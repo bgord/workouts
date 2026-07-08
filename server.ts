@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import { Hono } from "hono";
 import { HTTP } from "+app";
-import type * as infra from "+infra";
+import * as infra from "+infra";
 import { languages } from "+languages";
 import * as Preferences from "+preferences";
 import type { BootstrapType } from "+infra/bootstrap";
@@ -15,7 +15,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const CacheRepository = new bg.CacheRepositoryNodeCacheAdapter({ type: "infinite" });
   const CacheResolver = new bg.CacheResolverSimpleStrategy({ CacheRepository });
 
-  const origin = ["http://localhost:3000", "https://workouts.bgord.space"];
+  const origin = [infra.config.localhost, infra.config.host];
 
   const server = new Hono<infra.Config>()
     .basePath("/api")
@@ -24,16 +24,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
         {
           csrf: { origin },
           cors: { origin },
-          httpLogger: {
-            skip: [
-              "/api/translations",
-              "/api/profile-avatar/get",
-              "/api/auth/get-session",
-              "/api/digest",
-              new URLPattern({ pathname: "/api/facilities/:facilityId/locations/:locationId/frames" }),
-              new URLPattern({ pathname: "/api/facilities/:facilityId/locations/:locationId/motion-alarms" }),
-            ],
-          },
+          httpLogger: { skip: ["/api/translations", "/api/profile-avatar/get", "/api/auth/get-session"] },
           I18n: { languages, strategies: [new bg.LanguageDetectorCookieStrategy("language")] },
         },
         { ...Adapters.System, ...Tools, CacheResolver },

@@ -10,3 +10,5 @@ export type Config = {
     bg.LanguageDetectorVariables &
     AuthVariables;
 };
+
+export * as config from "./config";
