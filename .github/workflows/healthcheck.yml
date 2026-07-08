@@ -1,0 +1,36 @@
+name: Healthcheck
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+concurrency:
+  group: ci-healthcheck-${{ github.ref }}
+  cancel-in-progress: true
+permissions: {}
+jobs:
+  healthcheck:
+    name: Run healthcheck
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Clone repositories
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Run healthcheck
+        env:
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+          BASIC_AUTH_PRODUCTION: ${{ secrets.BASIC_AUTH_PRODUCTION }}
+        run: ./bgord-scripts/healthcheck.sh "${PROJECT_NAME}" "${BASIC_AUTH_PRODUCTION}"
+
+      - name: Notify on failure
+        env:
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+          LOBBYGOW_API_KEY: ${{ secrets.LOBBYGOW_API_KEY }}
+        if: ${{ always() && steps.run_healthcheck.outcome == 'failure' }}
+        run: |
+          curl -sS -X POST "https://lobbygow.bgord.space/api/notification-send" \
+            -H "Content-Type: application/json" \
+            -H "api-key: ${LOBBYGOW_API_KEY}" \
+            --data "{\"kind\":\"error\",\"subject\":\"[${PROJECT_NAME}] healthcheck\",\"content\":\"https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\"}"
