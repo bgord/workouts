@@ -1,10 +1,11 @@
 import * as bg from "@bgord/bun";
 import { Hono } from "hono";
 import { HTTP } from "+app";
-import * as infra from "+infra";
+import type * as infra from "+infra";
 import { languages } from "+languages";
 import * as Preferences from "+preferences";
 import type { BootstrapType } from "+infra/bootstrap";
+import { host, localhost } from "+infra/config";
 
 export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const deps = { ...Adapters.System, ...Tools };
@@ -15,7 +16,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const CacheRepository = new bg.CacheRepositoryNodeCacheAdapter({ type: "infinite" });
   const CacheResolver = new bg.CacheResolverSimpleStrategy({ CacheRepository });
 
-  const origin = [infra.config.localhost, infra.config.host];
+  const origin = [localhost, host];
 
   const server = new Hono<infra.Config>()
     .basePath("/api")
