@@ -1,1 +1,0 @@
-ALTER TABLE `motion_alarms` ADD `motionAlarmEscalationThreshold` integer NOT NULL;

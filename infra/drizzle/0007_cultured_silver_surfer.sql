@@ -1,1 +1,0 @@
-ALTER TABLE `motion_alarms` ADD `name` text DEFAULT 'sharp_v1' NOT NULL;

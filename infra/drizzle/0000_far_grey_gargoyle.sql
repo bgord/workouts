@@ -28,54 +28,6 @@ CREATE TABLE `events` (
 --> statement-breakpoint
 CREATE INDEX `stream_idx` ON `events` (`stream`);--> statement-breakpoint
 CREATE UNIQUE INDEX `stream_revision_uidx` ON `events` (`stream`,`revision`);--> statement-breakpoint
-CREATE TABLE `facilities` (
-	`id` text(36) PRIMARY KEY NOT NULL,
-	`revision` integer DEFAULT 0 NOT NULL,
-	`name` text NOT NULL,
-	`creatorId` text(36) NOT NULL,
-	`createdAt` integer NOT NULL,
-	`status` text NOT NULL
-);
---> statement-breakpoint
-CREATE INDEX `facilities_creatorId_idx` ON `facilities` (`creatorId`);--> statement-breakpoint
-CREATE TABLE `history` (
-	`id` text(36) PRIMARY KEY NOT NULL,
-	`createdAt` integer NOT NULL,
-	`subject` text NOT NULL,
-	`operation` text NOT NULL,
-	`payload` text
-);
---> statement-breakpoint
-CREATE INDEX `history_subject_createdAt` ON `history` (`subject`,"createdAt" desc);--> statement-breakpoint
-CREATE INDEX `history_operation_createdAt` ON `history` (`operation`,"createdAt" desc);--> statement-breakpoint
-CREATE INDEX `history_createdAt` ON `history` ("createdAt" desc);--> statement-breakpoint
-CREATE TABLE `location_frames` (
-	`key` text PRIMARY KEY NOT NULL,
-	`locationId` text(36) NOT NULL,
-	`facilityId` text(36) NOT NULL,
-	`etag` text NOT NULL,
-	`capturedAt` integer NOT NULL
-);
---> statement-breakpoint
-CREATE INDEX `location_frames_locationId_idx` ON `location_frames` (`locationId`);--> statement-breakpoint
-CREATE INDEX `location_frames_locationId_capturedAt_idx` ON `location_frames` (`locationId`,`capturedAt`);--> statement-breakpoint
-CREATE TABLE `locations` (
-	`id` text(36) PRIMARY KEY NOT NULL,
-	`revision` integer DEFAULT 0 NOT NULL,
-	`facilityId` text(36) NOT NULL,
-	`creatorId` text(36) NOT NULL,
-	`name` text NOT NULL,
-	`status` text NOT NULL,
-	`ingestionKeyHash` text(64) NOT NULL,
-	`createdAt` integer NOT NULL,
-	`frameCaptureIntervalMinutes` integer NOT NULL,
-	`frameRetentionDurationDays` integer NOT NULL,
-	`lastFrameCapturedAt` integer
-);
---> statement-breakpoint
-CREATE INDEX `locations_facilityId_idx` ON `locations` (`facilityId`);--> statement-breakpoint
-CREATE INDEX `locations_creatorId_idx` ON `locations` (`creatorId`);--> statement-breakpoint
-CREATE INDEX `locations_status_idx` ON `locations` (`status`);--> statement-breakpoint
 CREATE TABLE `sessions` (
 	`id` text PRIMARY KEY NOT NULL,
 	`expires_at` integer NOT NULL,
