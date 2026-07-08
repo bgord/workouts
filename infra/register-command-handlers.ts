@@ -1,0 +1,27 @@
+import * as bg from "@bgord/bun";
+import { languages } from "+languages";
+import type { BootstrapType } from "+infra/bootstrap";
+import * as PreferencesCommandHandlers from "+preferences/command-handlers";
+import * as PreferencesCommands from "+preferences/commands";
+
+export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
+  const deps = { ...Adapters.System, ...Tools };
+
+  Tools.CommandBus.on(
+    bg.Preferences.Commands.SET_USER_LANGUAGE_COMMAND,
+    bg.Preferences.CommandHandlers.handleSetUserLanguageCommand(languages, {
+      ...deps,
+      UserLanguageQuery: Adapters.Preferences.UserLanguageQuery,
+    }),
+  );
+
+  Tools.CommandBus.on(
+    PreferencesCommands.UPDATE_PROFILE_AVATAR_COMMAND,
+    PreferencesCommandHandlers.handleUpdateProfileAvatarCommand(deps),
+  );
+
+  Tools.CommandBus.on(
+    PreferencesCommands.REMOVE_PROFILE_AVATAR_COMMAND,
+    PreferencesCommandHandlers.handleRemoveProfileAvatarCommand(deps),
+  );
+}

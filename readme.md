@@ -50,4 +50,122 @@ bun run bgord-scripts/secrets-encrypt.ts --master-key /run/master-key.txt --inpu
 ## Domain:
 
 ```
-modules/  [error opening dir]
+modules/
+├── auth
+│   ├── events
+│   │   ├── ACCOUNT_CREATED_EVENT.ts
+│   │   ├── ACCOUNT_DELETED_EVENT.ts
+│   ├── open-host-queries
+│   │   ├── user-contact.ts
+│   │   └── user-directory.ts
+│   ├── services
+│   │   ├── email-verification-notification-composer.ts
+│   │   └── password-reset-notification-composer.ts
+│   └── value-objects
+│       ├── password.ts
+│       └── user-id.ts
+├── languages.ts
+├── preferences
+│   ├── command-handlers
+│   │   ├── handleRemoveProfileAvatarCommand.ts
+│   │   ├── handleUpdateProfileAvatarCommand.ts
+│   ├── commands
+│   │   ├── REMOVE_PROFILE_AVATAR_COMMAND.ts
+│   │   └── UPDATE_PROFILE_AVATAR_COMMAND.ts
+│   ├── events
+│   │   ├── PROFILE_AVATAR_REMOVED_EVENT.ts
+│   │   └── PROFILE_AVATAR_UPDATED_EVENT.ts
+│   ├── invariants
+│   │   └── profile-avatar-constraints.ts
+│   ├── policies
+│   │   └── set-default-user-language.ts
+│   └── value-objects
+│       ├── profile-avatar-key.ts
+│       ├── profile-avatar-max-side.ts
+│       ├── profile-avatar-max-size.ts
+│       ├── profile-avatar-mime-registry.ts
+│       └── profile-avatar-side.ts
+└── supported-languages.ts
+```
+
+## App:
+
+```
+app/
+├── http
+│   ├── error-handler.ts
+│   └── preferences
+│       ├── get-profile-avatar.ts
+│       ├── remove-profile-avatar.ts
+│       ├── update-profile-avatar.ts
+│       └── update-user-language.ts
+```
+
+## Infra:
+
+```
+infra/
+├── adapters
+│   ├── auth
+│   │   ├── user-contact.adapter.ts
+│   │   └── user-directory.adapter.ts
+│   ├── history
+│   ├── preferences
+│   │   ├── user-language-ohq.adapter.ts
+│   │   └── user-language-query.adapter.ts
+│   └── system
+│       ├── certificate-inspector.adapter.ts
+│       ├── clock.adapter.ts
+│       ├── disk-space-checker.adapter.ts
+│       ├── file-cleaner.adapter.ts
+│       ├── file-inspection.adapter.ts
+│       ├── file-reader-json.adapter.ts
+│       ├── file-renamer.adapter.ts
+│       ├── file-writer.adapter.ts
+│       ├── hash-file.adapter.ts
+│       ├── id-provider.adapter.ts
+│       ├── image-info.adapter.ts
+│       ├── image-processor.adapter.ts
+│       ├── logger.adapter.ts
+│       ├── mailer.adapter.ts
+│       ├── nonce-provider.adapter.ts
+│       ├── remote-file-storage.adapter.ts
+│       ├── secure-key-generator.ts
+│       ├── sleeper.adapter.ts
+│       ├── temporary-file.adapter.ts
+│       ├── timekeeper.adapter.ts
+│       ├── timeout-runner.adapter.ts
+│       └── tmp
+├── bootstrap.ts
+├── db.ts
+├── e2e
+│   └── home.spec.ts
+├── env.ts
+├── projections
+│   ├── preferences.projector.ts
+│   └── profile-avatars.projector.ts
+├── register-command-handlers.ts
+├── register-cron-tasks.ts
+├── register-event-handlers.ts
+├── schema.ts
+├── tools
+│   ├── build-info-config.adapter.ts
+│   ├── cache-response.ts
+│   ├── command-bus.ts
+│   ├── cron-scheduler.adapter.ts
+│   ├── event-bus.ts
+│   ├── event-handler.ts
+│   ├── event-store.ts
+│   ├── hash-content.strategy.ts
+│   ├── prerequisites.ts
+│   ├── shield-auth.strategy.ts
+│   ├── shield-basic-auth.strategy.ts
+│   ├── shield-captcha.strategy.ts
+│   ├── shield-rate-limit.strategy.ts
+│   ├── shield-security.strategy.ts
+│   ├── shield-timeout.strategy.ts
+│   └── translations-provider.adapter.ts
+└── translations
+    ├── en.json
+    └── pl.json
+```

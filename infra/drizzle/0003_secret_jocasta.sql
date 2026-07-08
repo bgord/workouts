@@ -1,0 +1,1 @@
+ALTER TABLE `motion_alarms` ADD `similarity` integer NOT NULL;

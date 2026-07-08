@@ -1,0 +1,1 @@
+ALTER TABLE `motion_alarms` RENAME COLUMN "createdAt" TO "raisedAt";

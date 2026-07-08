@@ -1,0 +1,186 @@
+import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
+import * as v from "valibot";
+import { languages } from "+languages";
+import { sqlite } from "+infra/db";
+import { type EnvironmentResultType, MasterKeyPath, SecretsPath } from "+infra/env";
+
+type Dependencies = {
+  DiskSpaceChecker: bg.DiskSpaceCheckerPort;
+  Logger: bg.LoggerPort;
+  Mailer: bg.MailerPort;
+  CertificateInspector: bg.CertificateInspectorPort;
+  Timekeeper: bg.TimekeeperPort;
+  CronScheduler: bg.CronSchedulerPort;
+  TemporaryFile: bg.TemporaryFilePort;
+  RemoteFileStorage: bg.RemoteFileStoragePort;
+  TranslationsProvider: bg.TranslationsProviderPort;
+  Clock: bg.ClockPort;
+  Sleeper: bg.SleeperPort;
+  TimeoutRunner: bg.TimeoutRunnerPort;
+  FileInspection: bg.FileInspectionPort;
+};
+
+export function createPrerequisites(
+  Env: EnvironmentResultType,
+  deps: Dependencies,
+): { healthcheck: Array<bg.Prerequisite>; readiness: Array<bg.Prerequisite> } {
+  const hostname = v.parse(bg.Hostname, "workouts.bgord.space");
+  const production = Env.type === bg.NodeEnvironmentEnum.production;
+  const local = Env.type === bg.NodeEnvironmentEnum.local;
+
+  const withTimeout = bg.PrerequisiteDecorator.withTimeout(tools.Duration.Seconds(5), deps);
+  const withFailSafe = bg.PrerequisiteDecorator.withFailSafe(
+    (result) => result.outcome === bg.PrerequisiteVerificationOutcome.failure,
+  );
+  const withRetry = bg.PrerequisiteDecorator.withRetry(
+    {
+      max: tools.Int.positive(2),
+      backoff: new bg.RetryBackoffLinearStrategy(tools.Duration.Ms(300)),
+    },
+    deps,
+  );
+
+  return {
+    healthcheck: [
+      new bg.Prerequisite("port", new bg.PrerequisiteVerifierPortAdapter({ port: Env.PORT })),
+      new bg.Prerequisite(
+        "timezone",
+        new bg.PrerequisiteVerifierTimezoneUtcAdapter({ timezone: v.parse(tools.Timezone, Env.TZ) }),
+      ),
+      new bg.Prerequisite("ram", new bg.PrerequisiteVerifierRamAdapter({ minimum: tools.Size.fromMB(128) }), {
+        enabled: production,
+        decorators: [withRetry],
+      }),
+      new bg.Prerequisite(
+        "disk-space",
+        new bg.PrerequisiteVerifierSpaceAdapter({ minimum: tools.Size.fromMB(512) }, deps),
+        { decorators: [withRetry] },
+      ),
+      new bg.Prerequisite(
+        "node",
+        new bg.PrerequisiteVerifierNodeAdapter({
+          version: tools.PackageVersion.fromString("24.3.0"),
+          current: process.version,
+        }),
+      ),
+      new bg.Prerequisite(
+        "bun",
+        new bg.PrerequisiteVerifierBunAdapter({
+          version: tools.PackageVersion.fromString("1.3.14"),
+          current: Bun.version,
+        }),
+      ),
+      new bg.Prerequisite(
+        "memory-consumption",
+        new bg.PrerequisiteVerifierMemoryAdapter({ maximum: tools.Size.fromMB(300) }),
+        { decorators: [withRetry] },
+      ),
+      new bg.Prerequisite(
+        "temporary-files dir",
+        new bg.PrerequisiteVerifierDirectoryAdapter({ directory: deps.TemporaryFile.root }, deps),
+        { enabled: production },
+      ),
+      new bg.Prerequisite(
+        "remote-file-storage dir",
+        new bg.PrerequisiteVerifierDirectoryAdapter({ directory: deps.RemoteFileStorage.root }, deps),
+        { enabled: production },
+      ),
+      new bg.Prerequisite("cron-scheduler", new bg.PrerequisiteVerifierCronSchedulerAdapter(deps)),
+      new bg.Prerequisite("translations", new bg.PrerequisiteVerifierTranslationsAdapter(languages, deps)),
+      new bg.Prerequisite("mailer", new bg.PrerequisiteVerifierMailerAdapter(deps), {
+        enabled: production,
+        decorators: [withRetry, withTimeout],
+      }),
+      new bg.Prerequisite("outside-connectivity", new bg.PrerequisiteVerifierOutsideConnectivityAdapter(), {
+        enabled: production,
+        decorators: [withFailSafe, withRetry, withTimeout],
+      }),
+      new bg.Prerequisite("user", new bg.PrerequisiteVerifierRunningUserAdapter({ username: "bgord" }), {
+        enabled: production,
+      }),
+      new bg.Prerequisite("sqlite", new bg.PrerequisiteVerifierSQLiteAdapter({ sqlite }), {
+        enabled: production,
+      }),
+      new bg.Prerequisite(
+        "ssl",
+        new bg.PrerequisiteVerifierSSLCertificateExpiryAdapter(
+          { hostname, minimum: tools.Duration.Days(7) },
+          deps,
+        ),
+        { enabled: production, decorators: [withFailSafe, withRetry, withTimeout] },
+      ),
+      new bg.Prerequisite("dns", new bg.PrerequisiteVerifierDnsAdapter({ hostname }), {
+        enabled: production,
+      }),
+      new bg.Prerequisite(
+        "clock-drift",
+        new bg.PrerequisiteVerifierClockDriftAdapter({ skew: tools.Duration.Minutes(1) }, deps),
+        { enabled: production, decorators: [withRetry, withTimeout] },
+      ),
+      new bg.Prerequisite("os", new bg.PrerequisiteVerifierOsAdapter({ accepted: ["Darwin", "Linux"] })),
+      new bg.Prerequisite(
+        "httpie",
+        new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "http") }),
+        { enabled: production },
+      ),
+      new bg.Prerequisite(
+        "ffmpeg",
+        new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "ffmpeg") }),
+        { enabled: production },
+      ),
+      new bg.Prerequisite(
+        "sqlite3",
+        new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "sqlite3") }),
+        { enabled: production },
+      ),
+      new bg.Prerequisite(
+        "tar",
+        new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "tar") }),
+        {
+          enabled: production,
+        },
+      ),
+      new bg.Prerequisite(
+        "gitleaks",
+        new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "gitleaks") }),
+        { enabled: local },
+      ),
+      new bg.Prerequisite(
+        "zizmor",
+        new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "zizmor") }),
+        { enabled: local },
+      ),
+      new bg.Prerequisite(
+        "master-key",
+        new bg.PrerequisiteVerifierFileAdapter({ file: MasterKeyPath, permissions: { read: true } }, deps),
+        { enabled: production },
+      ),
+      new bg.Prerequisite(
+        "secrets",
+        new bg.PrerequisiteVerifierFileAdapter({ file: SecretsPath, permissions: { read: true } }, deps),
+        { enabled: production },
+      ),
+      new bg.Prerequisite(
+        "build-info-file",
+        new bg.PrerequisiteVerifierFileAdapter(
+          { file: bg.BUILD_INFO_FILE_PATH, permissions: { read: true } },
+          deps,
+        ),
+        { enabled: production },
+      ),
+    ],
+    readiness: [
+      new bg.Prerequisite(
+        "disk-space",
+        new bg.PrerequisiteVerifierSpaceAdapter({ minimum: tools.Size.fromMB(512) }, deps),
+      ),
+      new bg.Prerequisite(
+        "memory-consumption",
+        new bg.PrerequisiteVerifierMemoryAdapter({ maximum: tools.Size.fromMB(300) }),
+      ),
+      new bg.Prerequisite("ram", new bg.PrerequisiteVerifierRamAdapter({ minimum: tools.Size.fromMB(128) })),
+      new bg.Prerequisite("sqlite", new bg.PrerequisiteVerifierSQLiteAdapter({ sqlite })),
+    ],
+  };
+}

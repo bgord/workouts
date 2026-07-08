@@ -5,6 +5,6 @@ echo "Starting project..."
 
 export NODE_ENV="production"
 
-cd /var/www/panopticon || exit
+cd /var/www/workouts || exit
 "$HOME/.bun/bin/bun" install --production --no-save --exact
 "$HOME/.bun/bin/bun" index.js

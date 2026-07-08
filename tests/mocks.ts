@@ -1,0 +1,195 @@
+// cspell:disable
+import { expect } from "bun:test";
+import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
+import type { Session, User } from "better-auth";
+import * as v from "valibot";
+import type * as Auth from "+auth";
+import { languages } from "+languages";
+import type * as Preferences from "+preferences";
+
+// IDs
+export const correlationId = "00000000-0000-0000-0000-000000000000";
+
+export const userId = v.parse(bg.UUID, "60aac9b2-2c16-4e94-b024-0951723e0bed");
+export const anotherUserId = v.parse(bg.UUID, "cd74d060-d5de-4a81-8ffb-b2dc46cd4451");
+export const historyId = v.parse(bg.UUID, "8d79bd87-1709-4c15-b40c-cd0fafaa0113");
+export const temporaryFileId = "55555555-1709-4c15-b40c-cd0fafaa0113";
+
+export const ingestionKeyRaw = "30".repeat(32);
+export const anotherIngestionKeyRaw = "40".repeat(32);
+export const ingestionKeyHash = v.parse(
+  bg.HashValue,
+  "854793720f2f4689265d3ac27abf926e2b67742801b8208687ed5ff4beb31f43",
+);
+export const anotherIngestionKeyHash = v.parse(
+  bg.HashValue,
+  "7ba4f2a69dc1dc97b3cddedee7004cc07b8371e89501d4e501c9c83178099309",
+);
+
+// Timestamps
+export const T0 = tools.Timestamp.fromInstant(tools.Temporal.Instant.from("2025-01-01T00:00:00Z"));
+
+export const hourHasPassedTimestamp = T0;
+
+export const expectAnyId = expect.stringMatching(
+  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
+);
+
+export const ip = { server: { requestIP: () => ({ address: "127.0.0.1" }) } };
+
+export const email = v.parse(tools.Email, "user@example.com");
+export const contact = { type: "email", address: email } as const;
+export const anotherEmail = "another@example.com";
+
+export const revision = new tools.Revision(0);
+
+export const revisionHeaders = (revision: tools.RevisionValueType = 0) => ({ "if-match": `W/${revision}` });
+export const correlationIdHeaders = { "correlation-id": correlationId };
+export const correlationIdAndRevisionHeaders = (revision: tools.RevisionValueType = 0) => ({
+  "if-match": `W/${revision}`,
+  "correlation-id": correlationId,
+});
+
+export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
+
+export const head = {
+  exists: true,
+  etag,
+  size: tools.Size.fromBytes(1234),
+  lastModified: T0,
+  mime: tools.Mimes.webp.mime,
+};
+
+export const profileAvatarObjectKey = v.parse(tools.ObjectKey, `users/${userId}/avatar.webp`);
+
+export const GenericHourHasPassedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: "passage_of_time",
+  version: 1,
+  name: "HOUR_HAS_PASSED_EVENT",
+  payload: { timestamp: hourHasPassedTimestamp.ms },
+} satisfies bg.System.Events.HourHasPassedEventType;
+
+export const GenericAccountCreatedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `account_${userId}`,
+  version: 1,
+  name: "ACCOUNT_CREATED_EVENT",
+  payload: { userId, timestamp: T0.ms },
+} satisfies Auth.Events.AccountCreatedEventType;
+
+export const GenericUserLanguageSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `preferences_${userId}`,
+  version: 1,
+  name: "USER_LANGUAGE_SET_EVENT",
+  payload: { userId, language: languages.supported.en },
+} satisfies bg.Preferences.Events.UserLanguageSetEventType;
+
+export const GenericUserLanguageSetPLEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `preferences_${userId}`,
+  version: 1,
+  name: "USER_LANGUAGE_SET_EVENT",
+  payload: { userId, language: languages.supported.pl },
+} satisfies bg.Preferences.Events.UserLanguageSetEventType;
+
+export const GenericProfileAvatarUpdatedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `preferences_${userId}`,
+  version: 1,
+  name: "PROFILE_AVATAR_UPDATED_EVENT",
+  payload: { userId, key: profileAvatarObjectKey, etag: etag.get() },
+} satisfies Preferences.Events.ProfileAvatarUpdatedEventType;
+
+export const GenericProfileAvatarRemovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `preferences_${userId}`,
+  version: 1,
+  name: "PROFILE_AVATAR_REMOVED_EVENT",
+  payload: { userId },
+} satisfies Preferences.Events.ProfileAvatarRemovedEventType;
+
+export const user: User = {
+  name: email,
+  email: email,
+  emailVerified: false,
+  image: null,
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  createdAt: new Date(),
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  updatedAt: new Date(),
+  id: userId,
+};
+
+export const anotherUser: User = {
+  name: anotherEmail,
+  email: anotherEmail,
+  emailVerified: false,
+  image: null,
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  createdAt: new Date(),
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  updatedAt: new Date(),
+  id: anotherUserId,
+};
+
+export const session: Session = {
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  expiresAt: new Date(),
+  token: "wyNm82TTSvBtxXSh1mb7lZJ4WF557tv4",
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  createdAt: new Date(),
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  updatedAt: new Date(),
+  ipAddress: "",
+  userAgent: "Mozilla/5.0",
+  userId,
+  id: "JUFCrqCBwFT3MCJV0mAVYSXtLJOkNBVN",
+};
+
+export const anotherSession: Session = {
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  expiresAt: new Date(),
+  token: "XFgejTtN28QI8cDEmE9Yb09yxRwQuGj0",
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  createdAt: new Date(),
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  updatedAt: new Date(),
+  ipAddress: "",
+  userAgent: "Mozilla/5.0",
+  userId,
+  id: "xXHd0LUChE6NiYnQXc8mwij7jjp5kUhs",
+};
+
+export const auth = { user, session, path: "/get-session", options: {} as any } as const;
+
+export const anotherAuth = {
+  user: anotherUser,
+  session: anotherSession,
+  path: "/get-session",
+  options: {} as any,
+} as const;
+
+export const IntentionalError = "intentional.error" as const;
+export const throwIntentionalError = () => {
+  throw new Error(IntentionalError);
+};
+export const throwIntentionalErrorAsync = async () => {
+  throw new Error(IntentionalError);
+};
+
+export const stream = () => new ReadableStream({ start: (controller) => controller.close() });
