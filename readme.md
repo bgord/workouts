@@ -137,6 +137,7 @@ infra/
 │       ├── timeout-runner.adapter.ts
 │       └── tmp
 ├── bootstrap.ts
+├── config.ts
 ├── db.ts
 ├── e2e
 │   └── home.spec.ts
