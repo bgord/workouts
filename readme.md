@@ -69,6 +69,7 @@ modules/
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
 │       ├── exercise-name.ts
+│       ├── exercise.ts
 ├── languages.ts
 ├── preferences
 │   ├── command-handlers
