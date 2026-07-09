@@ -67,6 +67,7 @@ modules/
 ├── exercises
 │   └── value-objects
 │       ├── exercise-id.ts
+│       ├── exercise-name.ts
 ├── languages.ts
 ├── preferences
 │   ├── command-handlers
