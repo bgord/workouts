@@ -64,6 +64,9 @@ modules/
 │   └── value-objects
 │       ├── password.ts
 │       └── user-id.ts
+├── exercises
+│   └── value-objects
+│       ├── exercise-id.ts
 ├── languages.ts
 ├── preferences
 │   ├── command-handlers

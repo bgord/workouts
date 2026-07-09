@@ -20,6 +20,8 @@
       "+languages": ["./modules/languages.ts"],
       "+auth": ["./modules/auth/index"],
       "+auth/*": ["./modules/auth/*"],
+      "+exercises": ["./modules/exercises/index"],
+      "+exercises/*": ["./modules/exercises/*"],
       "+system": ["./modules/system/index"],
       "+system/*": ["./modules/system/*"],
       "+preferences": ["./modules/preferences/index"],
