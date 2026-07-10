@@ -65,6 +65,8 @@ modules/
 │       ├── password.ts
 │       └── user-id.ts
 ├── exercises
+│   ├── command-handlers
+│   │   ├── handleExerciseAddCommand.ts
 │   ├── commands
 │   │   ├── EXERCISE_ADD_COMMAND.ts
 │   ├── events

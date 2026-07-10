@@ -16,4 +16,4 @@ export const ExerciseUpdatedEvent = v.object({
   }),
 });
 
-export type ExerciseAddedEventExerciseUpdatedEventType = v.InferOutput<typeof ExerciseUpdatedEvent>;
+export type ExerciseUpdatedEventType = v.InferOutput<typeof ExerciseUpdatedEvent>;

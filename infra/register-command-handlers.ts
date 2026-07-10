@@ -1,5 +1,7 @@
 import * as bg from "@bgord/bun";
 import { languages } from "+languages";
+import * as ExercisesCommandHandlers from "+exercises/command-handlers";
+import * as ExercisesCommands from "+exercises/commands";
 import type { BootstrapType } from "+infra/bootstrap";
 import * as PreferencesCommandHandlers from "+preferences/command-handlers";
 import * as PreferencesCommands from "+preferences/commands";
@@ -7,6 +9,13 @@ import * as PreferencesCommands from "+preferences/commands";
 export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   const deps = { ...Adapters.System, ...Tools };
 
+  // Exercises ==============================================================
+  Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_ADD_COMMAND,
+    ExercisesCommandHandlers.handleExerciseAddCommand(deps),
+  );
+
+  // Preferences ============================================================
   Tools.CommandBus.on(
     bg.Preferences.Commands.SET_USER_LANGUAGE_COMMAND,
     bg.Preferences.CommandHandlers.handleSetUserLanguageCommand(languages, {
