@@ -7,6 +7,7 @@ type Dependencies = { Logger: bg.LoggerPort };
 type AcceptedCommand =
   | ExercisesCommands.ExerciseAddCommandType
   | ExercisesCommands.ExerciseDeleteCommandType
+  | ExercisesCommands.ExerciseUpdateCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType;
