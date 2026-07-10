@@ -138,9 +138,9 @@ export const GenericExerciseAddedEvent = {
   payload: { id: exerciseId, name: exerciseName, description: exerciseDescription, image: exerciseImageKey },
 } satisfies Exercises.Events.ExerciseAddedEventType;
 
-export const user: User = {
+export const user = {
   name: email,
-  email: email,
+  email,
   emailVerified: false,
   image: null,
   // biome-ignore lint: lint/style/noRestrictedGlobals
@@ -148,9 +148,9 @@ export const user: User = {
   // biome-ignore lint: lint/style/noRestrictedGlobals
   updatedAt: new Date(),
   id: userId,
-};
+} satisfies User;
 
-export const anotherUser: User = {
+export const anotherUser = {
   name: anotherEmail,
   email: anotherEmail,
   emailVerified: false,
@@ -160,7 +160,7 @@ export const anotherUser: User = {
   // biome-ignore lint: lint/style/noRestrictedGlobals
   updatedAt: new Date(),
   id: anotherUserId,
-};
+} satisfies User;
 
 export const session: Session = {
   // biome-ignore lint: lint/style/noRestrictedGlobals
