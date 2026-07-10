@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import { Hono } from "hono";
 import { HTTP } from "+app";
+import * as Exercises from "+exercises";
 import type * as infra from "+infra";
 import { languages } from "+languages";
 import * as Preferences from "+preferences";
@@ -42,6 +43,17 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
     HTTP.Exercises.ExercisesList(Adapters.Exercises),
+  );
+  exercises.post(
+    "/add",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    new bg.FileUploaderHonoMiddleware({
+      field: "file",
+      MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
+      maxSize: Exercises.VO.ExerciseImageMaxSize,
+    }).handle(),
+    HTTP.Exercises.ExerciseAdd(deps),
   );
 
   server.route("/exercises", exercises);
