@@ -34,6 +34,18 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     )
     .use(Tools.ShieldSecurity.handle());
 
+  // Exercises =============
+  const exercises = new Hono<infra.Config>();
+
+  exercises.get(
+    "/list",
+    Tools.Auth.ShieldAuth.attach,
+    Tools.Auth.ShieldAuth.verify,
+    HTTP.Exercises.ExercisesList(Adapters.Exercises),
+  );
+
+  server.route("/exercises", exercises);
+
   // Probes =================
   server.get("/liveness", ...new bg.LivenessHonoHandler().handle());
   server.get(

@@ -16,17 +16,6 @@ export const anotherUserId = v.parse(bg.UUID, "cd74d060-d5de-4a81-8ffb-b2dc46cd4
 export const historyId = v.parse(bg.UUID, "8d79bd87-1709-4c15-b40c-cd0fafaa0113");
 export const temporaryFileId = "55555555-1709-4c15-b40c-cd0fafaa0113";
 
-export const ingestionKeyRaw = "30".repeat(32);
-export const anotherIngestionKeyRaw = "40".repeat(32);
-export const ingestionKeyHash = v.parse(
-  bg.HashValue,
-  "854793720f2f4689265d3ac27abf926e2b67742801b8208687ed5ff4beb31f43",
-);
-export const anotherIngestionKeyHash = v.parse(
-  bg.HashValue,
-  "7ba4f2a69dc1dc97b3cddedee7004cc07b8371e89501d4e501c9c83178099309",
-);
-
 // Timestamps
 export const T0 = tools.Timestamp.fromInstant(tools.Temporal.Instant.from("2025-01-01T00:00:00Z"));
 
