@@ -121,6 +121,30 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: "exercise.description.invalid", _known: true });
   });
 
+  test("happy path", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
+    using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.temporaryFileId)
+      .mockReturnValueOnce(mocks.exerciseId);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(1));
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: { ...mocks.correlationIdAndRevisionHeaders() }, body: form },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "exercise.name.is.unique");
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
+  });
+
   test("ExerciseImageConstraints - maxSide - width", async () => {
     const width = v.parse(tools.ImageWidth, 4100);
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -130,6 +154,9 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, width });
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -151,6 +178,9 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, height });
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -172,6 +202,9 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, size });
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -193,6 +226,9 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, mime });
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -216,6 +252,9 @@ describe(`POST ${url}`, async () => {
       .mockReturnValueOnce(mocks.temporaryFileId)
       .mockReturnValueOnce(mocks.exerciseId);
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue(inspection);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,

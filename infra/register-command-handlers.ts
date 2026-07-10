@@ -12,7 +12,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   // Exercises ==============================================================
   Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_ADD_COMMAND,
-    ExercisesCommandHandlers.handleExerciseAddCommand(deps),
+    ExercisesCommandHandlers.handleExerciseAddCommand({
+      ...deps,
+      GetExerciseNameCountQuery: Adapters.Exercises.GetExerciseNameCount,
+    }),
   );
 
   // Preferences ============================================================

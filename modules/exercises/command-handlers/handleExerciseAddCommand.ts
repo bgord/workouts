@@ -16,19 +16,19 @@ type Dependencies = {
   ImageProcessor: bg.ImageProcessorPort;
   RemoteFileStorage: bg.RemoteFileStoragePort;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseAddedEventType>;
+  GetExerciseNameCountQuery: Exercises.Queries.GetExerciseNameCount;
 };
 
 export const handleExerciseAddCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseAddCommandType) => {
     const temporary = tools.FilePathAbsolute.fromString(command.payload.absoluteFilePath);
 
-    // TODO
-    if (!ExerciseNameIsUnique.passes({ count: tools.Int.nonNegative(0) })) {
+    const count = await deps.GetExerciseNameCountQuery.execute(command.payload.name);
+
+    if (!ExerciseNameIsUnique.passes({ count })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
       throw new ExerciseNameIsUnique.error();
     }
-
-    const extension = v.parse(tools.Extension, "webp");
 
     const info = await deps.ImageInfo.inspect(temporary);
 
@@ -40,7 +40,7 @@ export const handleExerciseAddCommand =
     const final = await deps.ImageProcessor.process({
       strategy: "in_place",
       input: temporary,
-      to: extension,
+      to: v.parse(tools.Extension, "webp"),
       maxSide: ExerciseImageSide,
     });
 
