@@ -138,6 +138,7 @@ infra/
 │   │   ├── user-contact.adapter.ts
 │   │   └── user-directory.adapter.ts
 │   ├── exercises
+│   │   ├── get-exercise-name-count.adapter.ts
 │   │   └── list-exercises.adapter.ts
 │   ├── history
 │   ├── preferences
