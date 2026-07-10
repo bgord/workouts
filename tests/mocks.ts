@@ -41,6 +41,21 @@ export const correlationIdAndRevisionHeaders = (revision: tools.RevisionValueTyp
   "correlation-id": correlationId,
 });
 
+export const exerciseId = v.parse(Exercises.VO.ExerciseId, "8d79bd87-1709-4c15-b40c-cd0fafaa0113");
+export const exerciseName = v.parse(Exercises.VO.ExerciseName, "Bench Press Barbell Horizontal");
+export const exerciseDescription = v.parse(
+  Exercises.VO.ExerciseDescription,
+  "Press the barbell upwards, while lying on the horizontal bench.",
+);
+export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
+
+export const exercise: Exercises.VO.Exercise = {
+  id: exerciseId,
+  name: exerciseName,
+  description: exerciseDescription,
+  image: exerciseImageKey,
+};
+
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
 
 export const head = {
@@ -113,6 +128,16 @@ export const GenericProfileAvatarRemovedEvent = {
   payload: { userId },
 } satisfies Preferences.Events.ProfileAvatarRemovedEventType;
 
+export const GenericExerciseAddedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_${exerciseId}`,
+  version: 1,
+  name: "EXERCISE_ADDED_EVENT",
+  payload: { id: exerciseId, name: exerciseName, description: exerciseDescription, image: exerciseImageKey },
+} satisfies Exercises.Events.ExerciseAddedEventType;
+
 export const user: User = {
   name: email,
   email: email,
@@ -183,18 +208,3 @@ export const throwIntentionalErrorAsync = async () => {
 };
 
 export const stream = () => new ReadableStream({ start: (controller) => controller.close() });
-
-export const exerciseId = v.parse(Exercises.VO.ExerciseId, "8d79bd87-1709-4c15-b40c-cd0fafaa0113");
-export const exerciseName = v.parse(Exercises.VO.ExerciseName, "Bench Press Barbell Horizontal");
-export const exerciseDescription = v.parse(
-  Exercises.VO.ExerciseDescription,
-  "Press the barbell upwards, while lying on the horizontal bench.",
-);
-export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
-
-export const exercise: Exercises.VO.Exercise = {
-  id: exerciseId,
-  name: exerciseName,
-  description: exerciseDescription,
-  image: exerciseImageKey,
-};

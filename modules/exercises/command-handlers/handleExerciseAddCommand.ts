@@ -29,7 +29,7 @@ export const handleExerciseAddCommand =
       throw new ExerciseImageConstraints.error();
     }
 
-    await deps.ImageProcessor.process({
+    const final = await deps.ImageProcessor.process({
       strategy: "in_place",
       input: temporary,
       to: extension,
@@ -37,12 +37,12 @@ export const handleExerciseAddCommand =
     });
 
     const key = ExerciseImageKeyFactory.stable(command.payload.id);
-    await deps.RemoteFileStorage.putFromPath({ key, path: temporary });
-    await deps.TemporaryFile.cleanup(temporary.getFilename());
+    await deps.RemoteFileStorage.putFromPath({ key, path: final });
+    await deps.TemporaryFile.cleanup(final.getFilename());
 
     const event = bg.event(
       ExerciseAddedEvent,
-      `exercises_${command.payload.id}`,
+      `exercise_${command.payload.id}`,
       {
         id: command.payload.id,
         name: command.payload.name,

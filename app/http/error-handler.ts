@@ -20,7 +20,11 @@ const validationErrors = [
   ...Object.values(Exercises.VO.ExerciseDescriptionError),
 ] as Array<string>;
 
-const invariants = Object.values({ ...bg.Preferences.Invariants, ...Preferences.Invariants });
+const invariants = Object.values({
+  ...bg.Preferences.Invariants,
+  ...Preferences.Invariants,
+  ...Exercises.Invariants,
+});
 
 // Stryker disable all
 export class ErrorHandler {
