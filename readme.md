@@ -73,6 +73,8 @@ modules/
 │   │   ├── EXERCISE_ADDED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
+│   ├── invariants
+│   │   ├── exercise-image-constraints.ts
 │   ├── queries
 │   │   └── list-exercises.ts
 │   └── value-objects
