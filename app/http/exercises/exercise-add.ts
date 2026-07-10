@@ -1,4 +1,4 @@
-import type * as bg from "@bgord/bun";
+import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type hono from "hono";
 import * as v from "valibot";
@@ -9,6 +9,7 @@ type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   TemporaryFile: bg.TemporaryFilePort;
+  CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseAddCommandType>;
 };
 
 export const ExerciseAdd = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
@@ -24,6 +25,14 @@ export const ExerciseAdd = (deps: Dependencies) => async (c: hono.Context<infra.
   const description = v.parse(Exercises.VO.ExerciseDescription, body.get("description"));
 
   const temporary = await deps.TemporaryFile.write(filename, file);
+
+  const command = bg.command(
+    Exercises.Commands.ExerciseAddCommand,
+    { payload: { id, absoluteFilePath: temporary.get(), name, description } },
+    deps,
+  );
+
+  await deps.CommandBus.emit(command);
 
   return new Response();
 };
