@@ -69,6 +69,7 @@ modules/
 │   │   ├── handleExerciseAddCommand.ts
 │   ├── commands
 │   │   ├── EXERCISE_ADD_COMMAND.ts
+│   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   ├── events
 │   │   ├── EXERCISE_ADDED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
