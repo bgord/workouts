@@ -17,7 +17,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetExerciseNameCountQuery: Adapters.Exercises.GetExerciseNameCount,
     }),
   );
-
+  Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_UPDATE_COMMAND,
+    ExercisesCommandHandlers.handleExerciseUpdateCommand({
+      ...deps,
+      GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+    }),
+  );
   Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_DELETE_COMMAND,
     ExercisesCommandHandlers.handleExerciseDeleteCommand({
