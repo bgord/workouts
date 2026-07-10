@@ -5,6 +5,7 @@ import * as Exercises from "+exercises";
 describe("ExerciseName", () => {
   test("happy path", () => {
     expect(v.safeParse(Exercises.VO.ExerciseName, "f".repeat(64)).success).toEqual(true);
+    expect(v.safeParse(Exercises.VO.ExerciseName, "Bench Press").success).toEqual(true);
   });
 
   test("rejects non-string - null", () => {

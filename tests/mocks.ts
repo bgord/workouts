@@ -185,7 +185,7 @@ export const throwIntentionalErrorAsync = async () => {
 export const stream = () => new ReadableStream({ start: (controller) => controller.close() });
 
 export const exerciseId = v.parse(Exercises.VO.ExerciseId, "8d79bd87-1709-4c15-b40c-cd0fafaa0113");
-export const exerciseName = v.parse(Exercises.VO.ExerciseName, "Bench_Press_Barbell_Horizontal");
+export const exerciseName = v.parse(Exercises.VO.ExerciseName, "Bench Press Barbell Horizontal");
 export const exerciseDescription = v.parse(
   Exercises.VO.ExerciseDescription,
   "Press_the_barbell_while_lying_on_the_horizontal_bench",
