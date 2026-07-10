@@ -79,6 +79,8 @@ modules/
 │   │   ├── exercise-exists.ts
 │   │   ├── exercise-image-constraints.ts
 │   │   ├── exercise-name-is-unique.ts
+│   ├── policies
+│   │   ├── exercise-deleter.ts
 │   ├── queries
 │   │   ├── get-exercise-name-count.ts
 │   │   ├── get-exercise.ts

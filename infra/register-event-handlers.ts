@@ -1,3 +1,4 @@
+import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Preferences from "+preferences";
 import type { BootstrapType } from "+infra/bootstrap";
@@ -13,4 +14,5 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
 
   // Policies
   new Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
+  new Exercises.Policies.ExerciseDeleter(deps);
 }
