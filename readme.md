@@ -123,6 +123,7 @@ app/
 │   ├── error-handler.ts
 │   ├── exercises
 │   │   ├── exercise-add.ts
+│   │   ├── exercise-delete.ts
 │   │   ├── exercises-list.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts

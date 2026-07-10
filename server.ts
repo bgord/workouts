@@ -51,6 +51,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     }).handle(),
     HTTP.Exercises.ExerciseAdd(deps),
   );
+  exercises.delete("/:exerciseId", Tools.ShieldCaptcha.handle(), HTTP.Exercises.ExerciseDelete(deps));
 
   server.route("/exercises", exercises);
 
