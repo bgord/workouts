@@ -55,11 +55,7 @@ describe(`POST ${url}`, async () => {
     const form = new FormData();
     form.append("file", png);
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: mocks.revisionHeaders(), body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(400);
@@ -73,11 +69,7 @@ describe(`POST ${url}`, async () => {
     form.append("file", png);
     form.append("name", "a".repeat(129));
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: mocks.revisionHeaders(), body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(400);
@@ -91,11 +83,7 @@ describe(`POST ${url}`, async () => {
     form.append("file", png);
     form.append("name", mocks.exerciseName);
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: mocks.revisionHeaders(), body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(400);
@@ -110,18 +98,14 @@ describe(`POST ${url}`, async () => {
     form.append("name", mocks.exerciseName);
     form.append("description", "a".repeat(257));
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: mocks.revisionHeaders(), body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(400);
     expect(json).toEqual({ message: "exercise.description.invalid", _known: true });
   });
 
-  test("happy path", async () => {
+  test("ExerciseNameIsUnique", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
@@ -136,7 +120,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: { ...mocks.correlationIdAndRevisionHeaders() }, body: form },
+      { method: "POST", headers: mocks.correlationIdHeaders, body: form },
       mocks.ip,
     );
 
@@ -158,11 +142,7 @@ describe(`POST ${url}`, async () => {
       .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: { ...mocks.correlationIdAndRevisionHeaders() }, body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
@@ -182,11 +162,7 @@ describe(`POST ${url}`, async () => {
       .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: { ...mocks.correlationIdAndRevisionHeaders() }, body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
@@ -206,11 +182,7 @@ describe(`POST ${url}`, async () => {
       .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: { ...mocks.correlationIdAndRevisionHeaders() }, body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
@@ -230,11 +202,7 @@ describe(`POST ${url}`, async () => {
       .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: { ...mocks.correlationIdAndRevisionHeaders() }, body: form },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
@@ -258,7 +226,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: { ...mocks.correlationIdAndRevisionHeaders() }, body: form },
+      { method: "POST", headers: mocks.correlationIdHeaders, body: form },
       mocks.ip,
     );
 

@@ -79,6 +79,7 @@ modules/
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
 │   │   ├── exercise-exists.ts
+│   │   ├── exercise-has-changed.ts
 │   │   ├── exercise-image-constraints.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── policies
