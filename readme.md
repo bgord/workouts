@@ -68,6 +68,7 @@ modules/
 │   ├── events
 │   │   ├── EXERCISE_ADDED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
+│   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   └── value-objects
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
