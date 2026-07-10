@@ -69,6 +69,8 @@ modules/
 │   │   ├── EXERCISE_ADDED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
+│   ├── queries
+│   │   └── list-exercises.ts
 │   └── value-objects
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
@@ -104,6 +106,8 @@ modules/
 app/
 ├── http
 │   ├── error-handler.ts
+│   ├── exercises
+│   │   ├── exercises-list.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts
 │       ├── remove-profile-avatar.ts
@@ -119,6 +123,8 @@ infra/
 │   ├── auth
 │   │   ├── user-contact.adapter.ts
 │   │   └── user-directory.adapter.ts
+│   ├── exercises
+│   │   └── list-exercises.adapter.ts
 │   ├── history
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
