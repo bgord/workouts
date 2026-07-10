@@ -5,6 +5,7 @@ import * as tools from "@bgord/tools";
 import type { Session, User } from "better-auth";
 import * as v from "valibot";
 import type * as Auth from "+auth";
+import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import type * as Preferences from "+preferences";
 
@@ -182,3 +183,18 @@ export const throwIntentionalErrorAsync = async () => {
 };
 
 export const stream = () => new ReadableStream({ start: (controller) => controller.close() });
+
+export const exerciseId = v.parse(Exercises.VO.ExerciseId, "8d79bd87-1709-4c15-b40c-cd0fafaa0113");
+export const exerciseName = v.parse(Exercises.VO.ExerciseName, "Bench_Press_Barbell_Horizontal");
+export const exerciseDescription = v.parse(
+  Exercises.VO.ExerciseDescription,
+  "Press_the_barbell_while_lying_on_the_horizontal_bench",
+);
+export const exerciseImage = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
+
+export const exercise: Exercises.VO.Exercise = {
+  id: exerciseId,
+  name: exerciseName,
+  description: exerciseDescription,
+  image: exerciseImage,
+};
