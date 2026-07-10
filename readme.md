@@ -76,6 +76,7 @@ modules/
 │   └── value-objects
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
+│       ├── exercise-image-key.ts
 │       ├── exercise-name.ts
 │       ├── exercise.ts
 ├── languages.ts

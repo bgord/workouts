@@ -190,11 +190,11 @@ export const exerciseDescription = v.parse(
   Exercises.VO.ExerciseDescription,
   "Press the barbell upwards, while lying on the horizontal bench.",
 );
-export const exerciseImage = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
+export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 
 export const exercise: Exercises.VO.Exercise = {
   id: exerciseId,
   name: exerciseName,
   description: exerciseDescription,
-  image: exerciseImage,
+  image: exerciseImageKey,
 };
