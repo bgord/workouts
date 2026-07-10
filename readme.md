@@ -130,6 +130,7 @@ app/
 │   ├── exercises
 │   │   ├── exercise-add.ts
 │   │   ├── exercise-delete.ts
+│   │   ├── exercise-update.ts
 │   │   ├── exercises-list.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts

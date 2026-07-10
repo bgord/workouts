@@ -52,6 +52,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     HTTP.Exercises.ExerciseAdd(deps),
   );
   exercises.delete("/:exerciseId", Tools.ShieldCaptcha.handle(), HTTP.Exercises.ExerciseDelete(deps));
+  exercises.patch(
+    "/:exerciseId",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Exercises.ExerciseUpdate(deps),
+  );
 
   server.route("/exercises", exercises);
 
