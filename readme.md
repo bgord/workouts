@@ -79,6 +79,8 @@ modules/
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
 │       ├── exercise-image-key.ts
+│       ├── exercise-image-max-side.ts
+│       ├── exercise-image-max-size.ts
 │       ├── exercise-image-mime-registry.ts
 │       ├── exercise-name.ts
 │       ├── exercise.ts
