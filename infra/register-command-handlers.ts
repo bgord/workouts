@@ -18,6 +18,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
 
+  Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_DELETE_COMMAND,
+    ExercisesCommandHandlers.handleExerciseDeleteCommand(deps),
+  );
+
   // Preferences ============================================================
   Tools.CommandBus.on(
     bg.Preferences.Commands.SET_USER_LANGUAGE_COMMAND,

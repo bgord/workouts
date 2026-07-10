@@ -67,6 +67,7 @@ modules/
 ├── exercises
 │   ├── command-handlers
 │   │   ├── handleExerciseAddCommand.ts
+│   │   ├── handleExerciseDeleteCommand.ts
 │   ├── commands
 │   │   ├── EXERCISE_ADD_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
