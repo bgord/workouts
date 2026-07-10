@@ -77,6 +77,7 @@ modules/
 │   │   ├── exercise-image-constraints.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── queries
+│   │   ├── get-exercise-name-count.ts
 │   │   └── list-exercises.ts
 │   └── value-objects
 │       ├── exercise-description.ts
