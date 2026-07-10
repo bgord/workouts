@@ -80,6 +80,7 @@ modules/
 │   │   ├── exercise-name-is-unique.ts
 │   ├── queries
 │   │   ├── get-exercise-name-count.ts
+│   │   ├── get-exercise.ts
 │   │   └── list-exercises.ts
 │   └── value-objects
 │       ├── exercise-description.ts
@@ -142,6 +143,7 @@ infra/
 │   │   └── user-directory.adapter.ts
 │   ├── exercises
 │   │   ├── get-exercise-name-count.adapter.ts
+│   │   ├── get-exercise.adapter.ts
 │   │   └── list-exercises.adapter.ts
 │   ├── history
 │   ├── preferences

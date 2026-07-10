@@ -20,7 +20,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
 
   Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_DELETE_COMMAND,
-    ExercisesCommandHandlers.handleExerciseDeleteCommand(deps),
+    ExercisesCommandHandlers.handleExerciseDeleteCommand({
+      ...deps,
+      GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+    }),
   );
 
   // Preferences ============================================================
