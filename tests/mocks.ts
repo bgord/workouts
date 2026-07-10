@@ -188,7 +188,7 @@ export const exerciseId = v.parse(Exercises.VO.ExerciseId, "8d79bd87-1709-4c15-b
 export const exerciseName = v.parse(Exercises.VO.ExerciseName, "Bench Press Barbell Horizontal");
 export const exerciseDescription = v.parse(
   Exercises.VO.ExerciseDescription,
-  "Press_the_barbell_while_lying_on_the_horizontal_bench",
+  "Press the barbell upwards, while lying on the horizontal bench.",
 );
 export const exerciseImage = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 

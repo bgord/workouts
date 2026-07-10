@@ -5,6 +5,12 @@ import * as Exercises from "+exercises";
 describe("ExerciseDescription", () => {
   test("happy path", () => {
     expect(v.safeParse(Exercises.VO.ExerciseDescription, "f".repeat(256)).success).toEqual(true);
+    expect(
+      v.safeParse(
+        Exercises.VO.ExerciseDescription,
+        "Press the barbell upwards, while lying on the horizontal bench.",
+      ).success,
+    ).toEqual(true);
   });
 
   test("rejects non-string - null", () => {

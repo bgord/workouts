@@ -5,8 +5,8 @@ export const ExerciseDescriptionError = {
   Invalid: "exercise.description.invalid",
 };
 
-// 3 to 256 letters or digits, or underscores allowed
-const CHARS_WHITELIST = /^[a-zA-Z0-9_]{3,256}$/;
+// 3 to 256 letters or digits, or underscores, spaces, commas, and dots allowed
+const CHARS_WHITELIST = /^[a-zA-Z0-9_,. ]{3,256}$/;
 
 export const ExerciseDescription = v.pipe(
   v.string(ExerciseDescriptionError.Type),
