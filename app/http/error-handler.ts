@@ -4,6 +4,7 @@ import type hono from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import * as v from "valibot";
+import * as Exercises from "+exercises";
 import * as Preferences from "+preferences";
 
 type Dependencies = { Logger: bg.LoggerPort };
@@ -15,6 +16,8 @@ const validationErrors = [
   tools.ObjectKeyError.Type,
   tools.LanguageError.Type,
   tools.TimestampValueError.Invalid,
+  ...Object.values(Exercises.VO.ExerciseNameError),
+  ...Object.values(Exercises.VO.ExerciseDescriptionError),
 ] as Array<string>;
 
 const invariants = Object.values({ ...bg.Preferences.Invariants, ...Preferences.Invariants });

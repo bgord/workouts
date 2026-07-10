@@ -38,12 +38,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   // Exercises =============
   const exercises = new Hono<infra.Config>();
 
-  exercises.get(
-    "/list",
-    Tools.Auth.ShieldAuth.attach,
-    Tools.Auth.ShieldAuth.verify,
-    HTTP.Exercises.ExercisesList(Adapters.Exercises),
-  );
+  exercises.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  exercises.get("/list", HTTP.Exercises.ExercisesList(Adapters.Exercises));
   exercises.post(
     "/add",
     Tools.ShieldCaptcha.handle(),
