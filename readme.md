@@ -82,6 +82,7 @@ modules/
 │       ├── exercise-image-max-side.ts
 │       ├── exercise-image-max-size.ts
 │       ├── exercise-image-mime-registry.ts
+│       ├── exercise-image-side.ts
 │       ├── exercise-name.ts
 │       ├── exercise.ts
 ├── languages.ts

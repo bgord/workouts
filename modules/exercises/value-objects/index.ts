@@ -5,4 +5,5 @@ export * from "./exercise-image-key";
 export * from "./exercise-image-max-side";
 export * from "./exercise-image-max-size";
 export * from "./exercise-image-mime-registry";
+export * from "./exercise-image-side";
 export * from "./exercise-name";
