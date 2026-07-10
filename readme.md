@@ -75,6 +75,7 @@ modules/
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
 │   │   ├── exercise-image-constraints.ts
+│   │   ├── exercise-name-is-unique.ts
 │   ├── queries
 │   │   └── list-exercises.ts
 │   └── value-objects

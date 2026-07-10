@@ -4,6 +4,7 @@ import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import { ExerciseAddedEvent } from "../events/EXERCISE_ADDED_EVENT";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
+import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
 import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
 import { ExerciseImageSide } from "../value-objects/exercise-image-side";
 
@@ -19,8 +20,15 @@ type Dependencies = {
 
 export const handleExerciseAddCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseAddCommandType) => {
-    const extension = v.parse(tools.Extension, "webp");
     const temporary = tools.FilePathAbsolute.fromString(command.payload.absoluteFilePath);
+
+    // TODO
+    if (!ExerciseNameIsUnique.passes({ count: tools.Int.nonNegative(0) })) {
+      await deps.TemporaryFile.cleanup(temporary.getFilename());
+      throw new ExerciseNameIsUnique.error();
+    }
+
+    const extension = v.parse(tools.Extension, "webp");
 
     const info = await deps.ImageInfo.inspect(temporary);
 
