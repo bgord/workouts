@@ -14,7 +14,7 @@ export const ExerciseCategoryAdd = (deps: Dependencies) => async (c: hono.Contex
   const body = await c.req.json();
 
   const id = v.parse(Exercises.VO.ExerciseCategoryId, deps.IdProvider.generate());
-  const name = v.parse(Exercises.VO.ExerciseCategoryName, body.get("name"));
+  const name = v.parse(Exercises.VO.ExerciseCategoryName, body.name);
 
   const command = bg.command(Exercises.Commands.ExerciseCategoryAddCommand, { payload: { id, name } }, deps);
 

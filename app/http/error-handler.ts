@@ -18,6 +18,7 @@ const validationErrors = [
   tools.TimestampValueError.Invalid,
   ...Object.values(Exercises.VO.ExerciseNameError),
   ...Object.values(Exercises.VO.ExerciseDescriptionError),
+  ...Object.values(Exercises.VO.ExerciseCategoryNameError),
 ] as Array<string>;
 
 const invariants = Object.values({

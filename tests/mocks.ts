@@ -56,6 +56,9 @@ export const anotherExerciseDescription = v.parse(
 );
 export const anotherExerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 
+export const exerciseCategoryId = v.parse(Exercises.VO.ExerciseId, "11111111-1709-4c15-b40c-cd0fafaa0113");
+export const exerciseCategoryName = v.parse(Exercises.VO.ExerciseCategoryName, "Upper Chest");
+
 export const exercise: Exercises.VO.Exercise = {
   id: exerciseId,
   name: exerciseName,
@@ -194,6 +197,16 @@ export const GenericExerciseImageChangedEvent = {
   name: "EXERCISE_IMAGE_CHANGED_EVENT",
   payload: { id: exerciseId, image: exerciseImageKey },
 } satisfies Exercises.Events.ExerciseImageChangedEventType;
+
+export const GenericExerciseCategoryAddedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_category_${exerciseCategoryId}`,
+  version: 1,
+  name: "EXERCISE_CATEGORY_ADDED_EVENT",
+  payload: { id: exerciseCategoryId, name: exerciseCategoryName },
+} satisfies Exercises.Events.ExerciseCategoryAddedEventType;
 
 export const user = {
   name: email,
