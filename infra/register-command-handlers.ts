@@ -41,7 +41,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
 
   Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_CATEGORY_ADD_COMMAND,
-    ExercisesCommandHandlers.handleExerciseCategoryAddCommand(deps),
+    ExercisesCommandHandlers.handleExerciseCategoryAddCommand({
+      ...deps,
+      GetExerciseCategoryNameCountQuery: Adapters.Exercises.GetExerciseCategoryNameCount,
+    }),
   );
 
   // Preferences ============================================================
