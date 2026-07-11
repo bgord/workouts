@@ -212,6 +212,7 @@ infra/
 │   └── home.spec.ts
 ├── env.ts
 ├── projections
+│   ├── exercise-categories.projector.ts
 │   ├── exercises.projector.ts
 │   ├── preferences.projector.ts
 │   └── profile-avatars.projector.ts
