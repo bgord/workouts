@@ -7,17 +7,17 @@ import type * as infra from "+infra";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseRemoveCategoryCommandType>;
+  CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseUnassignCategoryCommandType>;
 };
 
-export const ExerciseRemoveCategory = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
+export const ExerciseUnassignCategory = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
   const body = await c.req.json();
 
   const exerciseId = v.parse(Exercises.VO.ExerciseId, body.exerciseId);
   const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body.exerciseCategoryId);
 
   const command = bg.command(
-    Exercises.Commands.ExerciseRemoveCategoryCommand,
+    Exercises.Commands.ExerciseUnassignCategoryCommand,
     { payload: { exerciseId, exerciseCategoryId } },
     deps,
   );

@@ -73,8 +73,8 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
-    ExercisesCommands.EXERCISE_REMOVE_CATEGORY_COMMAND,
-    ExercisesCommandHandlers.handleExerciseRemoveCategoryCommand({
+    ExercisesCommands.EXERCISE_UNASSIGN_CATEGORY_COMMAND,
+    ExercisesCommandHandlers.handleExerciseUnassignCategoryCommand({
       ...deps,
       GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
       GetExerciseCategoryQuery: Adapters.Exercises.GetExerciseCategoryQuery,

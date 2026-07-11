@@ -1,6 +1,6 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
-import { ExerciseCategoryRemovedEvent } from "../events/EXERCISE_CATEGORY_REMOVED_EVENT";
+import { ExerciseCategoryUnassignedEvent } from "../events/EXERCISE_CATEGORY_UNASSIGNED_EVENT";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsAssignedToCategory } from "../invariants/exercise-is-assigned-to-category";
@@ -8,14 +8,14 @@ import { ExerciseIsAssignedToCategory } from "../invariants/exercise-is-assigned
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryRemovedEventType>;
+  EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryUnassignedEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
   GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;
   ListCategoriesAssignedToExerciseQuery: Exercises.Queries.ListCategoriesAssignedToExercise;
 };
 
-export const handleExerciseRemoveCategoryCommand =
-  (deps: Dependencies) => async (command: Exercises.Commands.ExerciseRemoveCategoryCommandType) => {
+export const handleExerciseUnassignCategoryCommand =
+  (deps: Dependencies) => async (command: Exercises.Commands.ExerciseUnassignCategoryCommandType) => {
     const exercise = await deps.GetExerciseQuery.execute(command.payload.exerciseId);
 
     ExerciseExists.enforce({ exercise });
@@ -34,7 +34,7 @@ export const handleExerciseRemoveCategoryCommand =
     });
 
     const event = bg.event(
-      ExerciseCategoryRemovedEvent,
+      ExerciseCategoryUnassignedEvent,
       `exercise_${command.payload.exerciseId}`,
       { exerciseId: command.payload.exerciseId, exerciseCategoryId: command.payload.exerciseCategoryId },
       deps,
