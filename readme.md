@@ -96,12 +96,14 @@ modules/
 │   │   ├── exercise-deleter.ts
 │   ├── queries
 │   │   ├── get-exercise-category-name-count.ts
+│   │   ├── get-exercise-category.ts
 │   │   ├── get-exercise-name-count.ts
 │   │   ├── get-exercise.ts
 │   │   └── list-exercises.ts
 │   └── value-objects
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
+│       ├── exercise-category.ts
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
 │       ├── exercise-image-key.ts
