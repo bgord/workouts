@@ -56,17 +56,22 @@ export const anotherExerciseDescription = v.parse(
 );
 export const anotherExerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 
+export const exercise: Exercises.VO.Exercise = {
+  id: exerciseId,
+  name: exerciseName,
+  description: exerciseDescription,
+  image: exerciseImageKey,
+};
+
 export const exerciseCategoryId = v.parse(
   Exercises.VO.ExerciseCategoryId,
   "11111111-1709-4c15-b40c-cd0fafaa0113",
 );
 export const exerciseCategoryName = v.parse(Exercises.VO.ExerciseCategoryName, "Upper Chest");
 
-export const exercise: Exercises.VO.Exercise = {
-  id: exerciseId,
-  name: exerciseName,
-  description: exerciseDescription,
-  image: exerciseImageKey,
+export const exerciseCategory: Exercises.VO.ExerciseCategory = {
+  id: exerciseCategoryId,
+  name: exerciseCategoryName,
 };
 
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
@@ -210,6 +215,16 @@ export const GenericExerciseCategoryAddedEvent = {
   name: "EXERCISE_CATEGORY_ADDED_EVENT",
   payload: { id: exerciseCategoryId, name: exerciseCategoryName },
 } satisfies Exercises.Events.ExerciseCategoryAddedEventType;
+
+export const GenericExerciseCategoryDeletedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_category_${exerciseCategoryId}`,
+  version: 1,
+  name: "EXERCISE_CATEGORY_DELETED_EVENT",
+  payload: { id: exerciseCategoryId },
+} satisfies Exercises.Events.ExerciseCategoryDeletedEventType;
 
 export const user = {
   name: email,

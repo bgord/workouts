@@ -7,7 +7,7 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = `/api/exercises/${mocks.exerciseId}`;
+const url = `/api/exercises/category/${mocks.exerciseCategoryId}`;
 
 describe(`DELETE ${url}`, async () => {
   const di = await bootstrap();
@@ -26,28 +26,29 @@ describe(`DELETE ${url}`, async () => {
   test("validation - incorrect exercise id", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
-    const response = await server.request("/api/exercises/id", { method: "DELETE" }, mocks.ip);
+    const response = await server.request("/api/exercises/category/id", { method: "DELETE" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(400);
     expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
-  test("ExerciseExists", async () => {
+  test("ExerciseCategoryExists", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
-
-    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    await testcases.assertInvariantError(response, 403, "exercise.category.exists");
   });
 
   test("happy path", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
+      .mockResolvedValue(mocks.exerciseCategory);
 
     const response = await server.request(
       url,
@@ -56,6 +57,6 @@ describe(`DELETE ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseDeletedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseCategoryDeletedEvent]);
   });
 });
