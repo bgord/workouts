@@ -9,5 +9,6 @@ export * from "./exercise-delete";
 export * from "./exercise-image-change";
 export * from "./exercise-image-get";
 export * from "./exercise-list";
+export * from "./exercise-remove-category";
 export * from "./exercise-search";
 export * from "./exercise-update";

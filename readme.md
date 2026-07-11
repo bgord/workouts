@@ -172,6 +172,7 @@ app/
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
+│   │   ├── exercise-remove-category.ts
 │   │   ├── exercise-search.ts
 │   │   ├── exercise-update.ts
 │   └── preferences
