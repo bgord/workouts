@@ -46,8 +46,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     new bg.FileUploaderHonoMiddleware({
       field: "file",
-      MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
       maxSize: Exercises.VO.ExerciseImageMaxSize,
+      MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
     }).handle(),
     HTTP.Exercises.ExerciseAdd(deps),
   );
@@ -104,8 +104,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.Auth.ShieldAuth.verify,
     new bg.FileUploaderHonoMiddleware({
       field: "file",
-      MimeRegistry: Preferences.VO.ProfileAvatarMimeRegistry,
       maxSize: Preferences.VO.ProfileAvatarMaxSize,
+      MimeRegistry: Preferences.VO.ProfileAvatarMimeRegistry,
     }).handle(),
     HTTP.Preferences.UpdateProfileAvatar(deps),
   );
