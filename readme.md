@@ -73,7 +73,7 @@ modules/
 │   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
-│   │   ├── handleExerciseRemoveCategoryCommand.ts
+│   │   ├── handleExerciseUnassignCategoryCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
 │   │   ├── EXERCISE_ADD_COMMAND.ts
@@ -83,15 +83,15 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
-│   │   ├── EXERCISE_REMOVE_CATEGORY_COMMAND.ts
+│   │   ├── EXERCISE_UNASSIGN_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
 │   ├── events
 │   │   ├── EXERCISE_ADDED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_ADDED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_ASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_DELETED_EVENT.ts
-│   │   ├── EXERCISE_CATEGORY_REMOVED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_RENAMED_EVENT.ts
+│   │   ├── EXERCISE_CATEGORY_UNASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
@@ -172,8 +172,8 @@ app/
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
-│   │   ├── exercise-remove-category.ts
 │   │   ├── exercise-search.ts
+│   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts

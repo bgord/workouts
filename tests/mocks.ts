@@ -252,6 +252,16 @@ export const GenericExerciseCategoryAssignedEvent = {
   payload: { exerciseId, exerciseCategoryId },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
 
+export const GenericExerciseCategoryUnassignedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_${exerciseId}`,
+  version: 1,
+  name: "EXERCISE_CATEGORY_UNASSIGNED_EVENT",
+  payload: { exerciseId, exerciseCategoryId },
+} satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
+
 export const user = {
   name: email,
   email,

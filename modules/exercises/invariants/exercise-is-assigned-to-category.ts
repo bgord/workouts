@@ -15,7 +15,7 @@ type ExerciseIsAssignedToCategoryConfigType = {
 
 class ExerciseIsAssignedToCategoryFactory extends bg.Invariant<ExerciseIsAssignedToCategoryConfigType> {
   passes(config: ExerciseIsAssignedToCategoryConfigType) {
-    return !config.exerciseCategories.includes(config.exerciseCategoryId);
+    return config.exerciseCategories.includes(config.exerciseCategoryId);
   }
 
   // Stryker disable next-line StringLiteral

@@ -99,7 +99,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     HTTP.Exercises.ExerciseAssignCategory(deps),
   );
   exercises.post(
-    "/category/remove",
+    "/category/unassign",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
     HTTP.Exercises.ExerciseUnassignCategory(deps),
