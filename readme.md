@@ -87,6 +87,7 @@ modules/
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
+│   │   ├── exercise-category-exists.ts
 │   │   ├── exercise-category-name-is-unique.ts
 │   │   ├── exercise-exists.ts
 │   │   ├── exercise-has-changed.ts
