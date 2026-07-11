@@ -191,6 +191,7 @@ infra/
 │   └── home.spec.ts
 ├── env.ts
 ├── projections
+│   ├── exercises.projector.ts
 │   ├── preferences.projector.ts
 │   └── profile-avatars.projector.ts
 ├── register-command-handlers.ts
