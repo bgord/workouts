@@ -4,6 +4,7 @@ import { ExerciseCategoryAssignedEvent } from "../events/EXERCISE_CATEGORY_ASSIG
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsNotAssignedToCategory } from "../invariants/exercise-is-not-assigned-to-category";
+import { ExerciseCategoryLimit } from "../invariants/exercise-category-limit";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -32,6 +33,7 @@ export const handleExerciseAssignCategoryCommand =
       exerciseCategories,
       exerciseCategoryId: command.payload.exerciseCategoryId,
     });
+    ExerciseCategoryLimit.enforce({ exerciseCategories });
 
     const event = bg.event(
       ExerciseCategoryAssignedEvent,
