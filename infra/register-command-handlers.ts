@@ -72,6 +72,15 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       ListCategoriesAssignedToExerciseQuery: Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
     }),
   );
+  Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_REMOVE_CATEGORY_COMMAND,
+    ExercisesCommandHandlers.handleExerciseRemoveCategoryCommand({
+      ...deps,
+      GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+      GetExerciseCategoryQuery: Adapters.Exercises.GetExerciseCategoryQuery,
+      ListCategoriesAssignedToExerciseQuery: Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
+    }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(
