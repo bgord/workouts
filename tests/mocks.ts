@@ -69,6 +69,8 @@ export const exerciseCategoryId = v.parse(
 );
 export const exerciseCategoryName = v.parse(Exercises.VO.ExerciseCategoryName, "Upper Chest");
 
+export const anotherExerciseCategoryName = v.parse(Exercises.VO.ExerciseCategoryName, "Chest Upper");
+
 export const exerciseCategory: Exercises.VO.ExerciseCategory = {
   id: exerciseCategoryId,
   name: exerciseCategoryName,
@@ -225,6 +227,16 @@ export const GenericExerciseCategoryDeletedEvent = {
   name: "EXERCISE_CATEGORY_DELETED_EVENT",
   payload: { id: exerciseCategoryId },
 } satisfies Exercises.Events.ExerciseCategoryDeletedEventType;
+
+export const GenericExerciseCategoryRenamedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_category_${exerciseCategoryId}`,
+  version: 1,
+  name: "EXERCISE_CATEGORY_RENAMED_EVENT",
+  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName },
+} satisfies Exercises.Events.ExerciseCategoryRenamedEventType;
 
 export const user = {
   name: email,

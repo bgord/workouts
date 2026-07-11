@@ -23,7 +23,7 @@ describe(`DELETE ${url}`, async () => {
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
   });
 
-  test("validation - incorrect exercise id", async () => {
+  test("validation - incorrect exercise category id", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request("/api/exercises/category/id", { method: "DELETE" }, mocks.ip);
