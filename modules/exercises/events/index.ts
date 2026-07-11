@@ -1,5 +1,6 @@
 export * from "./EXERCISE_ADDED_EVENT";
 export * from "./EXERCISE_CATEGORY_ADDED_EVENT";
+export * from "./EXERCISE_CATEGORY_ASSIGNED_EVENT";
 export * from "./EXERCISE_CATEGORY_DELETED_EVENT";
 export * from "./EXERCISE_CATEGORY_RENAMED_EVENT";
 export * from "./EXERCISE_DELETED_EVENT";

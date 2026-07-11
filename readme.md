@@ -85,6 +85,7 @@ modules/
 │   ├── events
 │   │   ├── EXERCISE_ADDED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_ADDED_EVENT.ts
+│   │   ├── EXERCISE_CATEGORY_ASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_DELETED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_RENAMED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
