@@ -68,6 +68,7 @@ modules/
 │   ├── command-handlers
 │   │   ├── handleExerciseAddCommand.ts
 │   │   ├── handleExerciseCategoryAddCommand.ts
+│   │   ├── handleExerciseCategoryDeleteCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
@@ -81,6 +82,7 @@ modules/
 │   ├── events
 │   │   ├── EXERCISE_ADDED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_ADDED_EVENT.ts
+│   │   ├── EXERCISE_CATEGORY_DELETED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
