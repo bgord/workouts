@@ -140,6 +140,7 @@ app/
 │   ├── error-handler.ts
 │   ├── exercises
 │   │   ├── exercise-add.ts
+│   │   ├── exercise-category-add.ts
 │   │   ├── exercise-delete.ts
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
