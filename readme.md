@@ -92,6 +92,7 @@ modules/
 │   │   ├── get-exercise.ts
 │   │   └── list-exercises.ts
 │   └── value-objects
+│       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
