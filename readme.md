@@ -105,7 +105,8 @@ modules/
 │   │   ├── get-exercise.ts
 │   │   ├── list-exercise-categories.ts
 │   │   ├── list-exercises.ts
-│   │   └── search-exercise-categories.ts
+│   │   ├── search-exercise-categories.ts
+│   │   └── search-exercises.ts
 │   └── value-objects
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
@@ -159,6 +160,7 @@ app/
 │   │   ├── exercise-delete.ts
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
+│   │   ├── exercise-search.ts
 │   │   ├── exercise-update.ts
 │   │   ├── exercises-list.ts
 │   └── preferences
@@ -183,7 +185,8 @@ infra/
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
 │   │   ├── list-exercises.adapter.ts
-│   │   └── search-exercise-categories.adapter.ts
+│   │   ├── search-exercise-categories.adapter.ts
+│   │   └── search-exercises.adapter.ts
 │   ├── history
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts

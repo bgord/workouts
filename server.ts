@@ -40,6 +40,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   exercises.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   exercises.get("/list", HTTP.Exercises.ExercisesList(Adapters.Exercises));
+  exercises.get("/search", HTTP.Exercises.ExerciseSearch(Adapters.Exercises));
   exercises.post(
     "/add",
     Tools.ShieldCaptcha.handle(),
