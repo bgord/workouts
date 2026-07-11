@@ -1,4 +1,5 @@
 export * from "./exercise";
+export * from "./exercise-category-name";
 export * from "./exercise-description";
 export * from "./exercise-id";
 export * from "./exercise-image-key";
