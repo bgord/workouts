@@ -1,11 +1,19 @@
 import * as tools from "@bgord/tools";
+import { eq } from "drizzle-orm";
 import type * as Exercises from "+exercises";
+import { db } from "+infra/db";
+import * as Schema from "+infra/schema";
 
 class GetExerciseCategoryNameCountQueryDrizzle implements Exercises.Queries.GetExerciseCategoryNameCount {
   async execute(
-    _exerciseCategoryName: Exercises.VO.ExerciseCategoryNameType,
+    exerciseCategoryName: Exercises.VO.ExerciseCategoryNameType,
   ): Promise<tools.IntegerNonNegativeType> {
-    return tools.Int.nonNegative(0);
+    const count = await db.$count(
+      Schema.exerciseCategories,
+      eq(Schema.exerciseCategories.name, exerciseCategoryName),
+    );
+
+    return tools.Int.nonNegative(count);
   }
 }
 
