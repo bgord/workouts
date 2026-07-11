@@ -134,13 +134,20 @@ export const exercises = sqliteTable("exercises", {
   name: text("name").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),
-  createdAt: integer("capturedAt", { mode: "number" }).notNull(),
+  createdAt: integer("createdAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });
 
 export const exerciseCategories = sqliteTable("exercise_categories", {
   id,
   name: text("name").notNull(),
-  createdAt: integer("capturedAt", { mode: "number" }).notNull(),
+  createdAt: integer("createdAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+});
+
+export const exerciseCategoryAssignments = sqliteTable("exercise_category_assignments", {
+  id,
+  exerciseId: text("exerciseId", { length: 36 }).notNull(),
+  exerciseCategoryId: text("exerciseCategoryId", { length: 36 }).notNull(),
+  createdAt: integer("createdAt", { mode: "number" }).notNull(),
 });
