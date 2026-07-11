@@ -59,7 +59,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(1));
 
     const response = await server.request(
@@ -77,7 +77,7 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.exerciseCategoryId);
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(

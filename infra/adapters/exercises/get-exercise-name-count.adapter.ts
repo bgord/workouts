@@ -7,4 +7,4 @@ class GetExerciseNameCountQueryDrizzle implements Exercises.Queries.GetExerciseN
   }
 }
 
-export const GetExerciseNameCount = new GetExerciseNameCountQueryDrizzle();
+export const GetExerciseNameCountQuery = new GetExerciseNameCountQueryDrizzle();

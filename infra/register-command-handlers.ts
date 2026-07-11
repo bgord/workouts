@@ -14,7 +14,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     ExercisesCommands.EXERCISE_ADD_COMMAND,
     ExercisesCommandHandlers.handleExerciseAddCommand({
       ...deps,
-      GetExerciseNameCountQuery: Adapters.Exercises.GetExerciseNameCount,
+      GetExerciseNameCountQuery: Adapters.Exercises.GetExerciseNameCountQuery,
     }),
   );
   Tools.CommandBus.on(
@@ -22,6 +22,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     ExercisesCommandHandlers.handleExerciseUpdateCommand({
       ...deps,
       GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+      GetExerciseNameCountQuery: Adapters.Exercises.GetExerciseNameCountQuery,
     }),
   );
   Tools.CommandBus.on(
@@ -43,7 +44,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     ExercisesCommands.EXERCISE_CATEGORY_ADD_COMMAND,
     ExercisesCommandHandlers.handleExerciseCategoryAddCommand({
       ...deps,
-      GetExerciseCategoryNameCountQuery: Adapters.Exercises.GetExerciseCategoryNameCount,
+      GetExerciseCategoryNameCountQuery: Adapters.Exercises.GetExerciseCategoryNameCountQuery,
     }),
   );
   Tools.CommandBus.on(
@@ -51,7 +52,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     ExercisesCommandHandlers.handleExerciseCategoryRenameCommand({
       ...deps,
       GetExerciseCategoryQuery: Adapters.Exercises.GetExerciseCategoryQuery,
-      GetExerciseCategoryNameCountQuery: Adapters.Exercises.GetExerciseCategoryNameCount,
+      GetExerciseCategoryNameCountQuery: Adapters.Exercises.GetExerciseCategoryNameCountQuery,
     }),
   );
   Tools.CommandBus.on(

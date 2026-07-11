@@ -9,4 +9,4 @@ class GetExerciseCategoryNameCountQueryDrizzle implements Exercises.Queries.GetE
   }
 }
 
-export const GetExerciseCategoryNameCount = new GetExerciseCategoryNameCountQueryDrizzle();
+export const GetExerciseCategoryNameCountQuery = new GetExerciseCategoryNameCountQueryDrizzle();

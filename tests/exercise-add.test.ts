@@ -115,7 +115,7 @@ describe(`POST ${url}`, async () => {
       .mockReturnValueOnce(mocks.temporaryFileId)
       .mockReturnValueOnce(mocks.exerciseId);
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(1));
 
     const response = await server.request(
@@ -139,7 +139,7 @@ describe(`POST ${url}`, async () => {
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, width });
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
@@ -159,7 +159,7 @@ describe(`POST ${url}`, async () => {
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, height });
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
@@ -179,7 +179,7 @@ describe(`POST ${url}`, async () => {
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, size });
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
@@ -199,7 +199,7 @@ describe(`POST ${url}`, async () => {
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(ids.generate());
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue({ ...inspection, mime });
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
@@ -221,7 +221,7 @@ describe(`POST ${url}`, async () => {
       .mockReturnValueOnce(mocks.exerciseId);
     spies.use(spyOn(di.Adapters.System.ImageInfo, "inspect")).mockResolvedValue(inspection);
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(

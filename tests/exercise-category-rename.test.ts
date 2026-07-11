@@ -85,7 +85,7 @@ describe(`PATCH ${url}`, async () => {
       .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
       .mockResolvedValue(mocks.exerciseCategory);
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(1));
 
     const response = await server.request(
@@ -104,7 +104,7 @@ describe(`PATCH ${url}`, async () => {
       .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
       .mockResolvedValue(mocks.exerciseCategory);
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCount, "execute"))
+      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
