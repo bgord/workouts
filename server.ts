@@ -72,6 +72,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   exercises.get("/:exerciseId/image", HTTP.Exercises.ExerciseImageGet(deps));
 
   exercises.get("/category/list", HTTP.Exercises.ExerciseCategoryList(Adapters.Exercises));
+  exercises.get("/category/search", HTTP.Exercises.ExerciseCategorySearch(Adapters.Exercises));
   exercises.post(
     "/category",
     Tools.ShieldCaptcha.handle(),

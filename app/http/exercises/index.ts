@@ -3,6 +3,7 @@ export * from "./exercise-category-add";
 export * from "./exercise-category-delete";
 export * from "./exercise-category-list";
 export * from "./exercise-category-rename";
+export * from "./exercise-category-search";
 export * from "./exercise-delete";
 export * from "./exercise-image-change";
 export * from "./exercise-image-get";
