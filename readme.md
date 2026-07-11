@@ -69,6 +69,7 @@ modules/
 │   │   ├── handleExerciseAddCommand.ts
 │   │   ├── handleExerciseCategoryAddCommand.ts
 │   │   ├── handleExerciseCategoryDeleteCommand.ts
+│   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts

@@ -47,6 +47,14 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_CATEGORY_RENAME_COMMAND,
+    ExercisesCommandHandlers.handleExerciseCategoryRenameCommand({
+      ...deps,
+      GetExerciseCategoryQuery: Adapters.Exercises.GetExerciseCategoryQuery,
+      GetExerciseCategoryNameCountQuery: Adapters.Exercises.GetExerciseCategoryNameCount,
+    }),
+  );
+  Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_CATEGORY_DELETE_COMMAND,
     ExercisesCommandHandlers.handleExerciseCategoryDeleteCommand({
       ...deps,
