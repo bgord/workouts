@@ -9,6 +9,7 @@ type AcceptedCommand =
   | ExercisesCommands.ExerciseUpdateCommandType
   | ExercisesCommands.ExerciseImageChangeCommandType
   | ExercisesCommands.ExerciseDeleteCommandType
+  | ExercisesCommands.ExerciseCategoryAddCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType;

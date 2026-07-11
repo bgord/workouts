@@ -1,3 +1,4 @@
+export * from "./exercise-category-name-is-unique";
 export * from "./exercise-exists";
 export * from "./exercise-has-changed";
 export * from "./exercise-image-constraints";
