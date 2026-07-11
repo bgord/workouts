@@ -158,6 +158,7 @@ app/
 │   ├── error-handler.ts
 │   ├── exercises
 │   │   ├── exercise-add.ts
+│   │   ├── exercise-assign-category.ts
 │   │   ├── exercise-category-add.ts
 │   │   ├── exercise-category-delete.ts
 │   │   ├── exercise-category-list.ts

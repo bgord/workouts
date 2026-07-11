@@ -2,9 +2,9 @@ import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryAssignedEvent } from "../events/EXERCISE_CATEGORY_ASSIGNED_EVENT";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
+import { ExerciseCategoryLimit } from "../invariants/exercise-category-limit";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsNotAssignedToCategory } from "../invariants/exercise-is-not-assigned-to-category";
-import { ExerciseCategoryLimit } from "../invariants/exercise-category-limit";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
