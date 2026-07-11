@@ -75,6 +75,7 @@ modules/
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
 │   │   ├── EXERCISE_ADD_COMMAND.ts
+│   │   ├── EXERCISE_ASSIGN_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_CATEGORY_ADD_COMMAND.ts
 │   │   ├── EXERCISE_CATEGORY_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts

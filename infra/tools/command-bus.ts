@@ -12,6 +12,7 @@ type AcceptedCommand =
   | ExercisesCommands.ExerciseCategoryAddCommandType
   | ExercisesCommands.ExerciseCategoryDeleteCommandType
   | ExercisesCommands.ExerciseCategoryRenameCommandType
+  | ExercisesCommands.ExerciseAssignCategoryCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType;
