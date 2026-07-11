@@ -103,6 +103,7 @@ modules/
 │   │   ├── get-exercise-category.ts
 │   │   ├── get-exercise-name-count.ts
 │   │   ├── get-exercise.ts
+│   │   ├── list-exercise-categories.ts
 │   │   └── list-exercises.ts
 │   └── value-objects
 │       ├── exercise-category-id.ts
@@ -177,6 +178,7 @@ infra/
 │   │   ├── get-exercise-category.adapter.ts
 │   │   ├── get-exercise-name-count.adapter.ts
 │   │   ├── get-exercise.adapter.ts
+│   │   ├── list-exercise-categories.adapter.ts
 │   │   └── list-exercises.adapter.ts
 │   ├── history
 │   ├── preferences

@@ -1,7 +1,7 @@
-import * as Exercises from "+exercises";
 import * as tools from "@bgord/tools";
-import * as v from "valibot";
 import { desc } from "drizzle-orm";
+import * as v from "valibot";
+import * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
