@@ -73,6 +73,7 @@ modules/
 │   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
+│   │   ├── handleExerciseRemoveCategoryCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
 │   │   ├── EXERCISE_ADD_COMMAND.ts
@@ -101,6 +102,7 @@ modules/
 │   │   ├── exercise-exists.ts
 │   │   ├── exercise-has-changed.ts
 │   │   ├── exercise-image-constraints.ts
+│   │   ├── exercise-is-assigned-to-category.ts
 │   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── policies
