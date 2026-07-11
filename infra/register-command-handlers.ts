@@ -63,6 +63,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
 
+  Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_ASSIGN_CATEGORY_COMMAND,
+    ExercisesCommandHandlers.handleExerciseAssignCategoryCommand(deps),
+  );
+
   // Preferences ============================================================
   Tools.CommandBus.on(
     bg.Preferences.Commands.SET_USER_LANGUAGE_COMMAND,

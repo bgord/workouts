@@ -67,6 +67,7 @@ modules/
 ├── exercises
 │   ├── command-handlers
 │   │   ├── handleExerciseAddCommand.ts
+│   │   ├── handleExerciseAssignCategoryCommand.ts
 │   │   ├── handleExerciseCategoryAddCommand.ts
 │   │   ├── handleExerciseCategoryDeleteCommand.ts
 │   │   ├── handleExerciseCategoryRenameCommand.ts

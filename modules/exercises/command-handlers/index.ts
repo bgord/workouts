@@ -1,4 +1,5 @@
 export * from "./handleExerciseAddCommand";
+export * from "./handleExerciseAssignCategoryCommand";
 export * from "./handleExerciseCategoryAddCommand";
 export * from "./handleExerciseCategoryDeleteCommand";
 export * from "./handleExerciseCategoryRenameCommand";
