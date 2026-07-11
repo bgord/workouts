@@ -46,6 +46,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetExerciseCategoryNameCountQuery: Adapters.Exercises.GetExerciseCategoryNameCount,
     }),
   );
+  Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_CATEGORY_DELETE_COMMAND,
+    ExercisesCommandHandlers.handleExerciseCategoryDeleteCommand(deps),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(
