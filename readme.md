@@ -92,6 +92,7 @@ modules/
 │   ├── policies
 │   │   ├── exercise-deleter.ts
 │   ├── queries
+│   │   ├── get-exercise-category-name-count.ts
 │   │   ├── get-exercise-name-count.ts
 │   │   ├── get-exercise.ts
 │   │   └── list-exercises.ts
@@ -160,6 +161,7 @@ infra/
 │   │   ├── user-contact.adapter.ts
 │   │   └── user-directory.adapter.ts
 │   ├── exercises
+│   │   ├── get-exercise-category-name-count.adapter.ts
 │   │   ├── get-exercise-name-count.adapter.ts
 │   │   ├── get-exercise.adapter.ts
 │   │   └── list-exercises.adapter.ts
