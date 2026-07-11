@@ -98,6 +98,7 @@ modules/
 │   │   ├── exercise-exists.ts
 │   │   ├── exercise-has-changed.ts
 │   │   ├── exercise-image-constraints.ts
+│   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── policies
 │   │   ├── exercise-deleter.ts

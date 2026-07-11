@@ -6,3 +6,4 @@ export * from "./list-exercise-categories";
 export * from "./list-exercises";
 export * from "./search-exercise-categories";
 export * from "./search-exercises";
+export * from "./list-categories-assigned-to-exercise";

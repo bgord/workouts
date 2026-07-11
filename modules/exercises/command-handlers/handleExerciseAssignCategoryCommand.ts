@@ -1,8 +1,8 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryAssignedEvent } from "../events/EXERCISE_CATEGORY_ASSIGNED_EVENT";
-import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
+import { ExerciseExists } from "../invariants/exercise-exists";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
