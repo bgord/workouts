@@ -17,7 +17,7 @@ export const handleExerciseUpdateCommand =
 
     ExerciseExists.enforce({ exercise });
     ExerciseHasChanged.enforce({
-      current: exercise,
+      current: exercise!,
       incoming: { name: command.payload.name, description: command.payload.description },
     });
 

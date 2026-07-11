@@ -49,6 +49,13 @@ export const exerciseDescription = v.parse(
 );
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 
+export const anotherExerciseName = v.parse(Exercises.VO.ExerciseName, "Horizontal Bench Press Barbell");
+export const anotherExerciseDescription = v.parse(
+  Exercises.VO.ExerciseDescription,
+  "Press the barbell upwards, while lying on the bench.",
+);
+export const anotherExerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
+
 export const exercise: Exercises.VO.Exercise = {
   id: exerciseId,
   name: exerciseName,
@@ -147,6 +154,36 @@ export const GenericExerciseDeletedEvent = {
   name: "EXERCISE_DELETED_EVENT",
   payload: { id: exerciseId, image: exerciseImageKey },
 } satisfies Exercises.Events.ExerciseDeletedEventType;
+
+export const GenericExerciseUpdatedNameEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_${exerciseId}`,
+  version: 1,
+  name: "EXERCISE_UPDATED_EVENT",
+  payload: { id: exerciseId, name: anotherExerciseName, description: exerciseDescription },
+} satisfies Exercises.Events.ExerciseUpdatedEventType;
+
+export const GenericExerciseUpdatedDescriptionEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_${exerciseId}`,
+  version: 1,
+  name: "EXERCISE_UPDATED_EVENT",
+  payload: { id: exerciseId, name: exerciseName, description: anotherExerciseDescription },
+} satisfies Exercises.Events.ExerciseUpdatedEventType;
+
+export const GenericExerciseUpdatedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_${exerciseId}`,
+  version: 1,
+  name: "EXERCISE_UPDATED_EVENT",
+  payload: { id: exerciseId, name: anotherExerciseName, description: anotherExerciseDescription },
+} satisfies Exercises.Events.ExerciseUpdatedEventType;
 
 export const user = {
   name: email,

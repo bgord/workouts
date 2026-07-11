@@ -15,8 +15,8 @@ export const ExerciseUpdate = (deps: Dependencies) => async (c: hono.Context<inf
   const body = await c.req.json();
 
   const id = v.parse(Exercises.VO.ExerciseId, c.req.param("exerciseId"));
-  const name = v.parse(Exercises.VO.ExerciseName, body.get("name"));
-  const description = v.parse(Exercises.VO.ExerciseDescription, body.get("description"));
+  const name = v.parse(Exercises.VO.ExerciseName, body.name);
+  const description = v.parse(Exercises.VO.ExerciseDescription, body.description);
 
   const command = bg.command(
     Exercises.Commands.ExerciseUpdateCommand,
