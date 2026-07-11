@@ -152,6 +152,7 @@ app/
 │   │   ├── exercise-add.ts
 │   │   ├── exercise-category-add.ts
 │   │   ├── exercise-category-delete.ts
+│   │   ├── exercise-category-list.ts
 │   │   ├── exercise-category-rename.ts
 │   │   ├── exercise-delete.ts
 │   │   ├── exercise-image-change.ts
