@@ -4,6 +4,7 @@ import { GetExerciseCategoryNameCountQuery } from "./get-exercise-category-name-
 import { GetExerciseNameCountQuery } from "./get-exercise-name-count.adapter";
 import { ListExerciseCategoriesQuery } from "./list-exercise-categories.adapter";
 import { ListExercisesQuery } from "./list-exercises.adapter";
+import { SearchExerciseCategoriesQuery } from "./search-exercise-categories.adapter";
 
 export function createExercisesAdapters() {
   return {
@@ -13,5 +14,6 @@ export function createExercisesAdapters() {
     GetExerciseCategoryNameCountQuery,
     GetExerciseCategoryQuery,
     ListExerciseCategoriesQuery,
+    SearchExerciseCategoriesQuery,
   };
 }

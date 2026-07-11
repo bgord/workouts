@@ -104,7 +104,8 @@ modules/
 │   │   ├── get-exercise-name-count.ts
 │   │   ├── get-exercise.ts
 │   │   ├── list-exercise-categories.ts
-│   │   └── list-exercises.ts
+│   │   ├── list-exercises.ts
+│   │   └── search-exercise-categories.ts
 │   └── value-objects
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
@@ -180,7 +181,8 @@ infra/
 │   │   ├── get-exercise-name-count.adapter.ts
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
-│   │   └── list-exercises.adapter.ts
+│   │   ├── list-exercises.adapter.ts
+│   │   └── search-exercise-categories.adapter.ts
 │   ├── history
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
