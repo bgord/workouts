@@ -1,3 +1,4 @@
+// cSpell:ignore ilike
 import * as tools from "@bgord/tools";
 import { desc, ilike } from "drizzle-orm";
 import * as v from "valibot";

@@ -160,9 +160,9 @@ app/
 │   │   ├── exercise-delete.ts
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
+│   │   ├── exercise-list.ts
 │   │   ├── exercise-search.ts
 │   │   ├── exercise-update.ts
-│   │   ├── exercises-list.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts
 │       ├── remove-profile-avatar.ts

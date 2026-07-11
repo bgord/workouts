@@ -39,7 +39,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const exercises = new Hono<infra.Config>();
 
   exercises.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
-  exercises.get("/list", HTTP.Exercises.ExercisesList(Adapters.Exercises));
+  exercises.get("/list", HTTP.Exercises.ExerciseList(Adapters.Exercises));
   exercises.get("/search", HTTP.Exercises.ExerciseSearch(Adapters.Exercises));
   exercises.post(
     "/add",
