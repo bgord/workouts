@@ -137,3 +137,10 @@ export const exercises = sqliteTable("exercises", {
   createdAt: integer("capturedAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });
+
+export const exerciseCategories = sqliteTable("exercise_categories", {
+  id,
+  name: text("name").notNull(),
+  createdAt: integer("capturedAt", { mode: "number" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+});

@@ -15,6 +15,13 @@
       "when": 1783778059067,
       "tag": "0001_friendly_leper_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1783790514300,
+      "tag": "0002_daffy_sir_ram",
+      "breakpoints": true
     }
   ]
 }
