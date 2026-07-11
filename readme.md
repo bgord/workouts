@@ -76,6 +76,7 @@ modules/
 │   │   ├── EXERCISE_ADD_COMMAND.ts
 │   │   ├── EXERCISE_CATEGORY_ADD_COMMAND.ts
 │   │   ├── EXERCISE_CATEGORY_DELETE_COMMAND.ts
+│   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
