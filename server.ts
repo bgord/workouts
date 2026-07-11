@@ -58,6 +58,17 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Exercises.ExerciseUpdate(deps),
   );
+  exercises.patch(
+    "/:exerciseId/image",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    new bg.FileUploaderHonoMiddleware({
+      field: "file",
+      maxSize: Exercises.VO.ExerciseImageMaxSize,
+      MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
+    }).handle(),
+    HTTP.Exercises.ExerciseImageChange(deps),
+  );
   exercises.get("/:exerciseId/image", HTTP.Exercises.ExerciseImageGet(deps));
 
   server.route("/exercises", exercises);

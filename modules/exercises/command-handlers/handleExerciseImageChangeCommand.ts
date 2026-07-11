@@ -27,7 +27,7 @@ export const handleExerciseImageChangeCommand =
 
     if (!ExerciseExists.passes({ exercise })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
-      throw new ExerciseImageConstraints.error();
+      throw new ExerciseExists.error();
     }
 
     const info = await deps.ImageInfo.inspect(temporary);

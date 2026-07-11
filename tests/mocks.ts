@@ -185,6 +185,16 @@ export const GenericExerciseUpdatedEvent = {
   payload: { id: exerciseId, name: anotherExerciseName, description: anotherExerciseDescription },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
+export const GenericExerciseImageChangedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `exercise_${exerciseId}`,
+  version: 1,
+  name: "EXERCISE_IMAGE_CHANGED_EVENT",
+  payload: { id: exerciseId, image: exerciseImageKey },
+} satisfies Exercises.Events.ExerciseImageChangedEventType;
+
 export const user = {
   name: email,
   email,
