@@ -168,6 +168,7 @@ infra/
 │   │   └── user-directory.adapter.ts
 │   ├── exercises
 │   │   ├── get-exercise-category-name-count.adapter.ts
+│   │   ├── get-exercise-category.adapter.ts
 │   │   ├── get-exercise-name-count.adapter.ts
 │   │   ├── get-exercise.adapter.ts
 │   │   └── list-exercises.adapter.ts

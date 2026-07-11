@@ -48,7 +48,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   );
   Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_CATEGORY_DELETE_COMMAND,
-    ExercisesCommandHandlers.handleExerciseCategoryDeleteCommand(deps),
+    ExercisesCommandHandlers.handleExerciseCategoryDeleteCommand({
+      ...deps,
+      GetExerciseCategoryQuery: Adapters.Exercises.GetExerciseCategoryQuery,
+    }),
   );
 
   // Preferences ============================================================

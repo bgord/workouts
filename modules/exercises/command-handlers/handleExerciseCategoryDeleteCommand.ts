@@ -6,10 +6,13 @@ type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryDeletedEventType>;
+  GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;
 };
 
 export const handleExerciseCategoryDeleteCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryDeleteCommandType) => {
+    const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
+
     const event = bg.event(
       ExerciseCategoryDeletedEvent,
       `exercise_category_${command.payload.id}`,
