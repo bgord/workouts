@@ -1,0 +1,84 @@
+import { describe, expect, spyOn, test } from "bun:test";
+import { bootstrap } from "+infra/bootstrap";
+import { createServer } from "../server";
+import * as mocks from "./mocks";
+
+const url = `/api/exercises/${mocks.exerciseId}/image`;
+
+describe(`GET ${url}`, async () => {
+  const di = await bootstrap();
+  const server = createServer(di);
+
+  test("AccessDeniedAuthShieldError", async () => {
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(403);
+    expect(json._known).toEqual(true);
+  });
+
+  test("validation - incorrect exercise id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request("/api/exercises/id/image", { method: "GET" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type", _known: true });
+  });
+
+  test("no object", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using remoteFileStorageHead = spyOn(di.Adapters.System.RemoteFileStorage, "head").mockResolvedValue({
+      exists: false,
+    });
+
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+
+    expect(remoteFileStorageHead).toHaveBeenCalledTimes(1);
+    expect(response.status).toEqual(404);
+  });
+
+  test("304", async () => {
+    using remoteFileStorageGetStream = spyOn(di.Adapters.System.RemoteFileStorage, "getStream");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Adapters.System.RemoteFileStorage, "head").mockResolvedValue(mocks.head));
+
+    const response = await server.request(
+      url,
+      { method: "GET", headers: { "If-None-Match": mocks.head.etag.get() } },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(304);
+    expect(remoteFileStorageGetStream).not.toHaveBeenCalled();
+  });
+
+  test("stream unavailable", async () => {
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Adapters.System.RemoteFileStorage, "head").mockResolvedValue(mocks.head));
+    spies.use(spyOn(di.Adapters.System.RemoteFileStorage, "getStream").mockResolvedValue(null));
+
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+
+    expect(response.status).toEqual(404);
+  });
+
+  test("happy path", async () => {
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Adapters.System.RemoteFileStorage, "head").mockResolvedValue(mocks.head));
+    spies.use(spyOn(di.Adapters.System.RemoteFileStorage, "getStream").mockResolvedValue(mocks.stream()));
+
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+
+    expect(response.status).toEqual(200);
+    expect(response.headers.get("Content-Type")).toEqual("image/webp");
+    expect(response.headers.get("ETag")).toEqual(mocks.head.etag.get());
+    expect(response.headers.get("Content-Length")).toEqual(mocks.head.size.toBytes().toString());
+    expect(response.headers.get("Last-Modified")).toEqual(mocks.head.lastModified.toInstant().toString());
+    expect(response.headers.get("Cache-Control")).toEqual("private, max-age=0, must-revalidate");
+  });
+});

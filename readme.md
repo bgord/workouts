@@ -131,6 +131,7 @@ app/
 │   ├── exercises
 │   │   ├── exercise-add.ts
 │   │   ├── exercise-delete.ts
+│   │   ├── exercise-image-get.ts
 │   │   ├── exercise-update.ts
 │   │   ├── exercises-list.ts
 │   └── preferences

@@ -58,6 +58,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Exercises.ExerciseUpdate(deps),
   );
+  exercises.get("/:exerciseId/image", HTTP.Exercises.ExerciseImageGet(deps));
 
   server.route("/exercises", exercises);
 
