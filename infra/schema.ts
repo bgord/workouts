@@ -128,3 +128,12 @@ export const verifications = sqliteTable("verifications", {
   // biome-ignore lint: lint/style/noRestrictedGlobals
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
+
+export const exercises = sqliteTable("exercises", {
+  id,
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  image: text("image").notNull(),
+  createdAt: integer("capturedAt", { mode: "number" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+});
