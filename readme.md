@@ -147,6 +147,7 @@ app/
 │   ├── exercises
 │   │   ├── exercise-add.ts
 │   │   ├── exercise-category-add.ts
+│   │   ├── exercise-category-delete.ts
 │   │   ├── exercise-delete.ts
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts

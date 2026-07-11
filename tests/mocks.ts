@@ -56,7 +56,10 @@ export const anotherExerciseDescription = v.parse(
 );
 export const anotherExerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 
-export const exerciseCategoryId = v.parse(Exercises.VO.ExerciseId, "11111111-1709-4c15-b40c-cd0fafaa0113");
+export const exerciseCategoryId = v.parse(
+  Exercises.VO.ExerciseCategoryId,
+  "11111111-1709-4c15-b40c-cd0fafaa0113",
+);
 export const exerciseCategoryName = v.parse(Exercises.VO.ExerciseCategoryName, "Upper Chest");
 
 export const exercise: Exercises.VO.Exercise = {

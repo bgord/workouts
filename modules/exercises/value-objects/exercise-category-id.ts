@@ -1,5 +1,5 @@
 import * as bg from "@bgord/bun";
-import type * as v from "valibot";
+import * as v from "valibot";
 
-export const ExerciseCategoryId = bg.UUID;
+export const ExerciseCategoryId = v.pipe(bg.UUID, v.brand("ExerciseCategoryId"));
 export type ExerciseCategoryIdType = v.InferOutput<typeof ExerciseCategoryId>;
