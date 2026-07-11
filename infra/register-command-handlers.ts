@@ -65,7 +65,12 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
 
   Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_ASSIGN_CATEGORY_COMMAND,
-    ExercisesCommandHandlers.handleExerciseAssignCategoryCommand(deps),
+    ExercisesCommandHandlers.handleExerciseAssignCategoryCommand({
+      ...deps,
+      GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+      GetExerciseCategoryQuery: Adapters.Exercises.GetExerciseCategoryQuery,
+      ListCategoriesAssignedToExerciseQuery: Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
+    }),
   );
 
   // Preferences ============================================================
