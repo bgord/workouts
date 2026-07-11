@@ -3,6 +3,7 @@ import type * as Exercises from "+exercises";
 import { ExerciseCategoryAssignedEvent } from "../events/EXERCISE_CATEGORY_ASSIGNED_EVENT";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseExists } from "../invariants/exercise-exists";
+import { ExerciseIsNotAssignedToCategory } from "../invariants/exercise-is-not-assigned-to-category";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -10,6 +11,7 @@ type Dependencies = {
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryAssignedEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
   GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;
+  ListCategoriesAssignedToExerciseQuery: Exercises.Queries.ListCategoriesAssignedToExercise;
 };
 
 export const handleExerciseAssignCategoryCommand =
@@ -21,6 +23,15 @@ export const handleExerciseAssignCategoryCommand =
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.exerciseCategoryId);
 
     ExerciseCategoryExists.enforce({ exerciseCategory });
+
+    const exerciseCategories = await deps.ListCategoriesAssignedToExerciseQuery.execute(
+      command.payload.exerciseId,
+    );
+
+    ExerciseIsNotAssignedToCategory.enforce({
+      exerciseCategories,
+      exerciseCategoryId: command.payload.exerciseCategoryId,
+    });
 
     const event = bg.event(
       ExerciseCategoryAssignedEvent,
