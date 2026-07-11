@@ -82,6 +82,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
+│   │   ├── EXERCISE_REMOVE_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
 │   ├── events
 │   │   ├── EXERCISE_ADDED_EVENT.ts
