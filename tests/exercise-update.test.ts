@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -133,11 +134,34 @@ describe(`PATCH ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "exercise.has.changed");
   });
 
+  test("ExerciseNameIsUnique", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(1));
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ name: mocks.anotherExerciseName, description: mocks.exerciseDescription }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "exercise.name.is.unique");
+  });
+
   test("happy path - name", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -158,6 +182,9 @@ describe(`PATCH ${url}`, async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -178,6 +205,9 @@ describe(`PATCH ${url}`, async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,

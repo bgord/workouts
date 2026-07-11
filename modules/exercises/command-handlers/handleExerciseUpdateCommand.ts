@@ -3,12 +3,14 @@ import type * as Exercises from "+exercises";
 import { ExerciseUpdatedEvent } from "../events/EXERCISE_UPDATED_EVENT";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseHasChanged } from "../invariants/exercise-has-changed";
+import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseUpdatedEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
+  GetExerciseNameCountQuery: Exercises.Queries.GetExerciseNameCount;
 };
 
 export const handleExerciseUpdateCommand =
@@ -20,6 +22,10 @@ export const handleExerciseUpdateCommand =
       current: exercise!,
       incoming: { name: command.payload.name, description: command.payload.description },
     });
+
+    const count = await deps.GetExerciseNameCountQuery.execute(command.payload.name);
+
+    ExerciseNameIsUnique.enforce({ count });
 
     const event = bg.event(
       ExerciseUpdatedEvent,
