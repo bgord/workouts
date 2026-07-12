@@ -235,6 +235,7 @@ infra/
 ├── env.ts
 ├── projections
 │   ├── exercise-categories.projector.ts
+│   ├── exercise-category-assignments.projector.ts
 │   ├── exercises.projector.ts
 │   ├── preferences.projector.ts
 │   └── profile-avatars.projector.ts

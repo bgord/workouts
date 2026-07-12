@@ -1,6 +1,6 @@
 /* cSpell:disable */
 import { relations, sql } from "drizzle-orm";
-import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { SupportedLanguages } from "../modules/supported-languages";
 
 const id = text("id", { length: 36 })
@@ -145,9 +145,12 @@ export const exerciseCategories = sqliteTable("exercise_categories", {
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });
 
-export const exerciseCategoryAssignments = sqliteTable("exercise_category_assignments", {
-  id,
-  exerciseId: text("exerciseId", { length: 36 }).notNull(),
-  exerciseCategoryId: text("exerciseCategoryId", { length: 36 }).notNull(),
-  createdAt: integer("createdAt", { mode: "number" }).notNull(),
-});
+export const exerciseCategoryAssignments = sqliteTable(
+  "exercise_category_assignments",
+  {
+    exerciseId: text("exerciseId", { length: 36 }).notNull(),
+    exerciseCategoryId: text("exerciseCategoryId", { length: 36 }).notNull(),
+    createdAt: integer("createdAt", { mode: "number" }).notNull(),
+  },
+  (table) => [primaryKey({ columns: [table.exerciseId, table.exerciseCategoryId] })],
+);
