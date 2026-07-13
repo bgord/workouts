@@ -114,6 +114,7 @@ modules/
 │   │   ├── get-exercise.ts
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
+│   │   ├── list-exercises-assigned-to-category.ts
 │   │   ├── list-exercises.ts
 │   │   ├── search-exercise-categories.ts
 │   │   └── search-exercises.ts
