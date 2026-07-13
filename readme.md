@@ -198,6 +198,7 @@ infra/
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-categories-assigned-to-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
+│   │   ├── list-exercises-assigned-to-category.adapter.ts
 │   │   ├── list-exercises.adapter.ts
 │   │   ├── search-exercise-categories.adapter.ts
 │   │   └── search-exercises.adapter.ts
