@@ -81,6 +81,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Exercises.ExerciseCategoryAdd(deps),
   );
+  exercises.get(
+    "/category/:exerciseCategoryId",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Exercises.ExerciseCategoryGet(Adapters.Exercises),
+  );
   exercises.patch(
     "/category/:exerciseCategoryId",
     Tools.ShieldCaptcha.handle(),

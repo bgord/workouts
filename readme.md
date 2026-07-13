@@ -166,6 +166,7 @@ app/
 │   │   ├── exercise-assign-category.ts
 │   │   ├── exercise-category-add.ts
 │   │   ├── exercise-category-delete.ts
+│   │   ├── exercise-category-get.ts
 │   │   ├── exercise-category-list.ts
 │   │   ├── exercise-category-rename.ts
 │   │   ├── exercise-category-search.ts

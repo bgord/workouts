@@ -2,6 +2,7 @@ export * from "./exercise-add";
 export * from "./exercise-assign-category";
 export * from "./exercise-category-add";
 export * from "./exercise-category-delete";
+export * from "./exercise-category-get";
 export * from "./exercise-category-list";
 export * from "./exercise-category-rename";
 export * from "./exercise-category-search";
