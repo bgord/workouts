@@ -170,6 +170,7 @@ app/
 │   │   ├── exercise-category-rename.ts
 │   │   ├── exercise-category-search.ts
 │   │   ├── exercise-delete.ts
+│   │   ├── exercise-get.ts
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
