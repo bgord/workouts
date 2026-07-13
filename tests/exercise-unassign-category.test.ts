@@ -135,7 +135,7 @@ describe(`POST ${url}`, async () => {
       .mockResolvedValue(mocks.exerciseCategory);
     spies
       .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue([mocks.exerciseCategoryId]);
+      .mockResolvedValue([mocks.exerciseCategory]);
 
     const response = await server.request(
       url,

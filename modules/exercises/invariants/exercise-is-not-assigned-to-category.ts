@@ -10,12 +10,14 @@ class ExerciseIsNotAssignedToCategoryError extends Error {
 
 type ExerciseIsNotAssignedToCategoryConfigType = {
   exerciseCategoryId: VO.ExerciseCategoryIdType;
-  exerciseCategories: ReadonlyArray<VO.ExerciseCategoryIdType>;
+  exerciseCategories: ReadonlyArray<VO.ExerciseCategory>;
 };
 
 class ExerciseIsNotAssignedToCategoryFactory extends bg.Invariant<ExerciseIsNotAssignedToCategoryConfigType> {
   passes(config: ExerciseIsNotAssignedToCategoryConfigType) {
-    return !config.exerciseCategories.includes(config.exerciseCategoryId);
+    return !config.exerciseCategories
+      .map((exerciseCategory) => exerciseCategory.id)
+      .includes(config.exerciseCategoryId);
   }
 
   // Stryker disable next-line StringLiteral

@@ -8,7 +8,7 @@ class ExerciseCategoryLimitError extends Error {
   }
 }
 
-type ExerciseCategoryLimitConfigType = { exerciseCategories: ReadonlyArray<VO.ExerciseCategoryIdType> };
+type ExerciseCategoryLimitConfigType = { exerciseCategories: ReadonlyArray<VO.ExerciseCategory> };
 
 class ExerciseCategoryLimitFactory extends bg.Invariant<ExerciseCategoryLimitConfigType> {
   passes(config: ExerciseCategoryLimitConfigType) {

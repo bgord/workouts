@@ -118,7 +118,7 @@ describe(`POST ${url}`, async () => {
       .mockResolvedValue(mocks.exerciseCategory);
     spies
       .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue([mocks.exerciseCategoryId]);
+      .mockResolvedValue([mocks.exerciseCategory]);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
@@ -134,7 +134,7 @@ describe(`POST ${url}`, async () => {
       .mockResolvedValue(mocks.exerciseCategory);
     spies
       .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue(tools.repeat(mocks.anotherExerciseCategoryId, 5));
+      .mockResolvedValue(tools.repeat(mocks.anotherExerciseCategory, 5));
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
@@ -179,7 +179,7 @@ describe(`POST ${url}`, async () => {
       .mockResolvedValue(mocks.exerciseCategory);
     spies
       .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue(tools.repeat(mocks.anotherExerciseCategoryId, 4));
+      .mockResolvedValue(tools.repeat(mocks.anotherExerciseCategory, 4));
 
     const response = await server.request(
       url,

@@ -80,6 +80,11 @@ export const exerciseCategory: Exercises.VO.ExerciseCategory = {
   name: exerciseCategoryName,
 };
 
+export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
+  id: anotherExerciseCategoryId,
+  name: anotherExerciseCategoryName,
+};
+
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
 
 export const head = {
