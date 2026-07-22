@@ -136,6 +136,7 @@ modules/
 │   ├── aggregates
 │   │   └── plan.ts
 │   ├── command-handlers
+│   │   ├── handlePlanArchiveCommand.ts
 │   │   ├── handlePlanDraftCreateCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts

@@ -102,6 +102,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommands.PLAN_SECTION_REMOVE_COMMAND,
     PlansCommandHandlers.handlePlanSectionRemoveCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_ARCHIVE_COMMAND,
+    PlansCommandHandlers.handlePlanArchiveCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(
