@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import type * as ExercisesCommands from "+exercises/commands";
+import type * as PlansCommands from "+plans/commands";
 import type * as PreferencesCommands from "+preferences/commands";
 
 type Dependencies = { Logger: bg.LoggerPort };
@@ -14,6 +15,7 @@ type AcceptedCommand =
   | ExercisesCommands.ExerciseCategoryRenameCommandType
   | ExercisesCommands.ExerciseAssignCategoryCommandType
   | ExercisesCommands.ExerciseUnassignCategoryCommandType
+  | PlansCommands.PlanDraftCreateCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType;

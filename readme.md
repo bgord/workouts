@@ -135,6 +135,8 @@ modules/
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
+│   ├── commands
+│   │   └── PLAN_DRAFT_CREATE_COMMAND.ts
 │   ├── events
 │   │   └── PLAN_DRAFT_CREATED_EVENT.ts
 │   ├── invariants
