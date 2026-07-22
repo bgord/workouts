@@ -114,6 +114,20 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   server.route("/exercises", exercises);
 
+  // Plans =================
+  const plans = new Hono<infra.Config>();
+
+  plans.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+
+  plans.post(
+    "/draft",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Plans.PlanCreateDraft(deps),
+  );
+
+  server.route("/plans", plans);
+
   // Probes =================
   server.get("/liveness", ...new bg.LivenessHonoHandler().handle());
   server.get(

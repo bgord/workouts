@@ -5,6 +5,7 @@ import { HTTPException } from "hono/http-exception";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import * as v from "valibot";
 import * as Exercises from "+exercises";
+import * as Plans from "+plans";
 import * as Preferences from "+preferences";
 
 type Dependencies = { Logger: bg.LoggerPort };
@@ -19,12 +20,14 @@ const validationErrors = [
   ...Object.values(Exercises.VO.ExerciseNameError),
   ...Object.values(Exercises.VO.ExerciseDescriptionError),
   ...Object.values(Exercises.VO.ExerciseCategoryNameError),
+  ...Object.values(Plans.VO.PlanNameError),
 ] as Array<string>;
 
 const invariants = Object.values({
   ...bg.Preferences.Invariants,
   ...Preferences.Invariants,
   ...Exercises.Invariants,
+  ...Plans.Invariants,
 });
 
 // Stryker disable all

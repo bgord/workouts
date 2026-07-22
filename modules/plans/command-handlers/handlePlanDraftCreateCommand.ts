@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Plans from "+plans";
 import { PlanDraftCreatedEvent } from "../events/PLAN_DRAFT_CREATED_EVENT";
-import { PlanNameIsUniquePerUser } from "../invariants/plan-name-is-unique-for-owner";
+import { PlanNameIsUniqueForOwner } from "../invariants/plan-name-is-unique-for-owner";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -17,7 +17,7 @@ export const handlePlanDraftCreateCommand =
       command.payload.ownerId,
     );
 
-    PlanNameIsUniquePerUser.enforce({ count });
+    PlanNameIsUniqueForOwner.enforce({ count });
 
     const event = bg.event(
       PlanDraftCreatedEvent,

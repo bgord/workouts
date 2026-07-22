@@ -1,24 +1,24 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 
-class PlanNameIsUniquePerUserError extends Error {
+class PlanNameIsUniqueForOwnerError extends Error {
   constructor() {
     super();
-    Object.setPrototypeOf(this, PlanNameIsUniquePerUserError.prototype);
+    Object.setPrototypeOf(this, PlanNameIsUniqueForOwnerError.prototype);
   }
 }
 
-type PlanNameIsUniquePerUserConfigType = { count: tools.IntegerNonNegativeType };
+type PlanNameIsUniqueForOwnerConfigType = { count: tools.IntegerNonNegativeType };
 
-class PlanNameIsUniquePerUserFactory extends bg.Invariant<PlanNameIsUniquePerUserConfigType> {
-  passes(config: PlanNameIsUniquePerUserConfigType) {
+class PlanNameIsUniqueForOwnerFactory extends bg.Invariant<PlanNameIsUniqueForOwnerConfigType> {
+  passes(config: PlanNameIsUniqueForOwnerConfigType) {
     return config.count === 0;
   }
 
   // Stryker disable next-line StringLiteral
-  message = "plan.name.is.unique.per.user";
-  error = PlanNameIsUniquePerUserError;
+  message = "plan.name.is.unique.for.owner";
+  error = PlanNameIsUniqueForOwnerError;
   kind = bg.InvariantFailureKind.forbidden;
 }
 
-export const PlanNameIsUniquePerUser = new PlanNameIsUniquePerUserFactory();
+export const PlanNameIsUniqueForOwner = new PlanNameIsUniqueForOwnerFactory();

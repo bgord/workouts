@@ -87,7 +87,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   // Plans ==================================================================
   Tools.CommandBus.on(
     PlansCommands.PLAN_DRAFT_CREATE_COMMAND,
-    PlansCommandHandlers.handlePlanDraftCreateCommand(deps),
+    PlansCommandHandlers.handlePlanDraftCreateCommand({
+      ...deps,
+      GetPlanNameForUserCountQuery: Adapters.Plans.GetPlanNameForUserCountQuery,
+    }),
   );
 
   // Preferences ============================================================

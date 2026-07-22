@@ -194,6 +194,8 @@ app/
 │   │   ├── exercise-search.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
+│   ├── plans
+│   │   └── plan-create-draft.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts
 │       ├── remove-profile-avatar.ts
@@ -221,6 +223,8 @@ infra/
 │   │   ├── search-exercise-categories.adapter.ts
 │   │   └── search-exercises.adapter.ts
 │   ├── history
+│   ├── plans
+│   │   ├── get-plan-name-for-user-count.adapter.ts
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts

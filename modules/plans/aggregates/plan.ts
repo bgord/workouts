@@ -17,8 +17,8 @@ export class Plan {
 
   readonly id: VO.PlanIdType;
   public revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
-  private ownerId?: Auth.VO.UserIdType;
-  name: VO.PlanNameType;
+  ownerId?: Auth.VO.UserIdType;
+  name?: VO.PlanNameType;
 
   private readonly pending: Array<PlanEventType> = [];
 
