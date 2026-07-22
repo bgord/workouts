@@ -90,7 +90,7 @@ describe("Plan", async () => {
   test("removeSection", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
       di.Adapters.System,
     );
 
@@ -106,6 +106,18 @@ describe("Plan", async () => {
 
     expect(() => plan.removeSection(mocks.planSectionId, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
+  test("removeSection - PlanSectionExists", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.removeSection(mocks.anotherPlanSectionId, mocks.userId)).toThrow(
+      Plans.Invariants.PlanSectionExists.error,
     );
   });
 });

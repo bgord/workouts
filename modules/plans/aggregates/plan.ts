@@ -86,6 +86,7 @@ export class Plan {
 
   removeSection(planSectionId: VO.PlanSectionIdType, ownerId: Auth.VO.UserIdType) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
 
     const event = bg.event(
       Events.PlanSectionRemovedEvent,
