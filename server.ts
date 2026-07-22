@@ -125,6 +125,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Plans.PlanCreateDraft(deps),
   );
+  plans.post(
+    "/:planId/section",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Plans.PlanSectionCreate(deps),
+  );
 
   server.route("/plans", plans);
 

@@ -209,7 +209,8 @@ app/
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── plans
-│   │   └── plan-create-draft.ts
+│   │   ├── plan-create-draft.ts
+│   │   └── plan-section-create.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts
 │       ├── remove-profile-avatar.ts

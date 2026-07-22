@@ -21,6 +21,7 @@ const validationErrors = [
   ...Object.values(Exercises.VO.ExerciseDescriptionError),
   ...Object.values(Exercises.VO.ExerciseCategoryNameError),
   ...Object.values(Plans.VO.PlanNameError),
+  ...Object.values(Plans.VO.PlanSectionNameError),
 ] as Array<string>;
 
 const invariants = Object.values({

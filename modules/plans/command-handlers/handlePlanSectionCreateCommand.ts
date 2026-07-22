@@ -10,12 +10,11 @@ type Dependencies = {
 export const handlePlanSectionCreateCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanSectionCreateCommandType) => {
     const plan = await deps.repo.load(command.payload.planId);
-
+    command.revision.validate(plan.revision.value);
     plan.createSection(
       command.payload.planSectionId,
       command.payload.planSectionName,
       command.payload.ownerId,
     );
-
     await deps.repo.save(plan);
   };
