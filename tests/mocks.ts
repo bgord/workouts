@@ -332,6 +332,16 @@ export const GenericPlanArchivedEvent = {
   payload: { planId, ownerId: userId },
 } satisfies Plans.Events.PlanArchivedEventType;
 
+export const GenericPlanFinalizedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_FNALIZED_EVENT",
+  payload: { planId, ownerId: userId },
+} satisfies Plans.Events.PlanFinalizedEventType;
+
 export const user = {
   name: email,
   email,

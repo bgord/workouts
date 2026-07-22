@@ -206,4 +206,42 @@ describe("Plan", async () => {
 
     expect(() => plan.archive(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
+
+  test("finalize", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => plan.finalize(mocks.userId));
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanFinalizedEvent]);
+  });
+
+  test("finalize - PlanIsEditable - initial", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+
+    expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("finalize - PlanIsEditable - archived", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("finalize - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.finalize(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
+  });
 });
