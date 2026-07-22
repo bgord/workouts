@@ -338,7 +338,7 @@ export const GenericPlanFinalizedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
-  name: "PLAN_FNALIZED_EVENT",
+  name: "PLAN_FINALIZED_EVENT",
   payload: { planId, ownerId: userId },
 } satisfies Plans.Events.PlanFinalizedEventType;
 

@@ -222,6 +222,7 @@ app/
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create-draft.ts
+│   │   ├── plan-finalize.ts
 │   │   ├── plan-section-create.ts
 │   │   └── plan-section-remove.ts
 │   └── preferences

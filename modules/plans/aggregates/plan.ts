@@ -21,7 +21,7 @@ export class Plan {
     [Events.PLAN_SECTION_CREATED_EVENT]: Events.PlanSectionCreatedEvent,
     [Events.PLAN_SECTION_REMOVED_EVENT]: Events.PlanSectionRemovedEvent,
     [Events.PLAN_ARCHIVED_EVENT]: Events.PlanArchivedEvent,
-    [Events.PLAN_FNALIZED_EVENT]: Events.PlanFinalizedEvent,
+    [Events.PLAN_FINALIZED_EVENT]: Events.PlanFinalizedEvent,
   });
   // Stryker restore all
 

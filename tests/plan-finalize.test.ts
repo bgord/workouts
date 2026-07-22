@@ -7,16 +7,16 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = `/api/plans/${mocks.planId}`;
+const url = `/api/plans/${mocks.planId}/finalize`;
 
-describe(`DELETE ${url}`, async () => {
+describe(`POST ${url}`, async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
   const server = createServer(di);
 
   test("validation - AccessDeniedAuthShieldError", async () => {
-    const response = await server.request(url, { method: "DELETE" }, mocks.ip);
+    const response = await server.request(url, { method: "POST" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(403);
@@ -26,11 +26,7 @@ describe(`DELETE ${url}`, async () => {
   test("validation - incorrect plan id", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
-    const response = await server.request(
-      "/api/plans/id",
-      { method: "DELETE", body: JSON.stringify({}) },
-      mocks.ip,
-    );
+    const response = await server.request("/api/plans/id/finalize", { method: "POST" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(400);
@@ -45,7 +41,7 @@ describe(`DELETE ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders() },
+      { method: "POST", headers: mocks.revisionHeaders() },
       mocks.ip,
     );
 
@@ -63,7 +59,7 @@ describe(`DELETE ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders(2) },
+      { method: "POST", headers: mocks.revisionHeaders(2) },
       mocks.ip,
     );
 
@@ -79,7 +75,7 @@ describe(`DELETE ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders(1) },
+      { method: "POST", headers: mocks.revisionHeaders(1) },
       mocks.ip,
     );
 
@@ -100,11 +96,11 @@ describe(`DELETE ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(2) },
+      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(2) },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanArchivedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanFinalizedEvent]);
   });
 });
