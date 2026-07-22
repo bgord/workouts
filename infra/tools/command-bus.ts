@@ -17,6 +17,7 @@ type AcceptedCommand =
   | ExercisesCommands.ExerciseUnassignCategoryCommandType
   | PlansCommands.PlanDraftCreateCommandType
   | PlansCommands.PlanSectionCreateCommandType
+  | PlansCommands.PlanSectionRemoveCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType;

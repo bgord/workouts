@@ -5,8 +5,8 @@ import type { AccountCreatedEventType, AccountDeletedEventType } from "+auth/eve
 import { db } from "+infra/db";
 import type { EnvironmentResultType } from "+infra/env";
 import * as schema from "+infra/schema";
-import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
 import type { PlanEventType } from "+plans/aggregates";
+import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
 
 type Dependencies = { EventBus: bg.EventBusPort<AcceptedEventType>; Logger: bg.LoggerPort };
 
