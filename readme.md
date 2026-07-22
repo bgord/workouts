@@ -217,6 +217,7 @@ app/
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── plans
+│   │   ├── plan-archive.ts
 │   │   ├── plan-create-draft.ts
 │   │   ├── plan-section-create.ts
 │   │   └── plan-section-remove.ts

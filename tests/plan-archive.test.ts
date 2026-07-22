@@ -7,48 +7,20 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}`;
+const url = `/api/plans/${mocks.planId}`;
 
-describe(`POST ${url}`, async () => {
+describe(`DELETE ${url}`, async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
   const server = createServer(di);
 
   test("validation - AccessDeniedAuthShieldError", async () => {
-    const response = await server.request(url, { method: "POST" }, mocks.ip);
+    const response = await server.request(url, { method: "DELETE" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(403);
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
-  });
-
-  test("validation - incorrect plan id", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      `/api/plans/id/section/${mocks.planSectionId}`,
-      { method: "POST" },
-      mocks.ip,
-    );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
-  });
-
-  test("validation - incorrect plan section id", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      `/api/plans/${mocks.planId}/section/id`,
-      { method: "POST" },
-      mocks.ip,
-    );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
   test("PlanIsEditable", async () => {
@@ -59,7 +31,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders() },
+      { method: "DELETE", headers: mocks.revisionHeaders() },
       mocks.ip,
     );
 
@@ -75,27 +47,11 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders(1) },
+      { method: "DELETE", headers: mocks.revisionHeaders(1) },
       mocks.ip,
     );
 
     await testcases.assertInvariantError(response, 403, "plan.belongs.to.user");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
-  test("PlanSectionExists", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
-
-    const response = await server.request(
-      url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(1) },
-      mocks.ip,
-    );
-
-    await testcases.assertInvariantError(response, 403, "plan.section.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -112,11 +68,11 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(2) },
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(2) },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionRemovedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanArchivedEvent]);
   });
 });

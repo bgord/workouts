@@ -24,6 +24,20 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
   });
 
+  test("validation - incorrect plan id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      `/api/plans/id/section`,
+      { method: "POST", body: JSON.stringify({}) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type", _known: true });
+  });
+
   test("validation - empty payload", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     const response = await server.request(url, { method: "POST" }, mocks.ip);
