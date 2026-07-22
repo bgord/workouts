@@ -16,7 +16,7 @@ export async function bootstrap() {
   const Auth = createAuthAdapters();
   const Preferences = createPreferencesAdapters();
   const Exercises = createExercisesAdapters();
-  const Plans = createPlansAdapters();
+  const Plans = createPlansAdapters({ ...System, ...Tools });
 
   return { Env, Adapters: { Auth, Preferences, System, Exercises, Plans }, Tools: { ...Tools } };
 }

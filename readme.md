@@ -230,6 +230,7 @@ infra/
 │   ├── plans
 │   │   ├── get-plan-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-user-count.adapter.ts
+│   │   └── plan-repository.adapter.ts
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
