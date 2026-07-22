@@ -28,7 +28,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/plans/id/section`,
+      "/api/plans/id/section",
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
@@ -69,7 +69,7 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: "plan.section.name.invalid", _known: true });
   });
 
-  test("PlanIsEditable", async () => {
+  test("PlanIsEditable - initial", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -81,6 +81,28 @@ describe(`POST ${url}`, async () => {
         method: "POST",
         body: JSON.stringify({ planSectionName: mocks.planSectionName }),
         headers: mocks.revisionHeaders(),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanIsEditable - archived", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ planSectionName: mocks.planSectionName }),
+        headers: mocks.revisionHeaders(2),
       },
       mocks.ip,
     );

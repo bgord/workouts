@@ -150,6 +150,12 @@ export class Plan {
         this.sections = this.sections.filter((section) => section.id !== event.payload.planSectionId);
         break;
       }
+
+      case Events.PLAN_ARCHIVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.status = VO.PlanStatusEnum.archived;
+        break;
+      }
     }
   }
 
