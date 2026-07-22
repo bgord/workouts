@@ -153,6 +153,7 @@ modules/
 │   └── value-objects
 │       ├── plan-id.ts
 │       ├── plan-name.ts
+│       ├── plan-section-id.ts
 │       └── plan-section-name.ts
 ├── preferences
 │   ├── command-handlers
