@@ -22,6 +22,8 @@
       "+auth/*": ["./modules/auth/*"],
       "+exercises": ["./modules/exercises/index"],
       "+exercises/*": ["./modules/exercises/*"],
+      "+plans": ["./modules/plans/index"],
+      "+plans/*": ["./modules/plans/*"],
       "+system": ["./modules/system/index"],
       "+system/*": ["./modules/system/*"],
       "+preferences": ["./modules/preferences/index"],

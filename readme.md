@@ -132,6 +132,7 @@ modules/
 │       ├── exercise-name.ts
 │       ├── exercise.ts
 ├── languages.ts
+├── plans
 ├── preferences
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
