@@ -138,7 +138,8 @@ modules/
 │   ├── events
 │   │   └── PLAN_DRAFT_CREATED_EVENT.ts
 │   └── value-objects
-│       └── plan-id.ts
+│       ├── plan-id.ts
+│       └── plan-name.ts
 ├── preferences
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
