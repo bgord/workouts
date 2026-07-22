@@ -19,6 +19,7 @@ type AcceptedCommand =
   | PlansCommands.PlanSectionCreateCommandType
   | PlansCommands.PlanSectionRemoveCommandType
   | PlansCommands.PlanArchiveCommandType
+  | PlansCommands.PlanFinalizeCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType;

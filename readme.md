@@ -138,11 +138,13 @@ modules/
 │   ├── command-handlers
 │   │   ├── handlePlanArchiveCommand.ts
 │   │   ├── handlePlanDraftCreateCommand.ts
+│   │   ├── handlePlanFinalizeCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts
+│   │   ├── PLAN_FINALIZE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   └── PLAN_SECTION_REMOVE_COMMAND.ts
 │   ├── events
