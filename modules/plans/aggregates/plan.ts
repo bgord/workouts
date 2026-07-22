@@ -172,6 +172,12 @@ export class Plan {
         this.status = VO.PlanStatusEnum.archived;
         break;
       }
+
+      case Events.PLAN_FINALIZED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.status = VO.PlanStatusEnum.finalized;
+        break;
+      }
     }
   }
 

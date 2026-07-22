@@ -75,6 +75,18 @@ describe("Plan", async () => {
     );
   });
 
+  test("createSection - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
   test("createSection - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -145,6 +157,18 @@ describe("Plan", async () => {
     );
   });
 
+  test("removeSection - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.removeSection(mocks.planSectionId, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
   test("removeSection - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -197,6 +221,16 @@ describe("Plan", async () => {
     expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
   });
 
+  test("archive - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
   test("archive - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -229,6 +263,16 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("finalize - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 

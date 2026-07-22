@@ -85,6 +85,24 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanIsEditable - finalized", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.revisionHeaders(2) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("PlanBelongsToUser", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
