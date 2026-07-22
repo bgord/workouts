@@ -278,7 +278,7 @@ export const GenericPlanDraftCreatedEvent = {
   stream: `plan_${planId}`,
   version: 1,
   name: "PLAN_DRAFT_CREATED_EVENT",
-  payload: { id: planId, name: planName, ownerId: userId },
+  payload: { planId, planName, ownerId: userId },
 } satisfies Plans.Events.PlanDraftCreatedEventType;
 
 export const user = {
