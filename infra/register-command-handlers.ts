@@ -94,10 +94,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetPlanForOwnerCountQuery: Adapters.Plans.GetPlanForOwnerCountQuery,
     }),
   );
-
   Tools.CommandBus.on(
     PlansCommands.PLAN_SECTION_CREATE_COMMAND,
     PlansCommandHandlers.handlePlanSectionCreateCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+  );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_REMOVE_COMMAND,
+    PlansCommandHandlers.handlePlanSectionRemoveCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );
 
   // Preferences ============================================================

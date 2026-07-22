@@ -138,6 +138,7 @@ modules/
 │   ├── command-handlers
 │   │   ├── handlePlanDraftCreateCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
+│   │   ├── handlePlanSectionRemoveCommand.ts
 │   ├── commands
 │   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
