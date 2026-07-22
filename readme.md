@@ -137,6 +137,8 @@ modules/
 │   │   └── plan.ts
 │   ├── events
 │   │   └── PLAN_DRAFT_CREATED_EVENT.ts
+│   ├── invariants
+│   │   └── plan-name-is-unique-for-owner.ts
 │   └── value-objects
 │       ├── plan-id.ts
 │       └── plan-name.ts

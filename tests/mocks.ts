@@ -6,10 +6,9 @@ import type { Session, User } from "better-auth";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Exercises from "+exercises";
-import * as Plans from "+plans";
 import { languages } from "+languages";
+import * as Plans from "+plans";
 import type * as Preferences from "+preferences";
-import { PlanetAlt } from "iconoir-react";
 
 // IDs
 export const correlationId = "00000000-0000-0000-0000-000000000000";

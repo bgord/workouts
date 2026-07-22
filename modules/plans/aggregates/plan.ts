@@ -1,8 +1,8 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import type * as Auth from "+auth";
 import * as Events from "+plans/events";
 import type * as VO from "+plans/value-objects";
-import type * as Auth from "+auth";
 
 export type PlanEventType = Events.PlanDraftCreatedEventType;
 

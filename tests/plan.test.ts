@@ -1,8 +1,8 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import { bootstrap } from "+infra/bootstrap";
 import * as Plans from "+plans";
+import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
 
 describe("Plan", async () => {

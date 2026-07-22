@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
-import * as VO from "+plans/value-objects";
 import * as Auth from "+auth";
+import * as VO from "+plans/value-objects";
 
 export const PLAN_DRAFT_CREATED_EVENT = "PLAN_DRAFT_CREATED_EVENT";
 
