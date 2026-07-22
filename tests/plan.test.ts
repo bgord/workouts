@@ -144,4 +144,32 @@ describe("Plan", async () => {
       Plans.Invariants.PlanSectionExists.error,
     );
   });
+
+  test("archive", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => plan.archive(mocks.userId));
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanArchivedEvent]);
+  });
+
+  test("archive - PlanIsEditable", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+
+    expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("archive - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.archive(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
+  });
 });
