@@ -1,5 +1,4 @@
 import * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import type * as Plans from "+plans";
 import { PlanDraftCreatedEvent } from "../events/PLAN_DRAFT_CREATED_EVENT";
 import { PlanNameIsUniquePerUser } from "../invariants/plan-name-is-unique-for-owner";
@@ -8,11 +7,17 @@ type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   EventStore: bg.EventStorePort<Plans.Events.PlanDraftCreatedEventType>;
+  GetPlanNameForUserCountQuery: Plans.Queries.GetPlanNameForUserCount;
 };
 
 export const handlePlanDraftCreateCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanDraftCreateCommandType) => {
-    PlanNameIsUniquePerUser.enforce({ count: tools.Int.nonNegative(0) });
+    const count = await deps.GetPlanNameForUserCountQuery.execute(
+      command.payload.name,
+      command.payload.ownerId,
+    );
+
+    PlanNameIsUniquePerUser.enforce({ count });
 
     const event = bg.event(
       PlanDraftCreatedEvent,
