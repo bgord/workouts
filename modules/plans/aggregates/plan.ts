@@ -3,7 +3,7 @@ import * as tools from "@bgord/tools";
 import type * as Auth from "+auth";
 import * as Events from "+plans/events";
 import * as Invariants from "+plans/invariants";
-import type * as VO from "+plans/value-objects";
+import * as VO from "+plans/value-objects";
 
 export type PlanEventType = Events.PlanDraftCreatedEventType | Events.PlanSectionCreatedEventType;
 
@@ -18,10 +18,11 @@ export class Plan {
   // Stryker restore all
 
   readonly id: VO.PlanIdType;
-  public revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
-  ownerId?: Auth.VO.UserIdType;
+  revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
+  status = VO.PlanStatusEnum.initial;
   name?: VO.PlanNameType;
   sections: Array<VO.PlanSection> = [];
+  ownerId?: Auth.VO.UserIdType;
 
   private readonly pending: Array<PlanEventType> = [];
 
@@ -94,6 +95,7 @@ export class Plan {
     switch (event.name) {
       case Events.PLAN_DRAFT_CREATED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.status = VO.PlanStatusEnum.draft;
         this.name = event.payload.planName;
         this.ownerId = event.payload.ownerId;
         break;
