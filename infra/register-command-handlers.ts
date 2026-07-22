@@ -95,6 +95,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
 
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_CREATE_COMMAND,
+    PlansCommandHandlers.handlePlanSectionCreateCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+  );
+
   // Preferences ============================================================
   Tools.CommandBus.on(
     bg.Preferences.Commands.SET_USER_LANGUAGE_COMMAND,

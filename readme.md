@@ -138,7 +138,8 @@ modules/
 │   ├── command-handlers
 │   │   ├── handlePlanDraftCreateCommand.ts
 │   ├── commands
-│   │   └── PLAN_DRAFT_CREATE_COMMAND.ts
+│   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts
+│   │   └── PLAN_SECTION_CREATE_COMMAND.ts
 │   ├── events
 │   │   ├── PLAN_DRAFT_CREATED_EVENT.ts
 │   │   └── PLAN_SECTION_CREATED_EVENT.ts
