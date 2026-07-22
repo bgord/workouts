@@ -145,7 +145,8 @@ modules/
 │   │   ├── plan-limit-for-owner.ts
 │   │   └── plan-name-is-unique-for-owner.ts
 │   ├── queries
-│   │   ├── get-plan-name-for-user-count.ts
+│   │   ├── get-plan-for-owner-count.ts
+│   │   ├── get-plan-name-for-owner-count.ts
 │   └── value-objects
 │       ├── plan-id.ts
 │       └── plan-name.ts
@@ -225,6 +226,7 @@ infra/
 │   │   └── search-exercises.adapter.ts
 │   ├── history
 │   ├── plans
+│   │   ├── get-plan-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-user-count.adapter.ts
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
