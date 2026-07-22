@@ -133,6 +133,10 @@ modules/
 │       ├── exercise.ts
 ├── languages.ts
 ├── plans
+│   ├── aggregates
+│   │   └── plan.ts
+│   └── value-objects
+│       └── plan-id.ts
 ├── preferences
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
