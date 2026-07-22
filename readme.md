@@ -135,6 +135,8 @@ modules/
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
+│   ├── command-handlers
+│   │   ├── handlePlanDraftCreateCommand.ts
 │   ├── commands
 │   │   └── PLAN_DRAFT_CREATE_COMMAND.ts
 │   ├── events

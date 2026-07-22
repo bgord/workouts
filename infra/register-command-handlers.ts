@@ -3,6 +3,8 @@ import { languages } from "+languages";
 import * as ExercisesCommandHandlers from "+exercises/command-handlers";
 import * as ExercisesCommands from "+exercises/commands";
 import type { BootstrapType } from "+infra/bootstrap";
+import * as PlansCommandHandlers from "+plans/command-handlers";
+import * as PlansCommands from "+plans/commands";
 import * as PreferencesCommandHandlers from "+preferences/command-handlers";
 import * as PreferencesCommands from "+preferences/commands";
 
@@ -80,6 +82,12 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetExerciseCategoryQuery: Adapters.Exercises.GetExerciseCategoryQuery,
       ListCategoriesAssignedToExerciseQuery: Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
     }),
+  );
+
+  // Plans ==================================================================
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_DRAFT_CREATE_COMMAND,
+    PlansCommandHandlers.handlePlanDraftCreateCommand(deps),
   );
 
   // Preferences ============================================================
