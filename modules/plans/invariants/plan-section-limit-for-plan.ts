@@ -16,7 +16,7 @@ class PlanSectionLimitForPlanFactory extends bg.Invariant<PlanSectionLimitForPla
   }
 
   // Stryker disable next-line StringLiteral
-  message = "plan-section-limit-for-plan";
+  message = "plan.section.limit.for.plan";
   error = PlanSectionLimitForPlanError;
   kind = bg.InvariantFailureKind.forbidden;
 }

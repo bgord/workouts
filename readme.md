@@ -214,7 +214,8 @@ app/
 │   │   ├── exercise-update.ts
 │   ├── plans
 │   │   ├── plan-create-draft.ts
-│   │   └── plan-section-create.ts
+│   │   ├── plan-section-create.ts
+│   │   └── plan-section-remove.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts
 │       ├── remove-profile-avatar.ts
