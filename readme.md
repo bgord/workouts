@@ -140,7 +140,8 @@ modules/
 │   ├── commands
 │   │   └── PLAN_DRAFT_CREATE_COMMAND.ts
 │   ├── events
-│   │   └── PLAN_DRAFT_CREATED_EVENT.ts
+│   │   ├── PLAN_DRAFT_CREATED_EVENT.ts
+│   │   └── PLAN_SECTION_CREATED_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-limit-for-owner.ts
 │   │   └── plan-name-is-unique-for-owner.ts
@@ -151,7 +152,8 @@ modules/
 │   │   ├── get-plan-name-for-owner-count.ts
 │   └── value-objects
 │       ├── plan-id.ts
-│       └── plan-name.ts
+│       ├── plan-name.ts
+│       └── plan-section-name.ts
 ├── preferences
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
