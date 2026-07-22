@@ -137,6 +137,7 @@ modules/
 │   │   └── plan.ts
 │   ├── command-handlers
 │   │   ├── handlePlanDraftCreateCommand.ts
+│   │   ├── handlePlanSectionCreateCommand.ts
 │   ├── commands
 │   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts
 │   │   └── PLAN_SECTION_CREATE_COMMAND.ts
@@ -155,7 +156,8 @@ modules/
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-section-id.ts
-│       └── plan-section-name.ts
+│       ├── plan-section-name.ts
+│       └── plan-section.ts
 ├── preferences
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
