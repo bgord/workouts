@@ -86,4 +86,26 @@ describe("Plan", async () => {
       Plans.Invariants.PlanSectionNameIsUniqueForPlan.error,
     );
   });
+
+  test("removeSection", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.removeSection(mocks.planSectionId, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionRemovedEvent]);
+  });
+
+  test("removeSection - PlanIsEditable", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+
+    expect(() => plan.removeSection(mocks.planSectionId, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
 });

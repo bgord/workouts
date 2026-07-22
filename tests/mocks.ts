@@ -312,6 +312,16 @@ export const GenericPlanSectionCreatedEventSecond = {
   },
 } satisfies Plans.Events.PlanSectionCreatedEventType;
 
+export const GenericPlanSectionRemovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_SECTION_REMOVED_EVENT",
+  payload: { planId, planSectionId, ownerId: userId },
+} satisfies Plans.Events.PlanSectionRemovedEventType;
+
 export const user = {
   name: email,
   email,

@@ -5,7 +5,10 @@ import * as Events from "+plans/events";
 import * as Invariants from "+plans/invariants";
 import * as VO from "+plans/value-objects";
 
-export type PlanEventType = Events.PlanDraftCreatedEventType | Events.PlanSectionCreatedEventType;
+export type PlanEventType =
+  | Events.PlanDraftCreatedEventType
+  | Events.PlanSectionCreatedEventType
+  | Events.PlanSectionRemovedEventType;
 
 type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 
@@ -14,6 +17,7 @@ export class Plan {
   static readonly registry = new bg.EventValidatorRegistryAdapter<PlanEventType>({
     [Events.PLAN_DRAFT_CREATED_EVENT]: Events.PlanDraftCreatedEvent,
     [Events.PLAN_SECTION_CREATED_EVENT]: Events.PlanSectionCreatedEvent,
+    [Events.PLAN_SECTION_REMOVED_EVENT]: Events.PlanSectionRemovedEvent,
   });
   // Stryker restore all
 
@@ -80,6 +84,19 @@ export class Plan {
     this.record(event);
   }
 
+  removeSection(planSectionId: VO.PlanSectionIdType, ownerId: Auth.VO.UserIdType) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+
+    const event = bg.event(
+      Events.PlanSectionRemovedEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, planSectionId, ownerId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<PlanEventType> {
     const events = [...this.pending];
 
@@ -106,6 +123,12 @@ export class Plan {
       case Events.PLAN_SECTION_CREATED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections.push({ id: event.payload.planSectionId, name: event.payload.planSectionName });
+        break;
+      }
+
+      case Events.PLAN_SECTION_REMOVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.filter((section) => section.id !== event.payload.planSectionId);
         break;
       }
     }
