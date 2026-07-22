@@ -42,7 +42,7 @@ export class Plan {
     planName: VO.PlanNameType,
     ownerId: Auth.VO.UserIdType,
     deps: Dependencies,
-  ) {
+  ): Plan {
     const plan = new Plan(planId, deps);
 
     const PlanDraftCreatedEvent = bg.event(
