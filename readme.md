@@ -135,6 +135,8 @@ modules/
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
+│   ├── events
+│   │   └── PLAN_DRAFT_CREATED_EVENT.ts
 │   └── value-objects
 │       └── plan-id.ts
 ├── preferences
