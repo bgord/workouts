@@ -66,6 +66,7 @@ export class Plan {
     planSectionName: VO.PlanSectionNameType,
     ownerId: Auth.VO.UserIdType,
   ) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanSectionLimitForPlan.enforce({ count: tools.Int.nonNegative(this.sections.length) });
 
     const event = bg.event(

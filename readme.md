@@ -145,6 +145,7 @@ modules/
 │   │   ├── PLAN_DRAFT_CREATED_EVENT.ts
 │   │   └── PLAN_SECTION_CREATED_EVENT.ts
 │   ├── invariants
+│   │   ├── plan-is-editable.ts
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-is-unique-for-owner.ts
 │   │   └── plan-section-limit-for-plan.ts
