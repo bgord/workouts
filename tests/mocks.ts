@@ -6,8 +6,10 @@ import type { Session, User } from "better-auth";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Exercises from "+exercises";
+import * as Plans from "+plans";
 import { languages } from "+languages";
 import type * as Preferences from "+preferences";
+import { PlanetAlt } from "iconoir-react";
 
 // IDs
 export const correlationId = "00000000-0000-0000-0000-000000000000";
@@ -84,6 +86,9 @@ export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
   id: anotherExerciseCategoryId,
   name: anotherExerciseCategoryName,
 };
+
+export const planId = v.parse(Plans.VO.PlanId, "8d79bd87-1709-4c15-b40c-cd0fafaa0112");
+export const planName = v.parse(Plans.VO.PlanName, "PPL");
 
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
 
@@ -266,6 +271,16 @@ export const GenericExerciseCategoryUnassignedEvent = {
   name: "EXERCISE_CATEGORY_UNASSIGNED_EVENT",
   payload: { exerciseId, exerciseCategoryId },
 } satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
+
+export const GenericPlanDraftCreatedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_DRAFT_CREATED_EVENT",
+  payload: { id: planId, name: planName, ownerId: userId },
+} satisfies Plans.Events.PlanDraftCreatedEventType;
 
 export const user = {
   name: email,
