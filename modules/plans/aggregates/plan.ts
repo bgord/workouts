@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type * as Auth from "+auth";
 import * as Events from "+plans/events";
+import * as Invariants from "+plans/invariants";
 import type * as VO from "+plans/value-objects";
 
 export type PlanEventType = Events.PlanDraftCreatedEventType | Events.PlanSectionCreatedEventType;
@@ -20,6 +21,7 @@ export class Plan {
   public revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
   ownerId?: Auth.VO.UserIdType;
   name?: VO.PlanNameType;
+  sections: Array<VO.PlanSection> = [];
 
   private readonly pending: Array<PlanEventType> = [];
 
@@ -63,6 +65,8 @@ export class Plan {
     planSectionName: VO.PlanSectionNameType,
     ownerId: Auth.VO.UserIdType,
   ) {
+    Invariants.PlanSectionLimitForPlan.enforce({ count: tools.Int.nonNegative(this.sections.length) });
+
     const event = bg.event(
       Events.PlanSectionCreatedEvent,
       Plan.getStream(this.id),
@@ -92,6 +96,12 @@ export class Plan {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.name = event.payload.planName;
         this.ownerId = event.payload.ownerId;
+        break;
+      }
+
+      case Events.PLAN_SECTION_CREATED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections.push({ id: event.payload.planSectionId, name: event.payload.planSectionName });
         break;
       }
     }

@@ -146,7 +146,8 @@ modules/
 │   │   └── PLAN_SECTION_CREATED_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-limit-for-owner.ts
-│   │   └── plan-name-is-unique-for-owner.ts
+│   │   ├── plan-name-is-unique-for-owner.ts
+│   │   └── plan-section-limit-for-plan.ts
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
