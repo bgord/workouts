@@ -55,9 +55,31 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: "plan.name.invalid", _known: true });
   });
 
+  test("PlanLimitForOwner", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(2));
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ name: mocks.planName }) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.limit.for.owner");
+  });
+
   test("PlanNameIsUniqueForOwner", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(1));
@@ -71,11 +93,40 @@ describe(`POST ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "plan.name.is.unique.for.owner");
   });
 
-  test("happy path", async () => {
+  test("happy path - no plans", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planId);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdHeaders,
+        body: JSON.stringify({ name: mocks.planName }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanDraftCreatedEvent]);
+  });
+
+  test("happy path - one plan", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planId);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(1));
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));

@@ -89,6 +89,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommands.PLAN_DRAFT_CREATE_COMMAND,
     PlansCommandHandlers.handlePlanDraftCreateCommand({
       ...deps,
+      repo: Adapters.Plans.PlanRepository,
       GetPlanNameForOwnerCountQuery: Adapters.Plans.GetPlanNameForOwnerCountQuery,
       GetPlanForOwnerCountQuery: Adapters.Plans.GetPlanForOwnerCountQuery,
     }),

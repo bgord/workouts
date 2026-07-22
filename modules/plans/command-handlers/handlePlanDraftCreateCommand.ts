@@ -1,13 +1,13 @@
-import * as bg from "@bgord/bun";
+import type * as bg from "@bgord/bun";
 import type * as Plans from "+plans";
-import { PlanDraftCreatedEvent } from "../events/PLAN_DRAFT_CREATED_EVENT";
+import { Plan } from "../aggregates/plan";
 import { PlanLimitForOwner } from "../invariants/plan-limit-for-owner";
 import { PlanNameIsUniqueForOwner } from "../invariants/plan-name-is-unique-for-owner";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  EventStore: bg.EventStorePort<Plans.Events.PlanDraftCreatedEventType>;
+  repo: Plans.Ports.PlanRepositoryPort;
   GetPlanNameForOwnerCountQuery: Plans.Queries.GetPlanNameForOwnerCount;
   GetPlanForOwnerCountQuery: Plans.Queries.GetPlanForOwnerCount;
 };
@@ -25,12 +25,7 @@ export const handlePlanDraftCreateCommand =
 
     PlanNameIsUniqueForOwner.enforce({ count: planNameCount });
 
-    const event = bg.event(
-      PlanDraftCreatedEvent,
-      `plan_${command.payload.id}`,
-      { id: command.payload.id, name: command.payload.name, ownerId: command.payload.ownerId },
-      deps,
-    );
+    const plan = Plan.createDraft(command.payload.id, command.payload.name, command.payload.ownerId, deps);
 
-    await deps.EventStore.save([event]);
+    await deps.repo.save(plan);
   };
