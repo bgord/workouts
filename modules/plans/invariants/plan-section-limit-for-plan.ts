@@ -12,7 +12,7 @@ type PlanSectionLimitForPlanConfigType = { count: tools.IntegerNonNegativeType }
 
 class PlanSectionLimitForPlanFactory extends bg.Invariant<PlanSectionLimitForPlanConfigType> {
   passes(config: PlanSectionLimitForPlanConfigType) {
-    return config.count <= 4;
+    return config.count <= 5;
   }
 
   // Stryker disable next-line StringLiteral

@@ -68,6 +68,7 @@ export class Plan {
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanSectionLimitForPlan.enforce({ count: tools.Int.nonNegative(this.sections.length) });
+    Invariants.PlanSectionNameIsUniqueForPlan.enforce({ planSectionName, planSections: this.sections });
 
     const event = bg.event(
       Events.PlanSectionCreatedEvent,

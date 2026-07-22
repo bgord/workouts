@@ -44,15 +44,15 @@ describe("Plan", async () => {
   test("createSection - at the limit", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 4)],
+      [mocks.GenericPlanDraftCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)],
       di.Adapters.System,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId),
+      plan.createSection(mocks.anotherPlanSectionId, mocks.anotherPlanSectionName, mocks.userId),
     );
 
-    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCreatedEvent]);
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCreatedEventSecond]);
   });
 
   test("createSection - PlanIsEditable", async () => {
@@ -66,12 +66,24 @@ describe("Plan", async () => {
   test("createSection - PlanSectionLimitForPlan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)],
+      [mocks.GenericPlanDraftCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 6)],
       di.Adapters.System,
     );
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
       Plans.Invariants.PlanSectionLimitForPlan.error,
+    );
+  });
+
+  test("createSection - PlanSectionNameIsUniqueForPlan", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
+      Plans.Invariants.PlanSectionNameIsUniqueForPlan.error,
     );
   });
 });

@@ -92,6 +92,9 @@ export const planName = v.parse(Plans.VO.PlanName, "PPL");
 export const planSectionId = v.parse(Plans.VO.PlanSectionId, "8d79bd87-1709-4c15-b40c-cd0fafaa0111");
 export const planSectionName = v.parse(Plans.VO.PlanSectionName, "Push");
 
+export const anotherPlanSectionId = v.parse(Plans.VO.PlanSectionId, "8d79bd87-1709-4c15-b40c-cd0fafaa0110");
+export const anotherPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Push A");
+
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
 
 export const head = {
@@ -292,6 +295,21 @@ export const GenericPlanSectionCreatedEvent = {
   version: 1,
   name: "PLAN_SECTION_CREATED_EVENT",
   payload: { planId, planSectionId, planSectionName, ownerId: userId },
+} satisfies Plans.Events.PlanSectionCreatedEventType;
+
+export const GenericPlanSectionCreatedEventSecond = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_SECTION_CREATED_EVENT",
+  payload: {
+    planId,
+    planSectionId: anotherPlanSectionId,
+    planSectionName: anotherPlanSectionName,
+    ownerId: userId,
+  },
 } satisfies Plans.Events.PlanSectionCreatedEventType;
 
 export const user = {
