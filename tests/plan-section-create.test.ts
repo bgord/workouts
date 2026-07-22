@@ -75,6 +75,26 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanIsEditable", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ planSectionName: mocks.planSectionName }),
+        headers: mocks.revisionHeaders(1),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.belongs.to.user");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("PlanSectionLimitForPlan", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -96,7 +116,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan-section-limit-for-plan");
+    await testcases.assertInvariantError(response, 403, "plan.section.limit.for.plan");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

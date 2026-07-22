@@ -68,30 +68,32 @@ export class Plan {
   createSection(
     planSectionId: VO.PlanSectionIdType,
     planSectionName: VO.PlanSectionNameType,
-    ownerId: Auth.VO.UserIdType,
+    requesterId: Auth.VO.UserIdType,
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
     Invariants.PlanSectionLimitForPlan.enforce({ count: tools.Int.nonNegative(this.sections.length) });
     Invariants.PlanSectionNameIsUniqueForPlan.enforce({ planSectionName, planSections: this.sections });
 
     const event = bg.event(
       Events.PlanSectionCreatedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, planSectionName, ownerId },
+      { planId: this.id, planSectionId, planSectionName, ownerId: this.ownerId! },
       this.deps,
     );
 
     this.record(event);
   }
 
-  removeSection(planSectionId: VO.PlanSectionIdType, ownerId: Auth.VO.UserIdType) {
+  removeSection(planSectionId: VO.PlanSectionIdType, requesterId: Auth.VO.UserIdType) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
     Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
 
     const event = bg.event(
       Events.PlanSectionRemovedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, ownerId },
+      { planId: this.id, planSectionId, ownerId: this.ownerId! },
       this.deps,
     );
 

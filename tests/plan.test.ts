@@ -63,6 +63,18 @@ describe("Plan", async () => {
     );
   });
 
+  test("createSection - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.anotherUserId)).toThrow(
+      Plans.Invariants.PlanBelongsToUser.error,
+    );
+  });
+
   test("createSection - PlanSectionLimitForPlan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -106,6 +118,18 @@ describe("Plan", async () => {
 
     expect(() => plan.removeSection(mocks.planSectionId, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
+  test("removeSection - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.removeSection(mocks.planSectionId, mocks.anotherUserId)).toThrow(
+      Plans.Invariants.PlanBelongsToUser.error,
     );
   });
 

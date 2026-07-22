@@ -1,3 +1,4 @@
+export * from "./plan-belongs-to-user";
 export * from "./plan-is-editable";
 export * from "./plan-limit-for-owner";
 export * from "./plan-name-is-unique-for-owner";
