@@ -2,7 +2,7 @@ import * as tools from "@bgord/tools";
 import type * as Auth from "+auth";
 import type * as Plans from "+plans";
 
-class GetPlanNameForUserCountQueryDrizzle implements Plans.Queries.GetPlanNameForUserCount {
+class GetPlanNameForOwnerCountQueryDrizzle implements Plans.Queries.GetPlanNameForOwnerCount {
   async execute(
     _planName: Plans.VO.PlanNameType,
     _ownerId: Auth.VO.UserIdType,
@@ -11,4 +11,4 @@ class GetPlanNameForUserCountQueryDrizzle implements Plans.Queries.GetPlanNameFo
   }
 }
 
-export const GetPlanNameForUserCountQuery = new GetPlanNameForUserCountQueryDrizzle();
+export const GetPlanNameForOwnerCountQuery = new GetPlanNameForOwnerCountQueryDrizzle();

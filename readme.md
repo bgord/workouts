@@ -142,6 +142,7 @@ modules/
 │   ├── events
 │   │   └── PLAN_DRAFT_CREATED_EVENT.ts
 │   ├── invariants
+│   │   ├── plan-limit-for-owner.ts
 │   │   └── plan-name-is-unique-for-owner.ts
 │   ├── queries
 │   │   ├── get-plan-name-for-user-count.ts

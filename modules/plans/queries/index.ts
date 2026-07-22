@@ -1,1 +1,1 @@
-export * from "./get-plan-name-for-user-count";
+export * from "./get-plan-name-for-owner-count";

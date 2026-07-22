@@ -1,5 +1,5 @@
-import { GetPlanNameForUserCountQuery } from "./get-plan-name-for-user-count.adapter";
+import { GetPlanNameForOwnerCountQuery } from "./get-plan-name-for-user-count.adapter";
 
 export function createPlansAdapters() {
-  return { GetPlanNameForUserCountQuery };
+  return { GetPlanNameForOwnerCountQuery };
 }
