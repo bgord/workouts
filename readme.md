@@ -144,6 +144,8 @@ modules/
 │   ├── invariants
 │   │   ├── plan-limit-for-owner.ts
 │   │   └── plan-name-is-unique-for-owner.ts
+│   ├── ports
+│   │   └── plan-repository.ts
 │   ├── queries
 │   │   ├── get-plan-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
