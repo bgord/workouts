@@ -228,6 +228,7 @@ app/
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create-draft.ts
 │   │   ├── plan-finalize.ts
+│   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
 │   │   └── plan-section-remove.ts
 │   └── preferences

@@ -123,6 +123,7 @@ export class Plan {
   finalize(requesterId: Auth.VO.UserIdType) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
+    // Invariants.PlanHasNoEmptySections.enforce({ sections: this.sections })
 
     const event = bg.event(
       Events.PlanFinalizedEvent,
@@ -192,6 +193,12 @@ export class Plan {
       case Events.PLAN_FINALIZED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.finalized;
+        break;
+      }
+
+      case Events.PLAN_RESTORED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.status = VO.PlanStatusEnum.draft;
         break;
       }
     }

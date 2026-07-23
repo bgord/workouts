@@ -149,6 +149,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Plans.PlanFinalize(deps),
   );
+  plans.post(
+    "/:planId/restore",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Plans.PlanRestore(deps),
+  );
 
   server.route("/plans", plans);
 
