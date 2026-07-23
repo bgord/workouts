@@ -140,6 +140,7 @@ modules/
 │   │   ├── handlePlanDraftCreateCommand.ts
 │   │   ├── handlePlanEditingEnableCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
+│   │   ├── handlePlanRenameCommand.ts
 │   │   ├── handlePlanRestoreCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts

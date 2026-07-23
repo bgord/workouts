@@ -2,6 +2,7 @@ export * from "./handlePlanArchiveCommand";
 export * from "./handlePlanDraftCreateCommand";
 export * from "./handlePlanEditingEnableCommand";
 export * from "./handlePlanFinalizeCommand";
+export * from "./handlePlanRenameCommand";
 export * from "./handlePlanRestoreCommand";
 export * from "./handlePlanSectionCreateCommand";
 export * from "./handlePlanSectionRemoveCommand";
