@@ -298,6 +298,7 @@ infra/
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts
 │   ├── exercises.projector.ts
+│   ├── plan-sections.projector.ts
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts
 │   └── profile-avatars.projector.ts
