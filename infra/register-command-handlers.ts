@@ -118,6 +118,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommands.PLAN_RESTORE_COMMAND,
     PlansCommandHandlers.handlePlanRestoreCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_EDITING_ENABLE_COMMAND,
+    PlansCommandHandlers.handlePlanEditingEnableCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(

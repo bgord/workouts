@@ -138,6 +138,7 @@ modules/
 │   ├── command-handlers
 │   │   ├── handlePlanArchiveCommand.ts
 │   │   ├── handlePlanDraftCreateCommand.ts
+│   │   ├── handlePlanEditingEnableCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
 │   │   ├── handlePlanRestoreCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
@@ -165,6 +166,7 @@ modules/
 │   │   ├── plan-belongs-to-user.ts
 │   │   ├── plan-is-archivable.ts
 │   │   ├── plan-is-editable.ts
+│   │   ├── plan-is-finalized.ts
 │   │   ├── plan-is-restorable.ts
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-is-unique-for-owner.ts
