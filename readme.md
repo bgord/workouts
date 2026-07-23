@@ -234,6 +234,7 @@ app/
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create-draft.ts
+│   │   ├── plan-editing-enable.ts
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
