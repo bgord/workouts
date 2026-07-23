@@ -89,6 +89,8 @@ export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
 export const planId = v.parse(Plans.VO.PlanId, "8d79bd87-1709-4c15-b40c-cd0fafaa0112");
 export const planName = v.parse(Plans.VO.PlanName, "PPL");
 
+export const anotherPlanName = v.parse(Plans.VO.PlanName, "Push Pull Legs");
+
 export const planSectionId = v.parse(Plans.VO.PlanSectionId, "8d79bd87-1709-4c15-b40c-cd0fafaa0111");
 export const planSectionName = v.parse(Plans.VO.PlanSectionName, "Push");
 
@@ -371,6 +373,16 @@ export const GenericPlanEditingEnabledEvent = {
   name: "PLAN_EDITING_ENABLED_EVENT",
   payload: { planId, ownerId: userId },
 } satisfies Plans.Events.PlanEditingEnabledEventType;
+
+export const GenericPlanRenamedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_RENAMED_EVENT",
+  payload: { planId, planName: anotherPlanName, ownerId: userId },
+} satisfies Plans.Events.PlanRenamedEventType;
 
 export const user = {
   name: email,
