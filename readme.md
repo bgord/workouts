@@ -149,6 +149,7 @@ modules/
 │   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts
 │   │   ├── PLAN_EDITING_ENABLE_COMMAND.ts
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
+│   │   ├── PLAN_RENAME_COMMAND.ts
 │   │   ├── PLAN_RESTORE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
