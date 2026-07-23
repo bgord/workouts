@@ -168,3 +168,12 @@ export const plans = sqliteTable("plans", {
   createdAt: integer("createdAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });
+
+export const planSections = sqliteTable("planSections", {
+  id,
+  planId: text("planId", { length: 36 }).notNull(),
+  name: text("name").notNull(),
+  ownerId: text("ownerId", { length: 36 }).notNull(),
+  createdAt: integer("createdAt", { mode: "number" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+});
