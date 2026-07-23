@@ -143,8 +143,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Plans.PlanSectionRemove(deps),
   );
-  plans.delete(
-    "/:planId",
+  plans.post(
+    "/:planId/archive",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
     HTTP.Plans.PlanArchive(deps),
