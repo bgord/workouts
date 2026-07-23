@@ -9,14 +9,14 @@ import * as testcases from "./testcases";
 
 const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}`;
 
-describe(`POST ${url}`, async () => {
+describe(`DELETE ${url}`, async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
   const server = createServer(di);
 
   test("validation - AccessDeniedAuthShieldError", async () => {
-    const response = await server.request(url, { method: "POST" }, mocks.ip);
+    const response = await server.request(url, { method: "DELETE" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(403);
@@ -28,7 +28,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       `/api/plans/id/section/${mocks.planSectionId}`,
-      { method: "POST" },
+      { method: "DELETE" },
       mocks.ip,
     );
     const json = await response.json();
@@ -42,7 +42,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       `/api/plans/${mocks.planId}/section/id`,
-      { method: "POST" },
+      { method: "DELETE" },
       mocks.ip,
     );
     const json = await response.json();
@@ -59,7 +59,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders() },
+      { method: "DELETE", headers: mocks.revisionHeaders() },
       mocks.ip,
     );
 
@@ -77,7 +77,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders(2) },
+      { method: "DELETE", headers: mocks.revisionHeaders(2) },
       mocks.ip,
     );
 
@@ -95,7 +95,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders(2) },
+      { method: "DELETE", headers: mocks.revisionHeaders(2) },
       mocks.ip,
     );
 
@@ -111,7 +111,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders(1) },
+      { method: "DELETE", headers: mocks.revisionHeaders(1) },
       mocks.ip,
     );
 
@@ -127,7 +127,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(1) },
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(1) },
       mocks.ip,
     );
 
@@ -148,7 +148,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(2) },
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(2) },
       mocks.ip,
     );
 

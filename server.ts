@@ -137,7 +137,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Plans.PlanSectionRename(deps),
   );
-  plans.post(
+  plans.delete(
     "/:planId/section/:planSectionId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
