@@ -159,6 +159,7 @@ modules/
 │   │   ├── plan-belongs-to-user.ts
 │   │   ├── plan-is-archivable.ts
 │   │   ├── plan-is-editable.ts
+│   │   ├── plan-is-restorable.ts
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-is-unique-for-owner.ts
 │   │   ├── plan-section-exists.ts
