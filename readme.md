@@ -155,6 +155,7 @@ modules/
 │   │   └── PLAN_SECTION_REMOVED_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-belongs-to-user.ts
+│   │   ├── plan-is-archivable.ts
 │   │   ├── plan-is-editable.ts
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-is-unique-for-owner.ts

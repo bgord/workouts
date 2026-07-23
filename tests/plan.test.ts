@@ -193,7 +193,7 @@ describe("Plan", async () => {
     );
   });
 
-  test("archive", async () => {
+  test("archive - draft", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanDraftCreatedEvent],
@@ -205,30 +205,32 @@ describe("Plan", async () => {
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanArchivedEvent]);
   });
 
-  test("archive - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
-
-    expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
-  });
-
-  test("archive - PlanIsEditable - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
-    );
-
-    expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
-  });
-
-  test("archive - PlanIsEditable - finalized", async () => {
+  test("archive - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
-    expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
+    await bg.CorrelationStorage.run(mocks.correlationId, () => plan.archive(mocks.userId));
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanArchivedEvent]);
+  });
+
+  test("archive - PlanIsArchivable - initial", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+
+    expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsArchivable.error);
+  });
+
+  test("archive - PlanIsArchivable - archived", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsArchivable.error);
   });
 
   test("archive - PlanBelongsToUser", async () => {

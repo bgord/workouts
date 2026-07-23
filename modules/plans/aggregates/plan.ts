@@ -105,7 +105,7 @@ export class Plan {
   }
 
   archive(requesterId: Auth.VO.UserIdType) {
-    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanIsArchivable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
 
     const event = bg.event(

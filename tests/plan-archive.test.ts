@@ -37,7 +37,7 @@ describe(`DELETE ${url}`, async () => {
     expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
-  test("PlanIsEditable - initial", async () => {
+  test("PlanIsArchivable - initial", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -49,11 +49,11 @@ describe(`DELETE ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    await testcases.assertInvariantError(response, 403, "plan.is.archivable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("PlanIsEditable - archived", async () => {
+  test("PlanIsArchivable - archived", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -67,25 +67,7 @@ describe(`DELETE ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
-  test("PlanIsEditable - finalized", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent]);
-
-    const response = await server.request(
-      url,
-      { method: "DELETE", headers: mocks.revisionHeaders(2) },
-      mocks.ip,
-    );
-
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    await testcases.assertInvariantError(response, 403, "plan.is.archivable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -105,7 +87,26 @@ describe(`DELETE ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("happy path", async () => {
+  test("happy path - initial", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.anotherPlanSectionId);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(1) },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanArchivedEvent]);
+  });
+
+  test("happy path - finalized", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -114,7 +115,7 @@ describe(`DELETE ${url}`, async () => {
       .mockReturnValueOnce(mocks.anotherPlanSectionId);
     spies
       .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent]);
+      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent]);
 
     const response = await server.request(
       url,
