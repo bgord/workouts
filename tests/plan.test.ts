@@ -468,4 +468,74 @@ describe("Plan", async () => {
 
     expect(() => plan.enableEditing(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
+
+  test("rename", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.rename(mocks.anotherPlanName, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanRenamedEvent]);
+  });
+
+  test("rename - PlanIsEditable - initial", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+
+    expect(() => plan.rename(mocks.anotherPlanName, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
+  test("rename - PlanIsEditable - archived", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.rename(mocks.anotherPlanName, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
+  test("rename - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.rename(mocks.anotherPlanName, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
+  test("rename - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.rename(mocks.anotherPlanName, mocks.anotherUserId)).toThrow(
+      Plans.Invariants.PlanBelongsToUser.error,
+    );
+  });
+
+  test("rename - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanDraftCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() => plan.rename(mocks.planName, mocks.userId)).toThrow(
+      Plans.Invariants.PlanNameHasChanged.error,
+    );
+  });
 });

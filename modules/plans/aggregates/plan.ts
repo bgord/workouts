@@ -13,7 +13,8 @@ export type PlanEventType =
   | Events.PlanArchivedEventType
   | Events.PlanFinalizedEventType
   | Events.PlanRestoredEventType
-  | Events.PlanEditingEnabledEventType;
+  | Events.PlanEditingEnabledEventType
+  | Events.PlanRenamedEventType;
 
 type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 
@@ -28,6 +29,7 @@ export class Plan {
     [Events.PLAN_FINALIZED_EVENT]: Events.PlanFinalizedEvent,
     [Events.PLAN_RESTORED_EVENT]: Events.PlanRestoredEvent,
     [Events.PLAN_EDITING_ENABLED_EVENT]: Events.PlanEditingEnabledEvent,
+    [Events.PLAN_RENAMED_EVENT]: Events.PlanRenamedEvent,
   });
   // Stryker restore all
 
@@ -187,6 +189,21 @@ export class Plan {
     this.record(event);
   }
 
+  rename(planName: VO.PlanNameType, requesterId: Auth.VO.UserIdType) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
+    Invariants.PlanNameHasChanged.enforce({ current: this.name!, incoming: planName });
+
+    const event = bg.event(
+      Events.PlanRenamedEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, planName, ownerId: this.ownerId! },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<PlanEventType> {
     const events = [...this.pending];
 
@@ -253,6 +270,12 @@ export class Plan {
       case Events.PLAN_EDITING_ENABLED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.draft;
+        break;
+      }
+
+      case Events.PLAN_RENAMED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.name = event.payload.planName;
         break;
       }
     }
