@@ -4,6 +4,7 @@ export * from "./plan-is-editable";
 export * from "./plan-is-finalized";
 export * from "./plan-is-restorable";
 export * from "./plan-limit-for-owner";
+export * from "./plan-name-has-changed";
 export * from "./plan-name-is-unique-for-owner";
 export * from "./plan-section-exists";
 export * from "./plan-section-limit-for-plan";
