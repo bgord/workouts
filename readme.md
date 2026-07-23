@@ -240,6 +240,7 @@ app/
 │   │   ├── plan-create-draft.ts
 │   │   ├── plan-editing-enable.ts
 │   │   ├── plan-finalize.ts
+│   │   ├── plan-rename.ts
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-remove.ts

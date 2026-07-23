@@ -527,7 +527,7 @@ describe("Plan", async () => {
     );
   });
 
-  test("rename - PlanBelongsToUser", async () => {
+  test("rename - PlanNameHasChanged", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanDraftCreatedEvent],

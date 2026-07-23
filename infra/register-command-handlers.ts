@@ -124,7 +124,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   );
   Tools.CommandBus.on(
     PlansCommands.PLAN_RENAME_COMMAND,
-    PlansCommandHandlers.handlePlanRenameCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+    PlansCommandHandlers.handlePlanRenameCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+      GetPlanNameForOwnerCountQuery: Adapters.Plans.GetPlanNameForOwnerCountQuery,
+    }),
   );
 
   // Preferences ============================================================

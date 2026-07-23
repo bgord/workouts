@@ -167,6 +167,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Plans.PlanEditingEnable(deps),
   );
+  plans.post(
+    "/:planId/rename",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Plans.PlanRename(deps),
+  );
 
   server.route("/plans", plans);
 
