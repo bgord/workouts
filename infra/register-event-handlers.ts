@@ -14,6 +14,7 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
   new Projections.ExercisesProjector(deps);
   new Projections.ExerciseCategoriesProjector(deps);
   new Projections.ExerciseCategoryAssignmentsProjector(deps);
+  new Projections.PlansProjector(deps);
 
   // Policies
   new Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
