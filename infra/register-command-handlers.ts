@@ -99,6 +99,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionCreateCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );
   Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_RENAME_COMMAND,
+    PlansCommandHandlers.handlePlanSectionRenameCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+  );
+  Tools.CommandBus.on(
     PlansCommands.PLAN_SECTION_REMOVE_COMMAND,
     PlansCommandHandlers.handlePlanSectionRemoveCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );

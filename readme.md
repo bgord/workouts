@@ -142,6 +142,7 @@ modules/
 │   │   ├── handlePlanRestoreCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
+│   │   ├── handlePlanSectionRenameCommand.ts
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts

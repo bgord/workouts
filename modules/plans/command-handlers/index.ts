@@ -4,3 +4,4 @@ export * from "./handlePlanFinalizeCommand";
 export * from "./handlePlanRestoreCommand";
 export * from "./handlePlanSectionCreateCommand";
 export * from "./handlePlanSectionRemoveCommand";
+export * from "./handlePlanSectionRenameCommand";
