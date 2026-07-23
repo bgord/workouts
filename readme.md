@@ -148,7 +148,8 @@ modules/
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
 │   │   ├── PLAN_RESTORE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
-│   │   └── PLAN_SECTION_REMOVE_COMMAND.ts
+│   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
+│   │   └── PLAN_SECTION_RENAME_COMMAND.ts
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
 │   │   ├── PLAN_DRAFT_CREATED_EVENT.ts

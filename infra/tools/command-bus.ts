@@ -18,6 +18,7 @@ type AcceptedCommand =
   | PlansCommands.PlanDraftCreateCommandType
   | PlansCommands.PlanSectionCreateCommandType
   | PlansCommands.PlanSectionRemoveCommandType
+  | PlansCommands.PlanSectionRenameCommandType
   | PlansCommands.PlanArchiveCommandType
   | PlansCommands.PlanFinalizeCommandType
   | PlansCommands.PlanRestoreCommandType
