@@ -155,7 +155,8 @@ modules/
 │   │   ├── PLAN_FINALIZED_EVENT.ts
 │   │   ├── PLAN_RESTORED_EVENT.ts
 │   │   ├── PLAN_SECTION_CREATED_EVENT.ts
-│   │   └── PLAN_SECTION_REMOVED_EVENT.ts
+│   │   ├── PLAN_SECTION_REMOVED_EVENT.ts
+│   │   └── PLAN_SECTION_RENAMED_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-belongs-to-user.ts
 │   │   ├── plan-is-archivable.ts

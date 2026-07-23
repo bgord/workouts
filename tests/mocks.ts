@@ -322,6 +322,16 @@ export const GenericPlanSectionRemovedEvent = {
   payload: { planId, planSectionId, ownerId: userId },
 } satisfies Plans.Events.PlanSectionRemovedEventType;
 
+export const GenericPlanSectionRenamedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_SECTION_RENAMED_EVENT",
+  payload: { planSectionId, planSectionName: anotherPlanSectionName },
+} satisfies Plans.Events.PlanSectionRenamedEventType;
+
 export const GenericPlanArchivedEvent = {
   id: expectAnyId,
   correlationId,
