@@ -1,18 +1,25 @@
 /* cSpell:disable */
 import { relations, sql } from "drizzle-orm";
 import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import { SupportedLanguages } from "../modules/supported-languages";
 
 const id = text("id", { length: 36 })
   .primaryKey()
   .$defaultFn(() => crypto.randomUUID());
 
+const toEnumList = (value: Record<string, string>) => ({
+  enum: Object.keys(value) as [string, ...ReadonlyArray<string>],
+});
+
 export const events = sqliteTable(
   "events",
   {
     id,
     correlationId: text("correlationId").notNull(),
-    createdAt: integer("createdAt").default(sql`now`).notNull(),
+    createdAt: integer("createdAt")
+      .default(sql`now`)
+      .notNull(),
     name: text("name").notNull(),
     stream: text("stream").notNull(),
     version: integer("version").notNull(),
@@ -154,3 +161,12 @@ export const exerciseCategoryAssignments = sqliteTable(
   },
   (table) => [primaryKey({ columns: [table.exerciseId, table.exerciseCategoryId] })],
 );
+
+export const plans = sqliteTable("plans", {
+  id,
+  name: text("name").notNull(),
+  status: text("kind", toEnumList(PlanStatusEnum)).notNull(),
+  ownerId: text("ownerId", { length: 36 }).notNull(),
+  createdAt: integer("createdAt", { mode: "number" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+});
