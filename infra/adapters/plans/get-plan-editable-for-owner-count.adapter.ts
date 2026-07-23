@@ -1,10 +1,18 @@
 import * as tools from "@bgord/tools";
+import { and, eq, not } from "drizzle-orm";
 import type * as Auth from "+auth";
-import type * as Plans from "+plans";
+import * as Plans from "+plans";
+import { db } from "+infra/db";
+import * as Schema from "+infra/schema";
 
 class GetPlanEditableForOwnerCountQueryDrizzle implements Plans.Queries.GetPlanEditableForOwnerCount {
-  async execute(_ownerId: Auth.VO.UserIdType): Promise<tools.IntegerNonNegativeType> {
-    return tools.Int.nonNegative(0);
+  async execute(ownerId: Auth.VO.UserIdType): Promise<tools.IntegerNonNegativeType> {
+    const count = await db.$count(
+      Schema.plans,
+      and(eq(Schema.plans.name, ownerId), not(eq(Schema.plans.status, Plans.VO.PlanStatusEnum.archived))),
+    );
+
+    return tools.Int.nonNegative(count);
   }
 }
 
