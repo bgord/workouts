@@ -6,7 +6,9 @@ import * as Schema from "+infra/schema";
 
 type Dependencies = {
   EventBus: bg.EventBusPort<
-    Plans.Events.PlanSectionCreatedEventType | Plans.Events.PlanSectionRemovedEventType
+    | Plans.Events.PlanSectionCreatedEventType
+    | Plans.Events.PlanSectionRemovedEventType
+    | Plans.Events.PlanSectionRenamedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -20,6 +22,10 @@ export class PlanSectionsProjector {
     deps.EventBus.on(
       Plans.Events.PLAN_SECTION_REMOVED_EVENT,
       deps.EventHandler.handle(this.onPlanSectionRemovedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Plans.Events.PLAN_SECTION_RENAMED_EVENT,
+      deps.EventHandler.handle(this.onPlanSectionRenamedEvent.bind(this)),
     );
   }
 
@@ -44,5 +50,12 @@ export class PlanSectionsProjector {
           eq(Schema.planSections.ownerId, event.payload.ownerId),
         ),
       );
+  }
+
+  async onPlanSectionRenamedEvent(event: Plans.Events.PlanSectionRenamedEventType) {
+    await db
+      .update(Schema.planSections)
+      .set({ name: event.payload.planSectionName })
+      .where(eq(Schema.planSections.id, event.payload.planSectionId));
   }
 }

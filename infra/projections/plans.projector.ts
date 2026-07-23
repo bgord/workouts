@@ -27,6 +27,14 @@ export class PlansProjector {
       Plans.Events.PLAN_FINALIZED_EVENT,
       deps.EventHandler.handle(this.onPlanFinalizedEvent.bind(this)),
     );
+    deps.EventBus.on(
+      Plans.Events.PLAN_EDITING_ENABLED_EVENT,
+      deps.EventHandler.handle(this.onPlanEditingEnabledEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Plans.Events.PLAN_RENAMED_EVENT,
+      deps.EventHandler.handle(this.onPlanRenamedEvent.bind(this)),
+    );
   }
 
   async onPlanDraftCreatedEvent(event: Plans.Events.PlanDraftCreatedEventType) {
@@ -58,6 +66,20 @@ export class PlansProjector {
     await db
       .update(Schema.plans)
       .set({ updatedAt: event.createdAt, status: Plans.VO.PlanStatusEnum.finalized })
+      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
+  }
+
+  async onPlanEditingEnabledEvent(event: Plans.Events.PlanEditingEnabledEventType) {
+    await db
+      .update(Schema.plans)
+      .set({ updatedAt: event.createdAt, status: Plans.VO.PlanStatusEnum.draft })
+      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
+  }
+
+  async onPlanRenamedEvent(event: Plans.Events.PlanRenamedEventType) {
+    await db
+      .update(Schema.plans)
+      .set({ updatedAt: event.createdAt, name: event.payload.planName })
       .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
   }
 }
