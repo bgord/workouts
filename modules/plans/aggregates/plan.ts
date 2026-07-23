@@ -10,7 +10,8 @@ export type PlanEventType =
   | Events.PlanSectionCreatedEventType
   | Events.PlanSectionRemovedEventType
   | Events.PlanArchivedEventType
-  | Events.PlanFinalizedEventType;
+  | Events.PlanFinalizedEventType
+  | Events.PlanRestoredEventType;
 
 type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 
@@ -22,6 +23,7 @@ export class Plan {
     [Events.PLAN_SECTION_REMOVED_EVENT]: Events.PlanSectionRemovedEvent,
     [Events.PLAN_ARCHIVED_EVENT]: Events.PlanArchivedEvent,
     [Events.PLAN_FINALIZED_EVENT]: Events.PlanFinalizedEvent,
+    [Events.PLAN_RESTORED_EVENT]: Events.PlanRestoredEvent,
   });
   // Stryker restore all
 
@@ -124,6 +126,20 @@ export class Plan {
 
     const event = bg.event(
       Events.PlanFinalizedEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, ownerId: this.ownerId! },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
+  restore(requesterId: Auth.VO.UserIdType) {
+    Invariants.PlanIsRestorable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
+
+    const event = bg.event(
+      Events.PlanRestoredEvent,
       Plan.getStream(this.id),
       { planId: this.id, ownerId: this.ownerId! },
       this.deps,
