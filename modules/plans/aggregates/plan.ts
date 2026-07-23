@@ -9,6 +9,7 @@ export type PlanEventType =
   | Events.PlanDraftCreatedEventType
   | Events.PlanSectionCreatedEventType
   | Events.PlanSectionRemovedEventType
+  | Events.PlanSectionRenamedEventType
   | Events.PlanArchivedEventType
   | Events.PlanFinalizedEventType
   | Events.PlanRestoredEventType;
@@ -21,6 +22,7 @@ export class Plan {
     [Events.PLAN_DRAFT_CREATED_EVENT]: Events.PlanDraftCreatedEvent,
     [Events.PLAN_SECTION_CREATED_EVENT]: Events.PlanSectionCreatedEvent,
     [Events.PLAN_SECTION_REMOVED_EVENT]: Events.PlanSectionRemovedEvent,
+    [Events.PLAN_SECTION_RENAMED_EVENT]: Events.PlanSectionRenamedEvent,
     [Events.PLAN_ARCHIVED_EVENT]: Events.PlanArchivedEvent,
     [Events.PLAN_FINALIZED_EVENT]: Events.PlanFinalizedEvent,
     [Events.PLAN_RESTORED_EVENT]: Events.PlanRestoredEvent,
@@ -100,6 +102,26 @@ export class Plan {
       Events.PlanSectionRemovedEvent,
       Plan.getStream(this.id),
       { planId: this.id, planSectionId, ownerId: this.ownerId! },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
+  renameSection(
+    planSectionId: VO.PlanSectionIdType,
+    planSectionName: VO.PlanSectionNameType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
+    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
+    Invariants.PlanSectionNameIsUniqueForPlan.enforce({ planSectionName, planSections: this.sections });
+
+    const event = bg.event(
+      Events.PlanSectionRenamedEvent,
+      Plan.getStream(this.id),
+      { planSectionId, planSectionName },
       this.deps,
     );
 
