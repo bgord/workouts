@@ -146,6 +146,7 @@ modules/
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts
+│   │   ├── PLAN_EDITING_ENABLE_COMMAND.ts
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
 │   │   ├── PLAN_RESTORE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
