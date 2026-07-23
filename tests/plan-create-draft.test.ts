@@ -59,7 +59,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
     spies
-      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(2));
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
@@ -78,7 +78,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
     spies
-      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
@@ -99,7 +99,7 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planId);
     spies
-      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
@@ -125,7 +125,7 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planId);
     spies
-      .use(spyOn(di.Adapters.Plans.GetPlanForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(1));
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))

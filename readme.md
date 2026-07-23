@@ -166,7 +166,7 @@ modules/
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
-│   │   ├── get-plan-for-owner-count.ts
+│   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
 │   └── value-objects
 │       ├── plan-id.ts
@@ -255,7 +255,7 @@ infra/
 │   │   └── search-exercises.adapter.ts
 │   ├── history
 │   ├── plans
-│   │   ├── get-plan-for-owner-count.adapter.ts
+│   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-user-count.adapter.ts
 │   │   └── plan-repository.adapter.ts
 │   ├── preferences

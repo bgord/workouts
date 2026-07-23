@@ -9,12 +9,12 @@ type Dependencies = {
   Clock: bg.ClockPort;
   repo: Plans.Ports.PlanRepositoryPort;
   GetPlanNameForOwnerCountQuery: Plans.Queries.GetPlanNameForOwnerCount;
-  GetPlanForOwnerCountQuery: Plans.Queries.GetPlanForOwnerCount;
+  GetPlanEditableForOwnerCountQuery: Plans.Queries.GetPlanEditableForOwnerCount;
 };
 
 export const handlePlanDraftCreateCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanDraftCreateCommandType) => {
-    const planCount = await deps.GetPlanForOwnerCountQuery.execute(command.payload.ownerId);
+    const planCount = await deps.GetPlanEditableForOwnerCountQuery.execute(command.payload.ownerId);
 
     PlanLimitForOwner.enforce({ count: planCount });
 

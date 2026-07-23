@@ -91,7 +91,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       ...deps,
       repo: Adapters.Plans.PlanRepository,
       GetPlanNameForOwnerCountQuery: Adapters.Plans.GetPlanNameForOwnerCountQuery,
-      GetPlanForOwnerCountQuery: Adapters.Plans.GetPlanForOwnerCountQuery,
+      GetPlanEditableForOwnerCountQuery: Adapters.Plans.GetPlanEditableForOwnerCountQuery,
     }),
   );
   Tools.CommandBus.on(
