@@ -110,6 +110,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommands.PLAN_FINALIZE_COMMAND,
     PlansCommandHandlers.handlePlanFinalizeCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_RESTORE_COMMAND,
+    PlansCommandHandlers.handlePlanRestoreCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(

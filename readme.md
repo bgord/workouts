@@ -139,6 +139,7 @@ modules/
 │   │   ├── handlePlanArchiveCommand.ts
 │   │   ├── handlePlanDraftCreateCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
+│   │   ├── handlePlanRestoreCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
 │   ├── commands
