@@ -7,3 +7,4 @@ export * from "./plan-name-is-unique-for-owner";
 export * from "./plan-section-exists";
 export * from "./plan-section-limit-for-plan";
 export * from "./plan-section-name-is-unique-for-plan";
+export * from "./plan-is-finalized";
