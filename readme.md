@@ -233,7 +233,8 @@ app/
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
-│   │   └── plan-section-remove.ts
+│   │   ├── plan-section-remove.ts
+│   │   └── plan-section-rename.ts
 │   └── preferences
 │       ├── get-profile-avatar.ts
 │       ├── remove-profile-avatar.ts

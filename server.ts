@@ -132,6 +132,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     HTTP.Plans.PlanSectionCreate(deps),
   );
   plans.post(
+    "/:planId/section/:planSectionId/rename",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Plans.PlanSectionRename(deps),
+  );
+  plans.post(
     "/:planId/section/:planSectionId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
