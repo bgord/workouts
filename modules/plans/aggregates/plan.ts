@@ -200,6 +200,16 @@ export class Plan {
         break;
       }
 
+      case Events.PLAN_SECTION_RENAMED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.map((section) =>
+          section.id === event.payload.planSectionId
+            ? { ...section, name: event.payload.planSectionName }
+            : section,
+        );
+        break;
+      }
+
       case Events.PLAN_SECTION_REMOVED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.filter((section) => section.id !== event.payload.planSectionId);

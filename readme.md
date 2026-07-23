@@ -154,6 +154,7 @@ modules/
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
 │   │   ├── PLAN_DRAFT_CREATED_EVENT.ts
+│   │   ├── PLAN_EDITING_ENABLED_EVENT.ts
 │   │   ├── PLAN_FINALIZED_EVENT.ts
 │   │   ├── PLAN_RESTORED_EVENT.ts
 │   │   ├── PLAN_SECTION_CREATED_EVENT.ts
