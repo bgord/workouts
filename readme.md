@@ -188,7 +188,9 @@ modules/
 │       ├── plan-section-id.ts
 │       ├── plan-section-name.ts
 │       ├── plan-section.ts
-│       └── plan-status.ts
+│       ├── plan-status.ts
+│       ├── reps.ts
+│       └── sets.ts
 ├── preferences
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
