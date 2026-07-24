@@ -97,6 +97,21 @@ export const planSectionName = v.parse(Plans.VO.PlanSectionName, "Push");
 export const anotherPlanSectionId = v.parse(Plans.VO.PlanSectionId, "8d79bd87-1709-4c15-b40c-cd0fafaa0110");
 export const anotherPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Push A");
 
+export const exerciseInstructionId = v.parse(
+  Plans.VO.ExerciseInstructionId,
+  "8d79bd87-1709-4c15-b40c-cd0fafaa0109",
+);
+
+export const reps = v.parse(Plans.VO.Reps, { min: 8, max: 12 });
+export const sets = v.parse(Plans.VO.Sets, 3);
+
+export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId,
+  reps,
+  sets,
+};
+
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
 
 export const head = {
@@ -383,6 +398,16 @@ export const GenericPlanRenamedEvent = {
   name: "PLAN_RENAMED_EVENT",
   payload: { planId, planName: anotherPlanName, ownerId: userId },
 } satisfies Plans.Events.PlanRenamedEventType;
+
+export const GenericPlanExerciseInstructionAddedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  payload: { planId, planSectionId, exerciseInstruction, ownerId: userId },
+} satisfies Plans.Events.PlanExerciseInstructionAddedEventType;
 
 export const user = {
   name: email,

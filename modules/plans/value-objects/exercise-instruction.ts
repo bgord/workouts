@@ -8,7 +8,7 @@ export const ExerciseInstruction = v.object({
   id: ExerciseInstructionId,
   exerciseId: Exercises.VO.ExerciseId,
   sets: Sets,
-  reps: v.object({ min: Reps, max: Reps }),
+  reps: Reps,
 });
 
 export type ExerciseInstructionType = v.InferOutput<typeof ExerciseInstruction>;
