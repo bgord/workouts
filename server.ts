@@ -120,10 +120,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   plans.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
 
   plans.post(
-    "/draft",
+    "/create",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanCreateDraft(deps),
+    HTTP.Plans.PlanCreate(deps),
   );
   plans.post(
     "/:planId/section",

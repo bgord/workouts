@@ -15,7 +15,7 @@ type AcceptedCommand =
   | ExercisesCommands.ExerciseCategoryRenameCommandType
   | ExercisesCommands.ExerciseAssignCategoryCommandType
   | ExercisesCommands.ExerciseUnassignCategoryCommandType
-  | PlansCommands.PlanDraftCreateCommandType
+  | PlansCommands.PlanCreateCommandType
   | PlansCommands.PlanSectionCreateCommandType
   | PlansCommands.PlanSectionRemoveCommandType
   | PlansCommands.PlanSectionRenameCommandType

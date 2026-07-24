@@ -59,7 +59,7 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent]);
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
 
     const response = await server.request(
       url,
@@ -75,7 +75,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
 
     const response = await server.request(
       url,
@@ -94,7 +94,7 @@ describe(`POST ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.System.IdProvider, "generate"))
       .mockReturnValueOnce(mocks.anotherPlanSectionId);
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
 
     const response = await server.request(
       url,
@@ -115,7 +115,7 @@ describe(`POST ${url}`, async () => {
       .mockReturnValueOnce(mocks.anotherPlanSectionId);
     spies
       .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
 
     const response = await server.request(
       url,

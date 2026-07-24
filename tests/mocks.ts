@@ -279,15 +279,15 @@ export const GenericExerciseCategoryUnassignedEvent = {
   payload: { exerciseId, exerciseCategoryId },
 } satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
 
-export const GenericPlanDraftCreatedEvent = {
+export const GenericPlanCreatedEvent = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
-  name: "PLAN_DRAFT_CREATED_EVENT",
+  name: "PLAN_CREATED_EVENT",
   payload: { planId, planName, ownerId: userId },
-} satisfies Plans.Events.PlanDraftCreatedEventType;
+} satisfies Plans.Events.PlanCreatedEventType;
 
 export const GenericPlanSectionCreatedEvent = {
   id: expectAnyId,

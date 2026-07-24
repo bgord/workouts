@@ -6,7 +6,7 @@ import * as Invariants from "+plans/invariants";
 import * as VO from "+plans/value-objects";
 
 export type PlanEventType =
-  | Events.PlanDraftCreatedEventType
+  | Events.PlanCreatedEventType
   | Events.PlanSectionCreatedEventType
   | Events.PlanSectionRemovedEventType
   | Events.PlanSectionRenamedEventType
@@ -21,7 +21,7 @@ type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 export class Plan {
   // Stryker disable all
   static readonly registry = new bg.EventValidatorRegistryAdapter<PlanEventType>({
-    [Events.PLAN_DRAFT_CREATED_EVENT]: Events.PlanDraftCreatedEvent,
+    [Events.PLAN_CREATED_EVENT]: Events.PlanCreatedEvent,
     [Events.PLAN_SECTION_CREATED_EVENT]: Events.PlanSectionCreatedEvent,
     [Events.PLAN_SECTION_REMOVED_EVENT]: Events.PlanSectionRemovedEvent,
     [Events.PLAN_SECTION_RENAMED_EVENT]: Events.PlanSectionRenamedEvent,
@@ -57,7 +57,7 @@ export class Plan {
     return plan;
   }
 
-  static createDraft(
+  static create(
     planId: VO.PlanIdType,
     planName: VO.PlanNameType,
     ownerId: Auth.VO.UserIdType,
@@ -65,14 +65,14 @@ export class Plan {
   ): Plan {
     const plan = new Plan(planId, deps);
 
-    const PlanDraftCreatedEvent = bg.event(
-      Events.PlanDraftCreatedEvent,
+    const PlanCreatedEvent = bg.event(
+      Events.PlanCreatedEvent,
       Plan.getStream(planId),
       { planId, planName, ownerId },
       deps,
     );
 
-    plan.record(PlanDraftCreatedEvent);
+    plan.record(PlanCreatedEvent);
 
     return plan;
   }
@@ -219,7 +219,7 @@ export class Plan {
 
   private apply(event: PlanEventType): void {
     switch (event.name) {
-      case Events.PLAN_DRAFT_CREATED_EVENT: {
+      case Events.PLAN_CREATED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.draft;
         this.name = event.payload.planName;

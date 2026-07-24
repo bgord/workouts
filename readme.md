@@ -137,7 +137,7 @@ modules/
 │   │   └── plan.ts
 │   ├── command-handlers
 │   │   ├── handlePlanArchiveCommand.ts
-│   │   ├── handlePlanDraftCreateCommand.ts
+│   │   ├── handlePlanCreateCommand.ts
 │   │   ├── handlePlanEditingEnableCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
 │   │   ├── handlePlanRenameCommand.ts
@@ -147,7 +147,7 @@ modules/
 │   │   ├── handlePlanSectionRenameCommand.ts
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
-│   │   ├── PLAN_DRAFT_CREATE_COMMAND.ts
+│   │   ├── PLAN_CREATE_COMMAND.ts
 │   │   ├── PLAN_EDITING_ENABLE_COMMAND.ts
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
 │   │   ├── PLAN_RENAME_COMMAND.ts
@@ -157,7 +157,7 @@ modules/
 │   │   └── PLAN_SECTION_RENAME_COMMAND.ts
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
-│   │   ├── PLAN_DRAFT_CREATED_EVENT.ts
+│   │   ├── PLAN_CREATED_EVENT.ts
 │   │   ├── PLAN_EDITING_ENABLED_EVENT.ts
 │   │   ├── PLAN_FINALIZED_EVENT.ts
 │   │   ├── PLAN_RENAMED_EVENT.ts
@@ -237,7 +237,7 @@ app/
 │   │   ├── exercise-update.ts
 │   ├── plans
 │   │   ├── plan-archive.ts
-│   │   ├── plan-create-draft.ts
+│   │   ├── plan-create.ts
 │   │   ├── plan-editing-enable.ts
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-rename.ts

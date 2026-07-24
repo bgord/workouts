@@ -8,7 +8,7 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = "/api/plans/draft";
+const url = "/api/plans/create";
 
 describe(`POST ${url}`, async () => {
   const di = await bootstrap();
@@ -116,7 +116,7 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanDraftCreatedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanCreatedEvent]);
   });
 
   test("happy path - one plan", async () => {
@@ -142,6 +142,6 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanDraftCreatedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanCreatedEvent]);
   });
 });

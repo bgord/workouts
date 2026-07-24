@@ -131,7 +131,7 @@ describe(`POST ${url}`, async () => {
       .mockResolvedValue(tools.Int.nonNegative(0));
     spies
       .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent]);
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
 
     const response = await server.request(
       url,
@@ -156,7 +156,7 @@ describe(`POST ${url}`, async () => {
       .mockResolvedValue(tools.Int.nonNegative(0));
     spies
       .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
 
     const response = await server.request(
       url,
@@ -179,7 +179,7 @@ describe(`POST ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
 
     const response = await server.request(
       url,
@@ -202,7 +202,7 @@ describe(`POST ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
 
     const response = await server.request(
       url,
@@ -228,7 +228,7 @@ describe(`POST ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanDraftCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
 
     const response = await server.request(
       url,

@@ -5,12 +5,12 @@ import { PlanId } from "../value-objects/plan-id";
 import { PlanName } from "../value-objects/plan-name";
 
 // Stryker disable next-line StringLiteral
-export const PLAN_DRAFT_CREATE_COMMAND = "PLAN_DRAFT_CREATE_COMMAND";
+export const PLAN_CREATE_COMMAND = "PLAN_CREATE_COMMAND";
 
-export const PlanDraftCreateCommand = v.object({
+export const PlanCreateCommand = v.object({
   ...bg.CommandEnvelopeSchema,
-  name: v.literal(PLAN_DRAFT_CREATE_COMMAND),
+  name: v.literal(PLAN_CREATE_COMMAND),
   payload: v.object({ id: PlanId, name: PlanName, ownerId: Auth.VO.UserId }),
 });
 
-export type PlanDraftCreateCommandType = v.InferOutput<typeof PlanDraftCreateCommand>;
+export type PlanCreateCommandType = v.InferOutput<typeof PlanCreateCommand>;

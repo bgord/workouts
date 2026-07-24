@@ -12,8 +12,8 @@ type Dependencies = {
 export class PlansProjector {
   constructor(deps: Dependencies) {
     deps.EventBus.on(
-      Plans.Events.PLAN_DRAFT_CREATED_EVENT,
-      deps.EventHandler.handle(this.onPlanDraftCreatedEvent.bind(this)),
+      Plans.Events.PLAN_CREATED_EVENT,
+      deps.EventHandler.handle(this.onPlanCreatedEvent.bind(this)),
     );
     deps.EventBus.on(
       Plans.Events.PLAN_ARCHIVED_EVENT,
@@ -37,7 +37,7 @@ export class PlansProjector {
     );
   }
 
-  async onPlanDraftCreatedEvent(event: Plans.Events.PlanDraftCreatedEventType) {
+  async onPlanCreatedEvent(event: Plans.Events.PlanCreatedEventType) {
     await db.insert(Schema.plans).values({
       id: event.payload.planId,
       name: event.payload.planName,

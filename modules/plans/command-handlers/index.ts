@@ -1,5 +1,5 @@
 export * from "./handlePlanArchiveCommand";
-export * from "./handlePlanDraftCreateCommand";
+export * from "./handlePlanCreateCommand";
 export * from "./handlePlanEditingEnableCommand";
 export * from "./handlePlanFinalizeCommand";
 export * from "./handlePlanRenameCommand";

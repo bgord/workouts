@@ -14,23 +14,23 @@ describe("Plan", async () => {
     expect(plan.pullEvents()).toEqual([]);
   });
 
-  test("createDraft", async () => {
+  test("create", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, async () => {
-      const plan = Plans.Aggregates.Plan.createDraft(
+      const plan = Plans.Aggregates.Plan.create(
         mocks.planId,
         mocks.planName,
         mocks.userId,
         di.Adapters.System,
       );
 
-      expect(plan.pullEvents()).toEqual([mocks.GenericPlanDraftCreatedEvent]);
+      expect(plan.pullEvents()).toEqual([mocks.GenericPlanCreatedEvent]);
     });
   });
 
   test("createSection - first", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -44,7 +44,7 @@ describe("Plan", async () => {
   test("createSection - at the limit", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)],
+      [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)],
       di.Adapters.System,
     );
 
@@ -66,7 +66,7 @@ describe("Plan", async () => {
   test("createSection - PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -78,7 +78,7 @@ describe("Plan", async () => {
   test("createSection - PlanIsEditable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -90,7 +90,7 @@ describe("Plan", async () => {
   test("createSection - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -102,7 +102,7 @@ describe("Plan", async () => {
   test("createSection - PlanSectionLimitForPlan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 6)],
+      [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 6)],
       di.Adapters.System,
     );
 
@@ -114,7 +114,7 @@ describe("Plan", async () => {
   test("createSection - PlanSectionNameIsUniqueForPlan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
       di.Adapters.System,
     );
 
@@ -126,7 +126,7 @@ describe("Plan", async () => {
   test("renameSection", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
       di.Adapters.System,
     );
 
@@ -148,7 +148,7 @@ describe("Plan", async () => {
   test("renameSection - PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -160,7 +160,7 @@ describe("Plan", async () => {
   test("renameSection - PlanIsEditable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -172,7 +172,7 @@ describe("Plan", async () => {
   test("renameSection - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -184,7 +184,7 @@ describe("Plan", async () => {
   test("renameSection - PlanSectionExists", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
       di.Adapters.System,
     );
 
@@ -196,7 +196,7 @@ describe("Plan", async () => {
   test("renameSection - PlanSectionNameIsUniqueForPlan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
       di.Adapters.System,
     );
 
@@ -208,7 +208,7 @@ describe("Plan", async () => {
   test("removeSection", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
       di.Adapters.System,
     );
 
@@ -230,7 +230,7 @@ describe("Plan", async () => {
   test("removeSection - PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -242,7 +242,7 @@ describe("Plan", async () => {
   test("removeSection - PlanIsEditable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -254,7 +254,7 @@ describe("Plan", async () => {
   test("removeSection - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -266,7 +266,7 @@ describe("Plan", async () => {
   test("removeSection - PlanSectionExists", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
       di.Adapters.System,
     );
 
@@ -278,7 +278,7 @@ describe("Plan", async () => {
   test("archive - draft", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -290,7 +290,7 @@ describe("Plan", async () => {
   test("archive - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -308,7 +308,7 @@ describe("Plan", async () => {
   test("archive - PlanIsArchivable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -318,7 +318,7 @@ describe("Plan", async () => {
   test("archive - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -328,7 +328,7 @@ describe("Plan", async () => {
   test("finalize", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -346,7 +346,7 @@ describe("Plan", async () => {
   test("finalize - PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -356,7 +356,7 @@ describe("Plan", async () => {
   test("finalize - PlanIsEditable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -366,7 +366,7 @@ describe("Plan", async () => {
   test("finalize - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -376,7 +376,7 @@ describe("Plan", async () => {
   test("restore", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -394,7 +394,7 @@ describe("Plan", async () => {
   test("restore - PlanIsRestorable - draft", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -404,7 +404,7 @@ describe("Plan", async () => {
   test("restore - PlanIsArchivable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -414,7 +414,7 @@ describe("Plan", async () => {
   test("restore - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -424,7 +424,7 @@ describe("Plan", async () => {
   test("enableEditing", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -442,7 +442,7 @@ describe("Plan", async () => {
   test("enableEditing - PlanIsFinalized - draft", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -452,7 +452,7 @@ describe("Plan", async () => {
   test("enableEditing - PlanIsFinalized - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -462,7 +462,7 @@ describe("Plan", async () => {
   test("enableEditing - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -472,7 +472,7 @@ describe("Plan", async () => {
   test("rename", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -494,7 +494,7 @@ describe("Plan", async () => {
   test("rename - PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanArchivedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
       di.Adapters.System,
     );
 
@@ -506,7 +506,7 @@ describe("Plan", async () => {
   test("rename - PlanIsEditable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
       di.Adapters.System,
     );
 
@@ -518,7 +518,7 @@ describe("Plan", async () => {
   test("rename - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
@@ -530,7 +530,7 @@ describe("Plan", async () => {
   test("rename - PlanNameHasChanged", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanDraftCreatedEvent],
+      [mocks.GenericPlanCreatedEvent],
       di.Adapters.System,
     );
 
