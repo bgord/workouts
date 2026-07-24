@@ -183,6 +183,8 @@ modules/
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
 │   └── value-objects
+│       ├── exercise-instruction-id.ts
+│       ├── exercise-instruction.ts
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-section-id.ts
