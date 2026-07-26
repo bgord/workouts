@@ -50,6 +50,8 @@ export const exerciseDescription = v.parse(
 );
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 
+export const anotherExerciseId = v.parse(Exercises.VO.ExerciseId, "8d79bd87-1709-4c15-b40c-cd0fafaa0107");
+
 export const anotherExerciseName = v.parse(Exercises.VO.ExerciseName, "Horizontal Bench Press Barbell");
 export const anotherExerciseDescription = v.parse(
   Exercises.VO.ExerciseDescription,
@@ -455,6 +457,21 @@ export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
     ownerId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionUpdatedEventType;
+
+export const GenericPlanSectionExerciseInstructionExerciseChangedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT",
+  payload: {
+    planId,
+    planSectionId,
+    exerciseInstruction: { id: exerciseInstructionId, exerciseId: anotherExerciseId },
+    ownerId: userId,
+  },
+} satisfies Plans.Events.PlanSectionExerciseInstructionExerciseChangedEventType;
 
 export const user = {
   name: email,
