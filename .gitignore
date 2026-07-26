@@ -6,8 +6,10 @@
 .eslintcache
 .stryker-tmp
 build/
+fallow-viz.html
 infra/adapters/system/tmp/
 infra/build-info.json
+jobs.db*
 meta.json
 node_modules/
 output/
@@ -16,7 +18,6 @@ public/*.js.map
 public/main.min.css
 reports/
 sqlite.db*
-jobs.db*
 test-results/
 tmp/
 tsconfig.tsbuildinfo
