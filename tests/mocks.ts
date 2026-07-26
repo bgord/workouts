@@ -409,6 +409,16 @@ export const GenericPlanSectionExerciseInstructionAddedEvent = {
   payload: { planId, planSectionId, exerciseInstruction, ownerId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
+export const GenericPlanSectionExerciseInstructionRemovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT",
+  payload: { planId, planSectionId, exerciseInstructionId, ownerId: userId },
+} satisfies Plans.Events.PlanSectionExerciseInstructionRemovedEventType;
+
 export const user = {
   name: email,
   email,
