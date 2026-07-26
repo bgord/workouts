@@ -12,7 +12,7 @@ export const PlanSectionExerciseInstructionUpdatedEvent = v.object({
   payload: v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
-    exerciseInstruction: v.object({ id: VO.ExerciseInstructionId, sets: VO.Sets, reps: VO.Reps }),
+    exerciseInstruction: v.omit(VO.ExerciseInstruction, ["exerciseId"]),
     ownerId: Auth.VO.UserId,
   }),
 });
