@@ -1,4 +1,5 @@
 import { describe, expect, spyOn, test } from "bun:test";
+import * as tools from "@bgord/tools";
 import * as bg from "@bgord/bun";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
@@ -158,152 +159,187 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: "reps.range", _known: true });
   });
 
-  // test("PlanIsEditable - initial", async () => {
-  //   using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-  //   using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-  //   using spies = new DisposableStack();
-  //   spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
-  //
-  //   const response = await server.request(
-  //     url,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
-  //       headers: mocks.revisionHeaders(),
-  //     },
-  //     mocks.ip,
-  //   );
-  //
-  //   await testcases.assertInvariantError(response, 403, "plan.is.editable");
-  //   expect(eventStoreSave).not.toHaveBeenCalled();
-  // });
-  //
-  // test("PlanIsEditable - archived", async () => {
-  //   using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-  //   using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-  //   using spies = new DisposableStack();
-  //   spies
-  //     .use(spyOn(di.Tools.EventStore, "find"))
-  //     .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
-  //
-  //   const response = await server.request(
-  //     url,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
-  //       headers: mocks.revisionHeaders(2),
-  //     },
-  //     mocks.ip,
-  //   );
-  //
-  //   await testcases.assertInvariantError(response, 403, "plan.is.editable");
-  //   expect(eventStoreSave).not.toHaveBeenCalled();
-  // });
-  //
-  // test("PlanIsEditable - finalized", async () => {
-  //   using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-  //   using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-  //   using spies = new DisposableStack();
-  //   spies
-  //     .use(spyOn(di.Tools.EventStore, "find"))
-  //     .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
-  //
-  //   const response = await server.request(
-  //     url,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
-  //       headers: mocks.revisionHeaders(2),
-  //     },
-  //     mocks.ip,
-  //   );
-  //
-  //   await testcases.assertInvariantError(response, 403, "plan.is.editable");
-  //   expect(eventStoreSave).not.toHaveBeenCalled();
-  // });
-  //
-  // test("PlanBelongsToUser", async () => {
-  //   using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
-  //   using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-  //   using spies = new DisposableStack();
-  //   spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
-  //
-  //   const response = await server.request(
-  //     url,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
-  //       headers: mocks.revisionHeaders(1),
-  //     },
-  //     mocks.ip,
-  //   );
-  //
-  //   await testcases.assertInvariantError(response, 403, "plan.belongs.to.user");
-  //   expect(eventStoreSave).not.toHaveBeenCalled();
-  // });
-  //
-  // test("PlanSectionExists", async () => {
-  //   using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-  //   using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-  //   using spies = new DisposableStack();
-  //   spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
-  //
-  //   const response = await server.request(
-  //     url,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
-  //       headers: mocks.correlationIdAndRevisionHeaders(1),
-  //     },
-  //     mocks.ip,
-  //   );
-  //
-  //   await testcases.assertInvariantError(response, 403, "plan.section.exists");
-  //   expect(eventStoreSave).not.toHaveBeenCalled();
-  // });
-  //
-  // test("PlanSectionNameIsUniqueForPlan", async () => {
-  //   using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-  //   using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-  //   using spies = new DisposableStack();
-  //   spies
-  //     .use(spyOn(di.Tools.EventStore, "find"))
-  //     .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent]);
-  //
-  //   const response = await server.request(
-  //     url,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({ planSectionName: mocks.planSectionName }),
-  //       headers: mocks.correlationIdAndRevisionHeaders(2),
-  //     },
-  //     mocks.ip,
-  //   );
-  //
-  //   await testcases.assertInvariantError(response, 403, "plan.section.name.is.unique.for.plan");
-  //   expect(eventStoreSave).not.toHaveBeenCalled();
-  // });
-  //
-  // test("happy path", async () => {
-  //   using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-  //   using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-  //   using spies = new DisposableStack();
-  //   spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planSectionId);
-  //   spies
-  //     .use(spyOn(di.Tools.EventStore, "find"))
-  //     .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent]);
-  //
-  //   const response = await server.request(
-  //     url,
-  //     {
-  //       method: "POST",
-  //       headers: mocks.correlationIdAndRevisionHeaders(2),
-  //       body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
-  //     },
-  //     mocks.ip,
-  //   );
-  //
-  //   expect(response.status).toEqual(200);
-  //   expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionRenamedEvent]);
-  // });
+  test("PlanIsEditable - initial", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        headers: mocks.revisionHeaders(),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanIsEditable - archived", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        headers: mocks.revisionHeaders(2),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanIsEditable - finalized", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        headers: mocks.revisionHeaders(2),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanBelongsToUser", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        headers: mocks.revisionHeaders(1),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.belongs.to.user");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanSectionExists", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        headers: mocks.correlationIdAndRevisionHeaders(1),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.section.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanSectionExerciseInstructionLimit", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 20),
+      ]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        headers: mocks.correlationIdAndRevisionHeaders(22),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.section.exercise.instruction.limit");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("happy path - first", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.exerciseInstructionId);
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdAndRevisionHeaders(2),
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionExerciseInstructionAddedEvent]);
+  });
+
+  test("happy path - at the limit", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.exerciseInstructionId);
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 19),
+      ]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdAndRevisionHeaders(21),
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionExerciseInstructionAddedEvent]);
+  });
 });

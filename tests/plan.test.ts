@@ -639,7 +639,7 @@ describe("Plan", async () => {
     );
 
     expect(() =>
-      plan.addSectionExerciseInstruction(mocks.anotherPlanSectionId, mocks.exerciseInstruction, mocks.userId),
-    ).toThrow(Plans.Invariants.PlanSectionExists.error);
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionLimit.error);
   });
 });
