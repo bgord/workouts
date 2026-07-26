@@ -399,15 +399,15 @@ export const GenericPlanRenamedEvent = {
   payload: { planId, planName: anotherPlanName, ownerId: userId },
 } satisfies Plans.Events.PlanRenamedEventType;
 
-export const GenericPlanExerciseInstructionAddedEvent = {
+export const GenericPlanSectionExerciseInstructionAddedEvent = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
-  name: "PLAN_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
   payload: { planId, planSectionId, exerciseInstruction, ownerId: userId },
-} satisfies Plans.Events.PlanExerciseInstructionAddedEventType;
+} satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
 export const user = {
   name: email,

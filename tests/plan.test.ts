@@ -539,7 +539,7 @@ describe("Plan", async () => {
     );
   });
 
-  test("addExerciseInstruction - first", async () => {
+  test("addSectionExerciseInstruction - first", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
@@ -547,39 +547,39 @@ describe("Plan", async () => {
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.addExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
     );
 
-    expect(plan.pullEvents()).toEqual([mocks.GenericPlanExerciseInstructionAddedEvent]);
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionAddedEvent]);
   });
 
-  test("addExerciseInstruction - at the limit", async () => {
+  test("addSectionExerciseInstruction - at the limit", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
-        ...tools.repeat(mocks.GenericPlanExerciseInstructionAddedEvent, 19),
+        ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 19),
       ],
       di.Adapters.System,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.addExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
     );
 
-    expect(plan.pullEvents()).toEqual([mocks.GenericPlanExerciseInstructionAddedEvent]);
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionAddedEvent]);
   });
 
-  test("addExerciseInstruction - PlanIsEditable - initial", async () => {
+  test("addSectionExerciseInstruction - PlanIsEditable - initial", async () => {
     const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
 
     expect(() =>
-      plan.addExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
   });
 
-  test("addExerciseInstruction - PlanIsEditable - archived", async () => {
+  test("addSectionExerciseInstruction - PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
@@ -587,11 +587,11 @@ describe("Plan", async () => {
     );
 
     expect(() =>
-      plan.addExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
   });
 
-  test("addExerciseInstruction - PlanIsEditable - finalized", async () => {
+  test("addSectionExerciseInstruction - PlanIsEditable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
@@ -599,11 +599,11 @@ describe("Plan", async () => {
     );
 
     expect(() =>
-      plan.addExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
   });
 
-  test("addExerciseInstruction - PlanBelongsToUser", async () => {
+  test("addSectionExerciseInstruction - PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent],
@@ -611,11 +611,11 @@ describe("Plan", async () => {
     );
 
     expect(() =>
-      plan.addExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.anotherUserId),
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.anotherUserId),
     ).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
 
-  test("addExerciseInstruction - PlanSectionExists", async () => {
+  test("addSectionExerciseInstruction - PlanSectionExists", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
@@ -623,23 +623,23 @@ describe("Plan", async () => {
     );
 
     expect(() =>
-      plan.addExerciseInstruction(mocks.anotherPlanSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.addSectionExerciseInstruction(mocks.anotherPlanSectionId, mocks.exerciseInstruction, mocks.userId),
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
   });
 
-  test("addExerciseInstruction - PlanSectionExerciseInstructionLimit", async () => {
+  test("addSectionExerciseInstruction - PlanSectionExerciseInstructionLimit", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
-        ...tools.repeat(mocks.GenericPlanExerciseInstructionAddedEvent, 20),
+        ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 20),
       ],
       di.Adapters.System,
     );
 
     expect(() =>
-      plan.addExerciseInstruction(mocks.anotherPlanSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.addSectionExerciseInstruction(mocks.anotherPlanSectionId, mocks.exerciseInstruction, mocks.userId),
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
   });
 });

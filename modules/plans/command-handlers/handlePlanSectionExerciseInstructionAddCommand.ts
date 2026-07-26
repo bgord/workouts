@@ -7,11 +7,11 @@ type Dependencies = {
   repo: Plans.Ports.PlanRepositoryPort;
 };
 
-export const handlePlanExerciseInstructionAddCommand =
-  (deps: Dependencies) => async (command: Plans.Commands.PlanExerciseInstructionAddCommandType) => {
+export const handlePlanSectionExerciseInstructionAddCommand =
+  (deps: Dependencies) => async (command: Plans.Commands.PlanSectionExerciseInstructionAddCommandType) => {
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);
-    plan.addExerciseInstruction(
+    plan.addSectionExerciseInstruction(
       command.payload.planSectionId,
       command.payload.exerciseInstruction,
       command.payload.ownerId,

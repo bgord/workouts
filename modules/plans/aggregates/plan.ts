@@ -15,7 +15,7 @@ export type PlanEventType =
   | Events.PlanRestoredEventType
   | Events.PlanEditingEnabledEventType
   | Events.PlanRenamedEventType
-  | Events.PlanExerciseInstructionAddedEventType;
+  | Events.PlanSectionExerciseInstructionAddedEventType;
 
 type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 
@@ -31,7 +31,7 @@ export class Plan {
     [Events.PLAN_RESTORED_EVENT]: Events.PlanRestoredEvent,
     [Events.PLAN_EDITING_ENABLED_EVENT]: Events.PlanEditingEnabledEvent,
     [Events.PLAN_RENAMED_EVENT]: Events.PlanRenamedEvent,
-    [Events.PLAN_EXERCISE_INSTRUCTION_ADDED_EVENT]: Events.PlanExerciseInstructionAddedEvent,
+    [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT]: Events.PlanSectionExerciseInstructionAddedEvent,
   });
   // Stryker restore all
 
@@ -206,7 +206,7 @@ export class Plan {
     this.record(event);
   }
 
-  addExerciseInstruction(
+  addSectionExerciseInstruction(
     planSectionId: VO.PlanSectionIdType,
     exerciseInstruction: VO.ExerciseInstructionType,
     requesterId: Auth.VO.UserIdType,
@@ -215,11 +215,11 @@ export class Plan {
     Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
     Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
     Invariants.PlanSectionExerciseInstructionLimit.enforce({
-      planSection: this.sections.find((section) => section.id === planSectionId),
+      planSection: this.sections.find((section) => section.id === planSectionId)!,
     });
 
     const event = bg.event(
-      Events.PlanExerciseInstructionAddedEvent,
+      Events.PlanSectionExerciseInstructionAddedEvent,
       Plan.getStream(this.id),
       { planId: this.id, planSectionId, exerciseInstruction, ownerId: this.ownerId! },
       this.deps,
@@ -307,7 +307,7 @@ export class Plan {
         break;
       }
 
-      case Events.PLAN_EXERCISE_INSTRUCTION_ADDED_EVENT: {
+      case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) => {
           if (section.id === event.payload.planSectionId) {

@@ -131,8 +131,8 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
-    PlansCommands.PLAN_EXERCISE_INSTRUCTION_ADD_COMMAND,
-    PlansCommandHandlers.handlePlanExerciseInstructionAddCommand({
+    PlansCommands.PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND,
+    PlansCommandHandlers.handlePlanSectionExerciseInstructionAddCommand({
       ...deps,
       repo: Adapters.Plans.PlanRepository,
     }),

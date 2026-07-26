@@ -4,12 +4,12 @@ import * as v from "valibot";
 import * as Auth from "+auth";
 import * as VO from "+plans/value-objects";
 
-export const PLAN_EXERCISE_INSTRUCTION_ADD_COMMAND = "PLAN_EXERCISE_INSTRUCTION_ADD_COMMAND";
+export const PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND = "PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND";
 
-export const PlanExerciseInstructionAddCommand = v.object({
+export const PlanSectionExerciseInstructionAddCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   revision: v.instance(tools.Revision),
-  name: v.literal(PLAN_EXERCISE_INSTRUCTION_ADD_COMMAND),
+  name: v.literal(PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND),
   payload: v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
@@ -18,4 +18,6 @@ export const PlanExerciseInstructionAddCommand = v.object({
   }),
 });
 
-export type PlanExerciseInstructionAddCommandType = v.InferOutput<typeof PlanExerciseInstructionAddCommand>;
+export type PlanSectionExerciseInstructionAddCommandType = v.InferOutput<
+  typeof PlanSectionExerciseInstructionAddCommand
+>;
