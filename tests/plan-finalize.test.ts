@@ -34,14 +34,15 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - initial", async () => {
+    const events = [];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders() },
+      { method: "POST", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -50,16 +51,15 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders(2) },
+      { method: "POST", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -68,16 +68,15 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders(2) },
+      { method: "POST", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -86,14 +85,15 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanBelongsToUser", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.revisionHeaders(1) },
+      { method: "POST", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -102,19 +102,18 @@ describe(`POST ${url}`, async () => {
   });
 
   test("happy path", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.System.IdProvider, "generate"))
       .mockReturnValueOnce(mocks.anotherPlanSectionId);
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(2) },
+      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
       mocks.ip,
     );
 

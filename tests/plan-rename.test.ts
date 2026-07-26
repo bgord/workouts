@@ -100,19 +100,20 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - initial", async () => {
+    const events = [];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.revisionHeaders(),
+        headers: mocks.revisionHeaders(events.length),
         body: JSON.stringify({ planName: mocks.anotherPlanName }),
       },
       mocks.ip,
@@ -123,21 +124,20 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.revisionHeaders(2),
+        headers: mocks.revisionHeaders(events.length),
         body: JSON.stringify({ planName: mocks.anotherPlanName }),
       },
       mocks.ip,
@@ -148,21 +148,20 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.revisionHeaders(2),
+        headers: mocks.revisionHeaders(events.length),
         body: JSON.stringify({ planName: mocks.anotherPlanName }),
       },
       mocks.ip,
@@ -173,19 +172,20 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanBelongsToUser", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.revisionHeaders(1),
+        headers: mocks.revisionHeaders(events.length),
         body: JSON.stringify({ planName: mocks.anotherPlanName }),
       },
       mocks.ip,
@@ -196,19 +196,20 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanNameHasChanged", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.revisionHeaders(1),
+        headers: mocks.revisionHeaders(events.length),
         body: JSON.stringify({ planName: mocks.planName }),
       },
       mocks.ip,
@@ -219,6 +220,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("happy path", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -228,13 +230,13 @@ describe(`POST ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.correlationIdAndRevisionHeaders(1),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
         body: JSON.stringify({ planName: mocks.anotherPlanName }),
       },
       mocks.ip,

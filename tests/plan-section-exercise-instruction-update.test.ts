@@ -1,6 +1,5 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -152,17 +151,18 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("PlanIsEditable - initial", async () => {
+    const events = [];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
-        headers: mocks.revisionHeaders(),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -172,19 +172,18 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
-        headers: mocks.revisionHeaders(2),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -194,19 +193,18 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
-        headers: mocks.revisionHeaders(2),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -216,17 +214,18 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("PlanBelongsToUser", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
-        headers: mocks.revisionHeaders(1),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -236,17 +235,18 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("PlanSectionExists", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
-        headers: mocks.correlationIdAndRevisionHeaders(1),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -256,23 +256,22 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("PlanSectionExerciseInstructionHasChanged", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([
-        mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
-      ]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.exerciseInstruction),
-        headers: mocks.correlationIdAndRevisionHeaders(3),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -282,22 +281,21 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("happy path", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([
-        mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
-      ]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(3),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
         body: JSON.stringify(mocks.anotherExerciseInstruction),
       },
       mocks.ip,

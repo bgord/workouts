@@ -66,14 +66,15 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("PlanIsEditable - initial", async () => {
+    const events = [];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders() },
+      { method: "DELETE", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -82,16 +83,15 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders(2) },
+      { method: "DELETE", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -100,16 +100,15 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders(2) },
+      { method: "DELETE", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -118,14 +117,15 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("PlanBelongsToUser", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders(1) },
+      { method: "DELETE", headers: mocks.revisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -134,14 +134,15 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("PlanSectionExists", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(1) },
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -150,20 +151,19 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("PlanSectionExerciseInstructionExists", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([
-        mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
-      ]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}`,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(3) },
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
       mocks.ip,
     );
 
@@ -172,23 +172,19 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("happy path", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([
-        mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
-      ]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
-      {
-        method: "DELETE",
-        headers: mocks.correlationIdAndRevisionHeaders(3),
-      },
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
       mocks.ip,
     );
 

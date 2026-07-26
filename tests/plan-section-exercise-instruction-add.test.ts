@@ -160,17 +160,18 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - initial", async () => {
+    const events = [];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
-        headers: mocks.revisionHeaders(),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -180,19 +181,18 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
-        headers: mocks.revisionHeaders(2),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -202,19 +202,18 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
-        headers: mocks.revisionHeaders(2),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -224,17 +223,18 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanBelongsToUser", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
-        headers: mocks.revisionHeaders(1),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -244,17 +244,18 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanSectionExists", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
-        headers: mocks.correlationIdAndRevisionHeaders(1),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -264,23 +265,22 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanSectionExerciseInstructionLimit", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 20),
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([
-        mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
-        ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 20),
-      ]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
-        headers: mocks.correlationIdAndRevisionHeaders(22),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
       },
       mocks.ip,
     );
@@ -290,21 +290,20 @@ describe(`POST ${url}`, async () => {
   });
 
   test("happy path - first", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.System.IdProvider, "generate"))
       .mockReturnValueOnce(mocks.exerciseInstructionId);
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.correlationIdAndRevisionHeaders(2),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
       },
       mocks.ip,
@@ -315,25 +314,24 @@ describe(`POST ${url}`, async () => {
   });
 
   test("happy path - at the limit", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 19),
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.System.IdProvider, "generate"))
       .mockReturnValueOnce(mocks.exerciseInstructionId);
-    spies
-      .use(spyOn(di.Tools.EventStore, "find"))
-      .mockResolvedValue([
-        mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
-        ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 19),
-      ]);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
       url,
       {
         method: "POST",
-        headers: mocks.correlationIdAndRevisionHeaders(21),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
         body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
       },
       mocks.ip,
