@@ -8,6 +8,7 @@ export * from "./plan-name-has-changed";
 export * from "./plan-name-is-unique-for-owner";
 export * from "./plan-section-exercise-instruction-exists";
 export * from "./plan-section-exercise-instruction-has-changed";
+export * from "./plan-section-exercise-instruction-has-changed";
 export * from "./plan-section-exercise-instruction-limit";
 export * from "./plan-section-exists";
 export * from "./plan-section-limit-for-plan";
