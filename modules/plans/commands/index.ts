@@ -1,6 +1,7 @@
 export * from "./PLAN_ARCHIVE_COMMAND";
 export * from "./PLAN_CREATE_COMMAND";
 export * from "./PLAN_EDITING_ENABLE_COMMAND";
+export * from "./PLAN_EXERCISE_INSTRUCTION_ADD_COMMAND";
 export * from "./PLAN_FINALIZE_COMMAND";
 export * from "./PLAN_RENAME_COMMAND";
 export * from "./PLAN_RESTORE_COMMAND";
