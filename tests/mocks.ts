@@ -108,7 +108,10 @@ export const anotherExerciseInstructionId = v.parse(
 );
 
 export const sets = v.parse(Plans.VO.Sets, 3);
+export const anotherSets = v.parse(Plans.VO.Sets, 4);
+
 export const reps = v.parse(Plans.VO.Reps, { min: 8, max: 12 });
+export const anotherReps = v.parse(Plans.VO.Reps, { min: 6, max: 6 });
 
 export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: exerciseInstructionId,
@@ -423,6 +426,21 @@ export const GenericPlanSectionExerciseInstructionRemovedEvent = {
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT",
   payload: { planId, planSectionId, exerciseInstructionId, ownerId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionRemovedEventType;
+
+export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: `plan_${planId}`,
+  version: 1,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT",
+  payload: {
+    planId,
+    planSectionId,
+    exerciseInstruction: { id: exerciseInstructionId, reps: anotherReps, sets: anotherSets },
+    ownerId: userId,
+  },
+} satisfies Plans.Events.PlanSectionExerciseInstructionUpdatedEventType;
 
 export const user = {
   name: email,
