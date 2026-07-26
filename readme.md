@@ -144,6 +144,7 @@ modules/
 │   │   ├── handlePlanRestoreCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
+│   │   ├── handlePlanSectionExerciseInstructionRemoveCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
 │   │   ├── handlePlanSectionRenameCommand.ts
 │   ├── commands

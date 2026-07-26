@@ -137,6 +137,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       repo: Adapters.Plans.PlanRepository,
     }),
   );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND,
+    PlansCommandHandlers.handlePlanSectionExerciseInstructionRemoveCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+    }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(
