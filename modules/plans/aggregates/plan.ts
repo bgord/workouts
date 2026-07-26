@@ -15,7 +15,8 @@ export type PlanEventType =
   | Events.PlanRestoredEventType
   | Events.PlanEditingEnabledEventType
   | Events.PlanRenamedEventType
-  | Events.PlanSectionExerciseInstructionAddedEventType;
+  | Events.PlanSectionExerciseInstructionAddedEventType
+  | Events.PlanSectionExerciseInstructionRemovedEventType;
 
 type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 
@@ -32,6 +33,8 @@ export class Plan {
     [Events.PLAN_EDITING_ENABLED_EVENT]: Events.PlanEditingEnabledEvent,
     [Events.PLAN_RENAMED_EVENT]: Events.PlanRenamedEvent,
     [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT]: Events.PlanSectionExerciseInstructionAddedEvent,
+    [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT]:
+      Events.PlanSectionExerciseInstructionRemovedEvent,
   });
   // Stryker restore all
 
@@ -228,6 +231,29 @@ export class Plan {
     this.record(event);
   }
 
+  removeSectionExerciseInstruction(
+    planSectionId: VO.PlanSectionIdType,
+    exerciseInstructionId: VO.ExerciseInstructionIdType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
+    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
+    Invariants.PlanSectionExerciseInstructionExists.enforce({
+      planSection: this.sections.find((section) => section.id === planSectionId)!,
+      exerciseInstructionId,
+    });
+
+    const event = bg.event(
+      Events.PlanSectionExerciseInstructionRemovedEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, planSectionId, exerciseInstructionId, ownerId: this.ownerId! },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<PlanEventType> {
     const events = [...this.pending];
 
@@ -316,6 +342,17 @@ export class Plan {
           }
           return section;
         });
+        break;
+      }
+
+      case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.map((section) => ({
+          ...section,
+          exerciseInstructions: section.exerciseInstructions.filter(
+            (exerciseInstruction) => exerciseInstruction.id !== event.payload.exerciseInstructionId,
+          ),
+        }));
         break;
       }
     }
