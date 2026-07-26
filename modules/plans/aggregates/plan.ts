@@ -17,7 +17,8 @@ export type PlanEventType =
   | Events.PlanRenamedEventType
   | Events.PlanSectionExerciseInstructionAddedEventType
   | Events.PlanSectionExerciseInstructionRemovedEventType
-  | Events.PlanSectionExerciseInstructionUpdatedEventType;
+  | Events.PlanSectionExerciseInstructionUpdatedEventType
+  | Events.PlanSectionExerciseInstructionExerciseChangedEventType;
 
 type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 
@@ -38,6 +39,8 @@ export class Plan {
       Events.PlanSectionExerciseInstructionRemovedEvent,
     [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT]:
       Events.PlanSectionExerciseInstructionUpdatedEvent,
+    [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT]:
+      Events.PlanSectionExerciseInstructionExerciseChangedEvent,
   });
   // Stryker restore all
 
@@ -288,6 +291,37 @@ export class Plan {
     this.record(event);
   }
 
+  changeSectionExerciseInstructionExercise(
+    planSectionId: VO.PlanSectionIdType,
+    exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    const planSection = this.sections.find((section) => section.id === planSectionId);
+
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
+    Invariants.PlanSectionExists.enforce({ planSections: this.sections, planSectionId });
+    Invariants.PlanSectionExerciseInstructionExists.enforce({
+      planSection,
+      exerciseInstructionId: exerciseInstruction.id,
+    });
+    Invariants.PlanSectionExerciseInstructionExerciseHasChanged.enforce({
+      current: planSection.exerciseInstructions.find(
+        (instruction) => instruction.id === exerciseInstruction.id,
+      ).exerciseId,
+      incoming: exerciseInstruction.exerciseId,
+    });
+
+    const event = bg.event(
+      Events.PlanSectionExerciseInstructionExerciseChangedEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, planSectionId, exerciseInstruction, ownerId: this.ownerId! },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<PlanEventType> {
     const events = [...this.pending];
 
@@ -386,6 +420,38 @@ export class Plan {
           exerciseInstructions: section.exerciseInstructions.filter(
             (exerciseInstruction) => exerciseInstruction.id !== event.payload.exerciseInstructionId,
           ),
+        }));
+        break;
+      }
+
+      case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.map((section) => ({
+          ...section,
+          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => {
+            if (exerciseInstruction.id === event.payload.exerciseInstruction.id) {
+              return {
+                ...exerciseInstruction,
+                reps: event.payload.exerciseInstruction.reps,
+                sets: event.payload.exerciseInstruction.sets,
+              };
+            }
+            return exerciseInstruction;
+          }),
+        }));
+        break;
+      }
+
+      case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.map((section) => ({
+          ...section,
+          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => {
+            if (exerciseInstruction.id === event.payload.exerciseInstruction.id) {
+              return { ...exerciseInstruction, exerciseId: event.payload.exerciseInstruction.exerciseId };
+            }
+            return exerciseInstruction;
+          }),
         }));
         break;
       }
