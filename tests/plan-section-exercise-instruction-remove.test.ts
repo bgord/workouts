@@ -1,0 +1,199 @@
+import { describe, expect, spyOn, test } from "bun:test";
+import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
+import { bootstrap } from "+infra/bootstrap";
+import { registerCommandHandlers } from "+infra/register-command-handlers";
+import { registerEventHandlers } from "+infra/register-event-handlers";
+import { createServer } from "../server";
+import * as mocks from "./mocks";
+import * as testcases from "./testcases";
+
+const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}`;
+
+describe(`DELETE ${url}`, async () => {
+  const di = await bootstrap();
+  registerEventHandlers(di.Env, di);
+  registerCommandHandlers(di);
+  const server = createServer(di);
+
+  test("validation - AccessDeniedAuthShieldError", async () => {
+    const response = await server.request(url, { method: "DELETE" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(403);
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+  });
+
+  test("validation - incorrect plan id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      `/api/plans/id/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}`,
+      { method: "DELETE" },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type", _known: true });
+  });
+
+  test("validation - incorrect plan section id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      `/api/plans/${mocks.planId}/section/id/exercise-instruction/${mocks.exerciseInstructionId}`,
+      { method: "DELETE" },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type", _known: true });
+  });
+
+  test("validation - incorrect exercise instruction id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/id`,
+      { method: "DELETE" },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type", _known: true });
+  });
+
+  test("PlanIsEditable - initial", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([]);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.revisionHeaders() },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanIsEditable - archived", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent]);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.revisionHeaders(2) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanIsEditable - finalized", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent]);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.revisionHeaders(2) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanBelongsToUser", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.revisionHeaders(1) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.belongs.to.user");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanSectionExists", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue([mocks.GenericPlanCreatedEvent]);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(1) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.section.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanSectionExerciseInstructionExists", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ]);
+
+    const response = await server.request(
+      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}`,
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(3) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.section.exercise.instruction.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("happy path", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Tools.EventStore, "find"))
+      .mockResolvedValue([
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ]);
+
+    const response = await server.request(
+      url,
+      {
+        method: "DELETE",
+        headers: mocks.correlationIdAndRevisionHeaders(3),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionExerciseInstructionRemovedEvent]);
+  });
+});

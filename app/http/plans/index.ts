@@ -6,5 +6,6 @@ export * from "./plan-rename";
 export * from "./plan-restore";
 export * from "./plan-section-create";
 export * from "./plan-section-exercise-instruction-add";
+export * from "./plan-section-exercise-instruction-remove";
 export * from "./plan-section-remove";
 export * from "./plan-section-rename";

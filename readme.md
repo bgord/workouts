@@ -151,12 +151,12 @@ modules/
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_CREATE_COMMAND.ts
 │   │   ├── PLAN_EDITING_ENABLE_COMMAND.ts
-│   │   ├── PLAN_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
-│   │   ├── PLAN_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
 │   │   ├── PLAN_RENAME_COMMAND.ts
 │   │   ├── PLAN_RESTORE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
+│   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
+│   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
 │   │   └── PLAN_SECTION_RENAME_COMMAND.ts
 │   ├── events
@@ -256,6 +256,7 @@ app/
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
+│   │   ├── plan-section-exercise-instruction-remove.ts
 │   │   ├── plan-section-remove.ts
 │   │   └── plan-section-rename.ts
 │   └── preferences
