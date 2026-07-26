@@ -25,6 +25,7 @@ type AcceptedCommand =
   | PlansCommands.PlanEditingEnableCommandType
   | PlansCommands.PlanRenameCommandType
   | PlansCommands.PlanSectionExerciseInstructionAddCommandType
+  | PlansCommands.PlanSectionExerciseInstructionRemoveCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType;
