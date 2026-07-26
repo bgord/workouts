@@ -102,8 +102,8 @@ export const exerciseInstructionId = v.parse(
   "8d79bd87-1709-4c15-b40c-cd0fafaa0109",
 );
 
-export const reps = v.parse(Plans.VO.Reps, { min: 8, max: 12 });
 export const sets = v.parse(Plans.VO.Sets, 3);
+export const reps = v.parse(Plans.VO.Reps, { min: 8, max: 12 });
 
 export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: exerciseInstructionId,

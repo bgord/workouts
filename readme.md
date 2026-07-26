@@ -251,6 +251,7 @@ app/
 │   │   ├── plan-rename.ts
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
+│   │   ├── plan-section-exercise-instruction-add.ts
 │   │   ├── plan-section-remove.ts
 │   │   └── plan-section-rename.ts
 │   └── preferences

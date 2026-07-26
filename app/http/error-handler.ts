@@ -17,11 +17,13 @@ const validationErrors = [
   tools.ObjectKeyError.Type,
   tools.LanguageError.Type,
   tools.TimestampValueError.Invalid,
+  ...Object.values(tools.IntegerPositiveError),
   ...Object.values(Exercises.VO.ExerciseNameError),
   ...Object.values(Exercises.VO.ExerciseDescriptionError),
   ...Object.values(Exercises.VO.ExerciseCategoryNameError),
   ...Object.values(Plans.VO.PlanNameError),
   ...Object.values(Plans.VO.PlanSectionNameError),
+  ...Object.values(Plans.VO.RepsError),
 ] as Array<string>;
 
 const invariants = Object.values({

@@ -144,6 +144,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     HTTP.Plans.PlanSectionRemove(deps),
   );
   plans.post(
+    "/:planId/section/:planSectionId/exercise-instruction",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Plans.PlanSectionExerciseInstructionAdd(deps),
+  );
+  plans.post(
     "/:planId/archive",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
