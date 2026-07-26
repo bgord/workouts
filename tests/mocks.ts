@@ -120,6 +120,20 @@ export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
   sets,
 };
 
+export const anotherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId,
+  reps: anotherReps,
+  sets: anotherSets,
+};
+
+export const anotherExerciseInstructionAndId: Plans.VO.ExerciseInstructionType = {
+  id: anotherExerciseInstructionId,
+  exerciseId,
+  reps: anotherReps,
+  sets: anotherSets,
+};
+
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
 
 export const head = {
