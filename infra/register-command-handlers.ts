@@ -130,6 +130,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetPlanNameForOwnerCountQuery: Adapters.Plans.GetPlanNameForOwnerCountQuery,
     }),
   );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_EXERCISE_INSTRUCTION_ADD_COMMAND,
+    PlansCommandHandlers.handlePlanExerciseInstructionAddCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+    }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(

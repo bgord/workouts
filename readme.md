@@ -139,6 +139,7 @@ modules/
 │   │   ├── handlePlanArchiveCommand.ts
 │   │   ├── handlePlanCreateCommand.ts
 │   │   ├── handlePlanEditingEnableCommand.ts
+│   │   ├── handlePlanExerciseInstructionAddCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
 │   │   ├── handlePlanRenameCommand.ts
 │   │   ├── handlePlanRestoreCommand.ts
