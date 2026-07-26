@@ -7,6 +7,6 @@ export * from "./handlePlanRestoreCommand";
 export * from "./handlePlanSectionCreateCommand";
 export * from "./handlePlanSectionExerciseInstructionAddCommand";
 export * from "./handlePlanSectionExerciseInstructionRemoveCommand";
+export * from "./handlePlanSectionExerciseInstructionUpdateCommand";
 export * from "./handlePlanSectionRemoveCommand";
 export * from "./handlePlanSectionRenameCommand";
-export * from "./handlePlanSectionExerciseInstructionUpdateCommand";

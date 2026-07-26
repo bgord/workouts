@@ -145,6 +145,7 @@ modules/
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionRemoveCommand.ts
+│   │   ├── handlePlanSectionExerciseInstructionUpdateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
 │   │   ├── handlePlanSectionRenameCommand.ts
 │   ├── commands
@@ -260,6 +261,7 @@ app/
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
 │   │   ├── plan-section-exercise-instruction-remove.ts
+│   │   ├── plan-section-exercise-instruction-update.ts
 │   │   ├── plan-section-remove.ts
 │   │   └── plan-section-rename.ts
 │   └── preferences
