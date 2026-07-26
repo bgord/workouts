@@ -175,6 +175,7 @@ modules/
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-has-changed.ts
 │   │   ├── plan-name-is-unique-for-owner.ts
+│   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
 │   │   └── plan-section-name-is-unique-for-plan.ts
