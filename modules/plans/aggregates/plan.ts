@@ -14,7 +14,8 @@ export type PlanEventType =
   | Events.PlanFinalizedEventType
   | Events.PlanRestoredEventType
   | Events.PlanEditingEnabledEventType
-  | Events.PlanRenamedEventType;
+  | Events.PlanRenamedEventType
+  | Events.PlanExerciseInstructionAddedEventType;
 
 type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
 
@@ -30,6 +31,7 @@ export class Plan {
     [Events.PLAN_RESTORED_EVENT]: Events.PlanRestoredEvent,
     [Events.PLAN_EDITING_ENABLED_EVENT]: Events.PlanEditingEnabledEvent,
     [Events.PLAN_RENAMED_EVENT]: Events.PlanRenamedEvent,
+    [Events.PLAN_EXERCISE_INSTRUCTION_ADDED_EVENT]: Events.PlanExerciseInstructionAddedEvent,
   });
   // Stryker restore all
 
@@ -204,6 +206,28 @@ export class Plan {
     this.record(event);
   }
 
+  addExerciseInstruction(
+    planSectionId: VO.PlanSectionIdType,
+    exerciseInstruction: VO.ExerciseInstructionType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
+    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
+    Invariants.PlanSectionExerciseInstructionLimit.enforce({
+      planSection: this.sections.find((section) => section.id === planSectionId),
+    });
+
+    const event = bg.event(
+      Events.PlanExerciseInstructionAddedEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, planSectionId, exerciseInstruction, ownerId: this.ownerId! },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<PlanEventType> {
     const events = [...this.pending];
 
@@ -280,6 +304,18 @@ export class Plan {
       case Events.PLAN_RENAMED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.name = event.payload.planName;
+        break;
+      }
+
+      case Events.PLAN_EXERCISE_INSTRUCTION_ADDED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.map((section) => {
+          if (section.id === event.payload.planSectionId) {
+            section.exerciseInstructions.push(event.payload.exerciseInstruction);
+            return section;
+          }
+          return section;
+        });
         break;
       }
     }
