@@ -229,7 +229,11 @@ export class Plan {
 
       case Events.PLAN_SECTION_CREATED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
-        this.sections.push({ id: event.payload.planSectionId, name: event.payload.planSectionName });
+        this.sections.push({
+          id: event.payload.planSectionId,
+          name: event.payload.planSectionName,
+          exerciseInstructions: [],
+        });
         break;
       }
 
