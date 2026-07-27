@@ -7,9 +7,9 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}/instruction`;
+const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}/exercise`;
 
-describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/instruction", async () => {
+describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/exercise", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
@@ -27,7 +27,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/plans/id/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}/instruction`,
+      `/api/plans/id/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}/exercise`,
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
@@ -41,7 +41,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/plans/${mocks.planId}/section/id/exercise-instruction/${mocks.exerciseInstructionId}/instruction`,
+      `/api/plans/${mocks.planId}/section/id/exercise-instruction/${mocks.exerciseInstructionId}/exercise`,
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
@@ -55,7 +55,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/id/instruction`,
+      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/id/exercise`,
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
@@ -72,7 +72,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(response.status).toEqual(500);
   });
 
-  test("validation - sets - missing", async () => {
+  test("validation - exerciseId - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
@@ -83,71 +83,21 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
-  test("validation - sets - invalid", async () => {
+  test("validation - exerciseId - invalid", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
       url,
-      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: 0 }) },
+      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ exerciseId: 0 }) },
       mocks.ip,
     );
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid", _known: true });
-  });
-
-  test("validation - reps - missing", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: mocks.sets }) },
-      mocks.ip,
-    );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.type", _known: true });
-  });
-
-  test("validation - sets - invalid", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "PATCH",
-        headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ sets: mocks.sets, reps: { min: 0, max: 0 } }),
-      },
-      mocks.ip,
-    );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid", _known: true });
-  });
-
-  test("validation - sets - range", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "PATCH",
-        headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ sets: mocks.sets, reps: { min: 2, max: 1 } }),
-      },
-      mocks.ip,
-    );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.range", _known: true });
+    expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
   test("PlanIsEditable - initial", async () => {
@@ -267,7 +217,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
-      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}/instruction`,
+      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}/exercise`,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
@@ -280,7 +230,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("PlanSectionExerciseInstructionHasChanged", async () => {
+  test("PlanSectionExerciseInstructionExerciseHasChanged", async () => {
     const events = [
       mocks.GenericPlanCreatedEvent,
       mocks.GenericPlanSectionCreatedEvent,
@@ -295,7 +245,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       url,
       {
         method: "PATCH",
-        body: JSON.stringify(mocks.exerciseInstruction),
+        body: JSON.stringify(mocks.anotherExerciseInstruction),
         headers: mocks.correlationIdAndRevisionHeaders(events.length),
       },
       mocks.ip,
@@ -321,12 +271,14 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         headers: mocks.correlationIdAndRevisionHeaders(events.length),
-        body: JSON.stringify(mocks.anotherExerciseInstruction),
+        body: JSON.stringify(mocks.anotherExerciseInstructionAndExercise),
       },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionExerciseInstructionUpdatedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent,
+    ]);
   });
 });
