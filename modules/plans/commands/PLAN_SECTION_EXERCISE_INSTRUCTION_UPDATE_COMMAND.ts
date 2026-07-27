@@ -4,6 +4,7 @@ import * as v from "valibot";
 import * as Auth from "+auth";
 import * as VO from "+plans/value-objects";
 
+// Stryker disable next-line StringLiteral
 export const PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND =
   "PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND";
 

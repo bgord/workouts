@@ -9,7 +9,7 @@ class PlanSectionExerciseInstructionExerciseHasChangedError extends Error {
 }
 
 type PlanSectionExerciseInstructionExerciseHasChangedConfigType = {
-  current: Exercises.VO.ExerciseIdType;
+  current: Exercises.VO.ExerciseIdType | undefined;
   incoming: Exercises.VO.ExerciseIdType;
 };
 

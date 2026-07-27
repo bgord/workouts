@@ -8,7 +8,10 @@ class PlanBelongsToUserError extends Error {
   }
 }
 
-type PlanBelongsToUserConfigType = { ownerId: Auth.VO.UserIdType; requesterId: Auth.VO.UserIdType };
+type PlanBelongsToUserConfigType = {
+  ownerId: Auth.VO.UserIdType | undefined;
+  requesterId: Auth.VO.UserIdType;
+};
 
 class PlanBelongsToUserFactory extends bg.Invariant<PlanBelongsToUserConfigType> {
   passes(config: PlanBelongsToUserConfigType) {

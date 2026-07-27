@@ -8,7 +8,7 @@ class PlanNameHasChangedError extends Error {
   }
 }
 
-type PlanNameHasChangedConfigType = { current: VO.PlanNameType; incoming: VO.PlanNameType };
+type PlanNameHasChangedConfigType = { current: VO.PlanNameType | undefined; incoming: VO.PlanNameType };
 
 class PlanNameHasChangedFactory extends bg.Invariant<PlanNameHasChangedConfigType> {
   passes(config: PlanNameHasChangedConfigType) {

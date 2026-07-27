@@ -9,14 +9,16 @@ class PlanSectionExerciseInstructionExistsError extends Error {
 }
 
 type PlanSectionExerciseInstructionExistsConfigType = {
-  planSection: VO.PlanSection;
+  planSection: VO.PlanSection | undefined;
   exerciseInstructionId: VO.ExerciseInstructionIdType;
 };
 
 class PlanSectionExerciseInstructionExistsFactory extends bg.Invariant<PlanSectionExerciseInstructionExistsConfigType> {
   passes(config: PlanSectionExerciseInstructionExistsConfigType) {
-    return config.planSection.exerciseInstructions.some(
-      (exerciseInstruction) => exerciseInstruction.id === config.exerciseInstructionId,
+    return (
+      config.planSection?.exerciseInstructions.some(
+        (exerciseInstruction) => exerciseInstruction.id === config.exerciseInstructionId,
+      ) ?? false
     );
   }
 

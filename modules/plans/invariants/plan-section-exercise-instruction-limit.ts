@@ -8,11 +8,11 @@ class PlanSectionExerciseInstructionLimitError extends Error {
   }
 }
 
-type PlanSectionExerciseInstructionLimitConfigType = { planSection: VO.PlanSection };
+type PlanSectionExerciseInstructionLimitConfigType = { planSection: VO.PlanSection | undefined };
 
 class PlanSectionExerciseInstructionLimitFactory extends bg.Invariant<PlanSectionExerciseInstructionLimitConfigType> {
   passes(config: PlanSectionExerciseInstructionLimitConfigType) {
-    return config.planSection.exerciseInstructions.length < 20;
+    return (config.planSection?.exerciseInstructions.length ?? 0) < 20;
   }
 
   // Stryker disable next-line StringLiteral
