@@ -144,6 +144,7 @@ modules/
 │   │   ├── handlePlanRestoreCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
+│   │   ├── handlePlanSectionExerciseInstructionExerciseChangeCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionRemoveCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionUpdateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
@@ -157,6 +158,7 @@ modules/
 │   │   ├── PLAN_RESTORE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
+│   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
@@ -262,6 +264,7 @@ app/
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
+│   │   ├── plan-section-exercise-instruction-exercise-change.ts
 │   │   ├── plan-section-exercise-instruction-remove.ts
 │   │   ├── plan-section-exercise-instruction-update.ts
 │   │   ├── plan-section-remove.ts

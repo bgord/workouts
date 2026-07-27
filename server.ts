@@ -155,6 +155,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     HTTP.Plans.PlanSectionExerciseInstructionUpdate(deps),
   );
+  plans.patch(
+    "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/exercise",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    HTTP.Plans.PlanSectionExerciseInstructionExerciseChange(deps),
+  );
   plans.delete(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId",
     Tools.ShieldCaptcha.handle(),
