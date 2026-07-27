@@ -151,7 +151,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
   });
 
   test("PlanIsEditable - initial", async () => {
-    const events = [];
+    const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
