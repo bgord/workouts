@@ -151,6 +151,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       repo: Adapters.Plans.PlanRepository,
     }),
   );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND,
+    PlansCommandHandlers.handlePlanSectionExerciseInstructionExerciseChangeCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+    }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(
