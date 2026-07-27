@@ -105,6 +105,7 @@ modules/
 │   │   ├── exercise-is-assigned-to-category.ts
 │   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-name-is-unique.ts
+│   ├── open-host-queries
 │   ├── policies
 │   │   ├── exercise-deleter.ts
 │   ├── queries
