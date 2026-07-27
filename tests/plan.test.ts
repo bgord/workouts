@@ -843,6 +843,26 @@ describe("Plan", async () => {
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
   });
 
+  test("updateSectionExerciseInstruction - PlanSectionExerciseInstructionExists", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      di.Adapters.System,
+    );
+
+    expect(() =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndId,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
+  });
+
   test("updateSectionExerciseInstruction - PlanSectionExerciseInstructionHasChanged", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -857,5 +877,143 @@ describe("Plan", async () => {
     expect(() =>
       plan.updateSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionHasChanged.error);
+  });
+
+  test("changeSectionExerciseInstructionExercise", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      di.Adapters.System,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.userId,
+      ),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent]);
+  });
+
+  test("changeSectionExerciseInstructionExercise - PlanIsEditable - initial", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("changeSectionExerciseInstructionExercise - PlanIsEditable - archived", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("changeSectionExerciseInstructionExercise - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("changeSectionExerciseInstructionExercise - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.anotherUserId,
+      ),
+    ).toThrow(Plans.Invariants.PlanBelongsToUser.error);
+  });
+
+  test("changeSectionExerciseInstructionExercise - PlanSectionExists", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      di.Adapters.System,
+    );
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.anotherPlanSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExists.error);
+  });
+
+  test("changeSectionExerciseInstructionExercise - PlanSectionExerciseInstructionExists", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      di.Adapters.System,
+    );
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndId,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
+  });
+
+  test("changeSectionExerciseInstructionExercise - PlanSectionExerciseInstructionExerciseHasChanged", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      di.Adapters.System,
+    );
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.exerciseInstruction,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExerciseHasChanged.error);
   });
 });

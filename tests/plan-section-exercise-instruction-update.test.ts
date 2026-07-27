@@ -9,7 +9,7 @@ import * as testcases from "./testcases";
 
 const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}/instruction`;
 
-describe(`PATCH ${url}`, async () => {
+describe(`PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/instruction`, async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
@@ -252,6 +252,31 @@ describe(`PATCH ${url}`, async () => {
     );
 
     await testcases.assertInvariantError(response, 403, "plan.section.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanSectionExerciseInstructionExists", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}/instruction`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(mocks.anotherExerciseInstruction),
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.section.exercise.instruction.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
