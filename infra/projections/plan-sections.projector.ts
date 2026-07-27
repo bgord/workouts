@@ -55,7 +55,7 @@ export class PlanSectionsProjector {
   async onPlanSectionRenamedEvent(event: Plans.Events.PlanSectionRenamedEventType) {
     await db
       .update(Schema.planSections)
-      .set({ name: event.payload.planSectionName })
+      .set({ name: event.payload.planSectionName, updatedAt: event.createdAt })
       .where(eq(Schema.planSections.id, event.payload.planSectionId));
   }
 }

@@ -336,6 +336,7 @@ infra/
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts
 │   ├── exercises.projector.ts
+│   ├── plan-section-exercise-instructions.projector.ts
 │   ├── plan-sections.projector.ts
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts

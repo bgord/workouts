@@ -183,9 +183,10 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
   planId: text("planId", { length: 36 }).notNull(),
   planSectionId: text("planSectionId", { length: 36 }).notNull(),
   exerciseId: text("exerciseId", { length: 36 }).notNull(),
-  ownerId: text("ownerId", { length: 36 }).notNull(),
   sets: integer("sets", { mode: "number" }).notNull(),
-  reps: integer("reps", { mode: "number" }).notNull(),
+  repsMin: integer("repsMin", { mode: "number" }).notNull(),
+  repsMax: integer("repsMax", { mode: "number" }).notNull(),
+  ownerId: text("ownerId", { length: 36 }).notNull(),
   createdAt: integer("createdAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });

@@ -265,7 +265,7 @@ export class Plan {
     exerciseInstruction: Omit<VO.ExerciseInstructionType, "exerciseId">,
     requesterId: Auth.VO.UserIdType,
   ) {
-    const planSection = this.sections.find((section) => section.id === planSectionId);
+    const planSection = this.sections.find((section) => section.id === planSectionId)!;
 
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
@@ -277,7 +277,7 @@ export class Plan {
     Invariants.PlanSectionExerciseInstructionHasChanged.enforce({
       current: planSection.exerciseInstructions.find(
         (instruction) => instruction.id === exerciseInstruction.id,
-      ),
+      )!,
       incoming: exerciseInstruction,
     });
 
@@ -296,7 +296,7 @@ export class Plan {
     exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">,
     requesterId: Auth.VO.UserIdType,
   ) {
-    const planSection = this.sections.find((section) => section.id === planSectionId);
+    const planSection = this.sections.find((section) => section.id === planSectionId)!;
 
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ ownerId: this.ownerId!, requesterId });
@@ -308,7 +308,7 @@ export class Plan {
     Invariants.PlanSectionExerciseInstructionExerciseHasChanged.enforce({
       current: planSection.exerciseInstructions.find(
         (instruction) => instruction.id === exerciseInstruction.id,
-      ).exerciseId,
+      )?.exerciseId!,
       incoming: exerciseInstruction.exerciseId,
     });
 

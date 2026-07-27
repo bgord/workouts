@@ -51,35 +51,35 @@ export class PlansProjector {
   async onPlanArchivedEvent(event: Plans.Events.PlanArchivedEventType) {
     await db
       .update(Schema.plans)
-      .set({ updatedAt: event.createdAt, status: Plans.VO.PlanStatusEnum.archived })
+      .set({ status: Plans.VO.PlanStatusEnum.archived, updatedAt: event.createdAt })
       .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
   }
 
   async onPlanRestoredEvent(event: Plans.Events.PlanRestoredEventType) {
     await db
       .update(Schema.plans)
-      .set({ updatedAt: event.createdAt, status: Plans.VO.PlanStatusEnum.draft })
+      .set({ status: Plans.VO.PlanStatusEnum.draft, updatedAt: event.createdAt })
       .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
   }
 
   async onPlanFinalizedEvent(event: Plans.Events.PlanFinalizedEventType) {
     await db
       .update(Schema.plans)
-      .set({ updatedAt: event.createdAt, status: Plans.VO.PlanStatusEnum.finalized })
+      .set({ status: Plans.VO.PlanStatusEnum.finalized, updatedAt: event.createdAt })
       .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
   }
 
   async onPlanEditingEnabledEvent(event: Plans.Events.PlanEditingEnabledEventType) {
     await db
       .update(Schema.plans)
-      .set({ updatedAt: event.createdAt, status: Plans.VO.PlanStatusEnum.draft })
+      .set({ status: Plans.VO.PlanStatusEnum.draft, updatedAt: event.createdAt })
       .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
   }
 
   async onPlanRenamedEvent(event: Plans.Events.PlanRenamedEventType) {
     await db
       .update(Schema.plans)
-      .set({ updatedAt: event.createdAt, name: event.payload.planName })
+      .set({ name: event.payload.planName, updatedAt: event.createdAt })
       .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
   }
 }
