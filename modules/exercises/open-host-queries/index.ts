@@ -1,1 +1,3 @@
-export * as GetExerciseOHQ from "+exercises/queries/get-exercise";
+import type { GetExercise } from "+exercises/queries/get-exercise";
+
+export type GetExerciseOHQ = GetExercise;

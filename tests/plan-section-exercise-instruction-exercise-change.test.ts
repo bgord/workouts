@@ -100,12 +100,33 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
+  test("ExerciseExists", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        body: JSON.stringify(mocks.anotherExerciseInstruction),
+        headers: mocks.revisionHeaders(),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("PlanIsEditable - initial", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -127,6 +148,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -148,6 +170,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -169,6 +192,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -190,6 +214,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -215,6 +240,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}/exercise`,
@@ -240,6 +266,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -265,6 +292,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,

@@ -1,3 +1,4 @@
+export * from "./exercise-exists";
 export * from "./plan-belongs-to-user";
 export * from "./plan-is-archivable";
 export * from "./plan-is-editable";

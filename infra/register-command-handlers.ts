@@ -135,6 +135,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionExerciseInstructionAddCommand({
       ...deps,
       repo: Adapters.Plans.PlanRepository,
+      GetExerciseOHQ: Adapters.Exercises.GetExerciseQuery,
     }),
   );
   Tools.CommandBus.on(
@@ -156,6 +157,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionExerciseInstructionExerciseChangeCommand({
       ...deps,
       repo: Adapters.Plans.PlanRepository,
+      GetExerciseOHQ: Adapters.Exercises.GetExerciseQuery,
     }),
   );
 
