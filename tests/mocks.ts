@@ -13,6 +13,8 @@ import type * as Preferences from "+preferences";
 // IDs
 export const correlationId = "00000000-0000-0000-0000-000000000000";
 
+export const commit = bg.CommitSha.fromString("a".repeat(40)).value;
+
 export const userId = v.parse(bg.UUID, "592ddbc7-9d8f-4677-9f7c-14d88800eea7");
 export const anotherUserId = v.parse(bg.UUID, "c9371ccb-b4dd-4f4c-a03e-3bd9fcba816a");
 export const historyId = v.parse(bg.UUID, "bd639ce1-155b-4a99-b423-0c41eaa0e330");
@@ -159,6 +161,7 @@ export const GenericHourHasPassedEvent = {
   createdAt: T0.ms,
   stream: "passage_of_time",
   version: 1,
+  commit,
   name: "HOUR_HAS_PASSED_EVENT",
   payload: { timestamp: hourHasPassedTimestamp.ms },
 } satisfies bg.System.Events.HourHasPassedEventType;
@@ -169,6 +172,7 @@ export const GenericAccountCreatedEvent = {
   createdAt: T0.ms,
   stream: `account_${userId}`,
   version: 1,
+  commit,
   name: "ACCOUNT_CREATED_EVENT",
   payload: { userId, timestamp: T0.ms },
 } satisfies Auth.Events.AccountCreatedEventType;
@@ -179,6 +183,7 @@ export const GenericUserLanguageSetEvent = {
   createdAt: T0.ms,
   stream: `preferences_${userId}`,
   version: 1,
+  commit,
   name: "USER_LANGUAGE_SET_EVENT",
   payload: { userId, language: languages.supported.en },
 } satisfies bg.Preferences.Events.UserLanguageSetEventType;
@@ -189,6 +194,7 @@ export const GenericUserLanguageSetPLEvent = {
   createdAt: T0.ms,
   stream: `preferences_${userId}`,
   version: 1,
+  commit,
   name: "USER_LANGUAGE_SET_EVENT",
   payload: { userId, language: languages.supported.pl },
 } satisfies bg.Preferences.Events.UserLanguageSetEventType;
@@ -199,6 +205,7 @@ export const GenericProfileAvatarUpdatedEvent = {
   createdAt: T0.ms,
   stream: `preferences_${userId}`,
   version: 1,
+  commit,
   name: "PROFILE_AVATAR_UPDATED_EVENT",
   payload: { userId, key: profileAvatarObjectKey, etag: etag.get() },
 } satisfies Preferences.Events.ProfileAvatarUpdatedEventType;
@@ -209,6 +216,7 @@ export const GenericProfileAvatarRemovedEvent = {
   createdAt: T0.ms,
   stream: `preferences_${userId}`,
   version: 1,
+  commit,
   name: "PROFILE_AVATAR_REMOVED_EVENT",
   payload: { userId },
 } satisfies Preferences.Events.ProfileAvatarRemovedEventType;
@@ -219,6 +227,7 @@ export const GenericExerciseAddedEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_ADDED_EVENT",
   payload: { id: exerciseId, name: exerciseName, description: exerciseDescription, image: exerciseImageKey },
 } satisfies Exercises.Events.ExerciseAddedEventType;
@@ -229,6 +238,7 @@ export const GenericExerciseDeletedEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_DELETED_EVENT",
   payload: { id: exerciseId, image: exerciseImageKey },
 } satisfies Exercises.Events.ExerciseDeletedEventType;
@@ -239,6 +249,7 @@ export const GenericExerciseUpdatedNameEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_UPDATED_EVENT",
   payload: { id: exerciseId, name: anotherExerciseName, description: exerciseDescription },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
@@ -249,6 +260,7 @@ export const GenericExerciseUpdatedDescriptionEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_UPDATED_EVENT",
   payload: { id: exerciseId, name: exerciseName, description: anotherExerciseDescription },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
@@ -259,6 +271,7 @@ export const GenericExerciseUpdatedEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_UPDATED_EVENT",
   payload: { id: exerciseId, name: anotherExerciseName, description: anotherExerciseDescription },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
@@ -269,6 +282,7 @@ export const GenericExerciseImageChangedEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_IMAGE_CHANGED_EVENT",
   payload: { id: exerciseId, image: exerciseImageKey },
 } satisfies Exercises.Events.ExerciseImageChangedEventType;
@@ -279,6 +293,7 @@ export const GenericExerciseCategoryAddedEvent = {
   createdAt: T0.ms,
   stream: `exercise_category_${exerciseCategoryId}`,
   version: 1,
+  commit,
   name: "EXERCISE_CATEGORY_ADDED_EVENT",
   payload: { id: exerciseCategoryId, name: exerciseCategoryName },
 } satisfies Exercises.Events.ExerciseCategoryAddedEventType;
@@ -289,6 +304,7 @@ export const GenericExerciseCategoryDeletedEvent = {
   createdAt: T0.ms,
   stream: `exercise_category_${exerciseCategoryId}`,
   version: 1,
+  commit,
   name: "EXERCISE_CATEGORY_DELETED_EVENT",
   payload: { id: exerciseCategoryId },
 } satisfies Exercises.Events.ExerciseCategoryDeletedEventType;
@@ -299,6 +315,7 @@ export const GenericExerciseCategoryRenamedEvent = {
   createdAt: T0.ms,
   stream: `exercise_category_${exerciseCategoryId}`,
   version: 1,
+  commit,
   name: "EXERCISE_CATEGORY_RENAMED_EVENT",
   payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName },
 } satisfies Exercises.Events.ExerciseCategoryRenamedEventType;
@@ -309,6 +326,7 @@ export const GenericExerciseCategoryAssignedEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_CATEGORY_ASSIGNED_EVENT",
   payload: { exerciseId, exerciseCategoryId },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
@@ -319,6 +337,7 @@ export const GenericExerciseCategoryUnassignedEvent = {
   createdAt: T0.ms,
   stream: `exercise_${exerciseId}`,
   version: 1,
+  commit,
   name: "EXERCISE_CATEGORY_UNASSIGNED_EVENT",
   payload: { exerciseId, exerciseCategoryId },
 } satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
@@ -329,6 +348,7 @@ export const GenericPlanCreatedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_CREATED_EVENT",
   payload: { planId, planName, ownerId: userId },
 } satisfies Plans.Events.PlanCreatedEventType;
@@ -339,6 +359,7 @@ export const GenericPlanSectionCreatedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_CREATED_EVENT",
   payload: { planId, planSectionId, planSectionName, ownerId: userId },
 } satisfies Plans.Events.PlanSectionCreatedEventType;
@@ -349,6 +370,7 @@ export const GenericPlanSectionCreatedEventSecond = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_CREATED_EVENT",
   payload: {
     planId,
@@ -364,6 +386,7 @@ export const GenericPlanSectionRemovedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_REMOVED_EVENT",
   payload: { planId, planSectionId, ownerId: userId },
 } satisfies Plans.Events.PlanSectionRemovedEventType;
@@ -374,6 +397,7 @@ export const GenericPlanSectionRenamedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_RENAMED_EVENT",
   payload: { planSectionId, planSectionName: anotherPlanSectionName },
 } satisfies Plans.Events.PlanSectionRenamedEventType;
@@ -384,6 +408,7 @@ export const GenericPlanArchivedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_ARCHIVED_EVENT",
   payload: { planId, ownerId: userId },
 } satisfies Plans.Events.PlanArchivedEventType;
@@ -394,6 +419,7 @@ export const GenericPlanFinalizedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_FINALIZED_EVENT",
   payload: { planId, ownerId: userId },
 } satisfies Plans.Events.PlanFinalizedEventType;
@@ -404,6 +430,7 @@ export const GenericPlanRestoredEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_RESTORED_EVENT",
   payload: { planId, ownerId: userId },
 } satisfies Plans.Events.PlanRestoredEventType;
@@ -414,6 +441,7 @@ export const GenericPlanEditingEnabledEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_EDITING_ENABLED_EVENT",
   payload: { planId, ownerId: userId },
 } satisfies Plans.Events.PlanEditingEnabledEventType;
@@ -424,6 +452,7 @@ export const GenericPlanRenamedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_RENAMED_EVENT",
   payload: { planId, planName: anotherPlanName, ownerId: userId },
 } satisfies Plans.Events.PlanRenamedEventType;
@@ -434,6 +463,7 @@ export const GenericPlanSectionExerciseInstructionAddedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
   payload: { planId, planSectionId, exerciseInstruction, ownerId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
@@ -444,6 +474,7 @@ export const GenericPlanSectionExerciseInstructionRemovedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT",
   payload: { planId, planSectionId, exerciseInstructionId, ownerId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionRemovedEventType;
@@ -454,6 +485,7 @@ export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT",
   payload: {
     planId,
@@ -469,6 +501,7 @@ export const GenericPlanSectionExerciseInstructionExerciseChangedEvent = {
   createdAt: T0.ms,
   stream: `plan_${planId}`,
   version: 1,
+  commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT",
   payload: {
     planId,

@@ -8,6 +8,7 @@ import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseUpdatedEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
   GetExerciseNameCountQuery: Exercises.Queries.GetExerciseNameCount;

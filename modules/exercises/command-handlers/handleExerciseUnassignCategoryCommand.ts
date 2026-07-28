@@ -8,6 +8,7 @@ import { ExerciseIsAssignedToCategory } from "../invariants/exercise-is-assigned
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryUnassignedEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
   GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;

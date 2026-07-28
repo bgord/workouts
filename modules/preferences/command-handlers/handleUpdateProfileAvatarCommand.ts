@@ -11,6 +11,7 @@ type Dependencies = {
   EventStore: bg.EventStorePort<Preferences.Events.ProfileAvatarUpdatedEventType>;
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   ImageInfo: bg.ImageInfoPort;
   ImageProcessor: bg.ImageProcessorPort;
   TemporaryFile: bg.TemporaryFilePort;

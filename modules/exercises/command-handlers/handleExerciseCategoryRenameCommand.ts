@@ -7,6 +7,7 @@ import { ExerciseCategoryNameIsUnique } from "../invariants/exercise-category-na
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryRenamedEventType>;
   GetExerciseCategoryNameCountQuery: Exercises.Queries.GetExerciseCategoryNameCount;
   GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;

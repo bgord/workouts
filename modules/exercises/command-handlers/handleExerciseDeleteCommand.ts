@@ -6,6 +6,7 @@ import { ExerciseExists } from "../invariants/exercise-exists";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseDeletedEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
 };

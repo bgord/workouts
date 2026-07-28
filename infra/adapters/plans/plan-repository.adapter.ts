@@ -4,6 +4,7 @@ import * as Plans from "+plans";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Plans.Aggregates.PlanEventType>;
 };
 

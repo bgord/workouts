@@ -7,6 +7,7 @@ import { PlanNameIsUniqueForOwner } from "../invariants/plan-name-is-unique-for-
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   repo: Plans.Ports.PlanRepositoryPort;
   GetPlanNameForOwnerCountQuery: Plans.Queries.GetPlanNameForOwnerCount;
   GetPlanEditableForOwnerCountQuery: Plans.Queries.GetPlanEditableForOwnerCount;

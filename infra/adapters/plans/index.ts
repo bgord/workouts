@@ -7,6 +7,7 @@ import { createPlanRepository } from "./plan-repository.adapter";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Plans.Aggregates.PlanEventType>;
   Logger: bg.LoggerPort;
 };

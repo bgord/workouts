@@ -7,32 +7,24 @@ import * as mocks from "./mocks";
 
 describe("Plan", async () => {
   const di = await bootstrap();
+  const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("build new aggregate", () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(plan.pullEvents()).toEqual([]);
   });
 
   test("create", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, async () => {
-      const plan = Plans.Aggregates.Plan.create(
-        mocks.planId,
-        mocks.planName,
-        mocks.userId,
-        di.Adapters.System,
-      );
+      const plan = Plans.Aggregates.Plan.create(mocks.planId, mocks.planName, mocks.userId, deps);
 
       expect(plan.pullEvents()).toEqual([mocks.GenericPlanCreatedEvent]);
     });
   });
 
   test("createSection - first", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId),
@@ -45,7 +37,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -56,7 +48,7 @@ describe("Plan", async () => {
   });
 
   test("createSection - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
@@ -67,7 +59,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
@@ -79,7 +71,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
@@ -88,11 +80,7 @@ describe("Plan", async () => {
   });
 
   test("createSection - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.anotherUserId)).toThrow(
       Plans.Invariants.PlanBelongsToUser.error,
@@ -103,7 +91,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 6)],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
@@ -115,7 +103,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
@@ -127,7 +115,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -138,7 +126,7 @@ describe("Plan", async () => {
   });
 
   test("renameSection - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.renameSection(mocks.planSectionId, mocks.anotherPlanSectionName, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
@@ -149,7 +137,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.renameSection(mocks.planSectionId, mocks.anotherPlanSectionName, mocks.userId)).toThrow(
@@ -161,7 +149,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.renameSection(mocks.planSectionId, mocks.anotherPlanSectionName, mocks.userId)).toThrow(
@@ -170,11 +158,7 @@ describe("Plan", async () => {
   });
 
   test("renameSection - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() =>
       plan.renameSection(mocks.planSectionId, mocks.anotherPlanSectionName, mocks.anotherUserId),
@@ -185,7 +169,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -197,7 +181,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.renameSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
@@ -209,7 +193,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -220,7 +204,7 @@ describe("Plan", async () => {
   });
 
   test("removeSection - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.removeSection(mocks.planSectionId, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
@@ -231,7 +215,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.removeSection(mocks.planSectionId, mocks.userId)).toThrow(
@@ -243,7 +227,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.removeSection(mocks.planSectionId, mocks.userId)).toThrow(
@@ -252,11 +236,7 @@ describe("Plan", async () => {
   });
 
   test("removeSection - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.removeSection(mocks.planSectionId, mocks.anotherUserId)).toThrow(
       Plans.Invariants.PlanBelongsToUser.error,
@@ -267,7 +247,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.removeSection(mocks.anotherPlanSectionId, mocks.userId)).toThrow(
@@ -276,11 +256,7 @@ describe("Plan", async () => {
   });
 
   test("archive - draft", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.archive(mocks.userId));
 
@@ -291,7 +267,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.archive(mocks.userId));
@@ -300,7 +276,7 @@ describe("Plan", async () => {
   });
 
   test("archive - PlanIsArchivable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsArchivable.error);
   });
@@ -309,28 +285,20 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsArchivable.error);
   });
 
   test("archive - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.archive(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
 
   test("finalize", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.finalize(mocks.userId));
 
@@ -338,7 +306,7 @@ describe("Plan", async () => {
   });
 
   test("finalize - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
   });
@@ -347,7 +315,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -357,18 +325,14 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
   });
 
   test("finalize - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.finalize(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
@@ -377,7 +341,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.restore(mocks.userId));
@@ -386,17 +350,13 @@ describe("Plan", async () => {
   });
 
   test("restore - PlanIsRestorable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsArchivable.error);
   });
 
   test("restore - PlanIsRestorable - draft", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.restore(mocks.userId)).toThrow(Plans.Invariants.PlanIsRestorable.error);
   });
@@ -405,7 +365,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.restore(mocks.userId)).toThrow(Plans.Invariants.PlanIsRestorable.error);
@@ -415,7 +375,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.restore(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
@@ -425,7 +385,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.enableEditing(mocks.userId));
@@ -434,17 +394,13 @@ describe("Plan", async () => {
   });
 
   test("enableEditing - PlanIsFinalized - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.enableEditing(mocks.userId)).toThrow(Plans.Invariants.PlanIsFinalized.error);
   });
 
   test("enableEditing - PlanIsFinalized - draft", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.enableEditing(mocks.userId)).toThrow(Plans.Invariants.PlanIsFinalized.error);
   });
@@ -453,7 +409,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.enableEditing(mocks.userId)).toThrow(Plans.Invariants.PlanIsFinalized.error);
@@ -463,18 +419,14 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.enableEditing(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
 
   test("rename", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       plan.rename(mocks.anotherPlanName, mocks.userId),
@@ -484,7 +436,7 @@ describe("Plan", async () => {
   });
 
   test("rename - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() => plan.rename(mocks.anotherPlanName, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
@@ -495,7 +447,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.rename(mocks.anotherPlanName, mocks.userId)).toThrow(
@@ -507,7 +459,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() => plan.rename(mocks.anotherPlanName, mocks.userId)).toThrow(
@@ -516,11 +468,7 @@ describe("Plan", async () => {
   });
 
   test("rename - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.rename(mocks.anotherPlanName, mocks.anotherUserId)).toThrow(
       Plans.Invariants.PlanBelongsToUser.error,
@@ -528,11 +476,7 @@ describe("Plan", async () => {
   });
 
   test("rename - PlanNameHasChanged", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() => plan.rename(mocks.planName, mocks.userId)).toThrow(
       Plans.Invariants.PlanNameHasChanged.error,
@@ -543,7 +487,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -561,7 +505,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 19),
       ],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -572,7 +516,7 @@ describe("Plan", async () => {
   });
 
   test("addSectionExerciseInstruction - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() =>
       plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
@@ -583,7 +527,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -595,7 +539,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -604,11 +548,7 @@ describe("Plan", async () => {
   });
 
   test("addSectionExerciseInstruction - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() =>
       plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.anotherUserId),
@@ -619,7 +559,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -635,7 +575,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 20),
       ],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -651,7 +591,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -662,7 +602,7 @@ describe("Plan", async () => {
   });
 
   test("removeSectionExerciseInstruction - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() =>
       plan.removeSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstructionId, mocks.userId),
@@ -673,7 +613,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -685,7 +625,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -694,11 +634,7 @@ describe("Plan", async () => {
   });
 
   test("removeSectionExerciseInstruction - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() =>
       plan.removeSectionExerciseInstruction(
@@ -713,7 +649,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -733,7 +669,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -753,7 +689,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -768,7 +704,7 @@ describe("Plan", async () => {
   });
 
   test("updateSectionExerciseInstruction - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() =>
       plan.updateSectionExerciseInstruction(
@@ -783,7 +719,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -799,7 +735,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -812,11 +748,7 @@ describe("Plan", async () => {
   });
 
   test("updateSectionExerciseInstruction - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() =>
       plan.updateSectionExerciseInstruction(
@@ -831,7 +763,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -851,7 +783,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -871,7 +803,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -887,7 +819,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -902,7 +834,7 @@ describe("Plan", async () => {
   });
 
   test("changeSectionExerciseInstructionExercise - PlanIsEditable - initial", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], di.Adapters.System);
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [], deps);
 
     expect(() =>
       plan.changeSectionExerciseInstructionExercise(
@@ -917,7 +849,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -933,7 +865,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -946,11 +878,7 @@ describe("Plan", async () => {
   });
 
   test("changeSectionExerciseInstructionExercise - PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      [mocks.GenericPlanCreatedEvent],
-      di.Adapters.System,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
     expect(() =>
       plan.changeSectionExerciseInstructionExercise(
@@ -965,7 +893,7 @@ describe("Plan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -985,7 +913,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>
@@ -1005,7 +933,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
-      di.Adapters.System,
+      deps,
     );
 
     expect(() =>

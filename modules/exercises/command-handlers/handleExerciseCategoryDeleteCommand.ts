@@ -6,6 +6,7 @@ import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryDeletedEventType>;
   GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;
 };

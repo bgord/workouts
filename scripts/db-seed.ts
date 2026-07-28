@@ -26,6 +26,7 @@ const people = [
   for (const table of tables) await db.delete(table);
 
   const di = await bootstrap();
+  const deps = { ...di.Adapters.System, ...di.Tools };
 
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
@@ -49,7 +50,7 @@ const people = [
           Auth.Events.AccountCreatedEvent,
           `account_${result.user.id}`,
           { userId: result.user.id, timestamp: now.ms },
-          di.Adapters.System,
+          deps,
         );
 
         await di.Tools.EventStore.save([event]);

@@ -9,6 +9,7 @@ import { ExerciseIsNotAssignedToCategory } from "../invariants/exercise-is-not-a
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryAssignedEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
   GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;

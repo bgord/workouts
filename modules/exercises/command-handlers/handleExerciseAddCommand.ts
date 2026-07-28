@@ -11,6 +11,7 @@ import { ExerciseImageSide } from "../value-objects/exercise-image-side";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   TemporaryFile: bg.TemporaryFilePort;
   ImageInfo: bg.ImageInfoPort;
   ImageProcessor: bg.ImageProcessorPort;

@@ -6,6 +6,7 @@ import { ProfileAvatarKeyFactory } from "../value-objects/profile-avatar-key";
 type Dependencies = {
   EventStore: bg.EventStorePort<Preferences.Events.ProfileAvatarRemovedEventType>;
   IdProvider: bg.IdProviderPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   Clock: bg.ClockPort;
   RemoteFileStorage: bg.RemoteFileStoragePort;
 };

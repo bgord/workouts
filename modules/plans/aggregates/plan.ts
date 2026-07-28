@@ -20,7 +20,11 @@ export type PlanEventType =
   | Events.PlanSectionExerciseInstructionUpdatedEventType
   | Events.PlanSectionExerciseInstructionExerciseChangedEventType;
 
-type Dependencies = { IdProvider: bg.IdProviderPort; Clock: bg.ClockPort };
+type Dependencies = {
+  IdProvider: bg.IdProviderPort;
+  Clock: bg.ClockPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
+};
 
 export class Plan {
   // Stryker disable all
