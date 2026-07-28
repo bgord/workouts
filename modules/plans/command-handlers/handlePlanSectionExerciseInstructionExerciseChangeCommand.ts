@@ -1,7 +1,7 @@
 import type * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
-import { ExerciseExists } from "../invariants/exercise-exists";
+import { PlanSectionExerciseExists } from "../invariants/plan-section-exercise-exists";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -15,7 +15,7 @@ export const handlePlanSectionExerciseInstructionExerciseChangeCommand =
   async (command: Plans.Commands.PlanSectionExerciseInstructionExerciseChangeCommandType) => {
     const exercise = await deps.GetExerciseOHQ.execute(command.payload.exerciseInstruction.exerciseId);
 
-    ExerciseExists.enforce({ exercise });
+    PlanSectionExerciseExists.enforce({ exercise });
 
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);

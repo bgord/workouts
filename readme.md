@@ -179,7 +179,6 @@ modules/
 │   │   ├── PLAN_SECTION_REMOVED_EVENT.ts
 │   │   └── PLAN_SECTION_RENAMED_EVENT.ts
 │   ├── invariants
-│   │   ├── exercise-exists.ts
 │   │   ├── plan-belongs-to-user.ts
 │   │   ├── plan-is-archivable.ts
 │   │   ├── plan-is-editable.ts
@@ -188,6 +187,7 @@ modules/
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-has-changed.ts
 │   │   ├── plan-name-is-unique-for-owner.ts
+│   │   ├── plan-section-exercise-exists.ts
 │   │   ├── plan-section-exercise-instruction-exercise-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-exists.ts
 │   │   ├── plan-section-exercise-instruction-has-changed.ts

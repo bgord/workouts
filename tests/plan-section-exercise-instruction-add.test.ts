@@ -159,7 +159,7 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: "reps.range", _known: true });
   });
 
-  test("ExerciseExists", async () => {
+  test("PlanSectionExerciseExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -175,7 +175,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    await testcases.assertInvariantError(response, 403, "plan.section.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

@@ -100,7 +100,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
-  test("ExerciseExists", async () => {
+  test("PlanSectionExerciseExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -116,7 +116,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    await testcases.assertInvariantError(response, 403, "plan.section.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

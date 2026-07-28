@@ -1,4 +1,3 @@
-export * from "./exercise-exists";
 export * from "./plan-belongs-to-user";
 export * from "./plan-is-archivable";
 export * from "./plan-is-editable";
@@ -7,6 +6,7 @@ export * from "./plan-is-restorable";
 export * from "./plan-limit-for-owner";
 export * from "./plan-name-has-changed";
 export * from "./plan-name-is-unique-for-owner";
+export * from "./plan-section-exercise-exists";
 export * from "./plan-section-exercise-instruction-exercise-has-changed";
 export * from "./plan-section-exercise-instruction-exists";
 export * from "./plan-section-exercise-instruction-has-changed";
