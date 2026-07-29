@@ -7,7 +7,7 @@ import {
   Router,
   redirect,
 } from "@tanstack/react-router";
-import { Avatar, I18N, Session } from "./api";
+import { Avatar, Exercises, I18N, Session } from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
 
@@ -45,6 +45,7 @@ export const exercisesRoute = createRoute({
   path: "/exercises",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/exercises"), "Exercises"),
+  loader: async ({ context }) => ({ exerciseCategories: await Exercises.listCategories(context.request) }),
 });
 
 const profileRoute = createRoute({
