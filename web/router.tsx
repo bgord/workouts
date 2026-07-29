@@ -48,13 +48,19 @@ export const workbookRoute = createRoute({
   loader: async ({ context }) => ({ exerciseCategories: await Exercises.listCategories(context.request) }),
 });
 
+export const exerciseCategoryRoute = createRoute({
+  path: "/workbook/exercise-category/$exerciseCategoryId",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/exercise-category"), "ExerciseCategory"),
+});
+
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, profileRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, exerciseCategoryRoute, profileRoute]);
 
 export function createRouter(context: RouterContext) {
   return new Router({

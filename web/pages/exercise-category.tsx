@@ -1,0 +1,8 @@
+// fallow-ignore-file unused-export
+export function ExerciseCategory() {
+  return (
+    <main data-gap="8" data-maxw="md" data-md-m="2" data-md-pb="16" data-mx="auto" data-stack="y">
+      <h1>Exercise category</h1>
+    </main>
+  );
+}

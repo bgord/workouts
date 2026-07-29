@@ -1,5 +1,6 @@
 // fallow-ignore-file unused-export
 
+import { Link } from "@tanstack/react-router";
 import { workbookRoute } from "../router";
 import { ExerciseCategoryAdd } from "../sections/exercise-category-add";
 
@@ -12,7 +13,14 @@ export function Workbook() {
       <ExerciseCategoryAdd />
       <ul>
         {exerciseCategories.map((exerciseCategory) => (
-          <li key={exerciseCategory.id}>{exerciseCategory.name}</li>
+          <li key={exerciseCategory.id}>
+            <Link
+              to="/workbook/exercise-category/$exerciseCategoryId"
+              params={{ exerciseCategoryId: exerciseCategory.id }}
+            >
+              {exerciseCategory.name}
+            </Link>
+          </li>
         ))}
       </ul>
     </main>
