@@ -52,6 +52,9 @@ export const exerciseCategoryRoute = createRoute({
   path: "/workbook/exercise-category/$exerciseCategoryId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/exercise-category"), "ExerciseCategory"),
+  loader: async ({ context, params }) => ({
+    exerciseCategory: await Exercises.getCategory(context.request, params),
+  }),
 });
 
 const profileRoute = createRoute({

@@ -15,8 +15,8 @@ export function Workbook() {
         {exerciseCategories.map((exerciseCategory) => (
           <li key={exerciseCategory.id}>
             <Link
-              to="/workbook/exercise-category/$exerciseCategoryId"
               params={{ exerciseCategoryId: exerciseCategory.id }}
+              to="/workbook/exercise-category/$exerciseCategoryId"
             >
               {exerciseCategory.name}
             </Link>
