@@ -3,15 +3,6 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 }
 
-.logo a,
-.logo a:visited,
-.logo a:hover,
-.logo a:active {
-  text-shadow: -10px -8px var(--color-brand-800);
-  color: var(--color-brand-300);
-  text-decoration: none;
-}
-
 [data-when] {
   display: none;
 }
