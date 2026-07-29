@@ -122,6 +122,7 @@ modules/
 │   └── value-objects
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
+│       ├── exercise-category-name.validation.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
 │       ├── exercise-id.ts
@@ -276,6 +277,8 @@ app/
 │       ├── remove-profile-avatar.ts
 │       ├── update-profile-avatar.ts
 │       └── update-user-language.ts
+└── services
+    ├── exercise-category-add-form.ts
 ```
 
 ## Infra:

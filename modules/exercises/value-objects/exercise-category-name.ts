@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import { ExerciseCategoryNameMax, ExerciseCategoryNameMin } from "./exercise-category-name.validation";
 
 export const ExerciseCategoryNameError = {
   Type: "exercise.category.name.type",
@@ -6,7 +7,7 @@ export const ExerciseCategoryNameError = {
 };
 
 // 3 to 64 letters or digits, and spaces allowed
-const CHARS_WHITELIST = /^[a-zA-Z0-9 ]{3,64}$/;
+const CHARS_WHITELIST = new RegExp(`^[a-zA-Z0-9 ]{${ExerciseCategoryNameMin},${ExerciseCategoryNameMax}}$`);
 
 export const ExerciseCategoryName = v.pipe(
   v.string(ExerciseCategoryNameError.Type),
