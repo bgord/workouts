@@ -1,3 +1,4 @@
+export * from "./exercise-category-add";
 export * from "./navigation";
 export * from "./profile-account-delete";
 export * from "./profile-avatar-change";

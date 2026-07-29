@@ -41,10 +41,10 @@ export const homeRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/home"), "Home"),
 });
 
-export const exercisesRoute = createRoute({
-  path: "/exercises",
+export const workbookRoute = createRoute({
+  path: "/workbook",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/exercises"), "Exercises"),
+  component: lazyRouteComponent(() => import("./pages/workbook"), "Workbook"),
   loader: async ({ context }) => ({ exerciseCategories: await Exercises.listCategories(context.request) }),
 });
 
@@ -54,7 +54,7 @@ const profileRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, exercisesRoute, profileRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, profileRoute]);
 
 export function createRouter(context: RouterContext) {
   return new Router({
