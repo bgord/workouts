@@ -9,6 +9,7 @@
   "app.menu.show": "Show menu",
   "app.name": "workouts",
   "app.profile": "Profile",
+  "app.exercises": "Exercises",
   "app.register": "Sign up",
   "app.save": "Save",
   "auth.change_password.desc": "You will be redirected to a form to set a new password",

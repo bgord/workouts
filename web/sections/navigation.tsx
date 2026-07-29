@@ -12,11 +12,17 @@ export function Navigation() {
 }
 
 function NavigationDesktop() {
+  const t = useTranslations();
+
   return (
     <nav data-cross="center" data-gap="6" data-p="2" data-stack="x" style={{ height: "70px" }}>
       <Logo />
 
-      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" data-ml="auto" to="/profile">
+      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" data-ml="auto" to="/exercises">
+        {t("app.exercises")}
+      </Link>
+
+      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" to="/profile">
         <Avatar size={AvatarSize.md} />
       </Link>
 

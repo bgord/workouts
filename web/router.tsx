@@ -41,13 +41,19 @@ export const homeRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/home"), "Home"),
 });
 
+export const exercisesRoute = createRoute({
+  path: "/exercises",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/exercises"), "Exercises"),
+});
+
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, profileRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, exercisesRoute, profileRoute]);
 
 export function createRouter(context: RouterContext) {
   return new Router({
