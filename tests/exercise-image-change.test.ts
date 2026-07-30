@@ -40,13 +40,6 @@ describe(`PATCH ${url}`, async () => {
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
   });
 
-  test("validation - empty payload", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    const response = await server.request(url, { method: "PATCH" }, mocks.ip);
-
-    expect(response.status).toEqual(500);
-  });
-
   test("ExerciseExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");

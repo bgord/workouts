@@ -13,16 +13,18 @@ type Dependencies = {
 };
 
 export const ExerciseAdd = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const body = await c.req.raw.clone().formData();
-  const file = body.get("file") as File;
+  const context = new bg.RequestContextHonoAdapter(c);
+  const form = await context.request.form();
+
+  const file = form.get("file") as File;
 
   const filename = tools.Filename.fromString(file.name).withBasename(
     v.parse(tools.Basename, deps.IdProvider.generate()),
   );
 
   const id = v.parse(Exercises.VO.ExerciseId, deps.IdProvider.generate());
-  const name = v.parse(Exercises.VO.ExerciseName, body.get("name"));
-  const description = v.parse(Exercises.VO.ExerciseDescription, body.get("description"));
+  const name = v.parse(Exercises.VO.ExerciseName, form.get("name"));
+  const description = v.parse(Exercises.VO.ExerciseDescription, form.get("description"));
 
   const temporary = await deps.TemporaryFile.write(filename, file);
 

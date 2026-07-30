@@ -13,9 +13,12 @@ type Dependencies = {
 };
 
 export const ExerciseImageChange = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const id = v.parse(Exercises.VO.ExerciseId, c.req.param("exerciseId"));
-  const body = await c.req.raw.clone().formData();
-  const file = body.get("file") as File;
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
+  const form = await context.request.form();
+
+  const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
+  const file = form.get("file") as File;
 
   const filename = tools.Filename.fromString(file.name).withBasename(
     v.parse(tools.Basename, deps.IdProvider.generate()),

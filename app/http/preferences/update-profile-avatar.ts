@@ -14,9 +14,9 @@ type Dependencies = {
 
 export const UpdateProfileAvatar = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
   const context = new bg.RequestContextHonoAdapter(c);
+  const form = await context.request.form();
 
-  const body = await c.req.raw.clone().formData();
-  const file = body.get("file") as File;
+  const file = form.get("file") as File;
 
   const userId = context.identity.userId() as string;
 
