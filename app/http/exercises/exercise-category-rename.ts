@@ -12,8 +12,8 @@ type Dependencies = {
 
 export const ExerciseCategoryRename = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
   const context = new bg.RequestContextHonoAdapter(c);
-  const body = await context.request.json();
   const params = context.request.params();
+  const body = await context.request.json();
 
   const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
   const name = v.parse(Exercises.VO.ExerciseCategoryName, body["name"]);

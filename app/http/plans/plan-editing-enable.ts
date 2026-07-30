@@ -1,5 +1,4 @@
 import * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import type hono from "hono";
 import * as v from "valibot";
 import type * as infra from "+infra";
@@ -17,11 +16,10 @@ export const PlanEditingEnable = (deps: Dependencies) => async (c: hono.Context<
 
   const userId = context.identity.userId() as string;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
-  const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
   const command = bg.command(
     Plans.Commands.PlanEditingEnableCommand,
-    { revision, payload: { planId, userId } },
+    { revision: context.middleware.revision.fromWeakETag(), payload: { planId, userId } },
     deps,
   );
 

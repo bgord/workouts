@@ -1,5 +1,4 @@
 import * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import type hono from "hono";
 import * as v from "valibot";
 import type * as infra from "+infra";
@@ -26,11 +25,13 @@ export const PlanSectionExerciseInstructionUpdate =
       sets: v.parse(Plans.VO.Sets, body["sets"]),
       reps: v.parse(Plans.VO.Reps, body["reps"]),
     };
-    const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
     const command = bg.command(
       Plans.Commands.PlanSectionExerciseInstructionUpdateCommand,
-      { revision, payload: { planId, planSectionId, exerciseInstruction, userId } },
+      {
+        revision: context.middleware.revision.fromWeakETag(),
+        payload: { planId, planSectionId, exerciseInstruction, userId },
+      },
       deps,
     );
 
