@@ -7,7 +7,11 @@ import type * as infra from "+infra";
 type Dependencies = { RemoteFileStorage: bg.RemoteFileStoragePort };
 
 export const ExerciseImageGet = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const id = v.parse(Exercises.VO.ExerciseId, c.req.param("exerciseId"));
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
+
+  const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
+
   const key = Exercises.VO.ExerciseImageKeyFactory.stable(id);
 
   const head = await deps.RemoteFileStorage.head(key);

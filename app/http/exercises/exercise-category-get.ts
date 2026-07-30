@@ -1,3 +1,4 @@
+import * as bg from "@bgord/bun";
 import type hono from "hono";
 import * as v from "valibot";
 import * as Exercises from "+exercises";
@@ -9,7 +10,10 @@ type Dependencies = {
 };
 
 export const ExerciseCategoryGet = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const id = v.parse(Exercises.VO.ExerciseCategoryId, c.req.param("exerciseCategoryId"));
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
+
+  const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
 
   const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(id);
 

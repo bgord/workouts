@@ -1,6 +1,6 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
-import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
+import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 
 export class Exercises {
   static async listCategories(request: Request | null): Promise<ReadonlyArray<ExerciseCategory>> {

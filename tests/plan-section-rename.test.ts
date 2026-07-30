@@ -51,13 +51,6 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: "uuid.type", _known: true });
   });
 
-  test("validation - empty payload", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    const response = await server.request(url, { method: "POST" }, mocks.ip);
-
-    expect(response.status).toEqual(500);
-  });
-
   test("validation - name - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 

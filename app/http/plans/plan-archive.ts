@@ -12,9 +12,11 @@ type Dependencies = {
 };
 
 export const PlanArchive = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const ownerId = c.get("user").id;
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
 
-  const planId = v.parse(Plans.VO.PlanId, c.req.param("planId"));
+  const ownerId = context.identity.userId() as string;
+  const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
 
   const command = bg.command(

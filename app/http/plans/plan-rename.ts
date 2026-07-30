@@ -12,12 +12,14 @@ type Dependencies = {
 };
 
 export const PlanRename = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const body = await c.req.json();
-  const ownerId = c.get("user").id;
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
+  const body = await context.request.json();
 
-  const planId = v.parse(Plans.VO.PlanId, c.req.param("planId"));
+  const ownerId = context.identity.userId() as string;
+  const planId = v.parse(Plans.VO.PlanId, params["planId"]);
+  const planName = v.parse(Plans.VO.PlanName, body["planName"]);
   const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
-  const planName = v.parse(Plans.VO.PlanName, body.planName);
 
   const command = bg.command(
     Plans.Commands.PlanRenameCommand,

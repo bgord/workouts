@@ -11,10 +11,11 @@ type Dependencies = {
 };
 
 export const ExerciseUnassignCategory = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const body = await c.req.json();
+  const context = new bg.RequestContextHonoAdapter(c);
+  const body = await context.request.json();
 
-  const exerciseId = v.parse(Exercises.VO.ExerciseId, body.exerciseId);
-  const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body.exerciseCategoryId);
+  const exerciseId = v.parse(Exercises.VO.ExerciseId, body["exerciseId"]);
+  const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body["exerciseCategoryId"]);
 
   const command = bg.command(
     Exercises.Commands.ExerciseUnassignCategoryCommand,

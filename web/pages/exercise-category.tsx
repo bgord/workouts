@@ -17,7 +17,7 @@ export function ExerciseCategory() {
       <ul>
         {exerciseCategory.exercises.map((exercise) => (
           <li key={exercise.id}>
-            <Link>{exercise.name}</Link>
+            <Link to="/">{exercise.name}</Link>
           </li>
         ))}
       </ul>

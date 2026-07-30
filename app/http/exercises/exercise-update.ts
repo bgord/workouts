@@ -12,11 +12,13 @@ type Dependencies = {
 };
 
 export const ExerciseUpdate = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const body = await c.req.json();
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
+  const body = await context.request.json();
 
-  const id = v.parse(Exercises.VO.ExerciseId, c.req.param("exerciseId"));
-  const name = v.parse(Exercises.VO.ExerciseName, body.name);
-  const description = v.parse(Exercises.VO.ExerciseDescription, body.description);
+  const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
+  const name = v.parse(Exercises.VO.ExerciseName, body["name"]);
+  const description = v.parse(Exercises.VO.ExerciseDescription, body["description"]);
 
   const command = bg.command(
     Exercises.Commands.ExerciseUpdateCommand,

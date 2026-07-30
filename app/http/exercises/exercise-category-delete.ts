@@ -11,7 +11,10 @@ type Dependencies = {
 };
 
 export const ExerciseCategoryDelete = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const id = v.parse(Exercises.VO.ExerciseCategoryId, c.req.param("exerciseCategoryId"));
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
+
+  const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
 
   const command = bg.command(Exercises.Commands.ExerciseCategoryDeleteCommand, { payload: { id } }, deps);
 

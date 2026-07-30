@@ -13,9 +13,12 @@ type Dependencies = {
 };
 
 export const UpdateProfileAvatar = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const userId = c.get("user").id;
+  const context = new bg.RequestContextHonoAdapter(c);
+
   const body = await c.req.raw.clone().formData();
   const file = body.get("file") as File;
+
+  const userId = context.identity.userId() as string;
 
   const uploaded = tools.Filename.fromString(file.name);
   const filename = uploaded.withBasename(v.parse(tools.Basename, userId));

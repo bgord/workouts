@@ -13,15 +13,13 @@ type Dependencies = {
 
 export const PlanSectionExerciseInstructionRemove =
   (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-    const ownerId = c.get("user").id;
+    const context = new bg.RequestContextHonoAdapter(c);
+    const params = context.request.params();
 
-    const planId = v.parse(Plans.VO.PlanId, c.req.param("planId"));
-    const planSectionId = v.parse(Plans.VO.PlanSectionId, c.req.param("planSectionId"));
-    const exerciseInstructionId = v.parse(
-      Plans.VO.ExerciseInstructionId,
-      c.req.param("exerciseInstructionId"),
-    );
-
+    const ownerId = context.identity.userId() as string;
+    const planId = v.parse(Plans.VO.PlanId, params["planId"]);
+    const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
+    const exerciseInstructionId = v.parse(Plans.VO.ExerciseInstructionId, params["exerciseInstructionId"]);
     const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
 
     const command = bg.command(

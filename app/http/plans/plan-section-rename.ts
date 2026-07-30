@@ -12,13 +12,14 @@ type Dependencies = {
 };
 
 export const PlanSectionRename = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const body = await c.req.json();
-  const ownerId = c.get("user").id;
+  const context = new bg.RequestContextHonoAdapter(c);
+  const params = context.request.params();
+  const body = await context.request.json();
 
-  const planId = v.parse(Plans.VO.PlanId, c.req.param("planId"));
-  const planSectionId = v.parse(Plans.VO.PlanSectionId, c.req.param("planSectionId"));
-  const planSectionName = v.parse(Plans.VO.PlanSectionName, body.planSectionName);
-
+  const ownerId = context.identity.userId() as string;
+  const planId = v.parse(Plans.VO.PlanId, params["planId"]);
+  const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
+  const planSectionName = v.parse(Plans.VO.PlanSectionName, body["planSectionName"]);
   const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
 
   const command = bg.command(
