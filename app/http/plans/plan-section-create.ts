@@ -20,7 +20,7 @@ export const PlanSectionCreate = (deps: Dependencies) => async (c: hono.Context<
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const planSectionId = v.parse(Plans.VO.PlanSectionId, deps.IdProvider.generate());
   const planSectionName = v.parse(Plans.VO.PlanSectionName, body["planSectionName"]);
-  const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
+  const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
   const command = bg.command(
     Plans.Commands.PlanSectionCreateCommand,

@@ -20,7 +20,7 @@ export const PlanSectionExerciseInstructionRemove =
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
     const exerciseInstructionId = v.parse(Plans.VO.ExerciseInstructionId, params["exerciseInstructionId"]);
-    const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
+    const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
     const command = bg.command(
       Plans.Commands.PlanSectionExerciseInstructionRemoveCommand,

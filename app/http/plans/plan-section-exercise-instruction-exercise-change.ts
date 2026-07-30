@@ -26,7 +26,7 @@ export const PlanSectionExerciseInstructionExerciseChange =
       id: exerciseInstructionId,
       exerciseId: v.parse(Exercises.VO.ExerciseId, body["exerciseId"]),
     };
-    const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
+    const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
     const command = bg.command(
       Plans.Commands.PlanSectionExerciseInstructionExerciseChangeCommand,

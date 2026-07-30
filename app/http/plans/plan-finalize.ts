@@ -17,7 +17,7 @@ export const PlanFinalize = (deps: Dependencies) => async (c: hono.Context<infra
 
   const userId = context.identity.userId() as string;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
-  const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
+  const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
   const command = bg.command(
     Plans.Commands.PlanFinalizeCommand,

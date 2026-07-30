@@ -27,7 +27,7 @@ export const PlanSectionExerciseInstructionAdd =
       sets: v.parse(Plans.VO.Sets, body["sets"]),
       reps: v.parse(Plans.VO.Reps, body["reps"]),
     };
-    const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
+    const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
     const command = bg.command(
       Plans.Commands.PlanSectionExerciseInstructionAddCommand,

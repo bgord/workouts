@@ -18,7 +18,7 @@ export const PlanSectionRemove = (deps: Dependencies) => async (c: hono.Context<
   const userId = context.identity.userId() as string;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
-  const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
+  const revision = tools.Revision.fromWeakETag(context.middleware.weakETag());
 
   const command = bg.command(
     Plans.Commands.PlanSectionRemoveCommand,
