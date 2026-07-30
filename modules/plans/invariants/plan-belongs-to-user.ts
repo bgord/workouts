@@ -9,13 +9,13 @@ class PlanBelongsToUserError extends Error {
 }
 
 type PlanBelongsToUserConfigType = {
-  ownerId: Auth.VO.UserIdType | undefined;
+  userId: Auth.VO.UserIdType | undefined;
   requesterId: Auth.VO.UserIdType;
 };
 
 class PlanBelongsToUserFactory extends bg.Invariant<PlanBelongsToUserConfigType> {
   passes(config: PlanBelongsToUserConfigType) {
-    return config.ownerId === config.requesterId;
+    return config.userId === config.requesterId;
   }
 
   // Stryker disable next-line StringLiteral

@@ -16,7 +16,7 @@ export const PlanSectionRename = (deps: Dependencies) => async (c: hono.Context<
   const params = context.request.params();
   const body = await context.request.json();
 
-  const ownerId = context.identity.userId() as string;
+  const userId = context.identity.userId() as string;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
   const planSectionName = v.parse(Plans.VO.PlanSectionName, body["planSectionName"]);
@@ -24,7 +24,7 @@ export const PlanSectionRename = (deps: Dependencies) => async (c: hono.Context<
 
   const command = bg.command(
     Plans.Commands.PlanSectionRenameCommand,
-    { revision, payload: { planId, planSectionId, planSectionName, ownerId } },
+    { revision, payload: { planId, planSectionId, planSectionName, userId } },
     deps,
   );
 

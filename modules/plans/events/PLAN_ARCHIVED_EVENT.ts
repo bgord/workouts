@@ -8,7 +8,7 @@ export const PLAN_ARCHIVED_EVENT = "PLAN_ARCHIVED_EVENT";
 export const PlanArchivedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(PLAN_ARCHIVED_EVENT),
-  payload: v.object({ planId: VO.PlanId, ownerId: Auth.VO.UserId }),
+  payload: v.object({ planId: VO.PlanId, userId: Auth.VO.UserId }),
 });
 
 export type PlanArchivedEventType = v.InferOutput<typeof PlanArchivedEvent>;

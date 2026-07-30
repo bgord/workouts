@@ -12,7 +12,7 @@ export const PlanSectionExerciseInstructionAddedEvent = v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
     exerciseInstruction: VO.ExerciseInstruction,
-    ownerId: Auth.VO.UserId,
+    userId: Auth.VO.UserId,
   }),
 });
 

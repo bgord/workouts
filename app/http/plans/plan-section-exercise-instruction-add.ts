@@ -18,7 +18,7 @@ export const PlanSectionExerciseInstructionAdd =
     const params = context.request.params();
     const body = await context.request.json();
 
-    const ownerId = context.identity.userId() as string;
+    const userId = context.identity.userId() as string;
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
     const exerciseInstruction = {
@@ -31,7 +31,7 @@ export const PlanSectionExerciseInstructionAdd =
 
     const command = bg.command(
       Plans.Commands.PlanSectionExerciseInstructionAddCommand,
-      { revision, payload: { planId, planSectionId, exerciseInstruction, ownerId } },
+      { revision, payload: { planId, planSectionId, exerciseInstruction, userId } },
       deps,
     );
 

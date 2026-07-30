@@ -164,7 +164,7 @@ export const plans = sqliteTable("plans", {
   id,
   name: text("name").notNull(),
   status: text("kind", toEnumList(PlanStatusEnum)).notNull(),
-  ownerId: text("ownerId", { length: 36 }).notNull(),
+  userId: text("userId", { length: 36 }).notNull(),
   createdAt: integer("createdAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });
@@ -173,7 +173,7 @@ export const planSections = sqliteTable("planSections", {
   id,
   planId: text("planId", { length: 36 }).notNull(),
   name: text("name").notNull(),
-  ownerId: text("ownerId", { length: 36 }).notNull(),
+  userId: text("userId", { length: 36 }).notNull(),
   createdAt: integer("createdAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });
@@ -186,7 +186,7 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
   sets: integer("sets", { mode: "number" }).notNull(),
   repsMin: integer("repsMin", { mode: "number" }).notNull(),
   repsMax: integer("repsMax", { mode: "number" }).notNull(),
-  ownerId: text("ownerId", { length: 36 }).notNull(),
+  userId: text("userId", { length: 36 }).notNull(),
   createdAt: integer("createdAt", { mode: "number" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
 });

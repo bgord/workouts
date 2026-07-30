@@ -14,7 +14,7 @@ export const handlePlanSectionExerciseInstructionRemoveCommand =
     plan.removeSectionExerciseInstruction(
       command.payload.planSectionId,
       command.payload.exerciseInstructionId,
-      command.payload.ownerId,
+      command.payload.userId,
     );
     await deps.repo.save(plan);
   };

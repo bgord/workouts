@@ -15,14 +15,14 @@ export const PlanSectionRemove = (deps: Dependencies) => async (c: hono.Context<
   const context = new bg.RequestContextHonoAdapter(c);
   const params = context.request.params();
 
-  const ownerId = context.identity.userId() as string;
+  const userId = context.identity.userId() as string;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
   const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
 
   const command = bg.command(
     Plans.Commands.PlanSectionRemoveCommand,
-    { revision, payload: { planId, planSectionId, ownerId } },
+    { revision, payload: { planId, planSectionId, userId } },
     deps,
   );
 

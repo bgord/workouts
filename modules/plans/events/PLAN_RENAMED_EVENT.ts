@@ -8,7 +8,7 @@ export const PLAN_RENAMED_EVENT = "PLAN_RENAMED_EVENT";
 export const PlanRenamedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(PLAN_RENAMED_EVENT),
-  payload: v.object({ planId: VO.PlanId, planName: VO.PlanName, ownerId: Auth.VO.UserId }),
+  payload: v.object({ planId: VO.PlanId, planName: VO.PlanName, userId: Auth.VO.UserId }),
 });
 
 export type PlanRenamedEventType = v.InferOutput<typeof PlanRenamedEvent>;

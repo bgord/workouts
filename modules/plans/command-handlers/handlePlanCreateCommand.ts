@@ -15,18 +15,18 @@ type Dependencies = {
 
 export const handlePlanCreateCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanCreateCommandType) => {
-    const planCount = await deps.GetPlanEditableForOwnerCountQuery.execute(command.payload.ownerId);
+    const planCount = await deps.GetPlanEditableForOwnerCountQuery.execute(command.payload.userId);
 
     PlanLimitForOwner.enforce({ count: planCount });
 
     const planNameCount = await deps.GetPlanNameForOwnerCountQuery.execute(
       command.payload.name,
-      command.payload.ownerId,
+      command.payload.userId,
     );
 
     PlanNameIsUniqueForOwner.enforce({ count: planNameCount });
 
-    const plan = Plan.create(command.payload.id, command.payload.name, command.payload.ownerId, deps);
+    const plan = Plan.create(command.payload.id, command.payload.name, command.payload.userId, deps);
 
     await deps.repo.save(plan);
   };

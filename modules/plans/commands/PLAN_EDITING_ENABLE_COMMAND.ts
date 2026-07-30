@@ -11,7 +11,7 @@ export const PlanEditingEnableCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   revision: v.instance(tools.Revision),
   name: v.literal(PLAN_EDITING_ENABLE_COMMAND),
-  payload: v.object({ planId: PlanId, ownerId: Auth.VO.UserId }),
+  payload: v.object({ planId: PlanId, userId: Auth.VO.UserId }),
 });
 
 export type PlanEditingEnableCommandType = v.InferOutput<typeof PlanEditingEnableCommand>;

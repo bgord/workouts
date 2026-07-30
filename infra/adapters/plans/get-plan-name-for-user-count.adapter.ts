@@ -8,11 +8,11 @@ import * as Schema from "+infra/schema";
 class GetPlanNameForOwnerCountQueryDrizzle implements Plans.Queries.GetPlanNameForOwnerCount {
   async execute(
     planName: Plans.VO.PlanNameType,
-    ownerId: Auth.VO.UserIdType,
+    userId: Auth.VO.UserIdType,
   ): Promise<tools.IntegerNonNegativeType> {
     const count = await db.$count(
       Schema.plans,
-      and(eq(Schema.plans.name, planName), eq(Schema.plans.ownerId, ownerId)),
+      and(eq(Schema.plans.name, planName), eq(Schema.plans.userId, userId)),
     );
 
     return tools.Int.nonNegative(count);

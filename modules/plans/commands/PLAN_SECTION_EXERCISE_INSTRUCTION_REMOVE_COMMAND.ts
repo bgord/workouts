@@ -16,7 +16,7 @@ export const PlanSectionExerciseInstructionRemoveCommand = v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
     exerciseInstructionId: VO.ExerciseInstructionId,
-    ownerId: Auth.VO.UserId,
+    userId: Auth.VO.UserId,
   }),
 });
 

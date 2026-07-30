@@ -22,7 +22,7 @@ export const handlePlanSectionExerciseInstructionExerciseChangeCommand =
     plan.changeSectionExerciseInstructionExercise(
       command.payload.planSectionId,
       command.payload.exerciseInstruction,
-      command.payload.ownerId,
+      command.payload.userId,
     );
     await deps.repo.save(plan);
   };

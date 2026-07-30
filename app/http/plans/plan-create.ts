@@ -14,11 +14,11 @@ export const PlanCreate = (deps: Dependencies) => async (c: hono.Context<infra.C
   const context = new bg.RequestContextHonoAdapter(c);
   const body = await context.request.json();
 
-  const ownerId = context.identity.userId() as string;
+  const userId = context.identity.userId() as string;
   const id = v.parse(Plans.VO.PlanId, deps.IdProvider.generate());
   const name = v.parse(Plans.VO.PlanName, body["name"]);
 
-  const command = bg.command(Plans.Commands.PlanCreateCommand, { payload: { id, name, ownerId } }, deps);
+  const command = bg.command(Plans.Commands.PlanCreateCommand, { payload: { id, name, userId } }, deps);
 
   await deps.CommandBus.emit(command);
 

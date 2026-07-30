@@ -8,7 +8,7 @@ export const PLAN_SECTION_REMOVED_EVENT = "PLAN_SECTION_REMOVED_EVENT";
 export const PlanSectionRemovedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(PLAN_SECTION_REMOVED_EVENT),
-  payload: v.object({ planId: VO.PlanId, planSectionId: VO.PlanSectionId, ownerId: Auth.VO.UserId }),
+  payload: v.object({ planId: VO.PlanId, planSectionId: VO.PlanSectionId, userId: Auth.VO.UserId }),
 });
 
 export type PlanSectionRemovedEventType = v.InferOutput<typeof PlanSectionRemovedEvent>;

@@ -12,7 +12,7 @@ export const PlanRenameCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   revision: v.instance(tools.Revision),
   name: v.literal(PLAN_RENAME_COMMAND),
-  payload: v.object({ planId: PlanId, planName: PlanName, ownerId: Auth.VO.UserId }),
+  payload: v.object({ planId: PlanId, planName: PlanName, userId: Auth.VO.UserId }),
 });
 
 export type PlanRenameCommandType = v.InferOutput<typeof PlanRenameCommand>;

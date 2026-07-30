@@ -42,7 +42,7 @@ export class PlansProjector {
       id: event.payload.planId,
       name: event.payload.planName,
       status: Plans.VO.PlanStatusEnum.draft,
-      ownerId: event.payload.ownerId,
+      userId: event.payload.userId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
     });
@@ -52,34 +52,34 @@ export class PlansProjector {
     await db
       .update(Schema.plans)
       .set({ status: Plans.VO.PlanStatusEnum.archived, updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
+      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
   }
 
   async onPlanRestoredEvent(event: Plans.Events.PlanRestoredEventType) {
     await db
       .update(Schema.plans)
       .set({ status: Plans.VO.PlanStatusEnum.draft, updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
+      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
   }
 
   async onPlanFinalizedEvent(event: Plans.Events.PlanFinalizedEventType) {
     await db
       .update(Schema.plans)
       .set({ status: Plans.VO.PlanStatusEnum.finalized, updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
+      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
   }
 
   async onPlanEditingEnabledEvent(event: Plans.Events.PlanEditingEnabledEventType) {
     await db
       .update(Schema.plans)
       .set({ status: Plans.VO.PlanStatusEnum.draft, updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
+      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
   }
 
   async onPlanRenamedEvent(event: Plans.Events.PlanRenamedEventType) {
     await db
       .update(Schema.plans)
       .set({ name: event.payload.planName, updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.ownerId, event.payload.ownerId)));
+      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
   }
 }

@@ -10,7 +10,7 @@ export const PLAN_CREATE_COMMAND = "PLAN_CREATE_COMMAND";
 export const PlanCreateCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   name: v.literal(PLAN_CREATE_COMMAND),
-  payload: v.object({ id: PlanId, name: PlanName, ownerId: Auth.VO.UserId }),
+  payload: v.object({ id: PlanId, name: PlanName, userId: Auth.VO.UserId }),
 });
 
 export type PlanCreateCommandType = v.InferOutput<typeof PlanCreateCommand>;

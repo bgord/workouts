@@ -12,7 +12,7 @@ export const PlanSectionRemoveCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   revision: v.instance(tools.Revision),
   name: v.literal(PLAN_SECTION_REMOVE_COMMAND),
-  payload: v.object({ planId: PlanId, planSectionId: PlanSectionId, ownerId: Auth.VO.UserId }),
+  payload: v.object({ planId: PlanId, planSectionId: PlanSectionId, userId: Auth.VO.UserId }),
 });
 
 export type PlanSectionRemoveCommandType = v.InferOutput<typeof PlanSectionRemoveCommand>;

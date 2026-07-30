@@ -6,10 +6,10 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 class GetPlanEditableForOwnerCountQueryDrizzle implements Plans.Queries.GetPlanEditableForOwnerCount {
-  async execute(ownerId: Auth.VO.UserIdType): Promise<tools.IntegerNonNegativeType> {
+  async execute(userId: Auth.VO.UserIdType): Promise<tools.IntegerNonNegativeType> {
     const count = await db.$count(
       Schema.plans,
-      and(eq(Schema.plans.name, ownerId), not(eq(Schema.plans.status, Plans.VO.PlanStatusEnum.archived))),
+      and(eq(Schema.plans.userId, userId), not(eq(Schema.plans.status, Plans.VO.PlanStatusEnum.archived))),
     );
 
     return tools.Int.nonNegative(count);

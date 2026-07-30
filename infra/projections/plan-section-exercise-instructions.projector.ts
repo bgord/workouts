@@ -50,7 +50,7 @@ export class PlanSectionExerciseInstructionProjector {
       sets: event.payload.exerciseInstruction.sets,
       repsMin: event.payload.exerciseInstruction.reps.min,
       repsMax: event.payload.exerciseInstruction.reps.max,
-      ownerId: event.payload.ownerId,
+      userId: event.payload.userId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
     });

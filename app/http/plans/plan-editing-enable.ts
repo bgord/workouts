@@ -15,13 +15,13 @@ export const PlanEditingEnable = (deps: Dependencies) => async (c: hono.Context<
   const context = new bg.RequestContextHonoAdapter(c);
   const params = context.request.params();
 
-  const ownerId = context.identity.userId() as string;
+  const userId = context.identity.userId() as string;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const revision = tools.Revision.fromWeakETag(c.get("WeakETag"));
 
   const command = bg.command(
     Plans.Commands.PlanEditingEnableCommand,
-    { revision, payload: { planId, ownerId } },
+    { revision, payload: { planId, userId } },
     deps,
   );
 

@@ -16,7 +16,7 @@ export const PlanSectionExerciseInstructionRemove =
     const context = new bg.RequestContextHonoAdapter(c);
     const params = context.request.params();
 
-    const ownerId = context.identity.userId() as string;
+    const userId = context.identity.userId() as string;
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
     const exerciseInstructionId = v.parse(Plans.VO.ExerciseInstructionId, params["exerciseInstructionId"]);
@@ -24,7 +24,7 @@ export const PlanSectionExerciseInstructionRemove =
 
     const command = bg.command(
       Plans.Commands.PlanSectionExerciseInstructionRemoveCommand,
-      { revision, payload: { planId, planSectionId, exerciseInstructionId, ownerId } },
+      { revision, payload: { planId, planSectionId, exerciseInstructionId, userId } },
       deps,
     );
 
