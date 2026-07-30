@@ -17,7 +17,7 @@ export const ExerciseGet = (deps: Dependencies) => async (c: hono.Context<infra.
 
   const exercise = await deps.GetExerciseQuery.execute(id);
 
-  if (!exercise) return c.notFound();
+  if (!exercise) return new Response(null, { status: 404 });
 
   const categories = await deps.ListCategoriesAssignedToExerciseQuery.execute(id);
 

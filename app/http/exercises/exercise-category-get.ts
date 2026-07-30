@@ -17,7 +17,7 @@ export const ExerciseCategoryGet = (deps: Dependencies) => async (c: hono.Contex
 
   const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(id);
 
-  if (!exerciseCategory) return c.notFound();
+  if (!exerciseCategory) return new Response(null, { status: 404 });
 
   const exercises = await deps.ListExercisesAssignedToCategoryQuery.execute(id);
 
