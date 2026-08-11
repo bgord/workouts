@@ -31,7 +31,7 @@
     "@bgord/bun": "1.21.1",
     "@bgord/design": "1.7.1",
     "@bgord/ui": "0.10.1",
-    "@tanstack/react-router": "1.170.22",
+    "@tanstack/react-router": "1.170.23",
     "better-auth": "1.6.26",
     "better-sqlite3": "13.0.3",
     "drizzle-orm": "0.45.2",
