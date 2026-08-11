@@ -40,7 +40,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   exercises.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   exercises.get("/list", HTTP.Exercises.ExerciseList(Adapters.Exercises));
-  exercises.get("/search", HTTP.Exercises.ExerciseSearch(Adapters.Exercises));
+  exercises.query("/search", HTTP.Exercises.ExerciseSearch(Adapters.Exercises));
   exercises.post(
     "/add",
     Tools.ShieldCaptcha.handle(),
@@ -74,7 +74,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   exercises.get("/:exerciseId/image", HTTP.Exercises.ExerciseImageGet(deps));
 
   exercises.get("/category/list", HTTP.Exercises.ExerciseCategoryList(Adapters.Exercises));
-  exercises.get("/category/search", HTTP.Exercises.ExerciseCategorySearch(Adapters.Exercises));
+  exercises.query("/category/search", HTTP.Exercises.ExerciseCategorySearch(Adapters.Exercises));
   exercises.post(
     "/category",
     Tools.ShieldCaptcha.handle(),

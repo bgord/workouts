@@ -6,32 +6,36 @@ import * as mocks from "./mocks";
 
 const url = "/api/exercises/category/search";
 
-describe(`GET ${url}`, async () => {
+describe(`QUERY ${url}`, async () => {
   const di = await bootstrap();
   const server = createServer(di);
 
   test("validation - AccessDeniedAuthShieldError", async () => {
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(403);
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
   });
 
-  test("validation - empty query", async () => {
+  test("validation - search - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY", body: JSON.stringify({}) }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(400);
     expect(json).toEqual({ message: "exercise.category.name.type", _known: true });
   });
 
-  test("validation - query - invalid", async () => {
+  test("validation - search - invalid", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
-    const response = await server.request(url + `?search=${"a".repeat(129)}`, { method: "GET" }, mocks.ip);
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ search: "a".repeat(129) }) },
+      mocks.ip,
+    );
     const json = await response.json();
 
     expect(response.status).toEqual(400);
@@ -48,8 +52,8 @@ describe(`GET ${url}`, async () => {
     );
 
     const response = await server.request(
-      url + `?search=${mocks.exerciseCategoryName}`,
-      { method: "GET" },
+      url,
+      { method: "QUERY", body: JSON.stringify({ search: mocks.exerciseCategoryName }) },
       mocks.ip,
     );
     const json = await response.json();
@@ -64,8 +68,8 @@ describe(`GET ${url}`, async () => {
     spies.use(spyOn(di.Adapters.Exercises.SearchExerciseCategoriesQuery, "execute").mockResolvedValue([]));
 
     const response = await server.request(
-      url + `?search=${mocks.exerciseCategoryName}`,
-      { method: "GET" },
+      url,
+      { method: "QUERY", body: JSON.stringify({ search: mocks.exerciseCategoryName }) },
       mocks.ip,
     );
     const json = await response.json();

@@ -9,9 +9,9 @@ type Dependencies = { SearchExerciseCategoriesQuery: Exercises.Queries.SearchExe
 
 export const ExerciseCategorySearch = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
   const context = new bg.RequestContextHonoAdapter(c);
-  const query = context.request.query();
+  const body = await context.request.json();
 
-  const name = v.parse(Exercises.VO.ExerciseCategoryName, query["search"]);
+  const name = v.parse(Exercises.VO.ExerciseCategoryName, body["search"]);
 
   const exerciseCategories = await deps.SearchExerciseCategoriesQuery.execute(name, tools.Int.positive(5));
 
