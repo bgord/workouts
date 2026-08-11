@@ -22,6 +22,7 @@ export const temporaryFileId = "738d1d64-0828-437e-a979-3dcebafe841a";
 
 // Timestamps
 export const T0 = tools.Timestamp.fromInstant(tools.Temporal.Instant.from("2025-01-01T00:00:00Z"));
+export const T0Date = "Wed, 01 Jan 2025 00:00:00 GMT";
 
 export const hourHasPassedTimestamp = T0;
 
