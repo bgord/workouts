@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import { eq } from "drizzle-orm";
+import * as v from "valibot";
 import * as Auth from "+auth";
 import { bootstrap } from "+infra/bootstrap";
 import { db } from "+infra/db";
@@ -32,7 +33,7 @@ const people = [
   registerCommandHandlers(di);
 
   const now = di.Adapters.System.Clock.now();
-  const correlationId = di.Adapters.System.IdProvider.generate();
+  const correlationId = v.parse(bg.CorrelationId, di.Adapters.System.IdProvider.generate());
 
   await bg.CorrelationStorage.run(correlationId, async () => {
     await Promise.all(

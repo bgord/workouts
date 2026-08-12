@@ -1,4 +1,6 @@
 /* cSpell:disable */
+
+import type * as bg from "@bgord/bun";
 import { relations, sql } from "drizzle-orm";
 import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
@@ -16,7 +18,7 @@ export const events = sqliteTable(
   "events",
   {
     id,
-    correlationId: text("correlationId").notNull(),
+    correlationId: text("correlationId").notNull().$type<bg.CorrelationIdType>(),
     createdAt: integer("createdAt").default(sql`now`).notNull(),
     name: text("name").notNull(),
     stream: text("stream").notNull(),
