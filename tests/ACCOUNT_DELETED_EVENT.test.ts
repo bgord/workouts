@@ -11,7 +11,7 @@ describe("ACCOUNT_DELETED_EVENT", () => {
       name: "ACCOUNT_DELETED_EVENT",
       payload: { userId: mocks.userId, timestamp: mocks.T0.ms },
       createdAt: mocks.T0.ms,
-      stream: `user_${mocks.userId}`,
+      stream: mocks.userStream,
       version: 1,
       commit: mocks.commit,
     } as const;
