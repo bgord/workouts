@@ -42,7 +42,7 @@ export const events = sqliteTable(
     name: text("name").notNull(),
     stream: text("stream").notNull(),
     version: integer("version").notNull(),
-    revision: integer("revision").notNull().default(0),
+    revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
     payload: text("payload").notNull(),
   },
   (table) => [

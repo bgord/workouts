@@ -14,6 +14,7 @@ import type * as Preferences from "+preferences";
 export const correlationId = v.parse(bg.CorrelationId, "00000000-0000-0000-0000-000000000000");
 
 export const commit = bg.CommitSha.fromString("a".repeat(40)).value;
+export const revision = new tools.Revision(0);
 
 export const userId = v.parse(bg.UUID, "592ddbc7-9d8f-4677-9f7c-14d88800eea7");
 export const anotherUserId = v.parse(bg.UUID, "c9371ccb-b4dd-4f4c-a03e-3bd9fcba816a");
@@ -36,12 +37,12 @@ export const email = v.parse(tools.Email, "user@example.com");
 export const contact = { type: "email", address: email } as const;
 export const anotherEmail = "another@example.com";
 
-export const revision = new tools.Revision(0);
-
-export const revisionHeaders = (revision: tools.RevisionValueType = 0) => ({ "if-match": `W/${revision}` });
+export const revisionHeaders = (revision = 0) => ({
+  "if-match": `W/${v.parse(tools.RevisionValue, revision)}`,
+});
 export const correlationIdHeaders = { "correlation-id": correlationId };
-export const correlationIdAndRevisionHeaders = (revision: tools.RevisionValueType = 0) => ({
-  "if-match": `W/${revision}`,
+export const correlationIdAndRevisionHeaders = (revision = 0) => ({
+  "if-match": `W/${v.parse(tools.RevisionValue, revision)}`,
   "correlation-id": correlationId,
 });
 
