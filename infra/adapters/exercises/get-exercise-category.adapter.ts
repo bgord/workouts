@@ -1,6 +1,5 @@
 import { eq } from "drizzle-orm";
-import * as v from "valibot";
-import * as Exercises from "+exercises";
+import type * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
@@ -16,10 +15,7 @@ class GetExerciseCategoryQueryDrizzle implements Exercises.Queries.GetExerciseCa
 
     if (!exerciseCategory[0]) return null;
 
-    return {
-      id: v.parse(Exercises.VO.ExerciseCategoryId, exerciseCategory[0].id),
-      name: v.parse(Exercises.VO.ExerciseCategoryName, exerciseCategory[0].name),
-    };
+    return { id: exerciseCategory[0].id, name: exerciseCategory[0].name };
   }
 }
 

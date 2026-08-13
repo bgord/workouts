@@ -1,14 +1,33 @@
 /* cSpell:disable */
 
 import type * as bg from "@bgord/bun";
+import type * as tools from "@bgord/tools";
 import { relations, sql } from "drizzle-orm";
 import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/exercise-category-id";
+import type { ExerciseCategoryNameType } from "../modules/exercises/value-objects/exercise-category-name";
+import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
+import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
+import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
+import type { ExerciseInstructionIdType } from "../modules/plans/value-objects/exercise-instruction-id";
+import type { PlanIdType } from "../modules/plans/value-objects/plan-id";
+import type { PlanNameType } from "../modules/plans/value-objects/plan-name";
+import type { PlanSectionIdType } from "../modules/plans/value-objects/plan-section-id";
+import type { PlanSectionNameType } from "../modules/plans/value-objects/plan-section-name";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
-import { SupportedLanguages } from "../modules/supported-languages";
+import type { SetsType } from "../modules/plans/value-objects/sets";
 
 const id = text("id", { length: 36 })
   .primaryKey()
   .$defaultFn(() => crypto.randomUUID());
+
+const identifier = <T extends string>() =>
+  text("id", { length: 36 })
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID())
+    .$type<T>();
+
+const timestamp = (name: string) => integer(name, { mode: "number" }).$type<tools.TimestampValueType>();
 
 const toEnumList = (value: Record<string, string>) => ({
   enum: Object.keys(value) as [string, ...ReadonlyArray<string>],
@@ -40,9 +59,10 @@ export const userPreferences = sqliteTable(
     userId: text("userId", { length: 36 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    preference: text("preference", SupportedLanguages).notNull(),
+    // NOTE: length 2 is a legacy artifact of passing SupportedLanguages here; kept to avoid DDL drift
+    preference: text("preference", { length: 2, enum: ["language"] }).notNull(),
     value: text("value").notNull(),
-    updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
   },
   (table) => [
     uniqueIndex("user_preferences_userId_preference_uidx").on(table.userId, table.preference),
@@ -62,9 +82,9 @@ export const userProfileAvatars = sqliteTable(
     userId: text("userId", { length: 36 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    key: text("key").notNull(),
-    etag: text("etag").notNull(),
-    createdAt: integer("createdAt", { mode: "number" }).notNull(),
+    key: text("key").notNull().$type<tools.ObjectKeyType>(),
+    etag: text("etag").notNull().$type<bg.HashValueType>(),
+    createdAt: timestamp("createdAt").notNull(),
   },
   (table) => [
     index("user_profile_avatars_userId_idx").on(table.userId),
@@ -137,58 +157,58 @@ export const verifications = sqliteTable("verifications", {
 });
 
 export const exercises = sqliteTable("exercises", {
-  id,
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  image: text("image").notNull(),
-  createdAt: integer("createdAt", { mode: "number" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+  id: identifier<ExerciseIdType>(),
+  name: text("name").notNull().$type<ExerciseNameType>(),
+  description: text("description").notNull().$type<ExerciseDescriptionType>(),
+  image: text("image").notNull().$type<tools.ObjectKeyType>(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 export const exerciseCategories = sqliteTable("exercise_categories", {
-  id,
-  name: text("name").notNull(),
-  createdAt: integer("createdAt", { mode: "number" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+  id: identifier<ExerciseCategoryIdType>(),
+  name: text("name").notNull().$type<ExerciseCategoryNameType>(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 export const exerciseCategoryAssignments = sqliteTable(
   "exercise_category_assignments",
   {
-    exerciseId: text("exerciseId", { length: 36 }).notNull(),
-    exerciseCategoryId: text("exerciseCategoryId", { length: 36 }).notNull(),
-    createdAt: integer("createdAt", { mode: "number" }).notNull(),
+    exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
+    exerciseCategoryId: text("exerciseCategoryId", { length: 36 }).notNull().$type<ExerciseCategoryIdType>(),
+    createdAt: timestamp("createdAt").notNull(),
   },
   (table) => [primaryKey({ columns: [table.exerciseId, table.exerciseCategoryId] })],
 );
 
 export const plans = sqliteTable("plans", {
-  id,
-  name: text("name").notNull(),
-  status: text("kind", toEnumList(PlanStatusEnum)).notNull(),
+  id: identifier<PlanIdType>(),
+  name: text("name").notNull().$type<PlanNameType>(),
+  status: text("kind", toEnumList(PlanStatusEnum)).notNull().$type<PlanStatusEnum>(),
   userId: text("userId", { length: 36 }).notNull(),
-  createdAt: integer("createdAt", { mode: "number" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 export const planSections = sqliteTable("planSections", {
-  id,
-  planId: text("planId", { length: 36 }).notNull(),
-  name: text("name").notNull(),
+  id: identifier<PlanSectionIdType>(),
+  planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
+  name: text("name").notNull().$type<PlanSectionNameType>(),
   userId: text("userId", { length: 36 }).notNull(),
-  createdAt: integer("createdAt", { mode: "number" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseInstructions", {
-  id,
-  planId: text("planId", { length: 36 }).notNull(),
-  planSectionId: text("planSectionId", { length: 36 }).notNull(),
-  exerciseId: text("exerciseId", { length: 36 }).notNull(),
-  sets: integer("sets", { mode: "number" }).notNull(),
-  repsMin: integer("repsMin", { mode: "number" }).notNull(),
-  repsMax: integer("repsMax", { mode: "number" }).notNull(),
+  id: identifier<ExerciseInstructionIdType>(),
+  planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
+  planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
+  exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
+  sets: integer("sets", { mode: "number" }).notNull().$type<SetsType>(),
+  repsMin: integer("repsMin", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
+  repsMax: integer("repsMax", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
   userId: text("userId", { length: 36 }).notNull(),
-  createdAt: integer("createdAt", { mode: "number" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "number" }).notNull(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });

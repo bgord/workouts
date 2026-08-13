@@ -1,8 +1,7 @@
 // cSpell:ignore ilike
-import * as tools from "@bgord/tools";
+import type * as tools from "@bgord/tools";
 import { desc, ilike } from "drizzle-orm";
-import * as v from "valibot";
-import * as Exercises from "+exercises";
+import type * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
@@ -19,10 +18,10 @@ class SearchExercisesQueryDrizzle implements Exercises.Queries.SearchExercises {
       .limit(limit);
 
     return exercises.map((exercise) => ({
-      id: v.parse(Exercises.VO.ExerciseId, exercise?.id),
-      name: v.parse(Exercises.VO.ExerciseName, exercise?.name),
-      description: v.parse(Exercises.VO.ExerciseDescription, exercise?.description),
-      image: v.parse(tools.ObjectKey, exercise?.image),
+      id: exercise.id,
+      name: exercise.name,
+      description: exercise.description,
+      image: exercise.image,
     }));
   }
 }

@@ -1,7 +1,5 @@
-import * as tools from "@bgord/tools";
 import { desc, eq } from "drizzle-orm";
-import * as v from "valibot";
-import * as Exercises from "+exercises";
+import type * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
@@ -22,10 +20,10 @@ class ListExercisesAssignedToCategoryQueryDrizzle
       .orderBy(desc(Schema.exercises.updatedAt));
 
     return result.map((row) => ({
-      id: v.parse(Exercises.VO.ExerciseId, row.exercises?.id),
-      name: v.parse(Exercises.VO.ExerciseName, row.exercises?.name),
-      description: v.parse(Exercises.VO.ExerciseDescription, row.exercises?.description),
-      image: v.parse(tools.ObjectKey, row.exercises?.image),
+      id: row.exercises.id,
+      name: row.exercises.name,
+      description: row.exercises.description,
+      image: row.exercises.image,
     }));
   }
 }

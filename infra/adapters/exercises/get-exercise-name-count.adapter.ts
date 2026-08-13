@@ -6,7 +6,7 @@ import * as Schema from "+infra/schema";
 
 class GetExerciseNameCountQueryDrizzle implements Exercises.Queries.GetExerciseNameCount {
   async execute(exerciseName: Exercises.VO.ExerciseNameType): Promise<tools.IntegerNonNegativeType> {
-    const count = await db.$count(Schema.exercises, eq(Schema.exerciseCategories.name, exerciseName));
+    const count = await db.$count(Schema.exercises, eq(Schema.exercises.name, exerciseName));
 
     return tools.Int.nonNegative(count);
   }

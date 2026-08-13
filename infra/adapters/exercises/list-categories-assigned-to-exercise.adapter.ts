@@ -1,6 +1,5 @@
 import { desc, eq } from "drizzle-orm";
-import * as v from "valibot";
-import * as Exercises from "+exercises";
+import type * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
@@ -20,10 +19,7 @@ class ListCategoriesAssignedToExerciseQueryDrizzle
       .where(eq(Schema.exerciseCategoryAssignments.exerciseId, exerciseId))
       .orderBy(desc(Schema.exerciseCategories.updatedAt));
 
-    return result.map((row) => ({
-      id: v.parse(Exercises.VO.ExerciseCategoryId, row.exercise_categories?.id),
-      name: v.parse(Exercises.VO.ExerciseCategoryName, row.exercise_categories?.name),
-    }));
+    return result.map((row) => ({ id: row.exercise_categories.id, name: row.exercise_categories.name }));
   }
 }
 
