@@ -1,25 +1,24 @@
-import * as bg from "@bgord/bun";
-import type hono from "hono";
+import type * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Exercises from "+exercises";
-import type * as infra from "+infra";
 
 type Dependencies = {
   GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;
   ListExercisesAssignedToCategoryQuery: Exercises.Queries.ListExercisesAssignedToCategory;
 };
 
-export const ExerciseCategoryGet = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const context = new bg.RequestContextHonoAdapter(c);
-  const params = context.request.params();
+export const ExerciseCategoryGet =
+  (deps: Dependencies): bg.EndpointPort =>
+  async (context) => {
+    const params = context.request.params();
 
-  const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
+    const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
 
-  const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(id);
+    const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(id);
 
-  if (!exerciseCategory) return new Response(null, { status: 404 });
+    if (!exerciseCategory) return new Response(null, { status: 404 });
 
-  const exercises = await deps.ListExercisesAssignedToCategoryQuery.execute(id);
+    const exercises = await deps.ListExercisesAssignedToCategoryQuery.execute(id);
 
-  return Response.json({ ...exerciseCategory, exercises });
-};
+    return Response.json({ ...exerciseCategory, exercises });
+  };

@@ -1,8 +1,6 @@
 import * as bg from "@bgord/bun";
-import type hono from "hono";
 import * as v from "valibot";
 import * as Exercises from "+exercises";
-import type * as infra from "+infra";
 import * as Plans from "+plans";
 
 type Dependencies = {
@@ -12,8 +10,8 @@ type Dependencies = {
 };
 
 export const PlanSectionExerciseInstructionAdd =
-  (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-    const context = new bg.RequestContextHonoAdapter(c);
+  (deps: Dependencies): bg.EndpointPort =>
+  async (context) => {
     const params = context.request.params();
     const body = await context.request.json();
 

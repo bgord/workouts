@@ -1,8 +1,6 @@
 import * as bg from "@bgord/bun";
-import type hono from "hono";
 import * as v from "valibot";
 import * as Exercises from "+exercises";
-import type * as infra from "+infra";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -10,20 +8,21 @@ type Dependencies = {
   CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseUnassignCategoryCommandType>;
 };
 
-export const ExerciseUnassignCategory = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
-  const context = new bg.RequestContextHonoAdapter(c);
-  const body = await context.request.json();
+export const ExerciseUnassignCategory =
+  (deps: Dependencies): bg.EndpointPort =>
+  async (context) => {
+    const body = await context.request.json();
 
-  const exerciseId = v.parse(Exercises.VO.ExerciseId, body["exerciseId"]);
-  const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body["exerciseCategoryId"]);
+    const exerciseId = v.parse(Exercises.VO.ExerciseId, body["exerciseId"]);
+    const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body["exerciseCategoryId"]);
 
-  const command = bg.command(
-    Exercises.Commands.ExerciseUnassignCategoryCommand,
-    { payload: { exerciseId, exerciseCategoryId } },
-    deps,
-  );
+    const command = bg.command(
+      Exercises.Commands.ExerciseUnassignCategoryCommand,
+      { payload: { exerciseId, exerciseCategoryId } },
+      deps,
+    );
 
-  await deps.CommandBus.emit(command);
+    await deps.CommandBus.emit(command);
 
-  return new Response();
-};
+    return new Response();
+  };

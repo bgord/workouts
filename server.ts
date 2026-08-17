@@ -39,8 +39,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const exercises = new Hono<infra.Config>();
 
   exercises.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
-  exercises.get("/list", HTTP.Exercises.ExerciseList(Adapters.Exercises));
-  exercises.query("/search", HTTP.Exercises.ExerciseSearch(Adapters.Exercises));
+  exercises.get("/list", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseList(Adapters.Exercises)));
+  exercises.query("/search", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseSearch(Adapters.Exercises)));
   exercises.post(
     "/add",
     Tools.ShieldCaptcha.handle(),
@@ -50,15 +50,23 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
       maxSize: Exercises.VO.ExerciseImageMaxSize,
       MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
     }).handle(),
-    HTTP.Exercises.ExerciseAdd(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseAdd(deps)),
   );
-  exercises.get("/:exerciseId", Tools.ShieldCaptcha.handle(), HTTP.Exercises.ExerciseGet(Adapters.Exercises));
-  exercises.delete("/:exerciseId", Tools.ShieldCaptcha.handle(), HTTP.Exercises.ExerciseDelete(deps));
+  exercises.get(
+    "/:exerciseId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseGet(Adapters.Exercises)),
+  );
+  exercises.delete(
+    "/:exerciseId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseDelete(deps)),
+  );
   exercises.patch(
     "/:exerciseId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Exercises.ExerciseUpdate(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseUpdate(deps)),
   );
   exercises.patch(
     "/:exerciseId/image",
@@ -69,47 +77,53 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
       maxSize: Exercises.VO.ExerciseImageMaxSize,
       MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
     }).handle(),
-    HTTP.Exercises.ExerciseImageChange(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseImageChange(deps)),
   );
-  exercises.get("/:exerciseId/image", HTTP.Exercises.ExerciseImageGet(deps));
+  exercises.get("/:exerciseId/image", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseImageGet(deps)));
 
-  exercises.get("/category/list", HTTP.Exercises.ExerciseCategoryList(Adapters.Exercises));
-  exercises.query("/category/search", HTTP.Exercises.ExerciseCategorySearch(Adapters.Exercises));
+  exercises.get(
+    "/category/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryList(Adapters.Exercises)),
+  );
+  exercises.query(
+    "/category/search",
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategorySearch(Adapters.Exercises)),
+  );
   exercises.post(
     "/category",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Exercises.ExerciseCategoryAdd(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryAdd(deps)),
   );
   exercises.get(
     "/category/:exerciseCategoryId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Exercises.ExerciseCategoryGet(Adapters.Exercises),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryGet(Adapters.Exercises)),
   );
   exercises.patch(
     "/category/:exerciseCategoryId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Exercises.ExerciseCategoryRename(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryRename(deps)),
   );
   exercises.delete(
     "/category/:exerciseCategoryId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Exercises.ExerciseCategoryDelete(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryDelete(deps)),
   );
   exercises.post(
     "/category/assign",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Exercises.ExerciseAssignCategory(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseAssignCategory(deps)),
   );
   exercises.post(
     "/category/unassign",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Exercises.ExerciseUnassignCategory(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseUnassignCategory(deps)),
   );
 
   server.route("/exercises", exercises);
@@ -123,79 +137,79 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     "/create",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanCreate(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanCreate(deps)),
   );
   plans.post(
     "/:planId/section",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanSectionCreate(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionCreate(deps)),
   );
   plans.post(
     "/:planId/section/:planSectionId/rename",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanSectionRename(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionRename(deps)),
   );
   plans.delete(
     "/:planId/section/:planSectionId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanSectionRemove(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionRemove(deps)),
   );
   plans.post(
     "/:planId/section/:planSectionId/exercise-instruction",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanSectionExerciseInstructionAdd(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionAdd(deps)),
   );
   plans.patch(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/instruction",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanSectionExerciseInstructionUpdate(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionUpdate(deps)),
   );
   plans.patch(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/exercise",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanSectionExerciseInstructionExerciseChange(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionExerciseChange(deps)),
   );
   plans.delete(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanSectionExerciseInstructionRemove(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionRemove(deps)),
   );
   plans.post(
     "/:planId/archive",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanArchive(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanArchive(deps)),
   );
   plans.post(
     "/:planId/finalize",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanFinalize(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanFinalize(deps)),
   );
   plans.post(
     "/:planId/restore",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanRestore(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRestore(deps)),
   );
   plans.post(
     "/:planId/editing/enable",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanEditingEnable(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanEditingEnable(deps)),
   );
   plans.post(
     "/:planId/rename",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    HTTP.Plans.PlanRename(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRename(deps)),
   );
 
   server.route("/plans", plans);
@@ -233,7 +247,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    HTTP.Preferences.UpdateUserLanguage(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.UpdateUserLanguage(deps)),
   );
   server.post(
     "/preferences/profile-avatar/update",
@@ -245,20 +259,20 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
       maxSize: Preferences.VO.ProfileAvatarMaxSize,
       MimeRegistry: Preferences.VO.ProfileAvatarMimeRegistry,
     }).handle(),
-    HTTP.Preferences.UpdateProfileAvatar(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.UpdateProfileAvatar(deps)),
   );
   server.get(
     "/profile-avatar/get",
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    HTTP.Preferences.GetProfileAvatar(Adapters.System),
+    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.GetProfileAvatar(Adapters.System)),
   );
   server.delete(
     "/preferences/profile-avatar",
     Tools.ShieldCaptcha.handle(),
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    HTTP.Preferences.RemoveProfileAvatar(deps),
+    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.RemoveProfileAvatar(deps)),
   );
   // =============================
 
