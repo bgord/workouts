@@ -14,7 +14,7 @@ export const PlanCreate = (deps: Dependencies) => async (c: hono.Context<infra.C
   const context = new bg.RequestContextHonoAdapter(c);
   const body = await context.request.json();
 
-  const userId = context.identity.userId() as string;
+  const userId = context.identity.userId() as bg.UUIDType;
   const id = v.parse(Plans.VO.PlanId, deps.IdProvider.generate());
   const name = v.parse(Plans.VO.PlanName, body["name"]);
 

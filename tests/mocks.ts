@@ -19,7 +19,7 @@ export const revision = new tools.Revision(0);
 export const userId = v.parse(bg.UUID, "592ddbc7-9d8f-4677-9f7c-14d88800eea7");
 export const anotherUserId = v.parse(bg.UUID, "c9371ccb-b4dd-4f4c-a03e-3bd9fcba816a");
 export const historyId = v.parse(bg.UUID, "bd639ce1-155b-4a99-b423-0c41eaa0e330");
-export const temporaryFileId = "738d1d64-0828-437e-a979-3dcebafe841a";
+export const temporaryFileId = v.parse(bg.UUID, "738d1d64-0828-437e-a979-3dcebafe841a");
 
 // Timestamps
 export const T0 = tools.Timestamp.fromInstant(tools.Temporal.Instant.from("2025-01-01T00:00:00Z"));

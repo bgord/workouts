@@ -15,7 +15,7 @@ export const PlanSectionCreate = (deps: Dependencies) => async (c: hono.Context<
   const params = context.request.params();
   const body = await context.request.json();
 
-  const userId = context.identity.userId() as string;
+  const userId = context.identity.userId() as bg.UUIDType;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const planSectionId = v.parse(Plans.VO.PlanSectionId, deps.IdProvider.generate());
   const planSectionName = v.parse(Plans.VO.PlanSectionName, body["planSectionName"]);

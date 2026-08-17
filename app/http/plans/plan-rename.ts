@@ -15,7 +15,7 @@ export const PlanRename = (deps: Dependencies) => async (c: hono.Context<infra.C
   const params = context.request.params();
   const body = await context.request.json();
 
-  const userId = context.identity.userId() as string;
+  const userId = context.identity.userId() as bg.UUIDType;
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
   const planName = v.parse(Plans.VO.PlanName, body["planName"]);
 

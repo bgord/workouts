@@ -50,7 +50,7 @@ const people = [
         const event = bg.event(
           Auth.Events.AccountCreatedEvent,
           `account_${result.user.id}`,
-          { userId: result.user.id, timestamp: now.ms },
+          { userId: v.parse(Auth.VO.UserId, result.user.id), timestamp: now.ms },
           deps,
         );
 

@@ -4,6 +4,7 @@ import type * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import { relations, sql } from "drizzle-orm";
 import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import type { UserIdType } from "../modules/auth/value-objects/user-id";
 import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/exercise-category-id";
 import type { ExerciseCategoryNameType } from "../modules/exercises/value-objects/exercise-category-name";
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
@@ -36,7 +37,7 @@ const toEnumList = (value: Record<string, string>) => ({
 export const events = sqliteTable(
   "events",
   {
-    id,
+    id: identifier<bg.UUIDType>(),
     correlationId: text("correlationId").notNull().$type<bg.CorrelationIdType>(),
     createdAt: integer("createdAt").default(sql`now`).notNull(),
     name: text("name").notNull(),
@@ -58,7 +59,8 @@ export const userPreferences = sqliteTable(
     id,
     userId: text("userId", { length: 36 })
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => users.id, { onDelete: "cascade" })
+      .$type<UserIdType>(),
     // NOTE: length 2 is a legacy artifact of passing SupportedLanguages here; kept to avoid DDL drift
     preference: text("preference", { length: 2, enum: ["language"] }).notNull(),
     value: text("value").notNull(),
@@ -81,7 +83,8 @@ export const userProfileAvatars = sqliteTable(
     id,
     userId: text("userId", { length: 36 })
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => users.id, { onDelete: "cascade" })
+      .$type<UserIdType>(),
     key: text("key").notNull().$type<tools.ObjectKeyType>(),
     etag: text("etag").notNull().$type<bg.HashValueType>(),
     createdAt: timestamp("createdAt").notNull(),
@@ -97,7 +100,7 @@ export const userProfileAvatarsRelations = relations(userProfileAvatars, ({ one 
 }));
 
 export const users = sqliteTable("users", {
-  id: text("id").primaryKey(),
+  id: text("id").primaryKey().$type<UserIdType>(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: integer("email_verified", { mode: "boolean" })
@@ -186,7 +189,7 @@ export const plans = sqliteTable("plans", {
   id: identifier<PlanIdType>(),
   name: text("name").notNull().$type<PlanNameType>(),
   status: text("kind", toEnumList(PlanStatusEnum)).notNull().$type<PlanStatusEnum>(),
-  userId: text("userId", { length: 36 }).notNull(),
+  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
 });
@@ -195,7 +198,7 @@ export const planSections = sqliteTable("planSections", {
   id: identifier<PlanSectionIdType>(),
   planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
   name: text("name").notNull().$type<PlanSectionNameType>(),
-  userId: text("userId", { length: 36 }).notNull(),
+  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
 });
@@ -208,7 +211,7 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
   sets: integer("sets", { mode: "number" }).notNull().$type<SetsType>(),
   repsMin: integer("repsMin", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
   repsMax: integer("repsMax", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
-  userId: text("userId", { length: 36 }).notNull(),
+  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
 });
