@@ -14,7 +14,7 @@ export const PlanRestore = (deps: Dependencies) => async (c: hono.Context<infra.
   const context = new bg.RequestContextHonoAdapter(c);
   const params = context.request.params();
 
-  const userId = context.identity.userId() as bg.UUIDType;
+  const userId = context.identity.authenticatedUserId();
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
 
   const command = bg.command(

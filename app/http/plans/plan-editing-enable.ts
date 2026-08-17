@@ -14,7 +14,7 @@ export const PlanEditingEnable = (deps: Dependencies) => async (c: hono.Context<
   const context = new bg.RequestContextHonoAdapter(c);
   const params = context.request.params();
 
-  const userId = context.identity.userId() as bg.UUIDType;
+  const userId = context.identity.authenticatedUserId();
   const planId = v.parse(Plans.VO.PlanId, params["planId"]);
 
   const command = bg.command(
