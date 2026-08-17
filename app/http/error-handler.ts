@@ -115,7 +115,7 @@ export class ErrorHandler {
 
       const [message, code] = bg.InvariantErrorHandler.respond(invariantError);
 
-      return c.json(message, code as ContentfulStatusCode);
+      return Response.json(message, { status: code });
     }
 
     deps.Logger.error({

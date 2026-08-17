@@ -16,7 +16,7 @@ export const ExerciseAdd = (deps: Dependencies) => async (c: hono.Context<infra.
   const context = new bg.RequestContextHonoAdapter(c);
   const form = await context.request.form();
 
-  const file = form.get("file") as File;
+  const file = v.parse(v.instance(File), form.get("file"));
 
   const filename = tools.Filename.fromString(file.name).withBasename(
     v.parse(tools.Basename, deps.IdProvider.generate()),

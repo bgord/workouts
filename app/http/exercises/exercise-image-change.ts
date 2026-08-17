@@ -18,7 +18,7 @@ export const ExerciseImageChange = (deps: Dependencies) => async (c: hono.Contex
   const form = await context.request.form();
 
   const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
-  const file = form.get("file") as File;
+  const file = v.parse(v.instance(File), form.get("file"));
 
   const filename = tools.Filename.fromString(file.name).withBasename(
     v.parse(tools.Basename, deps.IdProvider.generate()),

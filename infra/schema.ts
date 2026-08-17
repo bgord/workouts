@@ -30,9 +30,13 @@ const identifier = <T extends string>() =>
 
 const timestamp = (name: string) => integer(name, { mode: "number" }).$type<tools.TimestampValueType>();
 
-const toEnumList = (value: Record<string, string>) => ({
-  enum: Object.keys(value) as [string, ...ReadonlyArray<string>],
-});
+const toEnumList = (value: Record<string, string>) => {
+  const [first, ...rest] = Object.keys(value);
+
+  if (first === undefined) throw new Error("Enum list cannot be empty");
+
+  return { enum: [first, ...rest] satisfies [string, ...ReadonlyArray<string>] };
+};
 
 export const events = sqliteTable(
   "events",

@@ -574,13 +574,13 @@ export const anotherSession: Session = {
   id: "xXHd0LUChE6NiYnQXc8mwij7jjp5kUhs",
 };
 
-export const auth = { user, session, path: "/get-session", options: {} as any } as const;
+export const auth = { user, session, path: "/get-session", options: {} } as const;
 
 export const anotherAuth = {
   user: anotherUser,
   session: anotherSession,
   path: "/get-session",
-  options: {} as any,
+  options: {},
 } as const;
 
 export const IntentionalError = "intentional.error" as const;
