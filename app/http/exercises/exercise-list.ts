@@ -1,11 +1,9 @@
-import type hono from "hono";
 import type * as Exercises from "+exercises";
-import type * as infra from "+infra";
 
 type Dependencies = { ListExercisesQuery: Exercises.Queries.ListExercises };
 
-export const ExerciseList = (deps: Dependencies) => async (c: hono.Context<infra.Config>) => {
+export const ExerciseList = (deps: Dependencies) => async () => {
   const exercises = await deps.ListExercisesQuery.execute();
 
-  return c.json(exercises);
+  return Response.json(exercises);
 };

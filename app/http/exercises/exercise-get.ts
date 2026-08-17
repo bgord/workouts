@@ -21,5 +21,5 @@ export const ExerciseGet = (deps: Dependencies) => async (c: hono.Context<infra.
 
   const categories = await deps.ListCategoriesAssignedToExerciseQuery.execute(id);
 
-  return c.json({ ...exercise, categories });
+  return Response.json({ ...exercise, categories });
 };

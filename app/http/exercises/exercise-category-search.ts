@@ -15,5 +15,5 @@ export const ExerciseCategorySearch = (deps: Dependencies) => async (c: hono.Con
 
   const exerciseCategories = await deps.SearchExerciseCategoriesQuery.execute(name, tools.Int.positive(5));
 
-  return c.json(exerciseCategories);
+  return Response.json(exerciseCategories);
 };
