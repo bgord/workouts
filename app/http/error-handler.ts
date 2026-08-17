@@ -2,7 +2,6 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type hono from "hono";
 import { HTTPException } from "hono/http-exception";
-import type { ContentfulStatusCode } from "hono/utils/http-status";
 import * as v from "valibot";
 import * as Exercises from "+exercises";
 import * as Plans from "+plans";
@@ -10,7 +9,7 @@ import * as Preferences from "+preferences";
 
 type Dependencies = { Logger: bg.LoggerPort };
 
-const validationErrors = [
+const validationErrors: Array<string> = [
   bg.HashValueError.InvalidHex,
   bg.HashValueError.Type,
   bg.UUIDError.Type,
@@ -24,7 +23,7 @@ const validationErrors = [
   ...Object.values(Plans.VO.PlanNameError),
   ...Object.values(Plans.VO.PlanSectionNameError),
   ...Object.values(Plans.VO.RepsError),
-] as Array<string>;
+];
 
 const invariants = Object.values({
   ...bg.Preferences.Invariants,
