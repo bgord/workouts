@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 
-class PlanSectionExerciseInstructionExerciseHasChangedError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanSectionExerciseInstructionExerciseHasChangedError.prototype);
-  }
-}
+class PlanSectionExerciseInstructionExerciseHasChangedError extends Error {}
 
 type PlanSectionExerciseInstructionExerciseHasChangedConfigType = {
   current: Exercises.VO.ExerciseIdType | undefined;

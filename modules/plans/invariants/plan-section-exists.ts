@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+plans/value-objects";
 
-class PlanSectionExistsError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanSectionExistsError.prototype);
-  }
-}
+class PlanSectionExistsError extends Error {}
 
 type PlanSectionExistsConfigType = {
   planSectionId: VO.PlanSectionIdType;

@@ -201,6 +201,26 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("revision mismatch", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planSectionId);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdAndRevisionHeaders(99),
+        body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+  });
+
   test("happy path", async () => {
     const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);

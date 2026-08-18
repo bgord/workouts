@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+plans/value-objects";
 
-class PlanSectionExerciseInstructionHasChangedError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanSectionExerciseInstructionHasChangedError.prototype);
-  }
-}
+class PlanSectionExerciseInstructionHasChangedError extends Error {}
 
 type PlanSectionExerciseInstructionHasChangedConfigType = {
   current: Pick<VO.ExerciseInstructionType, "sets" | "reps"> | undefined;

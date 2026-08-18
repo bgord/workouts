@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 
-class PlanNameIsUniqueForOwnerError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanNameIsUniqueForOwnerError.prototype);
-  }
-}
+class PlanNameIsUniqueForOwnerError extends Error {}
 
 type PlanNameIsUniqueForOwnerConfigType = { count: tools.IntegerNonNegativeType };
 

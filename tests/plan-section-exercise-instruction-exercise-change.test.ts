@@ -275,6 +275,30 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("revision mismatch", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.correlationIdAndRevisionHeaders(99),
+        body: JSON.stringify(mocks.anotherExerciseInstructionAndExercise),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+  });
+
   test("happy path", async () => {
     const events = [
       mocks.GenericPlanCreatedEvent,

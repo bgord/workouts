@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+exercises/value-objects";
 
-class ExerciseCategoryLimitError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, ExerciseCategoryLimitError.prototype);
-  }
-}
+class ExerciseCategoryLimitError extends Error {}
 
 type ExerciseCategoryLimitConfigType = { exerciseCategories: ReadonlyArray<VO.ExerciseCategory> };
 

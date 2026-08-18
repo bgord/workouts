@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 
-class PlanSectionExerciseExistsError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanSectionExerciseExistsError.prototype);
-  }
-}
+class PlanSectionExerciseExistsError extends Error {}
 
 type PlanSectionExerciseExistsConfigType = { exercise: Exercises.VO.Exercise | null };
 

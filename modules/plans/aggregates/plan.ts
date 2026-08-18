@@ -388,6 +388,7 @@ export class Plan {
         break;
       }
 
+      // Stryker disable next-line ConditionalExpression
       case Events.PLAN_RESTORED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.draft;

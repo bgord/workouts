@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as VO from "+plans/value-objects";
 
-class PlanIsEditableError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanIsEditableError.prototype);
-  }
-}
+class PlanIsEditableError extends Error {}
 
 type PlanIsEditableConfigType = { status: VO.PlanStatusEnum };
 

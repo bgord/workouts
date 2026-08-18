@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 
-class PlanBelongsToUserError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanBelongsToUserError.prototype);
-  }
-}
+class PlanBelongsToUserError extends Error {}
 
 type PlanBelongsToUserConfigType = {
   userId: Auth.VO.UserIdType | undefined;

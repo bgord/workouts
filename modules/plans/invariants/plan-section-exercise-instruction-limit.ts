@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+plans/value-objects";
 
-class PlanSectionExerciseInstructionLimitError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanSectionExerciseInstructionLimitError.prototype);
-  }
-}
+class PlanSectionExerciseInstructionLimitError extends Error {}
 
 type PlanSectionExerciseInstructionLimitConfigType = { planSection: VO.PlanSection | undefined };
 

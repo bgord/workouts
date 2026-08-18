@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+exercises/value-objects";
 
-class ExerciseCategoryExistsError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, ExerciseCategoryExistsError.prototype);
-  }
-}
+class ExerciseCategoryExistsError extends Error {}
 
 type ExerciseCategoryExistsConfigType = { exerciseCategory: VO.ExerciseCategory | null };
 

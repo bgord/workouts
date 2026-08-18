@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+plans/value-objects";
 
-class PlanSectionNameIsUniqueForPlanError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanSectionNameIsUniqueForPlanError.prototype);
-  }
-}
+class PlanSectionNameIsUniqueForPlanError extends Error {}
 
 type PlanSectionNameLimitForPlanConfigType = {
   planSectionName: VO.PlanSectionNameType;

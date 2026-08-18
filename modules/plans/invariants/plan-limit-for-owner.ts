@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 
-class PlanLimitForOwnerError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanLimitForOwnerError.prototype);
-  }
-}
+class PlanLimitForOwnerError extends Error {}
 
 type PlanLimitForOwnerConfigType = { count: tools.IntegerNonNegativeType };
 

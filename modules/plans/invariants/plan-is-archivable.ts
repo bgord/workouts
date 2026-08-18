@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as VO from "+plans/value-objects";
 
-class PlanIsArchivableError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanIsArchivableError.prototype);
-  }
-}
+class PlanIsArchivableError extends Error {}
 
 type PlanIsArchivableConfigType = { status: VO.PlanStatusEnum };
 

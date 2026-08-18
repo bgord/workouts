@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as VO from "+plans/value-objects";
 
-class PlanIsFinalizedError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanIsFinalizedError.prototype);
-  }
-}
+class PlanIsFinalizedError extends Error {}
 
 type PlanIsFinalizedConfigType = { status: VO.PlanStatusEnum };
 

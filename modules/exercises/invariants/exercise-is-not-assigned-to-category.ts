@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+exercises/value-objects";
 
-class ExerciseIsNotAssignedToCategoryError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, ExerciseIsNotAssignedToCategoryError.prototype);
-  }
-}
+class ExerciseIsNotAssignedToCategoryError extends Error {}
 
 type ExerciseIsNotAssignedToCategoryConfigType = {
   exerciseCategoryId: VO.ExerciseCategoryIdType;

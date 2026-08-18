@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 
-class PlanSectionLimitForPlanError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanSectionLimitForPlanError.prototype);
-  }
-}
+class PlanSectionLimitForPlanError extends Error {}
 
 type PlanSectionLimitForPlanConfigType = { count: tools.IntegerNonNegativeType };
 

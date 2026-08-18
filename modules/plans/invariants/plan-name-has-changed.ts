@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as VO from "+plans/value-objects";
 
-class PlanNameHasChangedError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanNameHasChangedError.prototype);
-  }
-}
+class PlanNameHasChangedError extends Error {}
 
 type PlanNameHasChangedConfigType = { current: VO.PlanNameType | undefined; incoming: VO.PlanNameType };
 

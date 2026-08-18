@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 
-class ExerciseCategoryNameIsUniqueError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, ExerciseCategoryNameIsUniqueError.prototype);
-  }
-}
+class ExerciseCategoryNameIsUniqueError extends Error {}
 
 type ExerciseCategoryNameIsUniqueConfigType = { count: tools.IntegerNonNegativeType };
 

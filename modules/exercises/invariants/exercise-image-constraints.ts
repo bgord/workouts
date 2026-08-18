@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as VO from "+exercises/value-objects";
 
-class ExerciseImageConstraintsError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, ExerciseImageConstraintsError.prototype);
-  }
-}
+class ExerciseImageConstraintsError extends Error {}
 
 type ExerciseImageConstraintsConfigType = bg.ImageInfoType;
 

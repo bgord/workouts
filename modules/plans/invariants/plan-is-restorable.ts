@@ -1,12 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as VO from "+plans/value-objects";
 
-class PlanIsRestorableError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PlanIsRestorableError.prototype);
-  }
-}
+class PlanIsRestorableError extends Error {}
 
 type PlanIsRestorableConfigType = { status: VO.PlanStatusEnum };
 
