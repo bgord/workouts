@@ -25,7 +25,6 @@
     "typescript": "7.0.2"
   },
   "dependencies": {
-    "@better-auth/drizzle-adapter": "1.7.1",
     "@bgord/bun": "1.22.1",
     "@bgord/design": "1.7.2",
     "@bgord/ui": "0.10.2",
