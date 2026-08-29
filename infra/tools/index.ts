@@ -1,7 +1,6 @@
 import * as bg from "@bgord/bun";
 import type { EnvironmentResultType } from "+infra/env";
 import { createBuildInfoConfig } from "./build-info-config.adapter";
-import { createCacheResponse } from "./cache-response";
 import { createCommandBus } from "./command-bus";
 import { createCronScheduler } from "./cron-scheduler.adapter";
 import { createEventBus } from "./event-bus";
@@ -37,13 +36,12 @@ export async function createTools(Env: EnvironmentResultType, deps: Dependencies
   const EventBus = createEventBus(deps);
   const EventStore = createEventStore(Env, { ...deps, EventBus });
   const CronScheduler = await createCronScheduler(Env, deps);
-  const TranslationsProvider = createTranslationsProvider(deps);
+  const TranslationsProvider = createTranslationsProvider(Env, { HashContent, ...deps });
   const BuildInfoConfig = createBuildInfoConfig(Env, deps);
   const CommitConfig = new bg.StaticConfigAdapter<bg.CommitShaValueType>((await BuildInfoConfig.get()).sha);
 
   return {
     Auth: createShieldAuth(Env, { ...deps, EventStore, CommitConfig }),
-    CacheResponse: createCacheResponse({ HashContent }),
     CronScheduler,
     Prerequisites: createPrerequisites(Env, { ...deps, TranslationsProvider, CronScheduler }),
     ShieldBasicAuth: createShieldBasicAuth(Env),

@@ -8,7 +8,11 @@ import * as schema from "+infra/schema";
 import type { PlanEventType } from "+plans/aggregates";
 import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
 
-type Dependencies = { EventBus: bg.EventBusPort<AcceptedEventType>; Logger: bg.LoggerPort };
+type Dependencies = {
+  EventBus: bg.EventBusPort<AcceptedEventType>;
+  Logger: bg.LoggerPort;
+  Clock: bg.ClockPort;
+};
 
 export type AcceptedEventType =
   | bg.System.Events.HourHasPassedEventType
