@@ -23,7 +23,7 @@ const people = [
   { email: "user@example.com", password: "1234567890" },
 ];
 
-(async function main() {
+void (async function main() {
   for (const table of tables) await db.delete(table);
 
   const di = await bootstrap();
