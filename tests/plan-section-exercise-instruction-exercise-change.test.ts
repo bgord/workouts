@@ -19,7 +19,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const response = await server.request(url, { method: "PATCH" }, mocks.ip);
     const json = await response.json();
 
-    expect(response.status).toEqual(403);
+    expect(response.status).toEqual(401);
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
   });
 

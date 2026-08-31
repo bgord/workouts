@@ -13,7 +13,7 @@ describe(`GET ${url}`, async () => {
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const body = await response.json();
 
-    expect(response.status).toEqual(403);
+    expect(response.status).toEqual(401);
     expect(body._known).toEqual(true);
   });
 

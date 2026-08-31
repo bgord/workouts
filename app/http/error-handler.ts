@@ -32,6 +32,12 @@ const invariants = Object.values({
   ...Plans.Invariants,
 });
 
+const knownShieldErrors: ReadonlyArray<string> = [
+  bg.ShieldApiKeyStrategyError.Rejected,
+  bg.ShieldAuthStrategyError.Rejected,
+  bg.ShieldRateLimitStrategyError.Rejected,
+];
+
 // Stryker disable all
 export class ErrorHandler {
   static handle: (deps: Dependencies) => hono.ErrorHandler = (deps) => async (error, c) => {
@@ -39,22 +45,8 @@ export class ErrorHandler {
     const correlationId = c.get("requestId");
 
     if (error instanceof HTTPException) {
-      if (error.message === bg.ShieldApiKeyStrategyError.Rejected) {
-        return Response.json(
-          { message: bg.ShieldApiKeyStrategyError.Rejected, _known: true },
-          { status: 403 },
-        );
-      }
-
-      if (error.message === bg.ShieldAuthStrategyError.Rejected) {
-        return Response.json({ message: bg.ShieldAuthStrategyError.Rejected, _known: true }, { status: 403 });
-      }
-
-      if (error.message === bg.ShieldRateLimitStrategyError.Rejected) {
-        return Response.json(
-          { message: bg.ShieldRateLimitStrategyError.Rejected, _known: true },
-          { status: 429 },
-        );
+      if (knownShieldErrors.includes(error.message)) {
+        return Response.json({ message: error.message, _known: true }, { status: error.status });
       }
 
       return error.getResponse();
