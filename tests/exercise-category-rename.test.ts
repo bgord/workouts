@@ -21,7 +21,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - incorrect exercise category id", async () => {
@@ -31,7 +31,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - name - missing", async () => {
@@ -41,7 +41,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.category.name.type", _known: true });
+    expect(json).toEqual({ message: "exercise.category.name.type" });
   });
 
   test("validation - name - invalid", async () => {
@@ -55,7 +55,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.category.name.invalid", _known: true });
+    expect(json).toEqual({ message: "exercise.category.name.invalid" });
   });
 
   test("ExerciseCategoryExists", async () => {

@@ -1,4 +1,5 @@
 import { describe, expect, spyOn, test } from "bun:test";
+import * as bg from "@bgord/bun";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
@@ -14,7 +15,7 @@ describe(`GET ${url}`, async () => {
     const body = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(body._known).toEqual(true);
+    expect(body).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("no object", async () => {

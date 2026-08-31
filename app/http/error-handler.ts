@@ -1,126 +1,80 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type hono from "hono";
-import { HTTPException } from "hono/http-exception";
-import * as v from "valibot";
 import * as Exercises from "+exercises";
 import * as Plans from "+plans";
 import * as Preferences from "+preferences";
 
 type Dependencies = { Logger: bg.LoggerPort };
 
-const validationErrors: Array<string> = [
-  bg.HashValueError.InvalidHex,
-  bg.HashValueError.Type,
-  bg.UUIDError.Type,
-  tools.ObjectKeyError.Type,
-  tools.LanguageError.Type,
-  tools.TimestampValueError.Invalid,
-  ...Object.values(tools.IntegerPositiveError),
-  ...Object.values(Exercises.VO.ExerciseNameError),
-  ...Object.values(Exercises.VO.ExerciseDescriptionError),
-  ...Object.values(Exercises.VO.ExerciseCategoryNameError),
-  ...Object.values(Plans.VO.PlanNameError),
-  ...Object.values(Plans.VO.PlanSectionNameError),
-  ...Object.values(Plans.VO.RepsError),
-];
-
-const invariants = Object.values({
-  ...bg.Preferences.Invariants,
-  ...Preferences.Invariants,
-  ...Exercises.Invariants,
-  ...Plans.Invariants,
+const messages = new bg.ErrorClassifierMessageMapStrategy({
+  [bg.Preferences.CommandHandlers.HandleSetUserLanguageCommandError.Missing]: {
+    message: "unsupported.language",
+    status: 400,
+  },
+  [tools.DateRangeError.Invalid]: { message: "invalid.date.range", status: 400 },
+  [tools.MimeValueError.Invalid]: { message: "invalid.mime", status: 400 },
+  [tools.RevisionError.Mismatch]: { message: "revision.mismatch", status: 412 },
 });
 
-const knownShieldErrors: ReadonlyArray<string> = [
-  bg.ShieldApiKeyStrategyError.Rejected,
-  bg.ShieldAuthStrategyError.Rejected,
-  bg.ShieldRateLimitStrategyError.Rejected,
-];
+const http = new bg.ErrorClassifierHttpExceptionHonoStrategy({
+  known: [
+    bg.ShieldAuthStrategyError.Rejected,
+    bg.ShieldBasicAuthStrategyError.Rejected,
+    bg.ShieldCsrfStrategyError.Rejected,
+    bg.ShieldRateLimitStrategyError.Rejected,
+    bg.ShieldTimeoutStrategyError.Rejected,
+    bg.FileUploaderError.MissingFile,
+    bg.FileUploaderError.EmptyFile,
+    bg.FileUploaderError.InvalidMime,
+    bg.FileUploaderError.SizeLimit,
+  ],
+});
 
-// Stryker disable all
+const validation = new bg.ErrorClassifierValidationStrategy({
+  validationErrors: [
+    bg.HashValueError.InvalidHex,
+    bg.HashValueError.Type,
+    bg.UUIDError.Type,
+    tools.ObjectKeyError.Type,
+    tools.LanguageError.Type,
+    tools.TimestampValueError.Invalid,
+    ...Object.values(tools.IntegerPositiveError),
+    ...Object.values(Exercises.VO.ExerciseNameError),
+    ...Object.values(Exercises.VO.ExerciseDescriptionError),
+    ...Object.values(Exercises.VO.ExerciseCategoryNameError),
+    ...Object.values(Plans.VO.PlanNameError),
+    ...Object.values(Plans.VO.PlanSectionNameError),
+    ...Object.values(Plans.VO.RepsError),
+  ],
+});
+
+const invariants = new bg.ErrorClassifierInvariantStrategy({
+  invariants: Object.values({
+    ...bg.Preferences.Invariants,
+    ...Preferences.Invariants,
+    ...Exercises.Invariants,
+    ...Plans.Invariants,
+  }),
+});
+
+const unknown = new bg.ErrorClassifierUnknownStrategy();
+
 export class ErrorHandler {
-  static handle: (deps: Dependencies) => hono.ErrorHandler = (deps) => async (error, c) => {
-    const url = c.req.url;
-    const correlationId = c.get("correlationId");
-
-    if (error instanceof HTTPException) {
-      if (knownShieldErrors.includes(error.message)) {
-        return Response.json({ message: error.message, _known: true }, { status: error.status });
-      }
-
-      return error.getResponse();
-    }
-
-    if (error.message === tools.MimeValueError.Invalid) {
-      return Response.json({ message: "invalid.mime", _known: true }, { status: 400 });
-    }
-
-    if (error.message === tools.RevisionError.Mismatch) {
-      return Response.json({ message: "revision.mismatch", _known: true }, { status: 412 });
-    }
-
-    if (error.message === bg.Preferences.CommandHandlers.HandleSetUserLanguageCommandError.Missing) {
-      return Response.json({ message: "unsupported.language", _known: true }, { status: 400 });
-    }
-
-    if (error.message === tools.DateRangeError.Invalid) {
-      return Response.json({ message: "invalid.date.range", _known: true }, { status: 400 });
-    }
-
-    if (error instanceof v.ValiError) {
-      const validationError = error.issues.find((issue) => validationErrors.includes(issue.message));
-
-      if (validationError) {
-        deps.Logger.error({
-          message: "Expected validation error",
-          component: "http",
-          operation: "validation",
-          correlationId,
-          metadata: { url, error: validationError },
-          error,
-        });
-
-        return Response.json({ message: validationError.message, _known: true }, { status: 400 });
-      }
-
-      deps.Logger.error({
-        message: "Invalid payload",
-        component: "http",
-        operation: "invalid_payload",
-        correlationId,
-        metadata: { url },
-        error,
-      });
-
-      return Response.json({ message: "payload.invalid.error", _known: true }, { status: 400 });
-    }
-
-    const invariantError = bg.InvariantErrorHandler.detect(invariants, error);
-
-    if (invariantError) {
-      deps.Logger.error({
-        message: "Domain error",
-        component: "http",
-        operation: invariantError.message,
-        correlationId,
-        error,
-      });
-
-      const [message, code] = bg.InvariantErrorHandler.respond(invariantError);
-
-      return Response.json(message, { status: code });
-    }
-
-    deps.Logger.error({
-      message: "Unknown error",
-      component: "http",
-      operation: "unknown_error",
-      correlationId,
-      error,
-    });
-
-    return Response.json({ message: "general.unknown" }, { status: 500 });
-  };
+  static handle: (deps: Dependencies) => hono.ErrorHandler = (deps) =>
+    new bg.ErrorHonoHandler({
+      classifiers: [
+        messages,
+        http,
+        new bg.ErrorClassifierWithLoggerStrategy({ operation: "validation" }, { inner: validation, ...deps }),
+        new bg.ErrorClassifierWithLoggerStrategy(
+          { operation: "domain_error" },
+          { inner: invariants, ...deps },
+        ),
+      ],
+      fallback: new bg.ErrorClassifierWithLoggerStrategy(
+        { operation: "unknown_error" },
+        { inner: unknown, ...deps },
+      ),
+    }).handle();
 }
-// Stryker restore all

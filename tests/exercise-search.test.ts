@@ -15,7 +15,7 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - search - missing", async () => {
@@ -25,7 +25,7 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.type", _known: true });
+    expect(json).toEqual({ message: "exercise.name.type" });
   });
 
   test("validation - search - invalid", async () => {
@@ -39,7 +39,7 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.invalid", _known: true });
+    expect(json).toEqual({ message: "exercise.name.invalid" });
   });
 
   test("happy path", async () => {

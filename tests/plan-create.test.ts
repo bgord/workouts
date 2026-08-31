@@ -21,7 +21,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - name - missing", async () => {
@@ -31,7 +31,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.name.type", _known: true });
+    expect(json).toEqual({ message: "plan.name.type" });
   });
   //
   test("validation - name - invalid", async () => {
@@ -45,7 +45,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.name.invalid", _known: true });
+    expect(json).toEqual({ message: "plan.name.invalid" });
   });
 
   test("PlanLimitForOwner", async () => {

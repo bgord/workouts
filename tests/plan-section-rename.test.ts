@@ -20,7 +20,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - incorrect plan id", async () => {
@@ -34,7 +34,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -48,7 +48,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - name - missing", async () => {
@@ -58,7 +58,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.name.type", _known: true });
+    expect(json).toEqual({ message: "plan.section.name.type" });
   });
 
   test("validation - name - invalid", async () => {
@@ -72,7 +72,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.name.invalid", _known: true });
+    expect(json).toEqual({ message: "plan.section.name.invalid" });
   });
 
   test("PlanIsEditable - initial", async () => {

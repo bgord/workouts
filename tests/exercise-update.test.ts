@@ -21,7 +21,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - incorrect exercise id", async () => {
@@ -35,7 +35,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - name - missing", async () => {
@@ -45,7 +45,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.type", _known: true });
+    expect(json).toEqual({ message: "exercise.name.type" });
   });
 
   test("validation - name - invalid", async () => {
@@ -59,7 +59,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.invalid", _known: true });
+    expect(json).toEqual({ message: "exercise.name.invalid" });
   });
 
   test("validation - description - missing", async () => {
@@ -73,7 +73,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.description.type", _known: true });
+    expect(json).toEqual({ message: "exercise.description.type" });
   });
 
   test("validation - description - invalid", async () => {
@@ -87,7 +87,7 @@ describe(`PATCH ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.description.invalid", _known: true });
+    expect(json).toEqual({ message: "exercise.description.invalid" });
   });
 
   test("ExerciseExists", async () => {

@@ -20,7 +20,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - incorrect plan id", async () => {
@@ -34,7 +34,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -48,7 +48,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - incorrect exercise instruction id", async () => {
@@ -62,7 +62,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - sets - missing", async () => {
@@ -76,7 +76,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.type", _known: true });
+    expect(json).toEqual({ message: "integer.positive.type" });
   });
 
   test("validation - sets - invalid", async () => {
@@ -90,7 +90,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid", _known: true });
+    expect(json).toEqual({ message: "integer.positive.invalid" });
   });
 
   test("validation - reps - missing", async () => {
@@ -104,7 +104,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.type", _known: true });
+    expect(json).toEqual({ message: "reps.type" });
   });
 
   test("validation - sets - invalid", async () => {
@@ -122,7 +122,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid", _known: true });
+    expect(json).toEqual({ message: "integer.positive.invalid" });
   });
 
   test("validation - sets - range", async () => {
@@ -140,7 +140,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.range", _known: true });
+    expect(json).toEqual({ message: "reps.range" });
   });
 
   test("PlanIsEditable - initial", async () => {

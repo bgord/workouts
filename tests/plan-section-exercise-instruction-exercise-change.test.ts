@@ -20,7 +20,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - incorrect plan id", async () => {
@@ -34,7 +34,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -48,7 +48,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - incorrect exercise instruction id", async () => {
@@ -62,7 +62,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - exerciseId - missing", async () => {
@@ -76,7 +76,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("validation - exerciseId - invalid", async () => {
@@ -90,7 +90,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type", _known: true });
+    expect(json).toEqual({ message: "uuid.type" });
   });
 
   test("PlanSectionExerciseExists", async () => {

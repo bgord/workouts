@@ -20,7 +20,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected, _known: true });
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
   test("validation - empty payload", async () => {
@@ -30,7 +30,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "language.type", _known: true });
+    expect(json).toEqual({ message: "language.type" });
   });
 
   test("validation - unsupported", async () => {
@@ -44,7 +44,7 @@ describe(`POST ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "unsupported.language", _known: true });
+    expect(json).toEqual({ message: "unsupported.language" });
   });
 
   test("UserLanguageHasChanged", async () => {
