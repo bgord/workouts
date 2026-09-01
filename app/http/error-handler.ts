@@ -17,53 +17,34 @@ const messages = new bg.ErrorClassifierMessageMapStrategy({
   [tools.RevisionError.Mismatch]: { message: "revision.mismatch", status: 412 },
 });
 
-const http = new bg.ErrorClassifierHttpExceptionHonoStrategy({
-  known: [
-    bg.ShieldAuthStrategyError.Rejected,
-    bg.ShieldBasicAuthStrategyError.Rejected,
-    bg.ShieldCsrfStrategyError.Rejected,
-    bg.ShieldRateLimitStrategyError.Rejected,
-    bg.ShieldTimeoutStrategyError.Rejected,
-    bg.FileUploaderError.MissingFile,
-    bg.FileUploaderError.EmptyFile,
-    bg.FileUploaderError.InvalidMime,
-    bg.FileUploaderError.SizeLimit,
-  ],
-});
+const http = new bg.ErrorClassifierHttpExceptionHonoStrategy([bg.HttpExceptionErrors]);
 
-const validation = new bg.ErrorClassifierValidationStrategy({
-  validationErrors: [
-    bg.HashValueError.InvalidHex,
-    bg.HashValueError.Type,
-    bg.UUIDError.Type,
-    tools.ObjectKeyError.Type,
-    tools.LanguageError.Type,
-    tools.TimestampValueError.Invalid,
-    ...Object.values(tools.IntegerPositiveError),
-    ...Object.values(Exercises.VO.ExerciseNameError),
-    ...Object.values(Exercises.VO.ExerciseDescriptionError),
-    ...Object.values(Exercises.VO.ExerciseCategoryNameError),
-    ...Object.values(Plans.VO.PlanNameError),
-    ...Object.values(Plans.VO.PlanSectionNameError),
-    ...Object.values(Plans.VO.RepsError),
-  ],
-});
+const validation = new bg.ErrorClassifierValidationStrategy([
+  bg.HashValueError,
+  bg.UUIDError,
+  tools.ObjectKeyError,
+  tools.LanguageError,
+  tools.TimestampValueError,
+  tools.IntegerPositiveError,
+  Exercises.VO.ExerciseNameError,
+  Exercises.VO.ExerciseDescriptionError,
+  Exercises.VO.ExerciseCategoryNameError,
+  Plans.VO.PlanNameError,
+  Plans.VO.PlanSectionNameError,
+  Plans.VO.RepsError,
+]);
 
-const invariants = new bg.ErrorClassifierInvariantStrategy({
-  invariants: Object.values({
-    ...bg.Preferences.Invariants,
-    ...Preferences.Invariants,
-    ...Exercises.Invariants,
-    ...Plans.Invariants,
-  }),
-});
-
-const unknown = new bg.ErrorClassifierUnknownStrategy();
+const invariants = new bg.ErrorClassifierInvariantStrategy([
+  bg.Preferences.Invariants,
+  Preferences.Invariants,
+  Exercises.Invariants,
+  Plans.Invariants,
+]);
 
 export class ErrorHandler {
   static handle: (deps: Dependencies) => hono.ErrorHandler = (deps) =>
-    new bg.ErrorHonoHandler({
-      classifiers: [
+    new bg.ErrorHonoHandler(
+      [
         messages,
         http,
         new bg.ErrorClassifierWithLoggerStrategy({ operation: "validation" }, { inner: validation, ...deps }),
@@ -72,9 +53,6 @@ export class ErrorHandler {
           { inner: invariants, ...deps },
         ),
       ],
-      fallback: new bg.ErrorClassifierWithLoggerStrategy(
-        { operation: "unknown_error" },
-        { inner: unknown, ...deps },
-      ),
-    }).handle();
+      deps,
+    ).handle();
 }
