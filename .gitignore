@@ -3,9 +3,7 @@
 .env.production
 .env.staging
 .env.test
-.eslintcache
 .stryker-tmp
-build/
 fallow-viz.html
 infra/adapters/system/tmp/
 infra/build-info.json
