@@ -41,7 +41,7 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("ExerciseExists", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using spies = new DisposableStack();
@@ -59,8 +59,8 @@ describe(`PATCH ${url}`, async () => {
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
-  test("ExerciseBelongsToUser", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+  test("CatalogIsManagedBySystem", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -73,14 +73,14 @@ describe(`PATCH ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.belongs.to.user");
+    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.system");
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("ExerciseImageConstraints - maxSide - width", async () => {
     const width = v.parse(tools.ImageWidth, 4100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using spies = new DisposableStack();
@@ -97,7 +97,7 @@ describe(`PATCH ${url}`, async () => {
 
   test("ExerciseImageConstraints - maxSide - height", async () => {
     const height = v.parse(tools.ImageHeight, 4100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using spies = new DisposableStack();
@@ -114,7 +114,7 @@ describe(`PATCH ${url}`, async () => {
 
   test("ExerciseImageConstraints - size", async () => {
     const size = tools.Size.fromMB(100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using spies = new DisposableStack();
@@ -131,7 +131,7 @@ describe(`PATCH ${url}`, async () => {
 
   test("ExerciseImageConstraints - mime", async () => {
     const mime = tools.Mimes.text.mime;
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using spies = new DisposableStack();
@@ -147,7 +147,7 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("happy path", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

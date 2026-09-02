@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryRenamedEvent } from "../events/EXERCISE_CATEGORY_RENAMED_EVENT";
-import { ExerciseCategoryBelongsToUser } from "../invariants/exercise-category-belongs-to-user";
+import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseCategoryNameIsUnique } from "../invariants/exercise-category-name-is-unique";
 
@@ -16,13 +16,11 @@ type Dependencies = {
 
 export const handleExerciseCategoryRenameCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryRenameCommandType) => {
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
 
     ExerciseCategoryExists.enforce({ exerciseCategory });
-    ExerciseCategoryBelongsToUser.enforce({
-      userId: exerciseCategory?.userId,
-      requesterId: command.payload.userId,
-    });
 
     const count = await deps.GetExerciseCategoryNameCountQuery.execute(command.payload.name);
 

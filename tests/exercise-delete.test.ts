@@ -25,7 +25,7 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("validation - incorrect exercise id", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const response = await server.request("/api/exercises/id", { method: "DELETE" }, mocks.ip);
     const json = await response.json();
@@ -36,7 +36,7 @@ describe(`DELETE ${url}`, async () => {
 
   test("ExerciseExists", async () => {
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
@@ -44,22 +44,22 @@ describe(`DELETE ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "exercise.exists");
   });
 
-  test("ExerciseBelongsToUser", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+  test("CatalogIsManagedBySystem", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.belongs.to.user");
+    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.system");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("ExerciseIsNotUsed", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
     spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseUsageCountQuery, "execute"))
@@ -74,7 +74,7 @@ describe(`DELETE ${url}`, async () => {
   test("happy path", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
     spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseUsageCountQuery, "execute"))

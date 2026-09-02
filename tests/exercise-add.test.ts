@@ -43,7 +43,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - name - missing", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
     form.append("file", png);
@@ -56,7 +56,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - name - invalid", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
     form.append("file", png);
@@ -70,7 +70,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - description - missing", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
     form.append("file", png);
@@ -84,7 +84,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - description - invalid", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
     form.append("file", png);
@@ -99,7 +99,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("ExerciseNameIsUnique", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using spies = new DisposableStack();
@@ -124,7 +124,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - maxSide - width", async () => {
     const width = v.parse(tools.ImageWidth, 4100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -144,7 +144,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - maxSide - height", async () => {
     const height = v.parse(tools.ImageHeight, 4100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -164,7 +164,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - size", async () => {
     const size = tools.Size.fromMB(100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -184,7 +184,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - mime", async () => {
     const mime = tools.Mimes.text.mime;
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -203,7 +203,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("happy path", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

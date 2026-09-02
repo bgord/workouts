@@ -4,7 +4,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type { Session, User } from "better-auth";
 import * as v from "valibot";
-import type * as Auth from "+auth";
+import * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Plans from "+plans";
@@ -68,7 +68,7 @@ export const exercise: Exercises.VO.Exercise = {
   name: exerciseName,
   description: exerciseDescription,
   image: exerciseImageKey,
-  userId,
+  userId: Auth.VO.SYSTEM_USER_ID,
 };
 
 export const exerciseCategoryId = v.parse(
@@ -86,13 +86,13 @@ export const anotherExerciseCategoryName = v.parse(Exercises.VO.ExerciseCategory
 export const exerciseCategory: Exercises.VO.ExerciseCategory = {
   id: exerciseCategoryId,
   name: exerciseCategoryName,
-  userId,
+  userId: Auth.VO.SYSTEM_USER_ID,
 };
 
 export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
   id: anotherExerciseCategoryId,
   name: anotherExerciseCategoryName,
-  userId,
+  userId: Auth.VO.SYSTEM_USER_ID,
 };
 
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");
@@ -280,7 +280,7 @@ export const GenericExerciseAddedEvent = {
     name: exerciseName,
     description: exerciseDescription,
     image: exerciseImageKey,
-    userId,
+    userId: Auth.VO.SYSTEM_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseAddedEventType;
 
@@ -292,7 +292,7 @@ export const GenericExerciseDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_DELETED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey, userId },
+  payload: { id: exerciseId, image: exerciseImageKey, userId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseDeletedEventType;
 
 export const GenericExerciseUpdatedNameEvent = {
@@ -303,7 +303,12 @@ export const GenericExerciseUpdatedNameEvent = {
   version: 1,
   commit,
   name: "EXERCISE_UPDATED_EVENT",
-  payload: { id: exerciseId, name: anotherExerciseName, description: exerciseDescription, userId },
+  payload: {
+    id: exerciseId,
+    name: anotherExerciseName,
+    description: exerciseDescription,
+    userId: Auth.VO.SYSTEM_USER_ID,
+  },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
 export const GenericExerciseUpdatedDescriptionEvent = {
@@ -314,7 +319,12 @@ export const GenericExerciseUpdatedDescriptionEvent = {
   version: 1,
   commit,
   name: "EXERCISE_UPDATED_EVENT",
-  payload: { id: exerciseId, name: exerciseName, description: anotherExerciseDescription, userId },
+  payload: {
+    id: exerciseId,
+    name: exerciseName,
+    description: anotherExerciseDescription,
+    userId: Auth.VO.SYSTEM_USER_ID,
+  },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
 export const GenericExerciseUpdatedEvent = {
@@ -325,7 +335,12 @@ export const GenericExerciseUpdatedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_UPDATED_EVENT",
-  payload: { id: exerciseId, name: anotherExerciseName, description: anotherExerciseDescription, userId },
+  payload: {
+    id: exerciseId,
+    name: anotherExerciseName,
+    description: anotherExerciseDescription,
+    userId: Auth.VO.SYSTEM_USER_ID,
+  },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
 export const GenericExerciseImageChangedEvent = {
@@ -336,7 +351,7 @@ export const GenericExerciseImageChangedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_IMAGE_CHANGED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey, userId },
+  payload: { id: exerciseId, image: exerciseImageKey, userId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseImageChangedEventType;
 
 export const GenericExerciseCategoryAddedEvent = {
@@ -347,7 +362,7 @@ export const GenericExerciseCategoryAddedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_ADDED_EVENT",
-  payload: { id: exerciseCategoryId, name: exerciseCategoryName, userId },
+  payload: { id: exerciseCategoryId, name: exerciseCategoryName, userId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryAddedEventType;
 
 export const GenericExerciseCategoryDeletedEvent = {
@@ -358,7 +373,7 @@ export const GenericExerciseCategoryDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_DELETED_EVENT",
-  payload: { id: exerciseCategoryId, userId },
+  payload: { id: exerciseCategoryId, userId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryDeletedEventType;
 
 export const GenericExerciseCategoryRenamedEvent = {
@@ -369,7 +384,7 @@ export const GenericExerciseCategoryRenamedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_RENAMED_EVENT",
-  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName, userId },
+  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName, userId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryRenamedEventType;
 
 export const GenericExerciseCategoryAssignedEvent = {
@@ -380,7 +395,7 @@ export const GenericExerciseCategoryAssignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_ASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId, userId },
+  payload: { exerciseId, exerciseCategoryId, userId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
 
 export const GenericExerciseCategoryUnassignedEvent = {
@@ -391,7 +406,7 @@ export const GenericExerciseCategoryUnassignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_UNASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId, userId },
+  payload: { exerciseId, exerciseCategoryId, userId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
 
 export const GenericPlanCreatedEvent = {
@@ -615,7 +630,40 @@ export const anotherSession: Session = {
   id: "xXHd0LUChE6NiYnQXc8mwij7jjp5kUhs",
 };
 
+export const systemUser = {
+  name: "system",
+  email: "system@example.com",
+  emailVerified: true,
+  image: null,
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  createdAt: new Date(),
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  updatedAt: new Date(),
+  id: Auth.VO.SYSTEM_USER_ID,
+} satisfies User;
+
+export const systemSession: Session = {
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  expiresAt: new Date(),
+  token: "TzXpNRK9dQmVbW4sJhLyCe2Ff7uAgQ3o",
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  createdAt: new Date(),
+  // biome-ignore lint: lint/style/noRestrictedGlobals
+  updatedAt: new Date(),
+  ipAddress: "",
+  userAgent: "Mozilla/5.0",
+  userId: Auth.VO.SYSTEM_USER_ID,
+  id: "Kk3wR7pVn0aZsQdHtXmL6yBgUfCe9iJx",
+};
+
 export const auth = { user, session, path: "/get-session", options: {} } as const;
+
+export const systemAuth = {
+  user: systemUser,
+  session: systemSession,
+  path: "/get-session",
+  options: {},
+} as const;
 
 export const anotherAuth = {
   user: anotherUser,

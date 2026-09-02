@@ -24,7 +24,7 @@ describe(`DELETE ${url}`, async () => {
   });
 
   test("validation - incorrect exercise category id", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const response = await server.request("/api/exercises/category/id", { method: "DELETE" }, mocks.ip);
     const json = await response.json();
@@ -35,15 +35,15 @@ describe(`DELETE ${url}`, async () => {
 
   test("ExerciseCategoryExists", async () => {
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
     await testcases.assertInvariantError(response, 403, "exercise.category.exists");
   });
 
-  test("ExerciseCategoryBelongsToUser", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+  test("CatalogIsManagedBySystem", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
@@ -52,14 +52,14 @@ describe(`DELETE ${url}`, async () => {
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.category.belongs.to.user");
+    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.system");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("happy path", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
       .mockResolvedValue(mocks.exerciseCategory);

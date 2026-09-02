@@ -3,6 +3,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import { ExerciseAddedEvent } from "../events/EXERCISE_ADDED_EVENT";
+import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
 import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
 import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
@@ -23,6 +24,11 @@ type Dependencies = {
 export const handleExerciseAddCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseAddCommandType) => {
     const temporary = tools.FilePathAbsolute.fromString(command.payload.absoluteFilePath);
+
+    if (!CatalogIsManagedBySystem.passes({ requesterId: command.payload.userId })) {
+      await deps.TemporaryFile.cleanup(temporary.getFilename());
+      throw new CatalogIsManagedBySystem.error();
+    }
 
     const count = await deps.GetExerciseNameCountQuery.execute(command.payload.name);
 

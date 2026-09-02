@@ -25,7 +25,7 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("validation - incorrect exercise category id", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const response = await server.request("/api/exercises/category/id", { method: "PATCH" }, mocks.ip);
     const json = await response.json();
@@ -35,7 +35,7 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("validation - name - missing", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const response = await server.request(url, { method: "PATCH", body: JSON.stringify({}) }, mocks.ip);
     const json = await response.json();
@@ -45,7 +45,7 @@ describe(`PATCH ${url}`, async () => {
   });
 
   test("validation - name - invalid", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const response = await server.request(
       url,
@@ -60,7 +60,7 @@ describe(`PATCH ${url}`, async () => {
 
   test("ExerciseCategoryExists", async () => {
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(
@@ -71,8 +71,8 @@ describe(`PATCH ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "exercise.category.exists");
   });
 
-  test("ExerciseCategoryBelongsToUser", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+  test("CatalogIsManagedBySystem", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
@@ -85,13 +85,13 @@ describe(`PATCH ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.category.belongs.to.user");
+    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.system");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("ExerciseCategoryNameIsUnique", async () => {
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
       .mockResolvedValue(mocks.exerciseCategory);
@@ -110,7 +110,7 @@ describe(`PATCH ${url}`, async () => {
   test("happy path", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth));
     spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
       .mockResolvedValue(mocks.exerciseCategory);

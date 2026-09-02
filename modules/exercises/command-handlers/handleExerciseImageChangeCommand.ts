@@ -3,7 +3,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import { ExerciseImageChangedEvent } from "../events/EXERCISE_IMAGE_CHANGED_EVENT";
-import { ExerciseBelongsToUser } from "../invariants/exercise-belongs-to-user";
+import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
 import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
@@ -25,16 +25,16 @@ export const handleExerciseImageChangeCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseImageChangeCommandType) => {
     const temporary = tools.FilePathAbsolute.fromString(command.payload.absoluteFilePath);
 
+    if (!CatalogIsManagedBySystem.passes({ requesterId: command.payload.userId })) {
+      await deps.TemporaryFile.cleanup(temporary.getFilename());
+      throw new CatalogIsManagedBySystem.error();
+    }
+
     const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
 
     if (!ExerciseExists.passes({ exercise })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
       throw new ExerciseExists.error();
-    }
-
-    if (!ExerciseBelongsToUser.passes({ userId: exercise?.userId, requesterId: command.payload.userId })) {
-      await deps.TemporaryFile.cleanup(temporary.getFilename());
-      throw new ExerciseBelongsToUser.error();
     }
 
     const info = await deps.ImageInfo.inspect(temporary);

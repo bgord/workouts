@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseDeletedEvent } from "../events/EXERCISE_DELETED_EVENT";
-import { ExerciseBelongsToUser } from "../invariants/exercise-belongs-to-user";
+import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsNotUsed } from "../invariants/exercise-is-not-used";
 
@@ -16,10 +16,11 @@ type Dependencies = {
 
 export const handleExerciseDeleteCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseDeleteCommandType) => {
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+
     const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
 
     ExerciseExists.enforce({ exercise });
-    ExerciseBelongsToUser.enforce({ userId: exercise?.userId, requesterId: command.payload.userId });
 
     const count = await deps.GetExerciseUsageCountQuery.execute(command.payload.id);
 

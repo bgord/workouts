@@ -1,8 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryAssignedEvent } from "../events/EXERCISE_CATEGORY_ASSIGNED_EVENT";
-import { ExerciseBelongsToUser } from "../invariants/exercise-belongs-to-user";
-import { ExerciseCategoryBelongsToUser } from "../invariants/exercise-category-belongs-to-user";
+import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseCategoryLimit } from "../invariants/exercise-category-limit";
 import { ExerciseExists } from "../invariants/exercise-exists";
@@ -20,18 +19,15 @@ type Dependencies = {
 
 export const handleExerciseAssignCategoryCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseAssignCategoryCommandType) => {
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+
     const exercise = await deps.GetExerciseQuery.execute(command.payload.exerciseId);
 
     ExerciseExists.enforce({ exercise });
-    ExerciseBelongsToUser.enforce({ userId: exercise?.userId, requesterId: command.payload.userId });
 
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.exerciseCategoryId);
 
     ExerciseCategoryExists.enforce({ exerciseCategory });
-    ExerciseCategoryBelongsToUser.enforce({
-      userId: exerciseCategory?.userId,
-      requesterId: command.payload.userId,
-    });
 
     const exerciseCategories = await deps.ListCategoriesAssignedToExerciseQuery.execute(
       command.payload.exerciseId,
