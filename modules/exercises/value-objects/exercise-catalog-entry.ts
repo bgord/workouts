@@ -1,5 +1,6 @@
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import { ExerciseCategoryName } from "./exercise-category-name";
 import { ExerciseDescription } from "./exercise-description";
 import { ExerciseName } from "./exercise-name";
 
@@ -10,4 +11,5 @@ export const ExerciseCatalogEntry = v.object({
     v.string(),
     v.transform((value) => tools.FilePathRelative.fromString(value)),
   ),
+  exerciseCategories: v.array(ExerciseCategoryName),
 });
