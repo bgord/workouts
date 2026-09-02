@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -43,11 +44,29 @@ describe(`DELETE ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "exercise.exists");
   });
 
+  test("ExerciseIsNotUsed", async () => {
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseUsageCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(1));
+
+    const response = await server.request(url, { method: "DELETE" }, mocks.ip);
+
+    await testcases.assertInvariantError(response, 403, "exercise.is.not.used");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("happy path", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseUsageCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,

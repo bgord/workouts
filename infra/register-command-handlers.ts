@@ -39,6 +39,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     ExercisesCommandHandlers.handleExerciseDeleteCommand({
       ...deps,
       GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+      GetExerciseUsageCountQuery: Adapters.Exercises.GetExerciseUsageCountQuery,
     }),
   );
 
