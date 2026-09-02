@@ -347,6 +347,7 @@ infra/
 │       ├── timeout-runner.adapter.ts
 │       └── tmp
 ├── bootstrap.ts
+├── catalog.json
 ├── config.ts
 ├── db.ts
 ├── e2e
