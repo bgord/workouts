@@ -410,7 +410,7 @@ export const GenericPlanSectionRenamedEvent = {
   version: 1,
   commit,
   name: "PLAN_SECTION_RENAMED_EVENT",
-  payload: { planSectionId, planSectionName: anotherPlanSectionName },
+  payload: { planId, planSectionId, planSectionName: anotherPlanSectionName, userId },
 } satisfies Plans.Events.PlanSectionRenamedEventType;
 
 export const GenericPlanArchivedEvent = {

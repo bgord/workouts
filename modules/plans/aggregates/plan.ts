@@ -141,7 +141,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionRenamedEvent,
       Plan.getStream(this.id),
-      { planSectionId, planSectionName },
+      { planId: this.id, planSectionId, planSectionName, userId: this.userId! },
       this.deps,
     );
 

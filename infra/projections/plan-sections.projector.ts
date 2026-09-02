@@ -56,6 +56,12 @@ export class PlanSectionsProjector {
     await db
       .update(Schema.planSections)
       .set({ name: event.payload.planSectionName, updatedAt: event.createdAt })
-      .where(eq(Schema.planSections.id, event.payload.planSectionId));
+      .where(
+        and(
+          eq(Schema.planSections.id, event.payload.planSectionId),
+          eq(Schema.planSections.planId, event.payload.planId),
+          eq(Schema.planSections.userId, event.payload.userId),
+        ),
+      );
   }
 }
