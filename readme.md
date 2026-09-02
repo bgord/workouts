@@ -104,6 +104,7 @@ modules/
 │   │   ├── exercise-image-constraints.ts
 │   │   ├── exercise-is-assigned-to-category.ts
 │   │   ├── exercise-is-not-assigned-to-category.ts
+│   │   ├── exercise-is-not-used.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── open-host-queries
 │   ├── policies
@@ -112,6 +113,7 @@ modules/
 │   │   ├── get-exercise-category-name-count.ts
 │   │   ├── get-exercise-category.ts
 │   │   ├── get-exercise-name-count.ts
+│   │   ├── get-exercise-usage-count.ts
 │   │   ├── get-exercise.ts
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
@@ -301,6 +303,7 @@ infra/
 │   │   ├── get-exercise-category-name-count.adapter.ts
 │   │   ├── get-exercise-category.adapter.ts
 │   │   ├── get-exercise-name-count.adapter.ts
+│   │   ├── get-exercise-usage-count.adapter.ts
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-categories-assigned-to-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
