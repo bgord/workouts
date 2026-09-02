@@ -24,7 +24,7 @@ const inspection = {
   size: tools.Size.fromKb(100),
 };
 
-describe(`PATCH ${url}`, async () => {
+describe("PATCH /api/exercises/:exerciseId/image", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);

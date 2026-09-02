@@ -10,7 +10,7 @@ import * as testcases from "./testcases";
 
 const url = `/api/exercises/category/${mocks.exerciseCategoryId}`;
 
-describe(`PATCH ${url}`, async () => {
+describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);

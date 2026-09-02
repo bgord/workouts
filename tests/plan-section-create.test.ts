@@ -10,7 +10,7 @@ import * as testcases from "./testcases";
 
 const url = `/api/plans/${mocks.planId}/section`;
 
-describe(`POST ${url}`, async () => {
+describe("POST /api/plans/:planId/section", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);

@@ -6,7 +6,7 @@ import * as mocks from "./mocks";
 
 const url = `/api/plans/${mocks.planId}`;
 
-describe(`GET ${url}`, async () => {
+describe("GET /api/plans/:planId", async () => {
   const di = await bootstrap();
   const server = createServer(di);
 

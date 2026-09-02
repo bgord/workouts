@@ -10,7 +10,7 @@ import * as testcases from "./testcases";
 
 const url = `/api/exercises/${mocks.exerciseId}`;
 
-describe(`DELETE ${url}`, async () => {
+describe("DELETE /api/exercises/:exerciseId", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
