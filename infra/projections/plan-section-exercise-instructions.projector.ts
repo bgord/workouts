@@ -75,7 +75,7 @@ export class PlanSectionExerciseInstructionProjector {
         repsMax: event.payload.exerciseInstruction.reps.max,
         updatedAt: event.createdAt,
       })
-      .where(eq(Schema.planSections.id, event.payload.planSectionId));
+      .where(eq(Schema.planSectionExerciseInstructions.id, event.payload.exerciseInstruction.id));
   }
 
   async onPlanSectionExerciseInstructionExerciseChangedEvent(
