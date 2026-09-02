@@ -1,10 +1,10 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Exercises from "+exercises";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
-import { CatalogSeeder } from "./catalog-seeder";
 
 const EXERCISE_CATALOG_PATH = tools.FilePathRelative.fromString("infra/exercise-catalog.json");
 
@@ -25,12 +25,10 @@ void (async function main() {
       metadata: { EXERCISE_CATALOG_PATH },
     });
 
-    const seeder = new CatalogSeeder({
+    const seeder = new Exercises.Services.ExerciseCatalogSeeder({
       ...di.Adapters.System,
       ...di.Tools,
-      ListExerciseCategoriesQuery: di.Adapters.Exercises.ListExerciseCategoriesQuery,
       ListExercisesQuery: di.Adapters.Exercises.ListExercisesQuery,
-      ListCategoriesAssignedToExerciseQuery: di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
     });
 
     const result = await seeder.seed(EXERCISE_CATALOG_PATH);
