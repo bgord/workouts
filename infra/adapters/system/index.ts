@@ -5,7 +5,7 @@ import { createDiskSpaceChecker } from "./disk-space-checker.adapter";
 import { createFileCleaner } from "./file-cleaner.adapter";
 import { createFileInspection } from "./file-inspection.adapter";
 import { FileReaderJson } from "./file-reader-json.adapter";
-import { FileReaderRaw } from "./file-reader-raw.adapter";
+import { createFileReaderRaw } from "./file-reader-raw.adapter";
 import { createFileRenamer } from "./file-renamer.adapter";
 import { FileWriter } from "./file-writer.adapter";
 import { createHashFile } from "./hash-file.adapter";
@@ -42,7 +42,7 @@ export async function createSystemAdapters(Env: EnvironmentResultType) {
     NonceProvider,
     Mailer,
     FileReaderJson,
-    FileReaderRaw,
+    FileReaderRaw: createFileReaderRaw(Env),
     Logger,
     Timekeeper,
     FileCleaner,
