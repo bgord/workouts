@@ -1,3 +1,4 @@
+export * from "./exercise-belongs-to-user";
 export * from "./exercise-category-exists";
 export * from "./exercise-category-limit";
 export * from "./exercise-category-name-is-unique";

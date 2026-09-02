@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseUpdatedEvent } from "../events/EXERCISE_UPDATED_EVENT";
+import { ExerciseBelongsToUser } from "../invariants/exercise-belongs-to-user";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseHasChanged } from "../invariants/exercise-has-changed";
 import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
@@ -19,6 +20,7 @@ export const handleExerciseUpdateCommand =
     const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
 
     ExerciseExists.enforce({ exercise });
+    ExerciseBelongsToUser.enforce({ userId: exercise?.userId, requesterId: command.payload.userId });
     ExerciseHasChanged.enforce({
       current: exercise!,
       incoming: { name: command.payload.name, description: command.payload.description },

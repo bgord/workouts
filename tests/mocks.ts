@@ -68,6 +68,7 @@ export const exercise: Exercises.VO.Exercise = {
   name: exerciseName,
   description: exerciseDescription,
   image: exerciseImageKey,
+  userId,
 };
 
 export const exerciseCategoryId = v.parse(
@@ -85,11 +86,13 @@ export const anotherExerciseCategoryName = v.parse(Exercises.VO.ExerciseCategory
 export const exerciseCategory: Exercises.VO.ExerciseCategory = {
   id: exerciseCategoryId,
   name: exerciseCategoryName,
+  userId,
 };
 
 export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
   id: anotherExerciseCategoryId,
   name: anotherExerciseCategoryName,
+  userId,
 };
 
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");

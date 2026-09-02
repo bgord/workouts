@@ -59,6 +59,25 @@ describe(`PATCH ${url}`, async () => {
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
+  test("ExerciseBelongsToUser", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+    using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.temporaryFileId);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", headers: mocks.correlationIdHeaders, body: form },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "exercise.belongs.to.user");
+    expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("ExerciseImageConstraints - maxSide - width", async () => {
     const width = v.parse(tools.ImageWidth, 4100);
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);

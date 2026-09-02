@@ -3,6 +3,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import { ExerciseImageChangedEvent } from "../events/EXERCISE_IMAGE_CHANGED_EVENT";
+import { ExerciseBelongsToUser } from "../invariants/exercise-belongs-to-user";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
 import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
@@ -29,6 +30,11 @@ export const handleExerciseImageChangeCommand =
     if (!ExerciseExists.passes({ exercise })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
       throw new ExerciseExists.error();
+    }
+
+    if (!ExerciseBelongsToUser.passes({ userId: exercise?.userId, requesterId: command.payload.userId })) {
+      await deps.TemporaryFile.cleanup(temporary.getFilename());
+      throw new ExerciseBelongsToUser.error();
     }
 
     const info = await deps.ImageInfo.inspect(temporary);
