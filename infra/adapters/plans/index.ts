@@ -2,6 +2,7 @@ import type * as bg from "@bgord/bun";
 import type * as Plans from "+plans";
 import { GetPlanEditableForOwnerCountQuery } from "./get-plan-editable-for-owner-count.adapter";
 import { GetPlanNameForOwnerCountQuery } from "./get-plan-name-for-user-count.adapter";
+import { ListPlansQuery } from "./list-plans.adapter";
 import { createPlanRepository } from "./plan-repository.adapter";
 
 type Dependencies = {
@@ -16,6 +17,7 @@ export function createPlansAdapters(deps: Dependencies) {
   return {
     GetPlanNameForOwnerCountQuery,
     GetPlanEditableForOwnerCountQuery,
+    ListPlansQuery,
     PlanRepository: createPlanRepository(deps),
   };
 }
