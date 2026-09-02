@@ -1,11 +1,12 @@
 import type * as bg from "@bgord/bun";
 import { and, eq } from "drizzle-orm";
+import * as Auth from "+auth";
 import * as Plans from "+plans";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 type Dependencies = {
-  EventBus: bg.EventBusPort<Plans.Aggregates.PlanEventType>;
+  EventBus: bg.EventBusPort<Plans.Aggregates.PlanEventType | Auth.Events.AccountDeletedEventType>;
   EventHandler: bg.EventHandlerStrategy;
 };
 
@@ -34,6 +35,10 @@ export class PlansProjector {
     deps.EventBus.on(
       Plans.Events.PLAN_RENAMED_EVENT,
       deps.EventHandler.handle(this.onPlanRenamedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Auth.Events.ACCOUNT_DELETED_EVENT,
+      deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
   }
 
@@ -81,5 +86,9 @@ export class PlansProjector {
       .update(Schema.plans)
       .set({ name: event.payload.planName, updatedAt: event.createdAt })
       .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
+  }
+
+  async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
+    await db.delete(Schema.plans).where(eq(Schema.plans.userId, event.payload.userId));
   }
 }

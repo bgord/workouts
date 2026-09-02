@@ -1,5 +1,6 @@
 import type * as bg from "@bgord/bun";
 import { eq } from "drizzle-orm";
+import * as Auth from "+auth";
 import * as Plans from "+plans";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -11,6 +12,7 @@ type Dependencies = {
     | Plans.Events.PlanSectionExerciseInstructionUpdatedEventType
     | Plans.Events.PlanSectionExerciseInstructionExerciseChangedEventType
     | Plans.Events.PlanSectionRemovedEventType
+    | Auth.Events.AccountDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -36,6 +38,10 @@ export class PlanSectionExerciseInstructionProjector {
     deps.EventBus.on(
       Plans.Events.PLAN_SECTION_REMOVED_EVENT,
       deps.EventHandler.handle(this.onPlanSectionRemovedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Auth.Events.ACCOUNT_DELETED_EVENT,
+      deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
   }
 
@@ -90,6 +96,12 @@ export class PlanSectionExerciseInstructionProjector {
   async onPlanSectionRemovedEvent(event: Plans.Events.PlanSectionRemovedEventType) {
     await db
       .delete(Schema.planSectionExerciseInstructions)
-      .where(eq(Schema.planSections.id, event.payload.planSectionId));
+      .where(eq(Schema.planSectionExerciseInstructions.planSectionId, event.payload.planSectionId));
+  }
+
+  async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
+    await db
+      .delete(Schema.planSectionExerciseInstructions)
+      .where(eq(Schema.planSectionExerciseInstructions.userId, event.payload.userId));
   }
 }
