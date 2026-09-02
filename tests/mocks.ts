@@ -169,6 +169,17 @@ export const planSummary: Plans.VO.PlanSummary = {
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
 };
+const planSection: Plans.VO.PlanSection = {
+  id: planSectionId,
+  name: planSectionName,
+  exerciseInstructions: [exerciseInstruction],
+};
+export const plan: Plans.VO.Plan = {
+  id: planId,
+  name: planName,
+  status: Plans.VO.PlanStatusEnum.draft,
+  sections: [planSection],
+};
 
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 
