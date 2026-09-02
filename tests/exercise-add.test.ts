@@ -11,10 +11,8 @@ import * as testcases from "./testcases";
 
 const url = "/api/exercises/add";
 
-const png = new File(["image"], "image.png");
-
 const form = new FormData();
-form.append("file", png);
+form.append("file", mocks.png);
 form.append("name", mocks.exerciseName);
 form.append("description", mocks.exerciseDescription);
 
@@ -46,7 +44,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
-    form.append("file", png);
+    form.append("file", mocks.png);
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
     const json = await response.json();
@@ -59,7 +57,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
-    form.append("file", png);
+    form.append("file", mocks.png);
     form.append("name", "a".repeat(129));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
@@ -73,7 +71,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
-    form.append("file", png);
+    form.append("file", mocks.png);
     form.append("name", mocks.exerciseName);
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
@@ -87,7 +85,7 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
 
     const form = new FormData();
-    form.append("file", png);
+    form.append("file", mocks.png);
     form.append("name", mocks.exerciseName);
     form.append("description", "a".repeat(257));
 
@@ -118,7 +116,7 @@ describe(`POST ${url}`, async () => {
     );
 
     await testcases.assertInvariantError(response, 403, "exercise.name.is.unique");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -138,7 +136,7 @@ describe(`POST ${url}`, async () => {
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -158,7 +156,7 @@ describe(`POST ${url}`, async () => {
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -178,7 +176,7 @@ describe(`POST ${url}`, async () => {
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -198,7 +196,7 @@ describe(`POST ${url}`, async () => {
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -224,7 +222,7 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(final);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseAddedEvent]);
   });

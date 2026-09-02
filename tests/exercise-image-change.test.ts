@@ -11,10 +11,8 @@ import * as testcases from "./testcases";
 
 const url = `/api/exercises/${mocks.exerciseId}/image`;
 
-const png = new File(["image"], "image.png");
-
 const form = new FormData();
-form.append("file", png);
+form.append("file", mocks.png);
 
 const temporary = tools.Filename.fromString(`${mocks.temporaryFileId}.png`);
 const final = temporary.withExtension(v.parse(tools.Extension, "webp"));
@@ -55,7 +53,7 @@ describe(`PATCH ${url}`, async () => {
     );
 
     await testcases.assertInvariantError(response, 403, "exercise.exists");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -91,7 +89,7 @@ describe(`PATCH ${url}`, async () => {
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -108,7 +106,7 @@ describe(`PATCH ${url}`, async () => {
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -125,7 +123,7 @@ describe(`PATCH ${url}`, async () => {
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -142,7 +140,7 @@ describe(`PATCH ${url}`, async () => {
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
     await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
 
@@ -163,7 +161,7 @@ describe(`PATCH ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, png);
+    expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(final);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseImageChangedEvent]);
   });

@@ -17,6 +17,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const CacheRepository = new bg.CacheRepositoryNodeCacheAdapter({ type: "infinite" });
   const CacheResolver = new bg.CacheResolverReadThroughStrategy({ CacheRepository });
 
+  const redactor = new bg.RedactorMask(bg.RedactorMask.DEFAULT_KEYS);
+
   const origin = [localhost, host];
 
   const server = new Hono<infra.Config>()
@@ -45,11 +47,14 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     "/add",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    new bg.FileUploaderHonoMiddleware({
-      field: "file",
-      maxSize: Exercises.VO.ExerciseImageMaxSize,
-      MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
-    }).handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Exercises.VO.ExerciseImageMaxSize,
+        MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorMagicBytesStrategy() },
+    ).handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseAdd(deps)),
   );
   exercises.get(
@@ -72,11 +77,14 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     "/:exerciseId/image",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
-    new bg.FileUploaderHonoMiddleware({
-      field: "file",
-      maxSize: Exercises.VO.ExerciseImageMaxSize,
-      MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
-    }).handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Exercises.VO.ExerciseImageMaxSize,
+        MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorMagicBytesStrategy() },
+    ).handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseImageChange(deps)),
   );
   exercises.get("/:exerciseId/image", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseImageGet(deps)));
@@ -220,7 +228,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   server.get(
     "/readiness",
     Tools.ShieldTimeout.handle(),
-    ...new bg.ReadinessHonoHandler({ prerequisites: Tools.Prerequisites.readiness }).handle(),
+    ...new bg.ReadinessHonoHandler({ prerequisites: Tools.Prerequisites.readiness, redactor }).handle(),
   );
   server.get(
     "/healthcheck",
@@ -228,7 +236,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldTimeout.handle(),
     Tools.ShieldBasicAuth.handle(),
     ...new bg.HealthcheckHonoHandler(
-      { Env: Env.type, prerequisites: Tools.Prerequisites.healthcheck },
+      { Env: Env.type, prerequisites: Tools.Prerequisites.healthcheck, redactor },
       { ...Adapters.System, ...Tools, LoggerStatsProvider: Adapters.System.Logger },
     ).handle(),
   );
@@ -251,11 +259,14 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    new bg.FileUploaderHonoMiddleware({
-      field: "file",
-      maxSize: Preferences.VO.ProfileAvatarMaxSize,
-      MimeRegistry: Preferences.VO.ProfileAvatarMimeRegistry,
-    }).handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Preferences.VO.ProfileAvatarMaxSize,
+        MimeRegistry: Preferences.VO.ProfileAvatarMimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorMagicBytesStrategy() },
+    ).handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Preferences.UpdateProfileAvatar(deps)),
   );
   server.get(
