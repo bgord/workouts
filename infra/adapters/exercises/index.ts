@@ -2,6 +2,7 @@ import { GetExerciseQuery } from "./get-exercise.adapter";
 import { GetExerciseCategoryQuery } from "./get-exercise-category.adapter";
 import { GetExerciseCategoryNameCountQuery } from "./get-exercise-category-name-count.adapter";
 import { GetExerciseNameCountQuery } from "./get-exercise-name-count.adapter";
+import { GetExerciseUsageCountQuery } from "./get-exercise-usage-count.adapter";
 import { ListCategoriesAssignedToExerciseQuery } from "./list-categories-assigned-to-exercise.adapter";
 import { ListExerciseCategoriesQuery } from "./list-exercise-categories.adapter";
 import { ListExercisesQuery } from "./list-exercises.adapter";
@@ -15,6 +16,7 @@ export function createExercisesAdapters() {
     GetExerciseCategoryQuery,
     GetExerciseNameCountQuery,
     GetExerciseQuery,
+    GetExerciseUsageCountQuery,
     ListCategoriesAssignedToExerciseQuery,
     ListExerciseCategoriesQuery,
     ListExercisesAssignedToCategoryQuery,
