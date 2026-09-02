@@ -233,6 +233,7 @@ modules/
 │   ├── invariants
 │   │   └── profile-avatar-constraints.ts
 │   ├── policies
+│   │   ├── profile-avatar-eraser.ts
 │   │   └── set-default-user-language.ts
 │   └── value-objects
 │       ├── profile-avatar-key.ts
