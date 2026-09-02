@@ -12,7 +12,6 @@ class ListExercisesQueryDrizzle implements Exercises.Queries.ListExercises {
       name: exercise.name,
       description: exercise.description,
       image: exercise.image,
-      userId: exercise.userId,
     }));
   }
 }

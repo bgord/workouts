@@ -24,7 +24,6 @@ class ListExercisesAssignedToCategoryQueryDrizzle
       name: row.exercises.name,
       description: row.exercises.description,
       image: row.exercises.image,
-      userId: row.exercises.userId,
     }));
   }
 }

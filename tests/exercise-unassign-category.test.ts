@@ -113,23 +113,6 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("CatalogIsManagedBySystem", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
-      .mockResolvedValue({ ...mocks.exercise, userId: mocks.anotherUserId });
-    spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
-      .mockResolvedValue(mocks.exerciseCategory);
-
-    const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
-
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.system");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
   test("ExerciseIsAssignedToCategory", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using spies = new DisposableStack();

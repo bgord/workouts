@@ -15,11 +15,7 @@ class GetExerciseCategoryQueryDrizzle implements Exercises.Queries.GetExerciseCa
 
     if (!exerciseCategory[0]) return null;
 
-    return {
-      id: exerciseCategory[0].id,
-      name: exerciseCategory[0].name,
-      userId: exerciseCategory[0].userId,
-    };
+    return { id: exerciseCategory[0].id, name: exerciseCategory[0].name };
   }
 }
 

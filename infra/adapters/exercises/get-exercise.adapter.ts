@@ -18,7 +18,6 @@ class GetExerciseQueryDrizzle implements Exercises.Queries.GetExercise {
       name: exercise[0].name,
       description: exercise[0].description,
       image: exercise[0].image,
-      userId: exercise[0].userId,
     };
   }
 }

@@ -13,7 +13,6 @@ class ListExerciseCategoriesQueryDrizzle implements Exercises.Queries.ListExerci
     return exerciseCategories.map((exerciseCategory) => ({
       id: exerciseCategory.id,
       name: exerciseCategory.name,
-      userId: exerciseCategory.userId,
     }));
   }
 }
