@@ -119,8 +119,46 @@ describe(`POST ${url}`, async () => {
     await testcases.assertInvariantError(response, 412, "revision.mismatch");
   });
 
-  test("happy path", async () => {
+  test("PlanHasSections", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.revisionHeaders(events.length) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.has.sections");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanHasNoEmptySections", async () => {
     const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.revisionHeaders(events.length) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.has.no.empty.sections");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("happy path", async () => {
+    const events = [
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

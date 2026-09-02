@@ -165,7 +165,8 @@ export class Plan {
   finalize(requesterId: Auth.VO.UserIdType) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    // Invariants.PlanHasNoEmptySections.enforce({ sections: this.sections })
+    Invariants.PlanHasSections.enforce({ planSections: this.sections });
+    Invariants.PlanHasNoEmptySections.enforce({ planSections: this.sections });
 
     const event = bg.event(
       Events.PlanFinalizedEvent,

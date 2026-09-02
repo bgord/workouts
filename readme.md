@@ -181,6 +181,8 @@ modules/
 │   │   └── PLAN_SECTION_RENAMED_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-belongs-to-user.ts
+│   │   ├── plan-has-no-empty-sections.ts
+│   │   ├── plan-has-sections.ts
 │   │   ├── plan-is-archivable.ts
 │   │   ├── plan-is-editable.ts
 │   │   ├── plan-is-finalized.ts

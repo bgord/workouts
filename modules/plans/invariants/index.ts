@@ -1,4 +1,6 @@
 export * from "./plan-belongs-to-user";
+export * from "./plan-has-no-empty-sections";
+export * from "./plan-has-sections";
 export * from "./plan-is-archivable";
 export * from "./plan-is-editable";
 export * from "./plan-is-finalized";

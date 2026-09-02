@@ -298,11 +298,35 @@ describe("Plan", async () => {
   });
 
   test("finalize", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      deps,
+    );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.finalize(mocks.userId));
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanFinalizedEvent]);
+  });
+
+  test("finalize - PlanHasSections", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+
+    expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanHasSections.error);
+  });
+
+  test("finalize - PlanHasNoEmptySections", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      deps,
+    );
+
+    expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanHasNoEmptySections.error);
   });
 
   test("finalize - PlanIsEditable - initial", async () => {
