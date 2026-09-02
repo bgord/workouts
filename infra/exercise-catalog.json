@@ -3,7 +3,8 @@
     {
       "name": "Bench Press Barbell Horizontal",
       "description": "Press the barbell upwards, while lying on the horizontal bench.",
-      "image": "infra/exercise-catalog/bench-press-barbell-horizontal.webp"
+      "image": "infra/exercise-catalog/bench-press-barbell-horizontal.webp",
+      "exerciseCategories": ["Chest", "Triceps"]
     }
   ]
 }
