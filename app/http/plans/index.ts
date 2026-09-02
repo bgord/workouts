@@ -2,6 +2,7 @@ export * from "./plan-archive";
 export * from "./plan-create";
 export * from "./plan-editing-enable";
 export * from "./plan-finalize";
+export * from "./plan-get";
 export * from "./plan-list";
 export * from "./plan-rename";
 export * from "./plan-restore";

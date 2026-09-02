@@ -4,7 +4,7 @@ import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
 
-const url = "/api/plans/list";
+const url = `/api/plans/${mocks.planId}`;
 
 describe(`GET ${url}`, async () => {
   const di = await bootstrap();
@@ -18,27 +18,35 @@ describe(`GET ${url}`, async () => {
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
   });
 
+  test("validation - incorrect plan id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request("/api/plans/id", { method: "GET" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type" });
+  });
+
+  test("not found", async () => {
+    const spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Adapters.Plans.GetPlanQuery, "execute").mockResolvedValue(null));
+
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+
+    expect(response.status).toEqual(404);
+  });
+
   test("happy path", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue([mocks.planSummary]));
+    spies.use(spyOn(di.Adapters.Plans.GetPlanQuery, "execute").mockResolvedValue(mocks.plan));
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([mocks.planSummary]);
-  });
-
-  test("happy path - empty", async () => {
-    const spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue([]));
-
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(200);
-    expect(json).toEqual([]);
+    expect(json).toEqual(mocks.plan);
   });
 });
