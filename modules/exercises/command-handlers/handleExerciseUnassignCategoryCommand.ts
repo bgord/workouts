@@ -1,6 +1,8 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryUnassignedEvent } from "../events/EXERCISE_CATEGORY_UNASSIGNED_EVENT";
+import { ExerciseBelongsToUser } from "../invariants/exercise-belongs-to-user";
+import { ExerciseCategoryBelongsToUser } from "../invariants/exercise-category-belongs-to-user";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsAssignedToCategory } from "../invariants/exercise-is-assigned-to-category";
@@ -20,10 +22,15 @@ export const handleExerciseUnassignCategoryCommand =
     const exercise = await deps.GetExerciseQuery.execute(command.payload.exerciseId);
 
     ExerciseExists.enforce({ exercise });
+    ExerciseBelongsToUser.enforce({ userId: exercise?.userId, requesterId: command.payload.userId });
 
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.exerciseCategoryId);
 
     ExerciseCategoryExists.enforce({ exerciseCategory });
+    ExerciseCategoryBelongsToUser.enforce({
+      userId: exerciseCategory?.userId,
+      requesterId: command.payload.userId,
+    });
 
     const exerciseCategories = await deps.ListCategoriesAssignedToExerciseQuery.execute(
       command.payload.exerciseId,

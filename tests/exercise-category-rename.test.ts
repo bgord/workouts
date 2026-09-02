@@ -71,6 +71,24 @@ describe(`PATCH ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "exercise.category.exists");
   });
 
+  test("ExerciseCategoryBelongsToUser", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
+      .mockResolvedValue(mocks.exerciseCategory);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", body: JSON.stringify({ name: mocks.anotherExerciseCategoryName }) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "exercise.category.belongs.to.user");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("ExerciseCategoryNameIsUnique", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));

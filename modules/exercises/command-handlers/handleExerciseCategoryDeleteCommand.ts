@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryDeletedEvent } from "../events/EXERCISE_CATEGORY_DELETED_EVENT";
+import { ExerciseCategoryBelongsToUser } from "../invariants/exercise-category-belongs-to-user";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 
 type Dependencies = {
@@ -16,6 +17,10 @@ export const handleExerciseCategoryDeleteCommand =
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
 
     ExerciseCategoryExists.enforce({ exerciseCategory });
+    ExerciseCategoryBelongsToUser.enforce({
+      userId: exerciseCategory?.userId,
+      requesterId: command.payload.userId,
+    });
 
     const event = bg.event(
       ExerciseCategoryDeletedEvent,
