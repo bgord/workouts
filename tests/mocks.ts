@@ -169,10 +169,12 @@ export const planSummary: Plans.VO.PlanSummary = {
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
 };
-const planSection: Plans.VO.PlanSection = {
+const planSection: Plans.VO.PlanSectionWithExercises = {
   id: planSectionId,
   name: planSectionName,
-  exerciseInstructions: [exerciseInstruction],
+  exerciseInstructions: [
+    { id: exerciseInstruction.id, exercise, sets: exerciseInstruction.sets, reps: exerciseInstruction.reps },
+  ],
 };
 export const plan: Plans.VO.Plan = {
   id: planId,

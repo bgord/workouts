@@ -22,8 +22,19 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       .orderBy(asc(Schema.planSections.createdAt));
 
     const exerciseInstructions = await db
-      .select()
+      .select({
+        id: Schema.planSectionExerciseInstructions.id,
+        planSectionId: Schema.planSectionExerciseInstructions.planSectionId,
+        sets: Schema.planSectionExerciseInstructions.sets,
+        repsMin: Schema.planSectionExerciseInstructions.repsMin,
+        repsMax: Schema.planSectionExerciseInstructions.repsMax,
+        exerciseId: Schema.exercises.id,
+        exerciseName: Schema.exercises.name,
+        exerciseDescription: Schema.exercises.description,
+        exerciseImage: Schema.exercises.image,
+      })
       .from(Schema.planSectionExerciseInstructions)
+      .innerJoin(Schema.exercises, eq(Schema.planSectionExerciseInstructions.exerciseId, Schema.exercises.id))
       .where(
         and(
           eq(Schema.planSectionExerciseInstructions.planId, planId),
@@ -43,7 +54,12 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           .filter((exerciseInstruction) => exerciseInstruction.planSectionId === section.id)
           .map((exerciseInstruction) => ({
             id: exerciseInstruction.id,
-            exerciseId: exerciseInstruction.exerciseId,
+            exercise: {
+              id: exerciseInstruction.exerciseId,
+              name: exerciseInstruction.exerciseName,
+              description: exerciseInstruction.exerciseDescription,
+              image: exerciseInstruction.exerciseImage,
+            },
             sets: exerciseInstruction.sets,
             reps: v.parse(Plans.VO.Reps, {
               min: exerciseInstruction.repsMin,
