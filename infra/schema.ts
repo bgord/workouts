@@ -203,6 +203,7 @@ export const plans = sqliteTable("plans", {
   id: identifier<PlanIdType>(),
   name: text("name").notNull().$type<PlanNameType>(),
   status: text("kind", toEnumList(PlanStatusEnum)).notNull().$type<PlanStatusEnum>(),
+  revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),

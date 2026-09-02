@@ -168,6 +168,7 @@ export const planSummary: Plans.VO.PlanSummary = {
   id: planId,
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
+  revision: revision.value,
 };
 const planSection: Plans.VO.PlanSectionWithExercises = {
   id: planSectionId,
@@ -180,6 +181,7 @@ export const plan: Plans.VO.Plan = {
   id: planId,
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
+  revision: revision.value,
   sections: [planSection],
 };
 

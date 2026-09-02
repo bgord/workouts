@@ -12,7 +12,12 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
       .where(eq(Schema.plans.userId, userId))
       .orderBy(desc(Schema.plans.updatedAt));
 
-    return plans.map((plan) => ({ id: plan.id, name: plan.name, status: plan.status }));
+    return plans.map((plan) => ({
+      id: plan.id,
+      name: plan.name,
+      status: plan.status,
+      revision: plan.revision,
+    }));
   }
 }
 
