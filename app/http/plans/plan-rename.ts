@@ -14,13 +14,13 @@ export const PlanRename =
     const params = context.request.params();
     const body = await context.request.json();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planName = v.parse(Plans.VO.PlanName, body["planName"]);
 
     const command = bg.command(
       Plans.Commands.PlanRenameCommand,
-      { revision: context.middleware.revision.fromWeakETag(), payload: { planId, planName, userId } },
+      { revision: context.middleware.revision.fromWeakETag(), payload: { planId, planName, requesterId } },
       deps,
     );
 

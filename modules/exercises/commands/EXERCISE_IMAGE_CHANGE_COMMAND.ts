@@ -12,7 +12,7 @@ export const ExerciseImageChangeCommand = v.object({
   payload: v.object({
     id: ExerciseId,
     absoluteFilePath: v.pipe(v.string(), v.minLength(1)),
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

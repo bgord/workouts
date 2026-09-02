@@ -14,7 +14,7 @@ export const PlanSectionExerciseInstructionUpdate =
     const params = context.request.params();
     const body = await context.request.json();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
     const exerciseInstructionId = v.parse(Plans.VO.ExerciseInstructionId, params["exerciseInstructionId"]);
@@ -28,7 +28,7 @@ export const PlanSectionExerciseInstructionUpdate =
       Plans.Commands.PlanSectionExerciseInstructionUpdateCommand,
       {
         revision: context.middleware.revision.fromWeakETag(),
-        payload: { planId, planSectionId, exerciseInstruction, userId },
+        payload: { planId, planSectionId, exerciseInstruction, requesterId },
       },
       deps,
     );

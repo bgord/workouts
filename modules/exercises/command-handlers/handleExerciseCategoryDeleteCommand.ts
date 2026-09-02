@@ -14,7 +14,7 @@ type Dependencies = {
 
 export const handleExerciseCategoryDeleteCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryDeleteCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
 
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
 
@@ -23,7 +23,7 @@ export const handleExerciseCategoryDeleteCommand =
     const event = bg.event(
       ExerciseCategoryDeletedEvent,
       `exercise_category_${command.payload.id}`,
-      { id: command.payload.id, userId: command.payload.userId },
+      { id: command.payload.id, requesterId: command.payload.requesterId },
       deps,
     );
 

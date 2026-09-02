@@ -121,7 +121,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionRemovedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, userId: this.userId! },
+      { planId: this.id, planSectionId, requesterId },
       this.deps,
     );
 
@@ -141,7 +141,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionRenamedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, planSectionName, userId: this.userId! },
+      { planId: this.id, planSectionId, planSectionName, requesterId },
       this.deps,
     );
 
@@ -155,7 +155,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanArchivedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, userId: this.userId! },
+      { planId: this.id, requesterId },
       this.deps,
     );
 
@@ -171,7 +171,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanFinalizedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, userId: this.userId! },
+      { planId: this.id, requesterId },
       this.deps,
     );
 
@@ -185,7 +185,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanRestoredEvent,
       Plan.getStream(this.id),
-      { planId: this.id, userId: this.userId! },
+      { planId: this.id, requesterId },
       this.deps,
     );
 
@@ -199,7 +199,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanEditingEnabledEvent,
       Plan.getStream(this.id),
-      { planId: this.id, userId: this.userId! },
+      { planId: this.id, requesterId },
       this.deps,
     );
 
@@ -214,7 +214,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanRenamedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planName, userId: this.userId! },
+      { planId: this.id, planName, requesterId },
       this.deps,
     );
 
@@ -259,7 +259,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionExerciseInstructionRemovedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, exerciseInstructionId, userId: this.userId! },
+      { planId: this.id, planSectionId, exerciseInstructionId, requesterId },
       this.deps,
     );
 
@@ -290,7 +290,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionExerciseInstructionUpdatedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, exerciseInstruction, userId: this.userId! },
+      { planId: this.id, planSectionId, exerciseInstruction, requesterId },
       this.deps,
     );
 
@@ -321,7 +321,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionExerciseInstructionExerciseChangedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, exerciseInstruction, userId: this.userId! },
+      { planId: this.id, planSectionId, exerciseInstruction, requesterId },
       this.deps,
     );
 

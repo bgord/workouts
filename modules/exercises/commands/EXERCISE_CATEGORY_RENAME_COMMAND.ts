@@ -10,7 +10,7 @@ export const EXERCISE_CATEGORY_RENAME_COMMAND = "EXERCISE_CATEGORY_RENAME_COMMAN
 export const ExerciseCategoryRenameCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   name: v.literal(EXERCISE_CATEGORY_RENAME_COMMAND),
-  payload: v.object({ id: ExerciseCategoryId, name: ExerciseCategoryName, userId: Auth.VO.UserId }),
+  payload: v.object({ id: ExerciseCategoryId, name: ExerciseCategoryName, requesterId: Auth.VO.UserId }),
 });
 
 export type ExerciseCategoryRenameCommandType = v.InferOutput<typeof ExerciseCategoryRenameCommand>;

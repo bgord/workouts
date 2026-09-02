@@ -16,7 +16,7 @@ type Dependencies = {
 
 export const handleExerciseDeleteCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseDeleteCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
 
@@ -29,7 +29,7 @@ export const handleExerciseDeleteCommand =
     const event = bg.event(
       ExerciseDeletedEvent,
       `exercise_${command.payload.id}`,
-      { id: command.payload.id, image: exercise!.image, userId: command.payload.userId },
+      { id: command.payload.id, image: exercise!.image, requesterId: command.payload.requesterId },
       deps,
     );
 

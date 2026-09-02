@@ -9,7 +9,7 @@ export const EXERCISE_DELETED_EVENT = "EXERCISE_DELETED_EVENT";
 export const ExerciseDeletedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(EXERCISE_DELETED_EVENT),
-  payload: v.object({ id: VO.ExerciseId, image: tools.ObjectKey, userId: Auth.VO.UserId }),
+  payload: v.object({ id: VO.ExerciseId, image: tools.ObjectKey, requesterId: Auth.VO.UserId }),
 });
 
 export type ExerciseDeletedEventType = v.InferOutput<typeof ExerciseDeletedEvent>;

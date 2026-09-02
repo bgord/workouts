@@ -106,7 +106,7 @@ export class ExerciseCatalogSeeder {
         await this.deps.CommandBus.emit(
           bg.command(
             Commands.ExerciseAssignCategoryCommand,
-            { payload: { exerciseId, exerciseCategoryId, userId: Auth.VO.SYSTEM_USER_ID } },
+            { payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID } },
             this.deps,
           ),
         );

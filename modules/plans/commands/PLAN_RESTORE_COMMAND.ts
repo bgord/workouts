@@ -11,7 +11,7 @@ export const PlanRestoreCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   revision: v.instance(tools.Revision),
   name: v.literal(PLAN_RESTORE_COMMAND),
-  payload: v.object({ planId: PlanId, userId: Auth.VO.UserId }),
+  payload: v.object({ planId: PlanId, requesterId: Auth.VO.UserId }),
 });
 
 export type PlanRestoreCommandType = v.InferOutput<typeof PlanRestoreCommand>;

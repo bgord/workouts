@@ -289,7 +289,7 @@ export const GenericExerciseDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_DELETED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey, userId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseId, image: exerciseImageKey, requesterId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseDeletedEventType;
 
 export const GenericExerciseUpdatedNameEvent = {
@@ -304,7 +304,7 @@ export const GenericExerciseUpdatedNameEvent = {
     id: exerciseId,
     name: anotherExerciseName,
     description: exerciseDescription,
-    userId: Auth.VO.SYSTEM_USER_ID,
+    requesterId: Auth.VO.SYSTEM_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
@@ -320,7 +320,7 @@ export const GenericExerciseUpdatedDescriptionEvent = {
     id: exerciseId,
     name: exerciseName,
     description: anotherExerciseDescription,
-    userId: Auth.VO.SYSTEM_USER_ID,
+    requesterId: Auth.VO.SYSTEM_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
@@ -336,7 +336,7 @@ export const GenericExerciseUpdatedEvent = {
     id: exerciseId,
     name: anotherExerciseName,
     description: anotherExerciseDescription,
-    userId: Auth.VO.SYSTEM_USER_ID,
+    requesterId: Auth.VO.SYSTEM_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
@@ -348,7 +348,7 @@ export const GenericExerciseImageChangedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_IMAGE_CHANGED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey, userId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseId, image: exerciseImageKey, requesterId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseImageChangedEventType;
 
 export const GenericExerciseCategoryAddedEvent = {
@@ -370,7 +370,7 @@ export const GenericExerciseCategoryDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_DELETED_EVENT",
-  payload: { id: exerciseCategoryId, userId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryDeletedEventType;
 
 export const GenericExerciseCategoryRenamedEvent = {
@@ -381,7 +381,7 @@ export const GenericExerciseCategoryRenamedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_RENAMED_EVENT",
-  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName, userId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName, requesterId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryRenamedEventType;
 
 export const GenericExerciseCategoryAssignedEvent = {
@@ -392,7 +392,7 @@ export const GenericExerciseCategoryAssignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_ASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId, userId: Auth.VO.SYSTEM_USER_ID },
+  payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
 
 export const GenericExerciseCategoryUnassignedEvent = {
@@ -403,7 +403,7 @@ export const GenericExerciseCategoryUnassignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_UNASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId, userId: Auth.VO.SYSTEM_USER_ID },
+  payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
 
 export const GenericPlanCreatedEvent = {
@@ -452,7 +452,7 @@ export const GenericPlanSectionRemovedEvent = {
   version: 1,
   commit,
   name: "PLAN_SECTION_REMOVED_EVENT",
-  payload: { planId, planSectionId, userId },
+  payload: { planId, planSectionId, requesterId: userId },
 } satisfies Plans.Events.PlanSectionRemovedEventType;
 
 export const GenericPlanSectionRenamedEvent = {
@@ -463,7 +463,7 @@ export const GenericPlanSectionRenamedEvent = {
   version: 1,
   commit,
   name: "PLAN_SECTION_RENAMED_EVENT",
-  payload: { planId, planSectionId, planSectionName: anotherPlanSectionName, userId },
+  payload: { planId, planSectionId, planSectionName: anotherPlanSectionName, requesterId: userId },
 } satisfies Plans.Events.PlanSectionRenamedEventType;
 
 export const GenericPlanArchivedEvent = {
@@ -474,7 +474,7 @@ export const GenericPlanArchivedEvent = {
   version: 1,
   commit,
   name: "PLAN_ARCHIVED_EVENT",
-  payload: { planId, userId },
+  payload: { planId, requesterId: userId },
 } satisfies Plans.Events.PlanArchivedEventType;
 
 export const GenericPlanFinalizedEvent = {
@@ -485,7 +485,7 @@ export const GenericPlanFinalizedEvent = {
   version: 1,
   commit,
   name: "PLAN_FINALIZED_EVENT",
-  payload: { planId, userId },
+  payload: { planId, requesterId: userId },
 } satisfies Plans.Events.PlanFinalizedEventType;
 
 export const GenericPlanRestoredEvent = {
@@ -496,7 +496,7 @@ export const GenericPlanRestoredEvent = {
   version: 1,
   commit,
   name: "PLAN_RESTORED_EVENT",
-  payload: { planId, userId },
+  payload: { planId, requesterId: userId },
 } satisfies Plans.Events.PlanRestoredEventType;
 
 export const GenericPlanEditingEnabledEvent = {
@@ -507,7 +507,7 @@ export const GenericPlanEditingEnabledEvent = {
   version: 1,
   commit,
   name: "PLAN_EDITING_ENABLED_EVENT",
-  payload: { planId, userId },
+  payload: { planId, requesterId: userId },
 } satisfies Plans.Events.PlanEditingEnabledEventType;
 
 export const GenericPlanRenamedEvent = {
@@ -518,7 +518,7 @@ export const GenericPlanRenamedEvent = {
   version: 1,
   commit,
   name: "PLAN_RENAMED_EVENT",
-  payload: { planId, planName: anotherPlanName, userId },
+  payload: { planId, planName: anotherPlanName, requesterId: userId },
 } satisfies Plans.Events.PlanRenamedEventType;
 
 export const GenericPlanSectionExerciseInstructionAddedEvent = {
@@ -540,7 +540,7 @@ export const GenericPlanSectionExerciseInstructionRemovedEvent = {
   version: 1,
   commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT",
-  payload: { planId, planSectionId, exerciseInstructionId, userId },
+  payload: { planId, planSectionId, exerciseInstructionId, requesterId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionRemovedEventType;
 
 export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
@@ -555,7 +555,7 @@ export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
     planId,
     planSectionId,
     exerciseInstruction: { id: exerciseInstructionId, reps: anotherReps, sets: anotherSets },
-    userId,
+    requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionUpdatedEventType;
 
@@ -571,7 +571,7 @@ export const GenericPlanSectionExerciseInstructionExerciseChangedEvent = {
     planId,
     planSectionId,
     exerciseInstruction: { id: exerciseInstructionId, exerciseId: anotherExerciseId },
-    userId,
+    requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionExerciseChangedEventType;
 

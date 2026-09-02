@@ -9,7 +9,7 @@ export const EXERCISE_CATEGORY_DELETE_COMMAND = "EXERCISE_CATEGORY_DELETE_COMMAN
 export const ExerciseCategoryDeleteCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   name: v.literal(EXERCISE_CATEGORY_DELETE_COMMAND),
-  payload: v.object({ id: ExerciseCategoryId, userId: Auth.VO.UserId }),
+  payload: v.object({ id: ExerciseCategoryId, requesterId: Auth.VO.UserId }),
 });
 
 export type ExerciseCategoryDeleteCommandType = v.InferOutput<typeof ExerciseCategoryDeleteCommand>;

@@ -11,7 +11,7 @@ export const PlanFinalizeCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   revision: v.instance(tools.Revision),
   name: v.literal(PLAN_FINALIZE_COMMAND),
-  payload: v.object({ planId: PlanId, userId: Auth.VO.UserId }),
+  payload: v.object({ planId: PlanId, requesterId: Auth.VO.UserId }),
 });
 
 export type PlanFinalizeCommandType = v.InferOutput<typeof PlanFinalizeCommand>;

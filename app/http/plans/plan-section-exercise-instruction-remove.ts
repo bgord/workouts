@@ -13,7 +13,7 @@ export const PlanSectionExerciseInstructionRemove =
   async (context) => {
     const params = context.request.params();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
     const exerciseInstructionId = v.parse(Plans.VO.ExerciseInstructionId, params["exerciseInstructionId"]);
@@ -22,7 +22,7 @@ export const PlanSectionExerciseInstructionRemove =
       Plans.Commands.PlanSectionExerciseInstructionRemoveCommand,
       {
         revision: context.middleware.revision.fromWeakETag(),
-        payload: { planId, planSectionId, exerciseInstructionId, userId },
+        payload: { planId, planSectionId, exerciseInstructionId, requesterId },
       },
       deps,
     );

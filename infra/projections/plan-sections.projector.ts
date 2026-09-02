@@ -53,7 +53,7 @@ export class PlanSectionsProjector {
         and(
           eq(Schema.planSections.id, event.payload.planSectionId),
           eq(Schema.planSections.planId, event.payload.planId),
-          eq(Schema.planSections.userId, event.payload.userId),
+          eq(Schema.planSections.userId, event.payload.requesterId),
         ),
       );
   }
@@ -66,7 +66,7 @@ export class PlanSectionsProjector {
         and(
           eq(Schema.planSections.id, event.payload.planSectionId),
           eq(Schema.planSections.planId, event.payload.planId),
-          eq(Schema.planSections.userId, event.payload.userId),
+          eq(Schema.planSections.userId, event.payload.requesterId),
         ),
       );
   }

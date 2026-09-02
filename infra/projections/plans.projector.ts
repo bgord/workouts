@@ -83,14 +83,18 @@ export class PlansProjector {
         revision: revisionOf(event),
         updatedAt: event.createdAt,
       })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
+      .where(
+        and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
+      );
   }
 
   async onPlanRestoredEvent(event: Plans.Events.PlanRestoredEventType) {
     await db
       .update(Schema.plans)
       .set({ status: Plans.VO.PlanStatusEnum.draft, revision: revisionOf(event), updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
+      .where(
+        and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
+      );
   }
 
   async onPlanFinalizedEvent(event: Plans.Events.PlanFinalizedEventType) {
@@ -101,21 +105,27 @@ export class PlansProjector {
         revision: revisionOf(event),
         updatedAt: event.createdAt,
       })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
+      .where(
+        and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
+      );
   }
 
   async onPlanEditingEnabledEvent(event: Plans.Events.PlanEditingEnabledEventType) {
     await db
       .update(Schema.plans)
       .set({ status: Plans.VO.PlanStatusEnum.draft, revision: revisionOf(event), updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
+      .where(
+        and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
+      );
   }
 
   async onPlanRenamedEvent(event: Plans.Events.PlanRenamedEventType) {
     await db
       .update(Schema.plans)
       .set({ name: event.payload.planName, revision: revisionOf(event), updatedAt: event.createdAt })
-      .where(and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.userId)));
+      .where(
+        and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
+      );
   }
 
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {

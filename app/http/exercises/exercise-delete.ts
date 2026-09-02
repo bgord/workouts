@@ -13,10 +13,14 @@ export const ExerciseDelete =
   async (context) => {
     const params = context.request.params();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
 
-    const command = bg.command(Exercises.Commands.ExerciseDeleteCommand, { payload: { id, userId } }, deps);
+    const command = bg.command(
+      Exercises.Commands.ExerciseDeleteCommand,
+      { payload: { id, requesterId } },
+      deps,
+    );
 
     await deps.CommandBus.emit(command);
 

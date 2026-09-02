@@ -13,13 +13,13 @@ export const ExerciseAssignCategory =
   async (context) => {
     const body = await context.request.json();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const exerciseId = v.parse(Exercises.VO.ExerciseId, body["exerciseId"]);
     const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body["exerciseCategoryId"]);
 
     const command = bg.command(
       Exercises.Commands.ExerciseAssignCategoryCommand,
-      { payload: { exerciseId, exerciseCategoryId, userId } },
+      { payload: { exerciseId, exerciseCategoryId, requesterId } },
       deps,
     );
 

@@ -11,6 +11,6 @@ export const handlePlanRestoreCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanRestoreCommandType) => {
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);
-    plan.restore(command.payload.userId);
+    plan.restore(command.payload.requesterId);
     await deps.repo.save(plan);
   };

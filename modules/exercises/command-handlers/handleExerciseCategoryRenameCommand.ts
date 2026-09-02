@@ -16,7 +16,7 @@ type Dependencies = {
 
 export const handleExerciseCategoryRenameCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryRenameCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
 
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
 
@@ -29,7 +29,7 @@ export const handleExerciseCategoryRenameCommand =
     const event = bg.event(
       ExerciseCategoryRenamedEvent,
       `exercise_category_${command.payload.id}`,
-      { id: command.payload.id, name: command.payload.name, userId: command.payload.userId },
+      { id: command.payload.id, name: command.payload.name, requesterId: command.payload.requesterId },
       deps,
     );
 

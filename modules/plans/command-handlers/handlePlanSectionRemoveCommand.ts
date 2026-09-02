@@ -11,6 +11,6 @@ export const handlePlanSectionRemoveCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanSectionRemoveCommandType) => {
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);
-    plan.removeSection(command.payload.planSectionId, command.payload.userId);
+    plan.removeSection(command.payload.planSectionId, command.payload.requesterId);
     await deps.repo.save(plan);
   };

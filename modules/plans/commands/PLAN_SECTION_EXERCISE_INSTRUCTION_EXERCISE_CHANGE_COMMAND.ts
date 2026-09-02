@@ -16,7 +16,7 @@ export const PlanSectionExerciseInstructionExerciseChangeCommand = v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
     exerciseInstruction: v.pick(VO.ExerciseInstruction, ["id", "exerciseId"]),
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

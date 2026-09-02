@@ -12,7 +12,7 @@ export const ExerciseUpdatedEvent = v.object({
     id: VO.ExerciseId,
     name: VO.ExerciseName,
     description: VO.ExerciseDescription,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

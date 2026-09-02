@@ -18,7 +18,7 @@ type Dependencies = {
 
 export const handleExerciseUnassignCategoryCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseUnassignCategoryCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.exerciseId);
 
@@ -43,7 +43,7 @@ export const handleExerciseUnassignCategoryCommand =
       {
         exerciseId: command.payload.exerciseId,
         exerciseCategoryId: command.payload.exerciseCategoryId,
-        userId: command.payload.userId,
+        requesterId: command.payload.requesterId,
       },
       deps,
     );

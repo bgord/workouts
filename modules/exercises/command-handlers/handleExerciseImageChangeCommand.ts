@@ -25,7 +25,7 @@ export const handleExerciseImageChangeCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseImageChangeCommandType) => {
     const temporary = tools.FilePathAbsolute.fromString(command.payload.absoluteFilePath);
 
-    if (!CatalogIsManagedBySystem.passes({ requesterId: command.payload.userId })) {
+    if (!CatalogIsManagedBySystem.passes({ requesterId: command.payload.requesterId })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
       throw new CatalogIsManagedBySystem.error();
     }
@@ -58,7 +58,7 @@ export const handleExerciseImageChangeCommand =
     const event = bg.event(
       ExerciseImageChangedEvent,
       `exercise_${command.payload.id}`,
-      { id: command.payload.id, image: key, userId: command.payload.userId },
+      { id: command.payload.id, image: key, requesterId: command.payload.requesterId },
       deps,
     );
 

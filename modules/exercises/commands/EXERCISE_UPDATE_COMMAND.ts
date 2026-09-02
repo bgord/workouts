@@ -15,7 +15,7 @@ export const ExerciseUpdateCommand = v.object({
     id: ExerciseId,
     name: ExerciseName,
     description: ExerciseDescription,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

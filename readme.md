@@ -318,7 +318,6 @@ infra/
 │   │   ├── list-exercises.adapter.ts
 │   │   ├── search-exercise-categories.adapter.ts
 │   │   └── search-exercises.adapter.ts
-│   ├── history
 │   ├── plans
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-user-count.adapter.ts

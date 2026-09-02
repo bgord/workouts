@@ -13,12 +13,12 @@ export const PlanRestore =
   async (context) => {
     const params = context.request.params();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
 
     const command = bg.command(
       Plans.Commands.PlanRestoreCommand,
-      { revision: context.middleware.revision.fromWeakETag(), payload: { planId, userId } },
+      { revision: context.middleware.revision.fromWeakETag(), payload: { planId, requesterId } },
       deps,
     );
 

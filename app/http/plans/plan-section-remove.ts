@@ -13,13 +13,16 @@ export const PlanSectionRemove =
   async (context) => {
     const params = context.request.params();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
 
     const command = bg.command(
       Plans.Commands.PlanSectionRemoveCommand,
-      { revision: context.middleware.revision.fromWeakETag(), payload: { planId, planSectionId, userId } },
+      {
+        revision: context.middleware.revision.fromWeakETag(),
+        payload: { planId, planSectionId, requesterId },
+      },
       deps,
     );
 

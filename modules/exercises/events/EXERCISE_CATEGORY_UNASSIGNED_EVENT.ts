@@ -11,7 +11,7 @@ export const ExerciseCategoryUnassignedEvent = v.object({
   payload: v.object({
     exerciseId: VO.ExerciseId,
     exerciseCategoryId: VO.ExerciseCategoryId,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

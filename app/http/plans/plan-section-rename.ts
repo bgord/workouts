@@ -14,7 +14,7 @@ export const PlanSectionRename =
     const params = context.request.params();
     const body = await context.request.json();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
     const planSectionId = v.parse(Plans.VO.PlanSectionId, params["planSectionId"]);
     const planSectionName = v.parse(Plans.VO.PlanSectionName, body["planSectionName"]);
@@ -23,7 +23,7 @@ export const PlanSectionRename =
       Plans.Commands.PlanSectionRenameCommand,
       {
         revision: context.middleware.revision.fromWeakETag(),
-        payload: { planId, planSectionId, planSectionName, userId },
+        payload: { planId, planSectionId, planSectionName, requesterId },
       },
       deps,
     );

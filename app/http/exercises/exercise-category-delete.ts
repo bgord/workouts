@@ -13,12 +13,12 @@ export const ExerciseCategoryDelete =
   async (context) => {
     const params = context.request.params();
 
-    const userId = context.identity.authenticatedUserId();
+    const requesterId = context.identity.authenticatedUserId();
     const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
 
     const command = bg.command(
       Exercises.Commands.ExerciseCategoryDeleteCommand,
-      { payload: { id, userId } },
+      { payload: { id, requesterId } },
       deps,
     );
 

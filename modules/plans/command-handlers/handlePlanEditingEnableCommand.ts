@@ -11,6 +11,6 @@ export const handlePlanEditingEnableCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanEditingEnableCommandType) => {
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);
-    plan.enableEditing(command.payload.userId);
+    plan.enableEditing(command.payload.requesterId);
     await deps.repo.save(plan);
   };

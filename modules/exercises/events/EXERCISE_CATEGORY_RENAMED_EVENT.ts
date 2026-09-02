@@ -8,7 +8,11 @@ export const EXERCISE_CATEGORY_RENAMED_EVENT = "EXERCISE_CATEGORY_RENAMED_EVENT"
 export const ExerciseCategoryRenamedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(EXERCISE_CATEGORY_RENAMED_EVENT),
-  payload: v.object({ id: VO.ExerciseCategoryId, name: VO.ExerciseCategoryName, userId: Auth.VO.UserId }),
+  payload: v.object({
+    id: VO.ExerciseCategoryId,
+    name: VO.ExerciseCategoryName,
+    requesterId: Auth.VO.UserId,
+  }),
 });
 
 export type ExerciseCategoryRenamedEventType = v.InferOutput<typeof ExerciseCategoryRenamedEvent>;

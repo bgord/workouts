@@ -17,7 +17,7 @@ type Dependencies = {
 
 export const handleExerciseUpdateCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseUpdateCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
 
@@ -38,7 +38,7 @@ export const handleExerciseUpdateCommand =
         id: command.payload.id,
         name: command.payload.name,
         description: command.payload.description,
-        userId: command.payload.userId,
+        requesterId: command.payload.requesterId,
       },
       deps,
     );

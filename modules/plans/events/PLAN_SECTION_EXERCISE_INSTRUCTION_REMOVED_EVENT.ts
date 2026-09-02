@@ -13,7 +13,7 @@ export const PlanSectionExerciseInstructionRemovedEvent = v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
     exerciseInstructionId: VO.ExerciseInstructionId,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

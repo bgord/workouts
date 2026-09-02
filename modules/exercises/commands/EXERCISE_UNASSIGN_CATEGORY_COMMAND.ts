@@ -13,7 +13,7 @@ export const ExerciseUnassignCategoryCommand = v.object({
   payload: v.object({
     exerciseId: ExerciseId,
     exerciseCategoryId: ExerciseCategoryId,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 
