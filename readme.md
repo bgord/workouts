@@ -208,12 +208,12 @@ modules/
 │       ├── exercise-instruction-id.ts
 │       ├── exercise-instruction.ts
 │       ├── plan-id.ts
-│       ├── plan-list-item.ts
 │       ├── plan-name.ts
 │       ├── plan-section-id.ts
 │       ├── plan-section-name.ts
 │       ├── plan-section.ts
 │       ├── plan-status.ts
+│       ├── plan-summary.ts
 │       ├── reps.ts
 │       └── sets.ts
 ├── preferences

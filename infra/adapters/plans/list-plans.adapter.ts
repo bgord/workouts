@@ -5,7 +5,7 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
-  async execute(userId: Auth.VO.UserIdType): Promise<ReadonlyArray<Plans.VO.PlanListItem>> {
+  async execute(userId: Auth.VO.UserIdType): Promise<ReadonlyArray<Plans.VO.PlanSummary>> {
     const plans = await db
       .select()
       .from(Schema.plans)
