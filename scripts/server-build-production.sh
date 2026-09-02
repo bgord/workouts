@@ -35,6 +35,10 @@ step_start "Infra directory create"
 mkdir -p "$OUTPUT_DIRECTORY/infra"
 step_end "Infra directory create"
 
+step_start "Catalog copy"
+cp infra/exercise-catalog.json "$OUTPUT_DIRECTORY/infra"
+step_end "Catalog copy"
+
 step_start "Translations copy"
 cp -r infra/translations "$OUTPUT_DIRECTORY/infra"
 step_end "Translations copy"

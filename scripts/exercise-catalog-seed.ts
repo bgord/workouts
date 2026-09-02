@@ -29,6 +29,8 @@ void (async function main() {
       ...di.Adapters.System,
       ...di.Tools,
       ListExercisesQuery: di.Adapters.Exercises.ListExercisesQuery,
+      ListExerciseCategoriesQuery: di.Adapters.Exercises.ListExerciseCategoriesQuery,
+      ListCategoriesAssignedToExerciseQuery: di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
     });
 
     const result = await seeder.seed(EXERCISE_CATALOG_PATH);

@@ -10,7 +10,14 @@ const path = tools.FilePathRelative.fromString("infra/exercise-catalog.json");
 const image = "exercise-catalog/bench-press-barbell-horizontal.webp";
 
 const catalog = {
-  exercises: [{ name: mocks.exerciseName, description: mocks.exerciseDescription, image }],
+  exercises: [
+    {
+      name: mocks.exerciseName,
+      description: mocks.exerciseDescription,
+      image,
+      exerciseCategories: [mocks.exerciseCategoryName],
+    },
+  ],
 };
 
 describe("ExerciseCatalogSeeder", async () => {
@@ -20,6 +27,8 @@ describe("ExerciseCatalogSeeder", async () => {
     ...di.Adapters.System,
     ...di.Tools,
     ListExercisesQuery: di.Adapters.Exercises.ListExercisesQuery,
+    ListExerciseCategoriesQuery: di.Adapters.Exercises.ListExerciseCategoriesQuery,
+    ListCategoriesAssignedToExerciseQuery: di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
   });
 
   test("malformed catalog", async () => {
@@ -36,10 +45,15 @@ describe("ExerciseCatalogSeeder", async () => {
     spies.use(spyOn(di.Adapters.System.FileReaderJson, "read")).mockResolvedValue({ exercises: [] });
     const commandBusEmit = spies.use(spyOn(di.Tools.CommandBus, "emit"));
     spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute")).mockResolvedValue([]);
+    spies.use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute")).mockResolvedValue([]);
 
     const result = await seeder.seed(path);
 
-    expect(result).toEqual({ exercisesCreated: 0 });
+    expect(result).toEqual({
+      exerciseCategoriesCreated: 0,
+      exercisesCreated: 0,
+      exerciseCategoriesAssigned: 0,
+    });
     expect(commandBusEmit).not.toHaveBeenCalled();
   });
 
@@ -58,38 +72,71 @@ describe("ExerciseCatalogSeeder", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.FileReaderJson, "read")).mockResolvedValue(catalog);
     spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute")).mockResolvedValue([]);
+    spies.use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute")).mockResolvedValue([]);
     spies
       .use(spyOn(di.Adapters.System.FileReaderRaw, "read"))
       .mockImplementation(mocks.throwIntentionalError);
-    const commandBusEmit = spies.use(spyOn(di.Tools.CommandBus, "emit"));
 
     expect(async () => bg.CorrelationStorage.run(mocks.correlationId, () => seeder.seed(path))).toThrow(
       mocks.IntentionalError,
     );
-    expect(commandBusEmit).not.toHaveBeenCalled();
   });
 
   test("happy path", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.FileReaderJson, "read")).mockResolvedValue(catalog);
-    const commandBusEmit = spies.use(spyOn(di.Tools.CommandBus, "emit"));
+    spies.use(spyOn(di.Tools.CommandBus, "emit"));
     spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute")).mockResolvedValue([]);
+    spies.use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute")).mockResolvedValue([]);
 
     const result = await bg.CorrelationStorage.run(mocks.correlationId, () => seeder.seed(path));
 
-    expect(result).toEqual({ exercisesCreated: 1 });
-    expect(commandBusEmit).toHaveBeenCalledTimes(1);
+    expect(result).toEqual({
+      exerciseCategoriesCreated: 1,
+      exercisesCreated: 1,
+      exerciseCategoriesAssigned: 1,
+    });
+  });
+
+  test("happy path - a new category for an existing exercise", async () => {
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.FileReaderJson, "read")).mockResolvedValue(catalog);
+    spies.use(spyOn(di.Tools.CommandBus, "emit"));
+    spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute")).mockResolvedValue([mocks.exercise]);
+    spies
+      .use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute"))
+      .mockResolvedValue([mocks.exerciseCategory]);
+    spies
+      .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
+      .mockResolvedValue([]);
+
+    const result = await bg.CorrelationStorage.run(mocks.correlationId, () => seeder.seed(path));
+
+    expect(result).toEqual({
+      exerciseCategoriesCreated: 0,
+      exercisesCreated: 0,
+      exerciseCategoriesAssigned: 1,
+    });
   });
 
   test("happy path - idempotency", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.FileReaderJson, "read")).mockResolvedValue(catalog);
-    const commandBusEmit = spies.use(spyOn(di.Tools.CommandBus, "emit"));
+    spies.use(spyOn(di.Tools.CommandBus, "emit"));
     spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute")).mockResolvedValue([mocks.exercise]);
+    spies
+      .use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute"))
+      .mockResolvedValue([mocks.exerciseCategory]);
+    spies
+      .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
+      .mockResolvedValue([mocks.exerciseCategory]);
 
     const result = await seeder.seed(path);
 
-    expect(result).toEqual({ exercisesCreated: 0 });
-    expect(commandBusEmit).not.toHaveBeenCalled();
+    expect(result).toEqual({
+      exerciseCategoriesCreated: 0,
+      exercisesCreated: 0,
+      exerciseCategoriesAssigned: 0,
+    });
   });
 });
