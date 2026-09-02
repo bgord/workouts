@@ -7,7 +7,7 @@ type PlanLimitForOwnerConfigType = { count: tools.IntegerNonNegativeType };
 
 class PlanLimitForOwnerFactory extends bg.Invariant<PlanLimitForOwnerConfigType> {
   passes(config: PlanLimitForOwnerConfigType) {
-    return config.count <= 1;
+    return config.count < 1;
   }
 
   // Stryker disable next-line StringLiteral
