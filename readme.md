@@ -203,10 +203,12 @@ modules/
 │   ├── queries
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
+│   │   └── list-plans.ts
 │   └── value-objects
 │       ├── exercise-instruction-id.ts
 │       ├── exercise-instruction.ts
 │       ├── plan-id.ts
+│       ├── plan-list-item.ts
 │       ├── plan-name.ts
 │       ├── plan-section-id.ts
 │       ├── plan-section-name.ts
@@ -265,6 +267,7 @@ app/
 │   │   ├── plan-create.ts
 │   │   ├── plan-editing-enable.ts
 │   │   ├── plan-finalize.ts
+│   │   ├── plan-list.ts
 │   │   ├── plan-rename.ts
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts
@@ -306,6 +309,7 @@ infra/
 │   ├── plans
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-user-count.adapter.ts
+│   │   ├── list-plans.adapter.ts
 │   │   └── plan-repository.adapter.ts
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
