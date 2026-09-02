@@ -164,6 +164,12 @@ export const accountStream = v.parse(bg.EventStream, `account_${userId}`);
 export const preferencesStream = v.parse(bg.EventStream, `preferences_${userId}`);
 export const exerciseStream = v.parse(bg.EventStream, `exercise_${exerciseId}`);
 export const exerciseCategoryStream = v.parse(bg.EventStream, `exercise_category_${exerciseCategoryId}`);
+export const planListItem: Plans.VO.PlanListItem = {
+  id: planId,
+  name: planName,
+  status: Plans.VO.PlanStatusEnum.draft,
+};
+
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 
 export const GenericHourHasPassedEvent = {

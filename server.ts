@@ -132,7 +132,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const plans = new Hono<infra.Config>();
 
   plans.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
-
+  plans.get("/list", bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanList(Adapters.Plans)));
   plans.post(
     "/create",
     Tools.ShieldCaptcha.handle(),
