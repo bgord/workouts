@@ -122,6 +122,8 @@ modules/
 │   │   ├── list-exercises.ts
 │   │   ├── search-exercise-categories.ts
 │   │   └── search-exercises.ts
+│   ├── services
+│   │   ├── exercise-catalog-seeder.ts
 │   └── value-objects
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
@@ -330,6 +332,7 @@ infra/
 │       ├── file-cleaner.adapter.ts
 │       ├── file-inspection.adapter.ts
 │       ├── file-reader-json.adapter.ts
+│       ├── file-reader-raw.adapter.ts
 │       ├── file-renamer.adapter.ts
 │       ├── file-writer.adapter.ts
 │       ├── hash-file.adapter.ts
@@ -347,12 +350,12 @@ infra/
 │       ├── timeout-runner.adapter.ts
 │       └── tmp
 ├── bootstrap.ts
-├── catalog.json
 ├── config.ts
 ├── db.ts
 ├── e2e
 │   └── home.spec.ts
 ├── env.ts
+├── exercise-catalog.json
 ├── projections
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts
