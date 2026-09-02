@@ -63,6 +63,7 @@ modules/
 │   │   └── password-reset-notification-composer.ts
 │   └── value-objects
 │       ├── password.ts
+│       ├── system-user-id.ts
 │       └── user-id.ts
 ├── exercises
 │   ├── command-handlers
