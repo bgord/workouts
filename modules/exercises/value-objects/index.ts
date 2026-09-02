@@ -1,4 +1,5 @@
 export * from "./exercise";
+export * from "./exercise-catalog";
 export * from "./exercise-catalog-entry";
 export * from "./exercise-category";
 export * from "./exercise-category-id";

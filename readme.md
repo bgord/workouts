@@ -126,6 +126,7 @@ modules/
 │   │   ├── exercise-catalog-seeder.ts
 │   └── value-objects
 │       ├── exercise-catalog-entry.ts
+│       ├── exercise-catalog.ts
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
 │       ├── exercise-category-name.validation.ts
