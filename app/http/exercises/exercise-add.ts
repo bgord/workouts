@@ -15,6 +15,7 @@ export const ExerciseAdd =
   async (context) => {
     const form = await context.request.form();
 
+    const userId = context.identity.authenticatedUserId();
     const file = v.parse(v.instance(File), form.get("file"));
 
     const filename = tools.Filename.fromString(file.name).withBasename(
@@ -29,7 +30,7 @@ export const ExerciseAdd =
 
     const command = bg.command(
       Exercises.Commands.ExerciseAddCommand,
-      { payload: { id, absoluteFilePath: temporary.get(), name, description } },
+      { payload: { id, absoluteFilePath: temporary.get(), name, description, userId } },
       deps,
     );
 

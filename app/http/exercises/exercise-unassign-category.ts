@@ -13,12 +13,13 @@ export const ExerciseUnassignCategory =
   async (context) => {
     const body = await context.request.json();
 
+    const userId = context.identity.authenticatedUserId();
     const exerciseId = v.parse(Exercises.VO.ExerciseId, body["exerciseId"]);
     const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body["exerciseCategoryId"]);
 
     const command = bg.command(
       Exercises.Commands.ExerciseUnassignCategoryCommand,
-      { payload: { exerciseId, exerciseCategoryId } },
+      { payload: { exerciseId, exerciseCategoryId, userId } },
       deps,
     );
 

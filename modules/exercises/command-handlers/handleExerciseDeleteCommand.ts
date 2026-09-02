@@ -26,7 +26,7 @@ export const handleExerciseDeleteCommand =
     const event = bg.event(
       ExerciseDeletedEvent,
       `exercise_${command.payload.id}`,
-      { id: command.payload.id, image: exercise!.image },
+      { id: command.payload.id, image: exercise!.image, userId: command.payload.userId },
       deps,
     );
 

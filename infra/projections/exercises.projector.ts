@@ -40,6 +40,7 @@ export class ExercisesProjector {
       name: event.payload.name,
       description: event.payload.description,
       image: event.payload.image,
+      userId: event.payload.userId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
     });

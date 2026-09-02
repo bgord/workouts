@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
+import * as Auth from "+auth";
 import { ExerciseCategoryId } from "../value-objects/exercise-category-id";
 
 // Stryker disable next-line StringLiteral
@@ -8,7 +9,7 @@ export const EXERCISE_CATEGORY_DELETE_COMMAND = "EXERCISE_CATEGORY_DELETE_COMMAN
 export const ExerciseCategoryDeleteCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   name: v.literal(EXERCISE_CATEGORY_DELETE_COMMAND),
-  payload: v.object({ id: ExerciseCategoryId }),
+  payload: v.object({ id: ExerciseCategoryId, userId: Auth.VO.UserId }),
 });
 
 export type ExerciseCategoryDeleteCommandType = v.InferOutput<typeof ExerciseCategoryDeleteCommand>;

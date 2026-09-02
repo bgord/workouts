@@ -13,9 +13,14 @@ export const ExerciseCategoryDelete =
   async (context) => {
     const params = context.request.params();
 
+    const userId = context.identity.authenticatedUserId();
     const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
 
-    const command = bg.command(Exercises.Commands.ExerciseCategoryDeleteCommand, { payload: { id } }, deps);
+    const command = bg.command(
+      Exercises.Commands.ExerciseCategoryDeleteCommand,
+      { payload: { id, userId } },
+      deps,
+    );
 
     await deps.CommandBus.emit(command);
 

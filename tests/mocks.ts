@@ -270,7 +270,13 @@ export const GenericExerciseAddedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_ADDED_EVENT",
-  payload: { id: exerciseId, name: exerciseName, description: exerciseDescription, image: exerciseImageKey },
+  payload: {
+    id: exerciseId,
+    name: exerciseName,
+    description: exerciseDescription,
+    image: exerciseImageKey,
+    userId,
+  },
 } satisfies Exercises.Events.ExerciseAddedEventType;
 
 export const GenericExerciseDeletedEvent = {
@@ -281,7 +287,7 @@ export const GenericExerciseDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_DELETED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey },
+  payload: { id: exerciseId, image: exerciseImageKey, userId },
 } satisfies Exercises.Events.ExerciseDeletedEventType;
 
 export const GenericExerciseUpdatedNameEvent = {
@@ -292,7 +298,7 @@ export const GenericExerciseUpdatedNameEvent = {
   version: 1,
   commit,
   name: "EXERCISE_UPDATED_EVENT",
-  payload: { id: exerciseId, name: anotherExerciseName, description: exerciseDescription },
+  payload: { id: exerciseId, name: anotherExerciseName, description: exerciseDescription, userId },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
 export const GenericExerciseUpdatedDescriptionEvent = {
@@ -303,7 +309,7 @@ export const GenericExerciseUpdatedDescriptionEvent = {
   version: 1,
   commit,
   name: "EXERCISE_UPDATED_EVENT",
-  payload: { id: exerciseId, name: exerciseName, description: anotherExerciseDescription },
+  payload: { id: exerciseId, name: exerciseName, description: anotherExerciseDescription, userId },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
 export const GenericExerciseUpdatedEvent = {
@@ -314,7 +320,7 @@ export const GenericExerciseUpdatedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_UPDATED_EVENT",
-  payload: { id: exerciseId, name: anotherExerciseName, description: anotherExerciseDescription },
+  payload: { id: exerciseId, name: anotherExerciseName, description: anotherExerciseDescription, userId },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
 export const GenericExerciseImageChangedEvent = {
@@ -325,7 +331,7 @@ export const GenericExerciseImageChangedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_IMAGE_CHANGED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey },
+  payload: { id: exerciseId, image: exerciseImageKey, userId },
 } satisfies Exercises.Events.ExerciseImageChangedEventType;
 
 export const GenericExerciseCategoryAddedEvent = {
@@ -336,7 +342,7 @@ export const GenericExerciseCategoryAddedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_ADDED_EVENT",
-  payload: { id: exerciseCategoryId, name: exerciseCategoryName },
+  payload: { id: exerciseCategoryId, name: exerciseCategoryName, userId },
 } satisfies Exercises.Events.ExerciseCategoryAddedEventType;
 
 export const GenericExerciseCategoryDeletedEvent = {
@@ -347,7 +353,7 @@ export const GenericExerciseCategoryDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_DELETED_EVENT",
-  payload: { id: exerciseCategoryId },
+  payload: { id: exerciseCategoryId, userId },
 } satisfies Exercises.Events.ExerciseCategoryDeletedEventType;
 
 export const GenericExerciseCategoryRenamedEvent = {
@@ -358,7 +364,7 @@ export const GenericExerciseCategoryRenamedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_RENAMED_EVENT",
-  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName },
+  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName, userId },
 } satisfies Exercises.Events.ExerciseCategoryRenamedEventType;
 
 export const GenericExerciseCategoryAssignedEvent = {
@@ -369,7 +375,7 @@ export const GenericExerciseCategoryAssignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_ASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId },
+  payload: { exerciseId, exerciseCategoryId, userId },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
 
 export const GenericExerciseCategoryUnassignedEvent = {
@@ -380,7 +386,7 @@ export const GenericExerciseCategoryUnassignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_UNASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId },
+  payload: { exerciseId, exerciseCategoryId, userId },
 } satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
 
 export const GenericPlanCreatedEvent = {

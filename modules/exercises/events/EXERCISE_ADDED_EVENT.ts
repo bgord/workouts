@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Auth from "+auth";
 import * as VO from "+exercises/value-objects";
 
 export const EXERCISE_ADDED_EVENT = "EXERCISE_ADDED_EVENT";
@@ -13,6 +14,7 @@ export const ExerciseAddedEvent = v.object({
     name: VO.ExerciseName,
     description: VO.ExerciseDescription,
     image: tools.ObjectKey,
+    userId: Auth.VO.UserId,
   }),
 });
 

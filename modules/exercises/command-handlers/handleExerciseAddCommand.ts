@@ -57,6 +57,7 @@ export const handleExerciseAddCommand =
         name: command.payload.name,
         description: command.payload.description,
         image: key,
+        userId: command.payload.userId,
       },
       deps,
     );

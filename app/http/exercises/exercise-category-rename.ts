@@ -14,12 +14,13 @@ export const ExerciseCategoryRename =
     const params = context.request.params();
     const body = await context.request.json();
 
+    const userId = context.identity.authenticatedUserId();
     const id = v.parse(Exercises.VO.ExerciseCategoryId, params["exerciseCategoryId"]);
     const name = v.parse(Exercises.VO.ExerciseCategoryName, body["name"]);
 
     const command = bg.command(
       Exercises.Commands.ExerciseCategoryRenameCommand,
-      { payload: { id, name } },
+      { payload: { id, name, userId } },
       deps,
     );
 

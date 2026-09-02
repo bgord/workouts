@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
+import * as Auth from "+auth";
 import { ExerciseDescription } from "../value-objects/exercise-description";
 import { ExerciseId } from "../value-objects/exercise-id";
 import { ExerciseName } from "../value-objects/exercise-name";
@@ -15,6 +16,7 @@ export const ExerciseAddCommand = v.object({
     absoluteFilePath: v.pipe(v.string(), v.minLength(1)),
     name: ExerciseName,
     description: ExerciseDescription,
+    userId: Auth.VO.UserId,
   }),
 });
 

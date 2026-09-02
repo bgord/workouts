@@ -78,6 +78,13 @@
       "when": 1787991737778,
       "tag": "0010_optimal_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1788345358914,
+      "tag": "0011_aspiring_bedlam",
+      "breakpoints": true
     }
   ]
 }

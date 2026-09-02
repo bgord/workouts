@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
+import * as Auth from "+auth";
 import * as VO from "+exercises/value-objects";
 
 export const EXERCISE_CATEGORY_DELETED_EVENT = "EXERCISE_CATEGORY_DELETED_EVENT";
@@ -7,7 +8,7 @@ export const EXERCISE_CATEGORY_DELETED_EVENT = "EXERCISE_CATEGORY_DELETED_EVENT"
 export const ExerciseCategoryDeletedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(EXERCISE_CATEGORY_DELETED_EVENT),
-  payload: v.object({ id: VO.ExerciseCategoryId }),
+  payload: v.object({ id: VO.ExerciseCategoryId, userId: Auth.VO.UserId }),
 });
 
 export type ExerciseCategoryDeletedEventType = v.InferOutput<typeof ExerciseCategoryDeletedEvent>;

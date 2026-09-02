@@ -52,7 +52,7 @@ export const handleExerciseImageChangeCommand =
     const event = bg.event(
       ExerciseImageChangedEvent,
       `exercise_${command.payload.id}`,
-      { id: command.payload.id, image: key },
+      { id: command.payload.id, image: key, userId: command.payload.userId },
       deps,
     );
 

@@ -20,7 +20,7 @@ export const handleExerciseCategoryDeleteCommand =
     const event = bg.event(
       ExerciseCategoryDeletedEvent,
       `exercise_category_${command.payload.id}`,
-      { id: command.payload.id },
+      { id: command.payload.id, userId: command.payload.userId },
       deps,
     );
 

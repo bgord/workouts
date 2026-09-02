@@ -176,6 +176,7 @@ export const exercises = sqliteTable("exercises", {
   name: text("name").notNull().$type<ExerciseNameType>(),
   description: text("description").notNull().$type<ExerciseDescriptionType>(),
   image: text("image").notNull().$type<tools.ObjectKeyType>(),
+  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
 });
@@ -183,6 +184,7 @@ export const exercises = sqliteTable("exercises", {
 export const exerciseCategories = sqliteTable("exercise_categories", {
   id: identifier<ExerciseCategoryIdType>(),
   name: text("name").notNull().$type<ExerciseCategoryNameType>(),
+  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
 });

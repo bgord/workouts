@@ -33,6 +33,7 @@ export class ExerciseCategoriesProjector {
     await db.insert(Schema.exerciseCategories).values({
       id: event.payload.id,
       name: event.payload.name,
+      userId: event.payload.userId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
     });

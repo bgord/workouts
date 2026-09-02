@@ -31,7 +31,12 @@ export const handleExerciseUpdateCommand =
     const event = bg.event(
       ExerciseUpdatedEvent,
       `exercise_${command.payload.id}`,
-      { id: command.payload.id, name: command.payload.name, description: command.payload.description },
+      {
+        id: command.payload.id,
+        name: command.payload.name,
+        description: command.payload.description,
+        userId: command.payload.userId,
+      },
       deps,
     );
 

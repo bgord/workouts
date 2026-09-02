@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
+import * as Auth from "+auth";
 import { ExerciseCategoryId } from "../value-objects/exercise-category-id";
 import { ExerciseId } from "../value-objects/exercise-id";
 
@@ -9,7 +10,11 @@ export const EXERCISE_ASSIGN_CATEGORY_COMMAND = "EXERCISE_ASSIGN_CATEGORY_COMMAN
 export const ExerciseAssignCategoryCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   name: v.literal(EXERCISE_ASSIGN_CATEGORY_COMMAND),
-  payload: v.object({ exerciseId: ExerciseId, exerciseCategoryId: ExerciseCategoryId }),
+  payload: v.object({
+    exerciseId: ExerciseId,
+    exerciseCategoryId: ExerciseCategoryId,
+    userId: Auth.VO.UserId,
+  }),
 });
 
 export type ExerciseAssignCategoryCommandType = v.InferOutput<typeof ExerciseAssignCategoryCommand>;

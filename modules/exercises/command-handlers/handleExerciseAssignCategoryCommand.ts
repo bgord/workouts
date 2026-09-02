@@ -39,7 +39,11 @@ export const handleExerciseAssignCategoryCommand =
     const event = bg.event(
       ExerciseCategoryAssignedEvent,
       `exercise_${command.payload.exerciseId}`,
-      { exerciseId: command.payload.exerciseId, exerciseCategoryId: command.payload.exerciseCategoryId },
+      {
+        exerciseId: command.payload.exerciseId,
+        exerciseCategoryId: command.payload.exerciseCategoryId,
+        userId: command.payload.userId,
+      },
       deps,
     );
 

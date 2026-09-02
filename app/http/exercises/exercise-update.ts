@@ -15,13 +15,14 @@ export const ExerciseUpdate =
     const params = context.request.params();
     const body = await context.request.json();
 
+    const userId = context.identity.authenticatedUserId();
     const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
     const name = v.parse(Exercises.VO.ExerciseName, body["name"]);
     const description = v.parse(Exercises.VO.ExerciseDescription, body["description"]);
 
     const command = bg.command(
       Exercises.Commands.ExerciseUpdateCommand,
-      { payload: { id, name, description } },
+      { payload: { id, name, description, userId } },
       deps,
     );
 

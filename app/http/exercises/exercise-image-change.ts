@@ -16,6 +16,7 @@ export const ExerciseImageChange =
     const params = context.request.params();
     const form = await context.request.form();
 
+    const userId = context.identity.authenticatedUserId();
     const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
     const file = v.parse(v.instance(File), form.get("file"));
 
@@ -27,7 +28,7 @@ export const ExerciseImageChange =
 
     const command = bg.command(
       Exercises.Commands.ExerciseImageChangeCommand,
-      { payload: { id, absoluteFilePath: temporary.get() } },
+      { payload: { id, absoluteFilePath: temporary.get(), userId } },
       deps,
     );
 

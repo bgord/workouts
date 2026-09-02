@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
+import * as Auth from "+auth";
 import { ExerciseDescription } from "../value-objects/exercise-description";
 import { ExerciseId } from "../value-objects/exercise-id";
 import { ExerciseName } from "../value-objects/exercise-name";
@@ -10,7 +11,12 @@ export const EXERCISE_UPDATE_COMMAND = "EXERCISE_UPDATE_COMMAND";
 export const ExerciseUpdateCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   name: v.literal(EXERCISE_UPDATE_COMMAND),
-  payload: v.object({ id: ExerciseId, name: ExerciseName, description: ExerciseDescription }),
+  payload: v.object({
+    id: ExerciseId,
+    name: ExerciseName,
+    description: ExerciseDescription,
+    userId: Auth.VO.UserId,
+  }),
 });
 
 export type ExerciseUpdateCommandType = v.InferOutput<typeof ExerciseUpdateCommand>;

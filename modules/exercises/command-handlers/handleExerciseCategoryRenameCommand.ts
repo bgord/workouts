@@ -26,7 +26,7 @@ export const handleExerciseCategoryRenameCommand =
     const event = bg.event(
       ExerciseCategoryRenamedEvent,
       `exercise_category_${command.payload.id}`,
-      { id: command.payload.id, name: command.payload.name },
+      { id: command.payload.id, name: command.payload.name, userId: command.payload.userId },
       deps,
     );
 
