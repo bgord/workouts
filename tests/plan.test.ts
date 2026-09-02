@@ -33,10 +33,10 @@ describe("Plan", async () => {
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCreatedEvent]);
   });
 
-  test("createSection - at the limit", async () => {
+  test("createSection - below the limit", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)],
+      [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 4)],
       deps,
     );
 
@@ -90,7 +90,7 @@ describe("Plan", async () => {
   test("createSection - PlanSectionLimitForPlan", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 6)],
+      [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)],
       deps,
     );
 

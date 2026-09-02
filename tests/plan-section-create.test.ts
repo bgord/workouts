@@ -147,7 +147,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("PlanSectionLimitForPlan", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 6)];
+    const events = [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -230,8 +230,8 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionCreatedEvent]);
   });
 
-  test("happy path - at the limit", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 5)];
+  test("happy path - below the limit", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, ...tools.repeat(mocks.GenericPlanSectionCreatedEvent, 4)];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
