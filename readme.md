@@ -97,6 +97,8 @@ modules/
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
+│   │   ├── exercise-belongs-to-user.ts
+│   │   ├── exercise-category-belongs-to-user.ts
 │   │   ├── exercise-category-exists.ts
 │   │   ├── exercise-category-limit.ts
 │   │   ├── exercise-category-name-is-unique.ts
