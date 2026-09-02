@@ -20,6 +20,7 @@ class SearchExerciseCategoriesQueryDrizzle implements Exercises.Queries.SearchEx
     return exerciseCategories.map((exerciseCategory) => ({
       id: exerciseCategory.id,
       name: exerciseCategory.name,
+      userId: exerciseCategory.userId,
     }));
   }
 }

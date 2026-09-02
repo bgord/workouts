@@ -19,7 +19,11 @@ class ListCategoriesAssignedToExerciseQueryDrizzle
       .where(eq(Schema.exerciseCategoryAssignments.exerciseId, exerciseId))
       .orderBy(desc(Schema.exerciseCategories.updatedAt));
 
-    return result.map((row) => ({ id: row.exercise_categories.id, name: row.exercise_categories.name }));
+    return result.map((row) => ({
+      id: row.exercise_categories.id,
+      name: row.exercise_categories.name,
+      userId: row.exercise_categories.userId,
+    }));
   }
 }
 

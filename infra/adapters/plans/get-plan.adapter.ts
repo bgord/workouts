@@ -30,6 +30,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         repsMax: Schema.planSectionExerciseInstructions.repsMax,
         exerciseId: Schema.exercises.id,
         exerciseName: Schema.exercises.name,
+        exerciseUserId: Schema.exercises.userId,
         exerciseDescription: Schema.exercises.description,
         exerciseImage: Schema.exercises.image,
       })
@@ -60,6 +61,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
               name: exerciseInstruction.exerciseName,
               description: exerciseInstruction.exerciseDescription,
               image: exerciseInstruction.exerciseImage,
+              userId: exerciseInstruction.exerciseUserId,
             },
             sets: exerciseInstruction.sets,
             reps: v.parse(Plans.VO.Reps, {
