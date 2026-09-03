@@ -91,7 +91,7 @@ export function createRouter(context: RouterContext) {
   return new Router({
     routeTree,
     context,
-  planRoute,
+    planRoute,
     defaultPreload: "intent",
     defaultViewTransition: true,
     ssr: { nonce: context.nonce },

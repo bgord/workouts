@@ -1,5 +1,6 @@
 export * from "./exercise-catalog";
 export * from "./navigation";
+export * from "./plan-create";
 export * from "./profile-account-delete";
 export * from "./profile-avatar-change";
 export * from "./profile-avatar-delete";
