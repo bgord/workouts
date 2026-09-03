@@ -6,3 +6,4 @@ export * from "./plan-sections.projector";
 export * from "./plans.projector";
 export * from "./preferences.projector";
 export * from "./profile-avatars.projector";
+export * from "./workouts.projector";

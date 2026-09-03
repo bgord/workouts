@@ -261,9 +261,12 @@ modules/
     ├── events
     │   └── WORKOUT_CREATED_EVENT.ts
     ├── invariants
+    │   ├── workout-draft-limit-for-owner.ts
     │   └── workout-plan-ready.ts
     ├── ports
     │   └── workout-repository.ts
+    ├── queries
+    │   ├── get-workout-draft-for-owner-count.ts
     └── value-objects
         ├── exercise-target.ts
         ├── load.ts
@@ -379,6 +382,7 @@ infra/
 │   │   ├── timeout-runner.adapter.ts
 │   │   └── tmp
 │   └── workouts
+│       ├── get-workout-draft-for-owner-count.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
 ├── config.ts
@@ -395,7 +399,8 @@ infra/
 │   ├── plan-sections.projector.ts
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts
-│   └── profile-avatars.projector.ts
+│   ├── profile-avatars.projector.ts
+│   └── workouts.projector.ts
 ├── register-command-handlers.ts
 ├── register-cron-tasks.ts
 ├── register-event-handlers.ts
