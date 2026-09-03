@@ -255,11 +255,13 @@ modules/
     ├── aggregates
     │   └── workout.ts
     ├── command-handlers
+    │   ├── handleWorkoutCompleteCommand.ts
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutSetLogCommand.ts
     │   ├── handleWorkoutStartCommand.ts
     ├── commands
+    │   ├── WORKOUT_COMPLETE_COMMAND.ts
     │   ├── WORKOUT_CREATE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     │   ├── WORKOUT_SET_LOG_COMMAND.ts

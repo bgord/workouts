@@ -35,7 +35,8 @@ type AcceptedCommand =
   | WorkoutsCommands.WorkoutCreateCommandType
   | WorkoutsCommands.WorkoutExerciseSetTargetCommandType
   | WorkoutsCommands.WorkoutStartCommandType
-  | WorkoutsCommands.WorkoutSetLogCommandType;
+  | WorkoutsCommands.WorkoutSetLogCommandType
+  | WorkoutsCommands.WorkoutCompleteCommandType;
 
 export function createCommandBus(deps: Dependencies): bg.CommandBusPort<AcceptedCommand> {
   const inner = new bg.CommandBusEmitteryAdapter<AcceptedCommand>();
