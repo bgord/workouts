@@ -215,4 +215,108 @@ describe("Workout", async () => {
 
     expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsReadyToStart.error);
   });
+
+  test("logSet", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.logSet(mocks.workoutExerciseId, mocks.loggedSet.reps, mocks.loggedSet.load, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutSetLoggedEvent]);
+  });
+
+  test("logSet - twice", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.logSet(
+        mocks.workoutExerciseId,
+        mocks.anotherLoggedSet.reps,
+        mocks.anotherLoggedSet.load,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.AnotherGenericWorkoutSetLoggedEvent]);
+  });
+
+  test("logSet - WorkoutIsInProgress", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.logSet(mocks.workoutExerciseId, mocks.loggedSet.reps, mocks.loggedSet.load, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutIsInProgress.error);
+  });
+
+  test("logSet - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.logSet(
+        mocks.workoutExerciseId,
+        mocks.loggedSet.reps,
+        mocks.loggedSet.load,
+        mocks.anotherUserId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
+  });
+
+  test("logSet - WorkoutExerciseExists", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.logSet(
+        mocks.anotherWorkoutExerciseId,
+        mocks.loggedSet.reps,
+        mocks.loggedSet.load,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
+  });
 });

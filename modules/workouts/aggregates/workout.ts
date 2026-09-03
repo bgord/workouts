@@ -12,7 +12,8 @@ export type WorkoutEventType =
   | Events.WorkoutCreatedEventType
   | Events.WorkoutExerciseAddedEventType
   | Events.WorkoutExerciseTargetSetEventType
-  | Events.WorkoutStartedEventType;
+  | Events.WorkoutStartedEventType
+  | Events.WorkoutSetLoggedEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -27,6 +28,7 @@ export class Workout {
     [Events.WORKOUT_EXERCISE_ADDED_EVENT]: Events.WorkoutExerciseAddedEvent,
     [Events.WORKOUT_EXERCISE_TARGET_SET_EVENT]: Events.WorkoutExerciseTargetSetEvent,
     [Events.WORKOUT_STARTED_EVENT]: Events.WorkoutStartedEvent,
+    [Events.WORKOUT_SET_LOGGED_EVENT]: Events.WorkoutSetLoggedEvent,
   });
   // Stryker restore all
 
@@ -129,6 +131,29 @@ export class Workout {
     this.record(event);
   }
 
+  logSet(
+    workoutExerciseId: VO.WorkoutExerciseIdType,
+    reps: VO.RepsType,
+    load: VO.LoadType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.WorkoutIsInProgress.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+
+    const exercise = this.exercises.find((exercise) => exercise.id === workoutExerciseId);
+    const setNumber = v.parse(VO.SetNumber, exercise!.loggedSets.length + 1);
+
+    const event = bg.event(
+      Events.WorkoutSetLoggedEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, workoutExerciseId, loggedSet: { setNumber, reps, load }, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<WorkoutEventType> {
     const events = [...this.pending];
 
@@ -157,6 +182,7 @@ export class Workout {
           id: event.payload.workoutExerciseId,
           exerciseId: event.payload.exerciseId,
           prescription: event.payload.prescription,
+          loggedSets: [],
         });
         break;
       }
@@ -174,6 +200,16 @@ export class Workout {
       case Events.WORKOUT_STARTED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.in_progress;
+        break;
+      }
+
+      case Events.WORKOUT_SET_LOGGED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.exercises = this.exercises.map((exercise) =>
+          exercise.id === event.payload.workoutExerciseId
+            ? { ...exercise, loggedSets: [...exercise.loggedSets, event.payload.loggedSet] }
+            : exercise,
+        );
         break;
       }
     }

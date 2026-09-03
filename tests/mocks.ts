@@ -205,6 +205,18 @@ export const anotherWorkoutExerciseId = v.parse(
 
 export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps });
 
+export const loggedSet = v.parse(Workouts.VO.LoggedSet, {
+  setNumber: v.parse(Workouts.VO.SetNumber, 1),
+  reps: v.parse(Workouts.VO.Reps, 9),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+});
+
+export const anotherLoggedSet = v.parse(Workouts.VO.LoggedSet, {
+  setNumber: v.parse(Workouts.VO.SetNumber, 2),
+  reps: v.parse(Workouts.VO.Reps, 9),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+});
+
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   sets,
   reps: v.parse(Workouts.VO.Reps, 9),
@@ -648,6 +660,28 @@ export const GenericWorkoutStartedEvent = {
   name: "WORKOUT_STARTED_EVENT",
   payload: { workoutId, requesterId: userId },
 } satisfies Workouts.Events.WorkoutStartedEventType;
+
+export const GenericWorkoutSetLoggedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_SET_LOGGED_EVENT",
+  payload: { workoutId, workoutExerciseId, loggedSet, requesterId: userId },
+} satisfies Workouts.Events.WorkoutSetLoggedEventType;
+
+export const AnotherGenericWorkoutSetLoggedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_SET_LOGGED_EVENT",
+  payload: { workoutId, workoutExerciseId, loggedSet: anotherLoggedSet, requesterId: userId },
+} satisfies Workouts.Events.WorkoutSetLoggedEventType;
 
 export const user = {
   name: email,
