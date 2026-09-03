@@ -198,7 +198,18 @@ export const workoutExerciseId = v.parse(
   "1d9b7f60-2c34-4a58-9e1b-7f0a3c5d6e21",
 );
 
+export const anotherWorkoutExerciseId = v.parse(
+  Workouts.VO.WorkoutExerciseId,
+  "6b2e4a17-9c05-4d3f-8a61-0e7d2f4b5c93",
+);
+
 export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps });
+
+export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
+  sets,
+  reps: v.parse(Workouts.VO.Reps, 9),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+});
 
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
@@ -615,6 +626,17 @@ export const GenericWorkoutExerciseAddedEvent = {
     requesterId: userId,
   },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
+
+export const GenericWorkoutExerciseTargetSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_EXERCISE_TARGET_SET_EVENT",
+  payload: { workoutId, workoutExerciseId, target: exerciseTarget, requesterId: userId },
+} satisfies Workouts.Events.WorkoutExerciseTargetSetEventType;
 
 export const user = {
   name: email,

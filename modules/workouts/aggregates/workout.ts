@@ -8,7 +8,10 @@ import * as Events from "+workouts/events";
 import * as Invariants from "+workouts/invariants";
 import * as VO from "+workouts/value-objects";
 
-export type WorkoutEventType = Events.WorkoutCreatedEventType | Events.WorkoutExerciseAddedEventType;
+export type WorkoutEventType =
+  | Events.WorkoutCreatedEventType
+  | Events.WorkoutExerciseAddedEventType
+  | Events.WorkoutExerciseTargetSetEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -21,6 +24,7 @@ export class Workout {
   static readonly registry = new bg.EventValidatorRegistryAdapter<WorkoutEventType>({
     [Events.WORKOUT_CREATED_EVENT]: Events.WorkoutCreatedEvent,
     [Events.WORKOUT_EXERCISE_ADDED_EVENT]: Events.WorkoutExerciseAddedEvent,
+    [Events.WORKOUT_EXERCISE_TARGET_SET_EVENT]: Events.WorkoutExerciseTargetSetEvent,
   });
   // Stryker restore all
 
@@ -89,6 +93,25 @@ export class Workout {
     this.record(event);
   }
 
+  setExerciseTarget(
+    workoutExerciseId: VO.WorkoutExerciseIdType,
+    target: VO.ExerciseTargetType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+
+    const event = bg.event(
+      Events.WorkoutExerciseTargetSetEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, workoutExerciseId, target, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<WorkoutEventType> {
     const events = [...this.pending];
 
@@ -118,6 +141,16 @@ export class Workout {
           exerciseId: event.payload.exerciseId,
           prescription: event.payload.prescription,
         });
+        break;
+      }
+
+      case Events.WORKOUT_EXERCISE_TARGET_SET_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.exercises = this.exercises.map((exercise) =>
+          exercise.id === event.payload.workoutExerciseId
+            ? { ...exercise, target: event.payload.target }
+            : exercise,
+        );
         break;
       }
     }

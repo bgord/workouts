@@ -73,4 +73,42 @@ describe("Workout", async () => {
       ),
     ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
   });
+
+  test("setExerciseTarget", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseTargetSetEvent]);
+  });
+
+  test("setExerciseTarget - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.anotherUserId),
+    ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
+  });
+
+  test("setExerciseTarget - WorkoutExerciseExists", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.setExerciseTarget(mocks.anotherWorkoutExerciseId, mocks.exerciseTarget, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
+  });
 });
