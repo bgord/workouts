@@ -1,11 +1,11 @@
 import * as bg from "@bgord/ui";
+import { Link } from "@tanstack/react-router";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 
 export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
   return (
     <li
-      className="c-exercise-card"
       data-bc="neutral-700"
       data-bg="neutral-800"
       data-br="md"
@@ -19,15 +19,16 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
     >
       <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.md} />
 
-      <div
-        data-fs="sm"
-        data-fw="medium"
+      <Link
+        className="c-link"
         data-maxw="100%"
         data-transform="truncate"
+        params={{ exerciseId: props.exercise.id }}
         title={props.exercise.name}
+        to="/workbook/exercise/$exerciseId"
       >
         {props.exercise.name}
-      </div>
+      </Link>
 
       <ul data-gap="1" data-overflow="hidden" data-stack="x" data-wrap="nowrap">
         {props.exercise.categories.map((category) => (

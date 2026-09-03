@@ -15,6 +15,21 @@ export class Exercises {
     return response.json().catch();
   }
 
+  static async get(
+    request: Request | null,
+    params: { exerciseId: string },
+  ): Promise<ExerciseWithCategories | null> {
+    const BASE = `/api/exercises/${params.exerciseId}`;
+
+    const url = absoluteUrl(BASE, request);
+    const headers = request ? { cookie: Cookies.extractFrom(request) } : undefined;
+
+    const response = await fetch(url, { headers, credentials: "include" });
+
+    if (!response?.ok) return null;
+    return response.json().catch();
+  }
+
   static async listCategories(request: Request | null): Promise<ReadonlyArray<ExerciseCategory>> {
     const BASE = "/api/exercises/category/list";
 
