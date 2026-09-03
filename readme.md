@@ -260,7 +260,8 @@ modules/
     │   └── WORKOUT_CREATE_COMMAND.ts
     ├── events
     │   ├── WORKOUT_CREATED_EVENT.ts
-    │   └── WORKOUT_EXERCISE_ADDED_EVENT.ts
+    │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
+    │   └── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
     ├── invariants
     │   ├── workout-belongs-to-user.ts
     │   ├── workout-draft-limit-for-owner.ts

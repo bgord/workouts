@@ -1,4 +1,5 @@
 export * from "./exercise-prescription";
+export * from "./exercise-target";
 export * from "./load";
 export * from "./reps";
 export * from "./set-number";
