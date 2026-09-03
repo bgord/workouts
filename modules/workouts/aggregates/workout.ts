@@ -5,6 +5,7 @@ import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
 import * as Events from "+workouts/events";
+import * as Invariants from "+workouts/invariants";
 import * as VO from "+workouts/value-objects";
 
 export type WorkoutEventType = Events.WorkoutCreatedEventType | Events.WorkoutExerciseAddedEventType;
@@ -42,6 +43,8 @@ export class Workout {
     const workout = new Workout(id, deps);
 
     events.forEach((event) => workout.apply(event));
+
+    Invariants.WorkoutExists.enforce({ status: workout.status });
 
     return workout;
   }

@@ -8,10 +8,20 @@ describe("Workout", async () => {
   const di = await bootstrap();
   const deps = { ...di.Adapters.System, ...di.Tools };
 
-  test("build", () => {
-    const facility = Workouts.Aggregates.Workout.build(mocks.workoutId, [], deps);
+  test("build - WorkoutExists", () => {
+    expect(() => Workouts.Aggregates.Workout.build(mocks.workoutId, [], deps)).toThrow(
+      Workouts.Invariants.WorkoutExists.error,
+    );
+  });
 
-    expect(facility.pullEvents()).toEqual([]);
+  test("build - no pending events", () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(workout.pullEvents()).toEqual([]);
   });
 
   test("create", async () => {
