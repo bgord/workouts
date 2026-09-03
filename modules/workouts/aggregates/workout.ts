@@ -11,7 +11,8 @@ import * as VO from "+workouts/value-objects";
 export type WorkoutEventType =
   | Events.WorkoutCreatedEventType
   | Events.WorkoutExerciseAddedEventType
-  | Events.WorkoutExerciseTargetSetEventType;
+  | Events.WorkoutExerciseTargetSetEventType
+  | Events.WorkoutStartedEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -25,6 +26,7 @@ export class Workout {
     [Events.WORKOUT_CREATED_EVENT]: Events.WorkoutCreatedEvent,
     [Events.WORKOUT_EXERCISE_ADDED_EVENT]: Events.WorkoutExerciseAddedEvent,
     [Events.WORKOUT_EXERCISE_TARGET_SET_EVENT]: Events.WorkoutExerciseTargetSetEvent,
+    [Events.WORKOUT_STARTED_EVENT]: Events.WorkoutStartedEvent,
   });
   // Stryker restore all
 
@@ -112,6 +114,21 @@ export class Workout {
     this.record(event);
   }
 
+  start(requesterId: Auth.VO.UserIdType) {
+    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutIsReadyToStart.enforce({ workoutExercises: this.exercises });
+
+    const event = bg.event(
+      Events.WorkoutStartedEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<WorkoutEventType> {
     const events = [...this.pending];
 
@@ -151,6 +168,12 @@ export class Workout {
             ? { ...exercise, target: event.payload.target }
             : exercise,
         );
+        break;
+      }
+
+      case Events.WORKOUT_STARTED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.status = VO.WorkoutStatusEnum.in_progress;
         break;
       }
     }

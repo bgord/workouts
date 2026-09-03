@@ -57,6 +57,28 @@ describe("Workout", async () => {
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseAddedEvent]);
   });
 
+  test("addExercise - WorkoutIsDraft", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.addExercise(
+        mocks.anotherWorkoutExerciseId,
+        mocks.exerciseId,
+        mocks.exercisePrescription,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutIsDraft.error);
+  });
+
   test("addExercise - WorkoutBelongsToUser", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
@@ -88,6 +110,23 @@ describe("Workout", async () => {
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseTargetSetEvent]);
   });
 
+  test("setExerciseTarget - WorkoutIsDraft", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutIsDraft.error);
+  });
+
   test("setExerciseTarget - WorkoutBelongsToUser", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
@@ -110,5 +149,70 @@ describe("Workout", async () => {
     expect(() =>
       workout.setExerciseTarget(mocks.anotherWorkoutExerciseId, mocks.exerciseTarget, mocks.userId),
     ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
+  });
+
+  test("start", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => workout.start(mocks.userId));
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutStartedEvent]);
+  });
+
+  test("start - WorkoutIsDraft", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsDraft.error);
+  });
+
+  test("start - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+      ],
+      deps,
+    );
+
+    expect(() => workout.start(mocks.anotherUserId)).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
+  });
+
+  test("start - WorkoutIsReadyToStart - no exercises", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsReadyToStart.error);
+  });
+
+  test("start - WorkoutIsReadyToStart - exercise without a target", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsReadyToStart.error);
   });
 });

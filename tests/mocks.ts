@@ -638,6 +638,17 @@ export const GenericWorkoutExerciseTargetSetEvent = {
   payload: { workoutId, workoutExerciseId, target: exerciseTarget, requesterId: userId },
 } satisfies Workouts.Events.WorkoutExerciseTargetSetEventType;
 
+export const GenericWorkoutStartedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_STARTED_EVENT",
+  payload: { workoutId, requesterId: userId },
+} satisfies Workouts.Events.WorkoutStartedEventType;
+
 export const user = {
   name: email,
   email,
