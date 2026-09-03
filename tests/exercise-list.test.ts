@@ -21,19 +21,23 @@ describe(`GET ${url}`, async () => {
   test("happy path", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute").mockResolvedValue([mocks.exercise]));
+    spies.use(
+      spyOn(di.Adapters.Exercises.ListExercisesWithCategoriesQuery, "execute").mockResolvedValue([
+        mocks.exerciseWithCategories,
+      ]),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([mocks.exercise]);
+    expect(json).toEqual([mocks.exerciseWithCategories]);
   });
 
   test("happy path - empty", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute").mockResolvedValue([]));
+    spies.use(spyOn(di.Adapters.Exercises.ListExercisesWithCategoriesQuery, "execute").mockResolvedValue([]));
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();

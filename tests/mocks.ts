@@ -93,6 +93,11 @@ export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
   name: anotherExerciseCategoryName,
 };
 
+export const exerciseWithCategories: Exercises.VO.ExerciseWithCategories = {
+  ...exercise,
+  categories: [exerciseCategory],
+};
+
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");
 export const planName = v.parse(Plans.VO.PlanName, "PPL");
 
