@@ -9,6 +9,7 @@ import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Plans from "+plans";
 import type * as Preferences from "+preferences";
+import * as Workouts from "+workouts";
 
 // IDs
 export const correlationId = v.parse(bg.CorrelationId, "00000000-0000-0000-0000-000000000000");
@@ -186,6 +187,9 @@ export const plan: Plans.VO.Plan = {
 };
 
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
+
+export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");
+export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
