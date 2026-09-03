@@ -514,6 +514,22 @@ export const GenericPlanSectionCreatedEventSecond = {
   },
 } satisfies Plans.Events.PlanSectionCreatedEventType;
 
+export const GenericPlanSectionCreatedEventThird = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_CREATED_EVENT",
+  payload: {
+    planId,
+    planSectionId: anotherPlanSectionId,
+    planSectionName: thirdPlanSectionName,
+    requesterId: userId,
+  },
+} satisfies Plans.Events.PlanSectionCreatedEventType;
+
 export const GenericPlanSectionRemovedEvent = {
   id: expectAnyId,
   correlationId,
@@ -614,6 +630,38 @@ export const GenericPlanSectionExerciseInstructionAddedEventSecond = {
     planId,
     planSectionId,
     exerciseInstruction: anotherExerciseInstructionAndIdAndExercise,
+    requesterId: userId,
+  },
+} satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
+
+export const GenericPlanSectionExerciseInstructionAddedEventThird = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  payload: {
+    planId,
+    planSectionId,
+    exerciseInstruction: anotherExerciseInstructionAndId,
+    requesterId: userId,
+  },
+} satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
+
+export const GenericAnotherPlanSectionExerciseInstructionAddedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  payload: {
+    planId,
+    planSectionId: anotherPlanSectionId,
+    exerciseInstruction,
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;

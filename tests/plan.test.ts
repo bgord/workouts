@@ -38,6 +38,9 @@ describe("Plan", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCreatedEvent]);
+    expect(plan.sections).toEqual([
+      { id: mocks.planSectionId, name: mocks.planSectionName, exerciseInstructions: [] },
+    ]);
   });
 
   test("createSection - below the limit", async () => {
@@ -113,7 +116,11 @@ describe("Plan", async () => {
   test("renameSection", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventThird,
+        mocks.GenericPlanSectionCreatedEvent,
+      ],
       deps,
     );
 
@@ -122,6 +129,10 @@ describe("Plan", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionRenamedEvent]);
+    expect(plan.sections).toEqual([
+      { id: mocks.anotherPlanSectionId, name: mocks.thirdPlanSectionName, exerciseInstructions: [] },
+      { id: mocks.planSectionId, name: mocks.anotherPlanSectionName, exerciseInstructions: [] },
+    ]);
   });
 
   test("renameSection - PlanIsEditable - archived", async () => {
@@ -183,7 +194,11 @@ describe("Plan", async () => {
   test("removeSection", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
+      ],
       deps,
     );
 
@@ -192,6 +207,9 @@ describe("Plan", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionRemovedEvent]);
+    expect(plan.sections).toEqual([
+      { id: mocks.anotherPlanSectionId, name: mocks.anotherPlanSectionName, exerciseInstructions: [] },
+    ]);
   });
 
   test("removeSection - PlanIsEditable - archived", async () => {
@@ -299,7 +317,12 @@ describe("Plan", async () => {
   test("finalize - PlanHasNoEmptySections", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
+      ],
       deps,
     );
 
@@ -461,7 +484,11 @@ describe("Plan", async () => {
   test("addSectionExerciseInstruction - first", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
+      ],
       deps,
     );
 
@@ -470,6 +497,14 @@ describe("Plan", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionAddedEvent]);
+    expect(plan.sections).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
+      },
+      { id: mocks.anotherPlanSectionId, name: mocks.anotherPlanSectionName, exerciseInstructions: [] },
+    ]);
   });
 
   test("addSectionExerciseInstruction - at the limit", async () => {
@@ -539,6 +574,7 @@ describe("Plan", async () => {
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
         ...tools.repeat(mocks.GenericPlanSectionExerciseInstructionAddedEvent, 20),
       ],
@@ -556,7 +592,10 @@ describe("Plan", async () => {
       [
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
+        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
       ],
       deps,
     );
@@ -566,6 +605,18 @@ describe("Plan", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionRemovedEvent]);
+    expect(plan.sections).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [mocks.anotherExerciseInstructionAndIdAndExercise],
+      },
+      {
+        id: mocks.anotherPlanSectionId,
+        name: mocks.anotherPlanSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
+      },
+    ]);
   });
 
   test("removeSectionExerciseInstruction - PlanIsEditable - archived", async () => {
@@ -625,18 +676,16 @@ describe("Plan", async () => {
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
       ],
       deps,
     );
 
     expect(() =>
-      plan.removeSectionExerciseInstruction(
-        mocks.planSectionId,
-        mocks.anotherExerciseInstructionId,
-        mocks.userId,
-      ),
+      plan.removeSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstructionId, mocks.userId),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
   });
 
@@ -668,7 +717,10 @@ describe("Plan", async () => {
       [
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
+        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
       ],
       deps,
     );
@@ -689,6 +741,21 @@ describe("Plan", async () => {
           ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
           exerciseInstruction,
         },
+      },
+    ]);
+    expect(plan.sections).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [
+          { ...mocks.exerciseInstruction, sets: mocks.anotherSets },
+          mocks.anotherExerciseInstructionAndId,
+        ],
+      },
+      {
+        id: mocks.anotherPlanSectionId,
+        name: mocks.anotherPlanSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
       },
     ]);
   });
@@ -820,8 +887,10 @@ describe("Plan", async () => {
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
       ],
       deps,
     );
@@ -829,7 +898,7 @@ describe("Plan", async () => {
     expect(() =>
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
-        mocks.anotherExerciseInstructionAndId,
+        mocks.anotherExerciseInstruction,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
@@ -841,6 +910,7 @@ describe("Plan", async () => {
       [
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
       deps,
@@ -857,7 +927,10 @@ describe("Plan", async () => {
       [
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
+        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
       ],
       deps,
     );
@@ -871,6 +944,21 @@ describe("Plan", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent]);
+    expect(plan.sections).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [
+          { ...mocks.exerciseInstruction, exerciseId: mocks.anotherExerciseId },
+          mocks.anotherExerciseInstructionAndId,
+        ],
+      },
+      {
+        id: mocks.anotherPlanSectionId,
+        name: mocks.anotherPlanSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
+      },
+    ]);
   });
 
   test("changeSectionExerciseInstructionExercise - PlanIsEditable - archived", async () => {
@@ -938,8 +1026,10 @@ describe("Plan", async () => {
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
       ],
       deps,
     );
@@ -947,7 +1037,7 @@ describe("Plan", async () => {
     expect(() =>
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
-        mocks.anotherExerciseInstructionAndId,
+        mocks.anotherExerciseInstructionAndExercise,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
@@ -959,6 +1049,7 @@ describe("Plan", async () => {
       [
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
       ],
       deps,

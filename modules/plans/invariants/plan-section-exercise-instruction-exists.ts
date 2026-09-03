@@ -13,7 +13,9 @@ class PlanSectionExerciseInstructionExistsFactory extends bg.Invariant<PlanSecti
     return (
       config.planSection?.exerciseInstructions.some(
         (exerciseInstruction) => exerciseInstruction.id === config.exerciseInstructionId,
-      ) ?? false
+      ) ??
+      // Stryker disable next-line BooleanLiteral
+      false
     );
   }
 
