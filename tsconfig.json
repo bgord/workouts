@@ -27,7 +27,9 @@
       "+system": ["./modules/system/index"],
       "+system/*": ["./modules/system/*"],
       "+preferences": ["./modules/preferences/index"],
-      "+preferences/*": ["./modules/preferences/*"]
+      "+preferences/*": ["./modules/preferences/*"],
+      "+workouts": ["./modules/workouts/index"],
+      "+workouts/*": ["./modules/workouts/*"]
     },
     "types": ["./node_modules/@bgord/design/dist/index.d.ts", "@types/bun"]
   },
