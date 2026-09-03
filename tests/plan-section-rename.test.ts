@@ -75,7 +75,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
     expect(json).toEqual({ message: "plan.section.name.invalid" });
   });
 
-  test("PlanIsEditable - initial", async () => {
+  test("PlanExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -92,7 +92,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    await testcases.assertInvariantError(response, 404, "plan.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

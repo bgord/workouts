@@ -37,7 +37,7 @@ describe("POST /api/plans/:planId/archive", async () => {
     expect(json).toEqual({ message: "uuid.type" });
   });
 
-  test("PlanIsArchivable - initial", async () => {
+  test("PlanExists", async () => {
     const events = [] as const;
 
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -51,7 +51,7 @@ describe("POST /api/plans/:planId/archive", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.archivable");
+    await testcases.assertInvariantError(response, 404, "plan.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

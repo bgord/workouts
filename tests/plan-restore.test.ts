@@ -33,7 +33,7 @@ describe("POST /api/plans/:planId/restore", async () => {
     expect(json).toEqual({ message: "uuid.type" });
   });
 
-  test("PlanIsRestorable - initial", async () => {
+  test("PlanExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -46,7 +46,7 @@ describe("POST /api/plans/:planId/restore", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.restorable");
+    await testcases.assertInvariantError(response, 404, "plan.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

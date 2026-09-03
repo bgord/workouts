@@ -70,6 +70,8 @@ export class Plan {
 
     events.forEach((event) => plan.apply(event));
 
+    Invariants.PlanExists.enforce({ status: plan.status });
+
     return plan;
   }
 
