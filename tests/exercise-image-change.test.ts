@@ -148,6 +148,8 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
+    using imageProcessorProcess = spyOn(di.Adapters.System.ImageProcessor, "process");
+    using remoteFileStoragePutFromPath = spyOn(di.Adapters.System.RemoteFileStorage, "putFromPath");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.temporaryFileId);
@@ -163,6 +165,18 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
     expect(response.status).toEqual(200);
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(final);
+    expect(imageProcessorProcess).toHaveBeenCalledWith({
+      maxSide: 540,
+      strategy: "in_place",
+      to: "webp",
+      // @ts-expect-error
+      input: expect.any(tools.FilePathAbsolute),
+    });
+    expect(remoteFileStoragePutFromPath).toHaveBeenCalledWith({
+      key: mocks.exerciseImageKey,
+      // @ts-expect-error
+      path: expect.any(tools.FilePathAbsolute),
+    });
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseImageChangedEvent]);
   });
 });
