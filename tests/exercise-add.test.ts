@@ -20,8 +20,8 @@ const temporary = tools.Filename.fromString(`${mocks.temporaryFileId}.png`);
 const final = temporary.withExtension(v.parse(tools.Extension, "webp"));
 
 const inspection = {
-  width: v.parse(tools.ImageWidth, 100),
-  height: v.parse(tools.ImageHeight, 100),
+  width: v.parse(tools.ImageWidth, 4000),
+  height: v.parse(tools.ImageHeight, 4000),
   mime: tools.Mimes.png.mime,
   size: tools.Size.fromKb(100),
 };
@@ -94,6 +94,24 @@ describe(`POST ${url}`, async () => {
 
     expect(response.status).toEqual(400);
     expect(json).toEqual({ message: "exercise.description.invalid" });
+  });
+
+  test("CatalogIsManagedBySystem", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.temporaryFileId);
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.correlationIdHeaders, body: form },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.system");
+    expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
+    expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("ExerciseNameIsUnique", async () => {
