@@ -115,7 +115,10 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.workoutId);
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.workoutId)
+      .mockReturnValue(mocks.workoutExerciseId);
     spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
     spies
       .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
@@ -132,14 +135,20 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutCreatedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+    ]);
   });
 
   test("happy path - at the limit", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.workoutId);
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.workoutId)
+      .mockReturnValue(mocks.workoutExerciseId);
     spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
     spies
       .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
@@ -156,6 +165,9 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutCreatedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+    ]);
   });
 });

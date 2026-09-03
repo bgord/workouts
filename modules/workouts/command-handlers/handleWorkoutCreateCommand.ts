@@ -1,11 +1,13 @@
 import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import * as v from "valibot";
 import type * as Plans from "+plans";
 import type * as Workouts from "+workouts";
 import { Workout } from "../aggregates/workout";
 import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for-owner";
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 import { WorkoutScheduledForIsNotPast } from "../invariants/workout-scheduled-for-is-not-past";
+import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -37,6 +39,17 @@ export const handleWorkoutCreateCommand =
       command.payload.userId,
       deps,
     );
+
+    for (const section of plan!.sections) {
+      for (const instruction of section.exerciseInstructions) {
+        workout.addExercise(
+          v.parse(WorkoutExerciseId, deps.IdProvider.generate()),
+          instruction.exercise.id,
+          { sets: instruction.sets, reps: instruction.reps },
+          command.payload.userId,
+        );
+      }
+    }
 
     await deps.repo.save(workout);
   };
