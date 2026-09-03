@@ -8,7 +8,7 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
-import { Avatar, Exercises, I18N, Session } from "./api";
+import { Avatar, Exercises, I18N, Plans, Session } from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
 
@@ -66,13 +66,20 @@ export const exerciseRoute = createRoute({
   loader: async ({ context, params }) => ({ exercise: await Exercises.get(context.request, params) }),
 });
 
+export const plansRoute = createRoute({
+  path: "/plans",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/plans"), "Plans"),
+  loader: async ({ context }) => ({ plans: await Plans.list(context.request) }),
+});
+
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, exerciseRoute, profileRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, exerciseRoute, plansRoute, profileRoute]);
 
 export function createRouter(context: RouterContext) {
   return new Router({

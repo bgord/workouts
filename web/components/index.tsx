@@ -6,6 +6,7 @@ export * from "./exercise-image";
 export * from "./language-selector";
 export * from "./logo";
 export * from "./online-status-bar";
+export * from "./plan-card";
 export * from "./plan-status-badge";
 export * from "./select";
 export * from "./separator";
