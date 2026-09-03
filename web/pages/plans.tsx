@@ -10,7 +10,7 @@ export function Plans() {
   const { plans } = plansRoute.useLoaderData();
   const planCreate = bg.useToggle({ name: "plan-create" });
 
-  const active = plans.find((plan) => plan.status !== PlanStatusEnum.archived);
+  const active = plans.filter((plan) => plan.status !== PlanStatusEnum.archived);
   const archived = plans.filter((plan) => plan.status === PlanStatusEnum.archived);
 
   return (
@@ -18,24 +18,28 @@ export function Plans() {
       <div data-cross="center" data-main="between" data-stack="x">
         <h1 data-fs="lg">{t("plan.list.header")}</h1>
 
-        {!active && (
+        {active.length === 0 && (
           <button className="c-button" data-variant="bare" onClick={planCreate.toggle} type="button">
             {t("plan.create.cta")}
           </button>
         )}
       </div>
 
-      {!active && planCreate.on && <PlanCreate />}
+      {active.length === 0 && planCreate.on && <PlanCreate />}
 
-      {!active && archived.length === 0 && <div data-color="neutral-500">{t("plan.list.empty")}</div>}
+      {active.length === 0 && archived.length === 0 && (
+        <div data-color="neutral-500">{t("plan.list.empty")}</div>
+      )}
 
-      {active && (
+      {active.length > 0 && (
         <ul data-gap="3" data-stack="y">
-          <PlanCard plan={active} />
+          {active.map((plan) => (
+            <PlanCard key={plan.id} plan={plan} />
+          ))}
         </ul>
       )}
 
-      {active && (
+      {active.length > 0 && (
         <div data-color="neutral-500" data-fs="sm">
           {t("plan.list.limit.hint")}
         </div>

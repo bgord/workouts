@@ -5,6 +5,7 @@ import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
+import { PlanRestore } from "../sections/plan-restore";
 
 export function Plan() {
   const t = useTranslations();
@@ -27,6 +28,8 @@ export function Plan() {
           <PlanStatusBadge status={plan.status} />
 
           {plan.status !== PlanStatusEnum.archived && <PlanArchive {...plan} />}
+
+          {plan.status === PlanStatusEnum.archived && <PlanRestore {...plan} />}
         </div>
       )}
     </main>
