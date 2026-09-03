@@ -251,13 +251,17 @@ modules/
 ├── supported-languages.ts
 └── workouts
     └── value-objects
+        ├── exercise-target.ts
         ├── load.ts
+        ├── logged-set.ts
         ├── reps.ts
         ├── set-number.ts
         ├── sets.ts
         ├── workout-exercise-id.ts
+        ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-scheduled-for.ts
+        ├── workout-section-name.ts
         └── workout-status.ts
 ```
 
