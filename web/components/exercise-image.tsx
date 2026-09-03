@@ -2,16 +2,19 @@ import { Rhythm } from "@bgord/ui";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
 
 export enum ExerciseImageSize {
+  sm = "sm",
   md = "md",
   lg = "lg",
 }
 
 const width: Record<ExerciseImageSize, number> = {
+  [ExerciseImageSize.sm]: 80,
   [ExerciseImageSize.md]: 160,
   [ExerciseImageSize.lg]: 320,
 };
 
 const height: Record<ExerciseImageSize, number> = {
+  [ExerciseImageSize.sm]: 60,
   [ExerciseImageSize.md]: 120,
   [ExerciseImageSize.lg]: 240,
 };

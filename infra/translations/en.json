@@ -71,6 +71,8 @@
   "plan.section.create.error": "Could not create a section",
   "plan.section.create.label": "Section name",
   "plan.section.create.placeholder": "Upper A",
+  "plan.section.exercise.instruction": "{{sets}} × {{reps}}",
+  "plan.section.exercise.list.empty": "No exercises yet",
   "plan.section.list.count": "{{count}} of {{max}}",
   "plan.section.list.empty": "No sections yet",
   "plan.section.list.header": "Sections",
