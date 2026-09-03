@@ -410,56 +410,67 @@ export class Plan {
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
-        this.sections = this.sections.map((section) => {
-          if (section.id === event.payload.planSectionId) {
-            section.exerciseInstructions.push(event.payload.exerciseInstruction);
-            return section;
-          }
-          return section;
-        });
+        this.sections = this.sections.map((section) =>
+          section.id === event.payload.planSectionId
+            ? {
+                ...section,
+                exerciseInstructions: [...section.exerciseInstructions, event.payload.exerciseInstruction],
+              }
+            : section,
+        );
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
-        this.sections = this.sections.map((section) => ({
-          ...section,
-          exerciseInstructions: section.exerciseInstructions.filter(
-            (exerciseInstruction) => exerciseInstruction.id !== event.payload.exerciseInstructionId,
-          ),
-        }));
+        this.sections = this.sections.map((section) =>
+          section.id === event.payload.planSectionId
+            ? {
+                ...section,
+                exerciseInstructions: section.exerciseInstructions.filter(
+                  (exerciseInstruction) => exerciseInstruction.id !== event.payload.exerciseInstructionId,
+                ),
+              }
+            : section,
+        );
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
-        this.sections = this.sections.map((section) => ({
-          ...section,
-          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => {
-            if (exerciseInstruction.id === event.payload.exerciseInstruction.id) {
-              return {
-                ...exerciseInstruction,
-                reps: event.payload.exerciseInstruction.reps,
-                sets: event.payload.exerciseInstruction.sets,
-              };
-            }
-            return exerciseInstruction;
-          }),
-        }));
+        this.sections = this.sections.map((section) =>
+          section.id === event.payload.planSectionId
+            ? {
+                ...section,
+                exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) =>
+                  exerciseInstruction.id === event.payload.exerciseInstruction.id
+                    ? {
+                        ...exerciseInstruction,
+                        reps: event.payload.exerciseInstruction.reps,
+                        sets: event.payload.exerciseInstruction.sets,
+                      }
+                    : exerciseInstruction,
+                ),
+              }
+            : section,
+        );
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
-        this.sections = this.sections.map((section) => ({
-          ...section,
-          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => {
-            if (exerciseInstruction.id === event.payload.exerciseInstruction.id) {
-              return { ...exerciseInstruction, exerciseId: event.payload.exerciseInstruction.exerciseId };
-            }
-            return exerciseInstruction;
-          }),
-        }));
+        this.sections = this.sections.map((section) =>
+          section.id === event.payload.planSectionId
+            ? {
+                ...section,
+                exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) =>
+                  exerciseInstruction.id === event.payload.exerciseInstruction.id
+                    ? { ...exerciseInstruction, exerciseId: event.payload.exerciseInstruction.exerciseId }
+                    : exerciseInstruction,
+                ),
+              }
+            : section,
+        );
         break;
       }
     }
