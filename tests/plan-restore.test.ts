@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -39,6 +40,9 @@ describe("POST /api/plans/:planId/restore", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -50,12 +54,35 @@ describe("POST /api/plans/:planId/restore", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanLimitForOwner", async () => {
+    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(1));
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.revisionHeaders(events.length) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "plan.limit.for.owner");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("restore - PlanIsRestorable - draft", async () => {
     const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -73,6 +100,9 @@ describe("POST /api/plans/:planId/restore", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -90,6 +120,9 @@ describe("POST /api/plans/:planId/restore", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -107,6 +140,9 @@ describe("POST /api/plans/:planId/restore", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planSectionId);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,
@@ -124,6 +160,9 @@ describe("POST /api/plans/:planId/restore", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planSectionId);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanEditableForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
       url,

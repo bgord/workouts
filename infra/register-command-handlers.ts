@@ -119,7 +119,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   );
   Tools.CommandBus.on(
     PlansCommands.PLAN_RESTORE_COMMAND,
-    PlansCommandHandlers.handlePlanRestoreCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+    PlansCommandHandlers.handlePlanRestoreCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+      GetPlanEditableForOwnerCountQuery: Adapters.Plans.GetPlanEditableForOwnerCountQuery,
+    }),
   );
   Tools.CommandBus.on(
     PlansCommands.PLAN_EDITING_ENABLE_COMMAND,
