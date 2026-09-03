@@ -231,6 +231,24 @@ export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
 });
 
+export const workout: Workouts.VO.Workout = {
+  id: workoutId,
+  planId,
+  scheduledFor: workoutScheduledFor,
+  status: Workouts.VO.WorkoutStatusEnum.in_progress,
+  revision: revision.value,
+  exercises: [
+    {
+      id: workoutExerciseId,
+      exerciseId,
+      exerciseName,
+      prescription: exercisePrescription,
+      target: exerciseTarget,
+      loggedSets: [loggedSet],
+    },
+  ],
+};
+
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
   correlationId,
