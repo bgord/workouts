@@ -248,7 +248,17 @@ modules/
 │       ├── profile-avatar-max-size.ts
 │       ├── profile-avatar-mime-registry.ts
 │       └── profile-avatar-side.ts
-└── supported-languages.ts
+├── supported-languages.ts
+└── workouts
+    └── value-objects
+        ├── load.ts
+        ├── reps.ts
+        ├── set-number.ts
+        ├── sets.ts
+        ├── workout-exercise-id.ts
+        ├── workout-id.ts
+        ├── workout-scheduled-for.ts
+        └── workout-status.ts
 ```
 
 ## App:
