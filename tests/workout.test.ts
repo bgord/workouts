@@ -319,4 +319,72 @@ describe("Workout", async () => {
       ),
     ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
   });
+
+  test("complete", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => workout.complete(mocks.userId));
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutCompletedEvent]);
+  });
+
+  test("complete - WorkoutIsInProgress", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+        mocks.GenericWorkoutCompletedEvent,
+      ],
+      deps,
+    );
+
+    expect(() => workout.complete(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsInProgress.error);
+  });
+
+  test("complete - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    expect(() => workout.complete(mocks.anotherUserId)).toThrow(
+      Workouts.Invariants.WorkoutBelongsToUser.error,
+    );
+  });
+
+  test("complete - WorkoutHasLoggedSets", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() => workout.complete(mocks.userId)).toThrow(Workouts.Invariants.WorkoutHasLoggedSets.error);
+  });
 });

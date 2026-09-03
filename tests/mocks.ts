@@ -672,6 +672,17 @@ export const GenericWorkoutSetLoggedEvent = {
   payload: { workoutId, workoutExerciseId, loggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
 
+export const GenericWorkoutCompletedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_COMPLETED_EVENT",
+  payload: { workoutId, requesterId: userId },
+} satisfies Workouts.Events.WorkoutCompletedEventType;
+
 export const AnotherGenericWorkoutSetLoggedEvent = {
   id: expectAnyId,
   correlationId,
