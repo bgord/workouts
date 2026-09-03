@@ -34,6 +34,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
   tools.LanguageError,
   tools.ObjectKeyError,
   tools.TimestampValueError,
+  tools.WeightGramsError,
 ]);
 
 const invariants = new bg.ErrorClassifierInvariantStrategy([

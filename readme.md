@@ -335,7 +335,8 @@ app/
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
 │   └── workouts
-│       └── workout-create.ts
+│       ├── workout-create.ts
+│       └── workout-exercise-set-target.ts
 └── services
     ├── exercise-category-add-form.ts
 ```
