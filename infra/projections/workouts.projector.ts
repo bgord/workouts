@@ -1,6 +1,6 @@
 import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
@@ -16,6 +16,10 @@ export class WorkoutsProjector {
     deps.EventBus.on(
       Workouts.Events.WORKOUT_CREATED_EVENT,
       deps.EventHandler.handle(this.onWorkoutCreatedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Workouts.Events.WORKOUT_STARTED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutStartedEvent.bind(this)),
     );
     deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
@@ -34,6 +38,22 @@ export class WorkoutsProjector {
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
     });
+  }
+
+  async onWorkoutStartedEvent(event: Workouts.Events.WorkoutStartedEventType) {
+    await db
+      .update(Schema.workouts)
+      .set({
+        status: Workouts.VO.WorkoutStatusEnum.in_progress,
+        revision: event.revision,
+        updatedAt: event.createdAt,
+      })
+      .where(
+        and(
+          eq(Schema.workouts.id, event.payload.workoutId),
+          eq(Schema.workouts.userId, event.payload.requesterId),
+        ),
+      );
   }
 
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
