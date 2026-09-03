@@ -76,6 +76,8 @@ export class Workout {
     prescription: VO.ExercisePrescriptionType,
     requesterId: Auth.VO.UserIdType,
   ) {
+    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+
     const event = bg.event(
       Events.WorkoutExerciseAddedEvent,
       Workout.getStream(this.id),
