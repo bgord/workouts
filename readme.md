@@ -257,9 +257,11 @@ modules/
     ├── command-handlers
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
+    │   ├── handleWorkoutStartCommand.ts
     ├── commands
     │   ├── WORKOUT_CREATE_COMMAND.ts
-    │   └── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
+    │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
+    │   └── WORKOUT_START_COMMAND.ts
     ├── events
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
@@ -270,6 +272,7 @@ modules/
     │   ├── workout-draft-limit-for-owner.ts
     │   ├── workout-exercise-exists.ts
     │   ├── workout-exists.ts
+    │   ├── workout-in-progress-limit-for-owner.ts
     │   ├── workout-is-draft.ts
     │   ├── workout-is-ready-to-start.ts
     │   ├── workout-plan-ready.ts
@@ -278,6 +281,7 @@ modules/
     │   └── workout-repository.ts
     ├── queries
     │   ├── get-workout-draft-for-owner-count.ts
+    │   ├── get-workout-in-progress-for-owner-count.ts
     └── value-objects
         ├── exercise-prescription.ts
         ├── exercise-target.ts
@@ -399,6 +403,7 @@ infra/
 │   │   └── tmp
 │   └── workouts
 │       ├── get-workout-draft-for-owner-count.adapter.ts
+│       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
 ├── config.ts
