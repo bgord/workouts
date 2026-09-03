@@ -97,6 +97,10 @@ function NavigationMobile() {
               <Avatar size={AvatarSize.sm} />
             </Link>
 
+            <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/workbook">
+              {t("app.workbook")}
+            </Link>
+
             <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/profile">
               {t("app.profile")}
             </Link>

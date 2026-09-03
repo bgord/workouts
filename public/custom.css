@@ -18,3 +18,10 @@ body {
 [data-status="error"] [data-when~="error"] {
   display: initial;
 }
+
+.c-exercise-card {
+  transition: background-color var(--motion-medium) ease-in-out;
+}
+.c-exercise-card:hover {
+  background-color: var(--color-neutral-700);
+}

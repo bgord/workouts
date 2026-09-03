@@ -45,7 +45,7 @@ export const workbookRoute = createRoute({
   path: "/workbook",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/workbook"), "Workbook"),
-  loader: async ({ context }) => ({ exerciseCategories: await Exercises.listCategories(context.request) }),
+  loader: async ({ context }) => ({ exercises: await Exercises.list(context.request) }),
 });
 
 const profileRoute = createRoute({
