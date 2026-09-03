@@ -435,6 +435,29 @@ infra/
 ├── e2e
 │   └── home.spec.ts
 ├── env.ts
+├── exercise-catalog
+│   ├── barbell-curl-straight-bar.png
+│   ├── bulgarian-split-squat.png
+│   ├── cable-overhead-tricep-extension.webp
+│   ├── calf-raise-machine.jpeg
+│   ├── concentration-curl-dumbbell.png
+│   ├── credits.json
+│   ├── dumbbell-lateral-raise.png
+│   ├── face-pull.webp
+│   ├── hammer-curl-dumbbell.png
+│   ├── incline-hammer-press.png
+│   ├── lat-pulldown.png
+│   ├── leg-curl-seated.png
+│   ├── leg-extension-single-leg.png
+│   ├── leg-press-horizontal.webp
+│   ├── low-row-machine.png
+│   ├── overhead-press-dumbbell.png
+│   ├── pec-deck.png
+│   ├── pec-fly-machine.png
+│   ├── romanian-deadlift-single-leg-dumbbell.png
+│   ├── straight-arm-pulldown.png
+│   ├── super-horizontal-bench-press-machine.webp
+│   └── tricep-bar-pushdown.png
 ├── exercise-catalog.json
 ├── projections
 │   ├── exercise-categories.projector.ts

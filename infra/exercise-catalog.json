@@ -3,127 +3,127 @@
     {
       "name": "Leg Press Horizontal",
       "description": "Push the platform away with both feet, while sitting in the horizontal leg press machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/leg-press-horizontal.webp",
       "exerciseCategories": ["Quads", "Glutes"]
     },
     {
       "name": "Bulgarian Split Squat",
       "description": "Squat down on the front leg, with the rear foot elevated on a bench, holding dumbbells.",
-      "image": "",
+      "image": "infra/exercise-catalog/bulgarian-split-squat.png",
       "exerciseCategories": ["Quads", "Glutes"]
     },
     {
       "name": "Leg Curl Seated",
       "description": "Curl the pad down with both legs, while sitting in the seated leg curl machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/leg-curl-seated.png",
       "exerciseCategories": ["Hamstrings"]
     },
     {
       "name": "Leg Extension Single Leg",
       "description": "Extend the pad upwards with one leg at a time, while sitting in the leg extension machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/leg-extension-single-leg.png",
       "exerciseCategories": ["Quads"]
     },
     {
       "name": "Calf Raise Machine",
       "description": "Raise the heels as high as possible, while loaded in the calf raise machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/calf-raise-machine.jpeg",
       "exerciseCategories": ["Calves"]
     },
     {
       "name": "Romanian Deadlift Single Leg Dumbbell",
       "description": "Hinge at the hip on one leg, lowering the dumbbell towards the floor with a flat back.",
-      "image": "",
+      "image": "infra/exercise-catalog/romanian-deadlift-single-leg-dumbbell.png",
       "exerciseCategories": ["Hamstrings", "Glutes"]
     },
     {
       "name": "Lat Pulldown",
       "description": "Pull the bar down to the upper chest, while sitting at the lat pulldown station.",
-      "image": "",
+      "image": "infra/exercise-catalog/lat-pulldown.png",
       "exerciseCategories": ["Back", "Biceps"]
     },
     {
       "name": "Low Row Machine",
       "description": "Row the handles towards the torso, while sitting in the low row machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/low-row-machine.png",
       "exerciseCategories": ["Back", "Biceps"]
     },
     {
       "name": "Straight Arm Pulldown",
       "description": "Pull the cable bar down to the thighs with straight arms, while standing.",
-      "image": "",
+      "image": "infra/exercise-catalog/straight-arm-pulldown.png",
       "exerciseCategories": ["Back"]
     },
     {
       "name": "Face Pull",
       "description": "Pull the rope towards the face, spreading the elbows wide, while standing at the cable station.",
-      "image": "",
+      "image": "infra/exercise-catalog/face-pull.webp",
       "exerciseCategories": ["Shoulders", "Back"]
     },
     {
       "name": "Barbell Curl Straight Bar",
       "description": "Curl the straight barbell up towards the chest, while standing with the elbows tucked in.",
-      "image": "",
+      "image": "infra/exercise-catalog/barbell-curl-straight-bar.png",
       "exerciseCategories": ["Biceps"]
     },
     {
       "name": "Hammer Curl Dumbbell",
       "description": "Curl the dumbbells up with a neutral grip, while standing with the elbows tucked in.",
-      "image": "",
+      "image": "infra/exercise-catalog/hammer-curl-dumbbell.png",
       "exerciseCategories": ["Biceps", "Forearms"]
     },
     {
       "name": "Concentration Curl Dumbbell",
       "description": "Curl a single dumbbell up, while sitting with the elbow braced against the inner thigh.",
-      "image": "",
+      "image": "infra/exercise-catalog/concentration-curl-dumbbell.png",
       "exerciseCategories": ["Biceps"]
     },
     {
       "name": "Super Horizontal Bench Press Machine",
       "description": "Press the handles forward, while sitting in the super horizontal bench press machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/super-horizontal-bench-press-machine.webp",
       "exerciseCategories": ["Chest", "Triceps"]
     },
     {
       "name": "Incline Hammer Press",
       "description": "Press the handles upwards, while sitting in the plate loaded incline hammer press machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/incline-hammer-press.png",
       "exerciseCategories": ["Chest", "Triceps"]
     },
     {
       "name": "Overhead Press Dumbbell",
       "description": "Press the dumbbells overhead, while sitting on an upright bench.",
-      "image": "",
+      "image": "infra/exercise-catalog/overhead-press-dumbbell.png",
       "exerciseCategories": ["Shoulders", "Triceps"]
     },
     {
       "name": "Pec Fly Machine",
       "description": "Bring the handles together in front of the chest, while sitting in the pec fly machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/pec-fly-machine.png",
       "exerciseCategories": ["Chest"]
     },
     {
       "name": "Pec Deck",
       "description": "Bring the pads together in front of the chest, while sitting in the pec deck machine.",
-      "image": "",
+      "image": "infra/exercise-catalog/pec-deck.png",
       "exerciseCategories": ["Chest"]
     },
     {
       "name": "Tricep Bar Pushdown",
       "description": "Push the bar down until the arms are straight, while standing at the cable station.",
-      "image": "",
+      "image": "infra/exercise-catalog/tricep-bar-pushdown.png",
       "exerciseCategories": ["Triceps"]
     },
     {
       "name": "Cable Overhead Tricep Extension",
       "description": "Extend the arms overhead against the cable, while facing away from the stack.",
-      "image": "",
+      "image": "infra/exercise-catalog/cable-overhead-tricep-extension.webp",
       "exerciseCategories": ["Triceps"]
     },
     {
       "name": "Dumbbell Lateral Raise",
       "description": "Raise the dumbbells out to the sides up to shoulder height, while standing.",
-      "image": "",
+      "image": "infra/exercise-catalog/dumbbell-lateral-raise.png",
       "exerciseCategories": ["Shoulders"]
     }
   ]
