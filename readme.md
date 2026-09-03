@@ -256,8 +256,10 @@ modules/
     │   └── workout.ts
     ├── command-handlers
     │   ├── handleWorkoutCreateCommand.ts
+    │   ├── handleWorkoutExerciseSetTargetCommand.ts
     ├── commands
-    │   └── WORKOUT_CREATE_COMMAND.ts
+    │   ├── WORKOUT_CREATE_COMMAND.ts
+    │   └── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     ├── events
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts

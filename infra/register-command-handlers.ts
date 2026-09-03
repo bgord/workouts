@@ -193,4 +193,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetWorkoutDraftForOwnerCountQuery: Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery,
     }),
   );
+  Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_EXERCISE_SET_TARGET_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutExerciseSetTargetCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
 }
