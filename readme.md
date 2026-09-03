@@ -271,6 +271,7 @@ modules/
     │   ├── workout-exercise-exists.ts
     │   ├── workout-exists.ts
     │   ├── workout-is-draft.ts
+    │   ├── workout-is-ready-to-start.ts
     │   ├── workout-plan-ready.ts
     │   └── workout-scheduled-for-is-not-past.ts
     ├── ports
