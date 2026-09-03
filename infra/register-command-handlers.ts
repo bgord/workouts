@@ -7,6 +7,8 @@ import * as PlansCommandHandlers from "+plans/command-handlers";
 import * as PlansCommands from "+plans/commands";
 import * as PreferencesCommandHandlers from "+preferences/command-handlers";
 import * as PreferencesCommands from "+preferences/commands";
+import * as WorkoutsCommandHandlers from "+workouts/command-handlers";
+import * as WorkoutsCommands from "+workouts/commands";
 
 export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   const deps = { ...Adapters.System, ...Tools };
@@ -179,5 +181,14 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   Tools.CommandBus.on(
     PreferencesCommands.REMOVE_PROFILE_AVATAR_COMMAND,
     PreferencesCommandHandlers.handleRemoveProfileAvatarCommand(deps),
+  );
+
+  // Workouts ===============================================================
+  Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_CREATE_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutCreateCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
   );
 }
