@@ -239,6 +239,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutExerciseSetTarget(deps)),
   );
+  workouts.patch(
+    "/:workoutId/start",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutStart(deps)),
+  );
 
   server.route("/workouts", workouts);
 
