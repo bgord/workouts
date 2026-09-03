@@ -5,7 +5,9 @@ import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
+import { PlanRename } from "../sections/plan-rename";
 import { PlanRestore } from "../sections/plan-restore";
+import { PlanSectionList } from "../sections/plan-section-list";
 
 export function Plan() {
   const t = useTranslations();
@@ -32,6 +34,10 @@ export function Plan() {
           {plan.status === PlanStatusEnum.archived && <PlanRestore {...plan} />}
         </div>
       )}
+
+      {plan?.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
+
+      {plan && <PlanSectionList {...plan} />}
     </main>
   );
 }
