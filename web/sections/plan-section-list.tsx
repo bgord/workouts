@@ -3,6 +3,7 @@ import type { Plan } from "../../modules/plans/value-objects/plan";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanSectionCreate } from "./plan-section-create";
+import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
 
 export function PlanSectionList(props: Plan) {
@@ -51,6 +52,8 @@ export function PlanSectionList(props: Plan) {
                 {section.name}
               </div>
             )}
+
+            {editable && <PlanSectionRemove plan={props} section={section} />}
           </li>
         ))}
       </ul>
