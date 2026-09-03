@@ -1,5 +1,5 @@
 import * as bg from "@bgord/bun";
-import type * as VO from "+plans/value-objects";
+import * as VO from "+plans/value-objects";
 
 class PlanSectionExerciseInstructionLimitError extends Error {}
 
@@ -7,7 +7,7 @@ type PlanSectionExerciseInstructionLimitConfigType = { planSection: VO.PlanSecti
 
 class PlanSectionExerciseInstructionLimitFactory extends bg.Invariant<PlanSectionExerciseInstructionLimitConfigType> {
   passes(config: PlanSectionExerciseInstructionLimitConfigType) {
-    return (config.planSection?.exerciseInstructions.length ?? 0) < 20;
+    return (config.planSection?.exerciseInstructions.length ?? 0) < VO.PlanSectionExerciseInstructionLimitMax;
   }
 
   // Stryker disable next-line StringLiteral

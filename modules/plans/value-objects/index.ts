@@ -4,6 +4,7 @@ export * from "./plan";
 export * from "./plan-id";
 export * from "./plan-name";
 export * from "./plan-section";
+export * from "./plan-section-exercise-instruction-limit";
 export * from "./plan-section-id";
 export * from "./plan-section-limit-for-plan";
 export * from "./plan-section-name";

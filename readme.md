@@ -223,6 +223,7 @@ modules/
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
+│       ├── plan-section-exercise-instruction-limit.ts
 │       ├── plan-section-id.ts
 │       ├── plan-section-limit-for-plan.ts
 │       ├── plan-section-name.ts
@@ -372,7 +373,8 @@ app/
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
-    └── plan-section-create-form.ts
+    ├── plan-section-create-form.ts
+    └── plan-section-exercise-instruction-add-form.ts
 ```
 
 ## Infra:
