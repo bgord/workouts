@@ -200,4 +200,12 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       repo: Adapters.Workouts.WorkoutRepository,
     }),
   );
+  Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_START_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutStartCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+      GetWorkoutInProgressForOwnerCountQuery: Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery,
+    }),
+  );
 }

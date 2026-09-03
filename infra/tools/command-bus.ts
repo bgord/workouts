@@ -33,7 +33,8 @@ type AcceptedCommand =
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType
   | WorkoutsCommands.WorkoutCreateCommandType
-  | WorkoutsCommands.WorkoutExerciseSetTargetCommandType;
+  | WorkoutsCommands.WorkoutExerciseSetTargetCommandType
+  | WorkoutsCommands.WorkoutStartCommandType;
 
 export function createCommandBus(deps: Dependencies): bg.CommandBusPort<AcceptedCommand> {
   const inner = new bg.CommandBusEmitteryAdapter<AcceptedCommand>();
