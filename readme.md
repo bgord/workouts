@@ -207,9 +207,11 @@ modules/
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
 │   │   └── plan-section-name-is-unique-for-plan.ts
+│   ├── open-host-queries
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
+│   │   ├── get-finalized-plan.ts
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
 │   │   ├── get-plan.ts
@@ -258,6 +260,8 @@ modules/
     │   └── WORKOUT_CREATE_COMMAND.ts
     ├── events
     │   └── WORKOUT_CREATED_EVENT.ts
+    ├── invariants
+    │   └── workout-plan-exists.ts
     ├── ports
     │   └── workout-repository.ts
     └── value-objects
@@ -341,6 +345,7 @@ infra/
 │   │   ├── search-exercise-categories.adapter.ts
 │   │   └── search-exercises.adapter.ts
 │   ├── plans
+│   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-user-count.adapter.ts
 │   │   ├── get-plan.adapter.ts
