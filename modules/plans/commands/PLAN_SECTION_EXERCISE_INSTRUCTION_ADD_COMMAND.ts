@@ -15,7 +15,7 @@ export const PlanSectionExerciseInstructionAddCommand = v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
     exerciseInstruction: VO.ExerciseInstruction,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

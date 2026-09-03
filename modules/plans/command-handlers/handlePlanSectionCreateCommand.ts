@@ -14,7 +14,7 @@ export const handlePlanSectionCreateCommand =
     plan.createSection(
       command.payload.planSectionId,
       command.payload.planSectionName,
-      command.payload.userId,
+      command.payload.requesterId,
     );
     await deps.repo.save(plan);
   };

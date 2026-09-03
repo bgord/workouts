@@ -12,7 +12,7 @@ export const PlanSectionCreatedEvent = v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
     planSectionName: VO.PlanSectionName,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

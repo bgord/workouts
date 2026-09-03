@@ -21,7 +21,7 @@ export const handlePlanSectionExerciseInstructionAddCommand =
     plan.addSectionExerciseInstruction(
       command.payload.planSectionId,
       command.payload.exerciseInstruction,
-      command.payload.userId,
+      command.payload.requesterId,
     );
     await deps.repo.save(plan);
   };

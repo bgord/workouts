@@ -425,7 +425,7 @@ export const GenericPlanSectionCreatedEvent = {
   version: 1,
   commit,
   name: "PLAN_SECTION_CREATED_EVENT",
-  payload: { planId, planSectionId, planSectionName, userId },
+  payload: { planId, planSectionId, planSectionName, requesterId: userId },
 } satisfies Plans.Events.PlanSectionCreatedEventType;
 
 export const GenericPlanSectionCreatedEventSecond = {
@@ -440,7 +440,7 @@ export const GenericPlanSectionCreatedEventSecond = {
     planId,
     planSectionId: anotherPlanSectionId,
     planSectionName: anotherPlanSectionName,
-    userId,
+    requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionCreatedEventType;
 
@@ -529,7 +529,7 @@ export const GenericPlanSectionExerciseInstructionAddedEvent = {
   version: 1,
   commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
-  payload: { planId, planSectionId, exerciseInstruction, userId },
+  payload: { planId, planSectionId, exerciseInstruction, requesterId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
 export const GenericPlanSectionExerciseInstructionRemovedEvent = {

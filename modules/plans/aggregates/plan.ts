@@ -106,7 +106,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionCreatedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, planSectionName, userId: this.userId! },
+      { planId: this.id, planSectionId, planSectionName, requesterId },
       this.deps,
     );
 
@@ -236,7 +236,7 @@ export class Plan {
     const event = bg.event(
       Events.PlanSectionExerciseInstructionAddedEvent,
       Plan.getStream(this.id),
-      { planId: this.id, planSectionId, exerciseInstruction, userId: this.userId! },
+      { planId: this.id, planSectionId, exerciseInstruction, requesterId },
       this.deps,
     );
 

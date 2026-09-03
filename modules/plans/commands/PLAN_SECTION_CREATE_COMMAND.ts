@@ -17,7 +17,7 @@ export const PlanSectionCreateCommand = v.object({
     planId: PlanId,
     planSectionId: PlanSectionId,
     planSectionName: PlanSectionName,
-    userId: Auth.VO.UserId,
+    requesterId: Auth.VO.UserId,
   }),
 });
 

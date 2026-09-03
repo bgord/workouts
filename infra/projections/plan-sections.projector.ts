@@ -40,7 +40,7 @@ export class PlanSectionsProjector {
       id: event.payload.planSectionId,
       planId: event.payload.planId,
       name: event.payload.planSectionName,
-      userId: event.payload.userId,
+      userId: event.payload.requesterId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
     });
