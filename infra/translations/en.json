@@ -82,6 +82,8 @@
   "plan.section.exercise.remove.cta": "Remove",
   "plan.section.exercise.remove.error": "Could not remove the exercise",
   "plan.section.exercise.remove.title": "Remove {{name}}",
+  "plan.section.exercise.update.cta": "Change sets and reps",
+  "plan.section.exercise.update.error": "Could not update the exercise",
   "plan.section.list.count": "{{count}} of {{max}}",
   "plan.section.list.empty": "No sections yet",
   "plan.section.list.header": "Sections",

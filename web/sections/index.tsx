@@ -8,6 +8,8 @@ export * from "./plan-section-create";
 export * from "./plan-section-exercise-instruction-add";
 export * from "./plan-section-exercise-instruction-list";
 export * from "./plan-section-exercise-instruction-remove";
+export * from "./plan-section-exercise-instruction-row";
+export * from "./plan-section-exercise-instruction-update";
 export * from "./plan-section-list";
 export * from "./plan-section-remove";
 export * from "./plan-section-rename";
