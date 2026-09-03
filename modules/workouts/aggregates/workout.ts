@@ -77,6 +77,7 @@ export class Workout {
     requesterId: Auth.VO.UserIdType,
   ) {
     Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
 
     const event = bg.event(
       Events.WorkoutExerciseAddedEvent,

@@ -56,4 +56,21 @@ describe("Workout", async () => {
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseAddedEvent]);
   });
+
+  test("addExercise - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.addExercise(
+        mocks.workoutExerciseId,
+        mocks.exerciseId,
+        mocks.exercisePrescription,
+        mocks.anotherUserId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
+  });
 });
