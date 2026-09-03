@@ -30,6 +30,10 @@ function NavigationDesktop() {
         {t("app.workbook")}
       </Link>
 
+      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" to="/plans">
+        {t("app.plans")}
+      </Link>
+
       <Link className="c-link" data-focus-ring="neutral" data-fw="medium" to="/profile">
         <Avatar size={AvatarSize.md} />
       </Link>
@@ -113,6 +117,10 @@ function NavigationMobile() {
               to="/workbook"
             >
               {t("app.workbook")}
+            </Link>
+
+            <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/plans">
+              {t("app.plans")}
             </Link>
 
             <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/profile">
