@@ -207,7 +207,6 @@ modules/
 │   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
-│   │   ├── plan-section-limit-for-plan.validation.ts
 │   │   └── plan-section-name-is-unique-for-plan.ts
 │   ├── open-host-queries
 │   ├── ports
@@ -225,6 +224,7 @@ modules/
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
 │       ├── plan-section-id.ts
+│       ├── plan-section-limit-for-plan.ts
 │       ├── plan-section-name.ts
 │       ├── plan-section-name.validation.ts
 │       ├── plan-section.ts
