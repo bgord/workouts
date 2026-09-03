@@ -62,7 +62,6 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
     <form
       data-cross="center"
       data-gap="2"
-      data-ml="auto"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
       {...change.props.target}

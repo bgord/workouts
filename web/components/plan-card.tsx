@@ -12,7 +12,8 @@ export function PlanCard(props: { plan: PlanSummary }) {
       data-bw="hairline"
       data-cross="center"
       data-gap="3"
-      data-p="3"
+      data-main="between"
+      data-p="4"
       data-stack="x"
     >
       <Link

@@ -3,6 +3,7 @@ import type { Plan } from "../../modules/plans/value-objects/plan";
 import { PlanSectionExerciseInstructionLimitMax } from "../../modules/plans/value-objects/plan-section-exercise-instruction-limit";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
+import { Separator } from "../components";
 import { PlanSectionCreate } from "./plan-section-create";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -43,7 +44,7 @@ export function PlanSectionList(props: Plan) {
             data-bs="solid"
             data-bw="hairline"
             data-gap="3"
-            data-p="3"
+            data-p="4"
             data-stack="y"
             key={section.id}
           >
@@ -58,6 +59,8 @@ export function PlanSectionList(props: Plan) {
 
               {editable && <PlanSectionRemove plan={props} section={section} />}
             </div>
+
+            <Separator color="neutral-700" />
 
             <PlanSectionExerciseInstructionList plan={props} section={section} />
 

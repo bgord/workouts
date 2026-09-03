@@ -59,7 +59,6 @@ export function PlanSectionExerciseInstructionUpdate(props: {
         data-color="neutral-300"
         data-cursor="pointer"
         data-fs="sm"
-        data-ml="auto"
         onClick={update.enable}
         title={t("plan.section.exercise.update.cta")}
         type="button"
@@ -74,7 +73,6 @@ export function PlanSectionExerciseInstructionUpdate(props: {
     <form
       data-cross="end"
       data-gap="1"
-      data-ml="auto"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...update.props.target}

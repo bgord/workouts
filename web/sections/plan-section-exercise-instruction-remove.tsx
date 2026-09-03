@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Trash } from "iconoir-react";
 import type {
   ExerciseInstructionWithExercise,
   Plan,
@@ -33,12 +34,13 @@ export function PlanSectionExerciseInstructionRemove(props: {
       <button
         className="c-button"
         data-color="danger-400"
-        data-variant="bare"
+        data-interaction="subtle-scale"
+        data-variant="with-icon"
         disabled={mutation.isLoading}
         title={t("plan.section.exercise.remove.title", { name: props.exerciseInstruction.exercise.name })}
         type="submit"
       >
-        {t("plan.section.exercise.remove.cta")}
+        <Trash data-size="md" />
       </button>
 
       {mutation.isError && (

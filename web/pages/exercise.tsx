@@ -2,7 +2,7 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseImage, ExerciseImageSize } from "../components";
+import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
 
 export function Exercise() {
@@ -10,7 +10,7 @@ export function Exercise() {
   const { exercise } = exerciseRoute.useLoaderData();
 
   return (
-    <main data-gap="6" data-maxw="md" data-md-m="2" data-md-pb="16" data-mx="auto" data-stack="y">
+    <Main>
       <Link className="c-link" search={Form.default} to="/workbook">
         {`< ${t("app.back")}`}
       </Link>
@@ -43,6 +43,6 @@ export function Exercise() {
           </p>
         </div>
       )}
-    </main>
+    </Main>
   );
 }

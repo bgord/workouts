@@ -2,7 +2,7 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
-import { PlanStatusBadge } from "../components";
+import { Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanEditingEnable } from "../sections/plan-editing-enable";
@@ -16,7 +16,7 @@ export function Plan() {
   const { plan } = planRoute.useLoaderData();
 
   return (
-    <main data-gap="6" data-maxw="md" data-md-m="2" data-md-pb="16" data-mx="auto" data-stack="y">
+    <Main>
       <Link className="c-link" to="/plans">
         {`< ${t("app.back")}`}
       </Link>
@@ -34,6 +34,12 @@ export function Plan() {
           )}
 
           <PlanStatusBadge status={plan.status} />
+        </div>
+      )}
+
+      {plan && (
+        <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
+          {plan.status === PlanStatusEnum.draft && <PlanFinalize {...plan} />}
 
           {plan.status === PlanStatusEnum.finalized && <PlanEditingEnable {...plan} />}
 
@@ -43,9 +49,7 @@ export function Plan() {
         </div>
       )}
 
-      {plan?.status === PlanStatusEnum.draft && <PlanFinalize {...plan} />}
-
       {plan && <PlanSectionList {...plan} />}
-    </main>
+    </Main>
   );
 }
