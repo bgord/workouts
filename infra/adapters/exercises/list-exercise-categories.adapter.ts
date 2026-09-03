@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { asc } from "drizzle-orm";
 import type * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -8,7 +8,7 @@ class ListExerciseCategoriesQueryDrizzle implements Exercises.Queries.ListExerci
     const exerciseCategories = await db
       .select()
       .from(Schema.exerciseCategories)
-      .orderBy(desc(Schema.exerciseCategories.updatedAt));
+      .orderBy(asc(Schema.exerciseCategories.name));
 
     return exerciseCategories.map((exerciseCategory) => ({
       id: exerciseCategory.id,

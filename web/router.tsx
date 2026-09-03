@@ -53,7 +53,10 @@ export const workbookRoute = createRoute({
         : ExerciseCatalogFiltersForm.Form.default.category,
     name: typeof value["name"] === "string" ? value["name"] : ExerciseCatalogFiltersForm.Form.default.name,
   }),
-  loader: async ({ context }) => ({ exercises: await Exercises.list(context.request) }),
+  loader: async ({ context }) => ({
+    exercises: await Exercises.list(context.request),
+    exerciseCategories: await Exercises.listCategories(context.request),
+  }),
 });
 
 const profileRoute = createRoute({
