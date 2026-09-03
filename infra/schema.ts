@@ -17,6 +17,9 @@ import type { PlanSectionIdType } from "../modules/plans/value-objects/plan-sect
 import type { PlanSectionNameType } from "../modules/plans/value-objects/plan-section-name";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { SetsType } from "../modules/plans/value-objects/sets";
+import type { LoadType } from "../modules/workouts/value-objects/load";
+import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-objects/reps";
+import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
 import type { WorkoutScheduledForType } from "../modules/workouts/value-objects/workout-scheduled-for";
 import { WorkoutStatusEnum } from "../modules/workouts/value-objects/workout-status";
@@ -240,6 +243,25 @@ export const workouts = sqliteTable("workouts", {
   scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
   status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
   revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
+  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
+});
+
+export const workoutExercises = sqliteTable("workoutExercises", {
+  id: identifier<WorkoutExerciseIdType>(),
+  workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
+  exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
+  prescriptionSets: integer("prescriptionSets", { mode: "number" }).notNull().$type<SetsType>(),
+  prescriptionRepsMin: integer("prescriptionRepsMin", { mode: "number" })
+    .notNull()
+    .$type<tools.IntegerPositiveType>(),
+  prescriptionRepsMax: integer("prescriptionRepsMax", { mode: "number" })
+    .notNull()
+    .$type<tools.IntegerPositiveType>(),
+  targetSets: integer("targetSets", { mode: "number" }).$type<SetsType>(),
+  targetReps: integer("targetReps", { mode: "number" }).$type<WorkoutRepsType>(),
+  targetLoad: integer("targetLoad", { mode: "number" }).$type<LoadType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
