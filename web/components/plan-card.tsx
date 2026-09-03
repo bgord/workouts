@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
-import { PlanStatusBadge } from "../components";
+import { PlanStatusBadge } from "./plan-status-badge";
 
 export function PlanCard(props: { plan: PlanSummary }) {
   return (

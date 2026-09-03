@@ -4,6 +4,7 @@ import { Form } from "../../app/services/plan-create-form";
 import { plansRoute } from "../router";
 
 export function PlanCreate() {
+  const t = bg.useTranslations();
   const router = useRouter();
 
   const name = bg.useTextField(Form.name.field);
@@ -26,12 +27,12 @@ export function PlanCreate() {
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
       <div data-cross="center" data-gap="3" data-stack="x">
         <label className="c-label" data-m="0" {...name.label.props}>
-          Plan name
+          {t("plan.create.name.label")}
         </label>
 
         <input
           className="c-input"
-          placeholder="Push pull legs"
+          placeholder={t("plan.create.name.placeholder")}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
@@ -43,7 +44,7 @@ export function PlanCreate() {
           disabled={mutation.isLoading}
           type="submit"
         >
-          Create
+          {t("plan.create.submit.cta")}
         </button>
 
         {name.changed && (
@@ -53,14 +54,14 @@ export function PlanCreate() {
             onClick={bg.exec([name.clear, mutation.reset])}
             type="button"
           >
-            Clear
+            {t("app.clear")}
           </button>
         )}
       </div>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">
-          Could not create a plan
+          {t("plan.create.error")}
         </output>
       )}
     </form>

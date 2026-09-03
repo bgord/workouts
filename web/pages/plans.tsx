@@ -6,6 +6,7 @@ import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
 export function Plans() {
+  const t = bg.useTranslations();
   const { plans } = plansRoute.useLoaderData();
   const planCreate = bg.useToggle({ name: "plan-create" });
 
@@ -15,18 +16,18 @@ export function Plans() {
   return (
     <main data-gap="6" data-maxw="md" data-md-m="2" data-md-pb="16" data-mx="auto" data-stack="y">
       <div data-cross="center" data-main="between" data-stack="x">
-        <h1 data-fs="lg">Plans</h1>
+        <h1 data-fs="lg">{t("plan.list.header")}</h1>
 
         {!active && (
           <button className="c-button" data-variant="bare" onClick={planCreate.toggle} type="button">
-            New
+            {t("plan.create.cta")}
           </button>
         )}
       </div>
 
       {!active && planCreate.on && <PlanCreate />}
 
-      {!active && archived.length === 0 && <div data-color="neutral-500">No plans created yet</div>}
+      {!active && archived.length === 0 && <div data-color="neutral-500">{t("plan.list.empty")}</div>}
 
       {active && (
         <ul data-gap="3" data-stack="y">
@@ -36,14 +37,14 @@ export function Plans() {
 
       {active && (
         <div data-color="neutral-500" data-fs="sm">
-          Archive the current plan to create a new one
+          {t("plan.list.limit.hint")}
         </div>
       )}
 
       {archived.length > 0 && (
         <div data-gap="3" data-stack="y">
           <h2 data-color="neutral-300" data-fs="base">
-            Archived
+            {t("plan.list.archived.header")}
           </h2>
 
           <ul data-gap="3" data-stack="y">

@@ -1,3 +1,4 @@
+import { useTranslations } from "@bgord/ui";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 
 type Color = React.JSX.IntrinsicElements["div"]["data-color"];
@@ -17,7 +18,16 @@ const background: Record<PlanStatusEnum, Background> = {
   [PlanStatusEnum.archived]: "neutral-800",
 };
 
+const label: Record<PlanStatusEnum, string> = {
+  [PlanStatusEnum.initial]: "plan.status.initial",
+  [PlanStatusEnum.draft]: "plan.status.draft",
+  [PlanStatusEnum.finalized]: "plan.status.finalized",
+  [PlanStatusEnum.archived]: "plan.status.archived",
+};
+
 export function PlanStatusBadge(props: { status: PlanStatusEnum }) {
+  const t = useTranslations();
+
   return (
     <div
       className="c-badge"
@@ -25,7 +35,7 @@ export function PlanStatusBadge(props: { status: PlanStatusEnum }) {
       data-color={color[props.status]}
       data-variant="primary"
     >
-      {props.status}
+      {t(label[props.status])}
     </div>
   );
 }

@@ -79,19 +79,26 @@ export const planRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/plan"), "Plan"),
   loader: async ({ context, params }) => ({ plan: await Plans.get(context.request, params) }),
 });
+
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, exerciseRoute, plansRoute, profileRoute]);
+const routeTree = rootRoute.addChildren([
+  homeRoute,
+  workbookRoute,
+  exerciseRoute,
+  plansRoute,
+  planRoute,
+  profileRoute,
+]);
 
 export function createRouter(context: RouterContext) {
   return new Router({
     routeTree,
     context,
-    planRoute,
     defaultPreload: "intent",
     defaultViewTransition: true,
     ssr: { nonce: context.nonce },
