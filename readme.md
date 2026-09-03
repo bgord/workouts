@@ -442,6 +442,7 @@ infra/
 │   ├── preferences.projector.ts
 │   ├── profile-avatars.projector.ts
 │   ├── workout-exercises.projector.ts
+│   ├── workout-logged-sets.projector.ts
 │   └── workouts.projector.ts
 ├── register-command-handlers.ts
 ├── register-cron-tasks.ts
