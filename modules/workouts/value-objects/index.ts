@@ -3,6 +3,7 @@ export * from "./load";
 export * from "./reps";
 export * from "./set-number";
 export * from "./sets";
+export * from "./workout-exercise";
 export * from "./workout-exercise-id";
 export * from "./workout-id";
 export * from "./workout-scheduled-for";

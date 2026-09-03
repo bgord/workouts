@@ -277,6 +277,7 @@ modules/
         ├── set-number.ts
         ├── sets.ts
         ├── workout-exercise-id.ts
+        ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-scheduled-for.ts
         └── workout-status.ts

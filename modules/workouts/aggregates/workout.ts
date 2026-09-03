@@ -2,11 +2,12 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Auth from "+auth";
+import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
 import * as Events from "+workouts/events";
 import * as VO from "+workouts/value-objects";
 
-export type WorkoutEventType = Events.WorkoutCreatedEventType;
+export type WorkoutEventType = Events.WorkoutCreatedEventType | Events.WorkoutExerciseAddedEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -18,6 +19,7 @@ export class Workout {
   // Stryker disable all
   static readonly registry = new bg.EventValidatorRegistryAdapter<WorkoutEventType>({
     [Events.WORKOUT_CREATED_EVENT]: Events.WorkoutCreatedEvent,
+    [Events.WORKOUT_EXERCISE_ADDED_EVENT]: Events.WorkoutExerciseAddedEvent,
   });
   // Stryker restore all
 
@@ -25,6 +27,7 @@ export class Workout {
   revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
   status = VO.WorkoutStatusEnum.initial;
   userId?: Auth.VO.UserIdType;
+  exercises: Array<VO.WorkoutExercise> = [];
 
   private readonly pending: Array<WorkoutEventType> = [];
 
@@ -64,6 +67,22 @@ export class Workout {
     return workout;
   }
 
+  addExercise(
+    workoutExerciseId: VO.WorkoutExerciseIdType,
+    exerciseId: Exercises.VO.ExerciseIdType,
+    prescription: VO.ExercisePrescriptionType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    const event = bg.event(
+      Events.WorkoutExerciseAddedEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, workoutExerciseId, exerciseId, prescription, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<WorkoutEventType> {
     const events = [...this.pending];
 
@@ -83,6 +102,16 @@ export class Workout {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.draft;
         this.userId = event.payload.userId;
+        break;
+      }
+
+      case Events.WORKOUT_EXERCISE_ADDED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.exercises.push({
+          id: event.payload.workoutExerciseId,
+          exerciseId: event.payload.exerciseId,
+          prescription: event.payload.prescription,
+        });
         break;
       }
     }

@@ -27,4 +27,23 @@ describe("Workout", async () => {
       expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutCreatedEvent]);
     });
   });
+
+  test("addExercise", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.addExercise(
+        mocks.workoutExerciseId,
+        mocks.exerciseId,
+        mocks.exercisePrescription,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseAddedEvent]);
+  });
 });
