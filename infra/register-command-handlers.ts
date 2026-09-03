@@ -215,4 +215,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       repo: Adapters.Workouts.WorkoutRepository,
     }),
   );
+  Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_COMPLETE_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutCompleteCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
 }
