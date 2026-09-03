@@ -259,7 +259,8 @@ modules/
     ├── commands
     │   └── WORKOUT_CREATE_COMMAND.ts
     ├── events
-    │   └── WORKOUT_CREATED_EVENT.ts
+    │   ├── WORKOUT_CREATED_EVENT.ts
+    │   └── WORKOUT_EXERCISE_ADDED_EVENT.ts
     ├── invariants
     │   ├── workout-draft-limit-for-owner.ts
     │   ├── workout-plan-ready.ts
@@ -269,6 +270,7 @@ modules/
     ├── queries
     │   ├── get-workout-draft-for-owner-count.ts
     └── value-objects
+        ├── exercise-prescription.ts
         ├── exercise-target.ts
         ├── load.ts
         ├── reps.ts
