@@ -359,6 +359,7 @@ app/
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
 │       ├── workout-exercise-set-target.ts
+│       ├── workout-list.ts
 │       ├── workout-set-log.ts
 │       └── workout-start.ts
 └── services

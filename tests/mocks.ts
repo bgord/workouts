@@ -198,6 +198,14 @@ export const workoutExerciseId = v.parse(
   "1d9b7f60-2c34-4a58-9e1b-7f0a3c5d6e21",
 );
 
+export const workoutSummary: Workouts.VO.WorkoutSummary = {
+  id: workoutId,
+  planId,
+  scheduledFor: workoutScheduledFor,
+  status: Workouts.VO.WorkoutStatusEnum.draft,
+  revision: revision.value,
+};
+
 export const anotherWorkoutExerciseId = v.parse(
   Workouts.VO.WorkoutExerciseId,
   "6b2e4a17-9c05-4d3f-8a61-0e7d2f4b5c93",
