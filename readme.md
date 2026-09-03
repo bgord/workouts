@@ -252,6 +252,8 @@ modules/
 └── workouts
     ├── aggregates
     │   └── workout.ts
+    ├── events
+    │   └── WORKOUT_CREATED_EVENT.ts
     └── value-objects
         ├── exercise-target.ts
         ├── load.ts

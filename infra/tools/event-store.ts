@@ -7,6 +7,7 @@ import type { EnvironmentResultType } from "+infra/env";
 import * as schema from "+infra/schema";
 import type { PlanEventType } from "+plans/aggregates";
 import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
+import type { WorkoutEventType } from "+workouts/aggregates";
 
 type Dependencies = {
   EventBus: bg.EventBusPort<AcceptedEventType>;
@@ -20,6 +21,7 @@ export type AcceptedEventType =
   | AccountCreatedEventType
   | AccountDeletedEventType
   | PlanEventType
+  | WorkoutEventType
   | bg.Preferences.Events.UserLanguageSetEventType
   | ProfileAvatarUpdatedEventType
   | ProfileAvatarRemovedEventType;

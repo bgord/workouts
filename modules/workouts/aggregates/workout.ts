@@ -1,9 +1,10 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Events from "+workouts/events";
 import * as VO from "+workouts/value-objects";
 
-export type WorkoutEventType = never;
+export type WorkoutEventType = Events.WorkoutCreatedEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -13,7 +14,9 @@ type Dependencies = {
 
 export class Workout {
   // Stryker disable all
-  static readonly registry = new bg.EventValidatorRegistryAdapter<WorkoutEventType>({});
+  static readonly registry = new bg.EventValidatorRegistryAdapter<WorkoutEventType>({
+    [Events.WORKOUT_CREATED_EVENT]: Events.WorkoutCreatedEvent,
+  });
   // Stryker restore all
 
   readonly id: VO.WorkoutIdType;
