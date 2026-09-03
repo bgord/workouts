@@ -222,6 +222,7 @@ modules/
 │       ├── exercise-instruction.ts
 │       ├── plan-id.ts
 │       ├── plan-name.ts
+│       ├── plan-name.validation.ts
 │       ├── plan-section-id.ts
 │       ├── plan-section-name.ts
 │       ├── plan-section.ts
@@ -368,6 +369,7 @@ app/
 └── services
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
+    └── plan-create-form.ts
 ```
 
 ## Infra:

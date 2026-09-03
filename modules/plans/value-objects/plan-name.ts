@@ -1,9 +1,10 @@
 import * as v from "valibot";
+import { PlanNameMax, PlanNameMin } from "./plan-name.validation";
 
 export const PlanNameError = { Type: "plan.name.type", Invalid: "plan.name.invalid" };
 
 // 3 to 64 letters or digits, and spaces allowed
-const CHARS_WHITELIST = /^[a-zA-Z0-9 ]{3,64}$/;
+const CHARS_WHITELIST = new RegExp(`^[a-zA-Z0-9 ]{${PlanNameMin},${PlanNameMax}}$`);
 
 export const PlanName = v.pipe(
   v.string(PlanNameError.Type),
