@@ -73,6 +73,12 @@ export const plansRoute = createRoute({
   loader: async ({ context }) => ({ plans: await Plans.list(context.request) }),
 });
 
+export const planRoute = createRoute({
+  path: "/plans/$planId",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/plan"), "Plan"),
+  loader: async ({ context, params }) => ({ plan: await Plans.get(context.request, params) }),
+});
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
@@ -85,6 +91,7 @@ export function createRouter(context: RouterContext) {
   return new Router({
     routeTree,
     context,
+  planRoute,
     defaultPreload: "intent",
     defaultViewTransition: true,
     ssr: { nonce: context.nonce },
