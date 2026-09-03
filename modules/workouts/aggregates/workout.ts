@@ -1,6 +1,8 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import type * as Auth from "+auth";
+import type * as Plans from "+plans";
 import * as Events from "+workouts/events";
 import * as VO from "+workouts/value-objects";
 
@@ -22,6 +24,7 @@ export class Workout {
   readonly id: VO.WorkoutIdType;
   revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
   status = VO.WorkoutStatusEnum.initial;
+  userId?: Auth.VO.UserIdType;
 
   private readonly pending: Array<WorkoutEventType> = [];
 
@@ -40,6 +43,27 @@ export class Workout {
     return workout;
   }
 
+  static create(
+    workoutId: VO.WorkoutIdType,
+    planId: Plans.VO.PlanIdType,
+    scheduledFor: VO.WorkoutScheduledForType,
+    userId: Auth.VO.UserIdType,
+    deps: Dependencies,
+  ): Workout {
+    const workout = new Workout(workoutId, deps);
+
+    const WorkoutCreatedEvent = bg.event(
+      Events.WorkoutCreatedEvent,
+      Workout.getStream(workoutId),
+      { workoutId, planId, scheduledFor, userId },
+      deps,
+    );
+
+    workout.record(WorkoutCreatedEvent);
+
+    return workout;
+  }
+
   pullEvents(): ReadonlyArray<WorkoutEventType> {
     const events = [...this.pending];
 
@@ -53,7 +77,16 @@ export class Workout {
     this.pending.push(event);
   }
 
-  private apply(_event: WorkoutEventType): void {}
+  private apply(event: WorkoutEventType): void {
+    switch (event.name) {
+      case Events.WORKOUT_CREATED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.status = VO.WorkoutStatusEnum.draft;
+        this.userId = event.payload.userId;
+        break;
+      }
+    }
+  }
 
   static getStream(id: VO.WorkoutIdType): bg.EventStreamType {
     return v.parse(bg.EventStream, `workout_${id}`);

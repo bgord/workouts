@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import * as bg from "@bgord/bun";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
@@ -11,5 +12,19 @@ describe("Workout", async () => {
     const facility = Workouts.Aggregates.Workout.build(mocks.workoutId, [], deps);
 
     expect(facility.pullEvents()).toEqual([]);
+  });
+
+  test("create", async () => {
+    await bg.CorrelationStorage.run(mocks.correlationId, async () => {
+      const workout = Workouts.Aggregates.Workout.create(
+        mocks.workoutId,
+        mocks.planId,
+        mocks.workoutScheduledFor,
+        mocks.userId,
+        deps,
+      );
+
+      expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutCreatedEvent]);
+    });
   });
 });

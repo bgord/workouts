@@ -191,6 +191,8 @@ export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");
 export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
+export const workoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-01");
+
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
   correlationId,
@@ -578,6 +580,17 @@ export const GenericPlanSectionExerciseInstructionExerciseChangedEvent = {
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionExerciseChangedEventType;
+
+export const GenericWorkoutCreatedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_CREATED_EVENT",
+  payload: { workoutId, planId, scheduledFor: workoutScheduledFor, userId },
+} satisfies Workouts.Events.WorkoutCreatedEventType;
 
 export const user = {
   name: email,
