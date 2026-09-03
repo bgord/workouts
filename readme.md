@@ -350,6 +350,7 @@ app/
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
 │   └── workouts
+│       ├── workout-complete.ts
 │       ├── workout-create.ts
 │       ├── workout-exercise-set-target.ts
 │       ├── workout-set-log.ts
