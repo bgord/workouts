@@ -208,4 +208,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetWorkoutInProgressForOwnerCountQuery: Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery,
     }),
   );
+  Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_SET_LOG_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutSetLogCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
 }
