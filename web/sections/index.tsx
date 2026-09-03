@@ -6,6 +6,7 @@ export * from "./plan-rename";
 export * from "./plan-restore";
 export * from "./plan-section-create";
 export * from "./plan-section-list";
+export * from "./plan-section-rename";
 export * from "./profile-account-delete";
 export * from "./profile-avatar-change";
 export * from "./profile-avatar-delete";

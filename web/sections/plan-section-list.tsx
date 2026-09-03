@@ -3,6 +3,7 @@ import type { Plan } from "../../modules/plans/value-objects/plan";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanSectionCreate } from "./plan-section-create";
+import { PlanSectionRename } from "./plan-section-rename";
 
 export function PlanSectionList(props: Plan) {
   const t = useTranslations();
@@ -43,9 +44,13 @@ export function PlanSectionList(props: Plan) {
             data-stack="x"
             key={section.id}
           >
-            <div data-maxw="100%" data-transform="truncate" title={section.name}>
-              {section.name}
-            </div>
+            {editable && <PlanSectionRename plan={props} section={section} />}
+
+            {!editable && (
+              <div data-maxw="100%" data-transform="truncate" title={section.name}>
+                {section.name}
+              </div>
+            )}
           </li>
         ))}
       </ul>
