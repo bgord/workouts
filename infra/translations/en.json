@@ -57,6 +57,8 @@
   "plan.create.name.label": "Plan name",
   "plan.create.name.placeholder": "Push pull legs",
   "plan.create.submit.cta": "Create",
+  "plan.editing.enable.cta": "Edit",
+  "plan.editing.enable.error": "Could not enable editing",
   "plan.finalize.blocked.empty_sections": "Add an exercise to {{names}} first",
   "plan.finalize.blocked.no_sections": "Add a section first",
   "plan.finalize.cta": "Finalize",

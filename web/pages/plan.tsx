@@ -5,6 +5,7 @@ import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
+import { PlanEditingEnable } from "../sections/plan-editing-enable";
 import { PlanFinalize } from "../sections/plan-finalize";
 import { PlanRename } from "../sections/plan-rename";
 import { PlanRestore } from "../sections/plan-restore";
@@ -33,6 +34,8 @@ export function Plan() {
           )}
 
           <PlanStatusBadge status={plan.status} />
+
+          {plan.status === PlanStatusEnum.finalized && <PlanEditingEnable {...plan} />}
 
           {plan.status !== PlanStatusEnum.archived && <PlanArchive {...plan} />}
 
