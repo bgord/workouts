@@ -107,6 +107,7 @@ export function PlanSectionExerciseInstructionAdd(props: { plan: Plan; section: 
               className="c-input"
               type="number"
               {...Form.repsMax.pattern}
+              min={repsMin.value}
               {...repsMax.input.props}
               {...bg.Rhythm().times(5).style.width}
             />

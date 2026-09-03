@@ -72,51 +72,54 @@ export function PlanSectionExerciseInstructionUpdate(props: {
 
   return (
     <form
-      data-cross="center"
-      data-gap="2"
+      data-cross="end"
+      data-gap="1"
       data-ml="auto"
-      data-stack="x"
+      data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...update.props.target}
     >
-      <input
-        aria-label={t("plan.section.exercise.add.sets.label")}
-        className="c-input"
-        type="number"
-        {...Form.sets.pattern}
-        {...sets.input.props}
-        {...bg.Rhythm().times(5).style.width}
-      />
+      <div data-cross="center" data-gap="2" data-stack="x">
+        <input
+          aria-label={t("plan.section.exercise.add.sets.label")}
+          className="c-input"
+          type="number"
+          {...Form.sets.pattern}
+          {...sets.input.props}
+          {...bg.Rhythm().times(5).style.width}
+        />
 
-      <div data-color="neutral-500">×</div>
+        <div data-color="neutral-500">×</div>
 
-      <input
-        aria-label={t("plan.section.exercise.add.reps.label")}
-        className="c-input"
-        type="number"
-        {...Form.repsMin.pattern}
-        {...repsMin.input.props}
-        {...bg.Rhythm().times(5).style.width}
-      />
+        <input
+          aria-label={t("plan.section.exercise.add.reps.label")}
+          className="c-input"
+          type="number"
+          {...Form.repsMin.pattern}
+          {...repsMin.input.props}
+          {...bg.Rhythm().times(5).style.width}
+        />
 
-      <div data-color="neutral-500">-</div>
+        <div data-color="neutral-500">-</div>
 
-      <input
-        aria-label={t("plan.section.exercise.add.reps.max.label")}
-        className="c-input"
-        type="number"
-        {...Form.repsMax.pattern}
-        {...repsMax.input.props}
-        {...bg.Rhythm().times(5).style.width}
-      />
+        <input
+          aria-label={t("plan.section.exercise.add.reps.max.label")}
+          className="c-input"
+          type="number"
+          {...Form.repsMax.pattern}
+          min={repsMin.value}
+          {...repsMax.input.props}
+          {...bg.Rhythm().times(5).style.width}
+        />
 
-      <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
-        {t("app.save")}
-      </button>
+        <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
+          {t("app.save")}
+        </button>
 
-      <ButtonCancel
-        onClick={bg.exec([sets.clear, repsMin.clear, repsMax.clear, mutation.reset, update.disable])}
-      />
+        <ButtonCancel
+          onClick={bg.exec([sets.clear, repsMin.clear, repsMax.clear, mutation.reset, update.disable])}
+        />
+      </div>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">
