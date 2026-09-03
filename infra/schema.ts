@@ -55,6 +55,7 @@ export const events = sqliteTable(
     stream: text("stream").notNull().$type<bg.EventStreamType>(),
     version: integer("version").notNull(),
     revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
+    commit: text("commit").notNull().$type<bg.CommitShaValueType>(),
     payload: text("payload").notNull(),
   },
   (table) => [
