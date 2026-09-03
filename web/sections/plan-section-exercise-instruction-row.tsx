@@ -7,6 +7,7 @@ import type {
 } from "../../modules/plans/value-objects/plan";
 import type { RepsType } from "../../modules/plans/value-objects/reps";
 import { ExerciseImage, ExerciseImageSize } from "../components";
+import { PlanSectionExerciseInstructionExerciseChange } from "./plan-section-exercise-instruction-exercise-change";
 import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
 import { PlanSectionExerciseInstructionUpdate } from "./plan-section-exercise-instruction-update";
 
@@ -24,6 +25,10 @@ export function PlanSectionExerciseInstructionRow(props: {
 
   const update = bg.useToggle({
     name: `plan-section-exercise-instruction-update-${props.exerciseInstruction.id}`,
+  });
+
+  const change = bg.useToggle({
+    name: `plan-section-exercise-instruction-exercise-change-${props.exerciseInstruction.id}`,
   });
 
   const { editable, exerciseInstruction } = props;
@@ -61,7 +66,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         </div>
       )}
 
-      {editable && (
+      {editable && change.off && (
         <PlanSectionExerciseInstructionUpdate
           exerciseInstruction={exerciseInstruction}
           plan={props.plan}
@@ -73,6 +78,15 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {editable && update.off && (
+        <PlanSectionExerciseInstructionExerciseChange
+          exerciseInstruction={exerciseInstruction}
+          plan={props.plan}
+          section={props.section}
+          toggle={change}
+        />
+      )}
+
+      {editable && update.off && change.off && (
         <PlanSectionExerciseInstructionRemove
           exerciseInstruction={exerciseInstruction}
           plan={props.plan}
