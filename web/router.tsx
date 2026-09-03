@@ -7,6 +7,7 @@ import {
   Router,
   redirect,
 } from "@tanstack/react-router";
+import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import { Avatar, Exercises, I18N, Session } from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
@@ -45,6 +46,13 @@ export const workbookRoute = createRoute({
   path: "/workbook",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/workbook"), "Workbook"),
+  validateSearch: (value) => ({
+    category:
+      typeof value["category"] === "string"
+        ? value["category"]
+        : ExerciseCatalogFiltersForm.Form.default.category,
+    name: typeof value["name"] === "string" ? value["name"] : ExerciseCatalogFiltersForm.Form.default.name,
+  }),
   loader: async ({ context }) => ({ exercises: await Exercises.list(context.request) }),
 });
 

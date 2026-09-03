@@ -25,3 +25,9 @@ body {
 .c-exercise-card:hover {
   background-color: var(--color-neutral-700);
 }
+
+.c-category-filter[aria-pressed="true"] {
+  color: var(--color-neutral-950);
+  background-color: var(--color-brand-400);
+  border-color: var(--color-brand-400);
+}

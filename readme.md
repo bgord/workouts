@@ -366,6 +366,7 @@ app/
 │       ├── workout-set-log.ts
 │       └── workout-start.ts
 └── services
+    ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
 ```
 
