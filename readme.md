@@ -255,18 +255,21 @@ modules/
     ├── aggregates
     │   └── workout.ts
     ├── command-handlers
+    │   ├── handleWorkoutAbandonCommand.ts
     │   ├── handleWorkoutCompleteCommand.ts
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutSetLogCommand.ts
     │   ├── handleWorkoutStartCommand.ts
     ├── commands
+    │   ├── WORKOUT_ABANDON_COMMAND.ts
     │   ├── WORKOUT_COMPLETE_COMMAND.ts
     │   ├── WORKOUT_CREATE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     │   ├── WORKOUT_SET_LOG_COMMAND.ts
     │   └── WORKOUT_START_COMMAND.ts
     ├── events
+    │   ├── WORKOUT_ABANDONED_EVENT.ts
     │   ├── WORKOUT_COMPLETED_EVENT.ts
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
@@ -350,6 +353,7 @@ app/
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
 │   └── workouts
+│       ├── workout-abandon.ts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
 │       ├── workout-exercise-set-target.ts
