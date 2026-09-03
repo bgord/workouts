@@ -17,6 +17,9 @@ import type { PlanSectionIdType } from "../modules/plans/value-objects/plan-sect
 import type { PlanSectionNameType } from "../modules/plans/value-objects/plan-section-name";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { SetsType } from "../modules/plans/value-objects/sets";
+import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
+import type { WorkoutScheduledForType } from "../modules/workouts/value-objects/workout-scheduled-for";
+import { WorkoutStatusEnum } from "../modules/workouts/value-objects/workout-status";
 
 const id = text("id", { length: 36 })
   .primaryKey()
@@ -226,6 +229,17 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
   sets: integer("sets", { mode: "number" }).notNull().$type<SetsType>(),
   repsMin: integer("repsMin", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
   repsMax: integer("repsMax", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
+  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
+});
+
+export const workouts = sqliteTable("workouts", {
+  id: identifier<WorkoutIdType>(),
+  planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
+  scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
+  status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
+  revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
