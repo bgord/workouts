@@ -207,6 +207,7 @@ modules/
 │   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
+│   │   ├── plan-section-limit-for-plan.validation.ts
 │   │   └── plan-section-name-is-unique-for-plan.ts
 │   ├── open-host-queries
 │   ├── ports
@@ -225,6 +226,7 @@ modules/
 │       ├── plan-name.validation.ts
 │       ├── plan-section-id.ts
 │       ├── plan-section-name.ts
+│       ├── plan-section-name.validation.ts
 │       ├── plan-section.ts
 │       ├── plan-status.ts
 │       ├── plan-summary.ts
@@ -369,7 +371,8 @@ app/
 └── services
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
-    └── plan-create-form.ts
+    ├── plan-create-form.ts
+    └── plan-section-create-form.ts
 ```
 
 ## Infra:
