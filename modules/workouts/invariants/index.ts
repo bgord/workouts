@@ -4,6 +4,7 @@ export * from "./workout-exercise-exists";
 export * from "./workout-exists";
 export * from "./workout-in-progress-limit-for-owner";
 export * from "./workout-is-draft";
+export * from "./workout-is-in-progress";
 export * from "./workout-is-ready-to-start";
 export * from "./workout-plan-ready";
 export * from "./workout-scheduled-for-is-not-past";
