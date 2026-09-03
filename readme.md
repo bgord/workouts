@@ -257,10 +257,12 @@ modules/
     ├── command-handlers
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
+    │   ├── handleWorkoutSetLogCommand.ts
     │   ├── handleWorkoutStartCommand.ts
     ├── commands
     │   ├── WORKOUT_CREATE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
+    │   ├── WORKOUT_SET_LOG_COMMAND.ts
     │   └── WORKOUT_START_COMMAND.ts
     ├── events
     │   ├── WORKOUT_CREATED_EVENT.ts
