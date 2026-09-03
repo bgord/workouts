@@ -1,9 +1,11 @@
 import type * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import type * as Plans from "+plans";
 import type * as Workouts from "+workouts";
 import { Workout } from "../aggregates/workout";
 import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for-owner";
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
+import { WorkoutScheduledForIsNotPast } from "../invariants/workout-scheduled-for-is-not-past";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -16,6 +18,10 @@ type Dependencies = {
 
 export const handleWorkoutCreateCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutCreateCommandType) => {
+    const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
+
+    WorkoutScheduledForIsNotPast.enforce({ scheduledFor: command.payload.scheduledFor, today });
+
     const plan = await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId);
 
     WorkoutPlanReady.enforce({ plan });

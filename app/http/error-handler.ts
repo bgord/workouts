@@ -4,6 +4,7 @@ import type hono from "hono";
 import * as Exercises from "+exercises";
 import * as Plans from "+plans";
 import * as Preferences from "+preferences";
+import * as Workouts from "+workouts";
 
 type Dependencies = { Logger: bg.LoggerPort };
 
@@ -39,6 +40,7 @@ const invariants = new bg.ErrorClassifierInvariantStrategy([
   Preferences.Invariants,
   Exercises.Invariants,
   Plans.Invariants,
+  Workouts.Invariants
 ]);
 
 export class ErrorHandler {
