@@ -265,6 +265,7 @@ modules/
     ├── invariants
     │   ├── workout-belongs-to-user.ts
     │   ├── workout-draft-limit-for-owner.ts
+    │   ├── workout-exercise-exists.ts
     │   ├── workout-exists.ts
     │   ├── workout-is-draft.ts
     │   ├── workout-plan-ready.ts
