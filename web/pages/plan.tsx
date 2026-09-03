@@ -1,8 +1,10 @@
 // fallow-ignore-file unused-export
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
+import { PlanArchive } from "../sections/plan-archive";
 
 export function Plan() {
   const t = useTranslations();
@@ -23,6 +25,8 @@ export function Plan() {
           </h1>
 
           <PlanStatusBadge status={plan.status} />
+
+          {plan.status !== PlanStatusEnum.archived && <PlanArchive {...plan} />}
         </div>
       )}
     </main>
