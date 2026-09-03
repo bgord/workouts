@@ -12,7 +12,11 @@ export function PlanSectionExerciseInstructionList(props: { section: PlanSection
   const t = useTranslations();
 
   if (props.section.exerciseInstructions.length === 0) {
-    return <div data-color="neutral-500" data-fs="sm">{t("plan.section.exercise.list.empty")}</div>;
+    return (
+      <div data-color="neutral-500" data-fs="sm">
+        {t("plan.section.exercise.list.empty")}
+      </div>
+    );
   }
 
   return (

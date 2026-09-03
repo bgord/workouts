@@ -1,8 +1,10 @@
 import { useTranslations } from "@bgord/ui";
 import type { Plan } from "../../modules/plans/value-objects/plan";
+import { PlanSectionExerciseInstructionLimitMax } from "../../modules/plans/value-objects/plan-section-exercise-instruction-limit";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanSectionCreate } from "./plan-section-create";
+import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
 import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
@@ -58,6 +60,10 @@ export function PlanSectionList(props: Plan) {
             </div>
 
             <PlanSectionExerciseInstructionList section={section} />
+
+            {editable && section.exerciseInstructions.length < PlanSectionExerciseInstructionLimitMax && (
+              <PlanSectionExerciseInstructionAdd plan={props} section={section} />
+            )}
           </li>
         ))}
       </ul>

@@ -77,7 +77,10 @@ export const planRoute = createRoute({
   path: "/plans/$planId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/plan"), "Plan"),
-  loader: async ({ context, params }) => ({ plan: await Plans.get(context.request, params) }),
+  loader: async ({ context, params }) => ({
+    plan: await Plans.get(context.request, params),
+    exercises: await Exercises.list(context.request),
+  }),
 });
 
 const profileRoute = createRoute({
