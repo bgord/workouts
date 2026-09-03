@@ -22,6 +22,14 @@ export class WorkoutsProjector {
       deps.EventHandler.handle(this.onWorkoutStartedEvent.bind(this)),
     );
     deps.EventBus.on(
+      Workouts.Events.WORKOUT_COMPLETED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutCompletedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Workouts.Events.WORKOUT_ABANDONED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutAbandonedEvent.bind(this)),
+    );
+    deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
       deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
@@ -45,6 +53,38 @@ export class WorkoutsProjector {
       .update(Schema.workouts)
       .set({
         status: Workouts.VO.WorkoutStatusEnum.in_progress,
+        revision: event.revision,
+        updatedAt: event.createdAt,
+      })
+      .where(
+        and(
+          eq(Schema.workouts.id, event.payload.workoutId),
+          eq(Schema.workouts.userId, event.payload.requesterId),
+        ),
+      );
+  }
+
+  async onWorkoutCompletedEvent(event: Workouts.Events.WorkoutCompletedEventType) {
+    await db
+      .update(Schema.workouts)
+      .set({
+        status: Workouts.VO.WorkoutStatusEnum.completed,
+        revision: event.revision,
+        updatedAt: event.createdAt,
+      })
+      .where(
+        and(
+          eq(Schema.workouts.id, event.payload.workoutId),
+          eq(Schema.workouts.userId, event.payload.requesterId),
+        ),
+      );
+  }
+
+  async onWorkoutAbandonedEvent(event: Workouts.Events.WorkoutAbandonedEventType) {
+    await db
+      .update(Schema.workouts)
+      .set({
+        status: Workouts.VO.WorkoutStatusEnum.abandoned,
         revision: event.revision,
         updatedAt: event.createdAt,
       })
