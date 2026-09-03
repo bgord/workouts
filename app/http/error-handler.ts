@@ -21,26 +21,27 @@ const messages = new bg.ErrorClassifierMessageMapStrategy({
 const http = new bg.ErrorClassifierHttpExceptionHonoStrategy([bg.HttpExceptionErrors]);
 
 const validation = new bg.ErrorClassifierValidationStrategy([
-  bg.HashValueError,
-  bg.UUIDError,
-  tools.ObjectKeyError,
-  tools.LanguageError,
-  tools.TimestampValueError,
-  tools.IntegerPositiveError,
-  Exercises.VO.ExerciseNameError,
-  Exercises.VO.ExerciseDescriptionError,
   Exercises.VO.ExerciseCategoryNameError,
+  Exercises.VO.ExerciseDescriptionError,
+  Exercises.VO.ExerciseNameError,
   Plans.VO.PlanNameError,
   Plans.VO.PlanSectionNameError,
   Plans.VO.RepsError,
+  bg.HashValueError,
+  bg.UUIDError,
+  tools.DayIsoIdError,
+  tools.IntegerPositiveError,
+  tools.LanguageError,
+  tools.ObjectKeyError,
+  tools.TimestampValueError,
 ]);
 
 const invariants = new bg.ErrorClassifierInvariantStrategy([
-  bg.Preferences.Invariants,
-  Preferences.Invariants,
   Exercises.Invariants,
   Plans.Invariants,
+  Preferences.Invariants,
   Workouts.Invariants,
+  bg.Preferences.Invariants,
 ]);
 
 export class ErrorHandler {
