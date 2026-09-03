@@ -261,7 +261,7 @@ modules/
     ├── events
     │   └── WORKOUT_CREATED_EVENT.ts
     ├── invariants
-    │   └── workout-plan-exists.ts
+    │   └── workout-plan-ready.ts
     ├── ports
     │   └── workout-repository.ts
     └── value-objects

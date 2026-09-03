@@ -189,6 +189,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     WorkoutsCommandHandlers.handleWorkoutCreateCommand({
       ...deps,
       repo: Adapters.Workouts.WorkoutRepository,
+      GetFinalizedPlanOHQ: Adapters.Plans.GetFinalizedPlanQuery,
     }),
   );
 }
