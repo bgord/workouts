@@ -1,5 +1,6 @@
 import type * as bg from "@bgord/bun";
 import type * as Workouts from "+workouts";
+import { GetWorkoutDraftForOwnerCountQuery } from "./get-workout-draft-for-owner-count.adapter";
 import { createWorkoutRepository } from "./workout-repository.adapter";
 
 type Dependencies = {
@@ -10,5 +11,8 @@ type Dependencies = {
 };
 
 export function createWorkoutsAdapters(deps: Dependencies) {
-  return { WorkoutRepository: createWorkoutRepository(deps) };
+  return {
+    GetWorkoutDraftForOwnerCountQuery,
+    WorkoutRepository: createWorkoutRepository(deps),
+  };
 }

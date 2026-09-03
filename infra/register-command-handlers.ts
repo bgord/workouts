@@ -190,6 +190,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       ...deps,
       repo: Adapters.Workouts.WorkoutRepository,
       GetFinalizedPlanOHQ: Adapters.Plans.GetFinalizedPlanQuery,
+      GetWorkoutDraftForOwnerCountQuery: Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery,
     }),
   );
 }
