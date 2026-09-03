@@ -293,6 +293,7 @@ modules/
     ├── queries
     │   ├── get-workout-draft-for-owner-count.ts
     │   ├── get-workout-in-progress-for-owner-count.ts
+    │   └── list-workouts.ts
     └── value-objects
         ├── exercise-prescription.ts
         ├── exercise-target.ts
@@ -305,7 +306,8 @@ modules/
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-scheduled-for.ts
-        └── workout-status.ts
+        ├── workout-status.ts
+        └── workout-summary.ts
 ```
 
 ## App:
@@ -420,6 +422,7 @@ infra/
 │   └── workouts
 │       ├── get-workout-draft-for-owner-count.adapter.ts
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
+│       ├── list-workouts.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
 ├── config.ts
