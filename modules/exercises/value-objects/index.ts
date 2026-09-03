@@ -12,3 +12,4 @@ export * from "./exercise-image-max-size";
 export * from "./exercise-image-mime-registry";
 export * from "./exercise-image-side";
 export * from "./exercise-name";
+export * from "./exercise-with-categories";
