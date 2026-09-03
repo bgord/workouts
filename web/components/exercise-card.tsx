@@ -17,7 +17,14 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
       data-stack="y"
       {...bg.Rhythm(176).times(1).style.width}
     >
-      <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.md} />
+      <Link
+        aria-hidden
+        params={{ exerciseId: props.exercise.id }}
+        tabIndex={-1}
+        to="/workbook/exercise/$exerciseId"
+      >
+        <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.md} />
+      </Link>
 
       <Link
         className="c-link"

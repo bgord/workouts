@@ -59,13 +59,20 @@ export const workbookRoute = createRoute({
   }),
 });
 
+export const exerciseRoute = createRoute({
+  path: "/workbook/exercise/$exerciseId",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/exercise"), "Exercise"),
+  loader: async ({ context, params }) => ({ exercise: await Exercises.get(context.request, params) }),
+});
+
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, profileRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, workbookRoute, exerciseRoute, profileRoute]);
 
 export function createRouter(context: RouterContext) {
   return new Router({

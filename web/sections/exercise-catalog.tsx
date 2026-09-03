@@ -70,7 +70,10 @@ export function ExerciseCatalog() {
             <li key={category.id}>
               <button
                 aria-pressed={selected}
-                className="c-badge c-category-filter"
+                className="c-badge"
+                data-bc={selected ? "brand-400" : "neutral-400"}
+                data-bg={selected ? "brand-400" : "neutral-950"}
+                data-color={selected ? "neutral-950" : "neutral-300"}
                 data-cursor="pointer"
                 data-variant="outline"
                 onClick={() =>
