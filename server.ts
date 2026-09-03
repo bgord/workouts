@@ -57,11 +57,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     ).handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseAdd(deps)),
   );
-  exercises.get(
-    "/:exerciseId",
-    Tools.ShieldCaptcha.handle(),
-    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseGet(Adapters.Exercises)),
-  );
+  exercises.get("/:exerciseId", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseGet(Adapters.Exercises)));
   exercises.delete(
     "/:exerciseId",
     Tools.ShieldCaptcha.handle(),
@@ -102,12 +98,6 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryAdd(deps)),
-  );
-  exercises.get(
-    "/category/:exerciseCategoryId",
-    Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
-    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryGet(Adapters.Exercises)),
   );
   exercises.patch(
     "/category/:exerciseCategoryId",
