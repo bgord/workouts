@@ -2,6 +2,7 @@ import type * as bg from "@bgord/bun";
 import type * as Plans from "+plans";
 import type * as Workouts from "+workouts";
 import { Workout } from "../aggregates/workout";
+import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for-owner";
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 
 type Dependencies = {
@@ -10,6 +11,7 @@ type Dependencies = {
   CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   repo: Workouts.Ports.WorkoutRepositoryPort;
   GetFinalizedPlanOHQ: Plans.OHQ.GetFinalizedPlanOHQ;
+  GetWorkoutDraftForOwnerCountQuery: Workouts.Queries.GetWorkoutDraftForOwnerCount;
 };
 
 export const handleWorkoutCreateCommand =
@@ -17,6 +19,10 @@ export const handleWorkoutCreateCommand =
     const plan = await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId);
 
     WorkoutPlanReady.enforce({ plan });
+
+    const count = await deps.GetWorkoutDraftForOwnerCountQuery.execute(command.payload.userId);
+
+    WorkoutDraftLimitForOwner.enforce({ count });
 
     const workout = Workout.create(
       command.payload.workoutId,
