@@ -23,9 +23,13 @@ export function Plan() {
 
       {plan && (
         <div data-cross="center" data-gap="3" data-stack="x">
-          <h1 data-fs="lg" data-transform="truncate">
-            {plan.name}
-          </h1>
+          {plan.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
+
+          {plan.status !== PlanStatusEnum.draft && (
+            <h1 data-fs="lg" data-maxw="100%" data-transform="truncate">
+              {plan.name}
+            </h1>
+          )}
 
           <PlanStatusBadge status={plan.status} />
 
@@ -34,8 +38,6 @@ export function Plan() {
           {plan.status === PlanStatusEnum.archived && <PlanRestore {...plan} />}
         </div>
       )}
-
-      {plan?.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
 
       {plan && <PlanSectionList {...plan} />}
     </main>
