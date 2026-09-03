@@ -40,7 +40,7 @@ const invariants = new bg.ErrorClassifierInvariantStrategy([
   Preferences.Invariants,
   Exercises.Invariants,
   Plans.Invariants,
-  Workouts.Invariants
+  Workouts.Invariants,
 ]);
 
 export class ErrorHandler {

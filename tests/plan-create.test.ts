@@ -86,7 +86,7 @@ describe(`POST ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "plan.name.is.unique.for.owner");
   });
 
-  test("happy path - no plans", async () => {
+  test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

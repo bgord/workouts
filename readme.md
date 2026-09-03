@@ -319,11 +319,13 @@ app/
 │   │   ├── plan-section-exercise-instruction-update.ts
 │   │   ├── plan-section-remove.ts
 │   │   └── plan-section-rename.ts
-│   └── preferences
-│       ├── get-profile-avatar.ts
-│       ├── remove-profile-avatar.ts
-│       ├── update-profile-avatar.ts
-│       └── update-user-language.ts
+│   ├── preferences
+│   │   ├── get-profile-avatar.ts
+│   │   ├── remove-profile-avatar.ts
+│   │   ├── update-profile-avatar.ts
+│   │   └── update-user-language.ts
+│   └── workouts
+│       └── workout-create.ts
 └── services
     ├── exercise-category-add-form.ts
 ```
