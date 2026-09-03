@@ -265,6 +265,7 @@ modules/
     │   ├── WORKOUT_SET_LOG_COMMAND.ts
     │   └── WORKOUT_START_COMMAND.ts
     ├── events
+    │   ├── WORKOUT_COMPLETED_EVENT.ts
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
