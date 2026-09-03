@@ -1,6 +1,7 @@
 export * from "./exercise-prescription";
 export * from "./exercise-target";
 export * from "./load";
+export * from "./logged-set";
 export * from "./reps";
 export * from "./set-number";
 export * from "./sets";
