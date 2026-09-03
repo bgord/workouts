@@ -1,10 +1,130 @@
 {
   "exercises": [
     {
-      "name": "Bench Press Barbell Horizontal",
-      "description": "Press the barbell upwards, while lying on the horizontal bench.",
-      "image": "infra/exercise-catalog/bench-press-barbell-horizontal.webp",
+      "name": "Leg Press Horizontal",
+      "description": "Push the platform away with both feet, while sitting in the horizontal leg press machine.",
+      "image": "",
+      "exerciseCategories": ["Quads", "Glutes"]
+    },
+    {
+      "name": "Bulgarian Split Squat",
+      "description": "Squat down on the front leg, with the rear foot elevated on a bench, holding dumbbells.",
+      "image": "",
+      "exerciseCategories": ["Quads", "Glutes"]
+    },
+    {
+      "name": "Leg Curl Seated",
+      "description": "Curl the pad down with both legs, while sitting in the seated leg curl machine.",
+      "image": "",
+      "exerciseCategories": ["Hamstrings"]
+    },
+    {
+      "name": "Leg Extension Single Leg",
+      "description": "Extend the pad upwards with one leg at a time, while sitting in the leg extension machine.",
+      "image": "",
+      "exerciseCategories": ["Quads"]
+    },
+    {
+      "name": "Calf Raise Machine",
+      "description": "Raise the heels as high as possible, while loaded in the calf raise machine.",
+      "image": "",
+      "exerciseCategories": ["Calves"]
+    },
+    {
+      "name": "Romanian Deadlift Single Leg Dumbbell",
+      "description": "Hinge at the hip on one leg, lowering the dumbbell towards the floor with a flat back.",
+      "image": "",
+      "exerciseCategories": ["Hamstrings", "Glutes"]
+    },
+    {
+      "name": "Lat Pulldown",
+      "description": "Pull the bar down to the upper chest, while sitting at the lat pulldown station.",
+      "image": "",
+      "exerciseCategories": ["Back", "Biceps"]
+    },
+    {
+      "name": "Low Row Machine",
+      "description": "Row the handles towards the torso, while sitting in the low row machine.",
+      "image": "",
+      "exerciseCategories": ["Back", "Biceps"]
+    },
+    {
+      "name": "Straight Arm Pulldown",
+      "description": "Pull the cable bar down to the thighs with straight arms, while standing.",
+      "image": "",
+      "exerciseCategories": ["Back"]
+    },
+    {
+      "name": "Face Pull",
+      "description": "Pull the rope towards the face, spreading the elbows wide, while standing at the cable station.",
+      "image": "",
+      "exerciseCategories": ["Shoulders", "Back"]
+    },
+    {
+      "name": "Barbell Curl Straight Bar",
+      "description": "Curl the straight barbell up towards the chest, while standing with the elbows tucked in.",
+      "image": "",
+      "exerciseCategories": ["Biceps"]
+    },
+    {
+      "name": "Hammer Curl Dumbbell",
+      "description": "Curl the dumbbells up with a neutral grip, while standing with the elbows tucked in.",
+      "image": "",
+      "exerciseCategories": ["Biceps", "Forearms"]
+    },
+    {
+      "name": "Concentration Curl Dumbbell",
+      "description": "Curl a single dumbbell up, while sitting with the elbow braced against the inner thigh.",
+      "image": "",
+      "exerciseCategories": ["Biceps"]
+    },
+    {
+      "name": "Super Horizontal Bench Press Machine",
+      "description": "Press the handles forward, while sitting in the super horizontal bench press machine.",
+      "image": "",
       "exerciseCategories": ["Chest", "Triceps"]
+    },
+    {
+      "name": "Incline Hammer Press",
+      "description": "Press the handles upwards, while sitting in the plate loaded incline hammer press machine.",
+      "image": "",
+      "exerciseCategories": ["Chest", "Triceps"]
+    },
+    {
+      "name": "Overhead Press Dumbbell",
+      "description": "Press the dumbbells overhead, while sitting on an upright bench.",
+      "image": "",
+      "exerciseCategories": ["Shoulders", "Triceps"]
+    },
+    {
+      "name": "Pec Fly Machine",
+      "description": "Bring the handles together in front of the chest, while sitting in the pec fly machine.",
+      "image": "",
+      "exerciseCategories": ["Chest"]
+    },
+    {
+      "name": "Pec Deck",
+      "description": "Bring the pads together in front of the chest, while sitting in the pec deck machine.",
+      "image": "",
+      "exerciseCategories": ["Chest"]
+    },
+    {
+      "name": "Tricep Bar Pushdown",
+      "description": "Push the bar down until the arms are straight, while standing at the cable station.",
+      "image": "",
+      "exerciseCategories": ["Triceps"]
+    },
+    {
+      "name": "Cable Overhead Tricep Extension",
+      "description": "Extend the arms overhead against the cable, while facing away from the stack.",
+      "image": "",
+      "exerciseCategories": ["Triceps"]
+    },
+    {
+      "name": "Dumbbell Lateral Raise",
+      "description": "Raise the dumbbells out to the sides up to shoulder height, while standing.",
+      "image": "",
+      "exerciseCategories": ["Shoulders"]
     }
   ]
 }
