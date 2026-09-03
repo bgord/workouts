@@ -634,6 +634,7 @@ export const GenericWorkoutExerciseAddedEvent = {
     workoutId,
     workoutExerciseId,
     exerciseId,
+    exerciseName,
     prescription: exercisePrescription,
     requesterId: userId,
   },

@@ -35,6 +35,7 @@ export class WorkoutExercisesProjector {
       id: event.payload.workoutExerciseId,
       workoutId: event.payload.workoutId,
       exerciseId: event.payload.exerciseId,
+      exerciseName: event.payload.exerciseName,
       prescriptionSets: event.payload.prescription.sets,
       prescriptionRepsMin: event.payload.prescription.reps.min,
       prescriptionRepsMax: event.payload.prescription.reps.max,

@@ -1,0 +1,1 @@
+ALTER TABLE `workoutExercises` ADD `exerciseName` text NOT NULL;

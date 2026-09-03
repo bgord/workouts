@@ -49,6 +49,7 @@ describe("Workout", async () => {
       workout.addExercise(
         mocks.workoutExerciseId,
         mocks.exerciseId,
+        mocks.exerciseName,
         mocks.exercisePrescription,
         mocks.userId,
       ),
@@ -73,6 +74,7 @@ describe("Workout", async () => {
       workout.addExercise(
         mocks.anotherWorkoutExerciseId,
         mocks.exerciseId,
+        mocks.exerciseName,
         mocks.exercisePrescription,
         mocks.userId,
       ),
@@ -90,6 +92,7 @@ describe("Workout", async () => {
       workout.addExercise(
         mocks.workoutExerciseId,
         mocks.exerciseId,
+        mocks.exerciseName,
         mocks.exercisePrescription,
         mocks.anotherUserId,
       ),

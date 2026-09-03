@@ -45,6 +45,7 @@ export const handleWorkoutCreateCommand =
         workout.addExercise(
           v.parse(WorkoutExerciseId, deps.IdProvider.generate()),
           instruction.exercise.id,
+          instruction.exercise.name,
           { sets: instruction.sets, reps: instruction.reps },
           command.payload.userId,
         );
