@@ -425,6 +425,7 @@ infra/
 │   └── workouts
 │       ├── get-workout-draft-for-owner-count.adapter.ts
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
+│       ├── get-workout.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
