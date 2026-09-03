@@ -2,6 +2,7 @@ export * from "./workout-belongs-to-user";
 export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise-exists";
 export * from "./workout-exists";
+export * from "./workout-has-logged-sets";
 export * from "./workout-in-progress-limit-for-owner";
 export * from "./workout-is-draft";
 export * from "./workout-is-in-progress";
