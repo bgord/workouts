@@ -252,8 +252,14 @@ modules/
 └── workouts
     ├── aggregates
     │   └── workout.ts
+    ├── command-handlers
+    │   ├── handleWorkoutCreateCommand.ts
+    ├── commands
+    │   └── WORKOUT_CREATE_COMMAND.ts
     ├── events
     │   └── WORKOUT_CREATED_EVENT.ts
+    ├── ports
+    │   └── workout-repository.ts
     └── value-objects
         ├── exercise-target.ts
         ├── load.ts
