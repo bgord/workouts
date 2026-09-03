@@ -262,7 +262,10 @@ modules/
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   └── WORKOUT_EXERCISE_ADDED_EVENT.ts
     ├── invariants
+    │   ├── workout-belongs-to-user.ts
     │   ├── workout-draft-limit-for-owner.ts
+    │   ├── workout-exists.ts
+    │   ├── workout-is-draft.ts
     │   ├── workout-plan-ready.ts
     │   └── workout-scheduled-for-is-not-past.ts
     ├── ports
