@@ -275,6 +275,7 @@ modules/
     │   ├── workout-exists.ts
     │   ├── workout-in-progress-limit-for-owner.ts
     │   ├── workout-is-draft.ts
+    │   ├── workout-is-in-progress.ts
     │   ├── workout-is-ready-to-start.ts
     │   ├── workout-plan-ready.ts
     │   └── workout-scheduled-for-is-not-past.ts
