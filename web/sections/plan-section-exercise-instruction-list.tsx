@@ -1,15 +1,19 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import type { PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
+import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
+import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import type { RepsType } from "../../modules/plans/value-objects/reps";
 import { ExerciseImage, ExerciseImageSize } from "../components";
+import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
 
 function format(reps: RepsType): string {
   return reps.min === reps.max ? String(reps.min) : `${reps.min}-${reps.max}`;
 }
 
-export function PlanSectionExerciseInstructionList(props: { section: PlanSectionWithExercises }) {
+export function PlanSectionExerciseInstructionList(props: { plan: Plan; section: PlanSectionWithExercises }) {
   const t = useTranslations();
+
+  const editable = props.plan.status === PlanStatusEnum.draft;
 
   if (props.section.exerciseInstructions.length === 0) {
     return (
@@ -49,6 +53,14 @@ export function PlanSectionExerciseInstructionList(props: { section: PlanSection
               reps: format(exerciseInstruction.reps),
             })}
           </div>
+
+          {editable && (
+            <PlanSectionExerciseInstructionRemove
+              exerciseInstruction={exerciseInstruction}
+              plan={props.plan}
+              section={props.section}
+            />
+          )}
         </li>
       ))}
     </ul>

@@ -59,7 +59,7 @@ export function PlanSectionList(props: Plan) {
               {editable && <PlanSectionRemove plan={props} section={section} />}
             </div>
 
-            <PlanSectionExerciseInstructionList section={section} />
+            <PlanSectionExerciseInstructionList plan={props} section={section} />
 
             {editable && section.exerciseInstructions.length < PlanSectionExerciseInstructionLimitMax && (
               <PlanSectionExerciseInstructionAdd plan={props} section={section} />
