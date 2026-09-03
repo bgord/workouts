@@ -348,6 +348,7 @@ app/
 │   └── workouts
 │       ├── workout-create.ts
 │       ├── workout-exercise-set-target.ts
+│       ├── workout-set-log.ts
 │       └── workout-start.ts
 └── services
     ├── exercise-category-add-form.ts
