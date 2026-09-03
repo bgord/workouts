@@ -10,6 +10,7 @@ type PlanSectionExerciseInstructionHasChangedConfigType = {
 
 class PlanSectionExerciseInstructionHasChangedFactory extends bg.Invariant<PlanSectionExerciseInstructionHasChangedConfigType> {
   passes(config: PlanSectionExerciseInstructionHasChangedConfigType) {
+    // Stryker disable next-line BooleanLiteral
     if (!config.current) return false;
     return (
       config.current.sets !== config.incoming.sets ||

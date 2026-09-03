@@ -9,6 +9,9 @@ const path = tools.FilePathRelative.fromString("infra/exercise-catalog.json");
 
 const image = "exercise-catalog/bench-press-barbell-horizontal.webp";
 
+const imageContent = "bench-press-image";
+const imageBytes = new TextEncoder().encode(imageContent).buffer;
+
 const catalog = {
   exercises: [
     {
@@ -88,9 +91,12 @@ describe("ExerciseCatalogSeeder", async () => {
     spies.use(spyOn(di.Tools.CommandBus, "emit"));
     spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute")).mockResolvedValue([]);
     spies.use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute")).mockResolvedValue([]);
+    spies.use(spyOn(di.Adapters.System.FileReaderRaw, "read")).mockResolvedValue(imageBytes);
+    const temporaryFileWrite = spies.use(spyOn(di.Adapters.System.TemporaryFile, "write"));
 
     const result = await bg.CorrelationStorage.run(mocks.correlationId, () => seeder.seed(path));
 
+    expect(await temporaryFileWrite.mock.calls[0]?.[1].text()).toEqual(imageContent);
     expect(result).toEqual({
       exerciseCategoriesCreated: 1,
       exercisesCreated: 1,
@@ -108,7 +114,7 @@ describe("ExerciseCatalogSeeder", async () => {
       .mockResolvedValue([mocks.exerciseCategory]);
     spies
       .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue([]);
+      .mockResolvedValue([mocks.anotherExerciseCategory]);
 
     const result = await bg.CorrelationStorage.run(mocks.correlationId, () => seeder.seed(path));
 
@@ -117,6 +123,23 @@ describe("ExerciseCatalogSeeder", async () => {
       exercisesCreated: 0,
       exerciseCategoriesAssigned: 1,
     });
+  });
+
+  test("happy path - a duplicated catalog entry is created once", async () => {
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.FileReaderJson, "read"))
+      .mockResolvedValue({ exercises: [catalog.exercises[0], catalog.exercises[0]] });
+    spies.use(spyOn(di.Tools.CommandBus, "emit"));
+    spies.use(spyOn(di.Adapters.Exercises.ListExercisesQuery, "execute")).mockResolvedValue([]);
+    spies.use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute")).mockResolvedValue([]);
+    spies
+      .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
+      .mockResolvedValue([mocks.exerciseCategory]);
+
+    const result = await bg.CorrelationStorage.run(mocks.correlationId, () => seeder.seed(path));
+
+    expect(result.exercisesCreated).toEqual(1);
   });
 
   test("happy path - idempotency", async () => {

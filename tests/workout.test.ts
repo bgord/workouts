@@ -212,7 +212,12 @@ describe("Workout", async () => {
   test("start - WorkoutIsReadyToStart - exercise without a target", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
-      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+      ],
       deps,
     );
 
@@ -261,6 +266,40 @@ describe("Workout", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.AnotherGenericWorkoutSetLoggedEvent]);
+  });
+
+  test("logSet - the set number is counted per exercise", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.logSet(
+        mocks.anotherWorkoutExerciseId,
+        mocks.loggedSet.reps,
+        mocks.loggedSet.load,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([
+      {
+        ...mocks.GenericWorkoutSetLoggedEvent,
+        payload: {
+          ...mocks.GenericWorkoutSetLoggedEvent.payload,
+          workoutExerciseId: mocks.anotherWorkoutExerciseId,
+        },
+      },
+    ]);
   });
 
   test("logSet - WorkoutIsInProgress", async () => {
@@ -330,6 +369,7 @@ describe("Workout", async () => {
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
         mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
         mocks.GenericWorkoutStartedEvent,
         mocks.GenericWorkoutSetLoggedEvent,
       ],
@@ -339,6 +379,7 @@ describe("Workout", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, () => workout.complete(mocks.userId));
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutCompletedEvent]);
+    expect(workout.status).toEqual(Workouts.VO.WorkoutStatusEnum.completed);
   });
 
   test("complete - WorkoutIsInProgress", async () => {

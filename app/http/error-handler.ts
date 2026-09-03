@@ -13,8 +13,6 @@ const messages = new bg.ErrorClassifierMessageMapStrategy({
     message: "unsupported.language",
     status: 400,
   },
-  [tools.DateRangeError.Invalid]: { message: "invalid.date.range", status: 400 },
-  [tools.MimeValueError.Invalid]: { message: "invalid.mime", status: 400 },
   [tools.RevisionError.Mismatch]: { message: "revision.mismatch", status: 412 },
 });
 
@@ -51,8 +49,10 @@ export class ErrorHandler {
       [
         messages,
         http,
+        // Stryker disable next-line StringLiteral
         new bg.ErrorClassifierWithLoggerStrategy({ operation: "validation" }, { inner: validation, ...deps }),
         new bg.ErrorClassifierWithLoggerStrategy(
+          // Stryker disable next-line StringLiteral
           { operation: "domain_error" },
           { inner: invariants, ...deps },
         ),

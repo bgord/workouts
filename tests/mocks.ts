@@ -103,6 +103,7 @@ export const planSectionName = v.parse(Plans.VO.PlanSectionName, "Push");
 
 export const anotherPlanSectionId = v.parse(Plans.VO.PlanSectionId, "a792b3cd-e519-4db4-8b99-c0b18aadb44b");
 export const anotherPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Push A");
+export const thirdPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Pull");
 
 export const exerciseInstructionId = v.parse(
   Plans.VO.ExerciseInstructionId,
@@ -142,6 +143,13 @@ export const anotherExerciseInstructionAndExercise: Pick<
 export const anotherExerciseInstructionAndId: Plans.VO.ExerciseInstructionType = {
   id: anotherExerciseInstructionId,
   exerciseId,
+  reps: anotherReps,
+  sets: anotherSets,
+};
+
+export const anotherExerciseInstructionAndIdAndExercise: Plans.VO.ExerciseInstructionType = {
+  id: anotherExerciseInstructionId,
+  exerciseId: anotherExerciseId,
   reps: anotherReps,
   sets: anotherSets,
 };
@@ -594,6 +602,22 @@ export const GenericPlanSectionExerciseInstructionAddedEvent = {
   payload: { planId, planSectionId, exerciseInstruction, requesterId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
+export const GenericPlanSectionExerciseInstructionAddedEventSecond = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  payload: {
+    planId,
+    planSectionId,
+    exerciseInstruction: anotherExerciseInstructionAndIdAndExercise,
+    requesterId: userId,
+  },
+} satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
+
 export const GenericPlanSectionExerciseInstructionRemovedEvent = {
   id: expectAnyId,
   correlationId,
@@ -659,6 +683,24 @@ export const GenericWorkoutExerciseAddedEvent = {
   payload: {
     workoutId,
     workoutExerciseId,
+    exerciseId,
+    exerciseName,
+    prescription: exercisePrescription,
+    requesterId: userId,
+  },
+} satisfies Workouts.Events.WorkoutExerciseAddedEventType;
+
+export const AnotherGenericWorkoutExerciseAddedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_EXERCISE_ADDED_EVENT",
+  payload: {
+    workoutId,
+    workoutExerciseId: anotherWorkoutExerciseId,
     exerciseId,
     exerciseName,
     prescription: exercisePrescription,
