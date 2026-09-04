@@ -141,6 +141,7 @@
   "workout.list.header": "Workouts",
   "workout.status.abandoned": "Abandoned",
   "workout.status.completed": "Completed",
+  "workout.status.discarded": "Discarded",
   "workout.status.draft": "Draft",
   "workout.status.in_progress": "In progress",
   "workout.status.initial": "Initial"

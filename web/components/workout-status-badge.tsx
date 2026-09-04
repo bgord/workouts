@@ -10,6 +10,7 @@ const color: Record<WorkoutStatusEnum, Color> = {
   [WorkoutStatusEnum.in_progress]: "brand-200",
   [WorkoutStatusEnum.completed]: "positive-200",
   [WorkoutStatusEnum.abandoned]: "neutral-400",
+  [WorkoutStatusEnum.discarded]: "neutral-400",
 };
 
 const background: Record<WorkoutStatusEnum, Background> = {
@@ -18,6 +19,7 @@ const background: Record<WorkoutStatusEnum, Background> = {
   [WorkoutStatusEnum.in_progress]: "brand-900",
   [WorkoutStatusEnum.completed]: "positive-900",
   [WorkoutStatusEnum.abandoned]: "neutral-800",
+  [WorkoutStatusEnum.discarded]: "neutral-800",
 };
 
 const label: Record<WorkoutStatusEnum, string> = {
@@ -26,6 +28,7 @@ const label: Record<WorkoutStatusEnum, string> = {
   [WorkoutStatusEnum.in_progress]: "workout.status.in_progress",
   [WorkoutStatusEnum.completed]: "workout.status.completed",
   [WorkoutStatusEnum.abandoned]: "workout.status.abandoned",
+  [WorkoutStatusEnum.discarded]: "workout.status.discarded",
 };
 
 export function WorkoutStatusBadge(props: { status: WorkoutStatusEnum }) {

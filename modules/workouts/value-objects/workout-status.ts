@@ -4,4 +4,5 @@ export enum WorkoutStatusEnum {
   in_progress = "in_progress",
   completed = "completed",
   abandoned = "abandoned",
+  discarded = "discarded",
 }

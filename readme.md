@@ -293,6 +293,7 @@ modules/
     │   ├── workout-exists.ts
     │   ├── workout-has-logged-sets.ts
     │   ├── workout-in-progress-limit-for-owner.ts
+    │   ├── workout-is-discardable.ts
     │   ├── workout-is-draft.ts
     │   ├── workout-is-in-progress.ts
     │   ├── workout-is-ready-to-start.ts

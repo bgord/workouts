@@ -7,7 +7,7 @@ type WorkoutExistsConfigType = { status: VO.WorkoutStatusEnum };
 
 class WorkoutExistsFactory extends bg.Invariant<WorkoutExistsConfigType> {
   passes(config: WorkoutExistsConfigType) {
-    return config.status !== VO.WorkoutStatusEnum.initial;
+    return ![VO.WorkoutStatusEnum.initial, VO.WorkoutStatusEnum.discarded].includes(config.status);
   }
 
   // Stryker disable next-line StringLiteral
