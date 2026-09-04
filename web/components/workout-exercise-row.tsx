@@ -19,78 +19,92 @@ export function WorkoutExerciseRow(props: {
 
   return (
     <li
-      className="exercise-block"
       data-bc="neutral-800"
       data-bg="neutral-900"
       data-br="md"
       data-bs="solid"
       data-bw="hairline"
-      data-gap="2"
+      data-cross="start"
+      data-gap="3"
       data-hover-bc="neutral-700"
       data-p="3"
       data-pl="4"
-      data-stack="y"
+      data-stack="x"
     >
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <Link
-          aria-hidden
-          params={{ exerciseId: props.exercise.exerciseId }}
-          tabIndex={-1}
-          to="/catalog/exercise/$exerciseId"
-        >
-          <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
-        </Link>
+      <Link
+        aria-hidden
+        params={{ exerciseId: props.exercise.exerciseId }}
+        tabIndex={-1}
+        to="/catalog/exercise/$exerciseId"
+      >
+        <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
+      </Link>
 
-        <Link
-          className="c-link"
-          data-maxw="100%"
-          data-transform="truncate"
-          params={{ exerciseId: props.exercise.exerciseId }}
-          title={props.exercise.exerciseName}
-          to="/catalog/exercise/$exerciseId"
-        >
-          {props.exercise.exerciseName}
-        </Link>
-
-        <div data-color="neutral-500" data-fs="sm" data-ls="wide" data-ml="auto">
-          {t("workout.exercise.prescription", {
-            sets: props.exercise.prescription.sets,
-            reps: format(props.exercise.prescription.reps),
-          })}
-        </div>
-
-        {props.exercise.target && (
-          <div
-            data-bc="brand-800"
-            data-bg="brand-900"
-            data-br="pill"
-            data-bs="solid"
-            data-bw="hairline"
-            data-color="brand-200"
-            data-fs="xs"
-            data-fw="medium"
-            data-lh="none"
-            data-px="2"
-            data-py="1"
-            data-skipped={props.skipped}
-            data-transform="nowrap"
+      <div data-gap="2" data-grow="1" data-maxw="100%" data-stack="y">
+        <div data-cross="center" data-gap="3" data-stack="x">
+          <Link
+            data-color="neutral-0"
+            data-focus-ring="neutral"
+            data-fs="base"
+            data-fw="bold"
+            data-hover-color="brand-300"
+            data-maxw="100%"
+            data-transform="truncate"
+            params={{ exerciseId: props.exercise.exerciseId }}
+            title={props.exercise.exerciseName}
+            to="/catalog/exercise/$exerciseId"
           >
-            {t("workout.exercise.target", {
-              sets: props.exercise.target.sets,
-              reps: props.exercise.target.reps,
-              load: props.exercise.target.load / 1000,
+            {props.exercise.exerciseName}
+          </Link>
+
+          <div data-color="neutral-500" data-fs="sm" data-ls="wide" data-ml="auto">
+            {t("workout.exercise.prescription", {
+              sets: props.exercise.prescription.sets,
+              reps: format(props.exercise.prescription.reps),
             })}
           </div>
-        )}
-      </div>
 
-      {props.skipped && (
-        <div className="skipped" data-color="neutral-500" data-fs="sm" data-ls="wide" data-px="2" data-py="1">
-          {t("workout.exercise.skipped")}
+          {props.exercise.target && (
+            <div
+              data-bc={props.skipped ? "neutral-700" : "brand-800"}
+              data-bg={props.skipped ? "neutral-900" : "brand-900"}
+              data-br="pill"
+              data-bs="solid"
+              data-bw="hairline"
+              data-color={props.skipped ? "neutral-500" : "brand-200"}
+              data-fs="xs"
+              data-fw="medium"
+              data-lh="none"
+              data-px="2"
+              data-py="1"
+              data-transform="nowrap"
+            >
+              {t("workout.exercise.target", {
+                sets: props.exercise.target.sets,
+                reps: props.exercise.target.reps,
+                load: props.exercise.target.load / 1000,
+              })}
+            </div>
+          )}
         </div>
-      )}
 
-      {props.children}
+        {props.skipped && (
+          <div
+            data-bcl="neutral-800"
+            data-bsl="solid"
+            data-bwl="thin"
+            data-color="neutral-500"
+            data-fs="sm"
+            data-ls="wide"
+            data-px="2"
+            data-py="1"
+          >
+            {t("workout.exercise.skipped")}
+          </div>
+        )}
+
+        {props.children}
+      </div>
     </li>
   );
 }

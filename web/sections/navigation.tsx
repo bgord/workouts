@@ -18,33 +18,88 @@ function NavigationDesktop() {
   const t = useTranslations();
 
   return (
-    <nav data-cross="center" data-gap="6" data-p="2" data-stack="x" style={{ height: "70px" }}>
-      <Logo />
-
-      <Link
-        className="c-link"
-        data-focus-ring="neutral"
-        data-fw="medium"
-        data-ml="auto"
-        search={WorkoutHistoryFilters.default}
-        to="/"
+    <nav
+      className="app-bar"
+      data-bcb="neutral-800"
+      data-bsb="solid"
+      data-bwb="hairline"
+      data-position="sticky"
+      data-top="0"
+      data-z="2"
+      style={{ height: "70px" }}
+    >
+      <div
+        data-cross="center"
+        data-gap="6"
+        data-height="100%"
+        data-maxw="md"
+        data-mx="auto"
+        data-px="3"
+        data-stack="x"
+        data-width="100%"
       >
-        {t("app.workouts")}
-      </Link>
+        <Logo />
 
-      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" search={Form.default} to="/catalog">
-        {t("app.catalog")}
-      </Link>
+        <Link
+          data-color="neutral-300"
+          data-focus-ring="neutral"
+          data-fs="sm"
+          data-fw="medium"
+          data-hover-color="brand-300"
+          data-ls="wide"
+          data-ml="auto"
+          search={WorkoutHistoryFilters.default}
+          to="/"
+        >
+          {t("app.workouts")}
+        </Link>
 
-      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" to="/plans">
-        {t("app.plans")}
-      </Link>
+        <Link
+          data-color="neutral-300"
+          data-focus-ring="neutral"
+          data-fs="sm"
+          data-fw="medium"
+          data-hover-color="brand-300"
+          data-ls="wide"
+          search={Form.default}
+          to="/catalog"
+        >
+          {t("app.catalog")}
+        </Link>
 
-      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" to="/profile">
-        <Avatar size={AvatarSize.md} />
-      </Link>
+        <Link
+          data-color="neutral-300"
+          data-focus-ring="neutral"
+          data-fs="sm"
+          data-fw="medium"
+          data-hover-color="brand-300"
+          data-ls="wide"
+          to="/plans"
+        >
+          {t("app.plans")}
+        </Link>
 
-      <NavigationLogout />
+        <Link
+          data-color="neutral-300"
+          data-focus-ring="neutral"
+          data-fs="sm"
+          data-fw="medium"
+          data-hover-color="brand-300"
+          data-ls="wide"
+          to="/profile"
+        >
+          <Avatar size={AvatarSize.md} />
+        </Link>
+
+        <NavigationLogout
+          data-color="neutral-300"
+          data-focus-ring="neutral"
+          data-fs="sm"
+          data-fw="medium"
+          data-hover-color="brand-300"
+          data-ls="wide"
+        />
+      </div>
     </nav>
   );
 }
@@ -69,7 +124,20 @@ function NavigationMobile() {
 
   return (
     <>
-      <nav data-cross="center" data-disp="flex" data-main="between" data-p="2" style={{ height: "70px" }}>
+      <nav
+        className="app-bar"
+        data-cross="center"
+        data-disp="flex"
+        data-bcb="neutral-800"
+        data-bsb="solid"
+        data-bwb="hairline"
+        data-main="between"
+        data-position="sticky"
+        data-px="3"
+        data-top="0"
+        data-z="2"
+        style={{ height: "70px" }}
+      >
         <Logo />
 
         <div data-cross="center" data-gap="3" data-stack="x">
@@ -127,7 +195,12 @@ function NavigationMobile() {
             </Link>
 
             <Link
-              className="c-link"
+              data-color="neutral-300"
+              data-focus-ring="neutral"
+              data-fs="sm"
+              data-fw="medium"
+              data-hover-color="brand-300"
+              data-ls="wide"
               data-transform="uppercase"
               onClick={navigation.disable}
               search={WorkoutHistoryFilters.default}
@@ -137,7 +210,12 @@ function NavigationMobile() {
             </Link>
 
             <Link
-              className="c-link"
+              data-color="neutral-300"
+              data-focus-ring="neutral"
+              data-fs="sm"
+              data-fw="medium"
+              data-hover-color="brand-300"
+              data-ls="wide"
               data-transform="uppercase"
               onClick={navigation.disable}
               search={Form.default}
@@ -146,15 +224,44 @@ function NavigationMobile() {
               {t("app.catalog")}
             </Link>
 
-            <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/plans">
+            <Link
+              data-color="neutral-300"
+              data-focus-ring="neutral"
+              data-fs="sm"
+              data-fw="medium"
+              data-hover-color="brand-300"
+              data-ls="wide"
+              data-transform="uppercase"
+              onClick={navigation.disable}
+              to="/plans"
+            >
               {t("app.plans")}
             </Link>
 
-            <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/profile">
+            <Link
+              data-color="neutral-300"
+              data-focus-ring="neutral"
+              data-fs="sm"
+              data-fw="medium"
+              data-hover-color="brand-300"
+              data-ls="wide"
+              data-transform="uppercase"
+              onClick={navigation.disable}
+              to="/profile"
+            >
               {t("app.profile")}
             </Link>
 
-            <NavigationLogout data-mt="8" />
+            <NavigationLogout
+              data-color="neutral-300"
+              data-focus-ring="neutral"
+              data-fs="sm"
+              data-fw="medium"
+              data-hover-color="brand-300"
+              data-ls="wide"
+              data-mt="8"
+              data-transform="uppercase"
+            />
           </div>
         </nav>
       )}
@@ -175,7 +282,7 @@ function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
 
   return (
     <button
-      className="c-link"
+      data-cursor="pointer"
       onClick={async () => {
         await fetch("/api/auth/sign-out", { method: "POST", credentials: "include" });
         location.replace("/public/login.html");

@@ -26,6 +26,7 @@ export function Avatar(props: { size: AvatarSize }) {
       data-br="pill"
       data-bs="solid"
       data-bw="thin"
+      data-hover-bc="brand-600"
       data-object-fit="cover"
       fetchPriority="high"
       src={src}

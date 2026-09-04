@@ -34,9 +34,12 @@ export function PlanRename(props: Plan) {
     return (
       <h1 data-maxw="100%" data-transform="truncate">
         <button
+          data-color="neutral-0"
           data-cursor="pointer"
-          data-fs="lg"
+          data-fs="2xl"
+          data-fw="black"
           data-maxw="100%"
+          data-md-fs="xl"
           data-transform="truncate"
           onClick={rename.enable}
           title={t("plan.rename.cta")}

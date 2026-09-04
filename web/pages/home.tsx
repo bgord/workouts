@@ -9,7 +9,7 @@ export function Home() {
 
   return (
     <Main>
-      <h1 data-fs="lg">{t("workout.list.header")}</h1>
+      <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">{t("workout.list.header")}</h1>
 
       <WorkoutCreate />
 

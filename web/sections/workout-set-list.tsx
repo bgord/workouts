@@ -16,10 +16,10 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
   const correctable = CORRECTABLE.includes(props.workout.status);
 
   return (
-    <ul className="set-ledger" data-gap="0" data-stack="y">
+    <ul data-bcl="neutral-800" data-bsl="solid" data-bwl="thin" data-gap="0" data-stack="y">
       {props.exercise.loggedSets.map((loggedSet) => (
         <li
-          className="set-row"
+          data-br="xs"
           data-cross="center"
           data-gap="2"
           data-hover-bg="neutral-800"

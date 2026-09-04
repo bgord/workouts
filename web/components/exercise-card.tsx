@@ -31,7 +31,11 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
       </Link>
 
       <Link
-        className="c-link"
+        data-color="neutral-0"
+        data-focus-ring="neutral"
+        data-fs="base"
+        data-fw="bold"
+        data-hover-color="brand-300"
         data-maxw="100%"
         data-transform="truncate"
         params={{ exerciseId: props.exercise.id }}

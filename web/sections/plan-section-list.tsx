@@ -19,7 +19,7 @@ export function PlanSectionList(props: Plan) {
   return (
     <div data-gap="3" data-stack="y">
       <div data-cross="center" data-gap="3" data-stack="x">
-        <h2 data-color="neutral-300" data-fs="base">
+        <h2 data-color="neutral-400" data-fs="xs" data-fw="bold" data-lh="none" data-ls="widest" data-transform="uppercase">
           {t("plan.section.list.header")}
         </h2>
 

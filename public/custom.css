@@ -62,13 +62,6 @@
   --font-weight-bold: 650;
   --font-weight-black: 800;
 
-  /* Tighter than stock: hardware, not stationery. */
-  --radius-xs: 2px;
-  --radius-sm: 3px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
-
   /* Shadows on a near-black ground have to be genuinely black to register. */
   --shadow-xs: 0 1px 2px oklch(0% 0 0 / 0.4);
   --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.45), 0 2px 6px oklch(0% 0 0 / 0.3);
@@ -77,12 +70,9 @@
   --shadow-xl: 0 8px 16px oklch(0% 0 0 / 0.45), 0 24px 56px oklch(0% 0 0 / 0.45);
   --shadow-inner: inset 0 1px 2px oklch(0% 0 0 / 0.5);
 
-  --focus-ring-brand: var(--color-brand-400);
   --focus-ring-neutral: var(--color-brand-400);
 
   --rail-width: 3px;
-  --page-width: 768px;
-  --nav-height: 70px;
 }
 
 @layer theme {
@@ -104,51 +94,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1 {
-    font-size: clamp(1.375rem, 1.15rem + 1vw, 1.75rem);
-    font-weight: var(--font-weight-black);
-    line-height: var(--line-height-tight);
-    letter-spacing: -0.022em;
-    color: var(--color-neutral-0);
-    text-wrap: balance;
-  }
-
-  h2 {
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-none);
-    letter-spacing: var(--letter-spacing-widest);
-    text-transform: uppercase;
-    color: var(--color-neutral-400);
-  }
-
-  main {
-    padding-block-start: var(--spacing-6);
-  }
-
-  nav:not([data-position="fixed"]) {
-    position: sticky;
-    inset-block-start: 0;
-    z-index: 2;
-    padding-inline: max(var(--spacing-3), calc((100% - var(--page-width)) / 2));
+  .app-bar {
     background-color: oklch(11% 0.017 265 / 0.72);
     backdrop-filter: blur(14px) saturate(150%);
     -webkit-backdrop-filter: blur(14px) saturate(150%);
-    border-block-end: var(--border-width-hairline) solid var(--color-neutral-800);
-  }
-
-  nav[data-position="fixed"] {
-    background-color: var(--color-canvas);
-    background-image: radial-gradient(70ch 40ch at 50% 0, oklch(68% 0.165 46 / 0.1), transparent 70%);
-  }
-
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35em;
-    text-transform: uppercase;
-    line-height: var(--line-height-none);
-    color: var(--color-brand-500);
   }
 
   .logo::before {
@@ -159,40 +108,7 @@
     background-image: repeating-linear-gradient(to right, currentColor 0 0.125em, transparent 0.125em 0.21em);
   }
 
-  .logo a {
-    color: inherit;
-  }
-
-  nav .c-link {
-    color: var(--color-neutral-300);
-    font-size: var(--font-size-sm);
-    letter-spacing: var(--letter-spacing-wide);
-  }
-
-  nav .c-link:hover {
-    color: var(--color-brand-300);
-    text-decoration: none;
-  }
-
-  [data-hover-bc],
-  [data-hover-shadow] {
-    transition:
-      border-color var(--motion-fast) ease,
-      box-shadow var(--motion-fast) ease;
-  }
-
-  /* Anything focused inside a card lights the whole card. */
-  [data-bg="neutral-800"][data-br="md"][data-bw="hairline"]:has(:focus-visible) {
-    border-color: var(--color-brand-800);
-  }
-
-  [data-bg="neutral-800"][data-br="md"][data-bw="hairline"][data-stack="x"] {
-    position: relative;
-    overflow: hidden;
-    padding-inline-start: calc(var(--spacing-4) + var(--rail-width));
-  }
-
-  [data-bg="neutral-800"][data-br="md"][data-bw="hairline"][data-stack="x"]::before {
+  .rail::before {
     content: "";
     position: absolute;
     inset-block: 0;
@@ -200,89 +116,14 @@
     inline-size: var(--rail-width);
     background-color: var(--color-brand-800);
     background-image: repeating-linear-gradient(to bottom, oklch(100% 0 0 / 0.14) 0 2px, transparent 2px 9px);
-    transition: background-color var(--motion-fast) ease;
   }
 
-  [data-bg="neutral-800"][data-br="md"][data-bw="hairline"][data-stack="x"]:hover::before {
+  .rail:hover::before {
     background-color: var(--color-brand-500);
   }
 
-  .set-ledger,
-  .skipped {
-    margin-inline-start: calc(80px + var(--spacing-3));
-    border-inline-start: var(--border-width-thin) solid var(--color-neutral-800);
-  }
-
-  /* The log form lands in the same column, so the whole block reads as one
-     ruled column under the exercise name. */
-  .exercise-block > form {
-    margin-inline-start: calc(80px + var(--spacing-3));
-    padding-block-start: var(--spacing-1);
-  }
-
-  @media (width < 768px) {
-    .set-ledger,
-    .skipped,
-    .exercise-block > form {
-      margin-inline-start: 0;
-    }
-  }
-
-  /* Squared off where the row meets the rule. */
-  .set-row {
-    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
-    transition: background-color var(--motion-fast) ease;
-  }
-
-  /* Row actions stay out of the way until the row is addressed. */
-  .set-row .c-button {
-    opacity: var(--opacity-none);
-    transition:
-      opacity var(--motion-fast) ease,
-      color var(--motion-fast) ease;
-  }
-
-  .set-row:hover .c-button,
-  .set-row:focus-within .c-button {
-    opacity: var(--opacity-full);
-  }
-
-  @media (hover: none) {
-    .set-row .c-button {
-      opacity: var(--opacity-full);
-    }
-  }
-
-  /* A target nobody worked stops reading as an achievement. */
-  [data-skipped="true"] {
-    border-color: var(--color-neutral-700);
-    background: transparent;
-    color: var(--color-neutral-500);
-    text-decoration: line-through;
-  }
-
   .c-button {
-    block-size: 34px;
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-black);
-    letter-spacing: var(--letter-spacing-widest);
-    border-radius: var(--radius-sm);
     border: var(--border-width-hairline) solid transparent;
-    transition:
-      background-color var(--motion-fast) ease,
-      border-color var(--motion-fast) ease,
-      color var(--motion-fast) ease,
-      box-shadow var(--motion-fast) ease;
-  }
-
-  .c-button:hover:not(:disabled) {
-    border-radius: var(--radius-sm);
-  }
-
-  .c-button:focus-visible {
-    outline: var(--border-width-thin) solid var(--focus-ring-brand);
-    outline-offset: var(--border-width-thin);
-    border-radius: var(--radius-sm);
   }
 
   .c-button[data-variant="primary"] {
@@ -320,8 +161,6 @@
     opacity: var(--opacity-full);
   }
 
-  /* Destructive actions opt in explicitly at the call site; keep them quiet
-     until hovered, then unambiguous. */
   .c-button[data-color="danger-400"]:not([data-variant="bare"]) {
     color: var(--color-danger-400);
     background-color: transparent;
@@ -334,8 +173,6 @@
     border-color: var(--color-danger-600);
   }
 
-  /* Inline row actions stay as plain text so they sit level with their
-     non-destructive siblings; the color alone carries the warning. */
   .c-button[data-variant="bare"][data-color="danger-400"] {
     color: var(--color-danger-400);
   }
@@ -355,67 +192,40 @@
     cursor: not-allowed;
   }
 
-  .c-badge {
-    font-size: 0.6875rem;
-    font-weight: var(--font-weight-black);
-    letter-spacing: var(--letter-spacing-widest);
-    line-height: var(--line-height-none);
-  }
-
   .c-badge[data-variant="primary"] {
-    padding: var(--spacing-1-5) var(--spacing-2-5);
-    border-radius: var(--radius-pill);
     border: var(--border-width-hairline) solid color-mix(in oklab, currentColor 28%, transparent);
+    border-radius: var(--radius-pill);
   }
 
   .c-badge[data-variant="outline"] {
-    padding: var(--spacing-1) var(--spacing-2);
-    border-radius: var(--radius-pill);
     color: var(--color-neutral-400);
     border-color: var(--color-neutral-700);
-    letter-spacing: var(--letter-spacing-wide);
+    border-radius: var(--radius-pill);
     text-transform: none;
-    font-weight: var(--font-weight-medium);
   }
 
   .c-label {
     color: var(--color-neutral-400);
-    font-size: 0.6875rem;
-    font-weight: var(--font-weight-black);
-    letter-spacing: var(--letter-spacing-widest);
   }
 
   .c-input,
   .c-select,
   .c-textarea {
-    block-size: 34px;
     color: var(--color-neutral-0);
     background-color: var(--color-neutral-900);
     border-color: var(--color-neutral-700);
-    border-radius: var(--radius-sm);
     box-shadow: var(--shadow-inner);
-    font-variant-numeric: tabular-nums;
-    transition:
-      border-color var(--motion-fast) ease,
-      box-shadow var(--motion-fast) ease;
-  }
-
-  .c-textarea {
-    block-size: auto;
-    padding-block: var(--spacing-2);
   }
 
   .c-input:hover:not(:disabled),
   .c-select:hover:not(:disabled),
   .c-textarea:hover:not(:disabled) {
     border-color: var(--color-neutral-600);
-    border-radius: var(--radius-sm);
   }
 
   .c-input:focus-visible,
   .c-select:focus-visible,
   .c-textarea:focus-visible {
-    outline: none;
     border-color: var(--color-brand-600);
     box-shadow:
       var(--shadow-inner),
@@ -446,50 +256,14 @@
 
   .c-select-wrapper::after {
     border-color: var(--color-neutral-500);
-    inline-size: 7px;
-    block-size: 7px;
-    inset-block-start: 12px;
-  }
-
-  /* Numeric fields are the app's real content - give them weight. */
-  .c-input[type="number"] {
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    letter-spacing: var(--letter-spacing-tight);
   }
 
   .c-link {
     color: var(--color-brand-400);
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: from-font;
   }
 
   .c-link:hover {
     color: var(--color-brand-300);
-    text-decoration-color: color-mix(in oklab, var(--color-brand-300) 55%, transparent);
-  }
-
-  .c-link:focus-visible {
-    outline-color: var(--focus-ring-brand);
-    border-radius: var(--radius-xs);
-  }
-
-  [data-bg="neutral-800"][data-br="md"] .c-link[data-transform="truncate"],
-  .exercise-block .c-link[data-transform="truncate"] {
-    color: var(--color-neutral-0);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: -0.012em;
-  }
-
-  [data-bg="neutral-800"][data-br="md"] .c-link[data-transform="truncate"]:hover,
-  .exercise-block .c-link[data-transform="truncate"]:hover {
-    color: var(--color-brand-300);
-  }
-
-  img {
-    border-radius: var(--radius-sm);
   }
 
   img[data-bg="neutral-0"] {
@@ -497,29 +271,6 @@
     box-shadow:
       inset 0 0 0 var(--border-width-hairline) oklch(0% 0 0 / 0.25),
       var(--shadow-xs);
-  }
-
-  .logo img,
-  nav img {
-    border-radius: var(--radius-circle);
-  }
-
-  nav a:has(img) img {
-    box-shadow: 0 0 0 var(--border-width-hairline) var(--color-neutral-700);
-    transition: box-shadow var(--motion-fast) ease;
-  }
-
-  nav a:has(img):hover img {
-    box-shadow: 0 0 0 var(--border-width-thin) var(--color-brand-600);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      transition-duration: 1ms !important;
-      animation-duration: 1ms !important;
-    }
   }
 }
 

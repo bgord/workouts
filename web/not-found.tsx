@@ -8,7 +8,7 @@ export function NotFound() {
 
   return (
     <Main>
-      <h1 data-fs="lg">{t("app.not_found.header")}</h1>
+      <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">{t("app.not_found.header")}</h1>
 
       <div data-color="neutral-500">{t("app.not_found.info")}</div>
 

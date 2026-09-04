@@ -21,7 +21,7 @@ export function Exercise() {
         <div data-gap="4" data-stack="y">
           <ExerciseImage exercise={exercise} size={ExerciseImageSize.lg} />
 
-          <h1 data-fs="lg">{exercise.name}</h1>
+          <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">{exercise.name}</h1>
 
           <ul data-gap="1" data-stack="x">
             {exercise.categories.map((category) => (

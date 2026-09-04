@@ -6,7 +6,18 @@ export function Logo() {
   const t = useTranslations();
 
   return (
-    <div className="logo" data-color="brand-600" data-fs="2xl" data-fw="bold" data-ls="wider">
+    <div
+      className="logo"
+      data-color="brand-500"
+      data-cross="center"
+      data-disp="flex"
+      data-fs="2xl"
+      data-fw="bold"
+      data-gap="2"
+      data-lh="none"
+      data-ls="wider"
+      data-transform="uppercase"
+    >
       <Link data-focus-ring="neutral" search={Form.default} to="/">
         {t("app.name")}
       </Link>
