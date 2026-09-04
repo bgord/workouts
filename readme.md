@@ -268,6 +268,7 @@ modules/
     │   ├── handleWorkoutCompleteCommand.ts
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutDiscardCommand.ts
+    │   ├── handleWorkoutExerciseAddCommand.ts
     │   ├── handleWorkoutExerciseRemoveCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutSetCorrectCommand.ts
@@ -279,6 +280,7 @@ modules/
     │   ├── WORKOUT_COMPLETE_COMMAND.ts
     │   ├── WORKOUT_CREATE_COMMAND.ts
     │   ├── WORKOUT_DISCARD_COMMAND.ts
+    │   ├── WORKOUT_EXERCISE_ADD_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_REMOVE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     │   ├── WORKOUT_SET_CORRECT_COMMAND.ts
@@ -299,6 +301,7 @@ modules/
     │   └── WORKOUT_STARTED_EVENT.ts
     ├── invariants
     │   ├── workout-belongs-to-user.ts
+    │   ├── workout-catalog-exercise-exists.ts
     │   ├── workout-draft-limit-for-owner.ts
     │   ├── workout-exercise-exists.ts
     │   ├── workout-exercise-limit.ts
@@ -392,6 +395,7 @@ app/
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
 │       ├── workout-discard.ts
+│       ├── workout-exercise-add.ts
 │       ├── workout-exercise-remove.ts
 │       ├── workout-exercise-set-target.ts
 │       ├── workout-get.ts
@@ -406,6 +410,7 @@ app/
     ├── plan-create-form.ts
     ├── plan-section-create-form.ts
     ├── plan-section-exercise-instruction-add-form.ts
+    ├── workout-exercise-add-form.ts
     └── workout-history-filters-form.ts
 ```
 

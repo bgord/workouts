@@ -15,7 +15,7 @@ export function Exercise() {
         {`< ${t("app.back")}`}
       </Link>
 
-      {!exercise && <div data-color="neutral-500">Exercise not found</div>}
+      {!exercise && <div data-color="neutral-500">{t("exercise.not_found")}</div>}
 
       {exercise && (
         <div data-gap="4" data-stack="y">

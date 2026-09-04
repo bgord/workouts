@@ -40,14 +40,14 @@ export function ExerciseCatalog() {
               to: "/catalog",
             })
           }
-          placeholder="Search by name"
+          placeholder={t("exercise.catalog.name.placeholder")}
           value={name.input.props.value}
           {...bg.Autocomplete.off}
           {...bg.Rhythm().times(20).style.width}
         />
 
         <div data-color="neutral-500" data-fs="sm">
-          {matching.length} of {exercises.length}
+          {t("exercise.catalog.count", { matching: matching.length, total: exercises.length })}
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
@@ -91,7 +91,7 @@ export function ExerciseCatalog() {
         })}
       </ul>
 
-      {matching.length === 0 && <div data-color="neutral-500">No exercises match the filters</div>}
+      {matching.length === 0 && <div data-color="neutral-500">{t("exercise.catalog.no_matches")}</div>}
 
       <ul data-gap="4" data-stack="x">
         {matching.map((exercise) => (
