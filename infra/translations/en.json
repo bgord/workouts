@@ -198,6 +198,7 @@
   "workout.target.error": "Could not set the target",
   "workout.target.load.label": "kg",
   "workout.target.reps.label": "Reps",
+  "workout.target.saved": "Saved",
   "workout.target.sets.label": "Sets",
   "workout.title": "{{plan}} - {{section}}"
 }

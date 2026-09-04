@@ -198,6 +198,7 @@
   "workout.target.error": "Nie udało się ustawić celu",
   "workout.target.load.label": "kg",
   "workout.target.reps.label": "Powtórzenia",
+  "workout.target.saved": "Zapisano",
   "workout.target.sets.label": "Serie",
   "workout.title": "{{plan}} - {{section}}"
 }

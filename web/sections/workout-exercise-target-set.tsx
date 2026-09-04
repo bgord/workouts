@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { CheckCircle } from "iconoir-react";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { workoutRoute } from "../router";
 
@@ -39,12 +40,20 @@ export function WorkoutExerciseTargetSet(props: { workout: Workout; exercise: Wo
         }),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
+    autoResetDelayMs: 3000,
   });
 
   const incomplete = sets.empty || reps.empty || load.empty;
 
   return (
-    <form data-cross="end" data-gap="2" data-stack="x" onSubmit={mutation.handleSubmit}>
+    <form
+      aria-busy={mutation.isLoading}
+      data-cross="end"
+      data-gap="2"
+      data-grow="1"
+      data-stack="x"
+      onSubmit={mutation.handleSubmit}
+    >
       <div data-gap="1" data-stack="y">
         <label className="c-label" data-m="0" {...sets.label.props}>
           {t("workout.target.sets.label")}
@@ -96,6 +105,21 @@ export function WorkoutExerciseTargetSet(props: { workout: Workout; exercise: Wo
       >
         {t("workout.target.cta")}
       </button>
+
+      {mutation.isDone && (
+        <output
+          aria-live="polite"
+          data-color="positive-400"
+          data-cross="center"
+          data-fs="sm"
+          data-gap="2"
+          data-mb="2"
+          data-stack="x"
+        >
+          <CheckCircle data-size="sm" />
+          {t("workout.target.saved")}
+        </output>
+      )}
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm" data-mb="2">
