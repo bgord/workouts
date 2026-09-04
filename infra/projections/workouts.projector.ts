@@ -17,6 +17,8 @@ export class WorkoutsProjector {
     Workouts.Events.WORKOUT_EXERCISE_ADDED_EVENT,
     Workouts.Events.WORKOUT_EXERCISE_TARGET_SET_EVENT,
     Workouts.Events.WORKOUT_SET_LOGGED_EVENT,
+    Workouts.Events.WORKOUT_SET_CORRECTED_EVENT,
+    Workouts.Events.WORKOUT_SET_REMOVED_EVENT,
   ] as const;
 
   constructor(deps: Dependencies) {
