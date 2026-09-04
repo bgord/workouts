@@ -7,6 +7,7 @@ import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanEditingEnable } from "../sections/plan-editing-enable";
 import { PlanFinalize } from "../sections/plan-finalize";
+import { PlanRemove } from "../sections/plan-remove";
 import { PlanRename } from "../sections/plan-rename";
 import { PlanRestore } from "../sections/plan-restore";
 import { PlanSectionList } from "../sections/plan-section-list";
@@ -46,6 +47,8 @@ export function Plan() {
           {plan.status !== PlanStatusEnum.archived && <PlanArchive {...plan} />}
 
           {plan.status === PlanStatusEnum.archived && <PlanRestore {...plan} />}
+
+          {plan.status !== PlanStatusEnum.finalized && <PlanRemove {...plan} />}
         </div>
       )}
 
