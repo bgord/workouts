@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { WorkoutDraftLimitForOwnerMax } from "../../modules/workouts/value-objects/workout-draft-limit-for-owner";
+import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Select } from "../components";
 import { homeRoute } from "../router";
@@ -11,6 +12,7 @@ export function WorkoutCreate() {
   const { plan, workouts } = homeRoute.useLoaderData();
 
   const today = Temporal.Now.plainDateISO().toString();
+  const horizon = Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString();
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
   const planSectionId = bg.useTextField({
     name: "planSectionId",
@@ -31,7 +33,11 @@ export function WorkoutCreate() {
           scheduledFor: scheduledFor.value,
         }),
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true }),
+    onSuccess: () => {
+      scheduledFor.set(today);
+
+      return router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true });
+    },
   });
 
   const hint = !plan
@@ -47,7 +53,7 @@ export function WorkoutCreate() {
           {t("workout.create.date.label")}
         </label>
 
-        <input className="c-input" min={today} type="date" {...scheduledFor.input.props} />
+        <input className="c-input" type="date" {...scheduledFor.input.props} max={horizon} min={today} />
       </div>
 
       {plan && (
