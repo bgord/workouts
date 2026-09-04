@@ -44,7 +44,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         aria-hidden
         params={{ exerciseId: exerciseInstruction.exercise.id }}
         tabIndex={-1}
-        to="/workbook/exercise/$exerciseId"
+        to="/catalog/exercise/$exerciseId"
       >
         <ExerciseImage exercise={exerciseInstruction.exercise} size={ExerciseImageSize.sm} />
       </Link>
@@ -55,7 +55,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         data-transform="truncate"
         params={{ exerciseId: exerciseInstruction.exercise.id }}
         title={exerciseInstruction.exercise.name}
-        to="/workbook/exercise/$exerciseId"
+        to="/catalog/exercise/$exerciseId"
       >
         {exerciseInstruction.exercise.name}
       </Link>

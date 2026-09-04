@@ -23,14 +23,8 @@ function NavigationDesktop() {
         {t("app.workouts")}
       </Link>
 
-      <Link
-        className="c-link"
-        data-focus-ring="neutral"
-        data-fw="medium"
-        search={Form.default}
-        to="/workbook"
-      >
-        {t("app.workbook")}
+      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" search={Form.default} to="/catalog">
+        {t("app.catalog")}
       </Link>
 
       <Link className="c-link" data-focus-ring="neutral" data-fw="medium" to="/plans">
@@ -121,7 +115,7 @@ function NavigationMobile() {
               data-transform="uppercase"
               onClick={navigation.disable}
               search={Form.default}
-              to="/workbook"
+              to="/catalog"
             >
               {t("app.workbook")}
             </Link>

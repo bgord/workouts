@@ -53,7 +53,7 @@ export function WorkoutCreate() {
       {plan && (
         <div data-gap="1" data-stack="y">
           <label className="c-label" data-m="0" {...planSectionId.label.props}>
-            {t("workout.create.section.label")}
+            {plan.name}
           </label>
 
           <Select {...planSectionId.input.props}>
@@ -74,12 +74,6 @@ export function WorkoutCreate() {
       >
         {t("workout.create.cta")}
       </button>
-
-      {plan && !hint && (
-        <div data-color="neutral-500" data-fs="sm" data-mb="2">
-          {t("workout.create.plan", { name: plan.name })}
-        </div>
-      )}
 
       {hint && (
         <div data-color="neutral-500" data-fs="sm" data-mb="2">

@@ -23,7 +23,7 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
         data-disp="flex"
         params={{ exerciseId: props.exercise.id }}
         tabIndex={-1}
-        to="/workbook/exercise/$exerciseId"
+        to="/catalog/exercise/$exerciseId"
       >
         <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.md} />
       </Link>
@@ -34,7 +34,7 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
         data-transform="truncate"
         params={{ exerciseId: props.exercise.id }}
         title={props.exercise.name}
-        to="/workbook/exercise/$exerciseId"
+        to="/catalog/exercise/$exerciseId"
       >
         {props.exercise.name}
       </Link>

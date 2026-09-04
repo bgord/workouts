@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ExerciseCard } from "../components";
-import { workbookRoute } from "../router";
+import { catalogRoute } from "../router";
 
 function matches(exercise: ExerciseWithCategories, search: { category: string; name: string }): boolean {
   const byCategory =
@@ -15,9 +15,9 @@ function matches(exercise: ExerciseWithCategories, search: { category: string; n
 
 export function ExerciseCatalog() {
   const t = bg.useTranslations();
-  const { exercises, exerciseCategories } = workbookRoute.useLoaderData();
-  const navigate = workbookRoute.useNavigate();
-  const search = workbookRoute.useSearch();
+  const { exercises, exerciseCategories } = catalogRoute.useLoaderData();
+  const navigate = catalogRoute.useNavigate();
+  const search = catalogRoute.useSearch();
 
   const name = bg.useTextField({
     name: ExerciseCatalogFiltersForm.Form.name.field.name,
@@ -37,7 +37,7 @@ export function ExerciseCatalog() {
             navigate({
               replace: true,
               search: { category: search.category, name: event.currentTarget.value },
-              to: "/workbook",
+              to: "/catalog",
             })
           }
           placeholder="Search by name"
@@ -54,7 +54,7 @@ export function ExerciseCatalog() {
           <button
             className="c-button"
             data-variant="bare"
-            onClick={() => navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/workbook" })}
+            onClick={() => navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" })}
             type="button"
           >
             {t("app.clear")}
@@ -79,7 +79,7 @@ export function ExerciseCatalog() {
                 onClick={() =>
                   navigate({
                     search: { category: selected ? "" : category.id, name: search.name },
-                    to: "/workbook",
+                    to: "/catalog",
                   })
                 }
                 type="button"

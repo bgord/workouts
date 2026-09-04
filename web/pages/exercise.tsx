@@ -11,7 +11,7 @@ export function Exercise() {
 
   return (
     <Main>
-      <Link className="c-link" search={Form.default} to="/workbook">
+      <Link className="c-link" search={Form.default} to="/catalog">
         {`< ${t("app.back")}`}
       </Link>
 
@@ -30,7 +30,7 @@ export function Exercise() {
                   className="c-badge"
                   data-variant="outline"
                   search={{ category: category.id, name: Form.default.name }}
-                  to="/workbook"
+                  to="/catalog"
                 >
                   {category.name}
                 </Link>

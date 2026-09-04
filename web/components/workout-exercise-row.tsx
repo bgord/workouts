@@ -20,7 +20,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
           aria-hidden
           params={{ exerciseId: props.exercise.exerciseId }}
           tabIndex={-1}
-          to="/workbook/exercise/$exerciseId"
+          to="/catalog/exercise/$exerciseId"
         >
           <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
         </Link>
@@ -31,7 +31,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
           data-transform="truncate"
           params={{ exerciseId: props.exercise.exerciseId }}
           title={props.exercise.exerciseName}
-          to="/workbook/exercise/$exerciseId"
+          to="/catalog/exercise/$exerciseId"
         >
           {props.exercise.exerciseName}
         </Link>

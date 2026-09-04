@@ -52,10 +52,10 @@ export const homeRoute = createRoute({
   },
 });
 
-export const workbookRoute = createRoute({
-  path: "/workbook",
+export const catalogRoute = createRoute({
+  path: "/catalog",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/workbook"), "Workbook"),
+  component: lazyRouteComponent(() => import("./pages/catalog"), "Catalog"),
   validateSearch: (value) => ({
     category:
       typeof value["category"] === "string"
@@ -70,7 +70,7 @@ export const workbookRoute = createRoute({
 });
 
 export const exerciseRoute = createRoute({
-  path: "/workbook/exercise/$exerciseId",
+  path: "/catalog/exercise/$exerciseId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/exercise"), "Exercise"),
   loader: async ({ context, params }) => ({ exercise: await Exercises.get(context.request, params) }),
@@ -111,7 +111,7 @@ const profileRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
-  workbookRoute,
+  catalogRoute,
   exerciseRoute,
   plansRoute,
   planRoute,
