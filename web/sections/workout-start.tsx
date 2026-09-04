@@ -32,7 +32,7 @@ export function WorkoutStart(props: { workout: Workout }) {
         : undefined;
 
   return (
-    <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
+    <form data-cross="start" data-gap="1" data-stack="y" onSubmit={mutation.handleSubmit}>
       <button
         className="c-button"
         data-variant="primary"

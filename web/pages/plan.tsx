@@ -25,7 +25,7 @@ export function Plan() {
       {!plan && <div data-color="neutral-500">{t("plan.not_found")}</div>}
 
       {plan && (
-        <div data-cross="center" data-gap="3" data-stack="x">
+        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
           {plan.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
 
           {plan.status !== PlanStatusEnum.draft && (
@@ -34,7 +34,7 @@ export function Plan() {
             </h1>
           )}
 
-          <PlanStatusBadge status={plan.status} />
+          <PlanStatusBadge data-mt="auto" status={plan.status} />
         </div>
       )}
 

@@ -55,7 +55,7 @@ export function Workout() {
       )}
 
       {workout && workout.status === WorkoutStatusEnum.draft && (
-        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+        <div data-cross="start" data-gap="3" data-main="between" data-stack="x">
           <WorkoutStart workout={workout} />
 
           <WorkoutDiscard workout={workout} />

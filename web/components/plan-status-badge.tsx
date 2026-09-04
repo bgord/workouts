@@ -28,17 +28,20 @@ const label: Record<PlanStatusEnum, string> = {
   [PlanStatusEnum.removed]: "plan.status.removed",
 };
 
-export function PlanStatusBadge(props: { status: PlanStatusEnum }) {
+export function PlanStatusBadge(props: { status: PlanStatusEnum } & React.JSX.IntrinsicElements["div"]) {
+  const { status, ...rest } = props;
+  props;
   const t = useTranslations();
 
   return (
     <div
       className="c-badge"
-      data-bg={background[props.status]}
-      data-color={color[props.status]}
+      data-bg={background[status]}
+      data-color={color[status]}
       data-variant="primary"
+      {...rest}
     >
-      {t(label[props.status])}
+      {t(label[status])}
     </div>
   );
 }
