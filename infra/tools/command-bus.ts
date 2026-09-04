@@ -23,6 +23,7 @@ type AcceptedCommand =
   | PlansCommands.PlanArchiveCommandType
   | PlansCommands.PlanFinalizeCommandType
   | PlansCommands.PlanRestoreCommandType
+  | PlansCommands.PlanRemoveCommandType
   | PlansCommands.PlanEditingEnableCommandType
   | PlansCommands.PlanRenameCommandType
   | PlansCommands.PlanSectionExerciseInstructionAddCommandType
