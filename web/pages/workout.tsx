@@ -2,12 +2,14 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
+import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutAbandon } from "../sections/workout-abandon";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
+import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRemove } from "../sections/workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
 import { WorkoutSetList } from "../sections/workout-set-list";
@@ -89,6 +91,10 @@ export function Workout() {
           ))}
         </ul>
       )}
+
+      {workout &&
+        workout.status === WorkoutStatusEnum.draft &&
+        workout.exercises.length < WorkoutExerciseLimitMax && <WorkoutExerciseAdd workout={workout} />}
     </Main>
   );
 }

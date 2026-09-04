@@ -1,3 +1,3 @@
-import * as Plans from "+plans";
+import { PlanSectionExerciseInstructionLimitMax } from "+plans/value-objects/plan-section-exercise-instruction-limit";
 
-export const WorkoutExerciseLimitMax = Plans.VO.PlanSectionExerciseInstructionLimitMax;
+export const WorkoutExerciseLimitMax = PlanSectionExerciseInstructionLimitMax;

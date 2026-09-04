@@ -107,6 +107,7 @@ export const workoutRoute = createRoute({
   loader: async ({ context, params }) => ({
     workout: await Workouts.get(context.request, params),
     workouts: await Workouts.list(context.request),
+    exercises: await Exercises.list(context.request),
   }),
 });
 
