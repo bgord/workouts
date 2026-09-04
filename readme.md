@@ -317,7 +317,8 @@ modules/
     │   ├── workout-plan-ready.ts
     │   ├── workout-plan-section-ready.ts
     │   ├── workout-retains-logged-sets.ts
-    │   └── workout-scheduled-for-is-not-past.ts
+    │   ├── workout-scheduled-for-is-not-past.ts
+    │   └── workout-scheduled-for-is-within-horizon.ts
     ├── ports
     │   └── workout-repository.ts
     ├── queries
@@ -340,6 +341,7 @@ modules/
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts
+        ├── workout-scheduled-for-horizon.ts
         ├── workout-scheduled-for.ts
         ├── workout-status.ts
         ├── workout-summary.ts

@@ -1,6 +1,7 @@
 import { useScrollLock, useToggle, useTranslations, useWindowDimensions } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Menu, Xmark } from "iconoir-react";
+import { useEffect } from "react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { Avatar, AvatarSize, Logo } from "../components";
@@ -54,6 +55,18 @@ function NavigationMobile() {
 
   useScrollLock(navigation.on);
 
+  useEffect(() => {
+    if (navigation.off) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") navigation.disable();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [navigation.off, navigation.disable]);
+
   return (
     <>
       <nav data-cross="center" data-disp="flex" data-main="between" data-p="2" style={{ height: "70px" }}>
@@ -64,7 +77,7 @@ function NavigationMobile() {
           <button
             className="c-button"
             data-variant="bare"
-            onClick={navigation.enable}
+            onClick={navigation.toggle}
             title={t("app.menu.show")}
             type="button"
             {...navigation.props.controller}
@@ -83,7 +96,7 @@ function NavigationMobile() {
           data-overflow="auto"
           data-position="fixed"
           data-wrap="nowrap"
-          data-z="1"
+          data-z="3"
           {...navigation.props.target}
         >
           <div data-cross="center" data-disp="flex" data-main="between" data-p="2" style={{ height: "70px" }}>
