@@ -2,10 +2,8 @@ import * as bg from "@bgord/ui";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import type { PlanSectionIdType } from "../../modules/plans/value-objects/plan-section-id";
 import type { PlanSectionNameType } from "../../modules/plans/value-objects/plan-section-name";
-import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { WorkoutCard } from "../components";
 import { homeRoute } from "../router";
-import { WorkoutDiscard } from "./workout-discard";
 
 export function WorkoutHistory() {
   const t = bg.useTranslations();
@@ -75,9 +73,7 @@ export function WorkoutHistory() {
 
       <ul data-gap="3" data-stack="y">
         {matching.map((workout) => (
-          <WorkoutCard key={workout.id} workout={workout}>
-            {workout.status === WorkoutStatusEnum.draft && <WorkoutDiscard workout={workout} />}
-          </WorkoutCard>
+          <WorkoutCard key={workout.id} workout={workout} />
         ))}
       </ul>
     </div>
