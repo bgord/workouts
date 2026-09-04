@@ -245,6 +245,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_SET_REMOVE_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutSetRemoveCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
+  Tools.CommandBus.on(
     WorkoutsCommands.WORKOUT_DISCARD_COMMAND,
     WorkoutsCommandHandlers.handleWorkoutDiscardCommand({
       ...deps,
