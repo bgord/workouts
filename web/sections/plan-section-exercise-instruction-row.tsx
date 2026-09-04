@@ -66,35 +66,37 @@ export function PlanSectionExerciseInstructionRow(props: {
         </div>
       )}
 
-      <div data-cross="center" data-gap="3" data-ml="auto" data-stack="x">
-        {editable && change.off && (
-          <PlanSectionExerciseInstructionUpdate
-            exerciseInstruction={exerciseInstruction}
-            plan={props.plan}
-            section={props.section}
-            toggle={update}
-          >
-            {instruction}
-          </PlanSectionExerciseInstructionUpdate>
-        )}
+      {editable && (
+        <div data-cross="center" data-gap="3" data-ml="auto" data-stack="x">
+          {change.off && (
+            <PlanSectionExerciseInstructionUpdate
+              exerciseInstruction={exerciseInstruction}
+              plan={props.plan}
+              section={props.section}
+              toggle={update}
+            >
+              {instruction}
+            </PlanSectionExerciseInstructionUpdate>
+          )}
 
-        {editable && update.off && (
-          <PlanSectionExerciseInstructionExerciseChange
-            exerciseInstruction={exerciseInstruction}
-            plan={props.plan}
-            section={props.section}
-            toggle={change}
-          />
-        )}
+          {update.off && (
+            <PlanSectionExerciseInstructionExerciseChange
+              exerciseInstruction={exerciseInstruction}
+              plan={props.plan}
+              section={props.section}
+              toggle={change}
+            />
+          )}
 
-        {editable && update.off && change.off && (
-          <PlanSectionExerciseInstructionRemove
-            exerciseInstruction={exerciseInstruction}
-            plan={props.plan}
-            section={props.section}
-          />
-        )}
-      </div>
+          {update.off && change.off && (
+            <PlanSectionExerciseInstructionRemove
+              exerciseInstruction={exerciseInstruction}
+              plan={props.plan}
+              section={props.section}
+            />
+          )}
+        </div>
+      )}
     </li>
   );
 }
