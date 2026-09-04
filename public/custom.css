@@ -421,15 +421,6 @@
       var(--shadow-xs);
   }
 
-  /* A disabled primary should read as "not yet", not as a dimmed amber smear. */
-  .c-button:disabled {
-    opacity: var(--opacity-full);
-    color: var(--color-neutral-500);
-    background-color: var(--color-neutral-800);
-    border-color: var(--color-neutral-700);
-    box-shadow: none;
-  }
-
   .c-button[data-variant="primary"]:hover:not(:disabled) {
     background-color: var(--color-brand-400);
     border-color: var(--color-brand-300);
@@ -478,6 +469,17 @@
 
   .c-button[data-variant="bare"][data-color="danger-400"]:hover:not(:disabled) {
     color: var(--color-danger-200);
+  }
+
+  .c-button:disabled,
+  .c-button[data-variant]:disabled,
+  .c-button[data-variant][data-color]:disabled {
+    opacity: var(--opacity-full);
+    color: var(--color-neutral-500);
+    background-color: var(--color-neutral-800);
+    border-color: var(--color-neutral-700);
+    box-shadow: none;
+    cursor: not-allowed;
   }
 
   /* ------------------------------------------------------------------------
@@ -557,6 +559,24 @@
     box-shadow:
       var(--shadow-inner),
       0 0 0 var(--border-width-thin) color-mix(in oklab, var(--color-brand-500) 35%, transparent);
+  }
+
+  .c-input:user-invalid,
+  .c-select:user-invalid,
+  .c-textarea:user-invalid {
+    border-color: var(--color-danger-600);
+    box-shadow:
+      var(--shadow-inner),
+      0 0 0 var(--border-width-hairline) color-mix(in oklab, var(--color-danger-600) 45%, transparent);
+  }
+
+  .c-input:user-invalid:focus-visible,
+  .c-select:user-invalid:focus-visible,
+  .c-textarea:user-invalid:focus-visible {
+    border-color: var(--color-danger-400);
+    box-shadow:
+      var(--shadow-inner),
+      0 0 0 var(--border-width-thin) color-mix(in oklab, var(--color-danger-400) 35%, transparent);
   }
 
   .c-input::placeholder {
