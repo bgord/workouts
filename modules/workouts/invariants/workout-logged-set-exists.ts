@@ -5,13 +5,13 @@ class WorkoutLoggedSetExistsError extends Error {}
 
 type WorkoutLoggedSetExistsConfigType = {
   workoutExercise?: VO.WorkoutExercise;
-  setNumber: VO.SetNumberType;
+  loggedSetId: VO.LoggedSetIdType;
 };
 
 class WorkoutLoggedSetExistsFactory extends bg.Invariant<WorkoutLoggedSetExistsConfigType> {
   passes(config: WorkoutLoggedSetExistsConfigType) {
     return Boolean(
-      config.workoutExercise?.loggedSets.some((loggedSet) => loggedSet.setNumber === config.setNumber),
+      config.workoutExercise?.loggedSets.some((loggedSet) => loggedSet.id === config.loggedSetId),
     );
   }
 

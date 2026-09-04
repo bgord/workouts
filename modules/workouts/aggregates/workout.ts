@@ -143,6 +143,7 @@ export class Workout {
 
   logSet(
     workoutExerciseId: VO.WorkoutExerciseIdType,
+    loggedSetId: VO.LoggedSetIdType,
     reps: VO.RepsType,
     load: VO.LoadType,
     requesterId: Auth.VO.UserIdType,
@@ -157,7 +158,12 @@ export class Workout {
     const event = bg.event(
       Events.WorkoutSetLoggedEvent,
       Workout.getStream(this.id),
-      { workoutId: this.id, workoutExerciseId, loggedSet: { setNumber, reps, load }, requesterId },
+      {
+        workoutId: this.id,
+        workoutExerciseId,
+        loggedSet: { id: loggedSetId, setNumber, reps, load },
+        requesterId,
+      },
       this.deps,
     );
 
@@ -166,23 +172,29 @@ export class Workout {
 
   correctSet(
     workoutExerciseId: VO.WorkoutExerciseIdType,
-    setNumber: VO.SetNumberType,
+    loggedSetId: VO.LoggedSetIdType,
     reps: VO.RepsType,
     load: VO.LoadType,
     requesterId: Auth.VO.UserIdType,
   ) {
+    const workoutExercise = this.exercises.find((exercise) => exercise.id === workoutExerciseId);
+
     Invariants.WorkoutIsCorrectable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
     Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
-    Invariants.WorkoutLoggedSetExists.enforce({
-      workoutExercise: this.exercises.find((exercise) => exercise.id === workoutExerciseId),
-      setNumber,
-    });
+    Invariants.WorkoutLoggedSetExists.enforce({ workoutExercise, loggedSetId });
+
+    const current = workoutExercise?.loggedSets.find((loggedSet) => loggedSet.id === loggedSetId);
 
     const event = bg.event(
       Events.WorkoutSetCorrectedEvent,
       Workout.getStream(this.id),
-      { workoutId: this.id, workoutExerciseId, loggedSet: { setNumber, reps, load }, requesterId },
+      {
+        workoutId: this.id,
+        workoutExerciseId,
+        loggedSet: { id: loggedSetId, setNumber: current!.setNumber, reps, load },
+        requesterId,
+      },
       this.deps,
     );
 
@@ -299,9 +311,7 @@ export class Workout {
             ? {
                 ...exercise,
                 loggedSets: exercise.loggedSets.map((loggedSet) =>
-                  loggedSet.setNumber === event.payload.loggedSet.setNumber
-                    ? event.payload.loggedSet
-                    : loggedSet,
+                  loggedSet.id === event.payload.loggedSet.id ? event.payload.loggedSet : loggedSet,
                 ),
               }
             : exercise,

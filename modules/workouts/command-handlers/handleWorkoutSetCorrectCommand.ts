@@ -13,7 +13,7 @@ export const handleWorkoutSetCorrectCommand =
     command.revision.validate(workout.revision.value);
     workout.correctSet(
       command.payload.workoutExerciseId,
-      command.payload.setNumber,
+      command.payload.loggedSetId,
       command.payload.reps,
       command.payload.load,
       command.payload.requesterId,

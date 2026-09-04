@@ -13,6 +13,7 @@ export const handleWorkoutSetLogCommand =
     command.revision.validate(workout.revision.value);
     workout.logSet(
       command.payload.workoutExerciseId,
+      command.payload.loggedSetId,
       command.payload.reps,
       command.payload.load,
       command.payload.requesterId,
