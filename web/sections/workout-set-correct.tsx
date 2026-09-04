@@ -1,0 +1,106 @@
+import * as bg from "@bgord/ui";
+import { useRouter } from "@tanstack/react-router";
+import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
+import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import { workoutRoute } from "../router";
+
+const GRAMS_IN_KILOGRAM = 1000;
+
+export function WorkoutSetCorrect(props: {
+  workout: Workout;
+  exercise: WorkoutExerciseWithSets;
+  loggedSet: LoggedSetType;
+}) {
+  const t = bg.useTranslations();
+  const router = useRouter();
+
+  const edit = bg.useToggle({ name: `correct-${props.exercise.id}-${props.loggedSet.setNumber}` });
+
+  const reps = bg.useNumberField({
+    name: `corrected-reps-${props.exercise.id}-${props.loggedSet.setNumber}`,
+    defaultValue: props.loggedSet.reps,
+  });
+
+  const load = bg.useNumberField({
+    name: `corrected-load-${props.exercise.id}-${props.loggedSet.setNumber}`,
+    defaultValue: props.loggedSet.load / GRAMS_IN_KILOGRAM,
+  });
+
+  const mutation = bg.useMutation({
+    perform: () =>
+      fetch(
+        `/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set/${props.loggedSet.setNumber}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            ...bg.WeakETag.fromRevision(props.workout.revision),
+          },
+          body: JSON.stringify({
+            reps: reps.value,
+            load: Math.round((load.value ?? 0) * GRAMS_IN_KILOGRAM),
+          }),
+        },
+      ),
+    onSuccess: async () => {
+      edit.disable();
+      await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
+    },
+  });
+
+  if (edit.off) {
+    return (
+      <button
+        className="c-button"
+        data-variant="bare"
+        onClick={edit.enable}
+        title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
+        type="button"
+        {...edit.props.controller}
+      >
+        {t("workout.set.correct.cta")}
+      </button>
+    );
+  }
+
+  return (
+    <form data-cross="center" data-gap="2" data-stack="x" onSubmit={mutation.handleSubmit}>
+      <input
+        className="c-input"
+        min="1"
+        type="number"
+        {...reps.input.props}
+        {...bg.Rhythm(56).times(1).style.width}
+      />
+
+      <input
+        className="c-input"
+        min="0"
+        step="0.5"
+        type="number"
+        {...load.input.props}
+        {...bg.Rhythm(72).times(1).style.width}
+      />
+
+      <button
+        className="c-button"
+        data-variant="secondary"
+        disabled={reps.empty || load.empty || mutation.isLoading}
+        type="submit"
+      >
+        {t("app.save")}
+      </button>
+
+      <button className="c-button" data-variant="bare" onClick={edit.disable} type="button">
+        {t("app.cancel")}
+      </button>
+
+      {mutation.isError && (
+        <output data-color="danger-400" data-fs="sm">
+          {t("workout.set.correct.error")}
+        </output>
+      )}
+    </form>
+  );
+}
