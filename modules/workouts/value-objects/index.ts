@@ -10,6 +10,7 @@ export * from "./workout";
 export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise";
 export * from "./workout-exercise-id";
+export * from "./workout-exercise-limit";
 export * from "./workout-id";
 export * from "./workout-in-progress-limit-for-owner";
 export * from "./workout-scheduled-for";
