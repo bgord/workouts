@@ -8,6 +8,8 @@ export type WorkoutSummary = {
   id: WorkoutIdType;
   planId: Plans.VO.PlanIdType;
   planName: Plans.VO.PlanNameType;
+  planSectionId: Plans.VO.PlanSectionIdType;
+  planSectionName: Plans.VO.PlanSectionNameType;
   scheduledFor: WorkoutScheduledForType;
   status: WorkoutStatusEnum;
   revision: tools.RevisionValueType;

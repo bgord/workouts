@@ -244,6 +244,8 @@ export const workouts = sqliteTable("workouts", {
   id: identifier<WorkoutIdType>(),
   planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
   planName: text("planName").notNull().$type<PlanNameType>(),
+  planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
+  planSectionName: text("planSectionName").notNull().$type<PlanSectionNameType>(),
   scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
   status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
   revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),

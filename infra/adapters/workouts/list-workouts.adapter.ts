@@ -16,6 +16,8 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       id: workout.id,
       planId: workout.planId,
       planName: workout.planName,
+      planSectionId: workout.planSectionId,
+      planSectionName: workout.planSectionName,
       scheduledFor: workout.scheduledFor,
       status: workout.status,
       revision: workout.revision,
