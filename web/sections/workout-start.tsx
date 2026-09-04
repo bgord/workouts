@@ -25,11 +25,13 @@ export function WorkoutStart(props: { workout: Workout }) {
   const inProgress = workouts.filter((workout) => workout.status === WorkoutStatusEnum.in_progress).length;
 
   const hint =
-    withoutTarget.length > 0
-      ? t("workout.start.blocked.missing_targets", { count: withoutTarget.length })
-      : inProgress >= WorkoutInProgressLimitForOwnerMax
-        ? t("workout.start.blocked.in_progress_limit")
-        : undefined;
+    withoutTarget.length === 1
+      ? t("workout.start.blocked.missing_target")
+      : withoutTarget.length > 1
+        ? t("workout.start.blocked.missing_targets", { count: withoutTarget.length })
+        : inProgress >= WorkoutInProgressLimitForOwnerMax
+          ? t("workout.start.blocked.in_progress_limit")
+          : undefined;
 
   return (
     <form data-cross="start" data-gap="1" data-stack="y" onSubmit={mutation.handleSubmit}>

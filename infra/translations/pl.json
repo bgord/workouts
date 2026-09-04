@@ -183,6 +183,7 @@
   "workout.set.remove.title": "Usuń serię {{setNumber}}",
   "workout.set.reps.label": "Powtórzenia",
   "workout.start.blocked.in_progress_limit": "Najpierw zakończ trwający trening",
+  "workout.start.blocked.missing_target": "Ćwiczenie bez ustalonego celu: 1",
   "workout.start.blocked.missing_targets": "Ćwiczenia bez ustalonego celu: {{count}}",
   "workout.start.cta": "Rozpocznij",
   "workout.start.error": "Nie udało się rozpocząć treningu",
