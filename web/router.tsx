@@ -8,7 +8,7 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
-import { Avatar, Exercises, I18N, Plans, Session } from "./api";
+import { Avatar, Exercises, I18N, Plans, Session, Workouts } from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
 
@@ -40,6 +40,7 @@ export const homeRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/home"), "Home"),
+  loader: async ({ context }) => ({ workouts: await Workouts.list(context.request) }),
 });
 
 export const workbookRoute = createRoute({

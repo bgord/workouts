@@ -129,5 +129,10 @@
   "profile.delete_account.error": "Error while deleting account",
   "profile.delete_account.header": "Delete account",
   "profile.delete_account.info": "This action is irreversible",
-  "profile.header": "Profile settings"
+  "profile.header": "Profile settings",
+  "workout.status.abandoned": "Abandoned",
+  "workout.status.completed": "Completed",
+  "workout.status.draft": "Draft",
+  "workout.status.in_progress": "In progress",
+  "workout.status.initial": "Initial"
 }
