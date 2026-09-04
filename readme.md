@@ -268,6 +268,7 @@ modules/
     │   ├── handleWorkoutCompleteCommand.ts
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutDiscardCommand.ts
+    │   ├── handleWorkoutExerciseRemoveCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutSetCorrectCommand.ts
     │   ├── handleWorkoutSetLogCommand.ts
@@ -278,6 +279,7 @@ modules/
     │   ├── WORKOUT_COMPLETE_COMMAND.ts
     │   ├── WORKOUT_CREATE_COMMAND.ts
     │   ├── WORKOUT_DISCARD_COMMAND.ts
+    │   ├── WORKOUT_EXERCISE_REMOVE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     │   ├── WORKOUT_SET_CORRECT_COMMAND.ts
     │   ├── WORKOUT_SET_LOG_COMMAND.ts
@@ -289,6 +291,7 @@ modules/
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   ├── WORKOUT_DISCARDED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
+    │   ├── WORKOUT_EXERCISE_REMOVED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
     │   ├── WORKOUT_SET_CORRECTED_EVENT.ts
     │   ├── WORKOUT_SET_LOGGED_EVENT.ts
@@ -387,6 +390,7 @@ app/
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
 │       ├── workout-discard.ts
+│       ├── workout-exercise-remove.ts
 │       ├── workout-exercise-set-target.ts
 │       ├── workout-get.ts
 │       ├── workout-list.ts
