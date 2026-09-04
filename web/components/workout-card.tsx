@@ -1,10 +1,16 @@
-import { useLanguage } from "@bgord/ui";
+import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
 export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.ReactNode }) {
+  const t = useTranslations();
   const language = useLanguage();
+
+  const title = t("workout.title", {
+    plan: props.workout.planName,
+    section: props.workout.planSectionName,
+  });
 
   const scheduledFor = Temporal.PlainDate.from(props.workout.scheduledFor).toLocaleString(language, {
     day: "numeric",
@@ -32,10 +38,10 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
           data-maxw="100%"
           data-transform="truncate"
           params={{ workoutId: props.workout.id }}
-          title={props.workout.planName}
+          title={title}
           to="/workouts/$workoutId"
         >
-          {props.workout.planName}
+          {title}
         </Link>
 
         <div data-color="neutral-500" data-fs="sm">

@@ -17,6 +17,10 @@ export function Workout() {
   const language = useLanguage();
   const { workout } = workoutRoute.useLoaderData();
 
+  const title = workout
+    ? t("workout.title", { plan: workout.planName, section: workout.planSectionName })
+    : "";
+
   return (
     <Main>
       <Link className="c-link" to="/">
@@ -27,8 +31,8 @@ export function Workout() {
 
       {workout && (
         <div data-cross="center" data-gap="3" data-stack="x">
-          <h1 data-fs="lg" data-maxw="100%" data-transform="truncate" title={workout.planName}>
-            {workout.planName}
+          <h1 data-fs="lg" data-maxw="100%" data-transform="truncate" title={title}>
+            {title}
           </h1>
 
           <WorkoutStatusBadge status={workout.status} />
