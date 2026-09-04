@@ -19,6 +19,14 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
     year: "numeric",
   });
 
+  const completedAt = props.workout.completedAt
+    ? Temporal.Instant.fromEpochMilliseconds(props.workout.completedAt).toLocaleString(language, {
+        hour: "2-digit",
+        hour12: false,
+        minute: "2-digit",
+      })
+    : undefined;
+
   return (
     <li
       data-bc="neutral-700"
@@ -45,7 +53,9 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
         </Link>
 
         <div data-color="neutral-500" data-fs="sm">
-          {scheduledFor}
+          {completedAt
+            ? t("workout.list.completed_at", { date: scheduledFor, time: completedAt })
+            : scheduledFor}
         </div>
       </div>
 
