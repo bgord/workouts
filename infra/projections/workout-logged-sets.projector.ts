@@ -1,5 +1,5 @@
 import type * as bg from "@bgord/bun";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
@@ -37,6 +37,7 @@ export class WorkoutLoggedSetsProjector {
 
   async onWorkoutSetLoggedEvent(event: Workouts.Events.WorkoutSetLoggedEventType) {
     await db.insert(Schema.workoutLoggedSets).values({
+      id: event.payload.loggedSet.id,
       workoutExerciseId: event.payload.workoutExerciseId,
       setNumber: event.payload.loggedSet.setNumber,
       workoutId: event.payload.workoutId,
@@ -51,12 +52,7 @@ export class WorkoutLoggedSetsProjector {
     await db
       .update(Schema.workoutLoggedSets)
       .set({ reps: event.payload.loggedSet.reps, load: event.payload.loggedSet.load })
-      .where(
-        and(
-          eq(Schema.workoutLoggedSets.workoutExerciseId, event.payload.workoutExerciseId),
-          eq(Schema.workoutLoggedSets.setNumber, event.payload.loggedSet.setNumber),
-        ),
-      );
+      .where(eq(Schema.workoutLoggedSets.id, event.payload.loggedSet.id));
   }
 
   async onWorkoutDiscardedEvent(event: Workouts.Events.WorkoutDiscardedEventType) {

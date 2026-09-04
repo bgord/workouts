@@ -18,6 +18,7 @@ import type { PlanSectionNameType } from "../modules/plans/value-objects/plan-se
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { SetsType } from "../modules/plans/value-objects/sets";
 import type { LoadType } from "../modules/workouts/value-objects/load";
+import type { LoggedSetIdType } from "../modules/workouts/value-objects/logged-set-id";
 import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-objects/reps";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
@@ -274,6 +275,7 @@ export const workoutExercises = sqliteTable("workoutExercises", {
 export const workoutLoggedSets = sqliteTable(
   "workoutLoggedSets",
   {
+    id: identifier<LoggedSetIdType>(),
     workoutExerciseId: text("workoutExerciseId", { length: 36 }).notNull().$type<WorkoutExerciseIdType>(),
     setNumber: integer("setNumber", { mode: "number" }).notNull().$type<SetNumberType>(),
     workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
@@ -282,5 +284,5 @@ export const workoutLoggedSets = sqliteTable(
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
     createdAt: timestamp("createdAt").notNull(),
   },
-  (table) => [primaryKey({ columns: [table.workoutExerciseId, table.setNumber] })],
+  (table) => [index("workoutLoggedSets_workoutExerciseId_idx").on(table.workoutExerciseId)],
 );

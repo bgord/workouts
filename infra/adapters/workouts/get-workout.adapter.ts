@@ -60,6 +60,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         loggedSets: loggedSets
           .filter((loggedSet) => loggedSet.workoutExerciseId === exercise.id)
           .map((loggedSet) => ({
+            id: loggedSet.id,
             setNumber: loggedSet.setNumber,
             reps: loggedSet.reps,
             load: loggedSet.load,
