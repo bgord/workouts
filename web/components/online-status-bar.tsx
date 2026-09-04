@@ -7,7 +7,7 @@ export function OnlineStatusBar() {
   if (status === OnlineStatus.online) return null;
 
   return (
-    <div data-bg="neutral-700" data-bottom="0" data-fs="sm" data-left="0" data-p="3" data-position="absolute">
+    <div data-bg="neutral-700" data-bottom="0" data-fs="sm" data-left="0" data-p="3" data-position="fixed">
       {t("app.offline")}
     </div>
   );
