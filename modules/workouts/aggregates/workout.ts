@@ -11,6 +11,7 @@ import * as VO from "+workouts/value-objects";
 export type WorkoutEventType =
   | Events.WorkoutCreatedEventType
   | Events.WorkoutExerciseAddedEventType
+  | Events.WorkoutExerciseRemovedEventType
   | Events.WorkoutExerciseTargetSetEventType
   | Events.WorkoutStartedEventType
   | Events.WorkoutSetLoggedEventType
@@ -31,6 +32,7 @@ export class Workout {
   static readonly registry = new bg.EventValidatorRegistryAdapter<WorkoutEventType>({
     [Events.WORKOUT_CREATED_EVENT]: Events.WorkoutCreatedEvent,
     [Events.WORKOUT_EXERCISE_ADDED_EVENT]: Events.WorkoutExerciseAddedEvent,
+    [Events.WORKOUT_EXERCISE_REMOVED_EVENT]: Events.WorkoutExerciseRemovedEvent,
     [Events.WORKOUT_EXERCISE_TARGET_SET_EVENT]: Events.WorkoutExerciseTargetSetEvent,
     [Events.WORKOUT_STARTED_EVENT]: Events.WorkoutStartedEvent,
     [Events.WORKOUT_SET_LOGGED_EVENT]: Events.WorkoutSetLoggedEvent,
@@ -105,6 +107,21 @@ export class Workout {
       Events.WorkoutExerciseAddedEvent,
       Workout.getStream(this.id),
       { workoutId: this.id, workoutExerciseId, exerciseId, exerciseName, prescription, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
+  removeExercise(workoutExerciseId: VO.WorkoutExerciseIdType, requesterId: Auth.VO.UserIdType) {
+    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+
+    const event = bg.event(
+      Events.WorkoutExerciseRemovedEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, workoutExerciseId, requesterId },
       this.deps,
     );
 
@@ -307,6 +324,12 @@ export class Workout {
           prescription: event.payload.prescription,
           loggedSets: [],
         });
+        break;
+      }
+
+      case Events.WORKOUT_EXERCISE_REMOVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.exercises = this.exercises.filter((exercise) => exercise.id !== event.payload.workoutExerciseId);
         break;
       }
 
