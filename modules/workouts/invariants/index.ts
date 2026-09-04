@@ -11,4 +11,5 @@ export * from "./workout-is-in-progress";
 export * from "./workout-is-ready-to-start";
 export * from "./workout-logged-set-exists";
 export * from "./workout-plan-ready";
+export * from "./workout-retains-logged-sets";
 export * from "./workout-scheduled-for-is-not-past";

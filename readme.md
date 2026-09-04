@@ -271,6 +271,7 @@ modules/
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutSetCorrectCommand.ts
     │   ├── handleWorkoutSetLogCommand.ts
+    │   ├── handleWorkoutSetRemoveCommand.ts
     │   ├── handleWorkoutStartCommand.ts
     ├── commands
     │   ├── WORKOUT_ABANDON_COMMAND.ts
@@ -280,6 +281,7 @@ modules/
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     │   ├── WORKOUT_SET_CORRECT_COMMAND.ts
     │   ├── WORKOUT_SET_LOG_COMMAND.ts
+    │   ├── WORKOUT_SET_REMOVE_COMMAND.ts
     │   └── WORKOUT_START_COMMAND.ts
     ├── events
     │   ├── WORKOUT_ABANDONED_EVENT.ts
@@ -290,6 +292,7 @@ modules/
     │   ├── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
     │   ├── WORKOUT_SET_CORRECTED_EVENT.ts
     │   ├── WORKOUT_SET_LOGGED_EVENT.ts
+    │   ├── WORKOUT_SET_REMOVED_EVENT.ts
     │   └── WORKOUT_STARTED_EVENT.ts
     ├── invariants
     │   ├── workout-belongs-to-user.ts
@@ -305,6 +308,7 @@ modules/
     │   ├── workout-is-ready-to-start.ts
     │   ├── workout-logged-set-exists.ts
     │   ├── workout-plan-ready.ts
+    │   ├── workout-retains-logged-sets.ts
     │   └── workout-scheduled-for-is-not-past.ts
     ├── ports
     │   └── workout-repository.ts
@@ -387,6 +391,7 @@ app/
 │       ├── workout-list.ts
 │       ├── workout-set-correct.ts
 │       ├── workout-set-log.ts
+│       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
     ├── exercise-catalog-filters-form.ts
