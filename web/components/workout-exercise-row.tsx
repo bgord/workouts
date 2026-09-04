@@ -18,7 +18,19 @@ export function WorkoutExerciseRow(props: {
   const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
 
   return (
-    <li className="exercise-block" data-gap="2" data-stack="y">
+    <li
+      className="exercise-block"
+      data-bc="neutral-800"
+      data-bg="neutral-900"
+      data-br="md"
+      data-bs="solid"
+      data-bw="hairline"
+      data-gap="2"
+      data-hover-bc="neutral-700"
+      data-p="3"
+      data-pl="4"
+      data-stack="y"
+    >
       <div data-cross="center" data-gap="3" data-stack="x">
         <Link
           aria-hidden
@@ -40,7 +52,7 @@ export function WorkoutExerciseRow(props: {
           {props.exercise.exerciseName}
         </Link>
 
-        <div className="prescription" data-color="neutral-500" data-fs="sm" data-ml="auto">
+        <div data-color="neutral-500" data-fs="sm" data-ls="wide" data-ml="auto">
           {t("workout.exercise.prescription", {
             sets: props.exercise.prescription.sets,
             reps: format(props.exercise.prescription.reps),
@@ -49,11 +61,19 @@ export function WorkoutExerciseRow(props: {
 
         {props.exercise.target && (
           <div
-            className="target"
-            data-color="neutral-300"
-            data-fs="sm"
+            data-bc="brand-800"
+            data-bg="brand-900"
+            data-br="pill"
+            data-bs="solid"
+            data-bw="hairline"
+            data-color="brand-200"
+            data-fs="xs"
             data-fw="medium"
+            data-lh="none"
+            data-px="2"
+            data-py="1"
             data-skipped={props.skipped}
+            data-transform="nowrap"
           >
             {t("workout.exercise.target", {
               sets: props.exercise.target.sets,
@@ -64,7 +84,11 @@ export function WorkoutExerciseRow(props: {
         )}
       </div>
 
-      {props.skipped && <div className="skipped">{t("workout.exercise.skipped")}</div>}
+      {props.skipped && (
+        <div className="skipped" data-color="neutral-500" data-fs="sm" data-ls="wide" data-px="2" data-py="1">
+          {t("workout.exercise.skipped")}
+        </div>
+      )}
 
       {props.children}
     </li>

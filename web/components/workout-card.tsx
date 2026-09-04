@@ -48,15 +48,18 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
 
   return (
     <li
-      data-bc="neutral-700"
+      data-bc="neutral-800"
       data-bg="neutral-800"
       data-br="md"
       data-bs="solid"
       data-bw="hairline"
       data-cross="center"
       data-gap="3"
+      data-hover-bc="neutral-700"
+      data-hover-shadow="md"
       data-main="between"
       data-p="4"
+      data-shadow="sm"
       data-stack="x"
     >
       <div data-gap="1" data-maxw="100%" data-stack="y">

@@ -43,7 +43,9 @@ export function WorkoutHistory() {
                   data-color={selected ? "neutral-950" : "neutral-300"}
                   data-cursor="pointer"
                   data-variant="outline"
-                  onClick={() => navigate({ search: { section: selected ? undefined : section.id }, to: "/" })}
+                  onClick={() =>
+                    navigate({ search: { section: selected ? undefined : section.id }, to: "/" })
+                  }
                   type="button"
                 >
                   {section.name}

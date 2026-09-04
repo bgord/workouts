@@ -16,7 +16,7 @@ export function Profile() {
   return (
     <main
       data-bg="neutral-900"
-      data-br="sm"
+      data-br="md"
       data-gap="6"
       data-maxw="md"
       data-md-mt="2"

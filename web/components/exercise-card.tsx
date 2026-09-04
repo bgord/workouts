@@ -6,15 +6,17 @@ import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
   return (
     <li
-      data-bc="neutral-700"
+      data-bc="neutral-800"
       data-bg="neutral-800"
       data-br="md"
       data-bs="solid"
       data-bw="hairline"
       data-gap="2"
-      data-hover-bc="neutral-500"
+      data-hover-bc="brand-800"
+      data-hover-shadow="md"
       data-maxw="100%"
       data-p="3"
+      data-shadow="sm"
       data-stack="y"
       {...bg.Rhythm(232).times(1).style.width}
     >

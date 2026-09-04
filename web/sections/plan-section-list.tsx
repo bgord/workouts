@@ -38,13 +38,16 @@ export function PlanSectionList(props: Plan) {
       <ul data-gap="3" data-stack="y">
         {props.sections.map((section) => (
           <li
-            data-bc="neutral-700"
+            data-bc="neutral-800"
             data-bg="neutral-800"
             data-br="md"
             data-bs="solid"
             data-bw="hairline"
             data-gap="3"
+            data-hover-bc="brand-800"
+            data-hover-shadow="md"
             data-p="4"
+            data-shadow="sm"
             data-stack="y"
             key={section.id}
           >

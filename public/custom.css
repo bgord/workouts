@@ -1,20 +1,5 @@
-/* ==========================================================================
-   Theme layer.
-
-   Declared after @bgord/design's layers (reset, defaults, components,
-   utilities), so `theme` sits on top of all of them and can restate any
-   token, component or utility without specificity tricks.
-   ========================================================================== */
 @layer theme;
 
-/* cspell:ignore nums */
-
-/* --------------------------------------------------------------------------
-   Tokens
-
-   Cold graphite ground, one warm accent. Amber carries every affordance -
-   links, primary actions, the live workout - and nothing else competes for it.
-   -------------------------------------------------------------------------- */
 :root {
   /* Ember brass. The only saturated warm in the interface. */
   --color-brand-50: oklch(96% 0.03 46);
@@ -69,10 +54,10 @@
 
   --color-canvas: oklch(11% 0.017 265);
 
-  --font-family-sans: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
-    sans-serif;
-  --font-family-mono: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Cascadia Mono",
-    Menlo, monospace;
+  --font-family-sans:
+    ui-sans-serif, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-family-mono:
+    ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Cascadia Mono", Menlo, monospace;
 
   --font-weight-bold: 650;
   --font-weight-black: 800;
@@ -101,12 +86,6 @@
 }
 
 @layer theme {
-  /* ------------------------------------------------------------------------
-     Ground
-
-     A single warm bloom behind the header, fixed to the viewport, so scrolling
-     content passes through a light source instead of over flat paint.
-     ------------------------------------------------------------------------ */
   html {
     color-scheme: dark;
     scrollbar-color: var(--color-neutral-700) transparent;
@@ -125,31 +104,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  ::selection {
-    background-color: oklch(68% 0.165 46 / 0.28);
-    color: var(--color-neutral-0);
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--color-neutral-700);
-    border: 3px solid transparent;
-    border-radius: var(--radius-pill);
-    background-clip: content-box;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-neutral-600);
-  }
-
-  /* ------------------------------------------------------------------------
-     Typography
-
-     Headings are the only place the type gets tight and heavy; every other
-     label is small, uppercase and widely tracked - signage, not prose.
-     ------------------------------------------------------------------------ */
   h1 {
     font-size: clamp(1.375rem, 1.15rem + 1vw, 1.75rem);
     font-weight: var(--font-weight-black);
@@ -172,12 +126,6 @@
     padding-block-start: var(--spacing-6);
   }
 
-  /* ------------------------------------------------------------------------
-     Header
-
-     Sticky, blurred, and padded so its contents line up with the page column
-     underneath rather than floating out at the window edges.
-     ------------------------------------------------------------------------ */
   nav:not([data-position="fixed"]) {
     position: sticky;
     inset-block-start: 0;
@@ -194,8 +142,6 @@
     background-image: radial-gradient(70ch 40ch at 50% 0, oklch(68% 0.165 46 / 0.1), transparent 70%);
   }
 
-  /* The logo carries a knurl mark - the same three-stroke motif that
-     marks every card rail. */
   .logo {
     display: inline-flex;
     align-items: center;
@@ -205,18 +151,12 @@
     color: var(--color-brand-500);
   }
 
-  /* Sized in em so the mark keeps its proportions at every logo size - the
-     nav logo and the standalone one on the auth pages. */
   .logo::before {
     content: "";
     inline-size: 0.55em;
     block-size: 0.92em;
     flex: none;
-    background-image: repeating-linear-gradient(
-      to right,
-      currentColor 0 0.125em,
-      transparent 0.125em 0.21em
-    );
+    background-image: repeating-linear-gradient(to right, currentColor 0 0.125em, transparent 0.125em 0.21em);
   }
 
   .logo a {
@@ -234,32 +174,20 @@
     text-decoration: none;
   }
 
-  /* ------------------------------------------------------------------------
-     Cards
-
-     Every list row in the app shares one recipe: hairline, radius, panel fill.
-     Row-shaped cards carry a knurled rail on the leading edge - the theme's
-     signature, borrowed from the grip of a bar. It solidifies on hover.
-     ------------------------------------------------------------------------ */
-  [data-bg="neutral-800"][data-br="md"][data-bw="hairline"] {
-    position: relative;
-    border-color: var(--color-neutral-800);
-    box-shadow: var(--shadow-sm);
+  [data-hover-bc],
+  [data-hover-shadow] {
     transition:
       border-color var(--motion-fast) ease,
       box-shadow var(--motion-fast) ease;
   }
 
-  [data-bg="neutral-800"][data-br="md"][data-bw="hairline"]:hover {
-    border-color: var(--color-neutral-700);
-    box-shadow: var(--shadow-md);
-  }
-
+  /* Anything focused inside a card lights the whole card. */
   [data-bg="neutral-800"][data-br="md"][data-bw="hairline"]:has(:focus-visible) {
     border-color: var(--color-brand-800);
   }
 
   [data-bg="neutral-800"][data-br="md"][data-bw="hairline"][data-stack="x"] {
+    position: relative;
     overflow: hidden;
     padding-inline-start: calc(var(--spacing-4) + var(--rail-width));
   }
@@ -271,11 +199,7 @@
     inset-inline-start: 0;
     inline-size: var(--rail-width);
     background-color: var(--color-brand-800);
-    background-image: repeating-linear-gradient(
-      to bottom,
-      oklch(100% 0 0 / 0.14) 0 2px,
-      transparent 2px 9px
-    );
+    background-image: repeating-linear-gradient(to bottom, oklch(100% 0 0 / 0.14) 0 2px, transparent 2px 9px);
     transition: background-color var(--motion-fast) ease;
   }
 
@@ -283,89 +207,14 @@
     background-color: var(--color-brand-500);
   }
 
-  /* Grid cards get a top edge instead, so the artwork stays flush. */
-  [data-bg="neutral-800"][data-br="md"][data-bw="hairline"][data-stack="y"]:hover {
-    border-color: var(--color-brand-800);
-  }
-
-  [data-bg="neutral-900"] {
-    border-radius: var(--radius-md);
-  }
-
-  /* ------------------------------------------------------------------------
-     The workout screen
-
-     This is the app: an exercise, its prescription, and a ledger of what
-     actually got moved. The ledger is inset and hairline-ruled so a glance
-     down the column reads as a column of numbers, not a list of sentences.
-     ------------------------------------------------------------------------ */
-  .exercise-block {
-    padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) var(--spacing-4);
-    border: var(--border-width-hairline) solid var(--color-neutral-800);
-    border-radius: var(--radius-md);
-    background-color: color-mix(in oklab, var(--color-neutral-900) 88%, transparent);
-    transition: border-color var(--motion-fast) ease;
-  }
-
-  .exercise-block:hover {
-    border-color: var(--color-neutral-700);
-  }
-
-  .prescription {
-    font-variant-numeric: tabular-nums;
-    letter-spacing: var(--letter-spacing-wide);
-  }
-
-  .target {
-    padding: var(--spacing-1) var(--spacing-2);
-    border-radius: var(--radius-pill);
-    border: var(--border-width-hairline) solid color-mix(in oklab, var(--color-brand-600) 40%, transparent);
-    background-color: color-mix(in oklab, var(--color-brand-900) 60%, transparent);
-    color: var(--color-brand-200);
-    font-size: var(--font-size-xs);
-    font-variant-numeric: tabular-nums;
-    line-height: var(--line-height-none);
-    white-space: nowrap;
-  }
-
-  /* A finished workout keeps every exercise on the page, so an untouched one
-     has to say so: the target stops reading as an achievement, and the ledger
-     column carries a word instead of numbers. */
-  .target[data-skipped="true"] {
-    border-color: color-mix(in oklab, var(--color-neutral-600) 40%, transparent);
-    background-color: transparent;
-    color: var(--color-neutral-500);
-    text-decoration: line-through;
-  }
-
+  .set-ledger,
   .skipped {
     margin-inline-start: calc(80px + var(--spacing-3));
-    padding: var(--spacing-1) var(--spacing-2);
-    border-inline-start: var(--border-width-thin) solid var(--color-neutral-800);
-    color: var(--color-neutral-500);
-    font-size: var(--font-size-sm);
-    letter-spacing: var(--letter-spacing-wide);
-  }
-
-  .set-ledger {
-    gap: 0;
-    margin-inline-start: calc(80px + var(--spacing-3));
     border-inline-start: var(--border-width-thin) solid var(--color-neutral-800);
   }
 
-  .set-row {
-    padding: var(--spacing-1) var(--spacing-2);
-    gap: var(--spacing-2);
-    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
-    transition: background-color var(--motion-fast) ease;
-  }
-
-  .set-row:hover {
-    background-color: color-mix(in oklab, var(--color-neutral-700) 30%, transparent);
-  }
-
-  /* The log form lands in the same column as the ledger, so the whole block
-     reads as one ruled column under the exercise name. */
+  /* The log form lands in the same column, so the whole block reads as one
+     ruled column under the exercise name. */
   .exercise-block > form {
     margin-inline-start: calc(80px + var(--spacing-3));
     padding-block-start: var(--spacing-1);
@@ -379,19 +228,18 @@
     }
   }
 
-  .set-figure {
-    flex: 1;
-    font-family: var(--font-family-mono);
-    font-size: var(--font-size-sm);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: var(--letter-spacing-tight);
-    color: var(--color-neutral-100);
+  /* Squared off where the row meets the rule. */
+  .set-row {
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    transition: background-color var(--motion-fast) ease;
   }
 
   /* Row actions stay out of the way until the row is addressed. */
   .set-row .c-button {
     opacity: var(--opacity-none);
-    transition: opacity var(--motion-fast) ease, color var(--motion-fast) ease;
+    transition:
+      opacity var(--motion-fast) ease,
+      color var(--motion-fast) ease;
   }
 
   .set-row:hover .c-button,
@@ -405,9 +253,14 @@
     }
   }
 
-  /* ------------------------------------------------------------------------
-     Buttons
-     ------------------------------------------------------------------------ */
+  /* A target nobody worked stops reading as an achievement. */
+  [data-skipped="true"] {
+    border-color: var(--color-neutral-700);
+    background: transparent;
+    color: var(--color-neutral-500);
+    text-decoration: line-through;
+  }
+
   .c-button {
     block-size: 34px;
     font-size: var(--font-size-xs);
@@ -502,12 +355,6 @@
     cursor: not-allowed;
   }
 
-  /* ------------------------------------------------------------------------
-     Badges
-
-     Pills, tinted from their own hue rather than a shared grey, with a ring
-     one step brighter than the fill so they read at 11px.
-     ------------------------------------------------------------------------ */
   .c-badge {
     font-size: 0.6875rem;
     font-weight: var(--font-weight-black);
@@ -531,12 +378,6 @@
     font-weight: var(--font-weight-medium);
   }
 
-  /* ------------------------------------------------------------------------
-     Fields
-
-     Inputs are wells: recessed, darker than the surface they sit on, with the
-     amber only appearing on focus.
-     ------------------------------------------------------------------------ */
   .c-label {
     color: var(--color-neutral-400);
     font-size: 0.6875rem;
@@ -618,9 +459,6 @@
     letter-spacing: var(--letter-spacing-tight);
   }
 
-  /* ------------------------------------------------------------------------
-     Links
-     ------------------------------------------------------------------------ */
   .c-link {
     color: var(--color-brand-400);
     text-underline-offset: 0.2em;
@@ -637,8 +475,6 @@
     border-radius: var(--radius-xs);
   }
 
-  /* Titles inside lists are links, but they are headings first - the amber is
-     reserved for things you act on. */
   [data-bg="neutral-800"][data-br="md"] .c-link[data-transform="truncate"],
   .exercise-block .c-link[data-transform="truncate"] {
     color: var(--color-neutral-0);
@@ -652,15 +488,10 @@
     color: var(--color-brand-300);
   }
 
-  /* ------------------------------------------------------------------------
-     Media
-     ------------------------------------------------------------------------ */
   img {
     border-radius: var(--radius-sm);
   }
 
-  /* Exercise artwork is line art on white; warm it slightly and ring it so it
-     reads as a printed plate rather than a hole cut in the page. */
   img[data-bg="neutral-0"] {
     background-color: oklch(94% 0.008 70);
     box-shadow:
@@ -682,9 +513,6 @@
     box-shadow: 0 0 0 var(--border-width-thin) var(--color-brand-600);
   }
 
-  /* ------------------------------------------------------------------------
-     Motion
-     ------------------------------------------------------------------------ */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

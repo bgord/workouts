@@ -20,7 +20,7 @@ export function ProfileAvatarDelete() {
       <Avatar size={AvatarSize.lg} />
 
       {overlay.on && enabled && (
-        <div data-bg="neutral-900" data-inset="0" data-opacity="high" data-position="absolute" />
+        <div data-bg="neutral-900" data-br="md" data-inset="0" data-opacity="high" data-position="absolute" />
       )}
       {overlay.on && enabled && (
         <ButtonClose
