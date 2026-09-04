@@ -590,6 +590,17 @@ export const GenericPlanRestoredEvent = {
   payload: { planId, requesterId: userId },
 } satisfies Plans.Events.PlanRestoredEventType;
 
+export const GenericPlanRemovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_REMOVED_EVENT",
+  payload: { planId, requesterId: userId },
+} satisfies Plans.Events.PlanRemovedEventType;
+
 export const GenericPlanEditingEnabledEvent = {
   id: expectAnyId,
   correlationId,

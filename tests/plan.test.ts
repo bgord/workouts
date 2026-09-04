@@ -16,6 +16,16 @@ describe("Plan", async () => {
     );
   });
 
+  test("build - PlanExists - removed", () => {
+    expect(() =>
+      Plans.Aggregates.Plan.build(
+        mocks.planId,
+        [mocks.GenericPlanCreatedEvent, mocks.GenericPlanRemovedEvent],
+        deps,
+      ),
+    ).toThrow(Plans.Invariants.PlanExists.error);
+  });
+
   test("build - no pending events", () => {
     const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 
@@ -391,6 +401,42 @@ describe("Plan", async () => {
     );
 
     expect(() => plan.restore(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
+  });
+
+  test("remove - draft", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => plan.remove(mocks.userId));
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanRemovedEvent]);
+  });
+
+  test("remove - archived", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => plan.remove(mocks.userId));
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanRemovedEvent]);
+  });
+
+  test("remove - PlanIsRemovable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      deps,
+    );
+
+    expect(() => plan.remove(mocks.userId)).toThrow(Plans.Invariants.PlanIsRemovable.error);
+  });
+
+  test("remove - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+
+    expect(() => plan.remove(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
 
   test("enableEditing", async () => {

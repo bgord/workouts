@@ -14,6 +14,7 @@ export type PlanEventType =
   | Events.PlanArchivedEventType
   | Events.PlanFinalizedEventType
   | Events.PlanRestoredEventType
+  | Events.PlanRemovedEventType
   | Events.PlanEditingEnabledEventType
   | Events.PlanRenamedEventType
   | Events.PlanSectionExerciseInstructionAddedEventType
@@ -37,6 +38,7 @@ export class Plan {
     [Events.PLAN_ARCHIVED_EVENT]: Events.PlanArchivedEvent,
     [Events.PLAN_FINALIZED_EVENT]: Events.PlanFinalizedEvent,
     [Events.PLAN_RESTORED_EVENT]: Events.PlanRestoredEvent,
+    [Events.PLAN_REMOVED_EVENT]: Events.PlanRemovedEvent,
     [Events.PLAN_EDITING_ENABLED_EVENT]: Events.PlanEditingEnabledEvent,
     [Events.PLAN_RENAMED_EVENT]: Events.PlanRenamedEvent,
     [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT]: Events.PlanSectionExerciseInstructionAddedEvent,
@@ -186,6 +188,20 @@ export class Plan {
 
     const event = bg.event(
       Events.PlanRestoredEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
+  remove(requesterId: Auth.VO.UserIdType) {
+    Invariants.PlanIsRemovable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
+
+    const event = bg.event(
+      Events.PlanRemovedEvent,
       Plan.getStream(this.id),
       { planId: this.id, requesterId },
       this.deps,
@@ -395,6 +411,12 @@ export class Plan {
       case Events.PLAN_RESTORED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.draft;
+        break;
+      }
+
+      case Events.PLAN_REMOVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.status = VO.PlanStatusEnum.removed;
         break;
       }
 
