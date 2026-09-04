@@ -2,7 +2,7 @@ import { useLanguage } from "@bgord/ui";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
-export function WorkoutCard(props: { workout: WorkoutSummary }) {
+export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.ReactNode }) {
   const language = useLanguage();
 
   const scheduledFor = Temporal.PlainDate.from(props.workout.scheduledFor).toLocaleString(language, {
@@ -35,7 +35,11 @@ export function WorkoutCard(props: { workout: WorkoutSummary }) {
         </div>
       </div>
 
-      <WorkoutStatusBadge status={props.workout.status} />
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <WorkoutStatusBadge status={props.workout.status} />
+
+        {props.children}
+      </div>
     </li>
   );
 }

@@ -1,8 +1,10 @@
 // fallow-ignore-file unused-export
 import { useTranslations } from "@bgord/ui";
+import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutCard } from "../components";
 import { homeRoute } from "../router";
 import { WorkoutCreate } from "../sections/workout-create";
+import { WorkoutDiscard } from "../sections/workout-discard";
 
 export function Home() {
   const t = useTranslations();
@@ -19,7 +21,9 @@ export function Home() {
       {workouts.length > 0 && (
         <ul data-gap="3" data-stack="y">
           {workouts.map((workout) => (
-            <WorkoutCard key={workout.id} workout={workout} />
+            <WorkoutCard key={workout.id} workout={workout}>
+              {workout.status === WorkoutStatusEnum.draft && <WorkoutDiscard workout={workout} />}
+            </WorkoutCard>
           ))}
         </ul>
       )}

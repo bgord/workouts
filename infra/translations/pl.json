@@ -137,6 +137,8 @@
   "workout.create.date.label": "Date",
   "workout.create.error": "Could not schedule the workout",
   "workout.create.plan": "From {{name}}",
+  "workout.discard.error": "Could not discard the workout",
+  "workout.discard.title": "Discard the {{name}} workout",
   "workout.list.empty": "No workouts yet",
   "workout.list.header": "Workouts",
   "workout.status.abandoned": "Abandoned",
