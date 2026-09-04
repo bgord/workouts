@@ -33,13 +33,15 @@ export function ExerciseCatalog() {
           className="c-input"
           id={ExerciseCatalogFiltersForm.Form.name.field.name}
           name={ExerciseCatalogFiltersForm.Form.name.field.name}
-          onChange={(event) =>
+          onChange={(event) => {
+            name.handleChange(event);
+
             navigate({
               replace: true,
               search: { category: search.category, name: event.currentTarget.value },
               to: "/catalog",
-            })
-          }
+            });
+          }}
           placeholder={t("exercise.catalog.name.placeholder")}
           value={name.input.props.value}
           {...bg.Autocomplete.off}
@@ -54,7 +56,11 @@ export function ExerciseCatalog() {
           <button
             className="c-button"
             data-variant="bare"
-            onClick={() => navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" })}
+            onClick={() => {
+              name.clear();
+
+              navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
+            }}
             type="button"
           >
             {t("app.clear")}
