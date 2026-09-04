@@ -73,7 +73,6 @@ function NavigationMobile() {
         <Logo />
 
         <div data-cross="center" data-gap="3" data-stack="x">
-          <Avatar size={AvatarSize.sm} />
           <button
             className="c-button"
             data-variant="bare"
