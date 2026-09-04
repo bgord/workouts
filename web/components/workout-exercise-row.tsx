@@ -8,7 +8,11 @@ function format(reps: RepsType): string {
   return reps.min === reps.max ? String(reps.min) : `${reps.min}-${reps.max}`;
 }
 
-export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; children?: React.ReactNode }) {
+export function WorkoutExerciseRow(props: {
+  exercise: WorkoutExerciseWithSets;
+  skipped?: boolean;
+  children?: React.ReactNode;
+}) {
   const t = useTranslations();
 
   const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
@@ -44,7 +48,13 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
         </div>
 
         {props.exercise.target && (
-          <div className="target" data-color="neutral-300" data-fs="sm" data-fw="medium">
+          <div
+            className="target"
+            data-color="neutral-300"
+            data-fs="sm"
+            data-fw="medium"
+            data-skipped={props.skipped}
+          >
             {t("workout.exercise.target", {
               sets: props.exercise.target.sets,
               reps: props.exercise.target.reps,
@@ -53,6 +63,8 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
           </div>
         )}
       </div>
+
+      {props.skipped && <div className="skipped">{t("workout.exercise.skipped")}</div>}
 
       {props.children}
     </li>

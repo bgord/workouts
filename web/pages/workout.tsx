@@ -15,6 +15,8 @@ import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
 import { WorkoutStart } from "../sections/workout-start";
 
+const FINISHED = [WorkoutStatusEnum.completed, WorkoutStatusEnum.abandoned];
+
 export function Workout() {
   const t = useTranslations();
   const language = useLanguage();
@@ -73,7 +75,11 @@ export function Workout() {
       {workout && (
         <ul data-gap="3" data-stack="y">
           {workout.exercises.map((exercise) => (
-            <WorkoutExerciseRow exercise={exercise} key={exercise.id}>
+            <WorkoutExerciseRow
+              exercise={exercise}
+              key={exercise.id}
+              skipped={FINISHED.includes(workout.status) && exercise.loggedSets.length === 0}
+            >
               <WorkoutSetList exercise={exercise} workout={workout} />
 
               {workout.status === WorkoutStatusEnum.draft && (

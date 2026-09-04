@@ -164,6 +164,7 @@
   "workout.exercise.prescription": "{{sets}} × {{reps}}",
   "workout.exercise.remove.cta": "Usuń",
   "workout.exercise.remove.title": "Usuń {{name}}",
+  "workout.exercise.skipped": "Pominięte",
   "workout.exercise.target": "{{sets}} × {{reps}} @ {{load}} kg",
   "workout.list.count": "{{matching}} z {{total}}",
   "workout.list.completed_at": "{{date}} · {{time}}",

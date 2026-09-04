@@ -328,6 +328,25 @@
     white-space: nowrap;
   }
 
+  /* A finished workout keeps every exercise on the page, so an untouched one
+     has to say so: the target stops reading as an achievement, and the ledger
+     column carries a word instead of numbers. */
+  .target[data-skipped="true"] {
+    border-color: color-mix(in oklab, var(--color-neutral-600) 40%, transparent);
+    background-color: transparent;
+    color: var(--color-neutral-500);
+    text-decoration: line-through;
+  }
+
+  .skipped {
+    margin-inline-start: calc(80px + var(--spacing-3));
+    padding: var(--spacing-1) var(--spacing-2);
+    border-inline-start: var(--border-width-thin) solid var(--color-neutral-800);
+    color: var(--color-neutral-500);
+    font-size: var(--font-size-sm);
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
   .set-ledger {
     gap: 0;
     margin-inline-start: calc(80px + var(--spacing-3));
@@ -354,6 +373,7 @@
 
   @media (width < 768px) {
     .set-ledger,
+    .skipped,
     .exercise-block > form {
       margin-inline-start: 0;
     }
