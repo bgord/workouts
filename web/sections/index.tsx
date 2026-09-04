@@ -23,6 +23,7 @@ export * from "./profile-avatar-delete";
 export * from "./profile-language-selector";
 export * from "./profile-password-change";
 export * from "./workout-abandon";
+export * from "./workout-complete";
 export * from "./workout-create";
 export * from "./workout-discard";
 export * from "./workout-exercise-target-set";

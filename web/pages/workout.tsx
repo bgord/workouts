@@ -5,6 +5,7 @@ import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutAbandon } from "../sections/workout-abandon";
+import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
 import { WorkoutSetLog } from "../sections/workout-set-log";
@@ -53,7 +54,11 @@ export function Workout() {
       )}
 
       {workout && workout.status === WorkoutStatusEnum.in_progress && (
-        <WorkoutAbandon workout={workout} />
+        <div data-cross="center" data-gap="3" data-stack="x">
+          <WorkoutComplete workout={workout} />
+
+          <WorkoutAbandon workout={workout} />
+        </div>
       )}
 
       {workout && (
