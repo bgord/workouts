@@ -7,6 +7,7 @@ import { workoutRoute } from "../router";
 import { WorkoutAbandon } from "../sections/workout-abandon";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
+import { WorkoutSetLog } from "../sections/workout-set-log";
 import { WorkoutStart } from "../sections/workout-start";
 
 export function Workout() {
@@ -61,6 +62,10 @@ export function Workout() {
             <WorkoutExerciseRow exercise={exercise} key={exercise.id}>
               {workout.status === WorkoutStatusEnum.draft && (
                 <WorkoutExerciseTargetSet exercise={exercise} workout={workout} />
+              )}
+
+              {workout.status === WorkoutStatusEnum.in_progress && (
+                <WorkoutSetLog exercise={exercise} workout={workout} />
               )}
             </WorkoutExerciseRow>
           ))}

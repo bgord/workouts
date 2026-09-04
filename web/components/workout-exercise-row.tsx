@@ -54,6 +54,20 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
         )}
       </div>
 
+      {props.exercise.loggedSets.length > 0 && (
+        <ul data-gap="1" data-stack="y">
+          {props.exercise.loggedSets.map((loggedSet) => (
+            <li data-color="neutral-300" data-fs="sm" key={loggedSet.setNumber}>
+              {t("workout.exercise.logged_set", {
+                setNumber: loggedSet.setNumber,
+                reps: loggedSet.reps,
+                load: loggedSet.load / 1000,
+              })}
+            </li>
+          ))}
+        </ul>
+      )}
+
       {props.children}
     </li>
   );
