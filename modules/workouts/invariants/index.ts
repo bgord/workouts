@@ -1,4 +1,5 @@
 export * from "./workout-belongs-to-user";
+export * from "./workout-catalog-exercise-exists";
 export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise-exists";
 export * from "./workout-exercise-limit";
