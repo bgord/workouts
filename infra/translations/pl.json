@@ -107,6 +107,7 @@
   "plan.status.draft": "Draft",
   "plan.status.finalized": "Finalized",
   "plan.status.initial": "Initial",
+  "plan.status.removed": "Removed",
   "profile.avatar.alt": "Image",
   "profile.avatar.selected": "Selected file: {{name}}",
   "profile.avatar.header": "Avatar",

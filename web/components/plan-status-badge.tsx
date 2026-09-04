@@ -9,6 +9,7 @@ const color: Record<PlanStatusEnum, Color> = {
   [PlanStatusEnum.draft]: "warning-300",
   [PlanStatusEnum.finalized]: "positive-200",
   [PlanStatusEnum.archived]: "neutral-400",
+  [PlanStatusEnum.removed]: "neutral-400",
 };
 
 const background: Record<PlanStatusEnum, Background> = {
@@ -16,6 +17,7 @@ const background: Record<PlanStatusEnum, Background> = {
   [PlanStatusEnum.draft]: "warning-900",
   [PlanStatusEnum.finalized]: "positive-900",
   [PlanStatusEnum.archived]: "neutral-800",
+  [PlanStatusEnum.removed]: "neutral-800",
 };
 
 const label: Record<PlanStatusEnum, string> = {
@@ -23,6 +25,7 @@ const label: Record<PlanStatusEnum, string> = {
   [PlanStatusEnum.draft]: "plan.status.draft",
   [PlanStatusEnum.finalized]: "plan.status.finalized",
   [PlanStatusEnum.archived]: "plan.status.archived",
+  [PlanStatusEnum.removed]: "plan.status.removed",
 };
 
 export function PlanStatusBadge(props: { status: PlanStatusEnum }) {

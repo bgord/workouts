@@ -3,4 +3,5 @@ export enum PlanStatusEnum {
   draft = "draft",
   archived = "archived",
   finalized = "finalized",
+  removed = "removed",
 }
