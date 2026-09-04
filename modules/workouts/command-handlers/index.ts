@@ -5,4 +5,5 @@ export * from "./handleWorkoutDiscardCommand";
 export * from "./handleWorkoutExerciseSetTargetCommand";
 export * from "./handleWorkoutSetCorrectCommand";
 export * from "./handleWorkoutSetLogCommand";
+export * from "./handleWorkoutSetRemoveCommand";
 export * from "./handleWorkoutStartCommand";
