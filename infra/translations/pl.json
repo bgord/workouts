@@ -148,6 +148,8 @@
   "workout.discard.title": "Discard the {{name}} workout",
   "workout.exercise.logged_set": "{{setNumber}} · {{reps}} × {{load}} kg",
   "workout.exercise.prescription": "{{sets}} × {{reps}}",
+  "workout.exercise.remove.cta": "Remove",
+  "workout.exercise.remove.title": "Remove {{name}}",
   "workout.exercise.target": "{{sets}} × {{reps}} @ {{load}} kg",
   "workout.list.count": "{{matching}} of {{total}}",
   "workout.list.completed_at": "{{date}} · {{time}}",

@@ -8,6 +8,7 @@ import { workoutRoute } from "../router";
 import { WorkoutAbandon } from "../sections/workout-abandon";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
+import { WorkoutExerciseRemove } from "../sections/workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
 import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
@@ -74,7 +75,11 @@ export function Workout() {
               <WorkoutSetList exercise={exercise} workout={workout} />
 
               {workout.status === WorkoutStatusEnum.draft && (
-                <WorkoutExerciseTargetSet exercise={exercise} workout={workout} />
+                <div data-cross="end" data-gap="3" data-stack="x">
+                  <WorkoutExerciseTargetSet exercise={exercise} workout={workout} />
+
+                  <WorkoutExerciseRemove exercise={exercise} workout={workout} />
+                </div>
               )}
 
               {workout.status === WorkoutStatusEnum.in_progress && (
