@@ -157,6 +157,7 @@
   "workout.set.error": "Could not log the set",
   "workout.set.load.label": "kg",
   "workout.set.progress": "{{done}} / {{target}} sets",
+  "workout.set.remove.title": "Remove set {{setNumber}}",
   "workout.set.reps.label": "Reps",
   "workout.start.blocked.in_progress_limit": "Finish the workout in progress first",
   "workout.start.blocked.missing_targets": "Set a target for {{count}} more exercise(s)",

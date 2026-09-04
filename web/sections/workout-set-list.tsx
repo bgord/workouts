@@ -2,6 +2,7 @@ import { useTranslations } from "@bgord/ui";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { WorkoutSetCorrect } from "./workout-set-correct";
+import { WorkoutSetRemove } from "./workout-set-remove";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
@@ -28,6 +29,10 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
 
           {correctable && (
             <WorkoutSetCorrect exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
+          )}
+
+          {correctable && (
+            <WorkoutSetRemove exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
           )}
         </li>
       ))}

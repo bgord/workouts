@@ -30,4 +30,5 @@ export * from "./workout-exercise-target-set";
 export * from "./workout-set-correct";
 export * from "./workout-set-list";
 export * from "./workout-set-log";
+export * from "./workout-set-remove";
 export * from "./workout-start";
