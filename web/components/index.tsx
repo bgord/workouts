@@ -12,4 +12,5 @@ export * from "./plan-status-badge";
 export * from "./select";
 export * from "./separator";
 export * from "./workout-card";
+export * from "./workout-exercise-row";
 export * from "./workout-status-badge";

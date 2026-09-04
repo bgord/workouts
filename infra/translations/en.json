@@ -139,6 +139,7 @@
   "workout.create.plan": "From {{name}}",
   "workout.discard.error": "Could not discard the workout",
   "workout.discard.title": "Discard the {{name}} workout",
+  "workout.exercise.prescription": "{{sets}} × {{reps}}",
   "workout.list.empty": "No workouts yet",
   "workout.list.header": "Workouts",
   "workout.not_found": "Workout not found",

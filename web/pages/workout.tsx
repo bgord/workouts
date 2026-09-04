@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Main, WorkoutStatusBadge } from "../components";
+import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 
 export function Workout() {
@@ -36,6 +36,14 @@ export function Workout() {
             year: "numeric",
           })}
         </div>
+      )}
+
+      {workout && (
+        <ul data-gap="3" data-stack="y">
+          {workout.exercises.map((exercise) => (
+            <WorkoutExerciseRow exercise={exercise} key={exercise.id} />
+          ))}
+        </ul>
       )}
     </Main>
   );

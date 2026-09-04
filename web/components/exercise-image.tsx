@@ -19,7 +19,7 @@ const height: Record<ExerciseImageSize, number> = {
   [ExerciseImageSize.lg]: 240,
 };
 
-export function ExerciseImage(props: { exercise: Exercise; size: ExerciseImageSize }) {
+export function ExerciseImage(props: { exercise: Pick<Exercise, "id" | "name">; size: ExerciseImageSize }) {
   return (
     <img
       alt={props.exercise.name}

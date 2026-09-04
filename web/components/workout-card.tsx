@@ -1,4 +1,5 @@
 import { useLanguage } from "@bgord/ui";
+import { Link } from "@tanstack/react-router";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
@@ -26,9 +27,16 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
       data-stack="x"
     >
       <div data-gap="1" data-maxw="100%" data-stack="y">
-        <div data-fw="medium" data-maxw="100%" data-transform="truncate" title={props.workout.planName}>
+        <Link
+          className="c-link"
+          data-maxw="100%"
+          data-transform="truncate"
+          params={{ workoutId: props.workout.id }}
+          title={props.workout.planName}
+          to="/workouts/$workoutId"
+        >
           {props.workout.planName}
-        </div>
+        </Link>
 
         <div data-color="neutral-500" data-fs="sm">
           {scheduledFor}
