@@ -11,4 +11,5 @@ export * from "./plan-card";
 export * from "./plan-status-badge";
 export * from "./select";
 export * from "./separator";
+export * from "./workout-card";
 export * from "./workout-status-badge";
