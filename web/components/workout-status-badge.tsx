@@ -31,17 +31,21 @@ const label: Record<WorkoutStatusEnum, string> = {
   [WorkoutStatusEnum.discarded]: "workout.status.discarded",
 };
 
-export function WorkoutStatusBadge(props: { status: WorkoutStatusEnum }) {
+export function WorkoutStatusBadge(
+  props: { status: WorkoutStatusEnum } & React.JSX.IntrinsicElements["div"],
+) {
+  const { status, ...rest } = props;
   const t = useTranslations();
 
   return (
     <div
       className="c-badge"
-      data-bg={background[props.status]}
-      data-color={color[props.status]}
+      data-bg={background[status]}
+      data-color={color[status]}
       data-variant="primary"
+      {...rest}
     >
-      {t(label[props.status])}
+      {t(label[status])}
     </div>
   );
 }

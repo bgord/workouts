@@ -34,12 +34,12 @@ export function Workout() {
       {!workout && <div data-color="neutral-500">{t("workout.not_found")}</div>}
 
       {workout && (
-        <div data-cross="center" data-gap="3" data-stack="x">
+        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
           <h1 data-fs="lg" data-maxw="100%" data-transform="truncate" title={title}>
             {title}
           </h1>
 
-          <WorkoutStatusBadge status={workout.status} />
+          <WorkoutStatusBadge data-mt="auto" status={workout.status} />
         </div>
       )}
 
