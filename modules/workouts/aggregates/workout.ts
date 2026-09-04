@@ -16,7 +16,8 @@ export type WorkoutEventType =
   | Events.WorkoutSetLoggedEventType
   | Events.WorkoutCompletedEventType
   | Events.WorkoutAbandonedEventType
-  | Events.WorkoutDiscardedEventType;
+  | Events.WorkoutDiscardedEventType
+  | Events.WorkoutSetCorrectedEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -32,6 +33,7 @@ export class Workout {
     [Events.WORKOUT_EXERCISE_TARGET_SET_EVENT]: Events.WorkoutExerciseTargetSetEvent,
     [Events.WORKOUT_STARTED_EVENT]: Events.WorkoutStartedEvent,
     [Events.WORKOUT_SET_LOGGED_EVENT]: Events.WorkoutSetLoggedEvent,
+    [Events.WORKOUT_SET_CORRECTED_EVENT]: Events.WorkoutSetCorrectedEvent,
     [Events.WORKOUT_COMPLETED_EVENT]: Events.WorkoutCompletedEvent,
     [Events.WORKOUT_ABANDONED_EVENT]: Events.WorkoutAbandonedEvent,
     [Events.WORKOUT_DISCARDED_EVENT]: Events.WorkoutDiscardedEvent,

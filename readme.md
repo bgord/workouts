@@ -286,6 +286,7 @@ modules/
     │   ├── WORKOUT_DISCARDED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
+    │   ├── WORKOUT_SET_CORRECTED_EVENT.ts
     │   ├── WORKOUT_SET_LOGGED_EVENT.ts
     │   └── WORKOUT_STARTED_EVENT.ts
     ├── invariants
@@ -295,10 +296,12 @@ modules/
     │   ├── workout-exists.ts
     │   ├── workout-has-logged-sets.ts
     │   ├── workout-in-progress-limit-for-owner.ts
+    │   ├── workout-is-correctable.ts
     │   ├── workout-is-discardable.ts
     │   ├── workout-is-draft.ts
     │   ├── workout-is-in-progress.ts
     │   ├── workout-is-ready-to-start.ts
+    │   ├── workout-logged-set-exists.ts
     │   ├── workout-plan-ready.ts
     │   └── workout-scheduled-for-is-not-past.ts
     ├── ports
@@ -320,6 +323,7 @@ modules/
         ├── workout-exercise-id.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
+        ├── workout-in-progress-limit-for-owner.ts
         ├── workout-scheduled-for.ts
         ├── workout-status.ts
         ├── workout-summary.ts
