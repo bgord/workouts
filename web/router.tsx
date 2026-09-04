@@ -40,7 +40,10 @@ export const homeRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/home"), "Home"),
-  loader: async ({ context }) => ({ workouts: await Workouts.list(context.request) }),
+  loader: async ({ context }) => ({
+    workouts: await Workouts.list(context.request),
+    plans: await Plans.list(context.request),
+  }),
 });
 
 export const workbookRoute = createRoute({

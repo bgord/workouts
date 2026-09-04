@@ -2,6 +2,7 @@
 import { useTranslations } from "@bgord/ui";
 import { Main, WorkoutCard } from "../components";
 import { homeRoute } from "../router";
+import { WorkoutCreate } from "../sections/workout-create";
 
 export function Home() {
   const t = useTranslations();
@@ -10,6 +11,8 @@ export function Home() {
   return (
     <Main>
       <h1 data-fs="lg">{t("workout.list.header")}</h1>
+
+      <WorkoutCreate />
 
       {workouts.length === 0 && <div data-color="neutral-500">{t("workout.list.empty")}</div>}
 
