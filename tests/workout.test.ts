@@ -112,6 +112,62 @@ describe("Workout", async () => {
     ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
   });
 
+  test("removeExercise", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.removeExercise(mocks.workoutExerciseId, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseRemovedEvent]);
+    expect(workout.exercises).toEqual([]);
+  });
+
+  test("removeExercise - WorkoutIsDraft", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() => workout.removeExercise(mocks.workoutExerciseId, mocks.userId)).toThrow(
+      Workouts.Invariants.WorkoutIsDraft.error,
+    );
+  });
+
+  test("removeExercise - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() => workout.removeExercise(mocks.workoutExerciseId, mocks.anotherUserId)).toThrow(
+      Workouts.Invariants.WorkoutBelongsToUser.error,
+    );
+  });
+
+  test("removeExercise - WorkoutExerciseExists", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() => workout.removeExercise(mocks.anotherWorkoutExerciseId, mocks.userId)).toThrow(
+      Workouts.Invariants.WorkoutExerciseExists.error,
+    );
+  });
+
   test("setExerciseTarget", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

@@ -8,6 +8,7 @@ import * as Schema from "+infra/schema";
 type Dependencies = {
   EventBus: bg.EventBusPort<
     | Workouts.Events.WorkoutExerciseAddedEventType
+    | Workouts.Events.WorkoutExerciseRemovedEventType
     | Workouts.Events.WorkoutExerciseTargetSetEventType
     | Workouts.Events.WorkoutDiscardedEventType
     | Auth.Events.AccountDeletedEventType
@@ -20,6 +21,10 @@ export class WorkoutExercisesProjector {
     deps.EventBus.on(
       Workouts.Events.WORKOUT_EXERCISE_ADDED_EVENT,
       deps.EventHandler.handle(this.onWorkoutExerciseAddedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Workouts.Events.WORKOUT_EXERCISE_REMOVED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutExerciseRemovedEvent.bind(this)),
     );
     deps.EventBus.on(
       Workouts.Events.WORKOUT_EXERCISE_TARGET_SET_EVENT,
@@ -48,6 +53,12 @@ export class WorkoutExercisesProjector {
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
     });
+  }
+
+  async onWorkoutExerciseRemovedEvent(event: Workouts.Events.WorkoutExerciseRemovedEventType) {
+    await db
+      .delete(Schema.workoutExercises)
+      .where(eq(Schema.workoutExercises.id, event.payload.workoutExerciseId));
   }
 
   async onWorkoutExerciseTargetSetEvent(event: Workouts.Events.WorkoutExerciseTargetSetEventType) {

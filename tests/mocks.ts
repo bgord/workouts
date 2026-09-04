@@ -806,6 +806,17 @@ export const AnotherGenericWorkoutExerciseAddedEvent = {
   },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
+export const GenericWorkoutExerciseRemovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_EXERCISE_REMOVED_EVENT",
+  payload: { workoutId, workoutExerciseId, requesterId: userId },
+} satisfies Workouts.Events.WorkoutExerciseRemovedEventType;
+
 export const GenericWorkoutExerciseTargetSetEvent = {
   id: expectAnyId,
   correlationId,

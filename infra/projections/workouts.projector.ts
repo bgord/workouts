@@ -15,6 +15,7 @@ export class WorkoutsProjector {
   // Stryker disable next-line ArrayDeclaration
   private static readonly CHILD_EVENTS = [
     Workouts.Events.WORKOUT_EXERCISE_ADDED_EVENT,
+    Workouts.Events.WORKOUT_EXERCISE_REMOVED_EVENT,
     Workouts.Events.WORKOUT_EXERCISE_TARGET_SET_EVENT,
     Workouts.Events.WORKOUT_SET_LOGGED_EVENT,
     Workouts.Events.WORKOUT_SET_CORRECTED_EVENT,
