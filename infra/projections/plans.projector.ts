@@ -57,7 +57,6 @@ export class PlansProjector {
       deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
 
-    // The revision belongs to the plan stream, so events about a plan's children advance it too
     for (const name of PlansProjector.CHILD_EVENTS) {
       deps.EventBus.on(name, deps.EventHandler.handle(this.onPlanChildEvent.bind(this)));
     }

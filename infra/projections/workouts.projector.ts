@@ -12,6 +12,13 @@ type Dependencies = {
 };
 
 export class WorkoutsProjector {
+  // Stryker disable next-line ArrayDeclaration
+  private static readonly CHILD_EVENTS = [
+    Workouts.Events.WORKOUT_EXERCISE_ADDED_EVENT,
+    Workouts.Events.WORKOUT_EXERCISE_TARGET_SET_EVENT,
+    Workouts.Events.WORKOUT_SET_LOGGED_EVENT,
+  ] as const;
+
   constructor(deps: Dependencies) {
     deps.EventBus.on(
       Workouts.Events.WORKOUT_CREATED_EVENT,
@@ -30,9 +37,17 @@ export class WorkoutsProjector {
       deps.EventHandler.handle(this.onWorkoutAbandonedEvent.bind(this)),
     );
     deps.EventBus.on(
+      Workouts.Events.WORKOUT_DISCARDED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutDiscardedEvent.bind(this)),
+    );
+    deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
       deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
+
+    for (const name of WorkoutsProjector.CHILD_EVENTS) {
+      deps.EventBus.on(name, deps.EventHandler.handle(this.onWorkoutChildEvent.bind(this)));
+    }
   }
 
   async onWorkoutCreatedEvent(event: Workouts.Events.WorkoutCreatedEventType) {
@@ -97,7 +112,27 @@ export class WorkoutsProjector {
       );
   }
 
+  async onWorkoutDiscardedEvent(event: Workouts.Events.WorkoutDiscardedEventType) {
+    await db
+      .delete(Schema.workouts)
+      .where(
+        and(
+          eq(Schema.workouts.id, event.payload.workoutId),
+          eq(Schema.workouts.userId, event.payload.requesterId),
+        ),
+      );
+  }
+
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
     await db.delete(Schema.workouts).where(eq(Schema.workouts.userId, event.payload.userId));
+  }
+
+  async onWorkoutChildEvent(
+    event: Workouts.Aggregates.WorkoutEventType & { payload: { workoutId: Workouts.VO.WorkoutIdType } },
+  ) {
+    await db
+      .update(Schema.workouts)
+      .set({ revision: event.revision, updatedAt: event.createdAt })
+      .where(eq(Schema.workouts.id, event.payload.workoutId));
   }
 }

@@ -9,6 +9,7 @@ type Dependencies = {
   EventBus: bg.EventBusPort<
     | Workouts.Events.WorkoutExerciseAddedEventType
     | Workouts.Events.WorkoutExerciseTargetSetEventType
+    | Workouts.Events.WorkoutDiscardedEventType
     | Auth.Events.AccountDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
@@ -23,6 +24,10 @@ export class WorkoutExercisesProjector {
     deps.EventBus.on(
       Workouts.Events.WORKOUT_EXERCISE_TARGET_SET_EVENT,
       deps.EventHandler.handle(this.onWorkoutExerciseTargetSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Workouts.Events.WORKOUT_DISCARDED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutDiscardedEvent.bind(this)),
     );
     deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
@@ -55,6 +60,12 @@ export class WorkoutExercisesProjector {
         updatedAt: event.createdAt,
       })
       .where(eq(Schema.workoutExercises.id, event.payload.workoutExerciseId));
+  }
+
+  async onWorkoutDiscardedEvent(event: Workouts.Events.WorkoutDiscardedEventType) {
+    await db
+      .delete(Schema.workoutExercises)
+      .where(eq(Schema.workoutExercises.workoutId, event.payload.workoutId));
   }
 
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {

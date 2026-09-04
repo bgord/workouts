@@ -6,7 +6,11 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 type Dependencies = {
-  EventBus: bg.EventBusPort<Workouts.Events.WorkoutSetLoggedEventType | Auth.Events.AccountDeletedEventType>;
+  EventBus: bg.EventBusPort<
+    | Workouts.Events.WorkoutSetLoggedEventType
+    | Workouts.Events.WorkoutDiscardedEventType
+    | Auth.Events.AccountDeletedEventType
+  >;
   EventHandler: bg.EventHandlerStrategy;
 };
 
@@ -15,6 +19,10 @@ export class WorkoutLoggedSetsProjector {
     deps.EventBus.on(
       Workouts.Events.WORKOUT_SET_LOGGED_EVENT,
       deps.EventHandler.handle(this.onWorkoutSetLoggedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Workouts.Events.WORKOUT_DISCARDED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutDiscardedEvent.bind(this)),
     );
     deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
@@ -32,6 +40,12 @@ export class WorkoutLoggedSetsProjector {
       userId: event.payload.requesterId,
       createdAt: event.createdAt,
     });
+  }
+
+  async onWorkoutDiscardedEvent(event: Workouts.Events.WorkoutDiscardedEventType) {
+    await db
+      .delete(Schema.workoutLoggedSets)
+      .where(eq(Schema.workoutLoggedSets.workoutId, event.payload.workoutId));
   }
 
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
