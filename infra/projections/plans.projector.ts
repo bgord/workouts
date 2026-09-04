@@ -1,14 +1,10 @@
 import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import * as Auth from "+auth";
 import * as Plans from "+plans";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
-
-// The event store assigns the revision on save; the fallback keeps the column monotonic if it ever arrives unset
-const revisionOf = (event: { revision?: tools.RevisionValueType }) =>
-  event.revision ?? sql`${Schema.plans.revision} + 1`;
 
 type Dependencies = {
   EventBus: bg.EventBusPort<Plans.Aggregates.PlanEventType | Auth.Events.AccountDeletedEventType>;
@@ -43,6 +39,10 @@ export class PlansProjector {
     deps.EventBus.on(
       Plans.Events.PLAN_FINALIZED_EVENT,
       deps.EventHandler.handle(this.onPlanFinalizedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Plans.Events.PLAN_REMOVED_EVENT,
+      deps.EventHandler.handle(this.onPlanRemovedEvent.bind(this)),
     );
     deps.EventBus.on(
       Plans.Events.PLAN_EDITING_ENABLED_EVENT,
@@ -80,7 +80,7 @@ export class PlansProjector {
       .update(Schema.plans)
       .set({
         status: Plans.VO.PlanStatusEnum.archived,
-        revision: revisionOf(event),
+        revision: event.revision,
         updatedAt: event.createdAt,
       })
       .where(
@@ -91,7 +91,7 @@ export class PlansProjector {
   async onPlanRestoredEvent(event: Plans.Events.PlanRestoredEventType) {
     await db
       .update(Schema.plans)
-      .set({ status: Plans.VO.PlanStatusEnum.draft, revision: revisionOf(event), updatedAt: event.createdAt })
+      .set({ status: Plans.VO.PlanStatusEnum.draft, revision: event.revision, updatedAt: event.createdAt })
       .where(
         and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
       );
@@ -102,9 +102,17 @@ export class PlansProjector {
       .update(Schema.plans)
       .set({
         status: Plans.VO.PlanStatusEnum.finalized,
-        revision: revisionOf(event),
+        revision: event.revision,
         updatedAt: event.createdAt,
       })
+      .where(
+        and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
+      );
+  }
+
+  async onPlanRemovedEvent(event: Plans.Events.PlanRemovedEventType) {
+    await db
+      .delete(Schema.plans)
       .where(
         and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
       );
@@ -113,7 +121,7 @@ export class PlansProjector {
   async onPlanEditingEnabledEvent(event: Plans.Events.PlanEditingEnabledEventType) {
     await db
       .update(Schema.plans)
-      .set({ status: Plans.VO.PlanStatusEnum.draft, revision: revisionOf(event), updatedAt: event.createdAt })
+      .set({ status: Plans.VO.PlanStatusEnum.draft, revision: event.revision, updatedAt: event.createdAt })
       .where(
         and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
       );
@@ -122,7 +130,7 @@ export class PlansProjector {
   async onPlanRenamedEvent(event: Plans.Events.PlanRenamedEventType) {
     await db
       .update(Schema.plans)
-      .set({ name: event.payload.planName, revision: revisionOf(event), updatedAt: event.createdAt })
+      .set({ name: event.payload.planName, revision: event.revision, updatedAt: event.createdAt })
       .where(
         and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
       );
@@ -137,7 +145,7 @@ export class PlansProjector {
   ) {
     await db
       .update(Schema.plans)
-      .set({ revision: revisionOf(event), updatedAt: event.createdAt })
+      .set({ revision: event.revision, updatedAt: event.createdAt })
       .where(eq(Schema.plans.id, event.payload.planId));
   }
 }

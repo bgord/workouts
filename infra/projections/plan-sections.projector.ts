@@ -10,6 +10,7 @@ type Dependencies = {
     | Plans.Events.PlanSectionCreatedEventType
     | Plans.Events.PlanSectionRemovedEventType
     | Plans.Events.PlanSectionRenamedEventType
+    | Plans.Events.PlanRemovedEventType
     | Auth.Events.AccountDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
@@ -28,6 +29,10 @@ export class PlanSectionsProjector {
     deps.EventBus.on(
       Plans.Events.PLAN_SECTION_RENAMED_EVENT,
       deps.EventHandler.handle(this.onPlanSectionRenamedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Plans.Events.PLAN_REMOVED_EVENT,
+      deps.EventHandler.handle(this.onPlanRemovedEvent.bind(this)),
     );
     deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
@@ -65,6 +70,17 @@ export class PlanSectionsProjector {
       .where(
         and(
           eq(Schema.planSections.id, event.payload.planSectionId),
+          eq(Schema.planSections.planId, event.payload.planId),
+          eq(Schema.planSections.userId, event.payload.requesterId),
+        ),
+      );
+  }
+
+  async onPlanRemovedEvent(event: Plans.Events.PlanRemovedEventType) {
+    await db
+      .delete(Schema.planSections)
+      .where(
+        and(
           eq(Schema.planSections.planId, event.payload.planId),
           eq(Schema.planSections.userId, event.payload.requesterId),
         ),
