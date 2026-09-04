@@ -373,6 +373,150 @@ describe("Workout", async () => {
     ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
   });
 
+  test("correctSet - in progress", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.correctSet(
+        mocks.workoutExerciseId,
+        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.reps,
+        mocks.correctedLoggedSet.load,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutSetCorrectedEvent]);
+  });
+
+  test("correctSet - completed", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+        mocks.GenericWorkoutCompletedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.correctSet(
+        mocks.workoutExerciseId,
+        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.reps,
+        mocks.correctedLoggedSet.load,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutSetCorrectedEvent]);
+  });
+
+  test("correctSet - replaces the set rather than adding one", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+        mocks.GenericWorkoutSetCorrectedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.logSet(
+        mocks.workoutExerciseId,
+        mocks.anotherLoggedSet.reps,
+        mocks.anotherLoggedSet.load,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.AnotherGenericWorkoutSetLoggedEvent]);
+  });
+
+  test("correctSet - WorkoutIsCorrectable - draft", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.correctSet(
+        mocks.workoutExerciseId,
+        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.reps,
+        mocks.correctedLoggedSet.load,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutIsCorrectable.error);
+  });
+
+  test("correctSet - WorkoutLoggedSetExists", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.correctSet(
+        mocks.workoutExerciseId,
+        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.reps,
+        mocks.correctedLoggedSet.load,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutLoggedSetExists.error);
+  });
+
+  test("correctSet - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.correctSet(
+        mocks.workoutExerciseId,
+        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.reps,
+        mocks.correctedLoggedSet.load,
+        mocks.anotherUserId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
+  });
+
   test("complete", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

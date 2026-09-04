@@ -164,6 +164,31 @@ export class Workout {
     this.record(event);
   }
 
+  correctSet(
+    workoutExerciseId: VO.WorkoutExerciseIdType,
+    setNumber: VO.SetNumberType,
+    reps: VO.RepsType,
+    load: VO.LoadType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.WorkoutIsCorrectable.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+    Invariants.WorkoutLoggedSetExists.enforce({
+      workoutExercise: this.exercises.find((exercise) => exercise.id === workoutExerciseId),
+      setNumber,
+    });
+
+    const event = bg.event(
+      Events.WorkoutSetCorrectedEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, workoutExerciseId, loggedSet: { setNumber, reps, load }, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   complete(requesterId: Auth.VO.UserIdType) {
     Invariants.WorkoutIsInProgress.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
@@ -262,6 +287,23 @@ export class Workout {
         this.exercises = this.exercises.map((exercise) =>
           exercise.id === event.payload.workoutExerciseId
             ? { ...exercise, loggedSets: [...exercise.loggedSets, event.payload.loggedSet] }
+            : exercise,
+        );
+        break;
+      }
+
+      case Events.WORKOUT_SET_CORRECTED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.exercises = this.exercises.map((exercise) =>
+          exercise.id === event.payload.workoutExerciseId
+            ? {
+                ...exercise,
+                loggedSets: exercise.loggedSets.map((loggedSet) =>
+                  loggedSet.setNumber === event.payload.loggedSet.setNumber
+                    ? event.payload.loggedSet
+                    : loggedSet,
+                ),
+              }
             : exercise,
         );
         break;

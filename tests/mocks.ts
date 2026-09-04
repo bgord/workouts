@@ -807,6 +807,23 @@ export const GenericWorkoutSetLoggedEvent = {
   payload: { workoutId, workoutExerciseId, loggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
 
+export const correctedLoggedSet = v.parse(Workouts.VO.LoggedSet, {
+  setNumber: v.parse(Workouts.VO.SetNumber, 1),
+  reps: v.parse(Workouts.VO.Reps, 6),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(85).get()),
+});
+
+export const GenericWorkoutSetCorrectedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_SET_CORRECTED_EVENT",
+  payload: { workoutId, workoutExerciseId, loggedSet: correctedLoggedSet, requesterId: userId },
+} satisfies Workouts.Events.WorkoutSetCorrectedEventType;
+
 export const GenericWorkoutCompletedEvent = {
   id: expectAnyId,
   correlationId,
