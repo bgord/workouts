@@ -50,7 +50,9 @@ export const events = sqliteTable(
   {
     id: identifier<bg.UUIDType>(),
     correlationId: text("correlationId").notNull().$type<bg.CorrelationIdType>(),
-    createdAt: integer("createdAt").default(sql`now`).notNull(),
+    createdAt: integer("createdAt")
+      .default(sql`now`)
+      .notNull(),
     name: text("name").notNull(),
     stream: text("stream").notNull().$type<bg.EventStreamType>(),
     version: integer("version").notNull(),
@@ -242,6 +244,7 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
 export const workouts = sqliteTable("workouts", {
   id: identifier<WorkoutIdType>(),
   planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
+  planName: text("planName").notNull().$type<PlanNameType>(),
   scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
   status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
   revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),

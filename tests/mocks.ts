@@ -214,6 +214,7 @@ export const workoutExerciseId = v.parse(
 export const workoutSummary: Workouts.VO.WorkoutSummary = {
   id: workoutId,
   planId,
+  planName,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.draft,
   revision: revision.value,
@@ -247,6 +248,7 @@ export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
 export const workout: Workouts.VO.Workout = {
   id: workoutId,
   planId,
+  planName,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.in_progress,
   revision: revision.value,
@@ -733,7 +735,7 @@ export const GenericWorkoutCreatedEvent = {
   version: 1,
   commit,
   name: "WORKOUT_CREATED_EVENT",
-  payload: { workoutId, planId, scheduledFor: workoutScheduledFor, userId },
+  payload: { workoutId, planId, planName, scheduledFor: workoutScheduledFor, userId },
 } satisfies Workouts.Events.WorkoutCreatedEventType;
 
 export const GenericWorkoutExerciseAddedEvent = {

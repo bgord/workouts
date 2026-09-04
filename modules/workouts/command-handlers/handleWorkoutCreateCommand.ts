@@ -35,6 +35,7 @@ export const handleWorkoutCreateCommand =
     const workout = Workout.create(
       command.payload.workoutId,
       command.payload.planId,
+      plan!.name,
       command.payload.scheduledFor,
       command.payload.userId,
       deps,

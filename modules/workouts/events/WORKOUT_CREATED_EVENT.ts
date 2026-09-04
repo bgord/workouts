@@ -12,6 +12,7 @@ export const WorkoutCreatedEvent = v.object({
   payload: v.object({
     workoutId: VO.WorkoutId,
     planId: Plans.VO.PlanId,
+    planName: Plans.VO.PlanName,
     scheduledFor: VO.WorkoutScheduledFor,
     userId: Auth.VO.UserId,
   }),

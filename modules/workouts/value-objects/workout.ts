@@ -21,6 +21,7 @@ export type WorkoutExerciseWithSets = {
 export type Workout = {
   id: WorkoutIdType;
   planId: Plans.VO.PlanIdType;
+  planName: Plans.VO.PlanNameType;
   scheduledFor: WorkoutScheduledForType;
   status: WorkoutStatusEnum;
   revision: tools.RevisionValueType;

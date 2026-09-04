@@ -29,6 +29,7 @@ describe("Workout", async () => {
       const workout = Workouts.Aggregates.Workout.create(
         mocks.workoutId,
         mocks.planId,
+        mocks.planName,
         mocks.workoutScheduledFor,
         mocks.userId,
         deps,

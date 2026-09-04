@@ -37,6 +37,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     return {
       id: workout.id,
       planId: workout.planId,
+      planName: workout.planName,
       scheduledFor: workout.scheduledFor,
       status: workout.status,
       revision: workout.revision,

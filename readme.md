@@ -151,6 +151,7 @@ modules/
 │   │   ├── handlePlanCreateCommand.ts
 │   │   ├── handlePlanEditingEnableCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
+│   │   ├── handlePlanRemoveCommand.ts
 │   │   ├── handlePlanRenameCommand.ts
 │   │   ├── handlePlanRestoreCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
@@ -349,6 +350,7 @@ app/
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-get.ts
 │   │   ├── plan-list.ts
+│   │   ├── plan-remove.ts
 │   │   ├── plan-rename.ts
 │   │   ├── plan-restore.ts
 │   │   ├── plan-section-create.ts

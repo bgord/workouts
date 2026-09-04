@@ -39,6 +39,7 @@ export class WorkoutsProjector {
     await db.insert(Schema.workouts).values({
       id: event.payload.workoutId,
       planId: event.payload.planId,
+      planName: event.payload.planName,
       scheduledFor: event.payload.scheduledFor,
       status: Workouts.VO.WorkoutStatusEnum.draft,
       revision: event.revision ?? tools.Revision.INITIAL,

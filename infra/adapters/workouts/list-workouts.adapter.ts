@@ -15,6 +15,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
     return workouts.map((workout) => ({
       id: workout.id,
       planId: workout.planId,
+      planName: workout.planName,
       scheduledFor: workout.scheduledFor,
       status: workout.status,
       revision: workout.revision,

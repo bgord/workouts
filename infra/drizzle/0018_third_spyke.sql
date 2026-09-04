@@ -1,0 +1,1 @@
+ALTER TABLE `workouts` ADD `planName` text NOT NULL;
