@@ -131,7 +131,7 @@ function NavigationMobile() {
               search={Form.default}
               to="/catalog"
             >
-              {t("app.workbook")}
+              {t("app.catalog")}
             </Link>
 
             <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/plans">
