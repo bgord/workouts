@@ -34,6 +34,7 @@ type AcceptedCommand =
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType
   | WorkoutsCommands.WorkoutCreateCommandType
+  | WorkoutsCommands.WorkoutExerciseRemoveCommandType
   | WorkoutsCommands.WorkoutExerciseSetTargetCommandType
   | WorkoutsCommands.WorkoutStartCommandType
   | WorkoutsCommands.WorkoutSetLogCommandType
