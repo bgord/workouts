@@ -3,8 +3,8 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import { Load } from "../value-objects/load";
+import { LoggedSetId } from "../value-objects/logged-set-id";
 import { Reps } from "../value-objects/reps";
-import { SetNumber } from "../value-objects/set-number";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
 import { WorkoutId } from "../value-objects/workout-id";
 
@@ -18,7 +18,7 @@ export const WorkoutSetCorrectCommand = v.object({
   payload: v.object({
     workoutId: WorkoutId,
     workoutExerciseId: WorkoutExerciseId,
-    setNumber: SetNumber,
+    loggedSetId: LoggedSetId,
     reps: Reps,
     load: Load,
     requesterId: Auth.VO.UserId,
