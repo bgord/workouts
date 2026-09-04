@@ -112,6 +112,27 @@ describe("Workout", async () => {
     ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
   });
 
+  test("addExercise - WorkoutExerciseLimit", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        ...Array.from({ length: Workouts.VO.WorkoutExerciseLimitMax }, mocks.workoutExerciseAddedEvent),
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.addExercise(
+        mocks.workoutExerciseId,
+        mocks.exerciseId,
+        mocks.exerciseName,
+        mocks.exercisePrescription,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseLimit.error);
+  });
+
   test("removeExercise", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

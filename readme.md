@@ -301,6 +301,7 @@ modules/
     │   ├── workout-belongs-to-user.ts
     │   ├── workout-draft-limit-for-owner.ts
     │   ├── workout-exercise-exists.ts
+    │   ├── workout-exercise-limit.ts
     │   ├── workout-exists.ts
     │   ├── workout-has-logged-sets.ts
     │   ├── workout-in-progress-limit-for-owner.ts
@@ -332,6 +333,7 @@ modules/
         ├── sets.ts
         ├── workout-draft-limit-for-owner.ts
         ├── workout-exercise-id.ts
+        ├── workout-exercise-limit.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts

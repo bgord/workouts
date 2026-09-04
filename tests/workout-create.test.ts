@@ -1,6 +1,7 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -203,6 +204,39 @@ describe(`POST ${url}`, async () => {
       mocks.GenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,
     ]);
+  });
+
+  test("happy path - plan section filled to the instruction limit", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.workoutId)
+      .mockReturnValue(mocks.workoutExerciseId);
+    spies
+      .use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute"))
+      .mockResolvedValue(mocks.planAtInstructionLimit);
+    spies
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdHeaders,
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: mocks.workoutScheduledFor,
+        }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave.mock.calls[0]?.[0]).toHaveLength(Workouts.VO.WorkoutExerciseLimitMax + 1);
   });
 
   test("happy path - at the limit", async () => {

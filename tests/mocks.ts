@@ -205,12 +205,28 @@ const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
   ],
 };
 
+export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = {
+  id: planSectionId,
+  name: planSectionName,
+  exerciseInstructions: Array.from({ length: Plans.VO.PlanSectionExerciseInstructionLimitMax }, () => ({
+    id: v.parse(Plans.VO.ExerciseInstructionId, crypto.randomUUID()),
+    exercise,
+    sets: exerciseInstruction.sets,
+    reps: exerciseInstruction.reps,
+  })),
+};
+
 export const plan: Plans.VO.Plan = {
   id: planId,
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
   revision: revision.value,
   sections: [planSection, anotherPlanSection],
+};
+
+export const planAtInstructionLimit: Plans.VO.Plan = {
+  ...plan,
+  sections: [planSectionAtInstructionLimit],
 };
 
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
@@ -787,6 +803,14 @@ export const GenericWorkoutExerciseAddedEvent = {
     requesterId: userId,
   },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
+
+export const workoutExerciseAddedEvent = (): Workouts.Events.WorkoutExerciseAddedEventType => ({
+  ...GenericWorkoutExerciseAddedEvent,
+  payload: {
+    ...GenericWorkoutExerciseAddedEvent.payload,
+    workoutExerciseId: v.parse(Workouts.VO.WorkoutExerciseId, crypto.randomUUID()),
+  },
+});
 
 export const AnotherGenericWorkoutExerciseAddedEvent = {
   id: expectAnyId,
