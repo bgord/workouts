@@ -8,6 +8,7 @@ import { WorkoutAbandon } from "../sections/workout-abandon";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
+import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
 import { WorkoutStart } from "../sections/workout-start";
 
@@ -65,6 +66,8 @@ export function Workout() {
         <ul data-gap="3" data-stack="y">
           {workout.exercises.map((exercise) => (
             <WorkoutExerciseRow exercise={exercise} key={exercise.id}>
+              <WorkoutSetList exercise={exercise} workout={workout} />
+
               {workout.status === WorkoutStatusEnum.draft && (
                 <WorkoutExerciseTargetSet exercise={exercise} workout={workout} />
               )}
