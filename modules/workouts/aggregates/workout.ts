@@ -17,7 +17,8 @@ export type WorkoutEventType =
   | Events.WorkoutCompletedEventType
   | Events.WorkoutAbandonedEventType
   | Events.WorkoutDiscardedEventType
-  | Events.WorkoutSetCorrectedEventType;
+  | Events.WorkoutSetCorrectedEventType
+  | Events.WorkoutSetRemovedEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -34,6 +35,7 @@ export class Workout {
     [Events.WORKOUT_STARTED_EVENT]: Events.WorkoutStartedEvent,
     [Events.WORKOUT_SET_LOGGED_EVENT]: Events.WorkoutSetLoggedEvent,
     [Events.WORKOUT_SET_CORRECTED_EVENT]: Events.WorkoutSetCorrectedEvent,
+    [Events.WORKOUT_SET_REMOVED_EVENT]: Events.WorkoutSetRemovedEvent,
     [Events.WORKOUT_COMPLETED_EVENT]: Events.WorkoutCompletedEvent,
     [Events.WORKOUT_ABANDONED_EVENT]: Events.WorkoutAbandonedEvent,
     [Events.WORKOUT_DISCARDED_EVENT]: Events.WorkoutDiscardedEvent,
@@ -201,6 +203,34 @@ export class Workout {
     this.record(event);
   }
 
+  removeSet(
+    workoutExerciseId: VO.WorkoutExerciseIdType,
+    loggedSetId: VO.LoggedSetIdType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    const workoutExercise = this.exercises.find((exercise) => exercise.id === workoutExerciseId);
+
+    Invariants.WorkoutIsCorrectable.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+    Invariants.WorkoutLoggedSetExists.enforce({ workoutExercise, loggedSetId });
+    Invariants.WorkoutRetainsLoggedSets.enforce({
+      status: this.status,
+      count: tools.Int.nonNegative(
+        this.exercises.reduce((total, exercise) => total + exercise.loggedSets.length, 0),
+      ),
+    });
+
+    const event = bg.event(
+      Events.WorkoutSetRemovedEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, workoutExerciseId, loggedSetId, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   complete(requesterId: Auth.VO.UserIdType) {
     Invariants.WorkoutIsInProgress.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
@@ -313,6 +343,24 @@ export class Workout {
                 loggedSets: exercise.loggedSets.map((loggedSet) =>
                   loggedSet.id === event.payload.loggedSet.id ? event.payload.loggedSet : loggedSet,
                 ),
+              }
+            : exercise,
+        );
+        break;
+      }
+
+      case Events.WORKOUT_SET_REMOVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.exercises = this.exercises.map((exercise) =>
+          exercise.id === event.payload.workoutExerciseId
+            ? {
+                ...exercise,
+                loggedSets: exercise.loggedSets
+                  .filter((loggedSet) => loggedSet.id !== event.payload.loggedSetId)
+                  .map((loggedSet, index) => ({
+                    ...loggedSet,
+                    setNumber: v.parse(VO.SetNumber, index + 1),
+                  })),
               }
             : exercise,
         );
