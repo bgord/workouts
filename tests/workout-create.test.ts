@@ -106,6 +106,25 @@ describe(`POST ${url}`, async () => {
     await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.not.past");
   });
 
+  test("WorkoutScheduledForIsWithinHorizon", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: "2999-12-31",
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.within.horizon");
+  });
+
   test("WorkoutPlanReady", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();

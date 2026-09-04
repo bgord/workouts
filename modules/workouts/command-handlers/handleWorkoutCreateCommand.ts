@@ -8,7 +8,9 @@ import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 import { WorkoutPlanSectionReady } from "../invariants/workout-plan-section-ready";
 import { WorkoutScheduledForIsNotPast } from "../invariants/workout-scheduled-for-is-not-past";
+import { WorkoutScheduledForIsWithinHorizon } from "../invariants/workout-scheduled-for-is-within-horizon";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
+import { WorkoutScheduledForHorizonDaysMax } from "../value-objects/workout-scheduled-for-horizon";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -21,9 +23,16 @@ type Dependencies = {
 
 export const handleWorkoutCreateCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutCreateCommandType) => {
-    const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
+    const today = tools.Day.fromTimestamp(deps.Clock.now());
 
-    WorkoutScheduledForIsNotPast.enforce({ scheduledFor: command.payload.scheduledFor, today });
+    WorkoutScheduledForIsNotPast.enforce({
+      scheduledFor: command.payload.scheduledFor,
+      today: today.toIsoId(),
+    });
+
+    const horizon = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
+
+    WorkoutScheduledForIsWithinHorizon.enforce({ scheduledFor: command.payload.scheduledFor, horizon });
 
     const plan = await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId);
 
