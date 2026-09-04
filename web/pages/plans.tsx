@@ -23,13 +23,13 @@ export function Plans() {
             {t("plan.create.cta")}
           </button>
         )}
-
-        {active.length > 0 && (
-          <div data-color="neutral-500" data-fs="sm">
-            {t("plan.list.limit.hint")}
-          </div>
-        )}
       </div>
+
+      {active.length > 0 && (
+        <div data-color="neutral-500" data-fs="sm">
+          {t("plan.list.limit.hint")}
+        </div>
+      )}
 
       {active.length === 0 && planCreate.on && <PlanCreate />}
 
