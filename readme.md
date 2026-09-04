@@ -165,6 +165,7 @@ modules/
 │   │   ├── PLAN_CREATE_COMMAND.ts
 │   │   ├── PLAN_EDITING_ENABLE_COMMAND.ts
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
+│   │   ├── PLAN_REMOVE_COMMAND.ts
 │   │   ├── PLAN_RENAME_COMMAND.ts
 │   │   ├── PLAN_RESTORE_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
@@ -197,6 +198,7 @@ modules/
 │   │   ├── plan-is-archivable.ts
 │   │   ├── plan-is-editable.ts
 │   │   ├── plan-is-finalized.ts
+│   │   ├── plan-is-removable.ts
 │   │   ├── plan-is-restorable.ts
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-has-changed.ts
