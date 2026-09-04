@@ -5,6 +5,7 @@ export * from "./plan-has-sections";
 export * from "./plan-is-archivable";
 export * from "./plan-is-editable";
 export * from "./plan-is-finalized";
+export * from "./plan-is-removable";
 export * from "./plan-is-restorable";
 export * from "./plan-limit-for-owner";
 export * from "./plan-name-has-changed";

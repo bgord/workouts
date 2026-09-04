@@ -7,7 +7,7 @@ type PlanExistsConfigType = { status: VO.PlanStatusEnum };
 
 class PlanExistsFactory extends bg.Invariant<PlanExistsConfigType> {
   passes(config: PlanExistsConfigType) {
-    return config.status !== VO.PlanStatusEnum.initial;
+    return ![VO.PlanStatusEnum.initial, VO.PlanStatusEnum.removed].includes(config.status);
   }
 
   // Stryker disable next-line StringLiteral
