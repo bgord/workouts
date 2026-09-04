@@ -1,8 +1,11 @@
 // fallow-ignore-file unused-export
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
+import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
+import { WorkoutStart } from "../sections/workout-start";
 
 export function Workout() {
   const t = useTranslations();
@@ -38,10 +41,16 @@ export function Workout() {
         </div>
       )}
 
+      {workout && workout.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout} />}
+
       {workout && (
         <ul data-gap="3" data-stack="y">
           {workout.exercises.map((exercise) => (
-            <WorkoutExerciseRow exercise={exercise} key={exercise.id} />
+            <WorkoutExerciseRow exercise={exercise} key={exercise.id}>
+              {workout.status === WorkoutStatusEnum.draft && (
+                <WorkoutExerciseTargetSet exercise={exercise} workout={workout} />
+              )}
+            </WorkoutExerciseRow>
           ))}
         </ul>
       )}

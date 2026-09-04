@@ -267,6 +267,7 @@ modules/
     │   ├── handleWorkoutAbandonCommand.ts
     │   ├── handleWorkoutCompleteCommand.ts
     │   ├── handleWorkoutCreateCommand.ts
+    │   ├── handleWorkoutDiscardCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutSetLogCommand.ts
     │   ├── handleWorkoutStartCommand.ts
@@ -373,6 +374,7 @@ app/
 │       ├── workout-abandon.ts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
+│       ├── workout-discard.ts
 │       ├── workout-exercise-set-target.ts
 │       ├── workout-get.ts
 │       ├── workout-list.ts

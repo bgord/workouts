@@ -8,39 +8,53 @@ function format(reps: RepsType): string {
   return reps.min === reps.max ? String(reps.min) : `${reps.min}-${reps.max}`;
 }
 
-export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets }) {
+export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; children?: React.ReactNode }) {
   const t = useTranslations();
 
   const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
 
   return (
-    <li data-cross="center" data-gap="3" data-stack="x">
-      <Link
-        aria-hidden
-        params={{ exerciseId: props.exercise.exerciseId }}
-        tabIndex={-1}
-        to="/workbook/exercise/$exerciseId"
-      >
-        <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
-      </Link>
+    <li data-gap="2" data-stack="y">
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <Link
+          aria-hidden
+          params={{ exerciseId: props.exercise.exerciseId }}
+          tabIndex={-1}
+          to="/workbook/exercise/$exerciseId"
+        >
+          <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
+        </Link>
 
-      <Link
-        className="c-link"
-        data-maxw="100%"
-        data-transform="truncate"
-        params={{ exerciseId: props.exercise.exerciseId }}
-        title={props.exercise.exerciseName}
-        to="/workbook/exercise/$exerciseId"
-      >
-        {props.exercise.exerciseName}
-      </Link>
+        <Link
+          className="c-link"
+          data-maxw="100%"
+          data-transform="truncate"
+          params={{ exerciseId: props.exercise.exerciseId }}
+          title={props.exercise.exerciseName}
+          to="/workbook/exercise/$exerciseId"
+        >
+          {props.exercise.exerciseName}
+        </Link>
 
-      <div data-color="neutral-300" data-fs="sm" data-ml="auto">
-        {t("workout.exercise.prescription", {
-          sets: props.exercise.prescription.sets,
-          reps: format(props.exercise.prescription.reps),
-        })}
+        <div data-color="neutral-500" data-fs="sm" data-ml="auto">
+          {t("workout.exercise.prescription", {
+            sets: props.exercise.prescription.sets,
+            reps: format(props.exercise.prescription.reps),
+          })}
+        </div>
+
+        {props.exercise.target && (
+          <div data-color="neutral-300" data-fs="sm" data-fw="medium">
+            {t("workout.exercise.target", {
+              sets: props.exercise.target.sets,
+              reps: props.exercise.target.reps,
+              load: props.exercise.target.load / 1000,
+            })}
+          </div>
+        )}
       </div>
+
+      {props.children}
     </li>
   );
 }

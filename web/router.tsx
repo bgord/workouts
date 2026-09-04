@@ -91,7 +91,10 @@ export const workoutRoute = createRoute({
   path: "/workouts/$workoutId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/workout"), "Workout"),
-  loader: async ({ context, params }) => ({ workout: await Workouts.get(context.request, params) }),
+  loader: async ({ context, params }) => ({
+    workout: await Workouts.get(context.request, params),
+    workouts: await Workouts.list(context.request),
+  }),
 });
 
 const profileRoute = createRoute({
