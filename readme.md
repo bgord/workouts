@@ -179,6 +179,7 @@ modules/
 │   │   ├── PLAN_CREATED_EVENT.ts
 │   │   ├── PLAN_EDITING_ENABLED_EVENT.ts
 │   │   ├── PLAN_FINALIZED_EVENT.ts
+│   │   ├── PLAN_REMOVED_EVENT.ts
 │   │   ├── PLAN_RENAMED_EVENT.ts
 │   │   ├── PLAN_RESTORED_EVENT.ts
 │   │   ├── PLAN_SECTION_CREATED_EVENT.ts
