@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { useRouter } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Trash } from "iconoir-react";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { homeRoute } from "../router";
@@ -7,6 +7,7 @@ import { homeRoute } from "../router";
 export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const navigate = useNavigate();
 
   const mutation = bg.useMutation({
     perform: async () =>
@@ -15,7 +16,10 @@ export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
         credentials: "include",
         headers: bg.WeakETag.fromRevision(props.workout.revision),
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true }),
+    onSuccess: async () => {
+      await navigate({ to: "/" });
+      await router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true });
+    },
   });
 
   return (

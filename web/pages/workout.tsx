@@ -4,6 +4,8 @@ import { Link } from "@tanstack/react-router";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
+import { WorkoutAbandon } from "../sections/workout-abandon";
+import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
 import { WorkoutStart } from "../sections/workout-start";
 
@@ -41,7 +43,17 @@ export function Workout() {
         </div>
       )}
 
-      {workout && workout.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout} />}
+      {workout && workout.status === WorkoutStatusEnum.draft && (
+        <div data-cross="center" data-gap="3" data-stack="x">
+          <WorkoutStart workout={workout} />
+
+          <WorkoutDiscard workout={workout} />
+        </div>
+      )}
+
+      {workout && workout.status === WorkoutStatusEnum.in_progress && (
+        <WorkoutAbandon workout={workout} />
+      )}
 
       {workout && (
         <ul data-gap="3" data-stack="y">
