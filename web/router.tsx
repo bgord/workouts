@@ -87,6 +87,13 @@ export const planRoute = createRoute({
   }),
 });
 
+export const workoutRoute = createRoute({
+  path: "/workouts/$workoutId",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/workout"), "Workout"),
+  loader: async ({ context, params }) => ({ workout: await Workouts.get(context.request, params) }),
+});
+
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
@@ -99,6 +106,7 @@ const routeTree = rootRoute.addChildren([
   exerciseRoute,
   plansRoute,
   planRoute,
+  workoutRoute,
   profileRoute,
 ]);
 

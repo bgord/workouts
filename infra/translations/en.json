@@ -141,6 +141,7 @@
   "workout.discard.title": "Discard the {{name}} workout",
   "workout.list.empty": "No workouts yet",
   "workout.list.header": "Workouts",
+  "workout.not_found": "Workout not found",
   "workout.status.abandoned": "Abandoned",
   "workout.status.completed": "Completed",
   "workout.status.discarded": "Discarded",
