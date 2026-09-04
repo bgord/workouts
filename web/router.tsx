@@ -8,6 +8,7 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
+import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import { Avatar, Exercises, I18N, Plans, Session, Workouts } from "./api";
 import { NotFound } from "./not-found";
@@ -41,6 +42,12 @@ export const homeRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/home"), "Home"),
+  validateSearch: (value) => ({
+    section:
+      typeof value["section"] === "string"
+        ? value["section"]
+        : WorkoutHistoryFiltersForm.Form.default.section,
+  }),
   loader: async ({ context }) => {
     const plans = await Plans.list(context.request);
     const finalized = plans.find((plan) => plan.status === PlanStatusEnum.finalized);

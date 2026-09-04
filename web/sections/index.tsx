@@ -27,6 +27,7 @@ export * from "./workout-complete";
 export * from "./workout-create";
 export * from "./workout-discard";
 export * from "./workout-exercise-target-set";
+export * from "./workout-history";
 export * from "./workout-set-correct";
 export * from "./workout-set-list";
 export * from "./workout-set-log";

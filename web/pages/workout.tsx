@@ -1,6 +1,7 @@
 // fallow-ignore-file unused-export
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
@@ -23,7 +24,7 @@ export function Workout() {
 
   return (
     <Main>
-      <Link className="c-link" to="/">
+      <Link className="c-link" search={WorkoutHistoryFilters.default} to="/">
         {`< ${t("app.back")}`}
       </Link>
 

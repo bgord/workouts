@@ -2,6 +2,7 @@ import { useScrollLock, useToggle, useTranslations, useWindowDimensions } from "
 import { Link } from "@tanstack/react-router";
 import { Menu, Xmark } from "iconoir-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
+import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { Avatar, AvatarSize, Logo } from "../components";
 
 export function Navigation() {
@@ -19,7 +20,14 @@ function NavigationDesktop() {
     <nav data-cross="center" data-gap="6" data-p="2" data-stack="x" style={{ height: "70px" }}>
       <Logo />
 
-      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" data-ml="auto" to="/">
+      <Link
+        className="c-link"
+        data-focus-ring="neutral"
+        data-fw="medium"
+        data-ml="auto"
+        search={WorkoutHistoryFilters.default}
+        to="/"
+      >
         {t("app.workouts")}
       </Link>
 
@@ -106,7 +114,13 @@ function NavigationMobile() {
               <Avatar size={AvatarSize.sm} />
             </Link>
 
-            <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/">
+            <Link
+              className="c-link"
+              data-transform="uppercase"
+              onClick={navigation.disable}
+              search={WorkoutHistoryFilters.default}
+              to="/"
+            >
               {t("app.workouts")}
             </Link>
 

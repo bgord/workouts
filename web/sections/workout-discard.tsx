@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
+import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { homeRoute } from "../router";
 
@@ -16,7 +17,7 @@ export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
         headers: bg.WeakETag.fromRevision(props.workout.revision),
       }),
     onSuccess: async () => {
-      await navigate({ to: "/" });
+      await navigate({ search: Form.default, to: "/" });
       await router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true });
     },
   });
