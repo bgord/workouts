@@ -14,35 +14,32 @@ export function WorkoutSetCorrect(props: {
   const t = bg.useTranslations();
   const router = useRouter();
 
-  const edit = bg.useToggle({ name: `correct-${props.exercise.id}-${props.loggedSet.setNumber}` });
+  const edit = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   const reps = bg.useNumberField({
-    name: `corrected-reps-${props.exercise.id}-${props.loggedSet.setNumber}`,
+    name: `corrected-reps-${props.loggedSet.id}`,
     defaultValue: props.loggedSet.reps,
   });
 
   const load = bg.useNumberField({
-    name: `corrected-load-${props.exercise.id}-${props.loggedSet.setNumber}`,
+    name: `corrected-load-${props.loggedSet.id}`,
     defaultValue: props.loggedSet.load / GRAMS_IN_KILOGRAM,
   });
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(
-        `/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set/${props.loggedSet.setNumber}`,
-        {
-          method: "PATCH",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            ...bg.WeakETag.fromRevision(props.workout.revision),
-          },
-          body: JSON.stringify({
-            reps: reps.value,
-            load: Math.round((load.value ?? 0) * GRAMS_IN_KILOGRAM),
-          }),
+      fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set/${props.loggedSet.id}`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...bg.WeakETag.fromRevision(props.workout.revision),
         },
-      ),
+        body: JSON.stringify({
+          reps: reps.value,
+          load: Math.round((load.value ?? 0) * GRAMS_IN_KILOGRAM),
+        }),
+      }),
     onSuccess: async () => {
       edit.disable();
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });

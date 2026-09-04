@@ -17,7 +17,7 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
   return (
     <ul data-gap="1" data-stack="y">
       {props.exercise.loggedSets.map((loggedSet) => (
-        <li data-cross="center" data-gap="3" data-stack="x" key={loggedSet.setNumber}>
+        <li data-cross="center" data-gap="3" data-stack="x" key={loggedSet.id}>
           <div data-color="neutral-300" data-fs="sm">
             {t("workout.exercise.logged_set", {
               setNumber: loggedSet.setNumber,
