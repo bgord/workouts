@@ -6,6 +6,7 @@ export * from "./reps";
 export * from "./set-number";
 export * from "./sets";
 export * from "./workout";
+export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise";
 export * from "./workout-exercise-id";
 export * from "./workout-id";
