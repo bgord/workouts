@@ -1,7 +1,6 @@
 // fallow-ignore-file unused-export
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
@@ -20,6 +19,7 @@ export function Workout() {
   const t = useTranslations();
   const language = useLanguage();
   const { workout } = workoutRoute.useLoaderData();
+  const search = workoutRoute.useSearch();
 
   const title = workout
     ? t("workout.title", { plan: workout.planName, section: workout.planSectionName })
@@ -27,7 +27,7 @@ export function Workout() {
 
   return (
     <Main>
-      <Link className="c-link" search={WorkoutHistoryFilters.default} to="/">
+      <Link className="c-link" search={{ section: search.section }} to="/">
         {`< ${t("app.back")}`}
       </Link>
 

@@ -4,11 +4,11 @@ import type { ExerciseWithCategories } from "../../modules/exercises/value-objec
 import { ExerciseCard } from "../components";
 import { catalogRoute } from "../router";
 
-function matches(exercise: ExerciseWithCategories, search: { category: string; name: string }): boolean {
+function matches(exercise: ExerciseWithCategories, search: { category?: string; name?: string }): boolean {
   const byCategory =
     !search.category || exercise.categories.some((category) => category.id === search.category);
 
-  const byName = exercise.name.toLowerCase().includes(search.name.trim().toLowerCase());
+  const byName = exercise.name.toLowerCase().includes((search.name ?? "").trim().toLowerCase());
 
   return byCategory && byName;
 }
@@ -21,7 +21,7 @@ export function ExerciseCatalog() {
 
   const name = bg.useTextField({
     name: ExerciseCatalogFiltersForm.Form.name.field.name,
-    defaultValue: search.name,
+    defaultValue: search.name ?? "",
   });
 
   const matching = exercises.filter((exercise) => matches(exercise, search));
@@ -38,7 +38,7 @@ export function ExerciseCatalog() {
 
             navigate({
               replace: true,
-              search: { category: search.category, name: event.currentTarget.value },
+              search: { category: search.category, name: event.currentTarget.value || undefined },
               to: "/catalog",
             });
           }}
@@ -84,7 +84,7 @@ export function ExerciseCatalog() {
                 data-variant="outline"
                 onClick={() =>
                   navigate({
-                    search: { category: selected ? "" : category.id, name: search.name },
+                    search: { category: selected ? undefined : category.id, name: search.name },
                     to: "/catalog",
                   })
                 }

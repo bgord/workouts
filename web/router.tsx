@@ -44,7 +44,7 @@ export const homeRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/home"), "Home"),
   validateSearch: (value) => ({
     section:
-      typeof value["section"] === "string"
+      typeof value["section"] === "string" && value["section"] !== ""
         ? value["section"]
         : WorkoutHistoryFiltersForm.Form.default.section,
   }),
@@ -65,10 +65,13 @@ export const catalogRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/catalog"), "Catalog"),
   validateSearch: (value) => ({
     category:
-      typeof value["category"] === "string"
+      typeof value["category"] === "string" && value["category"] !== ""
         ? value["category"]
         : ExerciseCatalogFiltersForm.Form.default.category,
-    name: typeof value["name"] === "string" ? value["name"] : ExerciseCatalogFiltersForm.Form.default.name,
+    name:
+      typeof value["name"] === "string" && value["name"] !== ""
+        ? value["name"]
+        : ExerciseCatalogFiltersForm.Form.default.name,
   }),
   loader: async ({ context }) => ({
     exercises: await Exercises.list(context.request),
@@ -104,6 +107,12 @@ export const workoutRoute = createRoute({
   path: "/workouts/$workoutId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/workout"), "Workout"),
+  validateSearch: (value) => ({
+    section:
+      typeof value["section"] === "string" && value["section"] !== ""
+        ? value["section"]
+        : WorkoutHistoryFiltersForm.Form.default.section,
+  }),
   loader: async ({ context, params }) => ({
     workout: await Workouts.get(context.request, params),
     workouts: await Workouts.list(context.request),

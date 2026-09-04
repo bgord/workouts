@@ -65,6 +65,7 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
           data-maxw="100%"
           data-transform="truncate"
           params={{ workoutId: props.workout.id }}
+          search={(prev) => ({ section: prev.section })}
           title={title}
           to="/workouts/$workoutId"
         >
