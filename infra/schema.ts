@@ -248,6 +248,7 @@ export const workouts = sqliteTable("workouts", {
   planSectionName: text("planSectionName").notNull().$type<PlanSectionNameType>(),
   scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
   status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
+  completedAt: timestamp("completedAt"),
   revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),

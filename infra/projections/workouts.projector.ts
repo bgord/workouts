@@ -89,6 +89,7 @@ export class WorkoutsProjector {
       .update(Schema.workouts)
       .set({
         status: Workouts.VO.WorkoutStatusEnum.completed,
+        completedAt: event.createdAt,
         revision: event.revision,
         updatedAt: event.createdAt,
       })

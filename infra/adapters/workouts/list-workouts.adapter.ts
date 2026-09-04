@@ -20,6 +20,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       planSectionName: workout.planSectionName,
       scheduledFor: workout.scheduledFor,
       status: workout.status,
+      completedAt: workout.completedAt ?? undefined,
       revision: workout.revision,
     }));
   }
