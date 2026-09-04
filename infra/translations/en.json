@@ -142,6 +142,7 @@
   "workout.create.date.label": "Date",
   "workout.create.error": "Could not schedule the workout",
   "workout.create.plan": "From {{name}}",
+  "workout.create.section.label": "Section",
   "workout.discard.cta": "Discard",
   "workout.discard.error": "Could not discard the workout",
   "workout.discard.title": "Discard the {{name}} workout",

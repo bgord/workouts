@@ -1,19 +1,22 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { WorkoutDraftLimitForOwnerMax } from "../../modules/workouts/value-objects/workout-draft-limit-for-owner";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
+import { Select } from "../components";
 import { homeRoute } from "../router";
 
 export function WorkoutCreate() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { plans, workouts } = homeRoute.useLoaderData();
+  const { plan, workouts } = homeRoute.useLoaderData();
 
   const today = Temporal.Now.plainDateISO().toString();
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
+  const planSectionId = bg.useTextField({
+    name: "planSectionId",
+    defaultValue: plan?.sections[0]?.id ?? "",
+  });
 
-  const plan = plans.find((plan) => plan.status === PlanStatusEnum.finalized);
   const drafts = workouts.filter((workout) => workout.status === WorkoutStatusEnum.draft).length;
 
   const mutation = bg.useMutation({
@@ -22,7 +25,11 @@ export function WorkoutCreate() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId: plan?.id, scheduledFor: scheduledFor.value }),
+        body: JSON.stringify({
+          planId: plan?.id,
+          planSectionId: planSectionId.value,
+          scheduledFor: scheduledFor.value,
+        }),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true }),
   });
@@ -43,10 +50,26 @@ export function WorkoutCreate() {
         <input className="c-input" min={today} type="date" {...scheduledFor.input.props} />
       </div>
 
+      {plan && (
+        <div data-gap="1" data-stack="y">
+          <label className="c-label" data-m="0" {...planSectionId.label.props}>
+            {t("workout.create.section.label")}
+          </label>
+
+          <Select {...planSectionId.input.props}>
+            {plan.sections.map((section) => (
+              <option key={section.id} value={section.id}>
+                {section.name}
+              </option>
+            ))}
+          </Select>
+        </div>
+      )}
+
       <button
         className="c-button"
         data-variant="primary"
-        disabled={Boolean(hint) || scheduledFor.empty || mutation.isLoading}
+        disabled={Boolean(hint) || scheduledFor.empty || planSectionId.empty || mutation.isLoading}
         type="submit"
       >
         {t("workout.create.cta")}
