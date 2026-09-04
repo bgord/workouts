@@ -17,6 +17,7 @@ export const WorkoutSetLog =
     const requesterId = context.identity.authenticatedUserId();
     const workoutId = v.parse(Workouts.VO.WorkoutId, params["workoutId"]);
     const workoutExerciseId = v.parse(Workouts.VO.WorkoutExerciseId, params["workoutExerciseId"]);
+    const loggedSetId = v.parse(Workouts.VO.LoggedSetId, deps.IdProvider.generate());
     const reps = v.parse(Workouts.VO.Reps, body["reps"]);
     const load = v.parse(Workouts.VO.Load, body["load"]);
 
@@ -24,7 +25,7 @@ export const WorkoutSetLog =
       Workouts.Commands.WorkoutSetLogCommand,
       {
         revision: context.middleware.revision.fromWeakETag(),
-        payload: { workoutId, workoutExerciseId, reps, load, requesterId },
+        payload: { workoutId, workoutExerciseId, loggedSetId, reps, load, requesterId },
       },
       deps,
     );

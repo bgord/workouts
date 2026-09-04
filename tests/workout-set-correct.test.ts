@@ -7,8 +7,8 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const setNumber = mocks.correctedLoggedSet.setNumber;
-const url = `/api/workouts/${mocks.workoutId}/exercise/${mocks.workoutExerciseId}/set/${setNumber}`;
+const loggedSetId = mocks.correctedLoggedSet.id;
+const url = `/api/workouts/${mocks.workoutId}/exercise/${mocks.workoutExerciseId}/set/${loggedSetId}`;
 
 const body = JSON.stringify({
   reps: mocks.correctedLoggedSet.reps,
@@ -23,7 +23,7 @@ const logged = [
   mocks.GenericWorkoutSetLoggedEvent,
 ] as const;
 
-describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:setNumber", async () => {
+describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:loggedSetId", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
@@ -41,7 +41,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:setNum
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/workouts/id/exercise/${mocks.workoutExerciseId}/set/1`,
+      `/api/workouts/id/exercise/${mocks.workoutExerciseId}/set/${loggedSetId}`,
       { method: "PATCH", body },
       mocks.ip,
     );

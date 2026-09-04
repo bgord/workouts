@@ -244,7 +244,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutStart(deps)),
   );
   workouts.patch(
-    "/:workoutId/exercise/:workoutExerciseId/set/:setNumber",
+    "/:workoutId/exercise/:workoutExerciseId/set/:loggedSetId",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutSetCorrect(deps)),

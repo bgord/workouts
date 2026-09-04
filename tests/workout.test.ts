@@ -248,7 +248,13 @@ describe("Workout", async () => {
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      workout.logSet(mocks.workoutExerciseId, mocks.loggedSet.reps, mocks.loggedSet.load, mocks.userId),
+      workout.logSet(
+        mocks.workoutExerciseId,
+        mocks.loggedSet.id,
+        mocks.loggedSet.reps,
+        mocks.loggedSet.load,
+        mocks.userId,
+      ),
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutSetLoggedEvent]);
@@ -270,6 +276,7 @@ describe("Workout", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       workout.logSet(
         mocks.workoutExerciseId,
+        mocks.anotherLoggedSet.id,
         mocks.anotherLoggedSet.reps,
         mocks.anotherLoggedSet.load,
         mocks.userId,
@@ -296,6 +303,7 @@ describe("Workout", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       workout.logSet(
         mocks.anotherWorkoutExerciseId,
+        mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
         mocks.userId,
@@ -325,7 +333,13 @@ describe("Workout", async () => {
     );
 
     expect(() =>
-      workout.logSet(mocks.workoutExerciseId, mocks.loggedSet.reps, mocks.loggedSet.load, mocks.userId),
+      workout.logSet(
+        mocks.workoutExerciseId,
+        mocks.loggedSet.id,
+        mocks.loggedSet.reps,
+        mocks.loggedSet.load,
+        mocks.userId,
+      ),
     ).toThrow(Workouts.Invariants.WorkoutIsInProgress.error);
   });
 
@@ -344,6 +358,7 @@ describe("Workout", async () => {
     expect(() =>
       workout.logSet(
         mocks.workoutExerciseId,
+        mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
         mocks.anotherUserId,
@@ -366,6 +381,7 @@ describe("Workout", async () => {
     expect(() =>
       workout.logSet(
         mocks.anotherWorkoutExerciseId,
+        mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
         mocks.userId,
@@ -389,7 +405,7 @@ describe("Workout", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       workout.correctSet(
         mocks.workoutExerciseId,
-        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
         mocks.userId,
@@ -416,7 +432,7 @@ describe("Workout", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       workout.correctSet(
         mocks.workoutExerciseId,
-        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
         mocks.userId,
@@ -443,6 +459,7 @@ describe("Workout", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       workout.logSet(
         mocks.workoutExerciseId,
+        mocks.anotherLoggedSet.id,
         mocks.anotherLoggedSet.reps,
         mocks.anotherLoggedSet.load,
         mocks.userId,
@@ -462,7 +479,7 @@ describe("Workout", async () => {
     expect(() =>
       workout.correctSet(
         mocks.workoutExerciseId,
-        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
         mocks.userId,
@@ -485,7 +502,7 @@ describe("Workout", async () => {
     expect(() =>
       workout.correctSet(
         mocks.workoutExerciseId,
-        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
         mocks.userId,
@@ -509,7 +526,7 @@ describe("Workout", async () => {
     expect(() =>
       workout.correctSet(
         mocks.workoutExerciseId,
-        mocks.correctedLoggedSet.setNumber,
+        mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
         mocks.anotherUserId,

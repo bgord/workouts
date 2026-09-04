@@ -243,6 +243,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(mocks.loggedSetId);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(

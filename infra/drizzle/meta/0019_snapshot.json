@@ -109,17 +109,12 @@
       "indexes": {
         "accounts_issuer_accountId_uidx": {
           "name": "accounts_issuer_accountId_uidx",
-          "columns": [
-            "issuer",
-            "account_id"
-          ],
+          "columns": ["issuer", "account_id"],
           "isUnique": true
         },
         "accounts_userId_idx": {
           "name": "accounts_userId_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         }
       },
@@ -128,12 +123,8 @@
           "name": "accounts_user_id_users_id_fk",
           "tableFrom": "accounts",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -214,17 +205,12 @@
       "indexes": {
         "stream_idx": {
           "name": "stream_idx",
-          "columns": [
-            "stream"
-          ],
+          "columns": ["stream"],
           "isUnique": false
         },
         "stream_revision_uidx": {
           "name": "stream_revision_uidx",
-          "columns": [
-            "stream",
-            "revision"
-          ],
+          "columns": ["stream", "revision"],
           "isUnique": true
         }
       },
@@ -307,10 +293,7 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "exercise_category_assignments_exerciseId_exerciseCategoryId_pk": {
-          "columns": [
-            "exerciseId",
-            "exerciseCategoryId"
-          ],
+          "columns": ["exerciseId", "exerciseCategoryId"],
           "name": "exercise_category_assignments_exerciseId_exerciseCategoryId_pk"
         }
       },
@@ -631,9 +614,7 @@
       "indexes": {
         "sessions_token_unique": {
           "name": "sessions_token_unique",
-          "columns": [
-            "token"
-          ],
+          "columns": ["token"],
           "isUnique": true
         }
       },
@@ -642,12 +623,8 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -698,24 +675,17 @@
       "indexes": {
         "user_preferences_userId_preference_uidx": {
           "name": "user_preferences_userId_preference_uidx",
-          "columns": [
-            "userId",
-            "preference"
-          ],
+          "columns": ["userId", "preference"],
           "isUnique": true
         },
         "user_preferences_userId_idx": {
           "name": "user_preferences_userId_idx",
-          "columns": [
-            "userId"
-          ],
+          "columns": ["userId"],
           "isUnique": false
         },
         "user_preferences_preference_idx": {
           "name": "user_preferences_preference_idx",
-          "columns": [
-            "preference"
-          ],
+          "columns": ["preference"],
           "isUnique": false
         }
       },
@@ -724,12 +694,8 @@
           "name": "user_preferences_userId_users_id_fk",
           "tableFrom": "user_preferences",
           "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -780,16 +746,12 @@
       "indexes": {
         "user_profile_avatars_userId_idx": {
           "name": "user_profile_avatars_userId_idx",
-          "columns": [
-            "userId"
-          ],
+          "columns": ["userId"],
           "isUnique": false
         },
         "user_profile_avatars_userId_uniq": {
           "name": "user_profile_avatars_userId_uniq",
-          "columns": [
-            "userId"
-          ],
+          "columns": ["userId"],
           "isUnique": true
         }
       },
@@ -798,12 +760,8 @@
           "name": "user_profile_avatars_userId_users_id_fk",
           "tableFrom": "user_profile_avatars",
           "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -868,9 +826,7 @@
       "indexes": {
         "users_email_unique": {
           "name": "users_email_unique",
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "isUnique": true
         }
       },
@@ -1095,9 +1051,7 @@
       "indexes": {
         "workoutLoggedSets_workoutExerciseId_idx": {
           "name": "workoutLoggedSets_workoutExerciseId_idx",
-          "columns": [
-            "workoutExerciseId"
-          ],
+          "columns": ["workoutExerciseId"],
           "isUnique": false
         }
       },

@@ -227,13 +227,19 @@ export const anotherWorkoutExerciseId = v.parse(
 
 export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps });
 
+export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
+
+export const anotherLoggedSetId = v.parse(Workouts.VO.LoggedSetId, "6a2d0c8f-4b3e-4d9c-8f7a-2b3c4d5e6f70");
+
 export const loggedSet = v.parse(Workouts.VO.LoggedSet, {
+  id: loggedSetId,
   setNumber: v.parse(Workouts.VO.SetNumber, 1),
   reps: v.parse(Workouts.VO.Reps, 9),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
 });
 
 export const anotherLoggedSet = v.parse(Workouts.VO.LoggedSet, {
+  id: anotherLoggedSetId,
   setNumber: v.parse(Workouts.VO.SetNumber, 2),
   reps: v.parse(Workouts.VO.Reps, 9),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
@@ -808,6 +814,7 @@ export const GenericWorkoutSetLoggedEvent = {
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
 
 export const correctedLoggedSet = v.parse(Workouts.VO.LoggedSet, {
+  id: loggedSetId,
   setNumber: v.parse(Workouts.VO.SetNumber, 1),
   reps: v.parse(Workouts.VO.Reps, 6),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(85).get()),
