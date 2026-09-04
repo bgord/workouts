@@ -202,6 +202,14 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_EXERCISE_ADD_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutExerciseAddCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+      GetExerciseOHQ: Adapters.Exercises.GetExerciseQuery,
+    }),
+  );
+  Tools.CommandBus.on(
     WorkoutsCommands.WORKOUT_EXERCISE_REMOVE_COMMAND,
     WorkoutsCommandHandlers.handleWorkoutExerciseRemoveCommand({
       ...deps,
