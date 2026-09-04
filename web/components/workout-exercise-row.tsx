@@ -14,7 +14,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
   const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
 
   return (
-    <li data-gap="2" data-stack="y">
+    <li className="exercise-block" data-gap="2" data-stack="y">
       <div data-cross="center" data-gap="3" data-stack="x">
         <Link
           aria-hidden
@@ -36,7 +36,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
           {props.exercise.exerciseName}
         </Link>
 
-        <div data-color="neutral-500" data-fs="sm" data-ml="auto">
+        <div className="prescription" data-color="neutral-500" data-fs="sm" data-ml="auto">
           {t("workout.exercise.prescription", {
             sets: props.exercise.prescription.sets,
             reps: format(props.exercise.prescription.reps),
@@ -44,7 +44,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExerciseWithSets; c
         </div>
 
         {props.exercise.target && (
-          <div data-color="neutral-300" data-fs="sm" data-fw="medium">
+          <div className="target" data-color="neutral-300" data-fs="sm" data-fw="medium">
             {t("workout.exercise.target", {
               sets: props.exercise.target.sets,
               reps: props.exercise.target.reps,

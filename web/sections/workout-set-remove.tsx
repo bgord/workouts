@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Trash } from "iconoir-react";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { workoutRoute } from "../router";
@@ -28,13 +27,12 @@ export function WorkoutSetRemove(props: {
       <button
         className="c-button"
         data-color="danger-400"
-        data-interaction="subtle-scale"
-        data-variant="with-icon"
+        data-variant="bare"
         disabled={mutation.isLoading}
         title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
         type="submit"
       >
-        <Trash data-size="sm" />
+        {t("workout.set.remove.cta")}
       </button>
     </form>
   );

@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { Trash } from "iconoir-react";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { homeRoute } from "../router";
 
@@ -27,13 +26,12 @@ export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
       <button
         className="c-button"
         data-color="danger-400"
-        data-interaction="subtle-scale"
-        data-variant="with-icon"
+        data-variant="secondary"
         disabled={mutation.isLoading}
         title={t("workout.discard.title", { name: props.workout.planName })}
         type="submit"
       >
-        <Trash data-size="md" />
+        {t("workout.discard.cta")}
       </button>
 
       {mutation.isError && (
