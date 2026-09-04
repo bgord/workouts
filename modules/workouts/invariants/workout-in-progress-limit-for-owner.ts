@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
+import { WorkoutInProgressLimitForOwnerMax } from "+workouts/value-objects";
 
 class WorkoutInProgressLimitForOwnerError extends Error {}
 
@@ -8,7 +9,7 @@ type WorkoutInProgressLimitForOwnerConfigType = { count: tools.IntegerNonNegativ
 class WorkoutInProgressLimitForOwnerFactory extends bg.Invariant<WorkoutInProgressLimitForOwnerConfigType> {
   // One workout at a time - you cannot be in the gym twice
   passes(config: WorkoutInProgressLimitForOwnerConfigType) {
-    return config.count < 1;
+    return config.count < WorkoutInProgressLimitForOwnerMax;
   }
 
   // Stryker disable next-line StringLiteral

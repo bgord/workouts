@@ -1,10 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
+import { WorkoutInProgressLimitForOwnerMax } from "../../modules/workouts/value-objects/workout-in-progress-limit-for-owner";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { workoutRoute } from "../router";
-
-const IN_PROGRESS_LIMIT = 1;
 
 export function WorkoutStart(props: { workout: Workout }) {
   const t = bg.useTranslations();
@@ -28,7 +27,7 @@ export function WorkoutStart(props: { workout: Workout }) {
   const hint =
     withoutTarget.length > 0
       ? t("workout.start.blocked.missing_targets", { count: withoutTarget.length })
-      : inProgress >= IN_PROGRESS_LIMIT
+      : inProgress >= WorkoutInProgressLimitForOwnerMax
         ? t("workout.start.blocked.in_progress_limit")
         : undefined;
 
