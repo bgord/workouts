@@ -198,6 +198,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRestore(deps)),
   );
+  plans.delete(
+    "/:planId",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRemove(deps)),
+  );
   plans.post(
     "/:planId/editing/enable",
     Tools.ShieldCaptcha.handle(),

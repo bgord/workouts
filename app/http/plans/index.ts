@@ -4,6 +4,7 @@ export * from "./plan-editing-enable";
 export * from "./plan-finalize";
 export * from "./plan-get";
 export * from "./plan-list";
+export * from "./plan-remove";
 export * from "./plan-rename";
 export * from "./plan-restore";
 export * from "./plan-section-create";
