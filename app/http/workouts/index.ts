@@ -5,5 +5,6 @@ export * from "./workout-discard";
 export * from "./workout-exercise-set-target";
 export * from "./workout-get";
 export * from "./workout-list";
+export * from "./workout-set-correct";
 export * from "./workout-set-log";
 export * from "./workout-start";

@@ -3,5 +3,6 @@ export * from "./handleWorkoutCompleteCommand";
 export * from "./handleWorkoutCreateCommand";
 export * from "./handleWorkoutDiscardCommand";
 export * from "./handleWorkoutExerciseSetTargetCommand";
+export * from "./handleWorkoutSetCorrectCommand";
 export * from "./handleWorkoutSetLogCommand";
 export * from "./handleWorkoutStartCommand";
