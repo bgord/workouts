@@ -19,13 +19,32 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
     year: "numeric",
   });
 
-  const completedAt = props.workout.completedAt
-    ? Temporal.Instant.fromEpochMilliseconds(props.workout.completedAt).toLocaleString(language, {
-        hour: "2-digit",
-        hour12: false,
-        minute: "2-digit",
-      })
+  const completed = props.workout.completedAt
+    ? Temporal.Instant.fromEpochMilliseconds(props.workout.completedAt).toZonedDateTimeISO(
+        Temporal.Now.timeZoneId(),
+      )
     : undefined;
+
+  const completedOnScheduledDay =
+    completed && completed.toPlainDate().equals(Temporal.PlainDate.from(props.workout.scheduledFor));
+
+  const subtitle = !completed
+    ? scheduledFor
+    : completedOnScheduledDay
+      ? t("workout.list.completed_at", {
+          date: scheduledFor,
+          time: completed.toLocaleString(language, { hour: "2-digit", hour12: false, minute: "2-digit" }),
+        })
+      : t("workout.list.completed_on", {
+          date: scheduledFor,
+          completed: completed.toLocaleString(language, {
+            day: "numeric",
+            hour: "2-digit",
+            hour12: false,
+            minute: "2-digit",
+            month: "short",
+          }),
+        });
 
   return (
     <li
@@ -53,9 +72,7 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
         </Link>
 
         <div data-color="neutral-500" data-fs="sm">
-          {completedAt
-            ? t("workout.list.completed_at", { date: scheduledFor, time: completedAt })
-            : scheduledFor}
+          {subtitle}
         </div>
       </div>
 
