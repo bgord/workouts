@@ -6,6 +6,7 @@ import type * as Workouts from "+workouts";
 import { Workout } from "../aggregates/workout";
 import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for-owner";
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
+import { WorkoutPlanSectionReady } from "../invariants/workout-plan-section-ready";
 import { WorkoutScheduledForIsNotPast } from "../invariants/workout-scheduled-for-is-not-past";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
 
@@ -28,6 +29,10 @@ export const handleWorkoutCreateCommand =
 
     WorkoutPlanReady.enforce({ plan });
 
+    const section = plan!.sections.find((section) => section.id === command.payload.planSectionId);
+
+    WorkoutPlanSectionReady.enforce({ section });
+
     const count = await deps.GetWorkoutDraftForOwnerCountQuery.execute(command.payload.userId);
 
     WorkoutDraftLimitForOwner.enforce({ count });
@@ -36,21 +41,21 @@ export const handleWorkoutCreateCommand =
       command.payload.workoutId,
       command.payload.planId,
       plan!.name,
+      section!.id,
+      section!.name,
       command.payload.scheduledFor,
       command.payload.userId,
       deps,
     );
 
-    for (const section of plan!.sections) {
-      for (const instruction of section.exerciseInstructions) {
-        workout.addExercise(
-          v.parse(WorkoutExerciseId, deps.IdProvider.generate()),
-          instruction.exercise.id,
-          instruction.exercise.name,
-          { sets: instruction.sets, reps: instruction.reps },
-          command.payload.userId,
-        );
-      }
+    for (const instruction of section!.exerciseInstructions) {
+      workout.addExercise(
+        v.parse(WorkoutExerciseId, deps.IdProvider.generate()),
+        instruction.exercise.id,
+        instruction.exercise.name,
+        { sets: instruction.sets, reps: instruction.reps },
+        command.payload.userId,
+      );
     }
 
     await deps.repo.save(workout);

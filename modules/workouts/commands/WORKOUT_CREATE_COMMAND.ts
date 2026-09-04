@@ -14,6 +14,7 @@ export const WorkoutCreateCommand = v.object({
   payload: v.object({
     workoutId: WorkoutId,
     planId: Plans.VO.PlanId,
+    planSectionId: Plans.VO.PlanSectionId,
     scheduledFor: WorkoutScheduledFor,
     userId: Auth.VO.UserId,
   }),

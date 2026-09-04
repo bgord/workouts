@@ -308,6 +308,7 @@ modules/
     │   ├── workout-is-ready-to-start.ts
     │   ├── workout-logged-set-exists.ts
     │   ├── workout-plan-ready.ts
+    │   ├── workout-plan-section-ready.ts
     │   ├── workout-retains-logged-sets.ts
     │   └── workout-scheduled-for-is-not-past.ts
     ├── ports

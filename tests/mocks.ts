@@ -108,6 +108,7 @@ export const planSectionName = v.parse(Plans.VO.PlanSectionName, "Push");
 
 export const anotherPlanSectionId = v.parse(Plans.VO.PlanSectionId, "a792b3cd-e519-4db4-8b99-c0b18aadb44b");
 export const anotherPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Push A");
+export const thirdPlanSectionId = v.parse(Plans.VO.PlanSectionId, "b0f0f0f7-6a0e-4c58-9a05-2f0c39e4a2f1");
 export const thirdPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Pull");
 
 export const exerciseInstructionId = v.parse(
@@ -191,12 +192,25 @@ const planSection: Plans.VO.PlanSectionWithExercises = {
     { id: exerciseInstruction.id, exercise, sets: exerciseInstruction.sets, reps: exerciseInstruction.reps },
   ],
 };
+const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
+  id: anotherPlanSectionId,
+  name: anotherPlanSectionName,
+  exerciseInstructions: [
+    {
+      id: anotherExerciseInstructionAndId.id,
+      exercise,
+      sets: anotherExerciseInstructionAndId.sets,
+      reps: anotherExerciseInstructionAndId.reps,
+    },
+  ],
+};
+
 export const plan: Plans.VO.Plan = {
   id: planId,
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
   revision: revision.value,
-  sections: [planSection],
+  sections: [planSection, anotherPlanSection],
 };
 
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
@@ -741,7 +755,15 @@ export const GenericWorkoutCreatedEvent = {
   version: 1,
   commit,
   name: "WORKOUT_CREATED_EVENT",
-  payload: { workoutId, planId, planName, scheduledFor: workoutScheduledFor, userId },
+  payload: {
+    workoutId,
+    planId,
+    planName,
+    planSectionId,
+    planSectionName,
+    scheduledFor: workoutScheduledFor,
+    userId,
+  },
 } satisfies Workouts.Events.WorkoutCreatedEventType;
 
 export const GenericWorkoutExerciseAddedEvent = {

@@ -34,12 +34,29 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: bg.UUIDError.Type });
   });
 
-  test("validation - scheduledFor - missing", async () => {
+  test("validation - planSectionId - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
       url,
       { method: "POST", body: JSON.stringify({ planId: mocks.planId }) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: bg.UUIDError.Type });
+  });
+
+  test("validation - scheduledFor - missing", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ planId: mocks.planId, planSectionId: mocks.planSectionId }),
+      },
       mocks.ip,
     );
     const json = await response.json();
@@ -53,7 +70,14 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ planId: mocks.planId, scheduledFor: "01-01-2025" }) },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: "01-01-2025",
+        }),
+      },
       mocks.ip,
     );
     const json = await response.json();
@@ -67,7 +91,14 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ planId: mocks.planId, scheduledFor: "2024-12-31" }) },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: "2024-12-31",
+        }),
+      },
       mocks.ip,
     );
 
@@ -83,12 +114,37 @@ describe(`POST ${url}`, async () => {
       url,
       {
         method: "POST",
-        body: JSON.stringify({ planId: mocks.planId, scheduledFor: mocks.workoutScheduledFor }),
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: mocks.workoutScheduledFor,
+        }),
       },
       mocks.ip,
     );
 
     await testcases.assertInvariantError(response, 404, "workout.plan.ready");
+  });
+
+  test("WorkoutPlanSectionReady", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.thirdPlanSectionId,
+          scheduledFor: mocks.workoutScheduledFor,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 404, "workout.plan.section.ready");
   });
 
   test("WorkoutDraftLimitForOwner", async () => {
@@ -103,7 +159,11 @@ describe(`POST ${url}`, async () => {
       url,
       {
         method: "POST",
-        body: JSON.stringify({ planId: mocks.planId, scheduledFor: mocks.workoutScheduledFor }),
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: mocks.workoutScheduledFor,
+        }),
       },
       mocks.ip,
     );
@@ -129,7 +189,11 @@ describe(`POST ${url}`, async () => {
       {
         method: "POST",
         headers: mocks.correlationIdHeaders,
-        body: JSON.stringify({ planId: mocks.planId, scheduledFor: mocks.workoutScheduledFor }),
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: mocks.workoutScheduledFor,
+        }),
       },
       mocks.ip,
     );
@@ -159,7 +223,11 @@ describe(`POST ${url}`, async () => {
       {
         method: "POST",
         headers: mocks.correlationIdHeaders,
-        body: JSON.stringify({ planId: mocks.planId, scheduledFor: mocks.workoutScheduledFor }),
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: mocks.workoutScheduledFor,
+        }),
       },
       mocks.ip,
     );

@@ -71,6 +71,8 @@ export class Workout {
     workoutId: VO.WorkoutIdType,
     planId: Plans.VO.PlanIdType,
     planName: Plans.VO.PlanNameType,
+    planSectionId: Plans.VO.PlanSectionIdType,
+    planSectionName: Plans.VO.PlanSectionNameType,
     scheduledFor: VO.WorkoutScheduledForType,
     userId: Auth.VO.UserIdType,
     deps: Dependencies,
@@ -80,7 +82,7 @@ export class Workout {
     const WorkoutCreatedEvent = bg.event(
       Events.WorkoutCreatedEvent,
       Workout.getStream(workoutId),
-      { workoutId, planId, planName, scheduledFor, userId },
+      { workoutId, planId, planName, planSectionId, planSectionName, scheduledFor, userId },
       deps,
     );
 

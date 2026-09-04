@@ -17,11 +17,12 @@ export const WorkoutCreate =
     const userId = context.identity.authenticatedUserId();
     const workoutId = v.parse(Workouts.VO.WorkoutId, deps.IdProvider.generate());
     const planId = v.parse(Plans.VO.PlanId, body["planId"]);
+    const planSectionId = v.parse(Plans.VO.PlanSectionId, body["planSectionId"]);
     const scheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, body["scheduledFor"]);
 
     const command = bg.command(
       Workouts.Commands.WorkoutCreateCommand,
-      { payload: { workoutId, planId, scheduledFor, userId } },
+      { payload: { workoutId, planId, planSectionId, scheduledFor, userId } },
       deps,
     );
 
