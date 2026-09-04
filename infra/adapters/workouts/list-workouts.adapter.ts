@@ -10,7 +10,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       .select()
       .from(Schema.workouts)
       .where(eq(Schema.workouts.userId, userId))
-      .orderBy(desc(Schema.workouts.scheduledFor), desc(Schema.workouts.createdAt));
+      .orderBy(desc(Schema.workouts.createdAt));
 
     return workouts.map((workout) => ({
       id: workout.id,
