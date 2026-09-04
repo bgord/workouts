@@ -9,7 +9,9 @@ export function Catalog() {
 
   return (
     <Main>
-      <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">{t("exercise.catalog.header")}</h1>
+      <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">
+        {t("exercise.catalog.header")}
+      </h1>
 
       <ExerciseCatalog />
     </Main>

@@ -19,7 +19,6 @@ function NavigationDesktop() {
 
   return (
     <nav
-      className="app-bar"
       data-bcb="neutral-800"
       data-bsb="solid"
       data-bwb="hairline"
@@ -125,12 +124,11 @@ function NavigationMobile() {
   return (
     <>
       <nav
-        className="app-bar"
-        data-cross="center"
-        data-disp="flex"
         data-bcb="neutral-800"
         data-bsb="solid"
         data-bwb="hairline"
+        data-cross="center"
+        data-disp="flex"
         data-main="between"
         data-position="sticky"
         data-px="3"

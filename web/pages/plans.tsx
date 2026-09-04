@@ -16,7 +16,9 @@ export function Plans() {
   return (
     <Main>
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">{t("plan.list.header")}</h1>
+        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">
+          {t("plan.list.header")}
+        </h1>
 
         {active.length === 0 && (
           <button className="c-button" data-variant="bare" onClick={planCreate.toggle} type="button">
@@ -47,7 +49,14 @@ export function Plans() {
 
       {archived.length > 0 && (
         <div data-gap="3" data-stack="y">
-          <h2 data-color="neutral-400" data-fs="xs" data-fw="bold" data-lh="none" data-ls="widest" data-transform="uppercase">
+          <h2
+            data-color="neutral-400"
+            data-fs="xs"
+            data-fw="bold"
+            data-lh="none"
+            data-ls="widest"
+            data-transform="uppercase"
+          >
             {t("plan.list.archived.header")}
           </h2>
 

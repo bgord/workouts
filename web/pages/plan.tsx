@@ -29,7 +29,14 @@ export function Plan() {
           {plan.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
 
           {plan.status !== PlanStatusEnum.draft && (
-            <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl" data-maxw="100%" data-transform="truncate">
+            <h1
+              data-color="neutral-0"
+              data-fs="2xl"
+              data-fw="black"
+              data-maxw="100%"
+              data-md-fs="xl"
+              data-transform="truncate"
+            >
               {plan.name}
             </h1>
           )}

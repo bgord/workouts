@@ -27,7 +27,7 @@ export function WorkoutHistory() {
   if (workouts.length === 0) return <div data-color="neutral-500">{t("workout.list.empty")}</div>;
 
   return (
-    <div data-gap="3" data-stack="y">
+    <div data-gap="8" data-stack="y">
       <div data-cross="center" data-gap="3" data-stack="x">
         <ul data-gap="1" data-stack="x">
           {sections.map((section) => {

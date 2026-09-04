@@ -37,7 +37,15 @@ export function Workout() {
 
       {workout && (
         <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-          <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl" data-maxw="100%" data-transform="truncate" title={title}>
+          <h1
+            data-color="neutral-0"
+            data-fs="2xl"
+            data-fw="black"
+            data-maxw="100%"
+            data-md-fs="xl"
+            data-transform="truncate"
+            title={title}
+          >
             {title}
           </h1>
 
