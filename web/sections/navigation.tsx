@@ -19,11 +19,14 @@ function NavigationDesktop() {
     <nav data-cross="center" data-gap="6" data-p="2" data-stack="x" style={{ height: "70px" }}>
       <Logo />
 
+      <Link className="c-link" data-focus-ring="neutral" data-fw="medium" data-ml="auto" to="/">
+        {t("app.workouts")}
+      </Link>
+
       <Link
         className="c-link"
         data-focus-ring="neutral"
         data-fw="medium"
-        data-ml="auto"
         search={Form.default}
         to="/workbook"
       >
@@ -107,6 +110,10 @@ function NavigationMobile() {
           >
             <Link data-fs="base" data-fw="medium" onClick={navigation.disable} to="/profile">
               <Avatar size={AvatarSize.sm} />
+            </Link>
+
+            <Link className="c-link" data-transform="uppercase" onClick={navigation.disable} to="/">
+              {t("app.workouts")}
             </Link>
 
             <Link
