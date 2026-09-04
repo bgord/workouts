@@ -829,6 +829,17 @@ export const GenericWorkoutAbandonedEvent = {
   payload: { workoutId, requesterId: userId },
 } satisfies Workouts.Events.WorkoutAbandonedEventType;
 
+export const GenericWorkoutDiscardedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_DISCARDED_EVENT",
+  payload: { workoutId, requesterId: userId },
+} satisfies Workouts.Events.WorkoutDiscardedEventType;
+
 export const AnotherGenericWorkoutSetLoggedEvent = {
   id: expectAnyId,
   correlationId,
