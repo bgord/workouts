@@ -1,5 +1,5 @@
 import type * as bg from "@bgord/bun";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
@@ -8,6 +8,7 @@ import * as Schema from "+infra/schema";
 type Dependencies = {
   EventBus: bg.EventBusPort<
     | Workouts.Events.WorkoutSetLoggedEventType
+    | Workouts.Events.WorkoutSetCorrectedEventType
     | Workouts.Events.WorkoutDiscardedEventType
     | Auth.Events.AccountDeletedEventType
   >;
@@ -19,6 +20,10 @@ export class WorkoutLoggedSetsProjector {
     deps.EventBus.on(
       Workouts.Events.WORKOUT_SET_LOGGED_EVENT,
       deps.EventHandler.handle(this.onWorkoutSetLoggedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Workouts.Events.WORKOUT_SET_CORRECTED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutSetCorrectedEvent.bind(this)),
     );
     deps.EventBus.on(
       Workouts.Events.WORKOUT_DISCARDED_EVENT,
@@ -40,6 +45,18 @@ export class WorkoutLoggedSetsProjector {
       userId: event.payload.requesterId,
       createdAt: event.createdAt,
     });
+  }
+
+  async onWorkoutSetCorrectedEvent(event: Workouts.Events.WorkoutSetCorrectedEventType) {
+    await db
+      .update(Schema.workoutLoggedSets)
+      .set({ reps: event.payload.loggedSet.reps, load: event.payload.loggedSet.load })
+      .where(
+        and(
+          eq(Schema.workoutLoggedSets.workoutExerciseId, event.payload.workoutExerciseId),
+          eq(Schema.workoutLoggedSets.setNumber, event.payload.loggedSet.setNumber),
+        ),
+      );
   }
 
   async onWorkoutDiscardedEvent(event: Workouts.Events.WorkoutDiscardedEventType) {
