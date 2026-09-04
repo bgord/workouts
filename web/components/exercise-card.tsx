@@ -12,13 +12,15 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
       data-bs="solid"
       data-bw="hairline"
       data-gap="2"
+      data-hover-bc="neutral-500"
       data-maxw="100%"
-      data-p="2"
+      data-p="3"
       data-stack="y"
-      {...bg.Rhythm(176).times(1).style.width}
+      {...bg.Rhythm(232).times(1).style.width}
     >
       <Link
         aria-hidden
+        data-disp="flex"
         params={{ exerciseId: props.exercise.id }}
         tabIndex={-1}
         to="/workbook/exercise/$exerciseId"
@@ -37,7 +39,7 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
         {props.exercise.name}
       </Link>
 
-      <ul data-gap="1" data-overflow="hidden" data-stack="x" data-wrap="nowrap">
+      <ul data-gap="1" data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap">
         {props.exercise.categories.map((category) => (
           <li className="c-badge" data-variant="outline" key={category.id}>
             {category.name}

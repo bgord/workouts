@@ -9,13 +9,13 @@ export enum ExerciseImageSize {
 
 const width: Record<ExerciseImageSize, number> = {
   [ExerciseImageSize.sm]: 80,
-  [ExerciseImageSize.md]: 160,
+  [ExerciseImageSize.md]: 208,
   [ExerciseImageSize.lg]: 320,
 };
 
 const height: Record<ExerciseImageSize, number> = {
   [ExerciseImageSize.sm]: 60,
-  [ExerciseImageSize.md]: 120,
+  [ExerciseImageSize.md]: 156,
   [ExerciseImageSize.lg]: 240,
 };
 
