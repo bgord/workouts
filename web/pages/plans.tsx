@@ -16,20 +16,24 @@ export function Plans() {
           {t("plan.list.header")}
         </h1>
 
-        {plans.hints.create === null && (
-          <button className="c-button" data-variant="secondary" onClick={planCreate.toggle} type="button">
-            {t("plan.create.cta")}
-          </button>
-        )}
+        <button
+          className="c-button"
+          data-variant="secondary"
+          disabled={!plans.actions.create.enabled}
+          onClick={planCreate.toggle}
+          type="button"
+        >
+          {t("plan.create.cta")}
+        </button>
       </div>
 
-      {plans.hints.create && (
-        <div data-color="neutral-400" data-fs="sm">
-          {t(plans.hints.create)}
+      {plans.actions.create.hints.map((hint) => (
+        <div data-color="neutral-400" data-fs="sm" key={hint}>
+          {t(hint)}
         </div>
-      )}
+      ))}
 
-      {plans.hints.create === null && planCreate.on && <PlanCreate />}
+      {plans.actions.create.enabled && planCreate.on && <PlanCreate />}
 
       {plans.data.active.length === 0 && plans.data.archived.length === 0 && (
         <div data-color="neutral-400">{t("plan.list.empty")}</div>

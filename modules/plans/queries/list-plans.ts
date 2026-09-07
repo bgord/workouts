@@ -4,7 +4,7 @@ import type { ActionState } from "./action-state";
 
 export type PlanListResponse = {
   data: { active: ReadonlyArray<VO.PlanSummary>; archived: ReadonlyArray<VO.PlanSummary> };
-  actions: { create: ActionState | null };
+  actions: { create: ActionState };
 };
 
 export interface ListPlans {

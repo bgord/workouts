@@ -26,8 +26,8 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
     const create: Plans.Queries.ActionState = Plans.Invariants.PlanLimitForOwner.passes({
       count: tools.Int.nonNegative(active.length),
     })
-      ? true
-      : ["plan.list.limit.hint"];
+      ? { enabled: true, hints: [] }
+      : { enabled: false, hints: ["plan.list.limit.hint"] };
 
     return { data: { active, archived }, actions: { create } };
   }
