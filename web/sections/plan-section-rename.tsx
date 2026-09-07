@@ -35,7 +35,6 @@ export function PlanSectionRename(props: { plan: Plan; section: PlanSectionWithE
       <button
         className="c-card-title"
         data-cursor="pointer"
-        data-fs="lg"
         data-hover-color="brand-300"
         data-transform="truncate"
         onClick={rename.enable}

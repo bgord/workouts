@@ -17,7 +17,15 @@ export function PlanSectionExerciseInstructionList(props: { plan: Plan; section:
   }
 
   return (
-    <ul data-gap="2" data-stack="y" data-width="100%">
+    <ul
+      data-bct="alpha-subtle"
+      data-bst="solid"
+      data-bwt="hairline"
+      data-gap="2"
+      data-pt="3"
+      data-stack="y"
+      data-width="100%"
+    >
       {props.section.exerciseInstructions.map((exerciseInstruction) => (
         <PlanSectionExerciseInstructionRow
           editable={editable}

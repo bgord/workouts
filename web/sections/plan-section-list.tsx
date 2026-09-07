@@ -3,7 +3,6 @@ import type { Plan } from "../../modules/plans/value-objects/plan";
 import { PlanSectionExerciseInstructionLimitMax } from "../../modules/plans/value-objects/plan-section-exercise-instruction-limit";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
-import { Separator } from "../components";
 import { PlanSectionCreate } from "./plan-section-create";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -18,7 +17,7 @@ export function PlanSectionList(props: Plan) {
 
   return (
     <div data-gap="3" data-stack="y">
-      <div data-cross="center" data-gap="2" data-stack="x">
+      <div data-cross="baseline" data-gap="2" data-stack="x">
         <h2
           data-color="neutral-300"
           data-fs="xs"
@@ -48,14 +47,13 @@ export function PlanSectionList(props: Plan) {
 
       <ul data-gap="5" data-stack="y">
         {props.sections.map((section) => (
-          <li className="c-card" data-gap="3" key={section.id}>
+          <li className="c-card" data-gap="3" data-p="4" key={section.id}>
             <div data-cross="center" data-gap="3" data-stack="x">
               {editable && <PlanSectionRename plan={props} section={section} />}
 
               {!editable && (
                 <div
                   className="c-card-title"
-                  data-fs="lg"
                   data-transform="truncate"
                   style={{ minInlineSize: 0 }}
                   title={section.name}
@@ -66,8 +64,6 @@ export function PlanSectionList(props: Plan) {
 
               {editable && <PlanSectionRemove plan={props} section={section} />}
             </div>
-
-            <Separator color="alpha-soft" />
 
             <PlanSectionExerciseInstructionList plan={props} section={section} />
 
