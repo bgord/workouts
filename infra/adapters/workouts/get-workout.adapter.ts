@@ -1,4 +1,5 @@
 import type * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { and, asc, eq } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
@@ -71,6 +72,30 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       })),
     };
 
+    const inProgressCount = await db.$count(
+      Schema.workouts,
+      and(
+        eq(Schema.workouts.userId, userId),
+        eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.in_progress),
+      ),
+    );
+
+    const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status: workout.status });
+    const readyToStart = Workouts.Invariants.WorkoutIsReadyToStart.passes({
+      workoutExercises: data.exercises,
+    });
+    const inProgressAvailable = Workouts.Invariants.WorkoutInProgressLimitForOwner.passes({
+      count: tools.Int.nonNegative(inProgressCount),
+    });
+
+    const startBlockers: Array<bg.TranslationsKeyType> = [];
+
+    if (draft && data.exercises.length === 0) startBlockers.push("workout.start.blocked.no_exercises");
+    if (draft && data.exercises.length > 0 && !readyToStart) {
+      startBlockers.push("workout.start.blocked.missing_target");
+    }
+    if (draft && !inProgressAvailable) startBlockers.push("workout.start.blocked.in_progress_limit");
+
     const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status: workout.status });
     const hasLoggedSets = Workouts.Invariants.WorkoutHasLoggedSets.passes({
       workoutExercises: data.exercises,
@@ -82,7 +107,10 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     return {
       data,
-      actions: { complete: { enabled: inProgress && hasLoggedSets, hints: completeBlockers } },
+      actions: {
+        start: { enabled: draft && readyToStart && inProgressAvailable, hints: startBlockers },
+        complete: { enabled: inProgress && hasLoggedSets, hints: completeBlockers },
+      },
     };
   }
 }

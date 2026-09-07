@@ -14,7 +14,7 @@ import { WorkoutExerciseRemove } from "../sections/workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
 import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
-import { useWorkoutStartHint, WorkoutStart } from "../sections/workout-start";
+import { WorkoutStart } from "../sections/workout-start";
 
 const DISCARDABLE = [WorkoutStatusEnum.draft, WorkoutStatusEnum.in_progress, WorkoutStatusEnum.completed];
 
@@ -23,10 +23,6 @@ export function Workout() {
   const language = useLanguage();
   const { workout } = workoutRoute.useLoaderData();
   const search = workoutRoute.useSearch();
-  const startHint = useWorkoutStartHint(workout?.data);
-
-  const hint = workout?.data.status === WorkoutStatusEnum.draft ? startHint : undefined;
-
   const title = workout
     ? t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })
     : "";
@@ -65,20 +61,14 @@ export function Workout() {
           {DISCARDABLE.includes(workout.data.status) && (
             <div data-gap="2" data-stack="y">
               <div data-cross="center" data-gap="3" data-stack="x">
-                {workout.data.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout.data} />}
+                {workout.actions.start.enabled && <WorkoutStart workout={workout.data} />}
 
                 {workout.actions.complete.enabled && <WorkoutComplete workout={workout.data} />}
 
                 <WorkoutDiscard workout={workout.data} />
               </div>
 
-              {hint && (
-                <div data-color="neutral-400" data-fs="sm">
-                  {hint}
-                </div>
-              )}
-
-              {workout.actions.complete.hints.map((blocker) => (
+              {[...workout.actions.start.hints, ...workout.actions.complete.hints].map((blocker) => (
                 <div data-color="neutral-400" data-fs="sm" key={blocker}>
                   {t(blocker)}
                 </div>

@@ -44,7 +44,10 @@ describe("GET /api/workouts/:workoutId", async () => {
     spies.use(
       spyOn(di.Adapters.Workouts.GetWorkoutQuery, "execute").mockResolvedValue({
         data: mocks.workout,
-        actions: { complete: { enabled: true, hints: [] } },
+        actions: {
+          start: { enabled: false, hints: ["workout.start.blocked.missing_target"] },
+          complete: { enabled: true, hints: [] },
+        },
       }),
     );
 
@@ -52,6 +55,12 @@ describe("GET /api/workouts/:workoutId", async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ data: mocks.workout, actions: { complete: { enabled: true, hints: [] } } });
+    expect(json).toEqual({
+      data: mocks.workout,
+      actions: {
+        start: { enabled: false, hints: ["workout.start.blocked.missing_target"] },
+        complete: { enabled: true, hints: [] },
+      },
+    });
   });
 });
