@@ -18,7 +18,7 @@ export function Logo() {
       data-ls="wider"
       data-transform="uppercase"
     >
-      <Link data-focus-ring="neutral" search={Form.default} to="/">
+      <Link search={Form.default} style={{ textDecoration: "none" }} to="/">
         {t("app.name")}
       </Link>
     </div>
