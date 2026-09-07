@@ -10,6 +10,7 @@ export type PlanGetResponse = {
     editingEnable: ActionState;
     archive: ActionState;
     restore: ActionState;
+    remove: ActionState;
   };
 };
 

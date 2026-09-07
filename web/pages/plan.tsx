@@ -1,7 +1,6 @@
 // fallow-ignore-file unused-export
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
@@ -59,23 +58,18 @@ export function Plan() {
       {plan?.data && (
         <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
           {plan.actions.finalize.enabled && <PlanFinalize {...plan?.data} />}
-
           {plan.actions.editingEnable.enabled && <PlanEditingEnable {...plan?.data} />}
-
           {plan.actions.archive.enabled && <PlanArchive {...plan?.data} />}
-
           {plan.actions.restore.enabled && <PlanRestore {...plan?.data} />}
-
-          {plan?.data.status !== PlanStatusEnum.finalized && <PlanRemove {...plan?.data} />}
+          {plan.actions.remove.enabled && <PlanRemove {...plan?.data} />}
         </div>
       )}
 
-      {plan?.data &&
-        plan.actions.finalize.hints.map((hint) => (
-          <div data-color="neutral-400" data-fs="sm" key={hint}>
-            {t(hint)}
-          </div>
-        ))}
+      {plan?.actions.finalize.hints.map((hint) => (
+        <div data-color="neutral-400" data-fs="sm" key={hint}>
+          {t(hint)}
+        </div>
+      ))}
 
       {plan?.data && <PlanSectionList {...plan?.data} />}
     </Main>
