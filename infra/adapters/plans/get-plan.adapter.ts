@@ -88,8 +88,12 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
 
     const finalize = { enabled: editable && finalizeBlockers.length === 0, hints: finalizeBlockers };
     const rename = { enabled: editable, hints: [] };
+    const editingEnable = {
+      enabled: Plans.Invariants.PlanIsFinalized.passes({ status: data.status }),
+      hints: [],
+    };
 
-    return { data, actions: { finalize, rename } };
+    return { data, actions: { finalize, rename, editingEnable } };
   }
 }
 

@@ -60,7 +60,7 @@ export function Plan() {
         <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
           {plan.actions.finalize.enabled && <PlanFinalize {...plan?.data} />}
 
-          {plan?.data.status === PlanStatusEnum.finalized && <PlanEditingEnable {...plan?.data} />}
+          {plan.actions.editingEnable.enabled && <PlanEditingEnable {...plan?.data} />}
 
           {plan?.data.status !== PlanStatusEnum.archived && <PlanArchive {...plan?.data} />}
 
