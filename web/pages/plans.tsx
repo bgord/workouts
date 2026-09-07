@@ -21,14 +21,14 @@ export function Plans() {
         </h1>
 
         {active.length === 0 && (
-          <button className="c-button" data-variant="bare" onClick={planCreate.toggle} type="button">
+          <button className="c-button" data-variant="secondary" onClick={planCreate.toggle} type="button">
             {t("plan.create.cta")}
           </button>
         )}
       </div>
 
       {active.length > 0 && (
-        <div data-color="neutral-500" data-fs="sm">
+        <div data-color="neutral-400" data-fs="sm">
           {t("plan.list.limit.hint")}
         </div>
       )}
@@ -36,7 +36,7 @@ export function Plans() {
       {active.length === 0 && planCreate.on && <PlanCreate />}
 
       {active.length === 0 && archived.length === 0 && (
-        <div data-color="neutral-500">{t("plan.list.empty")}</div>
+        <div data-color="neutral-400">{t("plan.list.empty")}</div>
       )}
 
       {active.length > 0 && (
@@ -50,7 +50,7 @@ export function Plans() {
       {archived.length > 0 && (
         <div data-gap="3" data-stack="y">
           <h2
-            data-color="neutral-400"
+            data-color="neutral-300"
             data-fs="xs"
             data-fw="bold"
             data-lh="none"

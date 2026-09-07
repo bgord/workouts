@@ -33,7 +33,7 @@ export function Workout() {
         {`< ${t("app.back")}`}
       </Link>
 
-      {!workout && <div data-color="neutral-500">{t("workout.not_found")}</div>}
+      {!workout && <div data-color="neutral-400">{t("workout.not_found")}</div>}
 
       {workout && (
         <div data-gap="4" data-stack="y">

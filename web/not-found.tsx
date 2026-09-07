@@ -12,7 +12,7 @@ export function NotFound() {
         {t("app.not_found.header")}
       </h1>
 
-      <div data-color="neutral-500">{t("app.not_found.info")}</div>
+      <div data-color="neutral-400">{t("app.not_found.info")}</div>
 
       <Link className="c-link" data-mr="auto" search={WorkoutHistoryFilters.default} to="/">
         {t("app.not_found.cta")}

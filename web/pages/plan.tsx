@@ -28,7 +28,7 @@ export function Plan() {
         {`< ${t("app.back")}`}
       </Link>
 
-      {!plan && <div data-color="neutral-500">{t("plan.not_found")}</div>}
+      {!plan && <div data-color="neutral-400">{t("plan.not_found")}</div>}
 
       {plan && (
         <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
