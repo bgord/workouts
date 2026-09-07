@@ -20,7 +20,9 @@ export function Profile() {
           {t("profile.header")}
         </h1>
 
-        <div data-color="neutral-400" data-fs="sm">{session.user.email}</div>
+        <div data-color="neutral-400" data-fs="sm">
+          {session.user.email}
+        </div>
       </div>
 
       <ProfileAvatarChange />
