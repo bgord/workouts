@@ -1,6 +1,6 @@
 import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, max, sql } from "drizzle-orm";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
@@ -38,6 +38,25 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       revision: workout.revision,
     }));
 
+    const sections = await db
+      .select({
+        id: Schema.workouts.planSectionId,
+        name: sql<Plans.VO.PlanSectionNameType>`coalesce(${Schema.planSections.name}, ${Schema.workouts.planSectionName})`,
+        latest: max(Schema.workouts.createdAt),
+      })
+      .from(Schema.workouts)
+      .leftJoin(
+        Schema.planSections,
+        and(
+          eq(Schema.planSections.id, Schema.workouts.planSectionId),
+          eq(Schema.planSections.userId, userId),
+          finalizedPlan ? eq(Schema.planSections.planId, finalizedPlan.id) : sql`0`,
+        ),
+      )
+      .where(eq(Schema.workouts.userId, userId))
+      .groupBy(Schema.workouts.planSectionId)
+      .orderBy(desc(max(Schema.workouts.createdAt)));
+
     const drafts = data.filter((workout) => workout.status === Workouts.VO.WorkoutStatusEnum.draft).length;
 
     const planReady = Workouts.Invariants.WorkoutPlanReady.passes({ plan: finalizedPlan ?? null });
@@ -50,7 +69,11 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
     if (!planReady) hints.push("workout.create.blocked.no_finalized_plan");
     if (!draftsAvailable) hints.push("workout.create.blocked.draft_limit");
 
-    return { data, actions: { create: { enabled: planReady && draftsAvailable, hints } } };
+    return {
+      data,
+      sections: sections.map((section) => ({ id: section.id, name: section.name })),
+      actions: { create: { enabled: planReady && draftsAvailable, hints } },
+    };
   }
 }
 

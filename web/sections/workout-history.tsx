@@ -1,26 +1,13 @@
 import * as bg from "@bgord/ui";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
-import type { PlanSectionIdType } from "../../modules/plans/value-objects/plan-section-id";
-import type { PlanSectionNameType } from "../../modules/plans/value-objects/plan-section-name";
 import { WorkoutCard } from "../components";
 import { homeRoute } from "../router";
 
 export function WorkoutHistory() {
   const t = bg.useTranslations();
-  const { plan, workouts } = homeRoute.useLoaderData();
+  const { workouts } = homeRoute.useLoaderData();
   const navigate = homeRoute.useNavigate();
   const search = homeRoute.useSearch();
-
-  const sections = workouts.data.reduce<Array<{ id: PlanSectionIdType; name: PlanSectionNameType }>>(
-    (result, workout) => {
-      if (result.some((section) => section.id === workout.planSectionId)) return result;
-
-      const current = plan?.sections.find((section) => section.id === workout.planSectionId);
-
-      return [...result, { id: workout.planSectionId, name: current?.name ?? workout.planSectionName }];
-    },
-    [],
-  );
 
   const matching = workouts.data.filter(
     (workout) => !search.section || workout.planSectionId === search.section,
@@ -32,7 +19,7 @@ export function WorkoutHistory() {
     <div data-gap="8" data-stack="y">
       <div data-cross="center" data-gap="3" data-stack="x">
         <ul data-gap="1" data-stack="x">
-          {sections.map((section) => {
+          {workouts.sections.map((section) => {
             const selected = search.section === section.id;
 
             return (

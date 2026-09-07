@@ -24,6 +24,7 @@ describe(`GET ${url}`, async () => {
     spies.use(
       spyOn(di.Adapters.Workouts.ListWorkoutsQuery, "execute").mockResolvedValue({
         data: [mocks.workoutSummary],
+        sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
         actions: { create: { enabled: false, hints: ["workout.create.blocked.draft_limit"] } },
       }),
     );
@@ -34,6 +35,7 @@ describe(`GET ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       data: [mocks.workoutSummary],
+      sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
       actions: { create: { enabled: false, hints: ["workout.create.blocked.draft_limit"] } },
     });
   });
@@ -44,6 +46,7 @@ describe(`GET ${url}`, async () => {
     spies.use(
       spyOn(di.Adapters.Workouts.ListWorkoutsQuery, "execute").mockResolvedValue({
         data: [],
+        sections: [],
         actions: { create: { enabled: true, hints: [] } },
       }),
     );
@@ -52,6 +55,6 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ data: [], actions: { create: { enabled: true, hints: [] } } });
+    expect(json).toEqual({ data: [], sections: [], actions: { create: { enabled: true, hints: [] } } });
   });
 });

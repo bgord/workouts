@@ -20,29 +20,42 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     if (!workout) return null;
 
-    const exercises = await db
-      .select()
-      .from(Schema.workoutExercises)
-      .where(
-        and(eq(Schema.workoutExercises.workoutId, workoutId), eq(Schema.workoutExercises.userId, userId)),
-      )
-      .orderBy(asc(Schema.workoutExercises.createdAt));
+    const [exercises, loggedSets, inProgressCount] = await Promise.all([
+      db
+        .select()
+        .from(Schema.workoutExercises)
+        .where(
+          and(eq(Schema.workoutExercises.workoutId, workoutId), eq(Schema.workoutExercises.userId, userId)),
+        )
+        .orderBy(asc(Schema.workoutExercises.createdAt)),
+      db
+        .select()
+        .from(Schema.workoutLoggedSets)
+        .where(
+          and(eq(Schema.workoutLoggedSets.workoutId, workoutId), eq(Schema.workoutLoggedSets.userId, userId)),
+        )
+        .orderBy(asc(Schema.workoutLoggedSets.setNumber)),
+      db.$count(
+        Schema.workouts,
+        and(
+          eq(Schema.workouts.userId, userId),
+          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.in_progress),
+        ),
+      ),
+    ]);
 
-    const loggedSets = await db
-      .select()
-      .from(Schema.workoutLoggedSets)
-      .where(
-        and(eq(Schema.workoutLoggedSets.workoutId, workoutId), eq(Schema.workoutLoggedSets.userId, userId)),
-      )
-      .orderBy(asc(Schema.workoutLoggedSets.setNumber));
+    const status = workout.status;
 
-    const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status: workout.status });
-    const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status: workout.status });
-
-    const correctable = Workouts.Invariants.WorkoutIsCorrectable.passes({ status: workout.status });
+    const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status });
+    const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status });
+    const correctable = Workouts.Invariants.WorkoutIsCorrectable.passes({ status });
+    const exists = Workouts.Invariants.WorkoutExists.passes({ status });
     const retainsLoggedSets = Workouts.Invariants.WorkoutRetainsLoggedSets.passes({
-      status: workout.status,
+      status,
       count: tools.Int.nonNegative(loggedSets.length),
+    });
+    const inProgressAvailable = Workouts.Invariants.WorkoutInProgressLimitForOwner.passes({
+      count: tools.Int.nonNegative(inProgressCount),
     });
 
     const setRemoveBlockers: Array<bg.TranslationsKeyType> = [];
@@ -61,7 +74,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       planSectionId: workout.planSectionId,
       planSectionName: workout.planSectionName,
       scheduledFor: workout.scheduledFor,
-      status: workout.status,
+      status,
       revision: workout.revision,
       exercises: exercises.map((exercise) => ({
         id: exercise.id,
@@ -92,44 +105,21 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       })),
     };
 
-    const inProgressCount = await db.$count(
-      Schema.workouts,
-      and(
-        eq(Schema.workouts.userId, userId),
-        eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.in_progress),
-      ),
-    );
+    const workoutExercises = data.exercises;
 
-    const readyToStart = Workouts.Invariants.WorkoutIsReadyToStart.passes({
-      workoutExercises: data.exercises,
-    });
-    const inProgressAvailable = Workouts.Invariants.WorkoutInProgressLimitForOwner.passes({
-      count: tools.Int.nonNegative(inProgressCount),
-    });
+    const hasExercises = workoutExercises.length > 0;
+    const readyToStart = Workouts.Invariants.WorkoutIsReadyToStart.passes({ workoutExercises });
+    const hasLoggedSets = Workouts.Invariants.WorkoutHasLoggedSets.passes({ workoutExercises });
+    const exercisesAvailable = Workouts.Invariants.WorkoutExerciseLimit.passes({ workoutExercises });
 
     const startBlockers: Array<bg.TranslationsKeyType> = [];
-
-    if (draft && data.exercises.length === 0) startBlockers.push("workout.start.blocked.no_exercises");
-    if (draft && data.exercises.length > 0 && !readyToStart) {
-      startBlockers.push("workout.start.blocked.missing_target");
-    }
-    if (draft && !inProgressAvailable) startBlockers.push("workout.start.blocked.in_progress_limit");
-
-    const hasLoggedSets = Workouts.Invariants.WorkoutHasLoggedSets.passes({
-      workoutExercises: data.exercises,
-    });
-
     const completeBlockers: Array<bg.TranslationsKeyType> = [];
-
-    if (inProgress && !hasLoggedSets) completeBlockers.push("workout.complete.blocked.no_logged_sets");
-
-    const exists = Workouts.Invariants.WorkoutExists.passes({ status: workout.status });
-    const exercisesAvailable = Workouts.Invariants.WorkoutExerciseLimit.passes({
-      workoutExercises: data.exercises,
-    });
-
     const exerciseAddBlockers: Array<bg.TranslationsKeyType> = [];
 
+    if (draft && !hasExercises) startBlockers.push("workout.start.blocked.no_exercises");
+    if (draft && hasExercises && !readyToStart) startBlockers.push("workout.start.blocked.missing_target");
+    if (draft && !inProgressAvailable) startBlockers.push("workout.start.blocked.in_progress_limit");
+    if (inProgress && !hasLoggedSets) completeBlockers.push("workout.complete.blocked.no_logged_sets");
     if (draft && !exercisesAvailable) exerciseAddBlockers.push("workout.exercise.add.blocked.limit");
 
     return {

@@ -367,10 +367,7 @@ export class Workout {
                 ...exercise,
                 loggedSets: exercise.loggedSets
                   .filter((loggedSet) => loggedSet.id !== event.payload.loggedSetId)
-                  .map((loggedSet, index) => ({
-                    ...loggedSet,
-                    setNumber: v.parse(VO.SetNumber, index + 1),
-                  })),
+                  .map((loggedSet, index) => ({ ...loggedSet, setNumber: v.parse(VO.SetNumber, index + 1) })),
               }
             : exercise,
         );
