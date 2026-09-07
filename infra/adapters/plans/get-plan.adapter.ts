@@ -1,3 +1,4 @@
+import type * as bg from "@bgord/bun";
 import { and, asc, eq } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
@@ -6,7 +7,10 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
-  async execute(planId: Plans.VO.PlanIdType, userId: Auth.VO.UserIdType): Promise<Plans.VO.Plan | null> {
+  async execute(
+    planId: Plans.VO.PlanIdType,
+    userId: Auth.VO.UserIdType,
+  ): Promise<Plans.Queries.PlanGetResponse | null> {
     const plan = await db
       .select()
       .from(Schema.plans)
@@ -43,7 +47,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       )
       .orderBy(asc(Schema.planSectionExerciseInstructions.createdAt));
 
-    return {
+    const data = {
       id: plan.id,
       name: plan.name,
       status: plan.status,
@@ -70,6 +74,21 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           })),
       })),
     };
+
+    const editable = Plans.Invariants.PlanIsEditable.passes({ status: data.status });
+    const hasSections = Plans.Invariants.PlanHasSections.passes({ planSections: data.sections });
+    const hasNoEmptySections = Plans.Invariants.PlanHasNoEmptySections.passes({
+      planSections: data.sections,
+    });
+
+    const finalizeBlockers: Array<bg.TranslationsKeyType> = [];
+
+    if (!hasSections) finalizeBlockers.push("plan.finalize.blocked.no_sections");
+    if (!hasNoEmptySections) finalizeBlockers.push("plan.finalize.blocked.empty_sections");
+
+    const finalize = !editable ? null : finalizeBlockers.length > 0 ? finalizeBlockers : true;
+
+    return { data, actions: { finalize } };
   }
 }
 
