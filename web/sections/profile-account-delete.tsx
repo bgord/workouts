@@ -23,7 +23,7 @@ export function ProfileAccountDelete() {
       <div data-gap="3" data-main="between" data-stack="x">
         <div data-cross="center" data-gap="3" data-stack="x">
           <UserXmark data-size="md" />
-          {t("profile.delete_account.header")}
+          <div className="c-card-title">{t("profile.delete_account.header")}</div>
         </div>
 
         <div data-color="danger-400" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">

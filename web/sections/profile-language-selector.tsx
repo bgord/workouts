@@ -6,13 +6,13 @@ export function ProfileLanguageSelector() {
   const t = useTranslations();
 
   return (
-    <div data-gap="5" data-stack="y">
+    <section className="c-card" data-gap="5">
       <div data-cross="center" data-gap="3" data-stack="x">
         <Language data-size="md" />
-        <div>{t("profile.change_language.header")}</div>
+        <div className="c-card-title">{t("profile.change_language.header")}</div>
       </div>
 
       <LanguageSelector />
-    </div>
+    </section>
   );
 }

@@ -29,10 +29,10 @@ export function ProfileAvatarChange() {
   });
 
   return (
-    <section data-gap="5" data-stack="y">
+    <section className="c-card" data-gap="5">
       <div data-cross="center" data-gap="3" data-stack="x">
         <UserCircle data-size="md" />
-        <div>{t("profile.avatar.header")}</div>
+        <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 
       <div data-gap="5" data-stack="x">
@@ -72,7 +72,7 @@ export function ProfileAvatarChange() {
               <button
                 className="c-button"
                 data-animation="grow-fade-in"
-                data-variant="bare"
+                data-variant="ghost"
                 disabled={mutation.isLoading}
                 onClick={exec([avatar.actions.clearFile, mutation.reset])}
                 type="button"
@@ -82,7 +82,7 @@ export function ProfileAvatarChange() {
             )}
           </div>
 
-          <div data-color="neutral-500" data-fs="xs">
+          <div data-color="neutral-400" data-fs="xs">
             {t("profile.avatar.hint")}
           </div>
 
