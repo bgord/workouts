@@ -30,7 +30,7 @@ export function PlanSectionList(props: Plan) {
           {t("plan.section.list.header")}
         </h2>
 
-        <div className="c-card-description">
+        <div data-color="neutral-400" data-fs="sm">
           {t("plan.section.list.count", {
             count: props.sections.length,
             max: PlanSectionLimitForPlanMax,
@@ -40,11 +40,9 @@ export function PlanSectionList(props: Plan) {
         {editable && !full && <PlanSectionCreate {...props} />}
       </div>
 
-      {props.sections.length === 0 && (
-        <div className="c-card-description">{t("plan.section.list.empty")}</div>
-      )}
+      {props.sections.length === 0 && <div data-color="neutral-400">{t("plan.section.list.empty")}</div>}
 
-      <ul data-gap="3" data-stack="y">
+      <ul data-gap="5" data-stack="y">
         {props.sections.map((section) => (
           <li className="c-card" data-gap="3" key={section.id}>
             <div data-cross="center" data-gap="3" data-stack="x">
