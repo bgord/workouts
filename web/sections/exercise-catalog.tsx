@@ -48,14 +48,14 @@ export function ExerciseCatalog() {
           {...bg.Rhythm().times(20).style.width}
         />
 
-        <div data-color="neutral-500" data-fs="sm">
+        <div data-color="neutral-400" data-fs="sm">
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.length })}
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
           <button
             className="c-button"
-            data-variant="bare"
+            data-variant="ghost"
             onClick={() => {
               name.clear();
 
@@ -77,11 +77,8 @@ export function ExerciseCatalog() {
               <button
                 aria-pressed={selected}
                 className="c-badge"
-                data-bc={selected ? "brand-400" : "neutral-400"}
-                data-bg={selected ? "brand-400" : "neutral-950"}
-                data-color={selected ? "neutral-950" : "neutral-300"}
                 data-cursor="pointer"
-                data-variant="outline"
+                data-variant={selected ? "primary" : "outline"}
                 onClick={() =>
                   navigate({
                     search: { category: selected ? undefined : category.id, name: search.name },
@@ -97,7 +94,7 @@ export function ExerciseCatalog() {
         })}
       </ul>
 
-      {matching.length === 0 && <div data-color="neutral-500">{t("exercise.catalog.no_matches")}</div>}
+      {matching.length === 0 && <div data-color="neutral-400">{t("exercise.catalog.no_matches")}</div>}
 
       <ul data-gap="4" data-stack="x">
         {matching.map((exercise) => (

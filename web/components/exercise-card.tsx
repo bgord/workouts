@@ -18,11 +18,11 @@ export function ExerciseCard(props: { exercise: ExerciseWithCategories }) {
           <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.md} />
         </span>
 
-        <div className="c-card-title" data-maxw="100%" data-transform="truncate">
+        <div className="c-card-title" data-fs="sm" data-fw="medium" data-transform="line-clamp">
           {props.exercise.name}
         </div>
 
-        <ul data-gap="1" data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap">
+        <ul data-gap="1" data-overflow="hidden" data-stack="x" data-wrap="nowrap">
           {props.exercise.categories.map((category) => (
             <li className="c-badge" data-variant="outline" key={category.id}>
               {category.name}
