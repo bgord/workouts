@@ -87,8 +87,9 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     if (!hasNoEmptySections) finalizeBlockers.push("plan.finalize.blocked.empty_sections");
 
     const finalize = { enabled: editable && finalizeBlockers.length === 0, hints: finalizeBlockers };
+    const rename = { enabled: editable, hints: [] };
 
-    return { data, actions: { finalize } };
+    return { data, actions: { finalize, rename } };
   }
 }
 

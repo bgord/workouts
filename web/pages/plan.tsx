@@ -33,9 +33,9 @@ export function Plan() {
       {plan?.data && (
         <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
           <div data-gap="1" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
-            {plan?.data.status === PlanStatusEnum.draft && <PlanRename {...plan?.data} />}
+            {plan.actions.rename.enabled && <PlanRename {...plan?.data} />}
 
-            {plan?.data.status !== PlanStatusEnum.draft && (
+            {!plan.actions.rename.enabled && (
               <h1
                 data-color="neutral-0"
                 data-fs="2xl"

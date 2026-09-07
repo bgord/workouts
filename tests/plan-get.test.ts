@@ -44,7 +44,7 @@ describe("GET /api/plans/:planId", async () => {
     spies.use(
       spyOn(di.Adapters.Plans.GetPlanQuery, "execute").mockResolvedValue({
         data: mocks.plan,
-        actions: { finalize: { enabled: true, hints: [] } },
+        actions: { finalize: { enabled: true, hints: [] }, rename: { enabled: true, hints: [] } },
       }),
     );
 
@@ -52,6 +52,9 @@ describe("GET /api/plans/:planId", async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ data: mocks.plan, actions: { finalize: { enabled: true, hints: [] } } });
+    expect(json).toEqual({
+      data: mocks.plan,
+      actions: { finalize: { enabled: true, hints: [] }, rename: { enabled: true, hints: [] } },
+    });
   });
 });
