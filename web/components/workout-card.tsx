@@ -47,45 +47,22 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
         });
 
   return (
-    <li
-      className="rail"
-      data-bc="neutral-800"
-      data-bg="neutral-800"
-      data-br="md"
-      data-bs="solid"
-      data-bw="hairline"
-      data-cross="center"
-      data-gap="3"
-      data-hover-bc="neutral-700"
-      data-hover-shadow="md"
-      data-main="between"
-      data-overflow="hidden"
-      data-p="4"
-      data-pl="5"
-      data-position="relative"
-      data-shadow="sm"
-      data-stack="x"
-    >
-      <div data-gap="1" data-maxw="100%" data-stack="y">
+    <li className="c-card" data-cross="center" data-gap="3" data-main="between" data-stack="x">
+      <div className="c-card-header" data-grow="1" style={{ minInlineSize: 0 }}>
         <Link
-          data-color="neutral-0"
-          data-focus-ring="neutral"
-          data-fs="base"
-          data-fw="bold"
+          className="c-card-title"
           data-hover-color="brand-300"
-          data-maxw="100%"
           data-transform="truncate"
           params={{ workoutId: props.workout.id }}
           search={(prev) => ({ section: prev.section })}
+          style={{ textDecoration: "none" }}
           title={title}
           to="/workouts/$workoutId"
         >
           {title}
         </Link>
 
-        <div data-color="neutral-500" data-fs="sm">
-          {subtitle}
-        </div>
+        <div className="c-card-description">{subtitle}</div>
       </div>
 
       <div data-cross="center" data-gap="3" data-stack="x">
