@@ -1,9 +1,9 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
+import type { WorkoutListResponse } from "../../modules/workouts/queries/list-workouts";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 
 export class Workouts {
-  static async list(request: Request | null): Promise<ReadonlyArray<WorkoutSummary>> {
+  static async list(request: Request | null): Promise<WorkoutListResponse> {
     const BASE = "/api/workouts/list";
 
     const url = absoluteUrl(BASE, request);
@@ -11,7 +11,7 @@ export class Workouts {
 
     const response = await fetch(url, { headers, credentials: "include" });
 
-    if (!response?.ok) return [];
+    if (!response?.ok) return { data: [], actions: { create: { enabled: false, hints: [] } } };
     return response.json().catch();
   }
 
