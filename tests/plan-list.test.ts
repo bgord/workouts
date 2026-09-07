@@ -21,24 +21,34 @@ describe(`GET ${url}`, async () => {
   test("happy path", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue([mocks.planSummary]));
+    spies.use(
+      spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue({
+        data: [mocks.planSummary],
+        hints: { create: "plan.list.limit.hint" },
+      }),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([mocks.planSummary]);
+    expect(json).toEqual({ data: [mocks.planSummary], hints: { create: "plan.list.limit.hint" } });
   });
 
   test("happy path - empty", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue([]));
+    spies.use(
+      spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue({
+        data: [],
+        hints: { create: null },
+      }),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([]);
+    expect(json).toEqual({ data: [], hints: { create: null } });
   });
 });

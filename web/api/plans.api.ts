@@ -1,9 +1,9 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
+import type { PlanListResponse } from "../../modules/plans/queries/list-plans";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
 
 export class Plans {
-  static async list(request: Request | null): Promise<ReadonlyArray<PlanSummary>> {
+  static async list(request: Request | null): Promise<PlanListResponse> {
     const BASE = "/api/plans/list";
 
     const url = absoluteUrl(BASE, request);
@@ -11,7 +11,7 @@ export class Plans {
 
     const response = await fetch(url, { headers, credentials: "include" });
 
-    if (!response?.ok) return [];
+    if (!response?.ok) return { data: [], hints: { create: null } };
     return response.json().catch();
   }
 
