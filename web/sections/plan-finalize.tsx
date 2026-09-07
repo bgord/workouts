@@ -21,30 +21,11 @@ export function PlanFinalize(props: Plan) {
       }),
   });
 
-  const empty = props.sections.filter((section) => section.exerciseInstructions.length === 0);
-  const blocked = props.sections.length === 0 || empty.length > 0;
-
-  const hint =
-    props.sections.length === 0
-      ? t("plan.finalize.blocked.no_sections")
-      : t("plan.finalize.blocked.empty_sections");
-
   return (
     <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
-      <button
-        className="c-button"
-        data-variant="primary"
-        disabled={blocked || mutation.isLoading}
-        type="submit"
-      >
+      <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
         {t("plan.finalize.cta")}
       </button>
-
-      {blocked && (
-        <div data-color="neutral-400" data-fs="sm">
-          {hint}
-        </div>
-      )}
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

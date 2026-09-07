@@ -28,14 +28,14 @@ export function Plan() {
         {`< ${t("app.back")}`}
       </Link>
 
-      {!plan && <div data-color="neutral-400">{t("plan.not_found")}</div>}
+      {!plan?.data && <div data-color="neutral-400">{t("plan.not_found")}</div>}
 
-      {plan && (
+      {plan?.data && (
         <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
           <div data-gap="1" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
-            {plan.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
+            {plan?.data.status === PlanStatusEnum.draft && <PlanRename {...plan?.data} />}
 
-            {plan.status !== PlanStatusEnum.draft && (
+            {plan?.data.status !== PlanStatusEnum.draft && (
               <h1
                 data-color="neutral-0"
                 data-fs="2xl"
@@ -43,34 +43,41 @@ export function Plan() {
                 data-md-fs="xl"
                 data-transform="truncate"
               >
-                {plan.name}
+                {plan?.data.name}
               </h1>
             )}
 
             <div data-color="neutral-400" data-fs="sm">
-              {t("plan.updated_at", { date: format(plan.updatedAt) })}
+              {t("plan.updated_at", { date: format(plan?.data.updatedAt) })}
             </div>
           </div>
 
-          <PlanStatusBadge status={plan.status} />
+          <PlanStatusBadge status={plan?.data.status} />
         </div>
       )}
 
-      {plan && (
+      {plan?.data && (
         <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
-          {plan.status === PlanStatusEnum.draft && <PlanFinalize {...plan} />}
+          {plan.actions.finalize.enabled && <PlanFinalize {...plan?.data} />}
 
-          {plan.status === PlanStatusEnum.finalized && <PlanEditingEnable {...plan} />}
+          {plan?.data.status === PlanStatusEnum.finalized && <PlanEditingEnable {...plan?.data} />}
 
-          {plan.status !== PlanStatusEnum.archived && <PlanArchive {...plan} />}
+          {plan?.data.status !== PlanStatusEnum.archived && <PlanArchive {...plan?.data} />}
 
-          {plan.status === PlanStatusEnum.archived && <PlanRestore {...plan} />}
+          {plan?.data.status === PlanStatusEnum.archived && <PlanRestore {...plan?.data} />}
 
-          {plan.status !== PlanStatusEnum.finalized && <PlanRemove {...plan} />}
+          {plan?.data.status !== PlanStatusEnum.finalized && <PlanRemove {...plan?.data} />}
         </div>
       )}
 
-      {plan && <PlanSectionList {...plan} />}
+      {plan?.data &&
+        plan.actions.finalize.hints.map((hint) => (
+          <div data-color="neutral-400" data-fs="sm" key={hint}>
+            {t(hint)}
+          </div>
+        ))}
+
+      {plan?.data && <PlanSectionList {...plan?.data} />}
     </Main>
   );
 }
