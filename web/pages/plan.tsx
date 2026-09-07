@@ -1,5 +1,5 @@
 // fallow-ignore-file unused-export
-import { useTranslations } from "@bgord/ui";
+import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { Main, PlanStatusBadge } from "../components";
@@ -14,7 +14,13 @@ import { PlanSectionList } from "../sections/plan-section-list";
 
 export function Plan() {
   const t = useTranslations();
+  const language = useLanguage();
   const { plan } = planRoute.useLoaderData();
+
+  const format = (timestamp: number) =>
+    Temporal.Instant.fromEpochMilliseconds(timestamp)
+      .toZonedDateTimeISO(Temporal.Now.timeZoneId())
+      .toLocaleString(language, { day: "numeric", month: "short", year: "numeric" });
 
   return (
     <Main>
@@ -26,22 +32,27 @@ export function Plan() {
 
       {plan && (
         <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-          {plan.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
+          <div data-gap="1" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
+            {plan.status === PlanStatusEnum.draft && <PlanRename {...plan} />}
 
-          {plan.status !== PlanStatusEnum.draft && (
-            <h1
-              data-color="neutral-0"
-              data-fs="2xl"
-              data-fw="black"
-              data-maxw="100%"
-              data-md-fs="xl"
-              data-transform="truncate"
-            >
-              {plan.name}
-            </h1>
-          )}
+            {plan.status !== PlanStatusEnum.draft && (
+              <h1
+                data-color="neutral-0"
+                data-fs="2xl"
+                data-fw="black"
+                data-md-fs="xl"
+                data-transform="truncate"
+              >
+                {plan.name}
+              </h1>
+            )}
 
-          <PlanStatusBadge data-mt="auto" status={plan.status} />
+            <div data-color="neutral-400" data-fs="sm">
+              {t("plan.updated_at", { date: format(plan.updatedAt) })}
+            </div>
+          </div>
+
+          <PlanStatusBadge status={plan.status} />
         </div>
       )}
 

@@ -29,9 +29,8 @@ export function PlanRemove(props: Plan) {
     <>
       <button
         className="c-button"
-        data-bg="danger-900"
         data-color="danger-400"
-        data-variant="secondary"
+        data-variant="ghost"
         onClick={dialog.enable}
         type="button"
         {...dialog.props.controller}
@@ -41,7 +40,7 @@ export function PlanRemove(props: Plan) {
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
         <div data-main="between" data-stack="x">
-          <strong data-color="neutral-300">{t("plan.remove.header")}</strong>
+          <strong data-color="neutral-100">{t("plan.remove.header")}</strong>
           <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
         </div>
 
@@ -75,7 +74,12 @@ export function PlanRemove(props: Plan) {
           <div data-gap="5" data-main="end" data-stack="x">
             <ButtonCancel onClick={dialog.disable} />
 
-            <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
+            <button
+              className="c-button"
+              data-variant="destructive"
+              disabled={mutation.isLoading}
+              type="submit"
+            >
               {t("plan.remove.cta")}
             </button>
           </div>

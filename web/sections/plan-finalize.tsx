@@ -41,7 +41,7 @@ export function PlanFinalize(props: Plan) {
       </button>
 
       {blocked && (
-        <div data-color="neutral-500" data-fs="sm">
+        <div data-color="neutral-400" data-fs="sm">
           {hint}
         </div>
       )}

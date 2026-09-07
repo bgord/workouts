@@ -10,7 +10,7 @@ export function PlanSectionExerciseInstructionList(props: { plan: Plan; section:
 
   if (props.section.exerciseInstructions.length === 0) {
     return (
-      <div data-color="neutral-500" data-fs="sm">
+      <div data-color="neutral-400" data-fs="sm">
         {t("plan.section.exercise.list.empty")}
       </div>
     );

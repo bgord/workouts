@@ -33,10 +33,13 @@ export function PlanSectionRename(props: { plan: Plan; section: PlanSectionWithE
   if (rename.off) {
     return (
       <button
+        className="c-card-title"
         data-cursor="pointer"
-        data-maxw="100%"
+        data-fs="lg"
+        data-hover-color="brand-300"
         data-transform="truncate"
         onClick={rename.enable}
+        style={{ minInlineSize: 0 }}
         title={t("plan.section.rename.cta")}
         type="button"
         {...rename.props.controller}

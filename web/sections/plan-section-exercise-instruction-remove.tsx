@@ -33,7 +33,7 @@ export function PlanSectionExerciseInstructionRemove(props: {
       <button
         className="c-button"
         data-color="danger-400"
-        data-variant="bare"
+        data-variant="ghost"
         disabled={mutation.isLoading}
         title={t("plan.section.exercise.remove.title", { name: props.exerciseInstruction.exercise.name })}
         type="submit"

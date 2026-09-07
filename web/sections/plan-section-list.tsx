@@ -18,7 +18,7 @@ export function PlanSectionList(props: Plan) {
 
   return (
     <div data-gap="3" data-stack="y">
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-gap="2" data-stack="x">
         <h2
           data-color="neutral-300"
           data-fs="xs"
@@ -37,7 +37,11 @@ export function PlanSectionList(props: Plan) {
           })}
         </div>
 
-        {editable && !full && <PlanSectionCreate {...props} />}
+        {editable && !full && (
+          <div data-ml="auto">
+            <PlanSectionCreate {...props} />
+          </div>
+        )}
       </div>
 
       {props.sections.length === 0 && <div data-color="neutral-400">{t("plan.section.list.empty")}</div>}
@@ -51,6 +55,7 @@ export function PlanSectionList(props: Plan) {
               {!editable && (
                 <div
                   className="c-card-title"
+                  data-fs="lg"
                   data-transform="truncate"
                   style={{ minInlineSize: 0 }}
                   title={section.name}

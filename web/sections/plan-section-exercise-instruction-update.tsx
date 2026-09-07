@@ -87,7 +87,7 @@ export function PlanSectionExerciseInstructionUpdate(props: {
           {...bg.Rhythm().times(5).style.width}
         />
 
-        <div data-color="neutral-500">×</div>
+        <div data-color="neutral-400">×</div>
 
         <input
           aria-label={t("plan.section.exercise.add.reps.label")}
@@ -98,7 +98,7 @@ export function PlanSectionExerciseInstructionUpdate(props: {
           {...bg.Rhythm().times(5).style.width}
         />
 
-        <div data-color="neutral-500">-</div>
+        <div data-color="neutral-400">-</div>
 
         <input
           aria-label={t("plan.section.exercise.add.reps.max.label")}

@@ -40,7 +40,7 @@ export function PlanArchive(props: Plan) {
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
         <div data-main="between" data-stack="x">
-          <strong data-color="neutral-300">{t("plan.archive.header")}</strong>
+          <strong data-color="neutral-100">{t("plan.archive.header")}</strong>
           <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
         </div>
 

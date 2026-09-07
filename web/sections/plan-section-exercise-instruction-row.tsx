@@ -50,14 +50,14 @@ export function PlanSectionExerciseInstructionRow(props: {
       </Link>
 
       <Link
-        data-color="neutral-0"
-        data-focus-ring="neutral"
-        data-fs="base"
-        data-fw="bold"
+        data-color="neutral-100"
+        data-fs="sm"
+        data-fw="medium"
+        data-grow="1"
         data-hover-color="brand-300"
-        data-maxw="100%"
         data-transform="truncate"
         params={{ exerciseId: exerciseInstruction.exercise.id }}
+        style={{ minInlineSize: 0 }}
         title={exerciseInstruction.exercise.name}
         to="/catalog/exercise/$exerciseId"
       >
@@ -65,7 +65,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       </Link>
 
       {!editable && (
-        <div data-color="neutral-300" data-fs="sm" data-ml="auto">
+        <div data-color="neutral-400" data-fs="sm" data-ml="auto">
           {instruction}
         </div>
       )}

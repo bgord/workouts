@@ -26,7 +26,7 @@ export function PlanCreate() {
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
       <div data-cross="center" data-gap="3" data-stack="x">
-        <label className="c-label" data-m="0" {...name.label.props}>
+        <label className="c-label" data-variant="inline" {...name.label.props}>
           {t("plan.create.name.label")}
         </label>
 
@@ -50,7 +50,7 @@ export function PlanCreate() {
         {name.changed && (
           <button
             className="c-button"
-            data-variant="bare"
+            data-variant="ghost"
             onClick={bg.exec([name.clear, mutation.reset])}
             type="button"
           >

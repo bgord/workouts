@@ -47,7 +47,7 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
     return (
       <button
         className="c-button"
-        data-variant="bare"
+        data-variant="ghost"
         onClick={change.enable}
         title={t("plan.section.exercise.change.title", { name: props.exerciseInstruction.exercise.name })}
         type="button"
