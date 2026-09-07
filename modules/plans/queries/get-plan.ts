@@ -4,7 +4,12 @@ import type { ActionState } from "./action-state";
 
 export type PlanGetResponse = {
   data: VO.Plan;
-  actions: { finalize: ActionState; rename: ActionState; editingEnable: ActionState };
+  actions: {
+    finalize: ActionState;
+    rename: ActionState;
+    editingEnable: ActionState;
+    archive: ActionState;
+  };
 };
 
 export interface GetPlan {

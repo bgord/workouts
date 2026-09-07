@@ -62,7 +62,7 @@ export function Plan() {
 
           {plan.actions.editingEnable.enabled && <PlanEditingEnable {...plan?.data} />}
 
-          {plan?.data.status !== PlanStatusEnum.archived && <PlanArchive {...plan?.data} />}
+          {plan.actions.archive.enabled && <PlanArchive {...plan?.data} />}
 
           {plan?.data.status === PlanStatusEnum.archived && <PlanRestore {...plan?.data} />}
 

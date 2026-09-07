@@ -93,7 +93,12 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       hints: [],
     };
 
-    return { data, actions: { finalize, rename, editingEnable } };
+    const archive = {
+      enabled: Plans.Invariants.PlanIsArchivable.passes({ status: data.status }),
+      hints: [],
+    };
+
+    return { data, actions: { finalize, rename, editingEnable, archive } };
   }
 }
 

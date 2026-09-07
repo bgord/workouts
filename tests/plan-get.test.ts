@@ -48,6 +48,7 @@ describe("GET /api/plans/:planId", async () => {
           finalize: { enabled: true, hints: [] },
           rename: { enabled: true, hints: [] },
           editingEnable: { enabled: false, hints: [] },
+          archive: { enabled: true, hints: [] },
         },
       }),
     );
@@ -62,6 +63,7 @@ describe("GET /api/plans/:planId", async () => {
         finalize: { enabled: true, hints: [] },
         rename: { enabled: true, hints: [] },
         editingEnable: { enabled: false, hints: [] },
+        archive: { enabled: true, hints: [] },
       },
     });
   });
