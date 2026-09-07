@@ -1,6 +1,7 @@
 // fallow-ignore-file unused-export
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { DateFormat } from "../../app/services/date-format";
 import { Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
@@ -15,11 +16,6 @@ export function Plan() {
   const t = useTranslations();
   const language = useLanguage();
   const { plan } = planRoute.useLoaderData();
-
-  const format = (timestamp: number) =>
-    Temporal.Instant.fromEpochMilliseconds(timestamp)
-      .toZonedDateTimeISO(Temporal.Now.timeZoneId())
-      .toLocaleString(language, { day: "numeric", month: "short", year: "numeric" });
 
   if (!plan?.data) {
     return (
@@ -52,7 +48,9 @@ export function Plan() {
           )}
 
           <div data-color="neutral-400" data-fs="sm">
-            {t("plan.updated_at", { date: format(plan.data.updatedAt) })}
+            {t("plan.updated_at", {
+              date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
+            })}
           </div>
         </div>
 

@@ -2,6 +2,7 @@
 /* cSpell:disable */
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { DateFormat } from "../../app/services/date-format";
 import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
@@ -60,12 +61,7 @@ export function Workout() {
               </h1>
 
               <div data-color="neutral-400" data-fs="sm">
-                {Temporal.PlainDate.from(workout.scheduledFor).toLocaleString(language, {
-                  day: "numeric",
-                  month: "short",
-                  weekday: "short",
-                  year: "numeric",
-                })}
+                {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.scheduledFor))}
               </div>
             </div>
 

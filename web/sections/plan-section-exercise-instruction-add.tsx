@@ -16,8 +16,6 @@ export function PlanSectionExerciseInstructionAdd(props: { plan: Plan; section: 
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
 
-  const fields = [exerciseId, sets, repsMin, repsMax];
-
   const mutation = bg.useMutation({
     perform: () =>
       fetch(`/api/plans/${props.plan.id}/section/${props.section.id}/exercise-instruction`, {
@@ -35,7 +33,7 @@ export function PlanSectionExerciseInstructionAdd(props: { plan: Plan; section: 
 
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
 
-      bg.Fields.clearAll(fields);
+      bg.Fields.clearAll([exerciseId, sets, repsMin, repsMax]);
       context.form?.reset();
     },
   });

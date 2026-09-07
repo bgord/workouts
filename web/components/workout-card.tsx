@@ -1,5 +1,6 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { DateFormat } from "../../app/services/date-format";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
@@ -12,18 +13,12 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
     section: props.workout.planSectionName,
   });
 
-  const scheduledFor = Temporal.PlainDate.from(props.workout.scheduledFor).toLocaleString(language, {
-    day: "numeric",
-    month: "short",
-    weekday: "short",
-    year: "numeric",
-  });
+  const scheduledFor = DateFormat.dayWithWeekday(
+    language,
+    Temporal.PlainDate.from(props.workout.scheduledFor),
+  );
 
-  const completed = props.workout.completedAt
-    ? Temporal.Instant.fromEpochMilliseconds(props.workout.completedAt).toZonedDateTimeISO(
-        Temporal.Now.timeZoneId(),
-      )
-    : undefined;
+  const completed = props.workout.completedAt ? DateFormat.zoned(props.workout.completedAt) : undefined;
 
   const completedOnScheduledDay =
     completed && completed.toPlainDate().equals(Temporal.PlainDate.from(props.workout.scheduledFor));
@@ -31,19 +26,10 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
   const subtitle = !completed
     ? scheduledFor
     : completedOnScheduledDay
-      ? t("workout.list.completed_at", {
-          date: scheduledFor,
-          time: completed.toLocaleString(language, { hour: "2-digit", hour12: false, minute: "2-digit" }),
-        })
+      ? t("workout.list.completed_at", { date: scheduledFor, time: DateFormat.time(language, completed) })
       : t("workout.list.completed_on", {
           date: scheduledFor,
-          completed: completed.toLocaleString(language, {
-            day: "numeric",
-            hour: "2-digit",
-            hour12: false,
-            minute: "2-digit",
-            month: "short",
-          }),
+          completed: DateFormat.dayWithTime(language, completed),
         });
 
   return (

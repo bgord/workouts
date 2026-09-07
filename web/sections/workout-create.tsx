@@ -12,7 +12,6 @@ export function WorkoutCreate() {
   const { plan, workouts } = homeRoute.useLoaderData();
 
   const today = Temporal.Now.plainDateISO().toString();
-  const horizon = Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString();
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
   const planSectionId = bg.useTextField({
     name: "planSectionId",
@@ -53,7 +52,13 @@ export function WorkoutCreate() {
           {t("workout.create.date.label")}
         </label>
 
-        <input className="c-input" type="date" {...scheduledFor.input.props} max={horizon} min={today} />
+        <input
+          className="c-input"
+          type="date"
+          {...scheduledFor.input.props}
+          max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+          min={today}
+        />
       </div>
 
       {plan && (
