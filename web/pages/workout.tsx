@@ -6,14 +6,14 @@ import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/wo
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
-import { WorkoutComplete } from "../sections/workout-complete";
+import { useWorkoutCompleteHint, WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRemove } from "../sections/workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
 import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
-import { WorkoutStart } from "../sections/workout-start";
+import { useWorkoutStartHint, WorkoutStart } from "../sections/workout-start";
 
 const DISCARDABLE = [WorkoutStatusEnum.draft, WorkoutStatusEnum.in_progress, WorkoutStatusEnum.completed];
 
@@ -22,6 +22,15 @@ export function Workout() {
   const language = useLanguage();
   const { workout } = workoutRoute.useLoaderData();
   const search = workoutRoute.useSearch();
+  const startHint = useWorkoutStartHint(workout);
+  const completeHint = useWorkoutCompleteHint(workout);
+
+  const hint =
+    workout?.status === WorkoutStatusEnum.draft
+      ? startHint
+      : workout?.status === WorkoutStatusEnum.in_progress
+        ? completeHint
+        : undefined;
 
   const title = workout
     ? t("workout.title", { plan: workout.planName, section: workout.planSectionName })
@@ -64,12 +73,20 @@ export function Workout() {
           </div>
 
           {DISCARDABLE.includes(workout.status) && (
-            <div data-cross="center" data-gap="3" data-stack="x">
-              {workout.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout} />}
+            <div data-gap="2" data-stack="y">
+              <div data-cross="center" data-gap="3" data-stack="x">
+                {workout.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout} />}
 
-              {workout.status === WorkoutStatusEnum.in_progress && <WorkoutComplete workout={workout} />}
+                {workout.status === WorkoutStatusEnum.in_progress && <WorkoutComplete workout={workout} />}
 
-              <WorkoutDiscard workout={workout} />
+                <WorkoutDiscard workout={workout} />
+              </div>
+
+              {hint && (
+                <div data-color="neutral-400" data-fs="sm">
+                  {hint}
+                </div>
+              )}
             </div>
           )}
         </div>
