@@ -19,15 +19,7 @@ export function ProfileAccountDelete() {
   });
 
   return (
-    <section
-      data-bc="danger-600"
-      data-bs="solid"
-      data-bw="hairline"
-      data-gap="5"
-      data-p="5"
-      data-stack="y"
-      dta-md-p="3"
-    >
+    <section className="c-card" data-bc="danger-600" data-gap="5" data-md-p="3">
       <div data-gap="3" data-main="between" data-stack="x">
         <div data-cross="center" data-gap="3" data-stack="x">
           <UserXmark data-size="md" />
@@ -42,10 +34,8 @@ export function ProfileAccountDelete() {
 
       <button
         className="c-button"
-        data-bg="danger-900"
-        data-color="danger-400"
         data-mr="auto"
-        data-variant="secondary"
+        data-variant="destructive"
         onClick={dialog.enable}
         type="button"
         {...dialog.props.controller}
@@ -55,8 +45,8 @@ export function ProfileAccountDelete() {
 
       <Dialog data-gap="8" data-mt="12" {...Rhythm().times(50).style.width} {...dialog}>
         <div data-main="between" data-stack="x">
-          <strong data-color="neutral-300" data-cross="center" data-gap="2" data-stack="x">
-            <UserXmark data-color="neutral-300" data-size="md" />
+          <strong data-color="neutral-100" data-cross="center" data-gap="2" data-stack="x">
+            <UserXmark data-size="md" />
             {t("profile.delete_account.header")}
           </strong>
           <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
@@ -69,7 +59,7 @@ export function ProfileAccountDelete() {
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           <div data-cross="start" data-gap="3" data-stack="y">
-            <label data-color="neutral-200" data-fs="sm" htmlFor="challenge">
+            <label className="c-label" htmlFor="challenge">
               {t("profile.delete_account.challenge")}
             </label>
             <input
@@ -88,7 +78,9 @@ export function ProfileAccountDelete() {
           {mutation.isError && (
             <output
               aria-live="assertive"
-              data-bg="neutral-700"
+              data-bg="danger-900"
+              data-br="md"
+              data-color="danger-100"
               data-cross="center"
               data-fs="sm"
               data-gap="3"
@@ -104,7 +96,12 @@ export function ProfileAccountDelete() {
           <div data-gap="5" data-main="end" data-stack="x">
             <ButtonCancel onClick={dialog.disable} />
 
-            <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
+            <button
+              className="c-button"
+              data-variant="destructive"
+              disabled={mutation.isLoading}
+              type="submit"
+            >
               {t("profile.delete_account.cta_primary")}
             </button>
           </div>
