@@ -49,6 +49,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       .orderBy(asc(Schema.planSectionExerciseInstructions.createdAt));
 
     const editable = Plans.Invariants.PlanIsEditable.passes({ status: plan.status });
+    const whenEditable = { enabled: editable, hints: [] };
 
     const data = {
       id: plan.id,
@@ -75,15 +76,11 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
                 min: exerciseInstruction.repsMin,
                 max: exerciseInstruction.repsMax,
               }),
-              actions: {
-                update: { enabled: editable, hints: [] },
-                exerciseChange: { enabled: editable, hints: [] },
-                remove: { enabled: editable, hints: [] },
-              },
+              actions: { update: whenEditable, exerciseChange: whenEditable, remove: whenEditable },
             })),
         };
 
-        const instructionsFull = !Plans.Invariants.PlanSectionExerciseInstructionLimit.passes({
+        const instructionsAvailable = Plans.Invariants.PlanSectionExerciseInstructionLimit.passes({
           planSection,
         });
 
@@ -91,8 +88,8 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           ...planSection,
           actions: {
             exerciseInstructionAdd: {
-              enabled: editable && !instructionsFull,
-              hints: instructionsFull ? ["plan.section.exercise.list.limit.hint"] : [],
+              enabled: editable && instructionsAvailable,
+              hints: instructionsAvailable ? [] : ["plan.section.exercise.list.limit.hint"],
             },
           },
         };
@@ -109,52 +106,28 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     if (!hasSections) finalizeBlockers.push("plan.finalize.blocked.no_sections");
     if (!hasNoEmptySections) finalizeBlockers.push("plan.finalize.blocked.empty_sections");
 
-    const finalize = { enabled: editable && finalizeBlockers.length === 0, hints: finalizeBlockers };
-    const rename = { enabled: editable, hints: [] };
-    const editingEnable = {
-      enabled: Plans.Invariants.PlanIsFinalized.passes({ status: data.status }),
-      hints: [],
-    };
-
-    const archive = {
-      enabled: Plans.Invariants.PlanIsArchivable.passes({ status: data.status }),
-      hints: [],
-    };
-
-    const restore = {
-      enabled: Plans.Invariants.PlanIsRestorable.passes({ status: data.status }),
-      hints: [],
-    };
-
-    const remove = {
-      enabled: Plans.Invariants.PlanIsRemovable.passes({ status: data.status }),
-      hints: [],
-    };
-
-    const sectionsFull = !Plans.Invariants.PlanSectionLimitForPlan.passes({
+    const sectionsAvailable = Plans.Invariants.PlanSectionLimitForPlan.passes({
       count: tools.Int.nonNegative(data.sections.length),
     });
-
-    const sectionCreate = {
-      enabled: editable && !sectionsFull,
-      hints: sectionsFull ? ["plan.section.list.limit.hint"] : [],
-    };
-
-    const sectionRename = { enabled: editable, hints: [] };
-    const sectionRemove = { enabled: editable, hints: [] };
 
     return {
       data,
       actions: {
-        finalize,
-        rename,
-        editingEnable,
-        archive,
-        restore,
-        remove,
-        sectionCreate,
-        sectionRename,
-        sectionRemove,
+        finalize: { enabled: editable && finalizeBlockers.length === 0, hints: finalizeBlockers },
+        rename: whenEditable,
+        editingEnable: {
+          enabled: Plans.Invariants.PlanIsFinalized.passes({ status: plan.status }),
+          hints: [],
+        },
+        archive: { enabled: Plans.Invariants.PlanIsArchivable.passes({ status: plan.status }), hints: [] },
+        restore: { enabled: Plans.Invariants.PlanIsRestorable.passes({ status: plan.status }), hints: [] },
+        remove: { enabled: Plans.Invariants.PlanIsRemovable.passes({ status: plan.status }), hints: [] },
+        sectionCreate: {
+          enabled: editable && sectionsAvailable,
+          hints: sectionsAvailable ? [] : ["plan.section.list.limit.hint"],
+        },
+        sectionRename: whenEditable,
+        sectionRemove: whenEditable,
       },
     };
   }

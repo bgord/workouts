@@ -36,7 +36,7 @@ export function Plan() {
   return (
     <Main>
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-        <div data-gap="1" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
+        <div data-gap="1" data-grow="1" data-stack="y">
           {plan.actions.rename.enabled && <PlanRename {...plan.data} />}
 
           {!plan.actions.rename.enabled && (
