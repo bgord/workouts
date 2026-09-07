@@ -7,7 +7,7 @@ import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/wo
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
-import { useWorkoutCompleteHint, WorkoutComplete } from "../sections/workout-complete";
+import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRemove } from "../sections/workout-exercise-remove";
@@ -23,18 +23,12 @@ export function Workout() {
   const language = useLanguage();
   const { workout } = workoutRoute.useLoaderData();
   const search = workoutRoute.useSearch();
-  const startHint = useWorkoutStartHint(workout);
-  const completeHint = useWorkoutCompleteHint(workout);
+  const startHint = useWorkoutStartHint(workout?.data);
 
-  const hint =
-    workout?.status === WorkoutStatusEnum.draft
-      ? startHint
-      : workout?.status === WorkoutStatusEnum.in_progress
-        ? completeHint
-        : undefined;
+  const hint = workout?.data.status === WorkoutStatusEnum.draft ? startHint : undefined;
 
   const title = workout
-    ? t("workout.title", { plan: workout.planName, section: workout.planSectionName })
+    ? t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })
     : "";
 
   return (
@@ -61,21 +55,21 @@ export function Workout() {
               </h1>
 
               <div data-color="neutral-400" data-fs="sm">
-                {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.scheduledFor))}
+                {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
               </div>
             </div>
 
-            <WorkoutStatusBadge status={workout.status} />
+            <WorkoutStatusBadge status={workout.data.status} />
           </div>
 
-          {DISCARDABLE.includes(workout.status) && (
+          {DISCARDABLE.includes(workout.data.status) && (
             <div data-gap="2" data-stack="y">
               <div data-cross="center" data-gap="3" data-stack="x">
-                {workout.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout} />}
+                {workout.data.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout.data} />}
 
-                {workout.status === WorkoutStatusEnum.in_progress && <WorkoutComplete workout={workout} />}
+                {workout.actions.complete.enabled && <WorkoutComplete workout={workout.data} />}
 
-                <WorkoutDiscard workout={workout} />
+                <WorkoutDiscard workout={workout.data} />
               </div>
 
               {hint && (
@@ -83,6 +77,12 @@ export function Workout() {
                   {hint}
                 </div>
               )}
+
+              {workout.actions.complete.hints.map((blocker) => (
+                <div data-color="neutral-400" data-fs="sm" key={blocker}>
+                  {t(blocker)}
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -90,24 +90,26 @@ export function Workout() {
 
       {workout && (
         <ul data-gap="3" data-stack="y">
-          {workout.exercises.map((exercise) => (
+          {workout.data.exercises.map((exercise) => (
             <WorkoutExerciseRow
               exercise={exercise}
               key={exercise.id}
-              skipped={workout.status === WorkoutStatusEnum.completed && exercise.loggedSets.length === 0}
+              skipped={
+                workout.data.status === WorkoutStatusEnum.completed && exercise.loggedSets.length === 0
+              }
             >
-              <WorkoutSetList exercise={exercise} workout={workout} />
+              <WorkoutSetList exercise={exercise} workout={workout.data} />
 
-              {workout.status === WorkoutStatusEnum.draft && (
+              {workout.data.status === WorkoutStatusEnum.draft && (
                 <div className="c-card-footer" data-cross="end" data-gap="3">
-                  <WorkoutExerciseTargetSet exercise={exercise} workout={workout} />
+                  <WorkoutExerciseTargetSet exercise={exercise} workout={workout.data} />
 
-                  <WorkoutExerciseRemove exercise={exercise} workout={workout} />
+                  <WorkoutExerciseRemove exercise={exercise} workout={workout.data} />
                 </div>
               )}
 
-              {workout.status === WorkoutStatusEnum.in_progress && (
-                <WorkoutSetLog exercise={exercise} workout={workout} />
+              {workout.data.status === WorkoutStatusEnum.in_progress && (
+                <WorkoutSetLog exercise={exercise} workout={workout.data} />
               )}
             </WorkoutExerciseRow>
           ))}
@@ -115,8 +117,10 @@ export function Workout() {
       )}
 
       {workout &&
-        workout.status === WorkoutStatusEnum.draft &&
-        workout.exercises.length < WorkoutExerciseLimitMax && <WorkoutExerciseAdd workout={workout} />}
+        workout.data.status === WorkoutStatusEnum.draft &&
+        workout.data.exercises.length < WorkoutExerciseLimitMax && (
+          <WorkoutExerciseAdd workout={workout.data} />
+        )}
     </Main>
   );
 }

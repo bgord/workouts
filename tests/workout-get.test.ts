@@ -41,12 +41,17 @@ describe("GET /api/workouts/:workoutId", async () => {
   test("happy path", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Workouts.GetWorkoutQuery, "execute").mockResolvedValue(mocks.workout));
+    spies.use(
+      spyOn(di.Adapters.Workouts.GetWorkoutQuery, "execute").mockResolvedValue({
+        data: mocks.workout,
+        actions: { complete: { enabled: true, hints: [] } },
+      }),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual(mocks.workout);
+    expect(json).toEqual({ data: mocks.workout, actions: { complete: { enabled: true, hints: [] } } });
   });
 });

@@ -1,3 +1,4 @@
+import type * as bg from "@bgord/bun";
 import { and, asc, eq } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
@@ -9,7 +10,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
   async execute(
     workoutId: Workouts.VO.WorkoutIdType,
     userId: Auth.VO.UserIdType,
-  ): Promise<Workouts.VO.Workout | null> {
+  ): Promise<Workouts.Queries.WorkoutGetResponse | null> {
     const workout = await db
       .select()
       .from(Schema.workouts)
@@ -34,7 +35,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       )
       .orderBy(asc(Schema.workoutLoggedSets.setNumber));
 
-    return {
+    const data = {
       id: workout.id,
       planId: workout.planId,
       planName: workout.planName,
@@ -68,6 +69,20 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             load: loggedSet.load,
           })),
       })),
+    };
+
+    const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status: workout.status });
+    const hasLoggedSets = Workouts.Invariants.WorkoutHasLoggedSets.passes({
+      workoutExercises: data.exercises,
+    });
+
+    const completeBlockers: Array<bg.TranslationsKeyType> = [];
+
+    if (inProgress && !hasLoggedSets) completeBlockers.push("workout.complete.blocked.no_logged_sets");
+
+    return {
+      data,
+      actions: { complete: { enabled: inProgress && hasLoggedSets, hints: completeBlockers } },
     };
   }
 }
