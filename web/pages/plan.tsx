@@ -21,57 +21,59 @@ export function Plan() {
       .toZonedDateTimeISO(Temporal.Now.timeZoneId())
       .toLocaleString(language, { day: "numeric", month: "short", year: "numeric" });
 
+  if (!plan?.data) {
+    return (
+      <Main>
+        <Link className="c-link" to="/plans">
+          {`< ${t("app.back")}`}
+        </Link>
+
+        <div data-color="neutral-400">{t("plan.not_found")}</div>
+      </Main>
+    );
+  }
+
   return (
     <Main>
-      <Link className="c-link" to="/plans">
-        {`< ${t("app.back")}`}
-      </Link>
+      <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+        <div data-gap="1" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
+          {plan.actions.rename.enabled && <PlanRename {...plan.data} />}
 
-      {!plan?.data && <div data-color="neutral-400">{t("plan.not_found")}</div>}
+          {!plan.actions.rename.enabled && (
+            <h1
+              data-color="neutral-0"
+              data-fs="2xl"
+              data-fw="black"
+              data-md-fs="xl"
+              data-transform="truncate"
+            >
+              {plan.data.name}
+            </h1>
+          )}
 
-      {plan?.data && (
-        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-          <div data-gap="1" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
-            {plan.actions.rename.enabled && <PlanRename {...plan?.data} />}
-
-            {!plan.actions.rename.enabled && (
-              <h1
-                data-color="neutral-0"
-                data-fs="2xl"
-                data-fw="black"
-                data-md-fs="xl"
-                data-transform="truncate"
-              >
-                {plan?.data.name}
-              </h1>
-            )}
-
-            <div data-color="neutral-400" data-fs="sm">
-              {t("plan.updated_at", { date: format(plan?.data.updatedAt) })}
-            </div>
+          <div data-color="neutral-400" data-fs="sm">
+            {t("plan.updated_at", { date: format(plan.data.updatedAt) })}
           </div>
-
-          <PlanStatusBadge status={plan?.data.status} />
         </div>
-      )}
 
-      {plan?.data && (
-        <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
-          {plan.actions.finalize.enabled && <PlanFinalize {...plan?.data} />}
-          {plan.actions.editingEnable.enabled && <PlanEditingEnable {...plan?.data} />}
-          {plan.actions.archive.enabled && <PlanArchive {...plan?.data} />}
-          {plan.actions.restore.enabled && <PlanRestore {...plan?.data} />}
-          {plan.actions.remove.enabled && <PlanRemove {...plan?.data} />}
-        </div>
-      )}
+        <PlanStatusBadge status={plan.data.status} />
+      </div>
 
-      {plan?.actions.finalize.hints.map((hint) => (
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
+        {plan.actions.finalize.enabled && <PlanFinalize {...plan.data} />}
+        {plan.actions.editingEnable.enabled && <PlanEditingEnable {...plan.data} />}
+        {plan.actions.archive.enabled && <PlanArchive {...plan.data} />}
+        {plan.actions.restore.enabled && <PlanRestore {...plan.data} />}
+        {plan.actions.remove.enabled && <PlanRemove {...plan.data} />}
+      </div>
+
+      {plan.actions.finalize.hints.map((hint) => (
         <div data-color="neutral-400" data-fs="sm" key={hint}>
           {t(hint)}
         </div>
       ))}
 
-      {plan?.data && <PlanSectionList {...plan?.data} />}
+      <PlanSectionList {...plan?.data} />
     </Main>
   );
 }
