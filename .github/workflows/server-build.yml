@@ -31,7 +31,7 @@ jobs:
       - name: Setup Bun environment
         uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
-          bun-version: 1.4.0
+          bun-version: 1.4.2
 
       - name: Install node-gyp
         run: bun add -g node-gyp
@@ -154,10 +154,8 @@ jobs:
         run: ./bgord-scripts/build-info-generate.sh "${SHA}"
 
       - name: Inspect app size
-        env:
-          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
         if: ${{ env.SKIP_CHECKS != 'true' }}
-        run: ./bgord-scripts/server-inspect-production.sh "${PROJECT_NAME}"
+        run: ./bgord-scripts/server-inspect-production.sh
 
       - name: Bundle secrets encryptor
         run: bun build --target=bun --outfile output/infra/secrets-encrypt.js bgord-scripts/secrets-encrypt.ts

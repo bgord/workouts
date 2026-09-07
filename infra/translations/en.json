@@ -131,7 +131,7 @@
   "profile.avatar.upload.error": "Could not upload the avatar, please try again",
   "profile.change_language.en.value": "English",
   "profile.change_language.header": "Change language",
-  "profile.change_language.pl.value": "Polski",
+  "profile.change_language.pl.value": "Polish",
   "profile.delete_account.challenge": "Type 'delete' in the field below",
   "profile.delete_account.input.placeholder": "delete",
   "profile.delete_account.cta_primary": "Delete account",

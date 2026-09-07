@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import * as bg from "@bgord/bun";
 import * as VO from "+workouts/value-objects";
 
