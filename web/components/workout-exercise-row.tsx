@@ -18,19 +18,7 @@ export function WorkoutExerciseRow(props: {
   const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
 
   return (
-    <li
-      data-bc="neutral-800"
-      data-bg="neutral-900"
-      data-br="md"
-      data-bs="solid"
-      data-bw="hairline"
-      data-cross="start"
-      data-gap="3"
-      data-hover-bc="neutral-700"
-      data-p="3"
-      data-pl="4"
-      data-stack="x"
-    >
+    <li className="c-card" data-cross="start" data-gap="3" data-stack="x">
       <Link
         aria-hidden
         params={{ exerciseId: props.exercise.exerciseId }}
@@ -40,24 +28,21 @@ export function WorkoutExerciseRow(props: {
         <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
       </Link>
 
-      <div data-gap="2" data-grow="1" data-maxw="100%" data-stack="y">
+      <div data-gap="2" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
         <div data-cross="center" data-gap="3" data-stack="x">
           <Link
-            data-color="neutral-0"
-            data-focus-ring="neutral"
-            data-fs="base"
-            data-fw="bold"
+            className="c-card-title"
             data-hover-color="brand-300"
-            data-maxw="100%"
             data-transform="truncate"
             params={{ exerciseId: props.exercise.exerciseId }}
+            style={{ minInlineSize: 0, textDecoration: "none" }}
             title={props.exercise.exerciseName}
             to="/catalog/exercise/$exerciseId"
           >
             {props.exercise.exerciseName}
           </Link>
 
-          <div data-color="neutral-500" data-fs="sm" data-ls="wide" data-ml="auto">
+          <div className="c-card-description" data-ls="wide" data-ml="auto" data-transform="nowrap">
             {t("workout.exercise.prescription", {
               sets: props.exercise.prescription.sets,
               reps: format(props.exercise.prescription.reps),
@@ -66,18 +51,9 @@ export function WorkoutExerciseRow(props: {
 
           {props.exercise.target && (
             <div
-              data-bc={props.skipped ? "neutral-700" : "brand-800"}
-              data-bg={props.skipped ? "neutral-900" : "brand-900"}
-              data-br="pill"
-              data-bs="solid"
-              data-bw="hairline"
-              data-color={props.skipped ? "neutral-500" : "brand-200"}
-              data-fs="xs"
-              data-fw="medium"
-              data-lh="none"
-              data-px="2"
-              data-py="1"
+              className="c-badge"
               data-transform="nowrap"
+              data-variant={props.skipped ? "outline" : "primary"}
             >
               {t("workout.exercise.target", {
                 sets: props.exercise.target.sets,
@@ -90,11 +66,10 @@ export function WorkoutExerciseRow(props: {
 
         {props.skipped && (
           <div
-            data-bcl="neutral-800"
+            className="c-card-description"
+            data-bcl="alpha-medium"
             data-bsl="solid"
             data-bwl="thin"
-            data-color="neutral-500"
-            data-fs="sm"
             data-ls="wide"
             data-px="2"
             data-py="1"
