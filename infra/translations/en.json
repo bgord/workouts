@@ -89,7 +89,6 @@
   "plan.restore.error": "Could not restore the plan",
   "plan.section.create.cta": "New",
   "plan.section.create.error": "Could not create a section",
-  "plan.section.create.label": "Section name",
   "plan.section.create.placeholder": "Upper A",
   "plan.section.exercise.add.cta": "Add exercise",
   "plan.section.exercise.add.error": "Could not add the exercise",

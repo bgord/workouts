@@ -1,4 +1,5 @@
 // fallow-ignore-file unused-export
+/* cSpell:disable */
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";

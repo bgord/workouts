@@ -89,7 +89,6 @@
   "plan.restore.error": "Nie udało się przywrócić planu",
   "plan.section.create.cta": "Nowa",
   "plan.section.create.error": "Nie udało się utworzyć sekcji",
-  "plan.section.create.label": "Nazwa sekcji",
   "plan.section.create.placeholder": "Góra A",
   "plan.section.exercise.add.cta": "Dodaj ćwiczenie",
   "plan.section.exercise.add.error": "Nie udało się dodać ćwiczenia",

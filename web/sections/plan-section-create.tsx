@@ -47,10 +47,6 @@ export function PlanSectionCreate(props: Plan) {
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...create.props.target}>
       <div data-cross="center" data-gap="3" data-stack="x">
-        <label className="c-label" data-variant="inline" {...planSectionName.label.props}>
-          {t("plan.section.create.label")}
-        </label>
-
         <input
           className="c-input"
           placeholder={t("plan.section.create.placeholder")}
