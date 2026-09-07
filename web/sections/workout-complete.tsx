@@ -31,7 +31,7 @@ export function WorkoutComplete(props: { workout: Workout }) {
       </button>
 
       {!logged && (
-        <div data-color="neutral-500" data-fs="sm">
+        <div data-color="neutral-400" data-fs="sm">
           {t("workout.complete.blocked.no_logged_sets")}
         </div>
       )}

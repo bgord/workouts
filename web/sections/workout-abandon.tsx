@@ -21,9 +21,8 @@ export function WorkoutAbandon(props: { workout: Workout }) {
     <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
       <button
         className="c-button"
-        data-bg="danger-900"
         data-color="danger-400"
-        data-variant="secondary"
+        data-variant="ghost"
         disabled={mutation.isLoading}
         type="submit"
       >

@@ -22,7 +22,7 @@ export function WorkoutExerciseRemove(props: { workout: Workout; exercise: Worko
       <button
         className="c-button"
         data-color="danger-400"
-        data-variant="bare"
+        data-variant="ghost"
         disabled={mutation.isLoading}
         title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
         type="submit"

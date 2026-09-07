@@ -43,7 +43,7 @@ export function WorkoutExerciseAdd(props: { workout: Workout }) {
       <button
         className="c-button"
         data-mr="auto"
-        data-variant="bare"
+        data-variant="ghost"
         onClick={add.enable}
         type="button"
         {...add.props.controller}
@@ -98,7 +98,7 @@ export function WorkoutExerciseAdd(props: { workout: Workout }) {
               {...bg.Rhythm().times(5).style.width}
             />
 
-            <div data-color="neutral-500">-</div>
+            <div data-color="neutral-400">-</div>
 
             <input
               aria-label={t("workout.exercise.add.reps.max.label")}

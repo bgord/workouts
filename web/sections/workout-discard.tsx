@@ -27,7 +27,7 @@ export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
       <button
         className="c-button"
         data-color="danger-400"
-        data-variant="secondary"
+        data-variant="ghost"
         disabled={mutation.isLoading}
         title={t("workout.discard.title", { name: props.workout.planName })}
         type="submit"

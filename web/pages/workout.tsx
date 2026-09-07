@@ -54,7 +54,7 @@ export function Workout() {
       )}
 
       {workout && (
-        <div data-color="neutral-500" data-fs="sm">
+        <div data-color="neutral-400" data-fs="sm">
           {Temporal.PlainDate.from(workout.scheduledFor).toLocaleString(language, {
             day: "numeric",
             month: "short",
@@ -91,7 +91,7 @@ export function Workout() {
               <WorkoutSetList exercise={exercise} workout={workout} />
 
               {workout.status === WorkoutStatusEnum.draft && (
-                <div data-cross="end" data-gap="3" data-stack="x">
+                <div className="c-card-footer" data-cross="end" data-gap="3">
                   <WorkoutExerciseTargetSet exercise={exercise} workout={workout} />
 
                   <WorkoutExerciseRemove exercise={exercise} workout={workout} />

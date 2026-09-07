@@ -49,7 +49,7 @@ export function WorkoutCreate() {
   return (
     <form data-cross="end" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
       <div data-gap="1" data-stack="y">
-        <label className="c-label" data-m="0" {...scheduledFor.label.props}>
+        <label className="c-label" data-variant="inline" {...scheduledFor.label.props}>
           {t("workout.create.date.label")}
         </label>
 
@@ -58,7 +58,7 @@ export function WorkoutCreate() {
 
       {plan && (
         <div data-gap="1" data-stack="y">
-          <label className="c-label" data-m="0" {...planSectionId.label.props}>
+          <label className="c-label" data-variant="inline" {...planSectionId.label.props}>
             {plan.name}
           </label>
 
@@ -82,7 +82,7 @@ export function WorkoutCreate() {
       </button>
 
       {hint && (
-        <div data-color="neutral-500" data-fs="sm" data-mb="2">
+        <div data-color="neutral-400" data-fs="sm" data-mb="2">
           {hint}
         </div>
       )}

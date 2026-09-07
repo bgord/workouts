@@ -18,18 +18,18 @@ export function WorkoutExerciseRow(props: {
   const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
 
   return (
-    <li className="c-card" data-cross="start" data-gap="3" data-stack="x">
-      <Link
-        aria-hidden
-        params={{ exerciseId: props.exercise.exerciseId }}
-        tabIndex={-1}
-        to="/catalog/exercise/$exerciseId"
-      >
-        <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
-      </Link>
+    <li className="c-card">
+      <div data-cross="center" data-gap="4" data-stack="x">
+        <Link
+          aria-hidden
+          params={{ exerciseId: props.exercise.exerciseId }}
+          tabIndex={-1}
+          to="/catalog/exercise/$exerciseId"
+        >
+          <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
+        </Link>
 
-      <div data-gap="2" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
-        <div data-cross="center" data-gap="3" data-stack="x">
+        <div data-gap="2" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
           <Link
             className="c-card-title"
             data-hover-color="brand-300"
@@ -41,44 +41,48 @@ export function WorkoutExerciseRow(props: {
             {props.exercise.exerciseName}
           </Link>
 
-          <div className="c-card-description" data-ls="wide" data-ml="auto" data-transform="nowrap">
-            {t("workout.exercise.prescription", {
-              sets: props.exercise.prescription.sets,
-              reps: format(props.exercise.prescription.reps),
-            })}
-          </div>
-
-          {props.exercise.target && (
-            <div
-              className="c-badge"
-              data-transform="nowrap"
-              data-variant={props.skipped ? "outline" : "primary"}
-            >
-              {t("workout.exercise.target", {
-                sets: props.exercise.target.sets,
-                reps: props.exercise.target.reps,
-                load: props.exercise.target.load / 1000,
+          <div data-cross="center" data-gap="3" data-stack="x">
+            <div className="c-card-description" data-ls="wide" data-transform="nowrap">
+              {t("workout.exercise.prescription", {
+                sets: props.exercise.prescription.sets,
+                reps: format(props.exercise.prescription.reps),
               })}
             </div>
-          )}
-        </div>
 
-        {props.skipped && (
-          <div
-            className="c-card-description"
-            data-bcl="alpha-medium"
-            data-bsl="solid"
-            data-bwl="thin"
-            data-ls="wide"
-            data-px="2"
-            data-py="1"
-          >
-            {t("workout.exercise.skipped")}
+            {props.exercise.target && (
+              <div
+                className="c-badge"
+                data-color={props.skipped ? "neutral-400" : "neutral-200"}
+                data-fs="sm"
+                data-transform="nowrap"
+                data-variant={props.skipped ? "outline" : "primary"}
+              >
+                {t("workout.exercise.target", {
+                  sets: props.exercise.target.sets,
+                  reps: props.exercise.target.reps,
+                  load: props.exercise.target.load / 1000,
+                })}
+              </div>
+            )}
           </div>
-        )}
-
-        {props.children}
+        </div>
       </div>
+
+      {props.skipped && (
+        <div
+          className="c-card-description"
+          data-bcl="alpha-medium"
+          data-bsl="solid"
+          data-bwl="thin"
+          data-ls="wide"
+          data-px="2"
+          data-py="1"
+        >
+          {t("workout.exercise.skipped")}
+        </div>
+      )}
+
+      {props.children}
     </li>
   );
 }

@@ -38,7 +38,7 @@ export function WorkoutSetLog(props: { workout: Workout; exercise: WorkoutExerci
   const done = props.exercise.loggedSets.length;
 
   return (
-    <form data-cross="end" data-gap="2" data-stack="x" onSubmit={mutation.handleSubmit}>
+    <form className="c-card-footer" data-cross="end" data-gap="3" onSubmit={mutation.handleSubmit}>
       <div data-gap="1" data-stack="y">
         <label className="c-label" data-variant="inline" {...reps.label.props}>
           {t("workout.set.reps.label")}
@@ -68,26 +68,28 @@ export function WorkoutSetLog(props: { workout: Workout; exercise: WorkoutExerci
         />
       </div>
 
-      <button
-        className="c-button"
-        data-variant="primary"
-        disabled={reps.empty || load.empty || mutation.isLoading}
-        type="submit"
-      >
-        {t("workout.set.cta")}
-      </button>
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <button
+          className="c-button"
+          data-variant="primary"
+          disabled={reps.empty || load.empty || mutation.isLoading}
+          type="submit"
+        >
+          {t("workout.set.cta")}
+        </button>
 
-      {props.exercise.target && (
-        <div data-color="neutral-400" data-fs="sm" data-mb="2">
-          {t("workout.set.progress", { done, target: props.exercise.target.sets })}
-        </div>
-      )}
+        {props.exercise.target && (
+          <div data-color="neutral-400" data-fs="sm">
+            {t("workout.set.progress", { done, target: props.exercise.target.sets })}
+          </div>
+        )}
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm" data-mb="2">
-          {t("workout.set.error")}
-        </output>
-      )}
+        {mutation.isError && (
+          <output data-color="danger-400" data-fs="sm">
+            {t("workout.set.error")}
+          </output>
+        )}
+      </div>
     </form>
   );
 }

@@ -55,7 +55,7 @@ export function WorkoutExerciseTargetSet(props: { workout: Workout; exercise: Wo
       onSubmit={mutation.handleSubmit}
     >
       <div data-gap="1" data-stack="y">
-        <label className="c-label" data-m="0" {...sets.label.props}>
+        <label className="c-label" data-variant="inline" {...sets.label.props}>
           {t("workout.target.sets.label")}
         </label>
 
@@ -69,7 +69,7 @@ export function WorkoutExerciseTargetSet(props: { workout: Workout; exercise: Wo
       </div>
 
       <div data-gap="1" data-stack="y">
-        <label className="c-label" data-m="0" {...reps.label.props}>
+        <label className="c-label" data-variant="inline" {...reps.label.props}>
           {t("workout.target.reps.label")}
         </label>
 
@@ -83,7 +83,7 @@ export function WorkoutExerciseTargetSet(props: { workout: Workout; exercise: Wo
       </div>
 
       <div data-gap="1" data-stack="y">
-        <label className="c-label" data-m="0" {...load.label.props}>
+        <label className="c-label" data-variant="inline" {...load.label.props}>
           {t("workout.target.load.label")}
         </label>
 

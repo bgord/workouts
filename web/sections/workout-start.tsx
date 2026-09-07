@@ -45,7 +45,7 @@ export function WorkoutStart(props: { workout: Workout }) {
       </button>
 
       {hint && (
-        <div data-color="neutral-500" data-fs="sm">
+        <div data-color="neutral-400" data-fs="sm">
           {hint}
         </div>
       )}
