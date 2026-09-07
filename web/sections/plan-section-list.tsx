@@ -20,7 +20,7 @@ export function PlanSectionList(props: Plan) {
     <div data-gap="3" data-stack="y">
       <div data-cross="center" data-gap="3" data-stack="x">
         <h2
-          data-color="neutral-400"
+          data-color="neutral-300"
           data-fs="xs"
           data-fw="bold"
           data-lh="none"
@@ -30,7 +30,7 @@ export function PlanSectionList(props: Plan) {
           {t("plan.section.list.header")}
         </h2>
 
-        <div data-color="neutral-500" data-fs="sm">
+        <div className="c-card-description">
           {t("plan.section.list.count", {
             count: props.sections.length,
             max: PlanSectionLimitForPlanMax,
@@ -40,29 +40,23 @@ export function PlanSectionList(props: Plan) {
         {editable && !full && <PlanSectionCreate {...props} />}
       </div>
 
-      {props.sections.length === 0 && <div data-color="neutral-500">{t("plan.section.list.empty")}</div>}
+      {props.sections.length === 0 && (
+        <div className="c-card-description">{t("plan.section.list.empty")}</div>
+      )}
 
       <ul data-gap="3" data-stack="y">
         {props.sections.map((section) => (
-          <li
-            data-bc="neutral-800"
-            data-bg="neutral-800"
-            data-br="md"
-            data-bs="solid"
-            data-bw="hairline"
-            data-gap="3"
-            data-hover-bc="brand-800"
-            data-hover-shadow="md"
-            data-p="4"
-            data-shadow="sm"
-            data-stack="y"
-            key={section.id}
-          >
+          <li className="c-card" data-gap="3" key={section.id}>
             <div data-cross="center" data-gap="3" data-stack="x">
               {editable && <PlanSectionRename plan={props} section={section} />}
 
               {!editable && (
-                <div data-maxw="100%" data-transform="truncate" title={section.name}>
+                <div
+                  className="c-card-title"
+                  data-transform="truncate"
+                  style={{ minInlineSize: 0 }}
+                  title={section.name}
+                >
                   {section.name}
                 </div>
               )}
@@ -70,7 +64,7 @@ export function PlanSectionList(props: Plan) {
               {editable && <PlanSectionRemove plan={props} section={section} />}
             </div>
 
-            <Separator color="neutral-700" />
+            <Separator color="alpha-soft" />
 
             <PlanSectionExerciseInstructionList plan={props} section={section} />
 
