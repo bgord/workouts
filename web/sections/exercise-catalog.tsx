@@ -1,17 +1,7 @@
 import * as bg from "@bgord/ui";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ExerciseCard } from "../components";
 import { catalogRoute } from "../router";
-
-function matches(exercise: ExerciseWithCategories, search: { category?: string; name?: string }): boolean {
-  const byCategory =
-    !search.category || exercise.categories.some((category) => category.id === search.category);
-
-  const byName = exercise.name.toLowerCase().includes((search.name ?? "").trim().toLowerCase());
-
-  return byCategory && byName;
-}
 
 export function ExerciseCatalog() {
   const t = bg.useTranslations();
@@ -24,7 +14,14 @@ export function ExerciseCatalog() {
     defaultValue: search.name ?? "",
   });
 
-  const matching = exercises.filter((exercise) => matches(exercise, search));
+  const matching = exercises.filter((exercise) => {
+    const byCategory =
+      !search.category || exercise.categories.some((category) => category.id === search.category);
+
+    const byName = exercise.name.toLowerCase().includes((search.name ?? "").trim().toLowerCase());
+
+    return byCategory && byName;
+  });
 
   return (
     <div data-gap="5" data-stack="y">
