@@ -27,7 +27,7 @@ export function WorkoutSetRemove(props: {
       <button
         className="c-button"
         data-color="danger-400"
-        data-variant="bare"
+        data-variant="ghost"
         disabled={mutation.isLoading}
         title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
         type="submit"

@@ -50,7 +50,7 @@ export function WorkoutSetCorrect(props: {
     return (
       <button
         className="c-button"
-        data-variant="bare"
+        data-variant="ghost"
         onClick={edit.enable}
         title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
         type="button"
@@ -89,7 +89,7 @@ export function WorkoutSetCorrect(props: {
         {t("app.save")}
       </button>
 
-      <button className="c-button" data-variant="bare" onClick={edit.disable} type="button">
+      <button className="c-button" data-variant="ghost" onClick={edit.disable} type="button">
         {t("app.cancel")}
       </button>
 
