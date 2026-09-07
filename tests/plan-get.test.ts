@@ -43,7 +43,7 @@ describe("GET /api/plans/:planId", async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Plans.GetPlanQuery, "execute").mockResolvedValue({
-        data: mocks.plan,
+        data: mocks.planWithSectionActions,
         actions: {
           finalize: { enabled: true, hints: [] },
           rename: { enabled: true, hints: [] },
@@ -63,7 +63,7 @@ describe("GET /api/plans/:planId", async () => {
 
     expect(response.status).toEqual(200);
     expect(json).toEqual({
-      data: mocks.plan,
+      data: mocks.planWithSectionActions,
       actions: {
         finalize: { enabled: true, hints: [] },
         rename: { enabled: true, hints: [] },

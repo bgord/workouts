@@ -1,19 +1,14 @@
 import { useTranslations } from "@bgord/ui";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
-import type { Plan } from "../../modules/plans/value-objects/plan";
-import { PlanSectionExerciseInstructionLimitMax } from "../../modules/plans/value-objects/plan-section-exercise-instruction-limit";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
-import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { PlanSectionCreate } from "./plan-section-create";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
 import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
 
-export function PlanSectionList(props: Plan & { actions: PlanGetResponse["actions"] }) {
+export function PlanSectionList(props: PlanGetResponse["data"] & { actions: PlanGetResponse["actions"] }) {
   const t = useTranslations();
-
-  const editable = props.status === PlanStatusEnum.draft;
 
   return (
     <div data-gap="3" data-stack="y">
@@ -73,9 +68,15 @@ export function PlanSectionList(props: Plan & { actions: PlanGetResponse["action
 
             <PlanSectionExerciseInstructionList plan={props} section={section} />
 
-            {editable && section.exerciseInstructions.length < PlanSectionExerciseInstructionLimitMax && (
+            {section.actions.exerciseInstructionAdd.enabled && (
               <PlanSectionExerciseInstructionAdd plan={props} section={section} />
             )}
+
+            {section.actions.exerciseInstructionAdd.hints.map((hint) => (
+              <div data-color="neutral-400" data-fs="sm" key={hint}>
+                {t(hint)}
+              </div>
+            ))}
           </li>
         ))}
       </ul>

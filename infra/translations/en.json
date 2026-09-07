@@ -101,6 +101,7 @@
   "plan.section.exercise.change.title": "Change {{name}} to another exercise",
   "plan.section.exercise.instruction": "{{sets}} × {{reps}}",
   "plan.section.exercise.list.empty": "No exercises yet",
+  "plan.section.exercise.list.limit.hint": "Remove an exercise to add a new one",
   "plan.section.exercise.remove.cta": "Remove",
   "plan.section.exercise.remove.error": "Could not remove the exercise",
   "plan.section.exercise.remove.title": "Remove {{name}}",

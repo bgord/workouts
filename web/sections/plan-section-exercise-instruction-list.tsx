@@ -1,12 +1,12 @@
 import { useTranslations } from "@bgord/ui";
-import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
+import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
 import { PlanSectionExerciseInstructionRow } from "./plan-section-exercise-instruction-row";
 
-export function PlanSectionExerciseInstructionList(props: { plan: Plan; section: PlanSectionWithExercises }) {
+export function PlanSectionExerciseInstructionList(props: {
+  plan: PlanGetResponse["data"];
+  section: PlanSection;
+}) {
   const t = useTranslations();
-
-  const editable = props.plan.status === PlanStatusEnum.draft;
 
   if (props.section.exerciseInstructions.length === 0) {
     return (
@@ -28,7 +28,6 @@ export function PlanSectionExerciseInstructionList(props: { plan: Plan; section:
     >
       {props.section.exerciseInstructions.map((exerciseInstruction) => (
         <PlanSectionExerciseInstructionRow
-          editable={editable}
           exerciseInstruction={exerciseInstruction}
           key={exerciseInstruction.id}
           plan={props.plan}

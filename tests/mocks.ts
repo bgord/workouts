@@ -230,6 +230,22 @@ export const planAtInstructionLimit: Plans.VO.Plan = {
   sections: [planSectionAtInstructionLimit],
 };
 
+export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
+  ...plan,
+  sections: plan.sections.map((section) => ({
+    ...section,
+    exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
+      ...exerciseInstruction,
+      actions: {
+        update: { enabled: true, hints: [] },
+        exerciseChange: { enabled: true, hints: [] },
+        remove: { enabled: true, hints: [] },
+      },
+    })),
+    actions: { exerciseInstructionAdd: { enabled: true, hints: [] } },
+  })),
+};
+
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 
 export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");

@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type {
-  ExerciseInstructionWithExercise,
-  Plan,
-  PlanSectionWithExercises,
-} from "../../modules/plans/value-objects/plan";
+  PlanExerciseInstruction,
+  PlanGetResponse,
+  PlanSection,
+} from "../../modules/plans/queries/get-plan";
 import type { RepsType } from "../../modules/plans/value-objects/reps";
 import { ExerciseImage, ExerciseImageSize } from "../components";
 import { PlanSectionExerciseInstructionExerciseChange } from "./plan-section-exercise-instruction-exercise-change";
@@ -16,10 +16,9 @@ function format(reps: RepsType): string {
 }
 
 export function PlanSectionExerciseInstructionRow(props: {
-  plan: Plan;
-  section: PlanSectionWithExercises;
-  exerciseInstruction: ExerciseInstructionWithExercise;
-  editable: boolean;
+  plan: PlanGetResponse["data"];
+  section: PlanSection;
+  exerciseInstruction: PlanExerciseInstruction;
 }) {
   const t = bg.useTranslations();
 
@@ -31,7 +30,10 @@ export function PlanSectionExerciseInstructionRow(props: {
     name: `plan-section-exercise-instruction-exercise-change-${props.exerciseInstruction.id}`,
   });
 
-  const { editable, exerciseInstruction } = props;
+  const { exerciseInstruction } = props;
+  const { actions } = exerciseInstruction;
+
+  const controls = actions.update.enabled || actions.exerciseChange.enabled || actions.remove.enabled;
 
   const instruction = t("plan.section.exercise.instruction", {
     sets: exerciseInstruction.sets,
@@ -64,15 +66,15 @@ export function PlanSectionExerciseInstructionRow(props: {
         {exerciseInstruction.exercise.name}
       </Link>
 
-      {!editable && (
+      {!controls && (
         <div data-color="neutral-400" data-fs="sm" data-ml="auto">
           {instruction}
         </div>
       )}
 
-      {editable && (
+      {controls && (
         <div data-cross="center" data-gap="3" data-ml="auto" data-stack="x">
-          {change.off && (
+          {change.off && actions.update.enabled && (
             <PlanSectionExerciseInstructionUpdate
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
@@ -83,7 +85,7 @@ export function PlanSectionExerciseInstructionRow(props: {
             </PlanSectionExerciseInstructionUpdate>
           )}
 
-          {update.off && (
+          {update.off && actions.exerciseChange.enabled && (
             <PlanSectionExerciseInstructionExerciseChange
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
@@ -92,7 +94,7 @@ export function PlanSectionExerciseInstructionRow(props: {
             />
           )}
 
-          {update.off && change.off && (
+          {update.off && change.off && actions.remove.enabled && (
             <PlanSectionExerciseInstructionRemove
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}

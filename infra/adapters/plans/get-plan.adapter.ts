@@ -48,35 +48,57 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       )
       .orderBy(asc(Schema.planSectionExerciseInstructions.createdAt));
 
+    const editable = Plans.Invariants.PlanIsEditable.passes({ status: plan.status });
+
     const data = {
       id: plan.id,
       name: plan.name,
       status: plan.status,
       revision: plan.revision,
       updatedAt: plan.updatedAt,
-      sections: sections.map((section) => ({
-        id: section.id,
-        name: section.name,
-        exerciseInstructions: exerciseInstructions
-          .filter((exerciseInstruction) => exerciseInstruction.planSectionId === section.id)
-          .map((exerciseInstruction) => ({
-            id: exerciseInstruction.id,
-            exercise: {
-              id: exerciseInstruction.exerciseId,
-              name: exerciseInstruction.exerciseName,
-              description: exerciseInstruction.exerciseDescription,
-              image: exerciseInstruction.exerciseImage,
+      sections: sections.map((section) => {
+        const planSection = {
+          id: section.id,
+          name: section.name,
+          exerciseInstructions: exerciseInstructions
+            .filter((exerciseInstruction) => exerciseInstruction.planSectionId === section.id)
+            .map((exerciseInstruction) => ({
+              id: exerciseInstruction.id,
+              exercise: {
+                id: exerciseInstruction.exerciseId,
+                name: exerciseInstruction.exerciseName,
+                description: exerciseInstruction.exerciseDescription,
+                image: exerciseInstruction.exerciseImage,
+              },
+              sets: exerciseInstruction.sets,
+              reps: v.parse(Plans.VO.Reps, {
+                min: exerciseInstruction.repsMin,
+                max: exerciseInstruction.repsMax,
+              }),
+              actions: {
+                update: { enabled: editable, hints: [] },
+                exerciseChange: { enabled: editable, hints: [] },
+                remove: { enabled: editable, hints: [] },
+              },
+            })),
+        };
+
+        const instructionsFull = !Plans.Invariants.PlanSectionExerciseInstructionLimit.passes({
+          planSection,
+        });
+
+        return {
+          ...planSection,
+          actions: {
+            exerciseInstructionAdd: {
+              enabled: editable && !instructionsFull,
+              hints: instructionsFull ? ["plan.section.exercise.list.limit.hint"] : [],
             },
-            sets: exerciseInstruction.sets,
-            reps: v.parse(Plans.VO.Reps, {
-              min: exerciseInstruction.repsMin,
-              max: exerciseInstruction.repsMax,
-            }),
-          })),
-      })),
+          },
+        };
+      }),
     };
 
-    const editable = Plans.Invariants.PlanIsEditable.passes({ status: data.status });
     const hasSections = Plans.Invariants.PlanHasSections.passes({ planSections: data.sections });
     const hasNoEmptySections = Plans.Invariants.PlanHasNoEmptySections.passes({
       planSections: data.sections,
