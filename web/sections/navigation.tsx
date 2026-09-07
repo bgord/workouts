@@ -25,7 +25,11 @@ function NavigationDesktop() {
       data-position="sticky"
       data-top="0"
       data-z="2"
-      style={{ height: "70px" }}
+      style={{
+        backdropFilter: "blur(12px)",
+        backgroundColor: "color-mix(in oklab, var(--surface-base) 80%, transparent)",
+        height: "70px",
+      }}
     >
       <div
         data-cross="center"
@@ -90,7 +94,11 @@ function NavigationMobile() {
         data-px="3"
         data-top="0"
         data-z="2"
-        style={{ height: "70px" }}
+        style={{
+          backdropFilter: "blur(12px)",
+          backgroundColor: "color-mix(in oklab, var(--surface-base) 80%, transparent)",
+          height: "70px",
+        }}
       >
         <Logo />
 
