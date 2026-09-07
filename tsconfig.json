@@ -17,6 +17,7 @@
       "+infra/*": ["./infra/*"],
       "+app": ["./app/index"],
       "+app/*": ["./app/*"],
+      "+action-state": ["./modules/action-state.ts"],
       "+languages": ["./modules/languages.ts"],
       "+auth": ["./modules/auth/index"],
       "+auth/*": ["./modules/auth/*"],

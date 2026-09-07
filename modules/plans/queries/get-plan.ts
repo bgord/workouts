@@ -1,6 +1,6 @@
+import type { ActionState } from "+action-state";
 import type * as Auth from "+auth";
 import type * as VO from "+plans/value-objects";
-import type { ActionState } from "./action-state";
 
 export type PlanSectionActions = { exerciseInstructionAdd: ActionState };
 

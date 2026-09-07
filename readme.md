@@ -51,6 +51,7 @@ bun run bgord-scripts/secrets-encrypt.ts --master-key /run/master-key.txt --inpu
 
 ```
 modules/
+├── action-state.ts
 ├── auth
 │   ├── events
 │   │   ├── ACCOUNT_CREATED_EVENT.ts
@@ -216,7 +217,6 @@ modules/
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
-│   │   ├── action-state.ts
 │   │   ├── get-finalized-plan.ts
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts

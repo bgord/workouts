@@ -1,5 +1,6 @@
 import * as tools from "@bgord/tools";
 import { desc, eq } from "drizzle-orm";
+import type { ActionState } from "+action-state";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import { db } from "+infra/db";
@@ -23,7 +24,7 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
     const active = summaries.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
     const archived = summaries.filter((plan) => plan.status === Plans.VO.PlanStatusEnum.archived);
 
-    const create: Plans.Queries.ActionState = Plans.Invariants.PlanLimitForOwner.passes({
+    const create: ActionState = Plans.Invariants.PlanLimitForOwner.passes({
       count: tools.Int.nonNegative(active.length),
     })
       ? { enabled: true, hints: [] }
