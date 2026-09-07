@@ -3,7 +3,9 @@ import type * as VO from "+plans/value-objects";
 
 class PlanHasSectionsError extends Error {}
 
-type PlanHasSectionsConfigType = { planSections: Array<VO.PlanSection> };
+type PlanHasSectionsConfigType = {
+  planSections: ReadonlyArray<VO.PlanSection | VO.PlanSectionWithExercises>;
+};
 
 class PlanHasSectionsFactory extends bg.Invariant<PlanHasSectionsConfigType> {
   passes(config: PlanHasSectionsConfigType) {
