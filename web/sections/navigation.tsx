@@ -179,7 +179,6 @@ const NavigationLink = createLink((props: React.JSX.IntrinsicElements["a"]) => (
     data-fw="medium"
     data-hover-color="brand-300"
     data-ls="wide"
-    style={{ textDecoration: "none" }}
     {...props}
   />
 ));

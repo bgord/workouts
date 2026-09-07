@@ -18,7 +18,7 @@ export function Logo() {
       data-ls="wider"
       data-transform="uppercase"
     >
-      <Link search={Form.default} style={{ textDecoration: "none" }} to="/">
+      <Link search={Form.default} to="/">
         {t("app.name")}
       </Link>
     </div>

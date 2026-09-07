@@ -52,3 +52,7 @@
 [data-status="error"] [data-when~="error"] {
   display: initial;
 }
+
+a {
+  text-decoration: none !important;
+}

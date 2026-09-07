@@ -11,7 +11,6 @@ export function PlanCard(props: { plan: PlanSummary }) {
         data-hover-color="brand-300"
         data-transform="truncate"
         params={{ planId: props.plan.id }}
-        style={{ minInlineSize: 0, textDecoration: "none" }}
         title={props.plan.name}
         to="/plans/$planId"
       >

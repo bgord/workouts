@@ -35,7 +35,6 @@ export function WorkoutExerciseRow(props: {
             data-hover-color="brand-300"
             data-transform="truncate"
             params={{ exerciseId: props.exercise.exerciseId }}
-            style={{ minInlineSize: 0, textDecoration: "none" }}
             title={props.exercise.exerciseName}
             to="/catalog/exercise/$exerciseId"
           >
