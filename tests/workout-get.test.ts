@@ -47,6 +47,7 @@ describe("GET /api/workouts/:workoutId", async () => {
         actions: {
           start: { enabled: false, hints: ["workout.start.blocked.missing_target"] },
           complete: { enabled: true, hints: [] },
+          discard: { enabled: true, hints: [] },
         },
       }),
     );
@@ -60,6 +61,7 @@ describe("GET /api/workouts/:workoutId", async () => {
       actions: {
         start: { enabled: false, hints: ["workout.start.blocked.missing_target"] },
         complete: { enabled: true, hints: [] },
+        discard: { enabled: true, hints: [] },
       },
     });
   });

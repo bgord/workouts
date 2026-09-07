@@ -105,11 +105,14 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     if (inProgress && !hasLoggedSets) completeBlockers.push("workout.complete.blocked.no_logged_sets");
 
+    const exists = Workouts.Invariants.WorkoutExists.passes({ status: workout.status });
+
     return {
       data,
       actions: {
         start: { enabled: draft && readyToStart && inProgressAvailable, hints: startBlockers },
         complete: { enabled: inProgress && hasLoggedSets, hints: completeBlockers },
+        discard: { enabled: exists, hints: [] },
       },
     };
   }

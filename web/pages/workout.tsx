@@ -16,8 +16,6 @@ import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
 import { WorkoutStart } from "../sections/workout-start";
 
-const DISCARDABLE = [WorkoutStatusEnum.draft, WorkoutStatusEnum.in_progress, WorkoutStatusEnum.completed];
-
 export function Workout() {
   const t = useTranslations();
   const language = useLanguage();
@@ -58,7 +56,7 @@ export function Workout() {
             <WorkoutStatusBadge status={workout.data.status} />
           </div>
 
-          {DISCARDABLE.includes(workout.data.status) && (
+          {workout.actions.discard.enabled && (
             <div data-gap="2" data-stack="y">
               <div data-cross="center" data-gap="3" data-stack="x">
                 {workout.actions.start.enabled && <WorkoutStart workout={workout.data} />}
