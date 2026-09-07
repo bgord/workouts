@@ -40,7 +40,7 @@ export function WorkoutSetLog(props: { workout: Workout; exercise: WorkoutExerci
   return (
     <form data-cross="end" data-gap="2" data-stack="x" onSubmit={mutation.handleSubmit}>
       <div data-gap="1" data-stack="y">
-        <label className="c-label" data-m="0" {...reps.label.props}>
+        <label className="c-label" data-variant="inline" {...reps.label.props}>
           {t("workout.set.reps.label")}
         </label>
 
@@ -54,7 +54,7 @@ export function WorkoutSetLog(props: { workout: Workout; exercise: WorkoutExerci
       </div>
 
       <div data-gap="1" data-stack="y">
-        <label className="c-label" data-m="0" {...load.label.props}>
+        <label className="c-label" data-variant="inline" {...load.label.props}>
           {t("workout.set.load.label")}
         </label>
 
@@ -78,7 +78,7 @@ export function WorkoutSetLog(props: { workout: Workout; exercise: WorkoutExerci
       </button>
 
       {props.exercise.target && (
-        <div data-color="neutral-500" data-fs="sm" data-mb="2">
+        <div data-color="neutral-400" data-fs="sm" data-mb="2">
           {t("workout.set.progress", { done, target: props.exercise.target.sets })}
         </div>
       )}
