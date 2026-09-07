@@ -16,8 +16,6 @@ export function WorkoutExerciseAdd(props: { workout: Workout }) {
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
 
-  const fields = [exerciseId, sets, repsMin, repsMax];
-
   const mutation = bg.useMutation({
     perform: () =>
       fetch(`/api/workouts/${props.workout.id}/exercise`, {
@@ -35,7 +33,7 @@ export function WorkoutExerciseAdd(props: { workout: Workout }) {
 
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
 
-      bg.Fields.clearAll(fields);
+      bg.Fields.clearAll([exerciseId, sets, repsMin, repsMax]);
       context.form?.reset();
     },
   });
