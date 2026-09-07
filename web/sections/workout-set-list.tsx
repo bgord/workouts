@@ -16,33 +16,40 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
   const correctable = CORRECTABLE.includes(props.workout.status);
 
   return (
-    <ul data-bcl="neutral-800" data-bsl="solid" data-bwl="thin" data-gap="0" data-stack="y">
-      {props.exercise.loggedSets.map((loggedSet) => (
+    <ul className="c-card" data-gap="0" data-p="0" data-stack="y" data-variant="sunken">
+      {props.exercise.loggedSets.map((loggedSet, index) => (
         <li
-          data-br="xs"
-          data-cross="center"
-          data-gap="2"
-          data-hover-bg="neutral-800"
-          data-px="2"
-          data-py="1"
+          data-bct={index > 0 ? "alpha-subtle" : undefined}
+          data-bst={index > 0 ? "solid" : undefined}
+          data-bwt={index > 0 ? "hairline" : undefined}
+          data-cross="baseline"
+          data-gap="3"
+          data-hover-bg="alpha-subtle"
+          data-px="3"
+          data-py="2"
           data-stack="x"
           key={loggedSet.id}
         >
-          <div data-color="neutral-100" data-ff="mono" data-fs="sm" data-grow="1" data-ls="tight">
+          <div className="c-badge" data-variant="outline">
+            {loggedSet.setNumber}
+          </div>
+
+          <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
             {t("workout.exercise.logged_set", {
-              setNumber: loggedSet.setNumber,
               reps: loggedSet.reps,
               load: loggedSet.load / GRAMS_IN_KILOGRAM,
             })}
           </div>
 
-          {correctable && (
-            <WorkoutSetCorrect exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
-          )}
+          <div data-stack="x">
+            {correctable && (
+              <WorkoutSetCorrect exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
+            )}
 
-          {correctable && (
-            <WorkoutSetRemove exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
-          )}
+            {correctable && (
+              <WorkoutSetRemove exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
+            )}
+          </div>
         </li>
       ))}
     </ul>

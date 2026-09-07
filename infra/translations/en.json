@@ -160,7 +160,7 @@
   "workout.exercise.add.reps.label": "Reps",
   "workout.exercise.add.reps.max.label": "Reps max",
   "workout.exercise.add.sets.label": "Sets",
-  "workout.exercise.logged_set": "{{setNumber}} · {{reps}} × {{load}} kg",
+  "workout.exercise.logged_set": "{{reps}} × {{load}} kg",
   "workout.exercise.prescription": "{{sets}} × {{reps}}",
   "workout.exercise.remove.cta": "Remove",
   "workout.exercise.remove.title": "Remove {{name}}",
