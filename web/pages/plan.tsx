@@ -64,7 +64,7 @@ export function Plan() {
 
           {plan.actions.archive.enabled && <PlanArchive {...plan?.data} />}
 
-          {plan?.data.status === PlanStatusEnum.archived && <PlanRestore {...plan?.data} />}
+          {plan.actions.restore.enabled && <PlanRestore {...plan?.data} />}
 
           {plan?.data.status !== PlanStatusEnum.finalized && <PlanRemove {...plan?.data} />}
         </div>

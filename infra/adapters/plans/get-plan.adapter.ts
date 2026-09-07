@@ -98,7 +98,12 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       hints: [],
     };
 
-    return { data, actions: { finalize, rename, editingEnable, archive } };
+    const restore = {
+      enabled: Plans.Invariants.PlanIsRestorable.passes({ status: data.status }),
+      hints: [],
+    };
+
+    return { data, actions: { finalize, rename, editingEnable, archive, restore } };
   }
 }
 
