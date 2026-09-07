@@ -5,7 +5,6 @@ import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/wo
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
-import { WorkoutAbandon } from "../sections/workout-abandon";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
@@ -15,7 +14,7 @@ import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
 import { WorkoutStart } from "../sections/workout-start";
 
-const FINISHED = [WorkoutStatusEnum.completed, WorkoutStatusEnum.abandoned];
+const DISCARDABLE = [WorkoutStatusEnum.draft, WorkoutStatusEnum.in_progress, WorkoutStatusEnum.completed];
 
 export function Workout() {
   const t = useTranslations();
@@ -63,19 +62,13 @@ export function Workout() {
             <WorkoutStatusBadge status={workout.status} />
           </div>
 
-          {workout.status === WorkoutStatusEnum.draft && (
+          {DISCARDABLE.includes(workout.status) && (
             <div data-cross="center" data-gap="3" data-stack="x">
-              <WorkoutStart workout={workout} />
+              {workout.status === WorkoutStatusEnum.draft && <WorkoutStart workout={workout} />}
+
+              {workout.status === WorkoutStatusEnum.in_progress && <WorkoutComplete workout={workout} />}
 
               <WorkoutDiscard workout={workout} />
-            </div>
-          )}
-
-          {workout.status === WorkoutStatusEnum.in_progress && (
-            <div data-cross="center" data-gap="3" data-stack="x">
-              <WorkoutComplete workout={workout} />
-
-              <WorkoutAbandon workout={workout} />
             </div>
           )}
         </div>
@@ -87,7 +80,7 @@ export function Workout() {
             <WorkoutExerciseRow
               exercise={exercise}
               key={exercise.id}
-              skipped={FINISHED.includes(workout.status) && exercise.loggedSets.length === 0}
+              skipped={workout.status === WorkoutStatusEnum.completed && exercise.loggedSets.length === 0}
             >
               <WorkoutSetList exercise={exercise} workout={workout} />
 

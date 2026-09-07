@@ -36,10 +36,6 @@ export class WorkoutsProjector {
       deps.EventHandler.handle(this.onWorkoutCompletedEvent.bind(this)),
     );
     deps.EventBus.on(
-      Workouts.Events.WORKOUT_ABANDONED_EVENT,
-      deps.EventHandler.handle(this.onWorkoutAbandonedEvent.bind(this)),
-    );
-    deps.EventBus.on(
       Workouts.Events.WORKOUT_DISCARDED_EVENT,
       deps.EventHandler.handle(this.onWorkoutDiscardedEvent.bind(this)),
     );
@@ -91,22 +87,6 @@ export class WorkoutsProjector {
       .set({
         status: Workouts.VO.WorkoutStatusEnum.completed,
         completedAt: event.createdAt,
-        revision: event.revision,
-        updatedAt: event.createdAt,
-      })
-      .where(
-        and(
-          eq(Schema.workouts.id, event.payload.workoutId),
-          eq(Schema.workouts.userId, event.payload.requesterId),
-        ),
-      );
-  }
-
-  async onWorkoutAbandonedEvent(event: Workouts.Events.WorkoutAbandonedEventType) {
-    await db
-      .update(Schema.workouts)
-      .set({
-        status: Workouts.VO.WorkoutStatusEnum.abandoned,
         revision: event.revision,
         updatedAt: event.createdAt,
       })

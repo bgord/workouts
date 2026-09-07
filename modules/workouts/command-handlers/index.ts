@@ -1,4 +1,3 @@
-export * from "./handleWorkoutAbandonCommand";
 export * from "./handleWorkoutCompleteCommand";
 export * from "./handleWorkoutCreateCommand";
 export * from "./handleWorkoutDiscardCommand";

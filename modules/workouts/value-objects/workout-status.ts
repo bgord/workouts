@@ -3,6 +3,5 @@ export enum WorkoutStatusEnum {
   draft = "draft",
   in_progress = "in_progress",
   completed = "completed",
-  abandoned = "abandoned",
   discarded = "discarded",
 }

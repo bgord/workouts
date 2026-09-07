@@ -40,7 +40,6 @@ type AcceptedCommand =
   | WorkoutsCommands.WorkoutStartCommandType
   | WorkoutsCommands.WorkoutSetLogCommandType
   | WorkoutsCommands.WorkoutCompleteCommandType
-  | WorkoutsCommands.WorkoutAbandonCommandType
   | WorkoutsCommands.WorkoutDiscardCommandType
   | WorkoutsCommands.WorkoutSetCorrectCommandType
   | WorkoutsCommands.WorkoutSetRemoveCommandType;

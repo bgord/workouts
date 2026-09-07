@@ -17,7 +17,6 @@ export type WorkoutEventType =
   | Events.WorkoutStartedEventType
   | Events.WorkoutSetLoggedEventType
   | Events.WorkoutCompletedEventType
-  | Events.WorkoutAbandonedEventType
   | Events.WorkoutDiscardedEventType
   | Events.WorkoutSetCorrectedEventType
   | Events.WorkoutSetRemovedEventType;
@@ -40,7 +39,6 @@ export class Workout {
     [Events.WORKOUT_SET_CORRECTED_EVENT]: Events.WorkoutSetCorrectedEvent,
     [Events.WORKOUT_SET_REMOVED_EVENT]: Events.WorkoutSetRemovedEvent,
     [Events.WORKOUT_COMPLETED_EVENT]: Events.WorkoutCompletedEvent,
-    [Events.WORKOUT_ABANDONED_EVENT]: Events.WorkoutAbandonedEvent,
     [Events.WORKOUT_DISCARDED_EVENT]: Events.WorkoutDiscardedEvent,
   });
   // Stryker restore all
@@ -267,22 +265,7 @@ export class Workout {
     this.record(event);
   }
 
-  abandon(requesterId: Auth.VO.UserIdType) {
-    Invariants.WorkoutIsInProgress.enforce({ status: this.status });
-    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-
-    const event = bg.event(
-      Events.WorkoutAbandonedEvent,
-      Workout.getStream(this.id),
-      { workoutId: this.id, requesterId },
-      this.deps,
-    );
-
-    this.record(event);
-  }
-
   discard(requesterId: Auth.VO.UserIdType) {
-    Invariants.WorkoutIsDiscardable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
 
     const event = bg.event(
@@ -397,12 +380,6 @@ export class Workout {
       case Events.WORKOUT_COMPLETED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.completed;
-        break;
-      }
-
-      case Events.WORKOUT_ABANDONED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
-        this.status = VO.WorkoutStatusEnum.abandoned;
         break;
       }
 

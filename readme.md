@@ -264,7 +264,6 @@ modules/
     ├── aggregates
     │   └── workout.ts
     ├── command-handlers
-    │   ├── handleWorkoutAbandonCommand.ts
     │   ├── handleWorkoutCompleteCommand.ts
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutDiscardCommand.ts
@@ -276,7 +275,6 @@ modules/
     │   ├── handleWorkoutSetRemoveCommand.ts
     │   ├── handleWorkoutStartCommand.ts
     ├── commands
-    │   ├── WORKOUT_ABANDON_COMMAND.ts
     │   ├── WORKOUT_COMPLETE_COMMAND.ts
     │   ├── WORKOUT_CREATE_COMMAND.ts
     │   ├── WORKOUT_DISCARD_COMMAND.ts
@@ -288,7 +286,6 @@ modules/
     │   ├── WORKOUT_SET_REMOVE_COMMAND.ts
     │   └── WORKOUT_START_COMMAND.ts
     ├── events
-    │   ├── WORKOUT_ABANDONED_EVENT.ts
     │   ├── WORKOUT_COMPLETED_EVENT.ts
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   ├── WORKOUT_DISCARDED_EVENT.ts
@@ -309,7 +306,6 @@ modules/
     │   ├── workout-has-logged-sets.ts
     │   ├── workout-in-progress-limit-for-owner.ts
     │   ├── workout-is-correctable.ts
-    │   ├── workout-is-discardable.ts
     │   ├── workout-is-draft.ts
     │   ├── workout-is-in-progress.ts
     │   ├── workout-is-ready-to-start.ts
@@ -393,7 +389,6 @@ app/
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
 │   └── workouts
-│       ├── workout-abandon.ts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
 │       ├── workout-discard.ts

@@ -799,57 +799,6 @@ describe("Workout", async () => {
     expect(() => workout.complete(mocks.userId)).toThrow(Workouts.Invariants.WorkoutHasLoggedSets.error);
   });
 
-  test("abandon", async () => {
-    const workout = Workouts.Aggregates.Workout.build(
-      mocks.workoutId,
-      [
-        mocks.GenericWorkoutCreatedEvent,
-        mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.GenericWorkoutExerciseTargetSetEvent,
-        mocks.GenericWorkoutStartedEvent,
-      ],
-      deps,
-    );
-
-    await bg.CorrelationStorage.run(mocks.correlationId, () => workout.abandon(mocks.userId));
-
-    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutAbandonedEvent]);
-  });
-
-  test("abandon - WorkoutIsInProgress", async () => {
-    const workout = Workouts.Aggregates.Workout.build(
-      mocks.workoutId,
-      [
-        mocks.GenericWorkoutCreatedEvent,
-        mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.GenericWorkoutExerciseTargetSetEvent,
-        mocks.GenericWorkoutStartedEvent,
-        mocks.GenericWorkoutAbandonedEvent,
-      ],
-      deps,
-    );
-
-    expect(() => workout.abandon(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsInProgress.error);
-  });
-
-  test("abandon - WorkoutBelongsToUser", async () => {
-    const workout = Workouts.Aggregates.Workout.build(
-      mocks.workoutId,
-      [
-        mocks.GenericWorkoutCreatedEvent,
-        mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.GenericWorkoutExerciseTargetSetEvent,
-        mocks.GenericWorkoutStartedEvent,
-        mocks.GenericWorkoutSetLoggedEvent,
-      ],
-      deps,
-    );
-
-    expect(() => workout.abandon(mocks.anotherUserId)).toThrow(
-      Workouts.Invariants.WorkoutBelongsToUser.error,
-    );
-  });
-
   test("discard", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
@@ -862,7 +811,7 @@ describe("Workout", async () => {
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutDiscardedEvent]);
   });
 
-  test("discard - WorkoutIsDiscardable - in progress", async () => {
+  test("discard - in progress", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
       [
@@ -874,10 +823,12 @@ describe("Workout", async () => {
       deps,
     );
 
-    expect(() => workout.discard(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsDiscardable.error);
+    await bg.CorrelationStorage.run(mocks.correlationId, () => workout.discard(mocks.userId));
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutDiscardedEvent]);
   });
 
-  test("discard - WorkoutIsDiscardable - abandoned", async () => {
+  test("discard - completed", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
       [
@@ -885,12 +836,15 @@ describe("Workout", async () => {
         mocks.GenericWorkoutExerciseAddedEvent,
         mocks.GenericWorkoutExerciseTargetSetEvent,
         mocks.GenericWorkoutStartedEvent,
-        mocks.GenericWorkoutAbandonedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+        mocks.GenericWorkoutCompletedEvent,
       ],
       deps,
     );
 
-    expect(() => workout.discard(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsDiscardable.error);
+    await bg.CorrelationStorage.run(mocks.correlationId, () => workout.discard(mocks.userId));
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutDiscardedEvent]);
   });
 
   test("discard - WorkoutBelongsToUser", async () => {

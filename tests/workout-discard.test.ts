@@ -72,7 +72,7 @@ describe("DELETE /api/workouts/:workoutId", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("WorkoutIsDiscardable - in progress", async () => {
+  test("happy path - in progress", async () => {
     const events = [
       mocks.GenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,
@@ -86,12 +86,12 @@ describe("DELETE /api/workouts/:workoutId", async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.revisionHeaders(events.length) },
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.discardable");
-    expect(eventStoreSave).not.toHaveBeenCalled();
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutDiscardedEvent]);
   });
 
   test("WorkoutBelongsToUser", async () => {

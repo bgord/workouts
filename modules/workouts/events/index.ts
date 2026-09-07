@@ -1,4 +1,3 @@
-export * from "./WORKOUT_ABANDONED_EVENT";
 export * from "./WORKOUT_COMPLETED_EVENT";
 export * from "./WORKOUT_CREATED_EVENT";
 export * from "./WORKOUT_DISCARDED_EVENT";

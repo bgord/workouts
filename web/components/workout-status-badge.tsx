@@ -8,7 +8,6 @@ const variant: Record<WorkoutStatusEnum, Variant> = {
   [WorkoutStatusEnum.draft]: "primary",
   [WorkoutStatusEnum.in_progress]: "primary",
   [WorkoutStatusEnum.completed]: "positive",
-  [WorkoutStatusEnum.abandoned]: "outline",
   [WorkoutStatusEnum.discarded]: "outline",
 };
 
@@ -17,7 +16,6 @@ const label: Record<WorkoutStatusEnum, string> = {
   [WorkoutStatusEnum.draft]: "workout.status.draft",
   [WorkoutStatusEnum.in_progress]: "workout.status.in_progress",
   [WorkoutStatusEnum.completed]: "workout.status.completed",
-  [WorkoutStatusEnum.abandoned]: "workout.status.abandoned",
   [WorkoutStatusEnum.discarded]: "workout.status.discarded",
 };
 
