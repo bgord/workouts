@@ -183,6 +183,7 @@
   "workout.set.error": "Could not log the set",
   "workout.set.load.label": "Load (kg)",
   "workout.set.progress": "{{done}} / {{target}} sets",
+  "workout.set.remove.blocked.last_set": "A completed workout keeps at least one set",
   "workout.set.remove.cta": "Remove",
   "workout.set.remove.title": "Remove set {{setNumber}}",
   "workout.set.reps.label": "Reps",

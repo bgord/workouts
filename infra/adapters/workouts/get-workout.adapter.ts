@@ -39,8 +39,20 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status: workout.status });
     const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status: workout.status });
 
+    const correctable = Workouts.Invariants.WorkoutIsCorrectable.passes({ status: workout.status });
+    const retainsLoggedSets = Workouts.Invariants.WorkoutRetainsLoggedSets.passes({
+      status: workout.status,
+      count: tools.Int.nonNegative(loggedSets.length),
+    });
+
+    const setRemoveBlockers: Array<bg.TranslationsKeyType> = [];
+
+    if (correctable && !retainsLoggedSets) setRemoveBlockers.push("workout.set.remove.blocked.last_set");
+
     const whenDraft = { enabled: draft, hints: [] };
     const whenInProgress = { enabled: inProgress, hints: [] };
+    const whenCorrectable = { enabled: correctable, hints: [] };
+    const setRemove = { enabled: correctable && retainsLoggedSets, hints: setRemoveBlockers };
 
     const data = {
       id: workout.id,
@@ -74,6 +86,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             setNumber: loggedSet.setNumber,
             reps: loggedSet.reps,
             load: loggedSet.load,
+            actions: { correct: whenCorrectable, remove: setRemove },
           })),
         actions: { targetSet: whenDraft, remove: whenDraft, setLog: whenInProgress },
       })),

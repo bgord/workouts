@@ -8,7 +8,14 @@ export type WorkoutExerciseActions = {
   setLog: ActionState;
 };
 
-export type WorkoutExercise = VO.WorkoutExercise & { actions: WorkoutExerciseActions };
+export type LoggedSetActions = { correct: ActionState; remove: ActionState };
+
+export type LoggedSet = VO.LoggedSetType & { actions: LoggedSetActions };
+
+export type WorkoutExercise = Omit<VO.WorkoutExercise, "loggedSets"> & {
+  loggedSets: Array<LoggedSet>;
+  actions: WorkoutExerciseActions;
+};
 
 export type WorkoutGetResponse = {
   data: Omit<VO.Workout, "exercises"> & { exercises: Array<WorkoutExercise> };

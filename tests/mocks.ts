@@ -325,6 +325,10 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
   ...workout,
   exercises: workout.exercises.map((exercise) => ({
     ...exercise,
+    loggedSets: exercise.loggedSets.map((set) => ({
+      ...set,
+      actions: { correct: { enabled: true, hints: [] }, remove: { enabled: true, hints: [] } },
+    })),
     actions: {
       targetSet: { enabled: true, hints: [] },
       remove: { enabled: true, hints: [] },

@@ -1,19 +1,15 @@
 import { useTranslations } from "@bgord/ui";
-import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
+import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
+import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
-const CORRECTABLE = [WorkoutStatusEnum.in_progress, WorkoutStatusEnum.completed];
-
-export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerciseWithSets }) {
+export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExercise }) {
   const t = useTranslations();
 
   if (props.exercise.loggedSets.length === 0) return null;
-
-  const correctable = CORRECTABLE.includes(props.workout.status);
 
   return (
     <ul data-bct="alpha-subtle" data-bst="solid" data-bwt="hairline" data-gap="0" data-stack="y">
@@ -39,13 +35,19 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
             })}
           </div>
 
-          {correctable && (
+          {loggedSet.actions.correct.enabled && (
             <WorkoutSetCorrect exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
           )}
 
-          {correctable && (
+          {loggedSet.actions.remove.enabled && (
             <WorkoutSetRemove exercise={props.exercise} loggedSet={loggedSet} workout={props.workout} />
           )}
+
+          {loggedSet.actions.remove.hints.map((blocker) => (
+            <div data-color="neutral-400" data-fs="sm" key={blocker}>
+              {t(blocker)}
+            </div>
+          ))}
         </li>
       ))}
     </ul>

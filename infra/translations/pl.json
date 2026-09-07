@@ -183,6 +183,7 @@
   "workout.set.error": "Nie udało się zapisać serii",
   "workout.set.load.label": "Ciężar (kg)",
   "workout.set.progress": "{{done}} / {{target}} serii",
+  "workout.set.remove.blocked.last_set": "Ukończony trening musi zachować co najmniej jedną serię",
   "workout.set.remove.cta": "Usuń",
   "workout.set.remove.title": "Usuń serię {{setNumber}}",
   "workout.set.reps.label": "Powtórzenia",
