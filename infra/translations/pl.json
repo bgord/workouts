@@ -156,6 +156,7 @@
   "workout.discard.header": "Odrzucanie treningu",
   "workout.discard.info": "Odrzucenie {{name}} trwale kasuje trening wraz ze wszystkimi zapisanymi w nim seriami.",
   "workout.discard.title": "Odrzuć trening {{name}}",
+  "workout.exercise.add.blocked.limit": "Usuń ćwiczenie, aby dodać nowe",
   "workout.exercise.add.cta": "Dodaj ćwiczenie",
   "workout.exercise.add.error": "Nie udało się dodać ćwiczenia",
   "workout.exercise.add.exercise.label": "Ćwiczenie",

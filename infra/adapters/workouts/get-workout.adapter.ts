@@ -106,6 +106,13 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     if (inProgress && !hasLoggedSets) completeBlockers.push("workout.complete.blocked.no_logged_sets");
 
     const exists = Workouts.Invariants.WorkoutExists.passes({ status: workout.status });
+    const exercisesAvailable = Workouts.Invariants.WorkoutExerciseLimit.passes({
+      workoutExercises: data.exercises,
+    });
+
+    const exerciseAddBlockers: Array<bg.TranslationsKeyType> = [];
+
+    if (draft && !exercisesAvailable) exerciseAddBlockers.push("workout.exercise.add.blocked.limit");
 
     return {
       data,
@@ -113,6 +120,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         start: { enabled: draft && readyToStart && inProgressAvailable, hints: startBlockers },
         complete: { enabled: inProgress && hasLoggedSets, hints: completeBlockers },
         discard: { enabled: exists, hints: [] },
+        exerciseAdd: { enabled: draft && exercisesAvailable, hints: exerciseAddBlockers },
       },
     };
   }

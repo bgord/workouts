@@ -3,7 +3,6 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { DateFormat } from "../../app/services/date-format";
-import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
@@ -104,11 +103,13 @@ export function Workout() {
         </ul>
       )}
 
-      {workout &&
-        workout.data.status === WorkoutStatusEnum.draft &&
-        workout.data.exercises.length < WorkoutExerciseLimitMax && (
-          <WorkoutExerciseAdd workout={workout.data} />
-        )}
+      {workout?.actions.exerciseAdd.enabled && <WorkoutExerciseAdd workout={workout.data} />}
+
+      {workout?.actions.exerciseAdd.hints.map((blocker) => (
+        <div data-color="neutral-400" data-fs="sm" key={blocker}>
+          {t(blocker)}
+        </div>
+      ))}
     </Main>
   );
 }

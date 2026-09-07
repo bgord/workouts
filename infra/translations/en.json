@@ -156,6 +156,7 @@
   "workout.discard.header": "Discard workout",
   "workout.discard.info": "Discarding {{name}} permanently removes it along with every set logged in it.",
   "workout.discard.title": "Discard the {{name}} workout",
+  "workout.exercise.add.blocked.limit": "Remove an exercise to add a new one",
   "workout.exercise.add.cta": "Add exercise",
   "workout.exercise.add.error": "Could not add the exercise",
   "workout.exercise.add.exercise.label": "Exercise",

@@ -4,7 +4,12 @@ import type * as VO from "+workouts/value-objects";
 
 export type WorkoutGetResponse = {
   data: VO.Workout;
-  actions: { start: ActionState; complete: ActionState; discard: ActionState };
+  actions: {
+    start: ActionState;
+    complete: ActionState;
+    discard: ActionState;
+    exerciseAdd: ActionState;
+  };
 };
 
 export interface GetWorkout {
