@@ -142,6 +142,7 @@ export function createRouter(context: RouterContext) {
     context,
     defaultPreload: "intent",
     defaultViewTransition: true,
+    scrollRestoration: true,
     ssr: { nonce: context.nonce },
   });
 }
