@@ -41,16 +41,16 @@
   display: none;
 }
 [data-status="initial"] [data-when~="initial"] {
-  display: initial;
+  display: revert-layer;
 }
 [data-status="pending"] [data-when~="pending"] {
-  display: initial;
+  display: revert-layer;
 }
 [data-status="success"] [data-when~="success"] {
-  display: initial;
+  display: revert-layer;
 }
 [data-status="error"] [data-when~="error"] {
-  display: initial;
+  display: revert-layer;
 }
 
 a {

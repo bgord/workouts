@@ -2,24 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Workouts" />
 
-    <link as="style" rel="stylesheet preload" href="/public/main.min.css" />
-    <link as="style" rel="stylesheet preload" href="/public/custom.css" />
+    <link rel="preload" as="style" href="/public/main.min.css" />
+    <link rel="stylesheet" href="/public/main.min.css" />
+    <link rel="preload" as="style" href="/public/custom.css" />
+    <link rel="stylesheet" href="/public/custom.css" />
 
     <title>Workouts</title>
   </head>
 
-  <body data-mx="auto" data-bg="neutral-950">
-    <main data-stack="y" data-gap="8">
-      <header data-stack="x" data-main="between" data-cross="center" data-py="2" data-px="4">
+  <body data-mx="auto">
+    <header data-bcb="alpha-subtle" data-bsb="solid" data-bwb="hairline">
+      <div
+        data-cross="center"
+        data-disp="flex"
+        data-height="100%"
+        data-maxw="md"
+        data-mx="auto"
+        data-px="3"
+        data-width="100%"
+        style="height: 70px"
+      >
         <div
           class="logo"
           data-color="brand-500"
           data-cross="center"
           data-disp="flex"
-          data-fs="4xl"
+          data-fs="2xl"
           data-fw="bold"
           data-gap="2"
           data-lh="none"
@@ -28,76 +39,94 @@
         >
           <a href="/">Workouts</a>
         </div>
-      </header>
+      </div>
+    </header>
 
+    <main data-maxw="md" data-mx="auto" data-pb="16" data-pt="12" data-px="3" data-stack="y" data-width="100%">
       <form
         id="register"
+        class="c-card"
         action="/api/auth/sign-up/email"
         method="post"
-        data-status="initial"
-        data-stack="y"
-        data-gap="4"
+        data-gap="5"
         data-mx="auto"
-        data-p="8"
-        data-md-p="5"
-        data-bg="neutral-900"
-        data-br="md"
+        data-status="initial"
         data-width="100%"
         style="max-width: 400px"
       >
-        <legend data-fs="xl" data-lh="none" data-color="neutral-200" data-mb="5">Register</legend>
+        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">Register</h1>
 
-        <div data-stack="y">
-          <label class="c-label" for="email">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            class="c-input"
-            autofocus
-            required
-            placeholder="user@example.com"
-            inputmode="email"
-            autocomplete="email"
-            autocapitalize="none"
-            spellcheck="false"
-          />
+        <div data-gap="4" data-stack="y">
+          <div data-stack="y">
+            <label class="c-label" for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="c-input"
+              autofocus
+              required
+              placeholder="user@example.com"
+              inputmode="email"
+              autocomplete="email"
+              autocapitalize="none"
+              spellcheck="false"
+              enterkeyhint="next"
+            />
+          </div>
+
+          <div data-stack="y">
+            <label class="c-label" for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              class="c-input"
+              type="password"
+              required
+              placeholder="*********"
+              autocomplete="new-password"
+              enterkeyhint="send"
+            />
+          </div>
         </div>
 
-        <div data-stack="y">
-          <label class="c-label" for="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            class="c-input"
-            type="password"
-            placeholder="*********"
-            autocomplete="new-password"
-          />
+        <div data-gap="3" data-stack="y">
+          <button data-when="initial error" class="c-button" data-variant="primary" type="submit">
+            Register
+          </button>
+          <button data-when="pending" class="c-button" data-variant="primary" type="submit" disabled>
+            Registering...
+          </button>
+
+          <output
+            data-when="error"
+            aria-live="assertive"
+            data-bg="danger-900"
+            data-br="md"
+            data-color="danger-100"
+            data-fs="sm"
+            data-p="3"
+          >
+            Something went wrong
+          </output>
+
+          <output
+            data-when="success"
+            aria-live="polite"
+            data-bg="positive-900"
+            data-br="md"
+            data-color="positive-100"
+            data-fs="sm"
+            data-p="3"
+          >
+            Check your inbox
+          </output>
         </div>
 
-        <button data-when="initial error" class="c-button" data-variant="primary" type="submit">
-          Register
-        </button>
-        <button data-when="pending" class="c-button" data-variant="primary" type="submit" disabled>
-          Registering...
-        </button>
-        <button data-when="success" class="c-button" data-variant="primary" type="submit" disabled>
-          Register
-        </button>
-
-        <div data-when="error" data-bg="neutral-700" data-color="neutral-200" data-p="3" data-fs="sm">
-          Something went wrong
+        <div class="c-card-footer" data-fs="sm" data-gap="2" data-main="center">
+          <span data-color="neutral-400">Already have an account?</span>
+          <a class="c-link" href="/public/login.html">Login</a>
         </div>
-
-        <div data-when="success" data-p="2" data-fs="base" data-bg="positive-200" data-color="positive-800">
-          Check your inbox
-        </div>
-
-        <p data-transform="center" data-color="neutral-400" data-mt="5" data-fs="sm">
-          Already have an account?
-          <a class="c-link" href="/public/login.html" data-decoration="underline">Login</a>
-        </p>
       </form>
     </main>
 
