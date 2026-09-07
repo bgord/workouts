@@ -3,16 +3,16 @@ import { useRouter } from "@tanstack/react-router";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { workoutRoute } from "../router";
 
-export function WorkoutComplete(props: { workout: Workout }) {
+export function WorkoutComplete(props: Workout) {
   const t = bg.useTranslations();
   const router = useRouter();
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.workout.id}/complete`, {
+      fetch(`/api/workouts/${props.id}/complete`, {
         method: "PATCH",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.workout.revision),
+        headers: bg.WeakETag.fromRevision(props.revision),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });

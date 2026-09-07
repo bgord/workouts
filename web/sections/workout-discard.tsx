@@ -6,23 +6,18 @@ import type { WorkoutSummary } from "../../modules/workouts/value-objects/workou
 import { ButtonCancel, ButtonClose } from "../components";
 import { homeRoute } from "../router";
 
-export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
+export function WorkoutDiscard(props: WorkoutSummary) {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = useNavigate();
   const dialog = bg.useToggle({ name: "workout-discard" });
 
-  const title = t("workout.title", {
-    plan: props.workout.planName,
-    section: props.workout.planSectionName,
-  });
-
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/workouts/${props.workout.id}`, {
+      fetch(`/api/workouts/${props.id}`, {
         method: "DELETE",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.workout.revision),
+        headers: bg.WeakETag.fromRevision(props.revision),
       }),
     onSuccess: async () => {
       dialog.disable();
@@ -38,7 +33,6 @@ export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
         data-color="danger-400"
         data-variant="ghost"
         onClick={dialog.enable}
-        title={t("workout.discard.title", { name: title })}
         type="button"
         {...dialog.props.controller}
       >
@@ -60,7 +54,9 @@ export function WorkoutDiscard(props: { workout: WorkoutSummary }) {
           data-stack="x"
         >
           <WarningCircle data-size="md" />
-          {t("workout.discard.info", { name: title })}
+          {t("workout.discard.info", {
+            name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
+          })}
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>

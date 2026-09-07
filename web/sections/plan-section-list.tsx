@@ -53,12 +53,7 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
               {props.actions.sectionRename.enabled && <PlanSectionRename plan={props} section={section} />}
 
               {!props.actions.sectionRename.enabled && (
-                <div
-                  className="c-card-title"
-                  data-transform="truncate"
-                  style={{ minInlineSize: 0 }}
-                  title={section.name}
-                >
+                <div className="c-card-title" data-transform="truncate" title={section.name}>
                   {section.name}
                 </div>
               )}

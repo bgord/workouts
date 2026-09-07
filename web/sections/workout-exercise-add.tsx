@@ -5,11 +5,11 @@ import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { ButtonCancel, Select } from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutExerciseAdd(props: { workout: Workout }) {
+export function WorkoutExerciseAdd(props: Workout) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercises } = workoutRoute.useLoaderData();
-  const add = bg.useToggle({ name: `workout-exercise-add-${props.workout.id}` });
+  const add = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
 
   const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises[0]?.id ?? "" });
   const sets = bg.useNumberField(Form.sets.field);
@@ -18,10 +18,10 @@ export function WorkoutExerciseAdd(props: { workout: Workout }) {
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.workout.id}/exercise`, {
+      fetch(`/api/workouts/${props.id}/exercise`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.workout.revision) },
+        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.revision) },
         body: JSON.stringify({
           exerciseId: exerciseId.value,
           sets: sets.value,

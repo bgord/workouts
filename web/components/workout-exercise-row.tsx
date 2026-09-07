@@ -29,7 +29,7 @@ export function WorkoutExerciseRow(props: {
           <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
         </Link>
 
-        <div data-gap="2" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
+        <div data-gap="2" data-grow="1" data-stack="y">
           <Link
             className="c-card-title"
             data-hover-color="brand-300"

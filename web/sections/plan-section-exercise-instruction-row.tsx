@@ -59,7 +59,6 @@ export function PlanSectionExerciseInstructionRow(props: {
         data-hover-color="brand-300"
         data-transform="truncate"
         params={{ exerciseId: exerciseInstruction.exercise.id }}
-        style={{ minInlineSize: 0 }}
         title={exerciseInstruction.exercise.name}
         to="/catalog/exercise/$exerciseId"
       >

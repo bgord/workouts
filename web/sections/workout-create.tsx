@@ -11,10 +11,7 @@ export function WorkoutCreate() {
 
   const today = Temporal.Now.plainDateISO().toString();
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
-  const planSectionId = bg.useTextField({
-    name: "planSectionId",
-    defaultValue: plan?.sections[0]?.id ?? "",
-  });
+  const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -29,7 +26,7 @@ export function WorkoutCreate() {
         }),
       }),
     onSuccess: () => {
-      scheduledFor.set(today);
+      scheduledFor.clear();
 
       return router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true });
     },

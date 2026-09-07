@@ -38,7 +38,6 @@ export function PlanSectionRename(props: { plan: Plan; section: PlanSectionWithE
         data-hover-color="brand-300"
         data-transform="truncate"
         onClick={rename.enable}
-        style={{ minInlineSize: 0 }}
         title={t("plan.section.rename.cta")}
         type="button"
         {...rename.props.controller}

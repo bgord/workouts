@@ -34,7 +34,7 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
 
   return (
     <li className="c-card" data-cross="center" data-gap="3" data-main="between" data-stack="x">
-      <div className="c-card-header" data-grow="1" style={{ minInlineSize: 0 }}>
+      <div className="c-card-header" data-grow="1">
         <Link
           className="c-card-title"
           data-hover-color="brand-300"
