@@ -36,47 +36,48 @@ export function Workout() {
       {!workout && <div data-color="neutral-500">{t("workout.not_found")}</div>}
 
       {workout && (
-        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-          <h1
-            data-color="neutral-0"
-            data-fs="2xl"
-            data-fw="black"
-            data-maxw="100%"
-            data-md-fs="xl"
-            data-transform="truncate"
-            title={title}
-          >
-            {title}
-          </h1>
+        <div data-gap="4" data-stack="y">
+          <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+            <div data-gap="1" data-grow="1" data-stack="y" style={{ minInlineSize: 0 }}>
+              <h1
+                data-color="neutral-0"
+                data-fs="2xl"
+                data-fw="black"
+                data-md-fs="xl"
+                data-transform="truncate"
+                title={title}
+              >
+                {title}
+              </h1>
 
-          <WorkoutStatusBadge data-mt="auto" status={workout.status} />
-        </div>
-      )}
+              <div data-color="neutral-400" data-fs="sm">
+                {Temporal.PlainDate.from(workout.scheduledFor).toLocaleString(language, {
+                  day: "numeric",
+                  month: "short",
+                  weekday: "short",
+                  year: "numeric",
+                })}
+              </div>
+            </div>
 
-      {workout && (
-        <div data-color="neutral-400" data-fs="sm">
-          {Temporal.PlainDate.from(workout.scheduledFor).toLocaleString(language, {
-            day: "numeric",
-            month: "short",
-            weekday: "short",
-            year: "numeric",
-          })}
-        </div>
-      )}
+            <WorkoutStatusBadge status={workout.status} />
+          </div>
 
-      {workout && workout.status === WorkoutStatusEnum.draft && (
-        <div data-cross="start" data-gap="3" data-main="between" data-stack="x">
-          <WorkoutStart workout={workout} />
+          {workout.status === WorkoutStatusEnum.draft && (
+            <div data-cross="center" data-gap="3" data-stack="x">
+              <WorkoutStart workout={workout} />
 
-          <WorkoutDiscard workout={workout} />
-        </div>
-      )}
+              <WorkoutDiscard workout={workout} />
+            </div>
+          )}
 
-      {workout && workout.status === WorkoutStatusEnum.in_progress && (
-        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-          <WorkoutComplete workout={workout} />
+          {workout.status === WorkoutStatusEnum.in_progress && (
+            <div data-cross="center" data-gap="3" data-stack="x">
+              <WorkoutComplete workout={workout} />
 
-          <WorkoutAbandon workout={workout} />
+              <WorkoutAbandon workout={workout} />
+            </div>
+          )}
         </div>
       )}
 

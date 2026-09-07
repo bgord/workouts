@@ -82,7 +82,7 @@ export function WorkoutExerciseRow(props: {
         </div>
       )}
 
-      {props.children}
+      <div data-gap="0" data-stack="y">{props.children}</div>
     </li>
   );
 }
