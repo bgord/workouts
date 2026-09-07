@@ -109,6 +109,7 @@
   "plan.section.list.count": "{{count}} of {{max}}",
   "plan.section.list.empty": "No sections yet",
   "plan.section.list.header": "Sections",
+  "plan.section.list.limit.hint": "Remove a section to add a new one",
   "plan.section.remove.cta": "Remove",
   "plan.section.remove.error": "Could not remove the section",
   "plan.section.remove.header": "Remove section",

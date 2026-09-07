@@ -51,6 +51,7 @@ describe("GET /api/plans/:planId", async () => {
           archive: { enabled: true, hints: [] },
           restore: { enabled: false, hints: [] },
           remove: { enabled: true, hints: [] },
+          sectionCreate: { enabled: true, hints: [] },
         },
       }),
     );
@@ -68,6 +69,7 @@ describe("GET /api/plans/:planId", async () => {
         archive: { enabled: true, hints: [] },
         restore: { enabled: false, hints: [] },
         remove: { enabled: true, hints: [] },
+        sectionCreate: { enabled: true, hints: [] },
       },
     });
   });

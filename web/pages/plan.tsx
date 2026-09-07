@@ -73,7 +73,7 @@ export function Plan() {
         </div>
       ))}
 
-      <PlanSectionList {...plan?.data} />
+      <PlanSectionList {...plan?.data} sectionCreate={plan.actions.sectionCreate} />
     </Main>
   );
 }

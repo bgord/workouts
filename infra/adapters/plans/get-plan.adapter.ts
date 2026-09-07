@@ -1,4 +1,5 @@
 import type * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { and, asc, eq } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
@@ -108,7 +109,16 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       hints: [],
     };
 
-    return { data, actions: { finalize, rename, editingEnable, archive, restore, remove } };
+    const sectionsFull = !Plans.Invariants.PlanSectionLimitForPlan.passes({
+      count: tools.Int.nonNegative(data.sections.length),
+    });
+
+    const sectionCreate = {
+      enabled: editable && !sectionsFull,
+      hints: sectionsFull ? ["plan.section.list.limit.hint"] : [],
+    };
+
+    return { data, actions: { finalize, rename, editingEnable, archive, restore, remove, sectionCreate } };
   }
 }
 

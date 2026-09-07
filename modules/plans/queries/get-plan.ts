@@ -11,6 +11,7 @@ export type PlanGetResponse = {
     archive: ActionState;
     restore: ActionState;
     remove: ActionState;
+    sectionCreate: ActionState;
   };
 };
 

@@ -1,4 +1,5 @@
 import { useTranslations } from "@bgord/ui";
+import type { ActionState } from "../../modules/plans/queries/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { PlanSectionExerciseInstructionLimitMax } from "../../modules/plans/value-objects/plan-section-exercise-instruction-limit";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
@@ -9,11 +10,10 @@ import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-inst
 import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
 
-export function PlanSectionList(props: Plan) {
+export function PlanSectionList(props: Plan & { sectionCreate: ActionState }) {
   const t = useTranslations();
 
   const editable = props.status === PlanStatusEnum.draft;
-  const full = props.sections.length >= PlanSectionLimitForPlanMax;
 
   return (
     <div data-gap="3" data-stack="y">
@@ -36,12 +36,18 @@ export function PlanSectionList(props: Plan) {
           })}
         </div>
 
-        {editable && !full && (
+        {props.sectionCreate.enabled && (
           <div data-ml="auto">
             <PlanSectionCreate {...props} />
           </div>
         )}
       </div>
+
+      {props.sectionCreate.hints.map((hint) => (
+        <div data-color="neutral-400" data-fs="sm" key={hint}>
+          {t(hint)}
+        </div>
+      ))}
 
       {props.sections.length === 0 && <div data-color="neutral-400">{t("plan.section.list.empty")}</div>}
 
