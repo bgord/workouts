@@ -1,5 +1,5 @@
 import { useScrollLock, useToggle, useTranslations, useWindowDimensions } from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
+import { createLink, Link } from "@tanstack/react-router";
 import { Menu, Xmark } from "iconoir-react";
 import { useEffect } from "react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
@@ -19,7 +19,7 @@ function NavigationDesktop() {
 
   return (
     <nav
-      data-bcb="neutral-800"
+      data-bcb="alpha-subtle"
       data-bsb="solid"
       data-bwb="hairline"
       data-position="sticky"
@@ -39,65 +39,21 @@ function NavigationDesktop() {
       >
         <Logo />
 
-        <Link
-          data-color="neutral-300"
-          data-focus-ring="neutral"
-          data-fs="sm"
-          data-fw="medium"
-          data-hover-color="brand-300"
-          data-ls="wide"
-          data-ml="auto"
-          search={WorkoutHistoryFilters.default}
-          to="/"
-        >
+        <NavigationLink data-ml="auto" search={WorkoutHistoryFilters.default} to="/">
           {t("app.workouts")}
-        </Link>
+        </NavigationLink>
 
-        <Link
-          data-color="neutral-300"
-          data-focus-ring="neutral"
-          data-fs="sm"
-          data-fw="medium"
-          data-hover-color="brand-300"
-          data-ls="wide"
-          search={Form.default}
-          to="/catalog"
-        >
+        <NavigationLink search={Form.default} to="/catalog">
           {t("app.catalog")}
-        </Link>
+        </NavigationLink>
 
-        <Link
-          data-color="neutral-300"
-          data-focus-ring="neutral"
-          data-fs="sm"
-          data-fw="medium"
-          data-hover-color="brand-300"
-          data-ls="wide"
-          to="/plans"
-        >
-          {t("app.plans")}
-        </Link>
+        <NavigationLink to="/plans">{t("app.plans")}</NavigationLink>
 
-        <Link
-          data-color="neutral-300"
-          data-focus-ring="neutral"
-          data-fs="sm"
-          data-fw="medium"
-          data-hover-color="brand-300"
-          data-ls="wide"
-          to="/profile"
-        >
+        <NavigationLink to="/profile">
           <Avatar size={AvatarSize.md} />
-        </Link>
+        </NavigationLink>
 
-        <NavigationLogout
-          data-color="neutral-300"
-          data-focus-ring="neutral"
-          data-fs="sm"
-          data-fw="medium"
-          data-hover-color="brand-300"
-          data-ls="wide"
-        />
+        <NavigationLogout />
       </div>
     </nav>
   );
@@ -124,7 +80,7 @@ function NavigationMobile() {
   return (
     <>
       <nav
-        data-bcb="neutral-800"
+        data-bcb="alpha-subtle"
         data-bsb="solid"
         data-bwb="hairline"
         data-cross="center"
@@ -141,20 +97,19 @@ function NavigationMobile() {
         <div data-cross="center" data-gap="3" data-stack="x">
           <button
             className="c-button"
-            data-variant="bare"
+            data-variant="icon"
             onClick={navigation.toggle}
             title={t("app.menu.show")}
             type="button"
             {...navigation.props.controller}
           >
-            <Menu data-color="white" height="24" width="24" />
+            <Menu data-size="lg" />
           </button>
         </div>
       </nav>
 
       {navigation.on && (
         <nav
-          data-bg="neutral-950"
           data-dir="column"
           data-disp="flex"
           data-inset="0"
@@ -162,6 +117,7 @@ function NavigationMobile() {
           data-position="fixed"
           data-wrap="nowrap"
           data-z="3"
+          style={{ backgroundColor: "var(--surface-base)" }}
           {...navigation.props.target}
         >
           <div data-cross="center" data-disp="flex" data-main="between" data-p="2" style={{ height: "70px" }}>
@@ -170,13 +126,13 @@ function NavigationMobile() {
             <button
               className="c-button"
               data-interaction="subtle-scale"
-              data-variant="bare"
+              data-variant="icon"
               onClick={navigation.disable}
               title={t("app.menu.close")}
               type="button"
               {...navigation.props.controller}
             >
-              <Xmark data-color="white" height="24" width="24" />
+              <Xmark data-size="lg" />
             </button>
           </div>
 
@@ -192,80 +148,41 @@ function NavigationMobile() {
               <Avatar size={AvatarSize.sm} />
             </Link>
 
-            <Link
-              data-color="neutral-300"
-              data-focus-ring="neutral"
-              data-fs="sm"
-              data-fw="medium"
-              data-hover-color="brand-300"
-              data-ls="wide"
-              data-transform="uppercase"
-              onClick={navigation.disable}
-              search={WorkoutHistoryFilters.default}
-              to="/"
-            >
+            <NavigationLink onClick={navigation.disable} search={WorkoutHistoryFilters.default} to="/">
               {t("app.workouts")}
-            </Link>
+            </NavigationLink>
 
-            <Link
-              data-color="neutral-300"
-              data-focus-ring="neutral"
-              data-fs="sm"
-              data-fw="medium"
-              data-hover-color="brand-300"
-              data-ls="wide"
-              data-transform="uppercase"
-              onClick={navigation.disable}
-              search={Form.default}
-              to="/catalog"
-            >
+            <NavigationLink onClick={navigation.disable} search={Form.default} to="/catalog">
               {t("app.catalog")}
-            </Link>
+            </NavigationLink>
 
-            <Link
-              data-color="neutral-300"
-              data-focus-ring="neutral"
-              data-fs="sm"
-              data-fw="medium"
-              data-hover-color="brand-300"
-              data-ls="wide"
-              data-transform="uppercase"
-              onClick={navigation.disable}
-              to="/plans"
-            >
+            <NavigationLink onClick={navigation.disable} to="/plans">
               {t("app.plans")}
-            </Link>
+            </NavigationLink>
 
-            <Link
-              data-color="neutral-300"
-              data-focus-ring="neutral"
-              data-fs="sm"
-              data-fw="medium"
-              data-hover-color="brand-300"
-              data-ls="wide"
-              data-transform="uppercase"
-              onClick={navigation.disable}
-              to="/profile"
-            >
+            <NavigationLink onClick={navigation.disable} to="/profile">
               {t("app.profile")}
-            </Link>
+            </NavigationLink>
 
-            <NavigationLogout
-              data-color="neutral-300"
-              data-focus-ring="neutral"
-              data-fs="sm"
-              data-fw="medium"
-              data-hover-color="brand-300"
-              data-ls="wide"
-              data-mt="8"
-              data-transform="uppercase"
-            />
+            <NavigationLogout data-mt="8" />
           </div>
         </nav>
       )}
     </>
   );
 }
+
+const NavigationLink = createLink((props: React.JSX.IntrinsicElements["a"]) => (
+  <a
+    data-color="neutral-300"
+    data-fs="sm"
+    data-fw="medium"
+    data-hover-color="brand-300"
+    data-ls="wide"
+    style={{ textDecoration: "none" }}
+    {...props}
+  />
+));
 
 function NavigationShell() {
   return (
@@ -281,6 +198,10 @@ function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
   return (
     <button
       data-cursor="pointer"
+      data-fs="sm"
+      data-fw="medium"
+      data-hover-color="brand-300"
+      data-ls="wide"
       onClick={async () => {
         await fetch("/api/auth/sign-out", { method: "POST", credentials: "include" });
         location.replace("/public/login.html");
