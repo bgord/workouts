@@ -1,25 +1,15 @@
 import { useTranslations } from "@bgord/ui";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 
-type Color = React.JSX.IntrinsicElements["div"]["data-color"];
-type Background = React.JSX.IntrinsicElements["div"]["data-bg"];
+type Variant = "primary" | "outline" | "positive" | "danger";
 
-const color: Record<WorkoutStatusEnum, Color> = {
-  [WorkoutStatusEnum.initial]: "neutral-300",
-  [WorkoutStatusEnum.draft]: "warning-300",
-  [WorkoutStatusEnum.in_progress]: "brand-200",
-  [WorkoutStatusEnum.completed]: "positive-200",
-  [WorkoutStatusEnum.abandoned]: "neutral-400",
-  [WorkoutStatusEnum.discarded]: "neutral-400",
-};
-
-const background: Record<WorkoutStatusEnum, Background> = {
-  [WorkoutStatusEnum.initial]: "neutral-700",
-  [WorkoutStatusEnum.draft]: "warning-900",
-  [WorkoutStatusEnum.in_progress]: "brand-900",
-  [WorkoutStatusEnum.completed]: "positive-900",
-  [WorkoutStatusEnum.abandoned]: "neutral-800",
-  [WorkoutStatusEnum.discarded]: "neutral-800",
+const variant: Record<WorkoutStatusEnum, Variant> = {
+  [WorkoutStatusEnum.initial]: "primary",
+  [WorkoutStatusEnum.draft]: "primary",
+  [WorkoutStatusEnum.in_progress]: "primary",
+  [WorkoutStatusEnum.completed]: "positive",
+  [WorkoutStatusEnum.abandoned]: "outline",
+  [WorkoutStatusEnum.discarded]: "outline",
 };
 
 const label: Record<WorkoutStatusEnum, string> = {
@@ -38,13 +28,7 @@ export function WorkoutStatusBadge(
   const t = useTranslations();
 
   return (
-    <div
-      className="c-badge"
-      data-bg={background[status]}
-      data-color={color[status]}
-      data-variant="primary"
-      {...rest}
-    >
+    <div className="c-badge" data-variant={variant[status]} {...rest}>
       {t(label[status])}
     </div>
   );
