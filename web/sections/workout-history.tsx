@@ -24,7 +24,7 @@ export function WorkoutHistory() {
 
   const matching = workouts.filter((workout) => !search.section || workout.planSectionId === search.section);
 
-  if (workouts.length === 0) return <div data-color="neutral-500">{t("workout.list.empty")}</div>;
+  if (workouts.length === 0) return <div data-color="neutral-400">{t("workout.list.empty")}</div>;
 
   return (
     <div data-gap="8" data-stack="y">
@@ -38,11 +38,8 @@ export function WorkoutHistory() {
                 <button
                   aria-pressed={selected}
                   className="c-badge"
-                  data-bc={selected ? "brand-400" : "neutral-400"}
-                  data-bg={selected ? "brand-400" : "neutral-950"}
-                  data-color={selected ? "neutral-950" : "neutral-300"}
                   data-cursor="pointer"
-                  data-variant="outline"
+                  data-variant={selected ? "primary" : "outline"}
                   onClick={() =>
                     navigate({ search: { section: selected ? undefined : section.id }, to: "/" })
                   }
@@ -55,14 +52,14 @@ export function WorkoutHistory() {
           })}
         </ul>
 
-        <div data-color="neutral-500" data-fs="sm">
+        <div data-color="neutral-400" data-fs="sm">
           {t("workout.list.count", { matching: matching.length, total: workouts.length })}
         </div>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
           <button
             className="c-button"
-            data-variant="bare"
+            data-variant="ghost"
             onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/" })}
             type="button"
           >
@@ -71,7 +68,7 @@ export function WorkoutHistory() {
         )}
       </div>
 
-      {matching.length === 0 && <div data-color="neutral-500">{t("workout.list.no_matches")}</div>}
+      {matching.length === 0 && <div data-color="neutral-400">{t("workout.list.no_matches")}</div>}
 
       <ul data-gap="3" data-stack="y">
         {matching.map((workout) => (
