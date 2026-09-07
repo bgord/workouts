@@ -27,7 +27,7 @@ export function PlanFinalize(props: Plan) {
   const hint =
     props.sections.length === 0
       ? t("plan.finalize.blocked.no_sections")
-      : t("plan.finalize.blocked.empty_sections", { names: empty.map((section) => section.name).join(", ") });
+      : t("plan.finalize.blocked.empty_sections");
 
   return (
     <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>

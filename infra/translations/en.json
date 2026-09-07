@@ -69,7 +69,7 @@
   "plan.create.submit.cta": "Create",
   "plan.editing.enable.cta": "Edit",
   "plan.editing.enable.error": "Could not enable editing",
-  "plan.finalize.blocked.empty_sections": "Add an exercise to {{names}} first",
+  "plan.finalize.blocked.empty_sections": "Add an exercise to all sections first",
   "plan.finalize.blocked.no_sections": "Add a section first",
   "plan.finalize.cta": "Finalize",
   "plan.finalize.error": "Could not finalize the plan",

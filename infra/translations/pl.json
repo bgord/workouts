@@ -69,7 +69,7 @@
   "plan.create.submit.cta": "Utwórz",
   "plan.editing.enable.cta": "Edytuj",
   "plan.editing.enable.error": "Nie udało się włączyć edycji",
-  "plan.finalize.blocked.empty_sections": "Najpierw dodaj ćwiczenie do {{names}}",
+  "plan.finalize.blocked.empty_sections": "Najpierw dodaj ćwiczenie do wszystkich sekcji",
   "plan.finalize.blocked.no_sections": "Najpierw dodaj sekcję",
   "plan.finalize.cta": "Zatwierdź",
   "plan.finalize.error": "Nie udało się zatwierdzić planu",
