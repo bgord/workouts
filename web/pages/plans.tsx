@@ -1,6 +1,5 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { Main, PlanCard } from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
@@ -9,9 +8,6 @@ export function Plans() {
   const t = bg.useTranslations();
   const { plans } = plansRoute.useLoaderData();
   const planCreate = bg.useToggle({ name: "plan-create" });
-
-  const active = plans.data.filter((plan) => plan.status !== PlanStatusEnum.archived);
-  const archived = plans.data.filter((plan) => plan.status === PlanStatusEnum.archived);
 
   return (
     <Main>
@@ -35,17 +31,19 @@ export function Plans() {
 
       {plans.hints.create === null && planCreate.on && <PlanCreate />}
 
-      {plans.data.length === 0 && <div data-color="neutral-400">{t("plan.list.empty")}</div>}
+      {plans.data.active.length === 0 && plans.data.archived.length === 0 && (
+        <div data-color="neutral-400">{t("plan.list.empty")}</div>
+      )}
 
-      {active.length > 0 && (
+      {plans.data.active.length > 0 && (
         <ul data-gap="3" data-stack="y">
-          {active.map((plan) => (
+          {plans.data.active.map((plan) => (
             <PlanCard key={plan.id} plan={plan} />
           ))}
         </ul>
       )}
 
-      {archived.length > 0 && (
+      {plans.data.archived.length > 0 && (
         <div data-gap="3" data-stack="y">
           <h2
             data-color="neutral-300"
@@ -59,7 +57,7 @@ export function Plans() {
           </h2>
 
           <ul data-gap="3" data-stack="y">
-            {archived.map((plan) => (
+            {plans.data.archived.map((plan) => (
               <PlanCard key={plan.id} plan={plan} />
             ))}
           </ul>

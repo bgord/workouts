@@ -23,7 +23,7 @@ describe(`GET ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue({
-        data: [mocks.planSummary],
+        data: { active: [mocks.planSummary], archived: [] },
         hints: { create: "plan.list.limit.hint" },
       }),
     );
@@ -32,7 +32,10 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ data: [mocks.planSummary], hints: { create: "plan.list.limit.hint" } });
+    expect(json).toEqual({
+      data: { active: [mocks.planSummary], archived: [] },
+      hints: { create: "plan.list.limit.hint" },
+    });
   });
 
   test("happy path - empty", async () => {
@@ -40,7 +43,7 @@ describe(`GET ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue({
-        data: [],
+        data: { active: [], archived: [] },
         hints: { create: null },
       }),
     );
@@ -49,6 +52,6 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ data: [], hints: { create: null } });
+    expect(json).toEqual({ data: { active: [], archived: [] }, hints: { create: null } });
   });
 });

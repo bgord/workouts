@@ -13,22 +13,23 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
       .where(eq(Schema.plans.userId, userId))
       .orderBy(desc(Schema.plans.updatedAt));
 
-    const data = plans.map((plan) => ({
+    const summaries = plans.map((plan) => ({
       id: plan.id,
       name: plan.name,
       status: plan.status,
       revision: plan.revision,
     }));
 
-    const editable = data.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
+    const active = summaries.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
+    const archived = summaries.filter((plan) => plan.status === Plans.VO.PlanStatusEnum.archived);
 
     const hints = {
-      create: Plans.Invariants.PlanLimitForOwner.passes({ count: tools.Int.nonNegative(editable.length) })
+      create: Plans.Invariants.PlanLimitForOwner.passes({ count: tools.Int.nonNegative(active.length) })
         ? null
         : "plan.list.limit.hint",
     };
 
-    return { data, hints };
+    return { data: { active, archived }, hints };
   }
 }
 

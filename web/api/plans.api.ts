@@ -11,7 +11,7 @@ export class Plans {
 
     const response = await fetch(url, { headers, credentials: "include" });
 
-    if (!response?.ok) return { data: [], hints: { create: null } };
+    if (!response?.ok) return { data: { active: [], archived: [] }, hints: { create: null } };
     return response.json().catch();
   }
 
