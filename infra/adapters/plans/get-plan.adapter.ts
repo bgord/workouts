@@ -48,6 +48,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       name: plan.name,
       status: plan.status,
       revision: plan.revision,
+      updatedAt: plan.updatedAt,
       sections: sections.map((section) => ({
         id: section.id,
         name: section.name,

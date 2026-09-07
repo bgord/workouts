@@ -221,6 +221,7 @@ export const plan: Plans.VO.Plan = {
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
   revision: revision.value,
+  updatedAt: T0.ms,
   sections: [planSection, anotherPlanSection],
 };
 

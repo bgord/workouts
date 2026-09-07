@@ -27,5 +27,6 @@ export type Plan = {
   name: PlanNameType;
   status: PlanStatusEnum;
   revision: tools.RevisionValueType;
+  updatedAt: tools.TimestampValueType;
   sections: Array<PlanSectionWithExercises>;
 };

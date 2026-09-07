@@ -62,6 +62,7 @@
   "plan.archive.header": "Archiwizacja planu",
   "plan.archive.info": "Archiwizacja {{name}} sprawia, że plan staje się tylko do odczytu i zwalnia miejsce na nowy. Możesz go później przywrócić.",
   "plan.create.cta": "Nowy",
+  "plan.updated_at": "Zaktualizowano {{date}}",
   "plan.create.error": "Nie udało się utworzyć planu",
   "plan.create.name.label": "Nazwa planu",
   "plan.create.name.placeholder": "Push pull legs",
