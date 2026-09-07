@@ -1,8 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { WorkoutDraftLimitForOwnerMax } from "../../modules/workouts/value-objects/workout-draft-limit-for-owner";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Select } from "../components";
 import { homeRoute } from "../router";
 
@@ -17,8 +15,6 @@ export function WorkoutCreate() {
     name: "planSectionId",
     defaultValue: plan?.sections[0]?.id ?? "",
   });
-
-  const drafts = workouts.filter((workout) => workout.status === WorkoutStatusEnum.draft).length;
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -38,12 +34,6 @@ export function WorkoutCreate() {
       return router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true });
     },
   });
-
-  const hint = !plan
-    ? t("workout.create.blocked.no_finalized_plan")
-    : drafts >= WorkoutDraftLimitForOwnerMax
-      ? t("workout.create.blocked.draft_limit")
-      : undefined;
 
   return (
     <form data-cross="end" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
@@ -80,17 +70,17 @@ export function WorkoutCreate() {
       <button
         className="c-button"
         data-variant="primary"
-        disabled={Boolean(hint) || scheduledFor.empty || planSectionId.empty || mutation.isLoading}
+        disabled={!workouts.actions.create.enabled || mutation.isLoading}
         type="submit"
       >
         {t("workout.create.cta")}
       </button>
 
-      {hint && (
-        <div data-color="neutral-400" data-fs="sm" data-mb="2">
-          {hint}
+      {workouts.actions.create.hints.map((hint) => (
+        <div data-color="neutral-400" data-fs="sm" data-mb="2" key={hint}>
+          {t(hint)}
         </div>
-      )}
+      ))}
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm" data-mb="2">

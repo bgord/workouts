@@ -11,7 +11,7 @@ export function WorkoutHistory() {
   const navigate = homeRoute.useNavigate();
   const search = homeRoute.useSearch();
 
-  const sections = workouts.reduce<Array<{ id: PlanSectionIdType; name: PlanSectionNameType }>>(
+  const sections = workouts.data.reduce<Array<{ id: PlanSectionIdType; name: PlanSectionNameType }>>(
     (result, workout) => {
       if (result.some((section) => section.id === workout.planSectionId)) return result;
 
@@ -22,9 +22,11 @@ export function WorkoutHistory() {
     [],
   );
 
-  const matching = workouts.filter((workout) => !search.section || workout.planSectionId === search.section);
+  const matching = workouts.data.filter(
+    (workout) => !search.section || workout.planSectionId === search.section,
+  );
 
-  if (workouts.length === 0) return <div data-color="neutral-400">{t("workout.list.empty")}</div>;
+  if (workouts.data.length === 0) return <div data-color="neutral-400">{t("workout.list.empty")}</div>;
 
   return (
     <div data-gap="8" data-stack="y">
@@ -53,7 +55,7 @@ export function WorkoutHistory() {
         </ul>
 
         <div data-color="neutral-400" data-fs="sm">
-          {t("workout.list.count", { matching: matching.length, total: workouts.length })}
+          {t("workout.list.count", { matching: matching.length, total: workouts.data.length })}
         </div>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (

@@ -10,7 +10,9 @@ export function useWorkoutStartHint(workout: Workout | null | undefined) {
   const { workouts } = workoutRoute.useLoaderData();
 
   const withoutTarget = workout?.exercises.filter((exercise) => exercise.target === undefined) ?? [];
-  const inProgress = workouts.filter((workout) => workout.status === WorkoutStatusEnum.in_progress).length;
+  const inProgress = workouts.data.filter(
+    (workout) => workout.status === WorkoutStatusEnum.in_progress,
+  ).length;
 
   if (withoutTarget.length === 1) return t("workout.start.blocked.missing_target");
   if (withoutTarget.length > 1) {
