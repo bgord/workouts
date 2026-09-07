@@ -13,6 +13,7 @@ export type PlanGetResponse = {
     remove: ActionState;
     sectionCreate: ActionState;
     sectionRename: ActionState;
+    sectionRemove: ActionState;
   };
 };
 

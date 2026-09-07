@@ -119,10 +119,21 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     };
 
     const sectionRename = { enabled: editable, hints: [] };
+    const sectionRemove = { enabled: editable, hints: [] };
 
     return {
       data,
-      actions: { finalize, rename, editingEnable, archive, restore, remove, sectionCreate, sectionRename },
+      actions: {
+        finalize,
+        rename,
+        editingEnable,
+        archive,
+        restore,
+        remove,
+        sectionCreate,
+        sectionRename,
+        sectionRemove,
+      },
     };
   }
 }

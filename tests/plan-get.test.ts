@@ -53,6 +53,7 @@ describe("GET /api/plans/:planId", async () => {
           remove: { enabled: true, hints: [] },
           sectionCreate: { enabled: true, hints: [] },
           sectionRename: { enabled: true, hints: [] },
+          sectionRemove: { enabled: true, hints: [] },
         },
       }),
     );
@@ -72,6 +73,7 @@ describe("GET /api/plans/:planId", async () => {
         remove: { enabled: true, hints: [] },
         sectionCreate: { enabled: true, hints: [] },
         sectionRename: { enabled: true, hints: [] },
+        sectionRemove: { enabled: true, hints: [] },
       },
     });
   });

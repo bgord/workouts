@@ -57,7 +57,7 @@ export function PlanSectionList(props: Plan & { actions: PlanGetResponse["action
             <div data-cross="center" data-gap="3" data-stack="x">
               {props.actions.sectionRename.enabled && <PlanSectionRename plan={props} section={section} />}
 
-              {!editable && (
+              {!props.actions.sectionRename.enabled && (
                 <div
                   className="c-card-title"
                   data-transform="truncate"
@@ -68,7 +68,7 @@ export function PlanSectionList(props: Plan & { actions: PlanGetResponse["action
                 </div>
               )}
 
-              {editable && <PlanSectionRemove plan={props} section={section} />}
+              {props.actions.sectionRemove.enabled && <PlanSectionRemove plan={props} section={section} />}
             </div>
 
             <PlanSectionExerciseInstructionList plan={props} section={section} />
