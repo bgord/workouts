@@ -87,15 +87,19 @@ export function Workout() {
             >
               <WorkoutSetList exercise={exercise} workout={workout.data} />
 
-              {workout.data.status === WorkoutStatusEnum.draft && (
+              {(exercise.actions.targetSet.enabled || exercise.actions.remove.enabled) && (
                 <div className="c-card-footer" data-cross="end" data-gap="3">
-                  <WorkoutExerciseTargetSet exercise={exercise} workout={workout.data} />
+                  {exercise.actions.targetSet.enabled && (
+                    <WorkoutExerciseTargetSet exercise={exercise} workout={workout.data} />
+                  )}
 
-                  <WorkoutExerciseRemove exercise={exercise} workout={workout.data} />
+                  {exercise.actions.remove.enabled && (
+                    <WorkoutExerciseRemove exercise={exercise} workout={workout.data} />
+                  )}
                 </div>
               )}
 
-              {workout.data.status === WorkoutStatusEnum.in_progress && (
+              {exercise.actions.setLog.enabled && (
                 <WorkoutSetLog exercise={exercise} workout={workout.data} />
               )}
             </WorkoutExerciseRow>

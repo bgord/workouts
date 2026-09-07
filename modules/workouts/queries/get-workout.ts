@@ -2,8 +2,16 @@ import type { ActionState } from "+action-state";
 import type * as Auth from "+auth";
 import type * as VO from "+workouts/value-objects";
 
+export type WorkoutExerciseActions = {
+  targetSet: ActionState;
+  remove: ActionState;
+  setLog: ActionState;
+};
+
+export type WorkoutExercise = VO.WorkoutExercise & { actions: WorkoutExerciseActions };
+
 export type WorkoutGetResponse = {
-  data: VO.Workout;
+  data: Omit<VO.Workout, "exercises"> & { exercises: Array<WorkoutExercise> };
   actions: {
     start: ActionState;
     complete: ActionState;

@@ -36,6 +36,12 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       )
       .orderBy(asc(Schema.workoutLoggedSets.setNumber));
 
+    const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status: workout.status });
+    const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status: workout.status });
+
+    const whenDraft = { enabled: draft, hints: [] };
+    const whenInProgress = { enabled: inProgress, hints: [] };
+
     const data = {
       id: workout.id,
       planId: workout.planId,
@@ -69,6 +75,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             reps: loggedSet.reps,
             load: loggedSet.load,
           })),
+        actions: { targetSet: whenDraft, remove: whenDraft, setLog: whenInProgress },
       })),
     };
 
@@ -80,7 +87,6 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       ),
     );
 
-    const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status: workout.status });
     const readyToStart = Workouts.Invariants.WorkoutIsReadyToStart.passes({
       workoutExercises: data.exercises,
     });
@@ -96,7 +102,6 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     }
     if (draft && !inProgressAvailable) startBlockers.push("workout.start.blocked.in_progress_limit");
 
-    const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status: workout.status });
     const hasLoggedSets = Workouts.Invariants.WorkoutHasLoggedSets.passes({
       workoutExercises: data.exercises,
     });

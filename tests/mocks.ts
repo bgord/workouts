@@ -321,6 +321,18 @@ export const workout: Workouts.VO.Workout = {
   ],
 };
 
+export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["data"] = {
+  ...workout,
+  exercises: workout.exercises.map((exercise) => ({
+    ...exercise,
+    actions: {
+      targetSet: { enabled: true, hints: [] },
+      remove: { enabled: true, hints: [] },
+      setLog: { enabled: false, hints: [] },
+    },
+  })),
+};
+
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
   correlationId,
