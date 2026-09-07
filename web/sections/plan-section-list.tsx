@@ -1,5 +1,5 @@
 import { useTranslations } from "@bgord/ui";
-import type { ActionState } from "../../modules/plans/queries/action-state";
+import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { PlanSectionExerciseInstructionLimitMax } from "../../modules/plans/value-objects/plan-section-exercise-instruction-limit";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
@@ -10,7 +10,7 @@ import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-inst
 import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
 
-export function PlanSectionList(props: Plan & { sectionCreate: ActionState }) {
+export function PlanSectionList(props: Plan & { actions: PlanGetResponse["actions"] }) {
   const t = useTranslations();
 
   const editable = props.status === PlanStatusEnum.draft;
@@ -36,14 +36,14 @@ export function PlanSectionList(props: Plan & { sectionCreate: ActionState }) {
           })}
         </div>
 
-        {props.sectionCreate.enabled && (
+        {props.actions.sectionCreate.enabled && (
           <div data-ml="auto">
             <PlanSectionCreate {...props} />
           </div>
         )}
       </div>
 
-      {props.sectionCreate.hints.map((hint) => (
+      {props.actions.sectionCreate.hints.map((hint) => (
         <div data-color="neutral-400" data-fs="sm" key={hint}>
           {t(hint)}
         </div>
@@ -55,7 +55,7 @@ export function PlanSectionList(props: Plan & { sectionCreate: ActionState }) {
         {props.sections.map((section) => (
           <li className="c-card" data-gap="3" data-p="4" key={section.id}>
             <div data-cross="center" data-gap="3" data-stack="x">
-              {editable && <PlanSectionRename plan={props} section={section} />}
+              {props.actions.sectionRename.enabled && <PlanSectionRename plan={props} section={section} />}
 
               {!editable && (
                 <div

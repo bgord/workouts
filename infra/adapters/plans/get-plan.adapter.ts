@@ -118,7 +118,12 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       hints: sectionsFull ? ["plan.section.list.limit.hint"] : [],
     };
 
-    return { data, actions: { finalize, rename, editingEnable, archive, restore, remove, sectionCreate } };
+    const sectionRename = { enabled: editable, hints: [] };
+
+    return {
+      data,
+      actions: { finalize, rename, editingEnable, archive, restore, remove, sectionCreate, sectionRename },
+    };
   }
 }
 
