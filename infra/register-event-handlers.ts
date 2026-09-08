@@ -20,6 +20,7 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
   new Projections.WorkoutsProjector(deps);
   new Projections.WorkoutExercisesProjector(deps);
   new Projections.WorkoutLoggedSetsProjector(deps);
+  new Projections.StatsExerciseSetsProjector(deps);
 
   // Policies
   new Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
