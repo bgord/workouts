@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Play } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { ActionHints } from "../components";
@@ -27,6 +28,7 @@ export function WorkoutStart(props: Workout & { action: ActionState }) {
         disabled={!props.action.enabled || mutation.isLoading}
         type="submit"
       >
+        <Play data-size="sm" />
         {t("workout.start.cta")}
       </button>
 

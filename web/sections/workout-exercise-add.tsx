@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
@@ -50,6 +51,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           type="button"
           {...add.props.controller}
         >
+          <Plus data-size="sm" />
           {t("workout.exercise.add.cta")}
         </button>
 

@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Pencil } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
@@ -61,7 +62,7 @@ export function WorkoutSetCorrect(props: {
           type="button"
           {...edit.props.controller}
         >
-          {t("workout.set.correct.cta")}
+          <Pencil data-size="sm" />
         </button>
 
         <ActionHints action={props.action} />

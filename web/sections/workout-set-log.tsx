@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { ActionHints } from "../components";
@@ -76,12 +77,14 @@ export function WorkoutSetLog(props: {
 
       <div data-cross="center" data-gap="3" data-stack="x">
         <button
+          aria-label={t("workout.set.cta")}
           className="c-button"
           data-variant="primary"
           disabled={!props.action.enabled || reps.empty || load.empty || mutation.isLoading}
+          title={t("workout.set.cta")}
           type="submit"
         >
-          {t("workout.set.cta")}
+          <Plus data-size="sm" />
         </button>
 
         <ActionHints action={props.action} />

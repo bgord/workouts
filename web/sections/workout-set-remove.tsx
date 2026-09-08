@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { CircleX } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
@@ -29,13 +30,14 @@ export function WorkoutSetRemove(props: {
     <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
       <button
         className="c-button"
-        data-color="danger-400"
+        data-color="neutral-400"
+        data-hover-color="danger-400"
         data-variant="ghost"
         disabled={!props.action.enabled || mutation.isLoading}
         title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
         type="submit"
       >
-        {t("workout.set.remove.cta")}
+        <CircleX data-size="sm" />
       </button>
 
       <ActionHints action={props.action} />

@@ -35,23 +35,25 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
             })}
           </div>
 
-          {loggedSet.actions.correct.available && (
-            <WorkoutSetCorrect
-              action={loggedSet.actions.correct}
-              exercise={props.exercise}
-              loggedSet={loggedSet}
-              workout={props.workout}
-            />
-          )}
+          <div data-stack="x">
+            {loggedSet.actions.correct.available && (
+              <WorkoutSetCorrect
+                action={loggedSet.actions.correct}
+                exercise={props.exercise}
+                loggedSet={loggedSet}
+                workout={props.workout}
+              />
+            )}
 
-          {loggedSet.actions.remove.available && (
-            <WorkoutSetRemove
-              action={loggedSet.actions.remove}
-              exercise={props.exercise}
-              loggedSet={loggedSet}
-              workout={props.workout}
-            />
-          )}
+            {loggedSet.actions.remove.available && (
+              <WorkoutSetRemove
+                action={loggedSet.actions.remove}
+                exercise={props.exercise}
+                loggedSet={loggedSet}
+                workout={props.workout}
+              />
+            )}
+          </div>
         </li>
       ))}
     </ul>

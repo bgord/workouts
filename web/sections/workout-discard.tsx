@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, Trash } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { ButtonCancel, ButtonClose } from "../components";
@@ -37,6 +37,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         type="button"
         {...dialog.props.controller}
       >
+        <Trash data-size="sm" />
         {t("workout.discard.cta")}
       </button>
 
