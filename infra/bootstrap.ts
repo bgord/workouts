@@ -1,3 +1,5 @@
+// cSpell:ignore brzycki
+
 import { createAuthAdapters } from "+infra/adapters/auth";
 import { createExercisesAdapters } from "+infra/adapters/exercises";
 import { createPlansAdapters } from "+infra/adapters/plans";
@@ -7,6 +9,7 @@ import { createSystemAdapters } from "+infra/adapters/system";
 import { createWorkoutsAdapters } from "+infra/adapters/workouts";
 import { createEnvironmentLoader } from "+infra/env";
 import { createTools } from "+infra/tools";
+import { OneRepMaxEstimatorBrzycki } from "+stats/services";
 
 export async function bootstrap() {
   const EnvironmentLoader = await createEnvironmentLoader();
@@ -18,7 +21,7 @@ export async function bootstrap() {
   const Auth = createAuthAdapters();
   const Preferences = createPreferencesAdapters();
   const Exercises = createExercisesAdapters();
-  const Stats = createStatsAdapters();
+  const Stats = createStatsAdapters({ OneRepMaxEstimator: new OneRepMaxEstimatorBrzycki() });
   const Plans = createPlansAdapters({ ...System, ...Tools });
   const Workouts = createWorkoutsAdapters({ ...System, ...Tools });
 
