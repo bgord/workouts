@@ -4,6 +4,7 @@ import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
+import { SetsReps } from "../components/sets-reps";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
@@ -43,13 +44,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
 
           <div data-cross="center" data-gap="3" data-stack="x">
             <div className="c-card-description" data-ls="wide" data-transform="nowrap">
-              {t("workout.exercise.prescription", {
-                sets: props.exercise.prescription.sets,
-                reps:
-                  props.exercise.prescription.reps.min === props.exercise.prescription.reps.max
-                    ? String(props.exercise.prescription.reps.min)
-                    : `${props.exercise.prescription.reps.min}-${props.exercise.prescription.reps.max}`,
-              })}
+              <SetsReps {...props.exercise.prescription} />
             </div>
 
             {props.exercise.target && (

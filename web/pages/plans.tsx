@@ -42,7 +42,7 @@ export function Plans() {
       {plans.data.active.length > 0 && (
         <ul data-gap="3" data-stack="y">
           {plans.data.active.map((plan) => (
-            <PlanCard key={plan.id} plan={plan} />
+            <PlanCard key={plan.id} {...plan} />
           ))}
         </ul>
       )}
@@ -62,7 +62,7 @@ export function Plans() {
 
           <ul data-gap="3" data-stack="y">
             {plans.data.archived.map((plan) => (
-              <PlanCard key={plan.id} plan={plan} />
+              <PlanCard key={plan.id} {...plan} />
             ))}
           </ul>
         </div>

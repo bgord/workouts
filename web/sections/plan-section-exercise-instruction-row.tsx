@@ -5,23 +5,17 @@ import type {
   PlanGetResponse,
   PlanSection,
 } from "../../modules/plans/queries/get-plan";
-import type { RepsType } from "../../modules/plans/value-objects/reps";
 import { ExerciseImage, ExerciseImageSize } from "../components";
+import { SetsReps } from "../components/sets-reps";
 import { PlanSectionExerciseInstructionExerciseChange } from "./plan-section-exercise-instruction-exercise-change";
 import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
 import { PlanSectionExerciseInstructionUpdate } from "./plan-section-exercise-instruction-update";
-
-function format(reps: RepsType): string {
-  return reps.min === reps.max ? String(reps.min) : `${reps.min}-${reps.max}`;
-}
 
 export function PlanSectionExerciseInstructionRow(props: {
   plan: PlanGetResponse["data"];
   section: PlanSection;
   exerciseInstruction: PlanExerciseInstruction;
 }) {
-  const t = bg.useTranslations();
-
   const update = bg.useToggle({
     name: `plan-section-exercise-instruction-update-${props.exerciseInstruction.id}`,
   });
@@ -34,11 +28,6 @@ export function PlanSectionExerciseInstructionRow(props: {
   const { actions } = exerciseInstruction;
 
   const controls = actions.update.available || actions.exerciseChange.available || actions.remove.available;
-
-  const instruction = t("plan.section.exercise.instruction", {
-    sets: exerciseInstruction.sets,
-    reps: format(exerciseInstruction.reps),
-  });
 
   return (
     <li data-cross="center" data-gap="3" data-stack="x">
@@ -88,7 +77,7 @@ export function PlanSectionExerciseInstructionRow(props: {
 
       {change.off && !controls && (
         <div data-color="neutral-400" data-fs="sm" data-ml="auto">
-          {instruction}
+          <SetsReps {...exerciseInstruction} />
         </div>
       )}
 
@@ -101,7 +90,7 @@ export function PlanSectionExerciseInstructionRow(props: {
               section={props.section}
               toggle={update}
             >
-              {instruction}
+              <SetsReps {...exerciseInstruction} />
             </PlanSectionExerciseInstructionUpdate>
           )}
 
