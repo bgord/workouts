@@ -20,15 +20,7 @@ export function ExerciseHistory(props: { history: ExerciseHistoryType }) {
   const chronological = props.history.sessions.toReversed();
 
   return (
-    <div
-      data-bct="alpha-subtle"
-      data-bst="solid"
-      data-bwt="hairline"
-      data-gap="8"
-      data-mt="5"
-      data-pt="5"
-      data-stack="y"
-    >
+    <div data-gap="8" data-pt="5" data-stack="y">
       {props.history.sessions.length === 0 && (
         <div data-color="neutral-400" data-fs="sm">
           {t("exercise.history.empty")}
