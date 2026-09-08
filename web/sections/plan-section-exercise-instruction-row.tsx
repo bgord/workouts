@@ -61,19 +61,29 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {change.off && (
-        <Link
-          data-color="neutral-100"
-          data-fs="sm"
-          data-fw="medium"
-          data-grow="1"
-          data-hover-color="brand-300"
-          data-transform="truncate"
-          params={{ exerciseId: exerciseInstruction.exercise.id }}
-          title={exerciseInstruction.exercise.name}
-          to="/catalog/exercise/$exerciseId"
-        >
-          {exerciseInstruction.exercise.name}
-        </Link>
+        <div data-cross="center" data-gap="1" data-grow="1" data-stack="x">
+          <Link
+            data-color="neutral-100"
+            data-fs="sm"
+            data-fw="medium"
+            data-hover-color="brand-300"
+            data-transform="truncate"
+            params={{ exerciseId: exerciseInstruction.exercise.id }}
+            title={exerciseInstruction.exercise.name}
+            to="/catalog/exercise/$exerciseId"
+          >
+            {exerciseInstruction.exercise.name}
+          </Link>
+
+          {update.off && actions.exerciseChange.available && (
+            <PlanSectionExerciseInstructionExerciseChange
+              exerciseInstruction={exerciseInstruction}
+              plan={props.plan}
+              section={props.section}
+              toggle={change}
+            />
+          )}
+        </div>
       )}
 
       {change.off && !controls && (
@@ -83,7 +93,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {change.off && controls && (
-        <div data-cross="center" data-gap="3" data-ml="auto" data-stack="x">
+        <div data-cross="center" data-gap="2" data-ml="auto" data-stack="x">
           {actions.update.available && (
             <PlanSectionExerciseInstructionUpdate
               exerciseInstruction={exerciseInstruction}
@@ -93,15 +103,6 @@ export function PlanSectionExerciseInstructionRow(props: {
             >
               {instruction}
             </PlanSectionExerciseInstructionUpdate>
-          )}
-
-          {update.off && actions.exerciseChange.available && (
-            <PlanSectionExerciseInstructionExerciseChange
-              exerciseInstruction={exerciseInstruction}
-              plan={props.plan}
-              section={props.section}
-              toggle={change}
-            />
           )}
 
           {update.off && actions.remove.available && (

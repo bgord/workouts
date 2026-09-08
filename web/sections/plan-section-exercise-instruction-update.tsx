@@ -59,6 +59,7 @@ export function PlanSectionExerciseInstructionUpdate(props: {
         data-color="neutral-300"
         data-cursor="pointer"
         data-fs="sm"
+        data-hover-color="neutral-0"
         onClick={update.enable}
         title={t("plan.section.exercise.update.cta")}
         type="button"

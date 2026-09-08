@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { RefreshDouble } from "iconoir-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type {
   ExerciseInstructionWithExercise,
@@ -46,14 +47,18 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
   if (change.off) {
     return (
       <button
+        aria-label={t("plan.section.exercise.change.title", {
+          name: props.exerciseInstruction.exercise.name,
+        })}
         className="c-button"
-        data-variant="ghost"
+        data-interaction="subtle-scale"
+        data-variant="icon"
         onClick={change.enable}
         title={t("plan.section.exercise.change.title", { name: props.exerciseInstruction.exercise.name })}
         type="button"
         {...change.props.controller}
       >
-        {t("plan.section.exercise.change.cta")}
+        <RefreshDouble data-size="sm" />
       </button>
     );
   }
