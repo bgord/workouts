@@ -13,6 +13,7 @@ export * from "./workout-exercise-id";
 export * from "./workout-exercise-limit";
 export * from "./workout-id";
 export * from "./workout-in-progress-limit-for-owner";
+export * from "./workout-note";
 export * from "./workout-scheduled-for";
 export * from "./workout-scheduled-for-horizon";
 export * from "./workout-status";
