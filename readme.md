@@ -261,10 +261,16 @@ modules/
 │       ├── profile-avatar-mime-registry.ts
 │       └── profile-avatar-side.ts
 ├── stats
+│   ├── ports
+│   │   └── one-rep-max-estimator.ts
 │   ├── queries
 │   │   ├── get-exercise-history.ts
+│   ├── services
+│   │   ├── brzycki-one-rep-max.ts
+│   │   ├── epley-one-rep-max.ts
 │   └── value-objects
 │       ├── exercise-history.ts
+│       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts
     ├── aggregates
