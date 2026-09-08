@@ -264,6 +264,7 @@ modules/
 │   ├── queries
 │   │   ├── get-exercise-history.ts
 │   ├── services
+│   │   ├── exercise-recency-calculator.ts
 │   │   ├── exercise-record-finder.ts
 │   └── value-objects
 │       ├── exercise-history.ts
