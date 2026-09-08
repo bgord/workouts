@@ -38,10 +38,10 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
 });
 
 // fallow-ignore-file unused-export
-export const homeRoute = createRoute({
+export const dashboardRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/home"), "Home"),
+  component: lazyRouteComponent(() => import("./pages/dashboard"), "Dashboard"),
 });
 
 export const workoutsRoute = createRoute({
@@ -130,7 +130,7 @@ const profileRoute = createRoute({
 });
 
 const routeTree = rootRoute.addChildren([
-  homeRoute,
+  dashboardRoute,
   workoutsRoute,
   catalogRoute,
   exerciseRoute,

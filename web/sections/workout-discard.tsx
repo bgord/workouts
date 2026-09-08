@@ -4,7 +4,7 @@ import { CircleAlert, Trash } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { ButtonCancel, ButtonClose } from "../components";
-import { homeRoute } from "../router";
+import { dashboardRoute } from "../router";
 
 export function WorkoutDiscard(props: WorkoutSummary) {
   const t = bg.useTranslations();
@@ -22,7 +22,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
     onSuccess: async () => {
       dialog.disable();
       await navigate({ search: Form.default, to: "/" });
-      await router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true });
+      await router.invalidate({ filter: (route) => route.id === dashboardRoute.id, sync: true });
     },
   });
 
