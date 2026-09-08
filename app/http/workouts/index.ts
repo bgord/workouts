@@ -7,6 +7,7 @@ export * from "./workout-exercise-set-target";
 export * from "./workout-get";
 export * from "./workout-list";
 export * from "./workout-note-set";
+export * from "./workout-reschedule";
 export * from "./workout-set-correct";
 export * from "./workout-set-log";
 export * from "./workout-set-remove";

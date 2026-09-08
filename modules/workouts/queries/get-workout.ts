@@ -25,6 +25,7 @@ export type WorkoutGetResponse = {
     discard: ActionState;
     exerciseAdd: ActionState;
     noteSet: ActionState;
+    reschedule: ActionState;
   };
 };
 

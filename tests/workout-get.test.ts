@@ -50,6 +50,7 @@ describe("GET /api/workouts/:workoutId", async () => {
           discard: { available: true, enabled: true, hints: [] },
           exerciseAdd: { available: true, enabled: true, hints: [] },
           noteSet: { available: true, enabled: true, hints: [] },
+          reschedule: { available: true, enabled: true, hints: [] },
         },
       }),
     );
@@ -66,6 +67,7 @@ describe("GET /api/workouts/:workoutId", async () => {
         discard: { available: true, enabled: true, hints: [] },
         exerciseAdd: { available: true, enabled: true, hints: [] },
         noteSet: { available: true, enabled: true, hints: [] },
+        reschedule: { available: true, enabled: true, hints: [] },
       },
     });
   });

@@ -273,4 +273,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       repo: Adapters.Workouts.WorkoutRepository,
     }),
   );
+  Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_RESCHEDULE_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutRescheduleCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
 }

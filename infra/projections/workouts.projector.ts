@@ -44,6 +44,10 @@ export class WorkoutsProjector {
       deps.EventHandler.handle(this.onWorkoutNoteSetEvent.bind(this)),
     );
     deps.EventBus.on(
+      Workouts.Events.WORKOUT_RESCHEDULED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutRescheduledEvent.bind(this)),
+    );
+    deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
       deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
@@ -89,6 +93,22 @@ export class WorkoutsProjector {
     await db
       .update(Schema.workouts)
       .set({ note: event.payload.note ?? null, revision: event.revision, updatedAt: event.createdAt })
+      .where(
+        and(
+          eq(Schema.workouts.id, event.payload.workoutId),
+          eq(Schema.workouts.userId, event.payload.requesterId),
+        ),
+      );
+  }
+
+  async onWorkoutRescheduledEvent(event: Workouts.Events.WorkoutRescheduledEventType) {
+    await db
+      .update(Schema.workouts)
+      .set({
+        scheduledFor: event.payload.scheduledFor,
+        revision: event.revision,
+        updatedAt: event.createdAt,
+      })
       .where(
         and(
           eq(Schema.workouts.id, event.payload.workoutId),

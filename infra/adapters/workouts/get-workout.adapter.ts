@@ -144,6 +144,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
           hints: exerciseAddBlockers,
         },
         noteSet: { available: exists, enabled: exists, hints: [] },
+        reschedule: { available: draft, enabled: draft, hints: [] },
       },
     };
   }
