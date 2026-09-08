@@ -23,6 +23,7 @@ import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-obje
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
+import type { WorkoutNoteType } from "../modules/workouts/value-objects/workout-note";
 import type { WorkoutScheduledForType } from "../modules/workouts/value-objects/workout-scheduled-for";
 import { WorkoutStatusEnum } from "../modules/workouts/value-objects/workout-status";
 
@@ -245,6 +246,7 @@ export const workouts = sqliteTable("workouts", {
   scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
   status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
   completedAt: timestamp("completedAt"),
+  note: text("note").$type<WorkoutNoteType>(),
   revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
