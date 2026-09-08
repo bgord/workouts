@@ -61,7 +61,7 @@
   "plan.archive.error": "Could not archive the plan",
   "plan.archive.header": "Archive plan",
   "plan.archive.info": "Archiving {{name}} makes it read-only and frees the slot for a new plan. You can restore it later.",
-  "plan.create.cta": "New",
+  "plan.create.cta": "New plan",
   "plan.updated_at": "Updated {{date}}",
   "plan.create.error": "Could not create a plan",
   "plan.create.name.label": "Plan name",

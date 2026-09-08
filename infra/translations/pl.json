@@ -61,7 +61,7 @@
   "plan.archive.error": "Nie udało się zarchiwizować planu",
   "plan.archive.header": "Archiwizacja planu",
   "plan.archive.info": "Archiwizacja {{name}} sprawia, że plan staje się tylko do odczytu i zwalnia miejsce na nowy. Możesz go później przywrócić.",
-  "plan.create.cta": "Nowy",
+  "plan.create.cta": "Nowy plan",
   "plan.updated_at": "Zaktualizowano {{date}}",
   "plan.create.error": "Nie udało się utworzyć planu",
   "plan.create.name.label": "Nazwa planu",

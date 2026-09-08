@@ -1,5 +1,6 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
+import { Plus } from "lucide-react";
 import { ActionHints, Main, PlanCard } from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
@@ -26,6 +27,7 @@ export function Plans() {
             onClick={planCreate.toggle}
             type="button"
           >
+            <Plus data-size="sm" />
             {t("plan.create.cta")}
           </button>
         </div>
