@@ -21,7 +21,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
       }),
     onSuccess: async () => {
       dialog.disable();
-      await navigate({ search: Form.default, to: "/" });
+      await navigate({ search: Form.default, to: "/workouts" });
       await router.invalidate({ filter: (route) => route.id === dashboardRoute.id, sync: true });
     },
   });
