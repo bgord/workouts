@@ -170,6 +170,7 @@
   "workout.exercise.skipped": "Skipped",
   "workout.exercise.target": "{{sets}} × {{reps}} @ {{load}} kg",
   "workout.list.count": "{{matching}} of {{total}}",
+  "workout.list.scheduled_for": "{{date}}",
   "workout.list.completed_at": "{{date}} · {{time}}",
   "workout.list.completed_on": "{{date}} · completed {{completed}}",
   "workout.list.empty": "No workouts yet",

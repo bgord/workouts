@@ -18,20 +18,6 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
     Temporal.PlainDate.from(props.workout.scheduledFor),
   );
 
-  const completed = props.workout.completedAt ? DateFormat.zoned(props.workout.completedAt) : undefined;
-
-  const completedOnScheduledDay =
-    completed && completed.toPlainDate().equals(Temporal.PlainDate.from(props.workout.scheduledFor));
-
-  const subtitle = !completed
-    ? scheduledFor
-    : completedOnScheduledDay
-      ? t("workout.list.completed_at", { date: scheduledFor, time: DateFormat.time(language, completed) })
-      : t("workout.list.completed_on", {
-          date: scheduledFor,
-          completed: DateFormat.dayWithTime(language, completed),
-        });
-
   return (
     <li className="c-card" data-cross="center" data-gap="3" data-main="between" data-stack="x">
       <div className="c-card-header" data-grow="1">
@@ -47,7 +33,18 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
           {title}
         </Link>
 
-        <div className="c-card-description">{subtitle}</div>
+        {props.workout.scheduledFor && !props.workout.completedAt && (
+          <div className="c-card-description">{t("workout.list.scheduled_for", { date: scheduledFor })}</div>
+        )}
+
+        {props.workout.completedAt && (
+          <div className="c-card-description">
+            {t("workout.list.completed_at", {
+              date: scheduledFor,
+              time: DateFormat.time(language, DateFormat.zoned(props.workout.completedAt)),
+            })}
+          </div>
+        )}
       </div>
 
       <div data-cross="center" data-gap="3" data-stack="x">

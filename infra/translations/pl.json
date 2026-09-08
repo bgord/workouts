@@ -144,6 +144,7 @@
   "workout.complete.blocked.no_logged_sets": "Najpierw zapisz przynajmniej jedną serię",
   "workout.complete.cta": "Zakończ",
   "workout.complete.error": "Nie udało się zakończyć treningu",
+  "workout.list.scheduled_for": "{{date}}",
   "workout.completed_at": "Ukończono {{date}}",
   "workout.create.blocked.draft_limit": "Masz już 3 zaplanowane treningi",
   "workout.create.blocked.no_finalized_plan": "Zatwierdź plan, aby zaplanować trening",
