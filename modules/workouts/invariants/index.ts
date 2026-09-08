@@ -12,6 +12,7 @@ export * from "./workout-is-draft";
 export * from "./workout-is-in-progress";
 export * from "./workout-is-ready-to-start";
 export * from "./workout-logged-set-exists";
+export * from "./workout-note-has-changed";
 export * from "./workout-plan-ready";
 export * from "./workout-plan-section-ready";
 export * from "./workout-retains-logged-sets";
