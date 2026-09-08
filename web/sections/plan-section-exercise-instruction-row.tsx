@@ -89,9 +89,7 @@ export function PlanSectionExerciseInstructionRow(props: {
               plan={props.plan}
               section={props.section}
               toggle={update}
-            >
-              <SetsReps {...exerciseInstruction} />
-            </PlanSectionExerciseInstructionUpdate>
+            />
           )}
 
           {update.off && actions.remove.available && (

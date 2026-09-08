@@ -7,6 +7,7 @@ import type {
   PlanSectionWithExercises,
 } from "../../modules/plans/value-objects/plan";
 import { ButtonCancel } from "../components";
+import { SetsReps } from "../components/sets-reps";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionUpdate(props: {
@@ -14,7 +15,6 @@ export function PlanSectionExerciseInstructionUpdate(props: {
   section: PlanSectionWithExercises;
   exerciseInstruction: ExerciseInstructionWithExercise;
   toggle: bg.UseToggleReturnType;
-  children: React.ReactNode;
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -65,7 +65,7 @@ export function PlanSectionExerciseInstructionUpdate(props: {
         type="button"
         {...update.props.controller}
       >
-        {props.children}
+        <SetsReps {...props.exerciseInstruction} />
       </button>
     );
   }
