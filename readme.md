@@ -261,6 +261,8 @@ modules/
 │       ├── profile-avatar-mime-registry.ts
 │       └── profile-avatar-side.ts
 ├── stats
+│   ├── queries
+│   │   ├── get-exercise-history.ts
 │   └── value-objects
 │       ├── exercise-history.ts
 ├── supported-languages.ts
@@ -460,6 +462,8 @@ infra/
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
+│   ├── stats
+│   │   ├── get-exercise-history.adapter.ts
 │   ├── system
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
