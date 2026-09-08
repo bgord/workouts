@@ -2,6 +2,7 @@
 /* cSpell:disable */
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { NavArrowLeft } from "iconoir-react";
 import { DateFormat } from "../../app/services/date-format";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
@@ -25,8 +26,16 @@ export function Workout() {
   if (!workout) {
     return (
       <Main>
-        <Link className="c-link" search={{ section: search.section }} to="/">
-          {`< ${t("app.back")}`}
+        <Link
+          className="c-link"
+          data-cross="center"
+          data-gap="1"
+          data-stack="x"
+          search={{ section: search.section }}
+          to="/"
+        >
+          <NavArrowLeft data-size="sm" />
+          {t("app.back")}
         </Link>
 
         <div data-color="neutral-400">{t("workout.not_found")}</div>
@@ -36,12 +45,21 @@ export function Workout() {
 
   return (
     <Main>
-      <Link className="c-link" search={{ section: search.section }} to="/">
-        {`< ${t("app.back")}`}
-      </Link>
-
       <div data-gap="6" data-stack="y">
-        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+        <div data-cross="center" data-gap="2" data-main="between" data-stack="x">
+          <Link
+            aria-label={t("app.back")}
+            className="c-button"
+            data-interaction="subtle-scale"
+            data-self="start"
+            data-variant="icon"
+            search={{ section: search.section }}
+            title={t("app.back")}
+            to="/"
+          >
+            <NavArrowLeft data-size="md" />
+          </Link>
+
           <div data-gap="3" data-grow="1" data-stack="y">
             <h1
               data-color="neutral-0"
