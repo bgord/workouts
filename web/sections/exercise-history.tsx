@@ -1,6 +1,6 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Trophy } from "lucide-react";
+import { TrendingUp, Trophy } from "lucide-react";
 import { useState } from "react";
 import { DateFormat } from "../../app/services/date-format";
 import type {
@@ -10,6 +10,9 @@ import type {
 import { ExerciseHistoryChart } from "../components/exercise-history-chart";
 
 const GRAMS_IN_KILOGRAM = 1000;
+const DECIMAL = 10;
+
+const kilograms = (grams: number) => Math.round((grams / GRAMS_IN_KILOGRAM) * DECIMAL) / DECIMAL;
 
 export function ExerciseHistory(props: { history: ExerciseHistoryType }) {
   const t = useTranslations();
@@ -27,23 +30,46 @@ export function ExerciseHistory(props: { history: ExerciseHistoryType }) {
         </div>
       )}
 
-      {props.history.record && (
-        <div className="c-card" data-cross="center" data-gap="5" data-mr="auto" data-stack="x">
-          <Trophy data-color="brand-300" data-size="sm" />
+      {(props.history.record || props.history.estimatedRecord) && (
+        <div data-cross="center" data-gap="3" data-mr="auto" data-stack="x">
+          {props.history.record && (
+            <div className="c-card" data-cross="center" data-gap="5" data-stack="x">
+              <Trophy data-color="brand-300" data-size="sm" />
 
-          <div data-color="neutral-0" data-fs="lg" data-fw="bold" data-lh="none">
-            {t("workout.exercise.logged_set", {
-              reps: props.history.record.reps,
-              load: props.history.record.load / GRAMS_IN_KILOGRAM,
-            })}
-          </div>
+              <div data-color="neutral-0" data-fs="lg" data-fw="bold" data-lh="none">
+                {t("workout.exercise.logged_set", {
+                  reps: props.history.record.reps,
+                  load: props.history.record.load / GRAMS_IN_KILOGRAM,
+                })}
+              </div>
 
-          <div data-color="neutral-400" data-fs="sm" data-transform="nowrap">
-            {DateFormat.dayWithWeekday(
-              language,
-              DateFormat.zoned(props.history.record.completedAt).toPlainDate(),
-            )}
-          </div>
+              <div data-color="neutral-400" data-fs="sm" data-transform="nowrap">
+                {DateFormat.dayWithWeekday(
+                  language,
+                  DateFormat.zoned(props.history.record.completedAt).toPlainDate(),
+                )}
+              </div>
+            </div>
+          )}
+
+          {props.history.estimatedRecord && (
+            <div className="c-card" data-cross="center" data-gap="5" data-stack="x">
+              <TrendingUp data-color="neutral-300" data-size="sm" />
+
+              <div data-color="neutral-100" data-fs="base" data-fw="medium" data-lh="none">
+                {t("exercise.history.one_rep_max_estimate", {
+                  load: kilograms(props.history.estimatedRecord.oneRepMaxEstimate),
+                })}
+              </div>
+
+              <div data-color="neutral-400" data-fs="sm" data-transform="nowrap">
+                {t("workout.exercise.logged_set", {
+                  reps: props.history.estimatedRecord.reps,
+                  load: props.history.estimatedRecord.load / GRAMS_IN_KILOGRAM,
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -75,7 +101,15 @@ export function ExerciseHistory(props: { history: ExerciseHistoryType }) {
                 {DateFormat.dayWithWeekday(language, DateFormat.zoned(session.completedAt).toPlainDate())}
               </Link>
 
-              <div data-color="neutral-400" data-fs="sm" data-transform="nowrap">
+              {props.history.record?.workoutId === session.workoutId && (
+                <Trophy data-color="brand-300" data-size="sm" />
+              )}
+
+              {props.history.estimatedRecord?.workoutId === session.workoutId && (
+                <TrendingUp data-color="neutral-300" data-size="sm" />
+              )}
+
+              <div data-color="neutral-400" data-fs="sm" data-ml="auto" data-transform="nowrap">
                 {DateFormat.time(language, DateFormat.zoned(session.completedAt))}
               </div>
             </div>
@@ -105,6 +139,20 @@ export function ExerciseHistory(props: { history: ExerciseHistoryType }) {
                 </li>
               ))}
             </ul>
+
+            <div data-color="neutral-400" data-fs="sm" data-gap="3" data-pt="2" data-stack="x">
+              {session.oneRepMaxEstimate !== undefined && (
+                <div data-transform="nowrap">
+                  {t("exercise.history.one_rep_max_estimate", {
+                    load: kilograms(session.oneRepMaxEstimate),
+                  })}
+                </div>
+              )}
+
+              <div data-ml="auto" data-transform="nowrap">
+                {t("exercise.history.volume", { load: kilograms(session.volume) })}
+              </div>
+            </div>
           </li>
         ))}
       </ul>

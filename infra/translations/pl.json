@@ -59,6 +59,8 @@
   "exercise.history.chart.label": "Zapisane obciążenie serii",
   "exercise.history.empty": "Brak zapisanych serii",
   "exercise.history.header": "Historia serii",
+  "exercise.history.one_rep_max_estimate": "szac. 1RM ≈ {{load}} kg",
+  "exercise.history.volume": "Objętość {{load}} kg",
   "exercise.not_found": "Nie znaleziono ćwiczenia",
   "plan.archive.cta": "Archiwizuj",
   "plan.archive.error": "Nie udało się zarchiwizować planu",

@@ -59,6 +59,8 @@
   "exercise.history.chart.label": "Logged load per set",
   "exercise.history.empty": "No logged sets yet",
   "exercise.history.header": "Sets history",
+  "exercise.history.one_rep_max_estimate": "est. 1RM ≈ {{load}} kg",
+  "exercise.history.volume": "Volume {{load}} kg",
   "exercise.not_found": "Exercise not found",
   "plan.archive.cta": "Archive",
   "plan.archive.error": "Could not archive the plan",
