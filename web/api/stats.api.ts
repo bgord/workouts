@@ -1,11 +1,11 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
-import type { ExerciseSession } from "../../modules/stats/value-objects/exercise-history";
+import type { ExerciseHistory } from "../../modules/stats/value-objects/exercise-history";
 
 export class Stats {
   static async getExerciseHistory(
     request: Request | null,
     params: { exerciseId: string },
-  ): Promise<ReadonlyArray<ExerciseSession>> {
+  ): Promise<ExerciseHistory> {
     const BASE = `/api/stats/exercise/${params.exerciseId}/history`;
 
     const url = absoluteUrl(BASE, request);
@@ -13,7 +13,7 @@ export class Stats {
 
     const response = await fetch(url, { headers, credentials: "include" });
 
-    if (!response?.ok) return [];
+    if (!response?.ok) return { sessions: [] };
     return response.json().catch();
   }
 }

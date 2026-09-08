@@ -1,7 +1,7 @@
 import { and, asc, desc, eq, isNotNull } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
-import type * as Stats from "+stats";
+import * as Stats from "+stats";
 import type * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -10,7 +10,7 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
-  ): Promise<Array<Stats.VO.ExerciseSession>> {
+  ): Promise<Stats.VO.ExerciseHistory> {
     const loggedSets = await db
       .select()
       .from(Schema.statsExerciseSets)
@@ -39,7 +39,10 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
       sessions.set(loggedSet.workoutId, session);
     }
 
-    return [...sessions.values()];
+    return {
+      sessions: [...sessions.values()],
+      record: new Stats.Services.ExerciseRecordFinder().find([...sessions.values()]),
+    };
   }
 }
 
