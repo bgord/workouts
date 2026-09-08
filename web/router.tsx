@@ -42,6 +42,12 @@ export const homeRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/home"), "Home"),
+});
+
+export const workoutsRoute = createRoute({
+  path: "/workouts",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/workouts"), "Workouts"),
   validateSearch: (value) => ({
     section:
       typeof value["section"] === "string" && value["section"] !== ""
@@ -125,6 +131,7 @@ const profileRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
+  workoutsRoute,
   catalogRoute,
   exerciseRoute,
   plansRoute,

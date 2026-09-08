@@ -1,13 +1,13 @@
 import * as bg from "@bgord/ui";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutCard } from "../components";
-import { homeRoute } from "../router";
+import { workoutsRoute } from "../router";
 
 export function WorkoutHistory() {
   const t = bg.useTranslations();
-  const { workouts } = homeRoute.useLoaderData();
-  const navigate = homeRoute.useNavigate();
-  const search = homeRoute.useSearch();
+  const { workouts } = workoutsRoute.useLoaderData();
+  const navigate = workoutsRoute.useNavigate();
+  const search = workoutsRoute.useSearch();
 
   const matching = workouts.data.filter(
     (workout) => !search.section || workout.planSectionId === search.section,

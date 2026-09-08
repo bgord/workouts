@@ -43,7 +43,7 @@ function NavigationDesktop() {
       >
         <Logo />
 
-        <NavigationLink data-ml="auto" search={WorkoutHistoryFilters.default} to="/">
+        <NavigationLink data-ml="auto" search={WorkoutHistoryFilters.default} to="/workouts">
           {t("app.workouts")}
         </NavigationLink>
 
@@ -156,7 +156,11 @@ function NavigationMobile() {
               <Avatar size={AvatarSize.sm} />
             </Link>
 
-            <NavigationLink onClick={navigation.disable} search={WorkoutHistoryFilters.default} to="/">
+            <NavigationLink
+              onClick={navigation.disable}
+              search={WorkoutHistoryFilters.default}
+              to="/workouts"
+            >
               {t("app.workouts")}
             </NavigationLink>
 

@@ -3,12 +3,12 @@ import { useRouter } from "@tanstack/react-router";
 import { CalendarPlus } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import { ActionHints, Select } from "../components";
-import { homeRoute } from "../router";
+import { workoutsRoute } from "../router";
 
 export function WorkoutCreate() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { plan, workouts } = homeRoute.useLoaderData();
+  const { plan, workouts } = workoutsRoute.useLoaderData();
 
   const today = Temporal.Now.plainDateISO().toString();
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
@@ -29,7 +29,7 @@ export function WorkoutCreate() {
     onSuccess: () => {
       scheduledFor.clear();
 
-      return router.invalidate({ filter: (route) => route.id === homeRoute.id, sync: true });
+      return router.invalidate({ filter: (route) => route.id === workoutsRoute.id, sync: true });
     },
   });
 
