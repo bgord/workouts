@@ -11,6 +11,7 @@ import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutNote } from "../sections/workout-note";
+import { WorkoutReschedule } from "../sections/workout-reschedule";
 import { WorkoutStart } from "../sections/workout-start";
 
 export function Workout() {
@@ -67,9 +68,13 @@ export function Workout() {
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
             </h1>
 
-            <div data-color="neutral-400" data-fs="sm">
-              {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
-            </div>
+            {workout.actions.reschedule.available ? (
+              <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
+            ) : (
+              <div data-color="neutral-400" data-fs="sm">
+                {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
+              </div>
+            )}
           </div>
 
           <WorkoutStatusBadge status={workout.data.status} />
