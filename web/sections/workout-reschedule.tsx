@@ -44,6 +44,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         title={t("workout.reschedule.cta")}
         type="button"
         {...reschedule.props.controller}
+        {...bg.Rhythm().times(3).style.height}
       >
         {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor))}
       </button>

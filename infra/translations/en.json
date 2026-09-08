@@ -179,7 +179,7 @@
   "workout.not_found": "Workout not found",
   "workout.note.error": "Could not save the note",
   "workout.note.label": "Note",
-  "workout.note.placeholder": "How did it go?",
+  "workout.note.placeholder": "Description...",
   "workout.reschedule.cta": "Change the date",
   "workout.reschedule.error": "Could not change the date",
   "workout.reschedule.label": "Scheduled for",
