@@ -266,4 +266,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       repo: Adapters.Workouts.WorkoutRepository,
     }),
   );
+  Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_NOTE_SET_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutNoteSetCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
 }

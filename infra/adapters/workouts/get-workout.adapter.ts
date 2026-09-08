@@ -80,6 +80,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       scheduledFor: workout.scheduledFor,
       status,
       completedAt: workout.completedAt ?? undefined,
+      note: workout.note ?? undefined,
       revision: workout.revision,
       exercises: exercises.map((exercise) => ({
         id: exercise.id,
@@ -142,6 +143,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
           enabled: draft && exercisesAvailable,
           hints: exerciseAddBlockers,
         },
+        noteSet: { available: exists, enabled: exists, hints: [] },
       },
     };
   }
