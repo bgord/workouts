@@ -8,3 +8,13 @@ export type ExerciseSession = {
   completedAt: tools.TimestampValueType;
   sets: Array<PerformedSet>;
 };
+
+export type ExerciseRecord = PerformedSet & {
+  workoutId: Workouts.VO.WorkoutIdType;
+  completedAt: tools.TimestampValueType;
+};
+
+export type ExerciseHistory = {
+  sessions: Array<ExerciseSession>;
+  record?: ExerciseRecord;
+};

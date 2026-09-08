@@ -263,6 +263,8 @@ modules/
 ├── stats
 │   ├── queries
 │   │   ├── get-exercise-history.ts
+│   ├── services
+│   │   ├── exercise-record-finder.ts
 │   └── value-objects
 │       ├── exercise-history.ts
 ├── supported-languages.ts
