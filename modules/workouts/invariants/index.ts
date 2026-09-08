@@ -9,6 +9,7 @@ export * from "./workout-has-logged-sets";
 export * from "./workout-in-progress-limit-for-owner";
 export * from "./workout-is-correctable";
 export * from "./workout-is-draft";
+export * from "./workout-is-editable";
 export * from "./workout-is-in-progress";
 export * from "./workout-is-ready-to-start";
 export * from "./workout-logged-set-exists";

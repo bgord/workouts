@@ -96,12 +96,14 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("WorkoutIsDraft - in progress", async () => {
+  test("WorkoutIsEditable - completed", async () => {
     const events = [
       mocks.GenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,
       mocks.GenericWorkoutExerciseTargetSetEvent,
       mocks.GenericWorkoutStartedEvent,
+      mocks.GenericWorkoutSetLoggedEvent,
+      mocks.GenericWorkoutCompletedEvent,
     ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -115,7 +117,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.draft");
+    await testcases.assertInvariantError(response, 403, "workout.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -188,5 +190,31 @@ describe(`POST ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseAddedEvent]);
+  });
+
+  test("happy path - in progress", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(
+      mocks.anotherWorkoutExerciseId,
+    );
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(events.length), body },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.AnotherGenericWorkoutExerciseAddedEvent]);
   });
 });

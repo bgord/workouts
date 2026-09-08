@@ -11,6 +11,7 @@ type Dependencies = {
     | Workouts.Events.WorkoutSetLoggedEventType
     | Workouts.Events.WorkoutSetCorrectedEventType
     | Workouts.Events.WorkoutSetRemovedEventType
+    | Workouts.Events.WorkoutExerciseRemovedEventType
     | Workouts.Events.WorkoutDiscardedEventType
     | Auth.Events.AccountDeletedEventType
   >;
@@ -30,6 +31,10 @@ export class WorkoutLoggedSetsProjector {
     deps.EventBus.on(
       Workouts.Events.WORKOUT_SET_REMOVED_EVENT,
       deps.EventHandler.handle(this.onWorkoutSetRemovedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Workouts.Events.WORKOUT_EXERCISE_REMOVED_EVENT,
+      deps.EventHandler.handle(this.onWorkoutExerciseRemovedEvent.bind(this)),
     );
     deps.EventBus.on(
       Workouts.Events.WORKOUT_DISCARDED_EVENT,
@@ -78,6 +83,12 @@ export class WorkoutLoggedSetsProjector {
         .set({ setNumber: v.parse(Workouts.VO.SetNumber, index + 1) })
         .where(eq(Schema.workoutLoggedSets.id, loggedSet.id));
     }
+  }
+
+  async onWorkoutExerciseRemovedEvent(event: Workouts.Events.WorkoutExerciseRemovedEventType) {
+    await db
+      .delete(Schema.workoutLoggedSets)
+      .where(eq(Schema.workoutLoggedSets.workoutExerciseId, event.payload.workoutExerciseId));
   }
 
   async onWorkoutDiscardedEvent(event: Workouts.Events.WorkoutDiscardedEventType) {

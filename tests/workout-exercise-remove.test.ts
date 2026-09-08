@@ -70,12 +70,14 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("WorkoutIsDraft - in progress", async () => {
+  test("WorkoutIsEditable - completed", async () => {
     const events = [
       mocks.GenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,
       mocks.GenericWorkoutExerciseTargetSetEvent,
       mocks.GenericWorkoutStartedEvent,
+      mocks.GenericWorkoutSetLoggedEvent,
+      mocks.GenericWorkoutCompletedEvent,
     ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -88,7 +90,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.draft");
+    await testcases.assertInvariantError(response, 403, "workout.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -148,6 +150,51 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
     const response = await server.request(
       url,
       { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(draft.length) },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseRemovedEvent]);
+  });
+
+  test("happy path - in progress", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseRemovedEvent]);
+  });
+
+  test("happy path - in progress with logged sets", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+      mocks.GenericWorkoutSetLoggedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
       mocks.ip,
     );
 

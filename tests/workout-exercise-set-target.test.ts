@@ -154,6 +154,34 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutIsEditable - completed", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+      mocks.GenericWorkoutSetLoggedEvent,
+      mocks.GenericWorkoutCompletedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify(mocks.exerciseTarget),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("WorkoutBelongsToUser", async () => {
     const events = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
@@ -213,6 +241,32 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
 
   test("happy path", async () => {
     const events = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        body: JSON.stringify(mocks.exerciseTarget),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseTargetSetEvent]);
+  });
+
+  test("happy path - in progress", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+    ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

@@ -47,6 +47,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     const status = workout.status;
 
     const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status });
+    const editable = Workouts.Invariants.WorkoutIsEditable.passes({ status });
     const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status });
     const correctable = Workouts.Invariants.WorkoutIsCorrectable.passes({ status });
     const exists = Workouts.Invariants.WorkoutExists.passes({ status });
@@ -62,7 +63,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     if (correctable && !retainsLoggedSets) setRemoveBlockers.push("workout.set.remove.blocked.last_set");
 
-    const whenDraft = { available: draft, enabled: draft, hints: [] };
+    const whenEditable = { available: editable, enabled: editable, hints: [] };
     const whenInProgress = { available: inProgress, enabled: inProgress, hints: [] };
     const whenCorrectable = { available: correctable, enabled: correctable, hints: [] };
     const setRemove = {
@@ -107,7 +108,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             load: loggedSet.load,
             actions: { correct: whenCorrectable, remove: setRemove },
           })),
-        actions: { targetSet: whenDraft, remove: whenDraft, setLog: whenInProgress },
+        actions: { targetSet: whenEditable, remove: whenEditable, setLog: whenInProgress },
       })),
     };
 
@@ -126,7 +127,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     if (draft && hasExercises && !readyToStart) startBlockers.push("workout.start.blocked.missing_target");
     if (draft && !inProgressAvailable) startBlockers.push("workout.start.blocked.in_progress_limit");
     if (inProgress && !hasLoggedSets) completeBlockers.push("workout.complete.blocked.no_logged_sets");
-    if (draft && !exercisesAvailable) exerciseAddBlockers.push("workout.exercise.add.blocked.limit");
+    if (editable && !exercisesAvailable) exerciseAddBlockers.push("workout.exercise.add.blocked.limit");
 
     return {
       data,
@@ -139,8 +140,8 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         complete: { available: inProgress, enabled: inProgress && hasLoggedSets, hints: completeBlockers },
         discard: { available: exists, enabled: exists, hints: [] },
         exerciseAdd: {
-          available: draft,
-          enabled: draft && exercisesAvailable,
+          available: editable,
+          enabled: editable && exercisesAvailable,
           hints: exerciseAddBlockers,
         },
         noteSet: { available: exists, enabled: exists, hints: [] },

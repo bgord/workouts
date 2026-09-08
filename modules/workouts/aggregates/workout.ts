@@ -105,7 +105,7 @@ export class Workout {
     prescription: VO.ExercisePrescriptionType,
     requesterId: Auth.VO.UserIdType,
   ) {
-    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
     Invariants.WorkoutExerciseLimit.enforce({ workoutExercises: this.exercises });
 
@@ -120,7 +120,7 @@ export class Workout {
   }
 
   removeExercise(workoutExerciseId: VO.WorkoutExerciseIdType, requesterId: Auth.VO.UserIdType) {
-    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
     Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
 
@@ -139,7 +139,7 @@ export class Workout {
     target: VO.ExerciseTargetType,
     requesterId: Auth.VO.UserIdType,
   ) {
-    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
     Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
 

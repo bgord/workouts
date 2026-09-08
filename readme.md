@@ -314,6 +314,7 @@ modules/
     │   ├── workout-in-progress-limit-for-owner.ts
     │   ├── workout-is-correctable.ts
     │   ├── workout-is-draft.ts
+    │   ├── workout-is-editable.ts
     │   ├── workout-is-in-progress.ts
     │   ├── workout-is-ready-to-start.ts
     │   ├── workout-logged-set-exists.ts
