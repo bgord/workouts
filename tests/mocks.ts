@@ -961,6 +961,30 @@ export const GenericWorkoutDiscardedEvent = {
   payload: { workoutId, requesterId: userId },
 } satisfies Workouts.Events.WorkoutDiscardedEventType;
 
+export const workoutNote = v.parse(Workouts.VO.WorkoutNote, "Felt heavy, dropped to 80kg on set 3");
+
+export const GenericWorkoutNoteSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_NOTE_SET_EVENT",
+  payload: { workoutId, note: workoutNote, requesterId: userId },
+} satisfies Workouts.Events.WorkoutNoteSetEventType;
+
+export const GenericWorkoutNoteUnsetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_NOTE_SET_EVENT",
+  payload: { workoutId, note: undefined, requesterId: userId },
+} satisfies Workouts.Events.WorkoutNoteSetEventType;
+
 export const AnotherGenericWorkoutSetLoggedEvent = {
   id: expectAnyId,
   correlationId,

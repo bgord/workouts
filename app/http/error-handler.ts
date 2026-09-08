@@ -25,6 +25,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
   Plans.VO.PlanNameError,
   Plans.VO.PlanSectionNameError,
   Plans.VO.RepsError,
+  Workouts.VO.WorkoutNoteError,
   bg.HashValueError,
   bg.UUIDError,
   tools.DayIsoIdError,
