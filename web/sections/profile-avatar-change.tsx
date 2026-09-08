@@ -1,6 +1,6 @@
 import { exec, useFile, useMutation, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { UserCircle } from "iconoir-react";
+import { CircleUser } from "lucide-react";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -31,7 +31,7 @@ export function ProfileAvatarChange() {
   return (
     <section className="c-card" data-gap="5">
       <div data-cross="center" data-gap="3" data-stack="x">
-        <UserCircle data-size="md" />
+        <CircleUser data-size="md" />
         <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 

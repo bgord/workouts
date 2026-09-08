@@ -1,5 +1,5 @@
 import { Autocomplete, Dialog, Rhythm, useMutation, useToggle, useTranslations } from "@bgord/ui";
-import { UserXmark, WarningCircle } from "iconoir-react";
+import { CircleAlert, UserX } from "lucide-react";
 import { ButtonCancel, ButtonClose } from "../components";
 
 export function ProfileAccountDelete() {
@@ -22,12 +22,12 @@ export function ProfileAccountDelete() {
     <section className="c-card" data-bc="danger-600" data-gap="5" data-md-p="3">
       <div data-gap="3" data-main="between" data-stack="x">
         <div data-cross="center" data-gap="3" data-stack="x">
-          <UserXmark data-size="md" />
+          <UserX data-size="md" />
           <div className="c-card-title">{t("profile.delete_account.header")}</div>
         </div>
 
         <div data-color="danger-400" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
-          <WarningCircle data-size="sm" />
+          <CircleAlert data-size="sm" />
           {t("profile.delete_account.info")}
         </div>
       </div>
@@ -46,14 +46,14 @@ export function ProfileAccountDelete() {
       <Dialog data-gap="8" data-mt="12" {...Rhythm().times(50).style.width} {...dialog}>
         <div data-main="between" data-stack="x">
           <strong data-color="neutral-100" data-cross="center" data-gap="2" data-stack="x">
-            <UserXmark data-size="md" />
+            <UserX data-size="md" />
             {t("profile.delete_account.header")}
           </strong>
           <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
         </div>
 
         <div data-color="danger-400" data-cross="center" data-fs="sm" data-gap="1" data-stack="x">
-          <WarningCircle data-size="sm" />
+          <CircleAlert data-size="sm" />
           {t("profile.delete_account.info")}
         </div>
 
@@ -88,7 +88,7 @@ export function ProfileAccountDelete() {
               data-p="3"
               data-stack="x"
             >
-              <WarningCircle data-size="md" />
+              <CircleAlert data-size="md" />
               {t("profile.delete_account.error")}
             </output>
           )}

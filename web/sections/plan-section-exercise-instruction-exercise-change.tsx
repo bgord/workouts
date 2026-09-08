@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { RefreshDouble } from "iconoir-react";
+import { ArrowLeftRight } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type {
   ExerciseInstructionWithExercise,
@@ -58,7 +58,7 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
         type="button"
         {...change.props.controller}
       >
-        <RefreshDouble data-size="sm" />
+        <ArrowLeftRight data-size="sm" />
       </button>
     );
   }

@@ -1,5 +1,5 @@
 import { useMutation, useTranslations } from "@bgord/ui";
-import { CheckCircle, Key, WarningCircle } from "iconoir-react";
+import { CircleAlert, CircleCheck, KeyRound } from "lucide-react";
 import { rootRoute } from "../router";
 
 export function ProfilePasswordChange() {
@@ -21,7 +21,7 @@ export function ProfilePasswordChange() {
   return (
     <section className="c-card" data-gap="5">
       <div data-cross="center" data-gap="3" data-stack="x">
-        <Key data-size="md" />
+        <KeyRound data-size="md" />
         <div className="c-card-title">{t("auth.change_password.header")}</div>
       </div>
 
@@ -48,7 +48,7 @@ export function ProfilePasswordChange() {
             data-gap="2"
             data-stack="x"
           >
-            <CheckCircle data-size="sm" />
+            <CircleCheck data-size="sm" />
             {t("auth.change_password.sent")}
           </output>
         )}
@@ -62,7 +62,7 @@ export function ProfilePasswordChange() {
             data-gap="2"
             data-stack="x"
           >
-            <WarningCircle data-size="sm" />
+            <CircleAlert data-size="sm" />
             {t("auth.change_password.error")}
           </output>
         )}

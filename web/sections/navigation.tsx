@@ -1,6 +1,6 @@
 import { useScrollLock, useToggle, useTranslations, useWindowDimensions } from "@bgord/ui";
 import { createLink, Link } from "@tanstack/react-router";
-import { Menu, Xmark } from "iconoir-react";
+import { Menu, X } from "lucide-react";
 import { useEffect } from "react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
@@ -140,7 +140,7 @@ function NavigationMobile() {
               type="button"
               {...navigation.props.controller}
             >
-              <Xmark data-size="lg" />
+              <X data-size="lg" />
             </button>
           </div>
 

@@ -1,5 +1,5 @@
 import { useTranslations } from "@bgord/ui";
-import { Language } from "iconoir-react";
+import { Languages } from "lucide-react";
 import { LanguageSelector } from "../components";
 
 export function ProfileLanguageSelector() {
@@ -8,7 +8,7 @@ export function ProfileLanguageSelector() {
   return (
     <section className="c-card" data-gap="5">
       <div data-cross="center" data-gap="3" data-stack="x">
-        <Language data-size="md" />
+        <Languages data-size="md" />
         <div className="c-card-title">{t("profile.change_language.header")}</div>
       </div>
 

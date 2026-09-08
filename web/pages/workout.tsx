@@ -2,7 +2,7 @@
 /* cSpell:disable */
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { NavArrowLeft } from "iconoir-react";
+import { ChevronLeft } from "lucide-react";
 import { DateFormat } from "../../app/services/date-format";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutExerciseRow, WorkoutStatusBadge } from "../components";
@@ -34,7 +34,7 @@ export function Workout() {
           search={{ section: search.section }}
           to="/"
         >
-          <NavArrowLeft data-size="sm" />
+          <ChevronLeft data-size="sm" />
           {t("app.back")}
         </Link>
 
@@ -57,7 +57,7 @@ export function Workout() {
             title={t("app.back")}
             to="/"
           >
-            <NavArrowLeft data-size="md" />
+            <ChevronLeft data-size="md" />
           </Link>
 
           <div data-gap="3" data-grow="1" data-stack="y">

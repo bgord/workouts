@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { WarningCircle } from "iconoir-react";
+import { CircleAlert } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { ButtonCancel, ButtonClose } from "../components";
 import { planRoute, plansRoute } from "../router";
@@ -58,7 +58,7 @@ export function PlanArchive(props: Plan) {
               data-gap="3"
               data-stack="x"
             >
-              <WarningCircle data-size="md" />
+              <CircleAlert data-size="md" />
               {t("plan.archive.error")}
             </output>
           )}

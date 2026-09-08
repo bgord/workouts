@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { NavArrowLeft } from "iconoir-react";
+import { ChevronLeft } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
@@ -21,7 +21,7 @@ export function Exercise() {
           search={Form.default}
           to="/catalog"
         >
-          <NavArrowLeft data-size="sm" />
+          <ChevronLeft data-size="sm" />
           {t("app.back")}
         </Link>
 
@@ -44,7 +44,7 @@ export function Exercise() {
             title={t("app.back")}
             to="/catalog"
           >
-            <NavArrowLeft data-size="md" />
+            <ChevronLeft data-size="md" />
           </Link>
 
           <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">

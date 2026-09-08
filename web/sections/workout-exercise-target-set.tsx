@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CheckCircle } from "iconoir-react";
+import { CircleCheck } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { ActionHints } from "../components";
@@ -124,7 +124,7 @@ export function WorkoutExerciseTargetSet(props: {
           data-mb="2"
           data-stack="x"
         >
-          <CheckCircle data-size="sm" />
+          <CircleCheck data-size="sm" />
           {t("workout.target.saved")}
         </output>
       )}

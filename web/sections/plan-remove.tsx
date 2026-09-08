@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { WarningCircle } from "iconoir-react";
+import { CircleAlert } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { ButtonCancel, ButtonClose } from "../components";
 import { planRoute, plansRoute } from "../router";
@@ -52,7 +52,7 @@ export function PlanRemove(props: Plan) {
           data-lh="loose"
           data-stack="x"
         >
-          <WarningCircle data-size="md" />
+          <CircleAlert data-size="md" />
           {t("plan.remove.info", { name: props.name })}
         </div>
 
@@ -66,7 +66,7 @@ export function PlanRemove(props: Plan) {
               data-gap="3"
               data-stack="x"
             >
-              <WarningCircle data-size="md" />
+              <CircleAlert data-size="md" />
               {t("plan.remove.error")}
             </output>
           )}

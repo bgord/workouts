@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { WarningCircle } from "iconoir-react";
+import { CircleAlert } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { ButtonCancel, ButtonClose } from "../components";
@@ -54,7 +54,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
           data-lh="loose"
           data-stack="x"
         >
-          <WarningCircle data-size="md" />
+          <CircleAlert data-size="md" />
           {t("workout.discard.info", {
             name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
           })}
@@ -70,7 +70,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
               data-gap="3"
               data-stack="x"
             >
-              <WarningCircle data-size="md" />
+              <CircleAlert data-size="md" />
               {t("workout.discard.error")}
             </output>
           )}

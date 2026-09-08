@@ -29,7 +29,7 @@
     "@tanstack/react-router": "1.170.32",
     "better-auth": "1.7.3",
     "drizzle-orm": "0.45.2",
-    "iconoir-react": "7.12.1",
+    "lucide-react": "1.41.0",
     "nodemailer": "10.0.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
