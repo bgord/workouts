@@ -1,6 +1,6 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Main, PlanCard } from "../components";
+import { ActionHints, Main, PlanCard } from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
@@ -16,22 +16,20 @@ export function Plans() {
           {t("plan.list.header")}
         </h1>
 
-        <button
-          className="c-button"
-          data-variant="secondary"
-          disabled={!plans.actions.create.enabled}
-          onClick={planCreate.toggle}
-          type="button"
-        >
-          {t("plan.create.cta")}
-        </button>
-      </div>
+        <div data-cross="center" data-gap="3" data-stack="x">
+          <ActionHints action={plans.actions.create} />
 
-      {plans.actions.create.hints.map((hint) => (
-        <div data-color="neutral-400" data-fs="sm" key={hint}>
-          {t(hint)}
+          <button
+            className="c-button"
+            data-variant="secondary"
+            disabled={!plans.actions.create.enabled}
+            onClick={planCreate.toggle}
+            type="button"
+          >
+            {t("plan.create.cta")}
+          </button>
         </div>
-      ))}
+      </div>
 
       {plans.actions.create.enabled && planCreate.on && <PlanCreate />}
 

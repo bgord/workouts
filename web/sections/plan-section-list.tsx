@@ -31,18 +31,12 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
           })}
         </div>
 
-        {props.actions.sectionCreate.enabled && (
+        {props.actions.sectionCreate.available && (
           <div data-ml="auto">
-            <PlanSectionCreate {...props} />
+            <PlanSectionCreate action={props.actions.sectionCreate} {...props} />
           </div>
         )}
       </div>
-
-      {props.actions.sectionCreate.hints.map((hint) => (
-        <div data-color="neutral-400" data-fs="sm" key={hint}>
-          {t(hint)}
-        </div>
-      ))}
 
       {props.sections.length === 0 && <div data-color="neutral-400">{t("plan.section.list.empty")}</div>}
 
@@ -50,28 +44,26 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
         {props.sections.map((section) => (
           <li className="c-card" data-gap="3" data-p="4" key={section.id}>
             <div data-cross="center" data-gap="3" data-stack="x">
-              {props.actions.sectionRename.enabled && <PlanSectionRename plan={props} section={section} />}
+              {props.actions.sectionRename.available && <PlanSectionRename plan={props} section={section} />}
 
-              {!props.actions.sectionRename.enabled && (
+              {!props.actions.sectionRename.available && (
                 <div className="c-card-title" data-transform="truncate" title={section.name}>
                   {section.name}
                 </div>
               )}
 
-              {props.actions.sectionRemove.enabled && <PlanSectionRemove plan={props} section={section} />}
+              {props.actions.sectionRemove.available && <PlanSectionRemove plan={props} section={section} />}
             </div>
 
             <PlanSectionExerciseInstructionList plan={props} section={section} />
 
-            {section.actions.exerciseInstructionAdd.enabled && (
-              <PlanSectionExerciseInstructionAdd plan={props} section={section} />
+            {section.actions.exerciseInstructionAdd.available && (
+              <PlanSectionExerciseInstructionAdd
+                action={section.actions.exerciseInstructionAdd}
+                plan={props}
+                section={section}
+              />
             )}
-
-            {section.actions.exerciseInstructionAdd.hints.map((hint) => (
-              <div data-color="neutral-400" data-fs="sm" key={hint}>
-                {t(hint)}
-              </div>
-            ))}
           </li>
         ))}
       </ul>

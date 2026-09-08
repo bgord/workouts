@@ -1,11 +1,12 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/plan-section-create-form";
+import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ButtonCancel } from "../components";
+import { ActionHints, ButtonCancel } from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionCreate(props: Plan) {
+export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
   const create = bg.useToggle({ name: "plan-section-create" });
@@ -32,15 +33,20 @@ export function PlanSectionCreate(props: Plan) {
 
   if (create.off) {
     return (
-      <button
-        className="c-button"
-        data-variant="secondary"
-        onClick={create.enable}
-        type="button"
-        {...create.props.controller}
-      >
-        {t("plan.section.create.cta")}
-      </button>
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <ActionHints action={props.action} />
+
+        <button
+          className="c-button"
+          data-variant="secondary"
+          disabled={!props.action.enabled}
+          onClick={create.enable}
+          type="button"
+          {...create.props.controller}
+        >
+          {t("plan.section.create.cta")}
+        </button>
+      </div>
     );
   }
 

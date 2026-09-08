@@ -1,9 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
+import { ActionHints } from "../components";
 import { planRoute, plansRoute } from "../router";
 
-export function PlanFinalize(props: Plan) {
+export function PlanFinalize(props: Plan & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
 
@@ -23,9 +25,16 @@ export function PlanFinalize(props: Plan) {
 
   return (
     <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
-      <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
+      <button
+        className="c-button"
+        data-variant="primary"
+        disabled={!props.action.enabled || mutation.isLoading}
+        type="submit"
+      >
         {t("plan.finalize.cta")}
       </button>
+
+      <ActionHints action={props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

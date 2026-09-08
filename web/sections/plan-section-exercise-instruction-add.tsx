@@ -1,11 +1,16 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
+import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import { ButtonCancel, Select } from "../components";
+import { ActionHints, ButtonCancel, Select } from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionExerciseInstructionAdd(props: { plan: Plan; section: PlanSectionWithExercises }) {
+export function PlanSectionExerciseInstructionAdd(props: {
+  plan: Plan;
+  section: PlanSectionWithExercises;
+  action: ActionState;
+}) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercises } = planRoute.useLoaderData();
@@ -40,16 +45,20 @@ export function PlanSectionExerciseInstructionAdd(props: { plan: Plan; section: 
 
   if (add.off) {
     return (
-      <button
-        className="c-button"
-        data-mr="auto"
-        data-variant="secondary"
-        onClick={add.enable}
-        type="button"
-        {...add.props.controller}
-      >
-        {t("plan.section.exercise.add.cta")}
-      </button>
+      <div data-cross="center" data-gap="3" data-mr="auto" data-stack="x">
+        <button
+          className="c-button"
+          data-variant="secondary"
+          disabled={!props.action.enabled}
+          onClick={add.enable}
+          type="button"
+          {...add.props.controller}
+        >
+          {t("plan.section.exercise.add.cta")}
+        </button>
+
+        <ActionHints action={props.action} />
+      </div>
     );
   }
 

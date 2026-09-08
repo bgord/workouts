@@ -33,9 +33,9 @@ export function Plan() {
     <Main>
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
         <div data-gap="1" data-grow="1" data-stack="y">
-          {plan.actions.rename.enabled && <PlanRename {...plan.data} />}
+          {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
-          {!plan.actions.rename.enabled && (
+          {!plan.actions.rename.available && (
             <h1
               data-color="neutral-0"
               data-fs="2xl"
@@ -58,18 +58,12 @@ export function Plan() {
       </div>
 
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
-        {plan.actions.finalize.enabled && <PlanFinalize {...plan.data} />}
-        {plan.actions.editingEnable.enabled && <PlanEditingEnable {...plan.data} />}
-        {plan.actions.archive.enabled && <PlanArchive {...plan.data} />}
-        {plan.actions.restore.enabled && <PlanRestore {...plan.data} />}
-        {plan.actions.remove.enabled && <PlanRemove {...plan.data} />}
+        {plan.actions.finalize.available && <PlanFinalize action={plan.actions.finalize} {...plan.data} />}
+        {plan.actions.editingEnable.available && <PlanEditingEnable {...plan.data} />}
+        {plan.actions.archive.available && <PlanArchive {...plan.data} />}
+        {plan.actions.restore.available && <PlanRestore {...plan.data} />}
+        {plan.actions.remove.available && <PlanRemove {...plan.data} />}
       </div>
-
-      {plan.actions.finalize.hints.map((hint) => (
-        <div data-color="neutral-400" data-fs="sm" key={hint}>
-          {t(hint)}
-        </div>
-      ))}
 
       <PlanSectionList {...plan?.data} actions={plan.actions} />
     </Main>

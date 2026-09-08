@@ -33,7 +33,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   const { exerciseInstruction } = props;
   const { actions } = exerciseInstruction;
 
-  const controls = actions.update.enabled || actions.exerciseChange.enabled || actions.remove.enabled;
+  const controls = actions.update.available || actions.exerciseChange.available || actions.remove.available;
 
   const instruction = t("plan.section.exercise.instruction", {
     sets: exerciseInstruction.sets,
@@ -73,7 +73,7 @@ export function PlanSectionExerciseInstructionRow(props: {
 
       {controls && (
         <div data-cross="center" data-gap="3" data-ml="auto" data-stack="x">
-          {change.off && actions.update.enabled && (
+          {change.off && actions.update.available && (
             <PlanSectionExerciseInstructionUpdate
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
@@ -84,7 +84,7 @@ export function PlanSectionExerciseInstructionRow(props: {
             </PlanSectionExerciseInstructionUpdate>
           )}
 
-          {update.off && actions.exerciseChange.enabled && (
+          {update.off && actions.exerciseChange.available && (
             <PlanSectionExerciseInstructionExerciseChange
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
@@ -93,7 +93,7 @@ export function PlanSectionExerciseInstructionRow(props: {
             />
           )}
 
-          {update.off && change.off && actions.remove.enabled && (
+          {update.off && change.off && actions.remove.available && (
             <PlanSectionExerciseInstructionRemove
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
