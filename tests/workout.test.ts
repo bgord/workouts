@@ -858,4 +858,66 @@ describe("Workout", async () => {
       Workouts.Invariants.WorkoutBelongsToUser.error,
     );
   });
+
+  test("setNote", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.setNote(mocks.workoutNote, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutNoteSetEvent]);
+  });
+
+  test("setNote - clears an existing note", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutNoteSetEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => workout.setNote(undefined, mocks.userId));
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutNoteUnsetEvent]);
+  });
+
+  test("setNote - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() => workout.setNote(mocks.workoutNote, mocks.anotherUserId)).toThrow(
+      Workouts.Invariants.WorkoutBelongsToUser.error,
+    );
+  });
+
+  test("setNote - WorkoutNoteHasChanged", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutNoteSetEvent],
+      deps,
+    );
+
+    expect(() => workout.setNote(mocks.workoutNote, mocks.userId)).toThrow(
+      Workouts.Invariants.WorkoutNoteHasChanged.error,
+    );
+  });
+
+  test("setNote - WorkoutNoteHasChanged - clearing an absent note", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() => workout.setNote(undefined, mocks.userId)).toThrow(
+      Workouts.Invariants.WorkoutNoteHasChanged.error,
+    );
+  });
 });

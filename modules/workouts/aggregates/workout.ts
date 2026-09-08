@@ -19,7 +19,8 @@ export type WorkoutEventType =
   | Events.WorkoutCompletedEventType
   | Events.WorkoutDiscardedEventType
   | Events.WorkoutSetCorrectedEventType
-  | Events.WorkoutSetRemovedEventType;
+  | Events.WorkoutSetRemovedEventType
+  | Events.WorkoutNoteSetEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -40,6 +41,7 @@ export class Workout {
     [Events.WORKOUT_SET_REMOVED_EVENT]: Events.WorkoutSetRemovedEvent,
     [Events.WORKOUT_COMPLETED_EVENT]: Events.WorkoutCompletedEvent,
     [Events.WORKOUT_DISCARDED_EVENT]: Events.WorkoutDiscardedEvent,
+    [Events.WORKOUT_NOTE_SET_EVENT]: Events.WorkoutNoteSetEvent,
   });
   // Stryker restore all
 
@@ -47,6 +49,7 @@ export class Workout {
   revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
   status = VO.WorkoutStatusEnum.initial;
   userId?: Auth.VO.UserIdType;
+  note?: VO.WorkoutNoteType;
   exercises: Array<VO.WorkoutExercise> = [];
 
   private readonly pending: Array<WorkoutEventType> = [];
@@ -278,6 +281,20 @@ export class Workout {
     this.record(event);
   }
 
+  setNote(note: VO.WorkoutNoteType | undefined, requesterId: Auth.VO.UserIdType) {
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutNoteHasChanged.enforce({ current: this.note, incoming: note });
+
+    const event = bg.event(
+      Events.WorkoutNoteSetEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, note, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<WorkoutEventType> {
     const events = [...this.pending];
 
@@ -383,6 +400,12 @@ export class Workout {
       case Events.WORKOUT_DISCARDED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.discarded;
+        break;
+      }
+
+      case Events.WORKOUT_NOTE_SET_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.note = event.payload.note;
         break;
       }
     }

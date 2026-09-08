@@ -24,6 +24,7 @@ export type WorkoutGetResponse = {
     complete: ActionState;
     discard: ActionState;
     exerciseAdd: ActionState;
+    noteSet: ActionState;
   };
 };
 
