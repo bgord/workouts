@@ -59,7 +59,7 @@ export function WorkoutHistory() {
 
       <ul data-gap="3" data-stack="y">
         {matching.map((workout) => (
-          <WorkoutCard key={workout.id} workout={workout} />
+          <WorkoutCard key={workout.id} {...workout} />
         ))}
       </ul>
     </div>

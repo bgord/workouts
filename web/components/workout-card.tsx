@@ -4,19 +4,11 @@ import { DateFormat } from "../../app/services/date-format";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
-export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.ReactNode }) {
+export function WorkoutCard(props: WorkoutSummary) {
   const t = useTranslations();
   const language = useLanguage();
 
-  const title = t("workout.title", {
-    plan: props.workout.planName,
-    section: props.workout.planSectionName,
-  });
-
-  const scheduledFor = DateFormat.dayWithWeekday(
-    language,
-    Temporal.PlainDate.from(props.workout.scheduledFor),
-  );
+  const scheduledFor = DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor));
 
   return (
     <li className="c-card" data-cross="center" data-gap="3" data-main="between" data-stack="x">
@@ -25,33 +17,28 @@ export function WorkoutCard(props: { workout: WorkoutSummary; children?: React.R
           className="c-card-title"
           data-hover-color="brand-300"
           data-transform="truncate"
-          params={{ workoutId: props.workout.id }}
+          params={{ workoutId: props.id }}
           search={(prev) => ({ section: prev.section })}
-          title={title}
           to="/workouts/$workoutId"
         >
-          {title}
+          {t("workout.title", { plan: props.planName, section: props.planSectionName })}
         </Link>
 
-        {props.workout.scheduledFor && !props.workout.completedAt && (
+        {props.scheduledFor && !props.completedAt && (
           <div className="c-card-description">{t("workout.list.scheduled_for", { date: scheduledFor })}</div>
         )}
 
-        {props.workout.completedAt && (
+        {props.completedAt && (
           <div className="c-card-description">
             {t("workout.list.completed_at", {
               date: scheduledFor,
-              time: DateFormat.time(language, DateFormat.zoned(props.workout.completedAt)),
+              time: DateFormat.time(language, DateFormat.zoned(props.completedAt)),
             })}
           </div>
         )}
       </div>
 
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <WorkoutStatusBadge status={props.workout.status} />
-
-        {props.children}
-      </div>
+      <WorkoutStatusBadge status={props.status} />
     </li>
   );
 }
