@@ -56,6 +56,7 @@
   "exercise.catalog.header": "Catalog",
   "exercise.catalog.name.placeholder": "Search by name",
   "exercise.catalog.no_matches": "No exercises match the filters",
+  "exercise.history.chart.label": "Logged load per set",
   "exercise.history.empty": "No logged sets yet",
   "exercise.history.header": "Sets history",
   "exercise.not_found": "Exercise not found",

@@ -1,7 +1,9 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { DateFormat } from "../../app/services/date-format";
 import type { ExerciseSession } from "../../modules/stats/value-objects/exercise-history";
+import { ExerciseHistoryChart } from "../components/exercise-history-chart";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
@@ -9,24 +11,28 @@ export function ExerciseHistory(props: { history: ReadonlyArray<ExerciseSession>
   const t = useTranslations();
   const language = useLanguage();
 
+  const [selected, setSelected] = useState<ExerciseSession["workoutId"]>();
+
+  const chronological = props.history.toReversed();
+
   return (
     <div
       data-bct="alpha-subtle"
       data-bst="solid"
       data-bwt="hairline"
-      data-gap="3"
+      data-gap="8"
       data-mt="5"
       data-pt="5"
       data-stack="y"
     >
-      <h2 data-color="neutral-0" data-fs="lg" data-fw="bold">
-        {t("exercise.history.header")}
-      </h2>
-
       {props.history.length === 0 && (
         <div data-color="neutral-400" data-fs="sm">
           {t("exercise.history.empty")}
         </div>
+      )}
+
+      {chronological.length > 1 && (
+        <ExerciseHistoryChart onSelect={setSelected} selected={selected} sessions={chronological} />
       )}
 
       <ul data-gap="3" data-stack="y">
@@ -34,7 +40,11 @@ export function ExerciseHistory(props: { history: ReadonlyArray<ExerciseSession>
           const completedAt = DateFormat.zoned(session.completedAt);
 
           return (
-            <li className="c-card" key={session.workoutId}>
+            <li
+              className="c-card"
+              data-bc={selected === session.workoutId ? "brand-500" : undefined}
+              key={session.workoutId}
+            >
               <div data-cross="baseline" data-gap="2" data-main="between" data-stack="x">
                 <Link
                   className="c-card-title"
