@@ -51,29 +51,40 @@ export function PlanSectionExerciseInstructionRow(props: {
         <ExerciseImage exercise={exerciseInstruction.exercise} size={ExerciseImageSize.sm} />
       </Link>
 
-      <Link
-        data-color="neutral-100"
-        data-fs="sm"
-        data-fw="medium"
-        data-grow="1"
-        data-hover-color="brand-300"
-        data-transform="truncate"
-        params={{ exerciseId: exerciseInstruction.exercise.id }}
-        title={exerciseInstruction.exercise.name}
-        to="/catalog/exercise/$exerciseId"
-      >
-        {exerciseInstruction.exercise.name}
-      </Link>
+      {change.on && (
+        <PlanSectionExerciseInstructionExerciseChange
+          exerciseInstruction={exerciseInstruction}
+          plan={props.plan}
+          section={props.section}
+          toggle={change}
+        />
+      )}
 
-      {!controls && (
+      {change.off && (
+        <Link
+          data-color="neutral-100"
+          data-fs="sm"
+          data-fw="medium"
+          data-grow="1"
+          data-hover-color="brand-300"
+          data-transform="truncate"
+          params={{ exerciseId: exerciseInstruction.exercise.id }}
+          title={exerciseInstruction.exercise.name}
+          to="/catalog/exercise/$exerciseId"
+        >
+          {exerciseInstruction.exercise.name}
+        </Link>
+      )}
+
+      {change.off && !controls && (
         <div data-color="neutral-400" data-fs="sm" data-ml="auto">
           {instruction}
         </div>
       )}
 
-      {controls && (
+      {change.off && controls && (
         <div data-cross="center" data-gap="3" data-ml="auto" data-stack="x">
-          {change.off && actions.update.available && (
+          {actions.update.available && (
             <PlanSectionExerciseInstructionUpdate
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
@@ -93,7 +104,7 @@ export function PlanSectionExerciseInstructionRow(props: {
             />
           )}
 
-          {update.off && change.off && actions.remove.available && (
+          {update.off && actions.remove.available && (
             <PlanSectionExerciseInstructionRemove
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
