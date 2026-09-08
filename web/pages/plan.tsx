@@ -1,6 +1,8 @@
 // fallow-ignore-file unused-export
+
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { ChevronLeft } from "lucide-react";
 import { DateFormat } from "../../app/services/date-format";
 import { Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
@@ -20,8 +22,9 @@ export function Plan() {
   if (!plan?.data) {
     return (
       <Main>
-        <Link className="c-link" to="/plans">
-          {`< ${t("app.back")}`}
+        <Link className="c-link" data-cross="center" data-gap="1" data-stack="x" to="/plans">
+          <ChevronLeft data-size="sm" />
+          {t("app.back")}
         </Link>
 
         <div data-color="neutral-400">{t("plan.not_found")}</div>
@@ -32,6 +35,17 @@ export function Plan() {
   return (
     <Main>
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+        <Link
+          aria-label={t("app.back")}
+          className="c-button"
+          data-interaction="subtle-scale"
+          data-self="start"
+          data-variant="icon"
+          title={t("app.back")}
+          to="/plans"
+        >
+          <ChevronLeft data-size="md" />
+        </Link>
         <div data-gap="1" data-grow="1" data-stack="y">
           {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
