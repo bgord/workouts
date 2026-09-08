@@ -26,6 +26,7 @@ export type Workout = {
   planSectionName: Plans.VO.PlanSectionNameType;
   scheduledFor: WorkoutScheduledForType;
   status: WorkoutStatusEnum;
+  completedAt?: tools.TimestampValueType;
   revision: tools.RevisionValueType;
   exercises: Array<WorkoutExerciseWithSets>;
 };

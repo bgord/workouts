@@ -79,6 +79,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       planSectionName: workout.planSectionName,
       scheduledFor: workout.scheduledFor,
       status,
+      completedAt: workout.completedAt ?? undefined,
       revision: workout.revision,
       exercises: exercises.map((exercise) => ({
         id: exercise.id,

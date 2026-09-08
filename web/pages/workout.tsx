@@ -60,7 +60,15 @@ export function Workout() {
           <WorkoutStatusBadge status={workout.data.status} />
         </div>
 
-        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+        <div data-cross="center" data-gap="3" data-stack="x">
+          {workout.data.completedAt && (
+            <div data-color="neutral-400" data-fs="sm">
+              {t("workout.completed_at", {
+                date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
+              })}
+            </div>
+          )}
+
           {workout.actions.start.available && (
             <WorkoutStart action={workout.actions.start} {...workout.data} />
           )}

@@ -144,6 +144,7 @@
   "workout.complete.blocked.no_logged_sets": "Log at least one set first",
   "workout.complete.cta": "Complete",
   "workout.complete.error": "Could not complete the workout",
+  "workout.completed_at": "Completed {{date}}",
   "workout.create.blocked.draft_limit": "You already have 3 scheduled workouts",
   "workout.create.blocked.no_finalized_plan": "Finalize a plan to schedule a workout",
   "workout.create.cta": "Schedule",

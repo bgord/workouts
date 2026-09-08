@@ -31,6 +31,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
       <button
         className="c-button"
         data-color="danger-400"
+        data-ml="auto"
         data-variant="ghost"
         onClick={dialog.enable}
         type="button"
