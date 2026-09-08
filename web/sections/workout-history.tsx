@@ -45,16 +45,15 @@ export function WorkoutHistory() {
           {t("workout.list.count", { matching: matching.length, total: workouts.data.length })}
         </div>
 
-        {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
-          <button
-            className="c-button"
-            data-variant="ghost"
-            onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/" })}
-            type="button"
-          >
-            {t("app.clear")}
-          </button>
-        )}
+        <button
+          className="c-button"
+          data-variant="ghost"
+          disabled={WorkoutHistoryFiltersForm.Form.isDefault(search)}
+          onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/" })}
+          type="button"
+        >
+          {t("app.clear")}
+        </button>
       </div>
 
       {matching.length === 0 && <div data-color="neutral-400">{t("workout.list.no_matches")}</div>}
