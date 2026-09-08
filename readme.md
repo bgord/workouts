@@ -271,6 +271,7 @@ modules/
     │   ├── handleWorkoutExerciseAddCommand.ts
     │   ├── handleWorkoutExerciseRemoveCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
+    │   ├── handleWorkoutNoteSetCommand.ts
     │   ├── handleWorkoutSetCorrectCommand.ts
     │   ├── handleWorkoutSetLogCommand.ts
     │   ├── handleWorkoutSetRemoveCommand.ts
@@ -282,6 +283,7 @@ modules/
     │   ├── WORKOUT_EXERCISE_ADD_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_REMOVE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
+    │   ├── WORKOUT_NOTE_SET_COMMAND.ts
     │   ├── WORKOUT_SET_CORRECT_COMMAND.ts
     │   ├── WORKOUT_SET_LOG_COMMAND.ts
     │   ├── WORKOUT_SET_REMOVE_COMMAND.ts
@@ -293,6 +295,7 @@ modules/
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_REMOVED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
+    │   ├── WORKOUT_NOTE_SET_EVENT.ts
     │   ├── WORKOUT_SET_CORRECTED_EVENT.ts
     │   ├── WORKOUT_SET_LOGGED_EVENT.ts
     │   ├── WORKOUT_SET_REMOVED_EVENT.ts
@@ -311,6 +314,7 @@ modules/
     │   ├── workout-is-in-progress.ts
     │   ├── workout-is-ready-to-start.ts
     │   ├── workout-logged-set-exists.ts
+    │   ├── workout-note-has-changed.ts
     │   ├── workout-plan-ready.ts
     │   ├── workout-plan-section-ready.ts
     │   ├── workout-retains-logged-sets.ts
@@ -400,6 +404,7 @@ app/
 │       ├── workout-exercise-set-target.ts
 │       ├── workout-get.ts
 │       ├── workout-list.ts
+│       ├── workout-note-set.ts
 │       ├── workout-set-correct.ts
 │       ├── workout-set-log.ts
 │       ├── workout-set-remove.ts
