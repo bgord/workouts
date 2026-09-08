@@ -32,7 +32,7 @@ export function Workout() {
           data-gap="1"
           data-stack="x"
           search={{ section: search.section }}
-          to="/"
+          to="/workouts"
         >
           <ChevronLeft data-size="sm" />
           {t("app.back")}
@@ -55,7 +55,7 @@ export function Workout() {
             data-variant="icon"
             search={{ section: search.section }}
             title={t("app.back")}
-            to="/"
+            to="/workouts"
           >
             <ChevronLeft data-size="md" />
           </Link>

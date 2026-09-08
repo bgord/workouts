@@ -17,28 +17,27 @@ export function WorkoutHistory() {
 
   return (
     <div data-gap="8" data-stack="y">
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="baseline" data-gap="3" data-stack="x">
         <ul data-gap="1" data-stack="x">
-          {workouts.sections.map((section) => {
-            const selected = search.section === section.id;
-
-            return (
-              <li key={section.id}>
-                <button
-                  aria-pressed={selected}
-                  className="c-badge"
-                  data-cursor="pointer"
-                  data-variant={selected ? "primary" : "outline"}
-                  onClick={() =>
-                    navigate({ search: { section: selected ? undefined : section.id }, to: "/" })
-                  }
-                  type="button"
-                >
-                  {section.name}
-                </button>
-              </li>
-            );
-          })}
+          {workouts.sections.map((section) => (
+            <li key={section.id}>
+              <button
+                aria-pressed={search.section === section.id}
+                className="c-badge"
+                data-cursor="pointer"
+                data-variant={search.section === section.id ? "primary" : "outline"}
+                onClick={() =>
+                  navigate({
+                    search: { section: search.section === section.id ? undefined : section.id },
+                    to: "/workouts",
+                  })
+                }
+                type="button"
+              >
+                {section.name}
+              </button>
+            </li>
+          ))}
         </ul>
 
         <div data-color="neutral-400" data-fs="sm">
@@ -49,7 +48,7 @@ export function WorkoutHistory() {
           className="c-button"
           data-variant="ghost"
           disabled={WorkoutHistoryFiltersForm.Form.isDefault(search)}
-          onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/" })}
+          onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
           type="button"
         >
           {t("app.clear")}
