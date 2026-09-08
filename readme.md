@@ -269,6 +269,7 @@ modules/
 │   │   ├── one-rep-max-estimator-brzycki.ts
 │   │   └── one-rep-max-estimator-epley.ts
 │   └── value-objects
+│       ├── delta.ts
 │       ├── exercise-history.ts
 │       ├── one-rep-max-estimate.ts
 │       └── volume.ts

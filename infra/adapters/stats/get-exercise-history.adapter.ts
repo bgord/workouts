@@ -69,7 +69,7 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
         .toSorted((one, another) => another.oneRepMaxEstimate - one.oneRepMaxEstimate),
     }));
 
-    const sessions = estimated.map(({ candidates, ...session }) => ({
+    const measured = estimated.map(({ candidates, ...session }) => ({
       ...session,
       oneRepMaxEstimate: candidates.at(0)?.oneRepMaxEstimate,
       volume: v.parse(
@@ -77,6 +77,23 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
         session.sets.reduce((total, set) => total + set.reps * set.load, 0),
       ),
     }));
+
+    const sessions = measured.map((session, order) => {
+      const previous = measured.at(order + 1);
+
+      if (previous === undefined) return session;
+
+      const oneRepMaxEstimateDelta =
+        session.oneRepMaxEstimate !== undefined && previous.oneRepMaxEstimate !== undefined
+          ? v.parse(Stats.VO.Delta, session.oneRepMaxEstimate - previous.oneRepMaxEstimate)
+          : undefined;
+
+      return {
+        ...session,
+        oneRepMaxEstimateDelta,
+        volumeDelta: v.parse(Stats.VO.Delta, session.volume - previous.volume),
+      };
+    });
 
     const [estimatedRecord] = estimated
       .flatMap((session) => session.candidates)
