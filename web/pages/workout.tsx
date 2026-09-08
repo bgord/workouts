@@ -39,9 +39,9 @@ export function Workout() {
         {`< ${t("app.back")}`}
       </Link>
 
-      <div data-gap="4" data-stack="y">
+      <div data-gap="6" data-stack="y">
         <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-          <div data-gap="1" data-grow="1" data-stack="y">
+          <div data-gap="3" data-grow="1" data-stack="y">
             <h1
               data-color="neutral-0"
               data-fs="2xl"
