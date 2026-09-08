@@ -4,18 +4,13 @@ import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { DateFormat } from "../../app/services/date-format";
-import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { Main, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
-import { WorkoutExerciseRemove } from "../sections/workout-exercise-remove";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
-import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
 import { WorkoutNote } from "../sections/workout-note";
-import { WorkoutSetList } from "../sections/workout-set-list";
-import { WorkoutSetLog } from "../sections/workout-set-log";
 import { WorkoutStart } from "../sections/workout-start";
 
 export function Workout() {
@@ -105,35 +100,7 @@ export function Workout() {
 
       <ul data-gap="3" data-stack="y">
         {workout.data.exercises.map((exercise) => (
-          <WorkoutExerciseRow
-            exercise={exercise}
-            key={exercise.id}
-            skipped={workout.data.status === WorkoutStatusEnum.completed && exercise.loggedSets.length === 0}
-          >
-            <WorkoutSetList exercise={exercise} workout={workout.data} />
-
-            {(exercise.actions.targetSet.available || exercise.actions.remove.available) && (
-              <div className="c-card-footer" data-cross="end" data-gap="3">
-                {exercise.actions.targetSet.available && (
-                  <WorkoutExerciseTargetSet
-                    action={exercise.actions.targetSet}
-                    exercise={exercise}
-                    workout={workout.data}
-                  />
-                )}
-                {exercise.actions.remove.available && (
-                  <WorkoutExerciseRemove
-                    action={exercise.actions.remove}
-                    exercise={exercise}
-                    workout={workout.data}
-                  />
-                )}
-              </div>
-            )}
-            {exercise.actions.setLog.available && (
-              <WorkoutSetLog action={exercise.actions.setLog} exercise={exercise} workout={workout.data} />
-            )}
-          </WorkoutExerciseRow>
+          <WorkoutExerciseRow exercise={exercise} key={exercise.id} workout={workout.data} />
         ))}
       </ul>
 

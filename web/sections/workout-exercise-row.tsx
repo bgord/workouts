@@ -1,21 +1,21 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import type { RepsType } from "../../modules/plans/value-objects/reps";
-import type { WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
+import type { Workout } from "../../modules/workouts/value-objects/workout";
+import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
+import { WorkoutExerciseRemove } from "./workout-exercise-remove";
+import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
+import { WorkoutSetList } from "./workout-set-list";
+import { WorkoutSetLog } from "./workout-set-log";
 
-function format(reps: RepsType): string {
-  return reps.min === reps.max ? String(reps.min) : `${reps.min}-${reps.max}`;
-}
-
-export function WorkoutExerciseRow(props: {
-  exercise: WorkoutExerciseWithSets;
-  skipped?: boolean;
-  children?: React.ReactNode;
-}) {
+export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise }) {
   const t = useTranslations();
 
   const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
+
+  const skipped =
+    props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
 
   return (
     <li className="c-card">
@@ -45,17 +45,20 @@ export function WorkoutExerciseRow(props: {
             <div className="c-card-description" data-ls="wide" data-transform="nowrap">
               {t("workout.exercise.prescription", {
                 sets: props.exercise.prescription.sets,
-                reps: format(props.exercise.prescription.reps),
+                reps:
+                  props.exercise.prescription.reps.min === props.exercise.prescription.reps.max
+                    ? String(props.exercise.prescription.reps.min)
+                    : `${props.exercise.prescription.reps.min}-${props.exercise.prescription.reps.max}`,
               })}
             </div>
 
             {props.exercise.target && (
               <div
                 className="c-badge"
-                data-color={props.skipped ? "neutral-400" : "neutral-200"}
+                data-color={skipped ? "neutral-400" : "neutral-200"}
                 data-fs="sm"
                 data-transform="nowrap"
-                data-variant={props.skipped ? "outline" : "primary"}
+                data-variant={skipped ? "outline" : "primary"}
               >
                 {t("workout.exercise.target", {
                   sets: props.exercise.target.sets,
@@ -68,7 +71,7 @@ export function WorkoutExerciseRow(props: {
         </div>
       </div>
 
-      {props.skipped && (
+      {skipped && (
         <div
           className="c-card-description"
           data-bcl="alpha-medium"
@@ -83,7 +86,32 @@ export function WorkoutExerciseRow(props: {
       )}
 
       <div data-gap="0" data-stack="y">
-        {props.children}
+        <WorkoutSetList exercise={props.exercise} workout={props.workout} />
+
+        <div className="c-card-footer" data-cross="end" data-gap="3">
+          {props.exercise.actions.targetSet.available && (
+            <WorkoutExerciseTargetSet
+              action={props.exercise.actions.targetSet}
+              exercise={props.exercise}
+              workout={props.workout}
+            />
+          )}
+          {props.exercise.actions.remove.available && (
+            <WorkoutExerciseRemove
+              action={props.exercise.actions.remove}
+              exercise={props.exercise}
+              workout={props.workout}
+            />
+          )}
+        </div>
+
+        {props.exercise.actions.setLog.available && (
+          <WorkoutSetLog
+            action={props.exercise.actions.setLog}
+            exercise={props.exercise}
+            workout={props.workout}
+          />
+        )}
       </div>
     </li>
   );
