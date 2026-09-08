@@ -260,6 +260,13 @@ modules/
 │       ├── profile-avatar-max-size.ts
 │       ├── profile-avatar-mime-registry.ts
 │       └── profile-avatar-side.ts
+├── stats
+│   ├── services
+│   │   ├── exercise-history-analyzer.ts
+│   └── value-objects
+│       ├── estimated-one-rep-max.ts
+│       ├── exercise-history.ts
+│       └── session-volume.ts
 ├── supported-languages.ts
 └── workouts
     ├── aggregates

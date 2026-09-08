@@ -29,6 +29,8 @@
       "+system/*": ["./modules/system/*"],
       "+preferences": ["./modules/preferences/index"],
       "+preferences/*": ["./modules/preferences/*"],
+      "+stats": ["./modules/stats/index"],
+      "+stats/*": ["./modules/stats/*"],
       "+workouts": ["./modules/workouts/index"],
       "+workouts/*": ["./modules/workouts/*"]
     },
