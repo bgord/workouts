@@ -1,7 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { CalendarPlus } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { Select } from "../components";
+import { ActionHints, Select } from "../components";
 import { homeRoute } from "../router";
 
 export function WorkoutCreate() {
@@ -70,14 +71,13 @@ export function WorkoutCreate() {
         disabled={!workouts.actions.create.enabled || mutation.isLoading}
         type="submit"
       >
+        <CalendarPlus data-size="sm" />
         {t("workout.create.cta")}
       </button>
 
-      {workouts.actions.create.hints.map((hint) => (
-        <div data-color="neutral-400" data-fs="sm" data-mb="2" key={hint}>
-          {t(hint)}
-        </div>
-      ))}
+      <div data-mb="2">
+        <ActionHints action={workouts.actions.create} />
+      </div>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm" data-mb="2">
