@@ -529,6 +529,7 @@ infra/
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts
 │   ├── profile-avatars.projector.ts
+│   ├── stats-exercise-sets.projector.ts
 │   ├── workout-exercises.projector.ts
 │   ├── workout-logged-sets.projector.ts
 │   └── workouts.projector.ts

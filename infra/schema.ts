@@ -273,6 +273,26 @@ export const workoutExercises = sqliteTable("workoutExercises", {
   updatedAt: timestamp("updatedAt").notNull(),
 });
 
+export const statsExerciseSets = sqliteTable(
+  "statsExerciseSets",
+  {
+    id: identifier<LoggedSetIdType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
+    workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
+    workoutExerciseId: text("workoutExerciseId", { length: 36 }).notNull().$type<WorkoutExerciseIdType>(),
+    reps: integer("reps", { mode: "number" }).notNull().$type<WorkoutRepsType>(),
+    load: integer("load", { mode: "number" }).notNull().$type<LoadType>(),
+    loggedAt: timestamp("loggedAt").notNull(),
+    completedAt: timestamp("completedAt"),
+  },
+  (table) => [
+    index("statsExerciseSets_userId_exerciseId_idx").on(table.userId, table.exerciseId),
+    index("statsExerciseSets_workoutId_idx").on(table.workoutId),
+    index("statsExerciseSets_workoutExerciseId_idx").on(table.workoutExerciseId),
+  ],
+);
+
 export const workoutLoggedSets = sqliteTable(
   "workoutLoggedSets",
   {

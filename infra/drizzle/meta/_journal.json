@@ -169,6 +169,13 @@
       "when": 1788858207938,
       "tag": "0023_many_nuke",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "6",
+      "when": 1788874943755,
+      "tag": "0024_superb_terrax",
+      "breakpoints": true
     }
   ]
 }
