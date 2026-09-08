@@ -28,7 +28,7 @@ export function ExerciseHistory(props: { history: ExerciseHistoryType }) {
       )}
 
       {props.history.record && (
-        <div className="c-card" data-cross="center" data-gap="5" data-stack="x" data-mr="auto">
+        <div className="c-card" data-cross="center" data-gap="5" data-mr="auto" data-stack="x">
           <Trophy data-color="brand-300" data-size="sm" />
 
           <div data-color="neutral-0" data-fs="lg" data-fw="bold" data-lh="none">

@@ -1,7 +1,7 @@
 import { and, asc, desc, eq, isNotNull } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
-import * as Stats from "+stats";
+import type * as Stats from "+stats";
 import type * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -11,17 +11,35 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Stats.VO.ExerciseHistory> {
-    const loggedSets = await db
-      .select()
-      .from(Schema.statsExerciseSets)
-      .where(
-        and(
-          eq(Schema.statsExerciseSets.exerciseId, exerciseId),
-          eq(Schema.statsExerciseSets.userId, userId),
-          isNotNull(Schema.statsExerciseSets.completedAt),
-        ),
-      )
-      .orderBy(desc(Schema.statsExerciseSets.completedAt), asc(Schema.statsExerciseSets.loggedAt));
+    const completedSets = and(
+      eq(Schema.statsExerciseSets.exerciseId, exerciseId),
+      eq(Schema.statsExerciseSets.userId, userId),
+      isNotNull(Schema.statsExerciseSets.completedAt),
+    );
+
+    const [loggedSets, [record]] = await Promise.all([
+      db
+        .select()
+        .from(Schema.statsExerciseSets)
+        .where(completedSets)
+        .orderBy(desc(Schema.statsExerciseSets.completedAt), asc(Schema.statsExerciseSets.loggedAt)),
+      db
+        .select({
+          reps: Schema.statsExerciseSets.reps,
+          load: Schema.statsExerciseSets.load,
+          workoutId: Schema.statsExerciseSets.workoutId,
+          completedAt: Schema.statsExerciseSets.completedAt,
+        })
+        .from(Schema.statsExerciseSets)
+        .where(completedSets)
+        .orderBy(
+          desc(Schema.statsExerciseSets.load),
+          desc(Schema.statsExerciseSets.reps),
+          asc(Schema.statsExerciseSets.completedAt),
+          asc(Schema.statsExerciseSets.loggedAt),
+        )
+        .limit(1),
+    ]);
 
     const sessions = new Map<Workouts.VO.WorkoutIdType, Stats.VO.ExerciseSession>();
 
@@ -41,7 +59,9 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
 
     const history = [...sessions.values()];
 
-    return { sessions: history, record: new Stats.Services.ExerciseRecordFinder().find(history) };
+    if (!record || record.completedAt === null) return { sessions: history };
+
+    return { sessions: history, record: { ...record, completedAt: record.completedAt } };
   }
 }
 
