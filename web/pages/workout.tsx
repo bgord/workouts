@@ -11,6 +11,7 @@ import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRemove } from "../sections/workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "../sections/workout-exercise-target-set";
+import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutSetList } from "../sections/workout-set-list";
 import { WorkoutSetLog } from "../sections/workout-set-log";
 import { WorkoutStart } from "../sections/workout-start";
@@ -77,6 +78,10 @@ export function Workout() {
           )}
           {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
         </div>
+
+        {workout.actions.noteSet.available && (
+          <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
+        )}
       </div>
 
       <ul data-gap="3" data-stack="y">

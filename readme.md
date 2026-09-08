@@ -417,7 +417,8 @@ app/
     ├── plan-section-create-form.ts
     ├── plan-section-exercise-instruction-add-form.ts
     ├── workout-exercise-add-form.ts
-    └── workout-history-filters-form.ts
+    ├── workout-history-filters-form.ts
+    └── workout-note-form.ts
 ```
 
 ## Infra:

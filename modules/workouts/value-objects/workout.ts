@@ -6,6 +6,7 @@ import type { ExerciseTargetType } from "./exercise-target";
 import type { LoggedSetType } from "./logged-set";
 import type { WorkoutExerciseIdType } from "./workout-exercise-id";
 import type { WorkoutIdType } from "./workout-id";
+import type { WorkoutNoteType } from "./workout-note";
 import type { WorkoutScheduledForType } from "./workout-scheduled-for";
 import type { WorkoutStatusEnum } from "./workout-status";
 
@@ -27,6 +28,7 @@ export type Workout = {
   scheduledFor: WorkoutScheduledForType;
   status: WorkoutStatusEnum;
   completedAt?: tools.TimestampValueType;
+  note?: WorkoutNoteType;
   revision: tools.RevisionValueType;
   exercises: Array<WorkoutExerciseWithSets>;
 };
