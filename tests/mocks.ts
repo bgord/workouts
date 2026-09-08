@@ -9,6 +9,7 @@ import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Plans from "+plans";
 import type * as Preferences from "+preferences";
+import type * as Stats from "+stats";
 import * as Workouts from "+workouts";
 
 // IDs
@@ -1007,6 +1008,19 @@ export const AnotherGenericWorkoutSetLoggedEvent = {
   name: "WORKOUT_SET_LOGGED_EVENT",
   payload: { workoutId, workoutExerciseId, exerciseId, loggedSet: anotherLoggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
+
+export const exerciseSession = {
+  workoutId,
+  completedAt: T0.ms,
+  sets: [{ reps: loggedSet.reps, load: loggedSet.load }],
+} satisfies Stats.VO.ExerciseSession;
+
+export const exerciseRecord = {
+  reps: loggedSet.reps,
+  load: loggedSet.load,
+  workoutId,
+  completedAt: T0.ms,
+} satisfies Stats.VO.ExerciseRecord;
 
 export const user = {
   name: email,
