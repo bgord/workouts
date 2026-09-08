@@ -9,7 +9,7 @@ import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Plans from "+plans";
 import type * as Preferences from "+preferences";
-import type * as Stats from "+stats";
+import * as Stats from "+stats";
 import * as Workouts from "+workouts";
 
 // IDs
@@ -1023,6 +1023,36 @@ export const exerciseRecord = {
   workoutId,
   completedAt: T0.ms,
 } satisfies Stats.VO.ExerciseRecord;
+
+export const singleRepSet = {
+  reps: v.parse(Workouts.VO.Reps, 1),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+} satisfies Stats.VO.PerformedSet;
+
+export const fiveRepSet = {
+  reps: v.parse(Workouts.VO.Reps, 5),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+} satisfies Stats.VO.PerformedSet;
+
+export const eightRepSet = {
+  reps: v.parse(Workouts.VO.Reps, 8),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(15).get()),
+} satisfies Stats.VO.PerformedSet;
+
+export const fifteenRepSet = {
+  reps: v.parse(Workouts.VO.Reps, 15),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(40).get()),
+} satisfies Stats.VO.PerformedSet;
+
+export const repLimitSet = {
+  reps: v.parse(Workouts.VO.Reps, Stats.Ports.ONE_REP_MAX_REPS_LIMIT),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+} satisfies Stats.VO.PerformedSet;
+
+export const aboveRepLimitSet = {
+  reps: v.parse(Workouts.VO.Reps, Stats.Ports.ONE_REP_MAX_REPS_LIMIT + 1),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+} satisfies Stats.VO.PerformedSet;
 
 export const user = {
   name: email,

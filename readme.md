@@ -266,8 +266,8 @@ modules/
 │   ├── queries
 │   │   ├── get-exercise-history.ts
 │   ├── services
-│   │   ├── brzycki-one-rep-max.ts
-│   │   ├── epley-one-rep-max.ts
+│   │   ├── one-rep-max-estimator-brzycki.ts
+│   │   └── one-rep-max-estimator-epley.ts
 │   └── value-objects
 │       ├── exercise-history.ts
 │       └── one-rep-max-estimate.ts
