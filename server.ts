@@ -300,6 +300,17 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   server.route("/workouts", workouts);
 
+  // Stats =================
+  const stats = new Hono<infra.Config>();
+
+  stats.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  stats.get(
+    "/exercise/:exerciseId/history",
+    bg.EndpointHonoAdapter.adapt(HTTP.Stats.ExerciseHistoryGet(Adapters.Stats)),
+  );
+
+  server.route("/stats", stats);
+
   // Probes =================
   server.get("/liveness", ...new bg.LivenessHonoHandler().handle());
   server.get(
