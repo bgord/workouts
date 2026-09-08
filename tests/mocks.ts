@@ -1015,6 +1015,8 @@ export const exerciseSession = {
   workoutId,
   completedAt: T0.ms,
   sets: [{ reps: loggedSet.reps, load: loggedSet.load }],
+  oneRepMaxEstimate: v.parse(Stats.VO.OneRepMaxEstimate, 102_857),
+  volume: v.parse(Stats.VO.Volume, tools.Weight.fromKilograms(720).get()),
 } satisfies Stats.VO.ExerciseSession;
 
 export const exerciseRecord = {
@@ -1023,6 +1025,11 @@ export const exerciseRecord = {
   workoutId,
   completedAt: T0.ms,
 } satisfies Stats.VO.ExerciseRecord;
+
+export const exerciseEstimatedRecord = {
+  ...exerciseRecord,
+  oneRepMaxEstimate: v.parse(Stats.VO.OneRepMaxEstimate, 102_857),
+} satisfies Stats.VO.EstimatedRecord;
 
 export const singleRepSet = {
   reps: v.parse(Workouts.VO.Reps, 1),

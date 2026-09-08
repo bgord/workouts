@@ -49,6 +49,7 @@ describe("GET /api/stats/exercise/:exerciseId/history", async () => {
       spyOn(di.Adapters.Stats.GetExerciseHistoryQuery, "execute").mockResolvedValue({
         sessions: [mocks.exerciseSession],
         record: mocks.exerciseRecord,
+        estimatedRecord: mocks.exerciseEstimatedRecord,
       }),
     );
 
@@ -56,7 +57,11 @@ describe("GET /api/stats/exercise/:exerciseId/history", async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ sessions: [mocks.exerciseSession], record: mocks.exerciseRecord });
+    expect(json).toEqual({
+      sessions: [mocks.exerciseSession],
+      record: mocks.exerciseRecord,
+      estimatedRecord: mocks.exerciseEstimatedRecord,
+    });
     expect(execute).toHaveBeenCalledWith(mocks.exerciseId, mocks.userId);
   });
 });
