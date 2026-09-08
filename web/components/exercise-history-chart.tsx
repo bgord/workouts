@@ -1,7 +1,7 @@
 // cSpell:ignore VIEWBOX
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { DateFormat } from "../../app/services/date-format";
-import type { ExerciseSession } from "../../modules/stats/value-objects/exercise-history";
+import type { ExerciseRecord, ExerciseSession } from "../../modules/stats/value-objects/exercise-history";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
@@ -20,6 +20,7 @@ const PLOT = {
 
 export function ExerciseHistoryChart(props: {
   sessions: ReadonlyArray<ExerciseSession>;
+  record?: ExerciseRecord;
   selected?: ExerciseSession["workoutId"];
   onSelect: (workoutId: ExerciseSession["workoutId"]) => void;
 }) {
@@ -77,6 +78,19 @@ export function ExerciseHistoryChart(props: {
           </text>
         </g>
       ))}
+
+      {props.record && (
+        <line
+          data-color="brand-500"
+          opacity="0.55"
+          stroke="currentColor"
+          strokeDasharray="5 5"
+          x1={PLOT.left}
+          x2={PLOT.right}
+          y1={y(props.record.load)}
+          y2={y(props.record.load)}
+        />
+      )}
 
       {props.sessions.map((session, index) => {
         const day = DateFormat.dayWithWeekday(language, DateFormat.zoned(session.completedAt).toPlainDate());
