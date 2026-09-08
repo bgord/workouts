@@ -5,6 +5,7 @@ export * from "./WORKOUT_EXERCISE_ADDED_EVENT";
 export * from "./WORKOUT_EXERCISE_REMOVED_EVENT";
 export * from "./WORKOUT_EXERCISE_TARGET_SET_EVENT";
 export * from "./WORKOUT_NOTE_SET_EVENT";
+export * from "./WORKOUT_RESCHEDULED_EVENT";
 export * from "./WORKOUT_SET_CORRECTED_EVENT";
 export * from "./WORKOUT_SET_LOGGED_EVENT";
 export * from "./WORKOUT_SET_REMOVED_EVENT";

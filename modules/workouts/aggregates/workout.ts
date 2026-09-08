@@ -20,7 +20,8 @@ export type WorkoutEventType =
   | Events.WorkoutDiscardedEventType
   | Events.WorkoutSetCorrectedEventType
   | Events.WorkoutSetRemovedEventType
-  | Events.WorkoutNoteSetEventType;
+  | Events.WorkoutNoteSetEventType
+  | Events.WorkoutRescheduledEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -42,6 +43,7 @@ export class Workout {
     [Events.WORKOUT_COMPLETED_EVENT]: Events.WorkoutCompletedEvent,
     [Events.WORKOUT_DISCARDED_EVENT]: Events.WorkoutDiscardedEvent,
     [Events.WORKOUT_NOTE_SET_EVENT]: Events.WorkoutNoteSetEvent,
+    [Events.WORKOUT_RESCHEDULED_EVENT]: Events.WorkoutRescheduledEvent,
   });
   // Stryker restore all
 

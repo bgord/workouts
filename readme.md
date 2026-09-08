@@ -272,6 +272,7 @@ modules/
     │   ├── handleWorkoutExerciseRemoveCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutNoteSetCommand.ts
+    │   ├── handleWorkoutRescheduleCommand.ts
     │   ├── handleWorkoutSetCorrectCommand.ts
     │   ├── handleWorkoutSetLogCommand.ts
     │   ├── handleWorkoutSetRemoveCommand.ts
@@ -284,6 +285,7 @@ modules/
     │   ├── WORKOUT_EXERCISE_REMOVE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     │   ├── WORKOUT_NOTE_SET_COMMAND.ts
+    │   ├── WORKOUT_RESCHEDULE_COMMAND.ts
     │   ├── WORKOUT_SET_CORRECT_COMMAND.ts
     │   ├── WORKOUT_SET_LOG_COMMAND.ts
     │   ├── WORKOUT_SET_REMOVE_COMMAND.ts
@@ -296,6 +298,7 @@ modules/
     │   ├── WORKOUT_EXERCISE_REMOVED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
     │   ├── WORKOUT_NOTE_SET_EVENT.ts
+    │   ├── WORKOUT_RESCHEDULED_EVENT.ts
     │   ├── WORKOUT_SET_CORRECTED_EVENT.ts
     │   ├── WORKOUT_SET_LOGGED_EVENT.ts
     │   ├── WORKOUT_SET_REMOVED_EVENT.ts
@@ -318,6 +321,7 @@ modules/
     │   ├── workout-plan-ready.ts
     │   ├── workout-plan-section-ready.ts
     │   ├── workout-retains-logged-sets.ts
+    │   ├── workout-scheduled-for-has-changed.ts
     │   ├── workout-scheduled-for-is-not-past.ts
     │   └── workout-scheduled-for-is-within-horizon.ts
     ├── ports
