@@ -49,7 +49,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       .orderBy(asc(Schema.planSectionExerciseInstructions.createdAt));
 
     const editable = Plans.Invariants.PlanIsEditable.passes({ status: plan.status });
-    const whenEditable = { enabled: editable, hints: [] };
+    const whenEditable = { available: editable, enabled: editable, hints: [] };
 
     const data = {
       id: plan.id,
@@ -88,6 +88,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           ...planSection,
           actions: {
             exerciseInstructionAdd: {
+              available: editable,
               enabled: editable && instructionsAvailable,
               hints: instructionsAvailable ? [] : ["plan.section.exercise.list.limit.hint"],
             },
@@ -110,19 +111,26 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       count: tools.Int.nonNegative(data.sections.length),
     });
 
+    const finalized = Plans.Invariants.PlanIsFinalized.passes({ status: plan.status });
+    const archivable = Plans.Invariants.PlanIsArchivable.passes({ status: plan.status });
+    const restorable = Plans.Invariants.PlanIsRestorable.passes({ status: plan.status });
+    const removable = Plans.Invariants.PlanIsRemovable.passes({ status: plan.status });
+
     return {
       data,
       actions: {
-        finalize: { enabled: editable && finalizeBlockers.length === 0, hints: finalizeBlockers },
-        rename: whenEditable,
-        editingEnable: {
-          enabled: Plans.Invariants.PlanIsFinalized.passes({ status: plan.status }),
-          hints: [],
+        finalize: {
+          available: editable,
+          enabled: editable && finalizeBlockers.length === 0,
+          hints: finalizeBlockers,
         },
-        archive: { enabled: Plans.Invariants.PlanIsArchivable.passes({ status: plan.status }), hints: [] },
-        restore: { enabled: Plans.Invariants.PlanIsRestorable.passes({ status: plan.status }), hints: [] },
-        remove: { enabled: Plans.Invariants.PlanIsRemovable.passes({ status: plan.status }), hints: [] },
+        rename: whenEditable,
+        editingEnable: { available: finalized, enabled: finalized, hints: [] },
+        archive: { available: archivable, enabled: archivable, hints: [] },
+        restore: { available: restorable, enabled: restorable, hints: [] },
+        remove: { available: removable, enabled: removable, hints: [] },
         sectionCreate: {
+          available: editable,
           enabled: editable && sectionsAvailable,
           hints: sectionsAvailable ? [] : ["plan.section.list.limit.hint"],
         },

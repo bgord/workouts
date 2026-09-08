@@ -1,3 +1,7 @@
 import type * as bg from "@bgord/bun";
 
-export type ActionState = { enabled: boolean; hints: ReadonlyArray<bg.TranslationsKeyType> };
+export type ActionState = {
+  available: boolean;
+  enabled: boolean;
+  hints: ReadonlyArray<bg.TranslationsKeyType>;
+};

@@ -24,7 +24,7 @@ describe(`GET ${url}`, async () => {
     spies.use(
       spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue({
         data: { active: [mocks.planSummary], archived: [] },
-        actions: { create: { enabled: false, hints: ["plan.list.limit.hint"] } },
+        actions: { create: { available: true, enabled: false, hints: ["plan.list.limit.hint"] } },
       }),
     );
 
@@ -34,7 +34,7 @@ describe(`GET ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       data: { active: [mocks.planSummary], archived: [] },
-      actions: { create: { enabled: false, hints: ["plan.list.limit.hint"] } },
+      actions: { create: { available: true, enabled: false, hints: ["plan.list.limit.hint"] } },
     });
   });
 
@@ -44,7 +44,7 @@ describe(`GET ${url}`, async () => {
     spies.use(
       spyOn(di.Adapters.Plans.ListPlansQuery, "execute").mockResolvedValue({
         data: { active: [], archived: [] },
-        actions: { create: { enabled: true, hints: [] } },
+        actions: { create: { available: true, enabled: true, hints: [] } },
       }),
     );
 
@@ -54,7 +54,7 @@ describe(`GET ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       data: { active: [], archived: [] },
-      actions: { create: { enabled: true, hints: [] } },
+      actions: { create: { available: true, enabled: true, hints: [] } },
     });
   });
 });

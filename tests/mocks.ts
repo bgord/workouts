@@ -237,12 +237,12 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
     exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
       ...exerciseInstruction,
       actions: {
-        update: { enabled: true, hints: [] },
-        exerciseChange: { enabled: true, hints: [] },
-        remove: { enabled: true, hints: [] },
+        update: { available: true, enabled: true, hints: [] },
+        exerciseChange: { available: true, enabled: true, hints: [] },
+        remove: { available: true, enabled: true, hints: [] },
       },
     })),
-    actions: { exerciseInstructionAdd: { enabled: true, hints: [] } },
+    actions: { exerciseInstructionAdd: { available: true, enabled: true, hints: [] } },
   })),
 };
 
@@ -327,12 +327,15 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     ...exercise,
     loggedSets: exercise.loggedSets.map((set) => ({
       ...set,
-      actions: { correct: { enabled: true, hints: [] }, remove: { enabled: true, hints: [] } },
+      actions: {
+        correct: { available: true, enabled: true, hints: [] },
+        remove: { available: true, enabled: true, hints: [] },
+      },
     })),
     actions: {
-      targetSet: { enabled: true, hints: [] },
-      remove: { enabled: true, hints: [] },
-      setLog: { enabled: false, hints: [] },
+      targetSet: { available: true, enabled: true, hints: [] },
+      remove: { available: true, enabled: true, hints: [] },
+      setLog: { available: false, enabled: false, hints: [] },
     },
   })),
 };

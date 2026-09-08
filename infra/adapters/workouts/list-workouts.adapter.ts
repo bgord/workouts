@@ -72,7 +72,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
     return {
       data,
       sections: sections.map((section) => ({ id: section.id, name: section.name })),
-      actions: { create: { enabled: planReady && draftsAvailable, hints } },
+      actions: { create: { available: true, enabled: planReady && draftsAvailable, hints } },
     };
   }
 }

@@ -11,7 +11,8 @@ export class Workouts {
 
     const response = await fetch(url, { headers, credentials: "include" });
 
-    if (!response?.ok) return { data: [], sections: [], actions: { create: { enabled: false, hints: [] } } };
+    if (!response?.ok)
+      return { data: [], sections: [], actions: { create: { available: true, enabled: false, hints: [] } } };
     return response.json().catch();
   }
 

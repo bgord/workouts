@@ -62,10 +62,14 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     if (correctable && !retainsLoggedSets) setRemoveBlockers.push("workout.set.remove.blocked.last_set");
 
-    const whenDraft = { enabled: draft, hints: [] };
-    const whenInProgress = { enabled: inProgress, hints: [] };
-    const whenCorrectable = { enabled: correctable, hints: [] };
-    const setRemove = { enabled: correctable && retainsLoggedSets, hints: setRemoveBlockers };
+    const whenDraft = { available: draft, enabled: draft, hints: [] };
+    const whenInProgress = { available: inProgress, enabled: inProgress, hints: [] };
+    const whenCorrectable = { available: correctable, enabled: correctable, hints: [] };
+    const setRemove = {
+      available: correctable,
+      enabled: correctable && retainsLoggedSets,
+      hints: setRemoveBlockers,
+    };
 
     const data = {
       id: workout.id,
@@ -125,10 +129,18 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     return {
       data,
       actions: {
-        start: { enabled: draft && readyToStart && inProgressAvailable, hints: startBlockers },
-        complete: { enabled: inProgress && hasLoggedSets, hints: completeBlockers },
-        discard: { enabled: exists, hints: [] },
-        exerciseAdd: { enabled: draft && exercisesAvailable, hints: exerciseAddBlockers },
+        start: {
+          available: draft,
+          enabled: draft && readyToStart && inProgressAvailable,
+          hints: startBlockers,
+        },
+        complete: { available: inProgress, enabled: inProgress && hasLoggedSets, hints: completeBlockers },
+        discard: { available: exists, enabled: exists, hints: [] },
+        exerciseAdd: {
+          available: draft,
+          enabled: draft && exercisesAvailable,
+          hints: exerciseAddBlockers,
+        },
       },
     };
   }
