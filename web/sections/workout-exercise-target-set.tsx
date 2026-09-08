@@ -1,12 +1,18 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CheckCircle } from "iconoir-react";
+import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import { ActionHints } from "../components";
 import { workoutRoute } from "../router";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
-export function WorkoutExerciseTargetSet(props: { workout: Workout; exercise: WorkoutExerciseWithSets }) {
+export function WorkoutExerciseTargetSet(props: {
+  workout: Workout;
+  exercise: WorkoutExerciseWithSets;
+  action: ActionState;
+}) {
   const t = bg.useTranslations();
   const router = useRouter();
 
@@ -100,11 +106,13 @@ export function WorkoutExerciseTargetSet(props: { workout: Workout; exercise: Wo
       <button
         className="c-button"
         data-variant="secondary"
-        disabled={incomplete || mutation.isLoading}
+        disabled={!props.action.enabled || incomplete || mutation.isLoading}
         type="submit"
       >
         {t("workout.target.cta")}
       </button>
+
+      <ActionHints action={props.action} />
 
       {mutation.isDone && (
         <output

@@ -1,11 +1,17 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import { ActionHints } from "../components";
 import { workoutRoute } from "../router";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
-export function WorkoutSetLog(props: { workout: Workout; exercise: WorkoutExerciseWithSets }) {
+export function WorkoutSetLog(props: {
+  workout: Workout;
+  exercise: WorkoutExerciseWithSets;
+  action: ActionState;
+}) {
   const t = bg.useTranslations();
   const router = useRouter();
 
@@ -72,11 +78,13 @@ export function WorkoutSetLog(props: { workout: Workout; exercise: WorkoutExerci
         <button
           className="c-button"
           data-variant="primary"
-          disabled={reps.empty || load.empty || mutation.isLoading}
+          disabled={!props.action.enabled || reps.empty || load.empty || mutation.isLoading}
           type="submit"
         >
           {t("workout.set.cta")}
         </button>
+
+        <ActionHints action={props.action} />
 
         {props.exercise.target && (
           <div data-color="neutral-400" data-fs="sm">

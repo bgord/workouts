@@ -1,7 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import { ActionHints } from "../components";
 import { workoutRoute } from "../router";
 
 const GRAMS_IN_KILOGRAM = 1000;
@@ -10,6 +12,7 @@ export function WorkoutSetCorrect(props: {
   workout: Workout;
   exercise: WorkoutExerciseWithSets;
   loggedSet: LoggedSetType;
+  action: ActionState;
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -48,16 +51,21 @@ export function WorkoutSetCorrect(props: {
 
   if (edit.off) {
     return (
-      <button
-        className="c-button"
-        data-variant="ghost"
-        onClick={edit.enable}
-        title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
-        type="button"
-        {...edit.props.controller}
-      >
-        {t("workout.set.correct.cta")}
-      </button>
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <button
+          className="c-button"
+          data-variant="ghost"
+          disabled={!props.action.enabled}
+          onClick={edit.enable}
+          title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
+          type="button"
+          {...edit.props.controller}
+        >
+          {t("workout.set.correct.cta")}
+        </button>
+
+        <ActionHints action={props.action} />
+      </div>
     );
   }
 

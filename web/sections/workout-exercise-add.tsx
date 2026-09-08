@@ -1,11 +1,12 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/workout-exercise-add-form";
+import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ButtonCancel, Select } from "../components";
+import { ActionHints, ButtonCancel, Select } from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutExerciseAdd(props: Workout) {
+export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercises } = workoutRoute.useLoaderData();
@@ -40,16 +41,20 @@ export function WorkoutExerciseAdd(props: Workout) {
 
   if (add.off) {
     return (
-      <button
-        className="c-button"
-        data-mr="auto"
-        data-variant="ghost"
-        onClick={add.enable}
-        type="button"
-        {...add.props.controller}
-      >
-        {t("workout.exercise.add.cta")}
-      </button>
+      <div data-cross="center" data-gap="3" data-mr="auto" data-stack="x">
+        <button
+          className="c-button"
+          data-variant="ghost"
+          disabled={!props.action.enabled}
+          onClick={add.enable}
+          type="button"
+          {...add.props.controller}
+        >
+          {t("workout.exercise.add.cta")}
+        </button>
+
+        <ActionHints action={props.action} />
+      </div>
     );
   }
 

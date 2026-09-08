@@ -60,21 +60,15 @@ export function Workout() {
           <WorkoutStatusBadge status={workout.data.status} />
         </div>
 
-        {workout.actions.discard.enabled && (
-          <div data-gap="2" data-stack="y">
-            <div data-cross="center" data-gap="3" data-stack="x">
-              {workout.actions.start.enabled && <WorkoutStart {...workout.data} />}
-              {workout.actions.complete.enabled && <WorkoutComplete {...workout.data} />}
-              <WorkoutDiscard {...workout.data} />
-            </div>
-
-            {[...workout.actions.start.hints, ...workout.actions.complete.hints].map((blocker) => (
-              <div data-color="neutral-400" data-fs="sm" key={blocker}>
-                {t(blocker)}
-              </div>
-            ))}
-          </div>
-        )}
+        <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+          {workout.actions.start.available && (
+            <WorkoutStart action={workout.actions.start} {...workout.data} />
+          )}
+          {workout.actions.complete.available && (
+            <WorkoutComplete action={workout.actions.complete} {...workout.data} />
+          )}
+          {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
+        </div>
       </div>
 
       <ul data-gap="3" data-stack="y">
@@ -86,26 +80,34 @@ export function Workout() {
           >
             <WorkoutSetList exercise={exercise} workout={workout.data} />
 
-            <div className="c-card-footer" data-cross="end" data-gap="3">
-              {exercise.actions.targetSet.enabled && (
-                <WorkoutExerciseTargetSet exercise={exercise} workout={workout.data} />
-              )}
-              {exercise.actions.remove.enabled && (
-                <WorkoutExerciseRemove exercise={exercise} workout={workout.data} />
-              )}
-            </div>
-            {exercise.actions.setLog.enabled && <WorkoutSetLog exercise={exercise} workout={workout.data} />}
+            {(exercise.actions.targetSet.available || exercise.actions.remove.available) && (
+              <div className="c-card-footer" data-cross="end" data-gap="3">
+                {exercise.actions.targetSet.available && (
+                  <WorkoutExerciseTargetSet
+                    action={exercise.actions.targetSet}
+                    exercise={exercise}
+                    workout={workout.data}
+                  />
+                )}
+                {exercise.actions.remove.available && (
+                  <WorkoutExerciseRemove
+                    action={exercise.actions.remove}
+                    exercise={exercise}
+                    workout={workout.data}
+                  />
+                )}
+              </div>
+            )}
+            {exercise.actions.setLog.available && (
+              <WorkoutSetLog action={exercise.actions.setLog} exercise={exercise} workout={workout.data} />
+            )}
           </WorkoutExerciseRow>
         ))}
       </ul>
 
-      {workout.actions.exerciseAdd.enabled && <WorkoutExerciseAdd {...workout.data} />}
-
-      {workout.actions.exerciseAdd.hints.map((blocker) => (
-        <div data-color="neutral-400" data-fs="sm" key={blocker}>
-          {t(blocker)}
-        </div>
-      ))}
+      {workout.actions.exerciseAdd.available && (
+        <WorkoutExerciseAdd action={workout.actions.exerciseAdd} {...workout.data} />
+      )}
     </Main>
   );
 }

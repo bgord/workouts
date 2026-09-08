@@ -1,9 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
+import { ActionHints } from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutStart(props: Workout) {
+export function WorkoutStart(props: Workout & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
 
@@ -19,9 +21,16 @@ export function WorkoutStart(props: Workout) {
 
   return (
     <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
-      <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
+      <button
+        className="c-button"
+        data-variant="primary"
+        disabled={!props.action.enabled || mutation.isLoading}
+        type="submit"
+      >
         {t("workout.start.cta")}
       </button>
+
+      <ActionHints action={props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

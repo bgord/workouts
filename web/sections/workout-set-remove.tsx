@@ -1,13 +1,16 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import { ActionHints } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutSetRemove(props: {
   workout: Workout;
   exercise: WorkoutExerciseWithSets;
   loggedSet: LoggedSetType;
+  action: ActionState;
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -23,17 +26,19 @@ export function WorkoutSetRemove(props: {
   });
 
   return (
-    <form onSubmit={mutation.handleSubmit}>
+    <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
       <button
         className="c-button"
         data-color="danger-400"
         data-variant="ghost"
-        disabled={mutation.isLoading}
+        disabled={!props.action.enabled || mutation.isLoading}
         title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
         type="submit"
       >
         {t("workout.set.remove.cta")}
       </button>
+
+      <ActionHints action={props.action} />
     </form>
   );
 }
