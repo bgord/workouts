@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import { ActionHints, ButtonCancel, Select } from "../components";
+import { ActionHint, ButtonCancel, Select } from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionAdd(props: {
@@ -59,7 +59,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           {t("plan.section.exercise.add.cta")}
         </button>
 
-        <ActionHints action={props.action} />
+        <ActionHint action={props.action} />
       </div>
     );
   }

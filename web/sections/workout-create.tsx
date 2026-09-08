@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CalendarPlus } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ActionHints, Select } from "../components";
+import { ActionHint, Select } from "../components";
 import { workoutsRoute } from "../router";
 
 export function WorkoutCreate() {
@@ -76,7 +76,7 @@ export function WorkoutCreate() {
       </button>
 
       <div data-mb="2">
-        <ActionHints action={workouts.actions.create} />
+        <ActionHint action={workouts.actions.create} />
       </div>
 
       {mutation.isError && (

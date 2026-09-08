@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { CircleCheck } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHints } from "../components";
+import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
 
 const GRAMS_IN_KILOGRAM = 1000;
@@ -112,7 +112,7 @@ export function WorkoutExerciseTargetSet(props: {
         {t("workout.target.cta")}
       </button>
 
-      <ActionHints action={props.action} />
+      <ActionHint action={props.action} />
 
       {mutation.isDone && (
         <output

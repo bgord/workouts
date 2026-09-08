@@ -1,12 +1,15 @@
 import { useTranslations } from "@bgord/ui";
 import type { ActionState } from "../../modules/action-state";
 
-export function ActionHints(props: { action: ActionState }) {
+export function ActionHint(props: { action: ActionState }) {
   const t = useTranslations();
+  const hint = props.action.hints[0];
 
-  return props.action.hints.map((hint) => (
+  if (!hint) return null;
+
+  return (
     <div data-color="neutral-400" data-fs="sm" key={hint}>
       {t(hint)}
     </div>
-  ));
+  );
 }

@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHints } from "../components";
+import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutComplete(props: Workout & { action: ActionState }) {
@@ -32,7 +32,7 @@ export function WorkoutComplete(props: Workout & { action: ActionState }) {
         {t("workout.complete.cta")}
       </button>
 
-      <ActionHints action={props.action} />
+      <ActionHint action={props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

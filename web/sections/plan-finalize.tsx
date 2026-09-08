@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHints } from "../components";
+import { ActionHint } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanFinalize(props: Plan & { action: ActionState }) {
@@ -36,7 +36,7 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
         {t("plan.finalize.cta")}
       </button>
 
-      <ActionHints action={props.action} />
+      <ActionHint action={props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

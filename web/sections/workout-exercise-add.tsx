@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHints, ButtonCancel, Select } from "../components";
+import { ActionHint, ButtonCancel, Select } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
@@ -55,7 +55,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           {t("workout.exercise.add.cta")}
         </button>
 
-        <ActionHints action={props.action} />
+        <ActionHint action={props.action} />
       </div>
     );
   }

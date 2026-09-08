@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHints, ButtonCancel } from "../components";
+import { ActionHint, ButtonCancel } from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionCreate(props: Plan & { action: ActionState }) {
@@ -35,7 +35,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   if (create.off) {
     return (
       <div data-cross="center" data-gap="3" data-stack="x">
-        <ActionHints action={props.action} />
+        <ActionHint action={props.action} />
 
         <button
           className="c-button"

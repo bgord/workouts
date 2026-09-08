@@ -1,4 +1,4 @@
-export * from "./action-hints";
+export * from "./action-hint";
 export * from "./avatar";
 export * from "./button-cancel";
 export * from "./button-close";

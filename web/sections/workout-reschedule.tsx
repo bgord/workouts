@@ -4,7 +4,7 @@ import { DateFormat } from "../../app/services/date-format";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ActionHints, ButtonCancel } from "../components";
+import { ActionHint, ButtonCancel } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutReschedule(props: Workout & { action: ActionState }) {
@@ -80,7 +80,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
 
       <ButtonCancel onClick={bg.exec([scheduledFor.clear, mutation.reset, reschedule.disable])} />
 
-      <ActionHints action={props.action} />
+      <ActionHint action={props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

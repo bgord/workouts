@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Plus } from "lucide-react";
-import { ActionHints, Main, PlanCard } from "../components";
+import { ActionHint, Main, PlanCard } from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
@@ -18,7 +18,7 @@ export function Plans() {
         </h1>
 
         <div data-cross="center" data-gap="3" data-stack="x">
-          <ActionHints action={plans.actions.create} />
+          <ActionHint action={plans.actions.create} />
 
           <button
             className="c-button"

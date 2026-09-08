@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/workout-note-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHints, ButtonCancel } from "../components";
+import { ActionHint, ButtonCancel } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutNote(props: Workout & { action: ActionState }) {
@@ -50,7 +50,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
         {...note.input.props}
       />
 
-      <ActionHints action={props.action} />
+      <ActionHint action={props.action} />
 
       {(focus.on || note.changed) && (
         <div data-cross="center" data-gap="3" data-stack="x">

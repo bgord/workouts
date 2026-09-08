@@ -4,7 +4,7 @@ import { Pencil } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHints } from "../components";
+import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
 
 const GRAMS_IN_KILOGRAM = 1000;
@@ -65,7 +65,7 @@ export function WorkoutSetCorrect(props: {
           <Pencil data-size="sm" />
         </button>
 
-        <ActionHints action={props.action} />
+        <ActionHint action={props.action} />
       </div>
     );
   }
