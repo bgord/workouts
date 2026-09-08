@@ -493,6 +493,49 @@ describe("Workout", async () => {
     ]);
   });
 
+  test("logSet - carries the exercise id of the logged exercise", async () => {
+    const anotherExerciseAdded = {
+      ...mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      payload: {
+        ...mocks.AnotherGenericWorkoutExerciseAddedEvent.payload,
+        exerciseId: mocks.anotherExerciseId,
+      },
+    };
+
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        anotherExerciseAdded,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.logSet(
+        mocks.anotherWorkoutExerciseId,
+        mocks.loggedSet.id,
+        mocks.loggedSet.reps,
+        mocks.loggedSet.load,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([
+      {
+        ...mocks.GenericWorkoutSetLoggedEvent,
+        payload: {
+          ...mocks.GenericWorkoutSetLoggedEvent.payload,
+          workoutExerciseId: mocks.anotherWorkoutExerciseId,
+          exerciseId: mocks.anotherExerciseId,
+        },
+      },
+    ]);
+  });
+
   test("logSet - WorkoutIsInProgress", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

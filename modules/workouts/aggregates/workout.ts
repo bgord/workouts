@@ -188,6 +188,7 @@ export class Workout {
       {
         workoutId: this.id,
         workoutExerciseId,
+        exerciseId: exercise!.exerciseId,
         loggedSet: { id: loggedSetId, setNumber, reps, load },
         requesterId,
       },

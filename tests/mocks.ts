@@ -908,7 +908,7 @@ export const GenericWorkoutSetLoggedEvent = {
   version: 1,
   commit,
   name: "WORKOUT_SET_LOGGED_EVENT",
-  payload: { workoutId, workoutExerciseId, loggedSet, requesterId: userId },
+  payload: { workoutId, workoutExerciseId, exerciseId, loggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
 
 export const correctedLoggedSet = v.parse(Workouts.VO.LoggedSet, {
@@ -1005,7 +1005,7 @@ export const AnotherGenericWorkoutSetLoggedEvent = {
   version: 1,
   commit,
   name: "WORKOUT_SET_LOGGED_EVENT",
-  payload: { workoutId, workoutExerciseId, loggedSet: anotherLoggedSet, requesterId: userId },
+  payload: { workoutId, workoutExerciseId, exerciseId, loggedSet: anotherLoggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
 
 export const user = {
