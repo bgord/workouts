@@ -17,5 +17,4 @@ export type ExerciseRecord = PerformedSet & {
 export type ExerciseHistory = {
   sessions: Array<ExerciseSession>;
   record?: ExerciseRecord;
-  daysSinceLastSession?: tools.IntegerNonNegativeType;
 };

@@ -1,4 +1,3 @@
-import type * as bg from "@bgord/bun";
 import { and, asc, desc, eq, isNotNull } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
@@ -7,11 +6,7 @@ import type * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
-type Dependencies = { Clock: bg.ClockPort };
-
 class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory {
-  constructor(private readonly deps: Dependencies) {}
-
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
@@ -46,15 +41,8 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
 
     const history = [...sessions.values()];
 
-    return {
-      sessions: history,
-      record: new Stats.Services.ExerciseRecordFinder().find(history),
-      daysSinceLastSession: new Stats.Services.ExerciseRecencyCalculator().calculate(
-        history,
-        this.deps.Clock.now(),
-      ),
-    };
+    return { sessions: history, record: new Stats.Services.ExerciseRecordFinder().find(history) };
   }
 }
 
-export const createGetExerciseHistoryQuery = (deps: Dependencies) => new GetExerciseHistoryQueryDrizzle(deps);
+export const createGetExerciseHistoryQuery = () => new GetExerciseHistoryQueryDrizzle();
