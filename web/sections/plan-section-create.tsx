@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
@@ -44,6 +45,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           type="button"
           {...create.props.controller}
         >
+          <Plus data-size="sm" />
           {t("plan.section.create.cta")}
         </button>
       </div>

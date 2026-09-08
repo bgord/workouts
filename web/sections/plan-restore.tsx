@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { ArchiveRestore } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { planRoute, plansRoute } from "../router";
 
@@ -24,6 +25,7 @@ export function PlanRestore(props: Plan) {
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
       <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
+        <ArchiveRestore data-size="sm" />
         {t("plan.restore.cta")}
       </button>
 

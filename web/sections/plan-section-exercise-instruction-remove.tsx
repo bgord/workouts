@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { CircleX } from "lucide-react";
 import type {
   ExerciseInstructionWithExercise,
   Plan,
@@ -39,7 +40,7 @@ export function PlanSectionExerciseInstructionRemove(props: {
         title={t("plan.section.exercise.remove.title", { name: props.exerciseInstruction.exercise.name })}
         type="submit"
       >
-        {t("plan.section.exercise.remove.cta")}
+        <CircleX data-size="sm" />
       </button>
 
       {mutation.isError && (

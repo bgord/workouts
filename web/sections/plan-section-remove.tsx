@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, CircleX } from "lucide-react";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
 import { ButtonCancel, ButtonClose } from "../components";
 import { planRoute } from "../router";
@@ -28,14 +28,16 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
     <>
       <button
         className="c-button"
-        data-color="danger-400"
+        data-color="neutral-400"
+        data-hover-color="danger-400"
         data-ml="auto"
         data-variant="ghost"
         onClick={dialog.enable}
+        title={t("plan.section.remove.title", { name: props.section.name })}
         type="button"
         {...dialog.props.controller}
       >
-        {t("plan.section.remove.cta")}
+        <CircleX data-size="sm" />
       </button>
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>

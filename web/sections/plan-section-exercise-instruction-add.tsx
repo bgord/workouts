@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
@@ -54,6 +55,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           type="button"
           {...add.props.controller}
         >
+          <Plus data-size="sm" />
           {t("plan.section.exercise.add.cta")}
         </button>
 

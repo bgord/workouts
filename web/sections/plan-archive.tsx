@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleAlert } from "lucide-react";
+import { Archive, CircleAlert } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { ButtonCancel, ButtonClose } from "../components";
 import { planRoute, plansRoute } from "../router";
@@ -35,6 +35,7 @@ export function PlanArchive(props: Plan) {
         type="button"
         {...dialog.props.controller}
       >
+        <Archive data-size="sm" />
         {t("plan.archive.cta")}
       </button>
 
