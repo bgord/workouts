@@ -920,4 +920,71 @@ describe("Workout", async () => {
       Workouts.Invariants.WorkoutNoteHasChanged.error,
     );
   });
+
+  test("reschedule", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.reschedule(mocks.anotherWorkoutScheduledFor, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutRescheduledEvent]);
+  });
+
+  test("reschedule - twice", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutRescheduledEvent],
+      deps,
+    );
+
+    expect(() => workout.reschedule(mocks.anotherWorkoutScheduledFor, mocks.userId)).toThrow(
+      Workouts.Invariants.WorkoutScheduledForHasChanged.error,
+    );
+  });
+
+  test("reschedule - WorkoutIsDraft", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+      ],
+      deps,
+    );
+
+    expect(() => workout.reschedule(mocks.anotherWorkoutScheduledFor, mocks.userId)).toThrow(
+      Workouts.Invariants.WorkoutIsDraft.error,
+    );
+  });
+
+  test("reschedule - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() => workout.reschedule(mocks.anotherWorkoutScheduledFor, mocks.anotherUserId)).toThrow(
+      Workouts.Invariants.WorkoutBelongsToUser.error,
+    );
+  });
+
+  test("reschedule - WorkoutScheduledForHasChanged", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() => workout.reschedule(mocks.workoutScheduledFor, mocks.userId)).toThrow(
+      Workouts.Invariants.WorkoutScheduledForHasChanged.error,
+    );
+  });
 });

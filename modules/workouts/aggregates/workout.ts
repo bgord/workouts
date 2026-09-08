@@ -51,6 +51,7 @@ export class Workout {
   revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
   status = VO.WorkoutStatusEnum.initial;
   userId?: Auth.VO.UserIdType;
+  scheduledFor?: VO.WorkoutScheduledForType;
   note?: VO.WorkoutNoteType;
   exercises: Array<VO.WorkoutExercise> = [];
 
@@ -297,6 +298,21 @@ export class Workout {
     this.record(event);
   }
 
+  reschedule(scheduledFor: VO.WorkoutScheduledForType, requesterId: Auth.VO.UserIdType) {
+    Invariants.WorkoutIsDraft.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutScheduledForHasChanged.enforce({ current: this.scheduledFor, incoming: scheduledFor });
+
+    const event = bg.event(
+      Events.WorkoutRescheduledEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, scheduledFor, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<WorkoutEventType> {
     const events = [...this.pending];
 
@@ -316,6 +332,7 @@ export class Workout {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.draft;
         this.userId = event.payload.userId;
+        this.scheduledFor = event.payload.scheduledFor;
         break;
       }
 
@@ -408,6 +425,12 @@ export class Workout {
       case Events.WORKOUT_NOTE_SET_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.note = event.payload.note;
+        break;
+      }
+
+      case Events.WORKOUT_RESCHEDULED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.scheduledFor = event.payload.scheduledFor;
         break;
       }
     }
