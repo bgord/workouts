@@ -25,7 +25,7 @@ export function WorkoutExerciseRemove(props: {
   });
 
   return (
-    <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
+    <form data-cross="center" data-gap="3" data-mb="auto" data-stack="x" onSubmit={mutation.handleSubmit}>
       <button
         className="c-button"
         data-color="neutral-400"

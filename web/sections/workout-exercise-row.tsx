@@ -64,6 +64,14 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
             )}
           </div>
         </div>
+
+        {props.exercise.actions.remove.available && (
+          <WorkoutExerciseRemove
+            action={props.exercise.actions.remove}
+            exercise={props.exercise}
+            workout={props.workout}
+          />
+        )}
       </div>
 
       {skipped && (
@@ -83,22 +91,15 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
       <div data-gap="0" data-stack="y">
         <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
-        <div className="c-card-footer" data-cross="end" data-gap="3">
-          {props.exercise.actions.targetSet.available && (
+        {props.exercise.actions.targetSet.available && (
+          <div className="c-card-footer" data-cross="end" data-gap="3">
             <WorkoutExerciseTargetSet
               action={props.exercise.actions.targetSet}
               exercise={props.exercise}
               workout={props.workout}
             />
-          )}
-          {props.exercise.actions.remove.available && (
-            <WorkoutExerciseRemove
-              action={props.exercise.actions.remove}
-              exercise={props.exercise}
-              workout={props.workout}
-            />
-          )}
-        </div>
+          </div>
+        )}
 
         {props.exercise.actions.setLog.available && (
           <WorkoutSetLog
