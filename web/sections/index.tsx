@@ -1,4 +1,5 @@
 export * from "./exercise-catalog";
+export * from "./exercise-history";
 export * from "./navigation";
 export * from "./plan-archive";
 export * from "./plan-create";

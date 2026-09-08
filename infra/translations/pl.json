@@ -56,6 +56,8 @@
   "exercise.catalog.header": "Katalog ćwiczeń",
   "exercise.catalog.name.placeholder": "Szukaj po nazwie",
   "exercise.catalog.no_matches": "Żadne ćwiczenie nie pasuje do filtrów",
+  "exercise.history.empty": "Brak zapisanych serii",
+  "exercise.history.header": "Historia serii",
   "exercise.not_found": "Nie znaleziono ćwiczenia",
   "plan.archive.cta": "Archiwizuj",
   "plan.archive.error": "Nie udało się zarchiwizować planu",

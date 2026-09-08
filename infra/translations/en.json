@@ -56,6 +56,8 @@
   "exercise.catalog.header": "Catalog",
   "exercise.catalog.name.placeholder": "Search by name",
   "exercise.catalog.no_matches": "No exercises match the filters",
+  "exercise.history.empty": "No logged sets yet",
+  "exercise.history.header": "Sets history",
   "exercise.not_found": "Exercise not found",
   "plan.archive.cta": "Archive",
   "plan.archive.error": "Could not archive the plan",

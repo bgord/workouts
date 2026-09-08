@@ -10,7 +10,7 @@ import {
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
-import { Avatar, Exercises, I18N, Plans, Session, Workouts } from "./api";
+import { Avatar, Exercises, I18N, Plans, Session, Stats, Workouts } from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
 
@@ -87,7 +87,10 @@ export const exerciseRoute = createRoute({
   path: "/catalog/exercise/$exerciseId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/exercise"), "Exercise"),
-  loader: async ({ context, params }) => ({ exercise: await Exercises.get(context.request, params) }),
+  loader: async ({ context, params }) => ({
+    exercise: await Exercises.get(context.request, params),
+    history: await Stats.getExerciseHistory(context.request, params),
+  }),
 });
 
 export const plansRoute = createRoute({

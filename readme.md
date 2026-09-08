@@ -405,6 +405,8 @@ app/
 │   │   ├── remove-profile-avatar.ts
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
+│   ├── stats
+│   │   ├── exercise-history-get.ts
 │   └── workouts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts

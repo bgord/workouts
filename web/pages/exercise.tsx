@@ -5,10 +5,11 @@ import { ChevronLeft } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
+import { ExerciseHistory } from "../sections/exercise-history";
 
 export function Exercise() {
   const t = useTranslations();
-  const { exercise } = exerciseRoute.useLoaderData();
+  const { exercise, history } = exerciseRoute.useLoaderData();
 
   if (!exercise) {
     return (
@@ -72,6 +73,8 @@ export function Exercise() {
         <p className="c-prose" data-color="neutral-200">
           {exercise.description}
         </p>
+
+        <ExerciseHistory history={history} />
       </div>
     </Main>
   );
