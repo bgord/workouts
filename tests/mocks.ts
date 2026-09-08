@@ -27,6 +27,8 @@ export const temporaryFileId = v.parse(bg.UUID, "738d1d64-0828-437e-a979-3dcebaf
 export const T0 = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-01T00:00:00Z"));
 export const T0Date = "Wed, 01 Jan 2025 00:00:00 GMT";
 
+export const T1 = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-02T00:00:00Z"));
+
 export const hourHasPassedTimestamp = T0;
 
 export const expectAnyId = expect.stringMatching(
