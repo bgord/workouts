@@ -2,7 +2,7 @@ import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type { RepsType } from "../../modules/plans/value-objects/reps";
 import type { WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
+import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 
 function format(reps: RepsType): string {
   return reps.min === reps.max ? String(reps.min) : `${reps.min}-${reps.max}`;
