@@ -284,7 +284,7 @@ export const statsExerciseSets = sqliteTable(
     reps: integer("reps", { mode: "number" }).notNull().$type<WorkoutRepsType>(),
     load: integer("load", { mode: "number" }).notNull().$type<LoadType>(),
     loggedAt: timestamp("loggedAt").notNull(),
-    completedAt: timestamp("completedAt"),
+    completedAt: timestamp("completedAt").notNull(),
   },
   (table) => [
     index("statsExerciseSets_userId_exerciseId_idx").on(table.userId, table.exerciseId),

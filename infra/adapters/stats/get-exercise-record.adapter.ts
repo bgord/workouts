@@ -1,5 +1,4 @@
-import type * as tools from "@bgord/tools";
-import { and, asc, desc, eq, isNotNull, sql } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as Stats from "+stats";
@@ -11,22 +10,16 @@ class GetExerciseRecordQueryDrizzle implements Stats.Queries.GetExerciseRecord {
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Stats.VO.ExerciseRecord | undefined> {
-    const completedAt = sql<tools.TimestampValueType>`${Schema.statsExerciseSets.completedAt}`;
-
     const [record] = await db
       .select({
         reps: Schema.statsExerciseSets.reps,
         load: Schema.statsExerciseSets.load,
         workoutId: Schema.statsExerciseSets.workoutId,
-        completedAt,
+        completedAt: Schema.statsExerciseSets.completedAt,
       })
       .from(Schema.statsExerciseSets)
       .where(
-        and(
-          eq(Schema.statsExerciseSets.exerciseId, exerciseId),
-          eq(Schema.statsExerciseSets.userId, userId),
-          isNotNull(Schema.statsExerciseSets.completedAt),
-        ),
+        and(eq(Schema.statsExerciseSets.exerciseId, exerciseId), eq(Schema.statsExerciseSets.userId, userId)),
       )
       .orderBy(
         desc(Schema.statsExerciseSets.load),

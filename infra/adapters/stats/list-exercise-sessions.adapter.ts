@@ -1,5 +1,4 @@
-import { sql, desc, and, eq, isNotNull } from "drizzle-orm";
-import * as tools from "@bgord/tools";
+import { and, desc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import * as Stats from "+stats";
@@ -16,17 +15,15 @@ class ListExerciseSessionsQueryDrizzle implements Stats.Queries.ListExerciseSess
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Array<Stats.VO.ExerciseSession>> {
-    const completedAt = sql<tools.TimestampValueType>`${Schema.statsExerciseSets.completedAt}`;
-
     const sessions = await db
-      .select({ workoutId: Schema.statsExerciseSets.workoutId, completedAt, sets: performedSets })
+      .select({
+        workoutId: Schema.statsExerciseSets.workoutId,
+        completedAt: Schema.statsExerciseSets.completedAt,
+        sets: performedSets,
+      })
       .from(Schema.statsExerciseSets)
       .where(
-        and(
-          eq(Schema.statsExerciseSets.exerciseId, exerciseId),
-          eq(Schema.statsExerciseSets.userId, userId),
-          isNotNull(Schema.statsExerciseSets.completedAt),
-        ),
+        and(eq(Schema.statsExerciseSets.exerciseId, exerciseId), eq(Schema.statsExerciseSets.userId, userId)),
       )
       .groupBy(Schema.statsExerciseSets.workoutId)
       .orderBy(desc(Schema.statsExerciseSets.completedAt));

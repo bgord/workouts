@@ -7,7 +7,6 @@ import * as Schema from "+infra/schema";
 
 type Dependencies = {
   EventBus: bg.EventBusPort<
-    | Workouts.Events.WorkoutSetLoggedEventType
     | Workouts.Events.WorkoutSetCorrectedEventType
     | Workouts.Events.WorkoutSetRemovedEventType
     | Workouts.Events.WorkoutExerciseRemovedEventType
@@ -20,10 +19,6 @@ type Dependencies = {
 
 export class StatsExerciseSetsProjector {
   constructor(deps: Dependencies) {
-    deps.EventBus.on(
-      Workouts.Events.WORKOUT_SET_LOGGED_EVENT,
-      deps.EventHandler.handle(this.onWorkoutSetLoggedEvent.bind(this)),
-    );
     deps.EventBus.on(
       Workouts.Events.WORKOUT_SET_CORRECTED_EVENT,
       deps.EventHandler.handle(this.onWorkoutSetCorrectedEvent.bind(this)),
@@ -50,19 +45,6 @@ export class StatsExerciseSetsProjector {
     );
   }
 
-  async onWorkoutSetLoggedEvent(event: Workouts.Events.WorkoutSetLoggedEventType) {
-    await db.insert(Schema.statsExerciseSets).values({
-      id: event.payload.loggedSet.id,
-      userId: event.payload.requesterId,
-      exerciseId: event.payload.exerciseId,
-      workoutId: event.payload.workoutId,
-      workoutExerciseId: event.payload.workoutExerciseId,
-      reps: event.payload.loggedSet.reps,
-      load: event.payload.loggedSet.load,
-      loggedAt: event.createdAt,
-    });
-  }
-
   async onWorkoutSetCorrectedEvent(event: Workouts.Events.WorkoutSetCorrectedEventType) {
     await db
       .update(Schema.statsExerciseSets)
@@ -83,10 +65,29 @@ export class StatsExerciseSetsProjector {
   }
 
   async onWorkoutCompletedEvent(event: Workouts.Events.WorkoutCompletedEventType) {
+    const loggedSets = await db
+      .select({
+        id: Schema.workoutLoggedSets.id,
+        userId: Schema.workoutLoggedSets.userId,
+        exerciseId: Schema.workoutExercises.exerciseId,
+        workoutId: Schema.workoutLoggedSets.workoutId,
+        workoutExerciseId: Schema.workoutLoggedSets.workoutExerciseId,
+        reps: Schema.workoutLoggedSets.reps,
+        load: Schema.workoutLoggedSets.load,
+        loggedAt: Schema.workoutLoggedSets.createdAt,
+      })
+      .from(Schema.workoutLoggedSets)
+      .innerJoin(
+        Schema.workoutExercises,
+        eq(Schema.workoutExercises.id, Schema.workoutLoggedSets.workoutExerciseId),
+      )
+      .where(eq(Schema.workoutLoggedSets.workoutId, event.payload.workoutId));
+
+    if (loggedSets.length === 0) return;
+
     await db
-      .update(Schema.statsExerciseSets)
-      .set({ completedAt: event.createdAt })
-      .where(eq(Schema.statsExerciseSets.workoutId, event.payload.workoutId));
+      .insert(Schema.statsExerciseSets)
+      .values(loggedSets.map((loggedSet) => ({ ...loggedSet, completedAt: event.createdAt })));
   }
 
   async onWorkoutDiscardedEvent(event: Workouts.Events.WorkoutDiscardedEventType) {
