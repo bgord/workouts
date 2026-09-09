@@ -342,6 +342,7 @@ modules/
     │   ├── get-workout-draft-for-owner-count.ts
     │   ├── get-workout-in-progress-for-owner-count.ts
     │   ├── get-workout.ts
+    │   ├── list-exercise-performances.ts
     │   ├── list-exercise-sets.ts
     │   └── list-workouts.ts
     └── value-objects
