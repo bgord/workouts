@@ -319,6 +319,23 @@ export const heaviestExerciseSet = {
   createdAt: T0.ms,
 };
 
+export const exercisePerformance = {
+  workoutId,
+  performedAt: T0.ms,
+  sets: [
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 1),
+      reps: v.parse(Workouts.VO.Reps, 5),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    },
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 2),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    },
+  ],
+};
+
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   sets,
   reps: v.parse(Workouts.VO.Reps, 9),

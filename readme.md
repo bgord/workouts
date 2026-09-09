@@ -265,6 +265,7 @@ modules/
 │   │   └── one-rep-estimator.port.ts
 │   ├── services
 │   │   ├── exercise-one-rep-max-estimator.ts
+│   │   ├── exercise-performance-calculator.ts
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
