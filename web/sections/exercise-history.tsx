@@ -15,88 +15,84 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
 
   return (
     <ul data-gap="3" data-stack="y">
-      {performances.map((performance, index) => {
-        const previous = performances[index + 1];
+      {performances.map((performance, index) => (
+        <li className="c-card" key={performance.workoutId}>
+          <div className="c-card-header">
+            <Link
+              className="c-card-title"
+              data-cross="center"
+              data-gap="1"
+              data-hover-color="brand-300"
+              data-stack="x"
+              params={{ workoutId: performance.workoutId }}
+              search={WorkoutHistoryFilters.default}
+              to="/workouts/$workoutId"
+            >
+              {DateFormat.dayWithTime(language, DateFormat.zoned(performance.performedAt))}
 
-        return (
-          <li className="c-card" key={performance.workoutId}>
-            <div className="c-card-header">
-              <Link
-                className="c-card-title"
+              <ChevronRight data-size="sm" />
+            </Link>
+          </div>
+
+          <ul data-gap="0" data-stack="y">
+            {performance.sets.map((set, index) => (
+              <li
+                data-bct={index > 0 ? "alpha-subtle" : undefined}
+                data-bst={index > 0 ? "solid" : undefined}
+                data-bwt={index > 0 ? "hairline" : undefined}
                 data-cross="center"
-                data-gap="1"
-                data-hover-color="brand-300"
+                data-gap="3"
+                data-py="2"
                 data-stack="x"
-                params={{ workoutId: performance.workoutId }}
-                search={WorkoutHistoryFilters.default}
-                to="/workouts/$workoutId"
+                key={set.setNumber}
               >
-                {DateFormat.dayWithTime(language, DateFormat.zoned(performance.performedAt))}
+                <div className="c-badge" data-variant="outline">
+                  {set.setNumber}
+                </div>
 
-                <ChevronRight data-size="sm" />
-              </Link>
-            </div>
-
-            <ul data-gap="0" data-stack="y">
-              {performance.sets.map((set, index) => (
-                <li
-                  data-bct={index > 0 ? "alpha-subtle" : undefined}
-                  data-bst={index > 0 ? "solid" : undefined}
-                  data-bwt={index > 0 ? "hairline" : undefined}
-                  data-cross="center"
-                  data-gap="3"
-                  data-py="2"
-                  data-stack="x"
-                  key={set.setNumber}
-                >
-                  <div className="c-badge" data-variant="outline">
-                    {set.setNumber}
-                  </div>
-
-                  <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
-                    {t("workout.exercise.logged_set", {
-                      load: WeightFormat.kilograms(set.load),
-                      reps: set.reps,
-                    })}
-                  </div>
-
-                  <div data-color="neutral-500" data-fs="xs">
-                    {t("statistics.exercise.one_rep_max_estimate.value", {
-                      load: WeightFormat.kilograms(set.estimate),
-                    })}
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <div data-cross="center" data-gap="2" data-main="between" data-mt="1" data-stack="x">
-              <div className="c-badge" data-gap="1-5" data-px="2-5" data-py="1" data-variant="outline">
-                <Sigma data-color="neutral-500" data-size="xs" />
-
-                <span data-color="neutral-100" data-fw="bold">
-                  {t("statistics.exercise.history.volume_load.value", {
-                    load: WeightFormat.kilograms(performance.volume),
+                <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
+                  {t("workout.exercise.logged_set", {
+                    load: WeightFormat.kilograms(set.load),
+                    reps: set.reps,
                   })}
-                </span>
+                </div>
 
-                <DeltaKg current={performance.volume} previous={previous?.volume} />
-              </div>
-
-              <div className="c-badge" data-gap="1-5" data-px="2-5" data-py="1" data-variant="outline">
-                <EqualApproximately data-color="neutral-500" data-size="xs" />
-
-                <span data-color="neutral-100" data-fw="bold">
+                <div data-color="neutral-500" data-fs="xs">
                   {t("statistics.exercise.one_rep_max_estimate.value", {
-                    load: WeightFormat.kilograms(performance.bestEstimate),
+                    load: WeightFormat.kilograms(set.estimate),
                   })}
-                </span>
+                </div>
+              </li>
+            ))}
+          </ul>
 
-                <DeltaKg current={performance.bestEstimate} previous={previous?.bestEstimate} />
-              </div>
+          <div data-cross="center" data-gap="2" data-main="between" data-mt="1" data-stack="x">
+            <div className="c-badge" data-gap="1-5" data-px="2-5" data-py="1" data-variant="outline">
+              <Sigma data-color="neutral-500" data-size="xs" />
+
+              <span data-color="neutral-100" data-fw="bold">
+                {t("statistics.exercise.history.volume_load.value", {
+                  load: WeightFormat.kilograms(performance.volume),
+                })}
+              </span>
+
+              <DeltaKg current={performance.volume} previous={performances[index + 1]?.volume} />
             </div>
-          </li>
-        );
-      })}
+
+            <div className="c-badge" data-gap="1-5" data-px="2-5" data-py="1" data-variant="outline">
+              <EqualApproximately data-color="neutral-500" data-size="xs" />
+
+              <span data-color="neutral-100" data-fw="bold">
+                {t("statistics.exercise.one_rep_max_estimate.value", {
+                  load: WeightFormat.kilograms(performance.bestEstimate),
+                })}
+              </span>
+
+              <DeltaKg current={performance.bestEstimate} previous={performances[index + 1]?.bestEstimate} />
+            </div>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }
