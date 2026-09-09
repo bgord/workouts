@@ -37,7 +37,6 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
 });
 
-// fallow-ignore-file unused-export
 export const dashboardRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
