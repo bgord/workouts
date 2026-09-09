@@ -12,6 +12,7 @@ const exerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 5),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  createdAt: mocks.T0.ms,
 };
 
 const anotherExerciseSet = {
@@ -19,6 +20,7 @@ const anotherExerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 10),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+  createdAt: mocks.T0.ms,
 };
 
 const heaviestExerciseSet = {
@@ -26,6 +28,7 @@ const heaviestExerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 1),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+  createdAt: mocks.T0.ms,
 };
 
 describe("ExerciseOneRepMaxEstimator", async () => {

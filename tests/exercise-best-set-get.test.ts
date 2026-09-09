@@ -14,6 +14,7 @@ const exerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 5),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  createdAt: mocks.T0.ms,
 };
 
 describe(`GET ${url}`, async () => {
@@ -38,7 +39,13 @@ describe(`GET ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(json).toEqual({
-      bestSet: { id: mocks.loggedSetId, workoutId: mocks.workoutId, reps: 5, load: 90000 },
+      bestSet: {
+        id: mocks.loggedSetId,
+        workoutId: mocks.workoutId,
+        reps: 5,
+        load: 90000,
+        createdAt: mocks.T0.ms,
+      },
     });
   });
 

@@ -11,6 +11,7 @@ const exerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 5),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  createdAt: mocks.T0.ms,
 };
 
 const heavierExerciseSet = {
@@ -18,6 +19,7 @@ const heavierExerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 3),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+  createdAt: mocks.T0.ms,
 };
 
 const repeatedExerciseSet = {
@@ -25,6 +27,7 @@ const repeatedExerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 8),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  createdAt: mocks.T0.ms,
 };
 
 const tiedExerciseSet = {
@@ -32,6 +35,7 @@ const tiedExerciseSet = {
   workoutId: mocks.workoutId,
   reps: v.parse(Workouts.VO.Reps, 5),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  createdAt: mocks.T0.ms,
 };
 
 describe("ExerciseBestSetPicker", async () => {
