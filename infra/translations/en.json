@@ -144,6 +144,7 @@
   "statistics.exercise.best_set": "Best set",
   "statistics.exercise.best_set.value": "{{load}} kg × {{reps}}",
   "statistics.exercise.one_rep_max_estimate": "Estimated 1RM",
+  "statistics.exercise.one_rep_max_estimate.set": "from {{load}} kg × {{reps}}",
   "statistics.exercise.one_rep_max_estimate.value": "{{load}} kg",
   "workout.complete.blocked.no_logged_sets": "Log at least one set first",
   "workout.complete.cta": "Complete",

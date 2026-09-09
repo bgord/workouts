@@ -9,7 +9,7 @@ import { ExerciseBestSet, ExerciseOneRepMaxEstimate } from "../sections";
 
 export function Exercise() {
   const t = useTranslations();
-  const { exercise, oneRepMaxEstimate, bestSet } = exerciseRoute.useLoaderData();
+  const { exercise, oneRepMax, bestSet } = exerciseRoute.useLoaderData();
 
   if (!exercise) {
     return (
@@ -56,7 +56,7 @@ export function Exercise() {
         <ExerciseImage exercise={exercise} size={ExerciseImageSize.lg} />
 
         <div data-gap="3" data-stack="x">
-          <ExerciseOneRepMaxEstimate estimate={oneRepMaxEstimate} />
+          <ExerciseOneRepMaxEstimate oneRepMax={oneRepMax} />
 
           <ExerciseBestSet bestSet={bestSet} />
         </div>

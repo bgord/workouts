@@ -2,11 +2,11 @@ import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Medal } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExerciseBestSet as ExerciseBestSetType } from "../api";
+import type { ExerciseSet } from "../api";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
-export function ExerciseBestSet(props: { bestSet: ExerciseBestSetType | null }) {
+export function ExerciseBestSet(props: { bestSet: ExerciseSet | null }) {
   const t = useTranslations();
 
   if (!props.bestSet) return null;

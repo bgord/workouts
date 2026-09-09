@@ -144,6 +144,7 @@
   "statistics.exercise.best_set": "Najlepsza seria",
   "statistics.exercise.best_set.value": "{{load}} kg × {{reps}}",
   "statistics.exercise.one_rep_max_estimate": "Szacowany ciężar maksymalny",
+  "statistics.exercise.one_rep_max_estimate.set": "z {{load}} kg × {{reps}}",
   "statistics.exercise.one_rep_max_estimate.value": "{{load}} kg",
   "workout.complete.blocked.no_logged_sets": "Najpierw zapisz przynajmniej jedną serię",
   "workout.complete.cta": "Zakończ",
