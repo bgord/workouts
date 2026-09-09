@@ -1,8 +1,6 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
-
-export type ExerciseSet = { id: string; workoutId: string; reps: number; load: number };
-
-export type ExerciseOneRepMax = { set: ExerciseSet; estimate: number };
+import type { ExerciseOneRepMaxEstimate } from "../../modules/statistics/services";
+import type { ExerciseSet } from "../../modules/workouts/open-host-queries";
 
 export class Statistics {
   static async getExerciseBestSet(
@@ -23,10 +21,28 @@ export class Statistics {
     return result?.bestSet ?? null;
   }
 
+  static async getExerciseSets(
+    request: Request | null,
+    params: { exerciseId: string },
+  ): Promise<Array<ExerciseSet>> {
+    const BASE = `/api/statistics/exercises/${params.exerciseId}/sets`;
+
+    const url = absoluteUrl(BASE, request);
+    const headers = request ? { cookie: Cookies.extractFrom(request) } : undefined;
+
+    const response = await fetch(url, { headers, credentials: "include" });
+
+    if (!response?.ok) return [];
+
+    const result = await response.json().catch(() => null);
+
+    return result?.sets ?? [];
+  }
+
   static async getExerciseOneRepMax(
     request: Request | null,
     params: { exerciseId: string },
-  ): Promise<ExerciseOneRepMax | null> {
+  ): Promise<ExerciseOneRepMaxEstimate | null> {
     const BASE = `/api/statistics/exercises/${params.exerciseId}/one-rep-max-estimate`;
 
     const url = absoluteUrl(BASE, request);

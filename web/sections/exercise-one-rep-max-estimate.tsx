@@ -4,23 +4,20 @@ import { Trophy } from "lucide-react";
 import { DateFormat } from "../../app/services/date-format";
 import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExerciseOneRepMax } from "../api";
+import type { ExerciseOneRepMaxEstimate } from "../../modules/statistics/services";
 
-export function ExerciseOneRepMaxEstimate(props: { oneRepMax: ExerciseOneRepMax | null }) {
+export function ExerciseOneRepMaxEstimate(props: ExerciseOneRepMaxEstimate) {
   const t = useTranslations();
   const language = useLanguage();
-
-  if (!props.oneRepMax) return null;
 
   return (
     <Link
       className="c-card"
       data-cross="center"
       data-gap="3"
-      data-grow="1"
       data-hover-bc="brand-500"
       data-stack="x"
-      params={{ workoutId: props.oneRepMax.set.workoutId }}
+      params={{ workoutId: props.set.workoutId }}
       search={WorkoutHistoryFilters.default}
       to="/workouts/$workoutId"
     >
@@ -42,12 +39,12 @@ export function ExerciseOneRepMaxEstimate(props: { oneRepMax: ExerciseOneRepMax 
 
         <div data-color="neutral-0" data-fs="2xl" data-fw="bold" data-lh="tight">
           {t("statistics.exercise.one_rep_max_estimate.value", {
-            load: WeightFormat.kilograms(props.oneRepMax.estimate),
+            load: WeightFormat.kilograms(props.estimate),
           })}
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {DateFormat.dayWithTime(language, DateFormat.zoned(props.oneRepMax.set.createdAt))}
+          {DateFormat.dayWithTime(language, DateFormat.zoned(props.set.createdAt))}
         </div>
       </div>
     </Link>
