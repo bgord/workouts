@@ -3,33 +3,8 @@ import { describe, expect, spyOn, test } from "bun:test";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Statistics from "+statistics";
-import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
-
-const exerciseSet = {
-  id: mocks.loggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 5),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
-  createdAt: mocks.T0.ms,
-};
-
-const anotherExerciseSet = {
-  id: mocks.anotherLoggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 10),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-  createdAt: mocks.T0.ms,
-};
-
-const heaviestExerciseSet = {
-  id: mocks.anotherLoggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 1),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
-  createdAt: mocks.T0.ms,
-};
 
 describe("ExerciseOneRepMaxEstimator", async () => {
   const di = await bootstrap();
@@ -43,13 +18,13 @@ describe("ExerciseOneRepMaxEstimator", async () => {
 
   test("happy path", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
-      exerciseSet,
-      anotherExerciseSet,
+      mocks.exerciseSet,
+      mocks.anotherExerciseSet,
     ]);
 
     expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual({
-      set: anotherExerciseSet,
-      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 106667),
+      set: mocks.anotherExerciseSet,
+      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120000),
     });
   });
 
@@ -60,23 +35,25 @@ describe("ExerciseOneRepMaxEstimator", async () => {
   });
 
   test("single set", async () => {
-    using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([exerciseSet]);
+    using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
+      mocks.exerciseSet,
+    ]);
 
     expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual({
-      set: exerciseSet,
+      set: mocks.exerciseSet,
       estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 105000),
     });
   });
 
   test("estimate wins over load", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
-      heaviestExerciseSet,
-      anotherExerciseSet,
+      mocks.heaviestExerciseSet,
+      mocks.anotherExerciseSet,
     ]);
 
     expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual({
-      set: anotherExerciseSet,
-      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 106667),
+      set: mocks.anotherExerciseSet,
+      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120000),
     });
   });
 });

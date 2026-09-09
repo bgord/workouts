@@ -1,42 +1,7 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as tools from "@bgord/tools";
-import * as v from "valibot";
 import * as Statistics from "+statistics";
-import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
-
-const exerciseSet = {
-  id: mocks.loggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 5),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
-  createdAt: mocks.T0.ms,
-};
-
-const heavierExerciseSet = {
-  id: mocks.anotherLoggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 3),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
-  createdAt: mocks.T0.ms,
-};
-
-const repeatedExerciseSet = {
-  id: mocks.anotherLoggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 8),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
-  createdAt: mocks.T0.ms,
-};
-
-const tiedExerciseSet = {
-  id: mocks.anotherLoggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 5),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
-  createdAt: mocks.T0.ms,
-};
 
 describe("ExerciseBestSetPicker", async () => {
   const di = await bootstrap();
@@ -47,11 +12,11 @@ describe("ExerciseBestSetPicker", async () => {
 
   test("happy path", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
-      exerciseSet,
-      heavierExerciseSet,
+      mocks.exerciseSet,
+      mocks.heaviestExerciseSet,
     ]);
 
-    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(heavierExerciseSet);
+    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(mocks.heaviestExerciseSet);
   });
 
   test("no sets", async () => {
@@ -61,35 +26,37 @@ describe("ExerciseBestSetPicker", async () => {
   });
 
   test("single set", async () => {
-    using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([exerciseSet]);
+    using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
+      mocks.exerciseSet,
+    ]);
 
-    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(exerciseSet);
+    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(mocks.exerciseSet);
   });
 
   test("load wins over reps", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
-      heavierExerciseSet,
-      repeatedExerciseSet,
+      mocks.heaviestExerciseSet,
+      mocks.anotherExerciseSet,
     ]);
 
-    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(heavierExerciseSet);
+    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(mocks.heaviestExerciseSet);
   });
 
   test("reps break the load tie", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
-      exerciseSet,
-      repeatedExerciseSet,
+      mocks.exerciseSet,
+      mocks.anotherExerciseSet,
     ]);
 
-    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(repeatedExerciseSet);
+    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(mocks.anotherExerciseSet);
   });
 
   test("the earliest set wins", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([
-      exerciseSet,
-      tiedExerciseSet,
+      mocks.exerciseSet,
+      mocks.tiedExerciseSet,
     ]);
 
-    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(exerciseSet);
+    expect(await picker.pick(mocks.userId, mocks.exerciseId)).toEqual(mocks.exerciseSet);
   });
 });

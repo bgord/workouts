@@ -1,21 +1,10 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
-import * as v from "valibot";
-import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
 
 const url = `/api/statistics/exercises/${mocks.exerciseId}/best-set`;
-
-const exerciseSet = {
-  id: mocks.loggedSetId,
-  workoutId: mocks.workoutId,
-  reps: v.parse(Workouts.VO.Reps, 5),
-  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
-  createdAt: mocks.T0.ms,
-};
 
 describe(`GET ${url}`, async () => {
   const di = await bootstrap();
@@ -32,21 +21,15 @@ describe(`GET ${url}`, async () => {
   test("happy path", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([exerciseSet]));
+    spies.use(
+      spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([mocks.exerciseSet]),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({
-      bestSet: {
-        id: mocks.loggedSetId,
-        workoutId: mocks.workoutId,
-        reps: 5,
-        load: 90000,
-        createdAt: mocks.T0.ms,
-      },
-    });
+    expect(json).toEqual({ bestSet: mocks.exerciseSet });
   });
 
   test("happy path - no sets logged", async () => {

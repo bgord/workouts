@@ -1,3 +1,4 @@
+// cSpell:ignore GRIDLINES
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { DateFormat } from "../../app/services/date-format";

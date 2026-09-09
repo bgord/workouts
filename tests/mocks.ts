@@ -295,6 +295,38 @@ export const anotherLoggedSet = v.parse(Workouts.VO.LoggedSet, {
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
 });
 
+export const exerciseSet = {
+  id: loggedSetId,
+  workoutId,
+  reps: v.parse(Workouts.VO.Reps, 5),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  createdAt: T0.ms,
+};
+
+export const anotherExerciseSet = {
+  id: anotherLoggedSetId,
+  workoutId,
+  reps: v.parse(Workouts.VO.Reps, 10),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  createdAt: T0.ms,
+};
+
+export const heaviestExerciseSet = {
+  id: anotherLoggedSetId,
+  workoutId,
+  reps: v.parse(Workouts.VO.Reps, 1),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+  createdAt: T0.ms,
+};
+
+export const tiedExerciseSet = {
+  id: anotherLoggedSetId,
+  workoutId,
+  reps: exerciseSet.reps,
+  load: exerciseSet.load,
+  createdAt: T0.ms,
+};
+
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   sets,
   reps: v.parse(Workouts.VO.Reps, 9),
