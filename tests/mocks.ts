@@ -319,14 +319,6 @@ export const heaviestExerciseSet = {
   createdAt: T0.ms,
 };
 
-export const tiedExerciseSet = {
-  id: anotherLoggedSetId,
-  workoutId,
-  reps: exerciseSet.reps,
-  load: exerciseSet.load,
-  createdAt: T0.ms,
-};
-
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   sets,
   reps: v.parse(Workouts.VO.Reps, 9),

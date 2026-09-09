@@ -141,8 +141,6 @@
   "profile.delete_account.header": "Delete account",
   "profile.delete_account.info": "This action is irreversible",
   "profile.header": "Profile settings",
-  "statistics.exercise.best_set": "Best set",
-  "statistics.exercise.best_set.value": "{{reps}} × {{load}} kg",
   "statistics.exercise.history.volume_load.value": "{{load}} kg",
   "statistics.exercise.one_rep_max_estimate": "Estimated 1RM",
   "statistics.exercise.one_rep_max_estimate.set": "from {{reps}} × {{load}} kg",

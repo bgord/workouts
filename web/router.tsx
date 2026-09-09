@@ -89,7 +89,6 @@ export const exerciseRoute = createRoute({
   loader: async ({ context, params }) => ({
     exercise: await Exercises.get(context.request, params),
     oneRepMax: await Statistics.getExerciseOneRepMax(context.request, params),
-    bestSet: await Statistics.getExerciseBestSet(context.request, params),
     sets: await Statistics.getExerciseSets(context.request, params),
   }),
 });

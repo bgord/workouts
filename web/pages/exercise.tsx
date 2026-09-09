@@ -5,16 +5,11 @@ import { ChevronLeft } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
-import {
-  ExerciseBestSet,
-  ExerciseHistory,
-  ExerciseOneRepMaxEstimate,
-  ExerciseProgressChart,
-} from "../sections";
+import { ExerciseHistory, ExerciseOneRepMaxEstimate, ExerciseProgressChart } from "../sections";
 
 export function Exercise() {
   const t = useTranslations();
-  const { exercise, oneRepMax, bestSet, sets } = exerciseRoute.useLoaderData();
+  const { exercise, oneRepMax, sets } = exerciseRoute.useLoaderData();
 
   if (!exercise) {
     return (
@@ -80,10 +75,7 @@ export function Exercise() {
         </p>
 
         <div data-gap="8" data-mt="8" data-stack="y">
-          <div data-gap="3" data-stack="x">
-            {oneRepMax && <ExerciseOneRepMaxEstimate {...oneRepMax} />}
-            {bestSet && <ExerciseBestSet {...bestSet} />}
-          </div>
+          {oneRepMax && <ExerciseOneRepMaxEstimate {...oneRepMax} />}
 
           <ExerciseProgressChart sets={sets} />
 
