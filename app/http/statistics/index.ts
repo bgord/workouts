@@ -1,2 +1,3 @@
 export * from "./exercise-one-rep-max-estimate-get";
+export * from "./exercise-performances-get";
 export * from "./exercise-sets-get";

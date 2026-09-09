@@ -252,6 +252,18 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     ),
   );
 
+  statistics.get(
+    "/exercises/:exerciseId/performances",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Statistics.ExercisePerformancesGet({
+        ExercisePerformanceCalculator: new Statistics.Services.ExercisePerformanceCalculator({
+          OneRepEstimator,
+          ListExercisePerformances: Adapters.Workouts.ListExercisePerformancesQuery,
+        }),
+      }),
+    ),
+  );
+
   server.route("/statistics", statistics);
 
   // Workouts =================
