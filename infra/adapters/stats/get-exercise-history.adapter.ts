@@ -1,13 +1,12 @@
 import type * as tools from "@bgord/tools";
 import { and, asc, desc, eq, isNotNull, sql } from "drizzle-orm";
-import * as v from "valibot";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import * as Stats from "+stats";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
-type Dependencies = { OneRepMaxEstimator: Stats.Ports.OneRepMaxEstimatorPort };
+type Dependencies = { OneRepMaxCandidates: Stats.Services.OneRepMaxCandidates };
 
 const completedAt = sql<tools.TimestampValueType>`${Schema.statsExerciseSets.completedAt}`;
 
@@ -56,26 +55,13 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
 
     const estimated = logged.map((session) => ({
       ...session,
-      candidates: session.sets
-        .flatMap((set) => {
-          const oneRepMaxEstimate = this.deps.OneRepMaxEstimator.estimate(set);
-
-          if (oneRepMaxEstimate === undefined) return [];
-
-          return [
-            { ...set, workoutId: session.workoutId, completedAt: session.completedAt, oneRepMaxEstimate },
-          ];
-        })
-        .toSorted((one, another) => another.oneRepMaxEstimate - one.oneRepMaxEstimate),
+      candidates: this.deps.OneRepMaxCandidates.from(session),
     }));
 
     const measured = estimated.map(({ candidates, ...session }) => ({
       ...session,
       oneRepMaxEstimate: candidates.at(0)?.oneRepMaxEstimate,
-      volume: v.parse(
-        Stats.VO.Volume,
-        session.sets.reduce((total, set) => total + set.reps * set.load, 0),
-      ),
+      volume: Stats.Services.SessionVolume.calculate(session.sets),
     }));
 
     const sessions = measured.map((session, order) => {
@@ -83,24 +69,19 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
 
       if (previous === undefined) return session;
 
-      const oneRepMaxEstimateDelta =
-        session.oneRepMaxEstimate !== undefined && previous.oneRepMaxEstimate !== undefined
-          ? v.parse(Stats.VO.Delta, session.oneRepMaxEstimate - previous.oneRepMaxEstimate)
-          : undefined;
-
       return {
         ...session,
-        oneRepMaxEstimateDelta,
-        volumeDelta: v.parse(Stats.VO.Delta, session.volume - previous.volume),
+        oneRepMaxEstimateDelta: Stats.Services.DeltaCalculator.between(
+          session.oneRepMaxEstimate,
+          previous.oneRepMaxEstimate,
+        ),
+        volumeDelta: Stats.Services.DeltaCalculator.between(session.volume, previous.volume),
       };
     });
 
     const [estimatedRecord] = estimated
       .flatMap((session) => session.candidates)
-      .toSorted(
-        (one, another) =>
-          another.oneRepMaxEstimate - one.oneRepMaxEstimate || one.completedAt - another.completedAt,
-      );
+      .toSorted((one, another) => Stats.Services.EstimatedRecordOrder.compare(one, another));
 
     return { sessions, record, estimatedRecord };
   }
