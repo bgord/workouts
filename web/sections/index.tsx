@@ -1,3 +1,4 @@
+export * from "./exercise-best-set";
 export * from "./exercise-catalog";
 export * from "./exercise-one-rep-max-estimate";
 export * from "./navigation";

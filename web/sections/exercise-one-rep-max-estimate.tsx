@@ -9,7 +9,7 @@ export function ExerciseOneRepMaxEstimate(props: { estimate: number | null }) {
   if (!props.estimate) return null;
 
   return (
-    <div className="c-card" data-cross="center" data-gap="3" data-mr="auto" data-stack="x">
+    <div className="c-card" data-cross="center" data-gap="3" data-stack="x">
       <Trophy data-color="brand-500" data-size="lg" />
 
       <div data-gap="0" data-stack="y">
