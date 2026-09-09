@@ -143,6 +143,7 @@
   "profile.header": "Ustawienia profilu",
   "statistics.exercise.best_set": "Najlepsza seria",
   "statistics.exercise.best_set.value": "{{reps}} × {{load}} kg",
+  "statistics.exercise.history.volume_load.value": "{{load}} kg",
   "statistics.exercise.one_rep_max_estimate": "Szacowany ciężar maksymalny",
   "statistics.exercise.one_rep_max_estimate.set": "z {{reps}} × {{load}} kg",
   "statistics.exercise.one_rep_max_estimate.value": "{{load}} kg",

@@ -1,6 +1,6 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, EqualApproximately, Sigma } from "lucide-react";
 import { DateFormat } from "../../app/services/date-format";
 import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
@@ -64,6 +64,26 @@ export function ExerciseHistory(props: { sets: Array<ExerciseSetOneRepMaxEstimat
               </li>
             ))}
           </ul>
+
+          <div data-main="between" data-stack="x">
+            <div className="c-badge" data-px="2-5" data-variant="outline">
+              <Sigma data-color="neutral-500" data-size="xs" />
+
+              {t("statistics.exercise.history.volume_load.value", {
+                load: WeightFormat.kilograms(
+                  sets.reduce((total, entry) => total + entry.set.reps * entry.set.load, 0),
+                ),
+              })}
+            </div>
+
+            <div className="c-badge" data-px="2-5" data-variant="outline">
+              <EqualApproximately data-color="neutral-500" data-size="xs" />
+
+              {t("statistics.exercise.one_rep_max_estimate.value", {
+                load: WeightFormat.kilograms(Math.max(...sets.map((entry) => entry.estimate))),
+              })}
+            </div>
+          </div>
         </li>
       ))}
     </ul>
