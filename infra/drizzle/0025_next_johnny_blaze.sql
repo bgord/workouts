@@ -1,1 +1,0 @@
-ALTER TABLE `statisticsExerciseOneRepMaxEstimates` ADD `loggedSetId` text(36) NOT NULL;

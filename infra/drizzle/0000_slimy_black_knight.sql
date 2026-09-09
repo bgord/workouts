@@ -15,6 +15,7 @@ CREATE TABLE `accounts` (
 	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
+CREATE INDEX `accounts_userId_idx` ON `accounts` (`user_id`);--> statement-breakpoint
 CREATE TABLE `events` (
 	`id` text(36) PRIMARY KEY NOT NULL,
 	`correlationId` text NOT NULL,
@@ -23,11 +24,69 @@ CREATE TABLE `events` (
 	`stream` text NOT NULL,
 	`version` integer NOT NULL,
 	`revision` integer DEFAULT 0 NOT NULL,
+	`commit` text NOT NULL,
 	`payload` text NOT NULL
 );
 --> statement-breakpoint
 CREATE INDEX `stream_idx` ON `events` (`stream`);--> statement-breakpoint
 CREATE UNIQUE INDEX `stream_revision_uidx` ON `events` (`stream`,`revision`);--> statement-breakpoint
+CREATE TABLE `exercise_categories` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `exercise_category_assignments` (
+	`exerciseId` text(36) NOT NULL,
+	`exerciseCategoryId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	PRIMARY KEY(`exerciseId`, `exerciseCategoryId`)
+);
+--> statement-breakpoint
+CREATE TABLE `exercises` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`description` text NOT NULL,
+	`image` text NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `planSectionExerciseInstructions` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`planId` text(36) NOT NULL,
+	`planSectionId` text(36) NOT NULL,
+	`exerciseId` text(36) NOT NULL,
+	`sets` integer NOT NULL,
+	`repsMin` integer NOT NULL,
+	`repsMax` integer NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `planSections` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`planId` text(36) NOT NULL,
+	`name` text NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `plans` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`kind` text NOT NULL,
+	`revision` integer DEFAULT 0 NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE `sessions` (
 	`id` text PRIMARY KEY NOT NULL,
 	`expires_at` integer NOT NULL,
@@ -82,4 +141,48 @@ CREATE TABLE `verifications` (
 	`expires_at` integer NOT NULL,
 	`created_at` integer,
 	`updated_at` integer
+);
+--> statement-breakpoint
+CREATE TABLE `workoutExercises` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`workoutId` text(36) NOT NULL,
+	`exerciseId` text(36) NOT NULL,
+	`exerciseName` text NOT NULL,
+	`prescriptionSets` integer NOT NULL,
+	`prescriptionRepsMin` integer NOT NULL,
+	`prescriptionRepsMax` integer NOT NULL,
+	`targetSets` integer,
+	`targetReps` integer,
+	`targetLoad` integer,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `workoutLoggedSets` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`workoutExerciseId` text(36) NOT NULL,
+	`setNumber` integer NOT NULL,
+	`workoutId` text(36) NOT NULL,
+	`reps` integer NOT NULL,
+	`load` integer NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE INDEX `workoutLoggedSets_workoutExerciseId_idx` ON `workoutLoggedSets` (`workoutExerciseId`);--> statement-breakpoint
+CREATE TABLE `workouts` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`planId` text(36) NOT NULL,
+	`planName` text NOT NULL,
+	`planSectionId` text(36) NOT NULL,
+	`planSectionName` text NOT NULL,
+	`scheduledFor` text NOT NULL,
+	`status` text NOT NULL,
+	`completedAt` integer,
+	`note` text,
+	`revision` integer DEFAULT 0 NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
 );
