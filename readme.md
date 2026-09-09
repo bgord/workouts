@@ -266,9 +266,11 @@ modules/
 │   ├── services
 │   │   ├── exercise-best-set-picker.ts
 │   │   ├── exercise-one-rep-max-estimator.ts
+│   │   ├── exercise-set-one-rep-max-estimator.ts
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
+│       ├── exercise-set-one-rep-max-estimate.ts
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts

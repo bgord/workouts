@@ -9,21 +9,16 @@ type ExerciseOneRepMaxEstimatorConfig = {
   ListExerciseSetsOHQ: Workouts.OHQ.ListExerciseSetsOHQ;
 };
 
-export type ExerciseOneRepMaxEstimate = {
-  set: Workouts.OHQ.ExerciseSet;
-  estimate: VO.OneRepMaxEstimateType;
-};
-
 export class ExerciseOneRepMaxEstimator {
   constructor(private readonly config: ExerciseOneRepMaxEstimatorConfig) {}
 
   async estimate(
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
-  ): Promise<ExerciseOneRepMaxEstimate | null> {
+  ): Promise<VO.ExerciseSetOneRepMaxEstimate | null> {
     const sets = await this.config.ListExerciseSetsOHQ.execute(userId, exerciseId);
 
-    let best: ExerciseOneRepMaxEstimate | null = null;
+    let best: VO.ExerciseSetOneRepMaxEstimate | null = null;
 
     for (const set of sets) {
       const estimate = this.config.OneRepEstimator.estimate(set);
