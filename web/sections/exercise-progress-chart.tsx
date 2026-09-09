@@ -1,8 +1,9 @@
-// cSpell:ignore GRIDLINES
+// cSpell:ignore GRIDLINE GRIDLINES
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import { ChartScale } from "../services/chart-scale";
 import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
@@ -10,11 +11,19 @@ const WIDTH = 600;
 const HEIGHT = 200;
 const PADDING = { top: 12, right: 12, bottom: 26, left: 66 };
 
-const PLOT_WIDTH = WIDTH - PADDING.left - PADDING.right;
-const PLOT_HEIGHT = HEIGHT - PADDING.top - PADDING.bottom;
+const PLOT = {
+  top: PADDING.top,
+  right: WIDTH - PADDING.right,
+  bottom: HEIGHT - PADDING.bottom,
+  left: PADDING.left,
+  width: WIDTH - PADDING.left - PADDING.right,
+  height: HEIGHT - PADDING.top - PADDING.bottom,
+};
 
 const MINIMAL_POINTS = 2;
 const GRIDLINES = [0, 0.5, 1];
+const GRIDLINE_LABEL_GAP = 8;
+const DATE_LABEL_BASELINE = HEIGHT - 6;
 
 export function ExerciseProgressChart(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
@@ -22,24 +31,24 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
 
   if (props.performances.length < MINIMAL_POINTS) return null;
 
-  const estimates = props.performances.map((performance) => performance.bestEstimate);
+  const scale = ChartScale.of(props.performances.map((performance) => performance.bestEstimate));
 
-  const lowest = Math.min(...estimates);
-  const highest = Math.max(...estimates);
-  const padding = (highest - lowest) / 10 || highest / 10;
+  const toY = (estimate: number) => PLOT.bottom - scale.ratio(estimate) * PLOT.height;
 
-  const floor = lowest - padding;
-  const ceiling = highest + padding;
+  const gridlines = GRIDLINES.map((ratio) => {
+    const estimate = scale.at(ratio);
 
-  const x = (index: number) => PADDING.left + (index * PLOT_WIDTH) / (props.performances.length - 1);
-  const y = (estimate: number) =>
-    PADDING.top + PLOT_HEIGHT - ((estimate - floor) / (ceiling - floor)) * PLOT_HEIGHT;
+    return { ratio, estimate, y: toY(estimate) };
+  });
 
   const points = props.performances.map((performance, index) => ({
     performance,
-    x: x(index),
-    y: y(performance.bestEstimate),
+    x: PLOT.left + (index * PLOT.width) / (props.performances.length - 1),
+    y: toY(performance.bestEstimate),
   }));
+
+  const first = points[0]!;
+  const last = points.at(-1)!;
 
   return (
     <svg
@@ -48,36 +57,35 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       width="100%"
     >
-      {GRIDLINES.map((ratio) => {
-        const estimate = floor + (ceiling - floor) * ratio;
+      <g data-color="neutral-800" stroke="currentColor">
+        {gridlines.map((gridline) => (
+          <line key={gridline.ratio} x1={PLOT.left} x2={PLOT.right} y1={gridline.y} y2={gridline.y} />
+        ))}
+      </g>
 
-        return (
-          <g key={ratio}>
-            <line
-              data-color="neutral-800"
-              stroke="currentColor"
-              x1={PADDING.left}
-              x2={WIDTH - PADDING.right}
-              y1={y(estimate)}
-              y2={y(estimate)}
-            />
+      <g data-color="neutral-500" fill="currentColor" fontSize="11">
+        {gridlines.map((gridline) => (
+          <text
+            dominantBaseline="middle"
+            key={gridline.ratio}
+            textAnchor="end"
+            x={PLOT.left - GRIDLINE_LABEL_GAP}
+            y={gridline.y}
+          >
+            {t("statistics.exercise.one_rep_max_estimate.value", {
+              load: WeightFormat.kilograms(gridline.estimate),
+            })}
+          </text>
+        ))}
 
-            <text
-              data-color="neutral-500"
-              dominantBaseline="middle"
-              fill="currentColor"
-              fontSize="11"
-              textAnchor="end"
-              x={PADDING.left - 8}
-              y={y(estimate)}
-            >
-              {t("statistics.exercise.one_rep_max_estimate.value", {
-                load: WeightFormat.kilograms(estimate),
-              })}
-            </text>
-          </g>
-        );
-      })}
+        <text x={PLOT.left} y={DATE_LABEL_BASELINE}>
+          {DateFormat.day(language, DateFormat.zoned(first.performance.performedAt))}
+        </text>
+
+        <text textAnchor="end" x={PLOT.right} y={DATE_LABEL_BASELINE}>
+          {DateFormat.day(language, DateFormat.zoned(last.performance.performedAt))}
+        </text>
+      </g>
 
       <polyline
         data-color="brand-400"
@@ -105,21 +113,6 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
           <circle cx={point.x} cy={point.y} fill="currentColor" r="4" />
         </Link>
       ))}
-
-      <text data-color="neutral-500" fill="currentColor" fontSize="11" x={PADDING.left} y={HEIGHT - 6}>
-        {DateFormat.day(language, DateFormat.zoned(props.performances[0]!.performedAt))}
-      </text>
-
-      <text
-        data-color="neutral-500"
-        fill="currentColor"
-        fontSize="11"
-        textAnchor="end"
-        x={WIDTH - PADDING.right}
-        y={HEIGHT - 6}
-      >
-        {DateFormat.day(language, DateFormat.zoned(props.performances.at(-1)!.performedAt))}
-      </text>
     </svg>
   );
 }
