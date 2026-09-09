@@ -535,6 +535,7 @@ infra/
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts
 │   ├── profile-avatars.projector.ts
+│   ├── statistics-exercise-one-rep-max-estimates.projector.ts
 │   ├── workout-exercises.projector.ts
 │   ├── workout-logged-sets.projector.ts
 │   └── workouts.projector.ts
