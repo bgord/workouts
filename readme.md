@@ -263,6 +263,9 @@ modules/
 ├── statistics
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
+│   ├── services
+│   │   ├── one-rep-estimator-brzycki.adapter.ts
+│   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
@@ -462,6 +465,7 @@ infra/
 │   ├── preferences
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
+│   ├── statistics
 │   ├── system
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
