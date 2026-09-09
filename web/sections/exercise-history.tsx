@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { DateFormat } from "../../app/services/date-format";
 import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExerciseSet } from "../../modules/workouts/open-host-queries";
+import type { ExerciseSetOneRepMaxEstimate } from "../../modules/statistics/value-objects/exercise-set-one-rep-max-estimate";
 
 export function ExerciseHistory(props: { sets: Array<ExerciseSet> }) {
   const t = useTranslations();

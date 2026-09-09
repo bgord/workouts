@@ -1,5 +1,5 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
-import type { ExerciseOneRepMaxEstimate } from "../../modules/statistics/services";
+import type { ExerciseSetOneRepMaxEstimate } from "../../modules/statistics/value-objects/exercise-set-one-rep-max-estimate";
 import type { ExerciseSet } from "../../modules/workouts/open-host-queries";
 
 export class Statistics {
@@ -24,7 +24,7 @@ export class Statistics {
   static async getExerciseSets(
     request: Request | null,
     params: { exerciseId: string },
-  ): Promise<Array<ExerciseSet>> {
+  ): Promise<Array<ExerciseSetOneRepMaxEstimate>> {
     const BASE = `/api/statistics/exercises/${params.exerciseId}/sets`;
 
     const url = absoluteUrl(BASE, request);
@@ -36,13 +36,13 @@ export class Statistics {
 
     const result = await response.json().catch(() => null);
 
-    return result?.sets ?? [];
+    return result ?? [];
   }
 
   static async getExerciseOneRepMax(
     request: Request | null,
     params: { exerciseId: string },
-  ): Promise<ExerciseOneRepMaxEstimate | null> {
+  ): Promise<ExerciseSetOneRepMaxEstimate | null> {
     const BASE = `/api/statistics/exercises/${params.exerciseId}/one-rep-max-estimate`;
 
     const url = absoluteUrl(BASE, request);

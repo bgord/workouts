@@ -4,7 +4,7 @@ import { Trophy } from "lucide-react";
 import { DateFormat } from "../../app/services/date-format";
 import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExerciseOneRepMaxEstimate } from "../../modules/statistics/services";
+import type { ExerciseSetOneRepMaxEstimate } from "../../modules/statistics/value-objects/exercise-set-one-rep-max-estimate";
 
 export function ExerciseOneRepMaxEstimate(props: ExerciseOneRepMaxEstimate) {
   const t = useTranslations();

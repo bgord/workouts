@@ -22,6 +22,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   const redactor = new bg.RedactorMask(bg.RedactorMask.DEFAULT_KEYS);
 
+  const OneRepEstimator = new Statistics.Services.OneRepEstimatorEpley({
+    rounding: new tools.RoundingToNearestStrategy(),
+  });
+
   const origin = [localhost, host];
 
   const server = new Hono<infra.Config>()
@@ -231,9 +235,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(
       HTTP.Statistics.ExerciseOneRepMaxEstimateGet({
         ExerciseOneRepMaxEstimator: new Statistics.Services.ExerciseOneRepMaxEstimator({
-          OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley({
-            rounding: new tools.RoundingToNearestStrategy(),
-          }),
+          OneRepEstimator,
           ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery,
         }),
       }),
@@ -254,7 +256,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   statistics.get(
     "/exercises/:exerciseId/sets",
     bg.EndpointHonoAdapter.adapt(
-      HTTP.Statistics.ExerciseSetsGet({ ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery }),
+      HTTP.Statistics.ExerciseSetsGet({
+        ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery,
+        OneRepEstimator,
+      }),
     ),
   );
 

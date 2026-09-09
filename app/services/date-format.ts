@@ -5,6 +5,8 @@ export const DateFormat = {
   zoned: (timestamp: number) =>
     Temporal.Instant.fromEpochMilliseconds(timestamp).toZonedDateTimeISO(Temporal.Now.timeZoneId()),
 
+  day: (language: string, moment: Temporal.ZonedDateTime) => moment.toLocaleString(language, DAY),
+
   dayWithWeekday: (language: string, date: Temporal.PlainDate) =>
     date.toLocaleString(language, { ...DAY, weekday: "short" }),
 
