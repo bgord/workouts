@@ -261,6 +261,8 @@ modules/
 │       ├── profile-avatar-mime-registry.ts
 │       └── profile-avatar-side.ts
 ├── statistics
+│   ├── ports
+│   │   └── one-rep-estimator.port.ts
 │   └── value-objects
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
