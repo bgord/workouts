@@ -251,6 +251,13 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     ),
   );
 
+  statistics.get(
+    "/exercises/:exerciseId/sets",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Statistics.ExerciseSetsGet({ ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery }),
+    ),
+  );
+
   server.route("/statistics", statistics);
 
   // Workouts =================

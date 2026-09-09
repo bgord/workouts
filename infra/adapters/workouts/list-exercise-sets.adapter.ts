@@ -16,6 +16,7 @@ class ListExerciseSetsQueryDrizzle implements Workouts.Queries.ListExerciseSets 
         workoutId: Schema.workoutLoggedSets.workoutId,
         reps: Schema.workoutLoggedSets.reps,
         load: Schema.workoutLoggedSets.load,
+        createdAt: Schema.workoutLoggedSets.createdAt,
       })
       .from(Schema.workoutLoggedSets)
       .innerJoin(
