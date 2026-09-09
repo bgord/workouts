@@ -268,6 +268,7 @@ modules/
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
+│       ├── exercise-performance.ts
 │       ├── exercise-set-one-rep-max-estimate.ts
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
