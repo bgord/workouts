@@ -1,40 +1,49 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, isNotNull } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
-import * as Stats from "+stats";
+import type * as Stats from "+stats";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
-import { performedSets } from "./completed-exercise-sets";
-
-type Dependencies = { OneRepMaxCandidates: Stats.Services.OneRepMaxCandidates };
 
 class GetExerciseEstimatedRecordQueryDrizzle implements Stats.Queries.GetExerciseEstimatedRecord {
-  constructor(private readonly deps: Dependencies) {}
-
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Stats.VO.EstimatedRecord | undefined> {
-    const logged = await db
+    const [session] = await db
       .select({
-        workoutId: Schema.statsExerciseSets.workoutId,
-        completedAt: Schema.statsExerciseSets.completedAt,
-        sets: performedSets,
+        reps: Schema.statsExerciseSessions.oneRepMaxEstimateReps,
+        load: Schema.statsExerciseSessions.oneRepMaxEstimateLoad,
+        workoutId: Schema.statsExerciseSessions.workoutId,
+        completedAt: Schema.statsExerciseSessions.completedAt,
+        oneRepMaxEstimate: Schema.statsExerciseSessions.oneRepMaxEstimate,
       })
-      .from(Schema.statsExerciseSets)
+      .from(Schema.statsExerciseSessions)
       .where(
-        and(eq(Schema.statsExerciseSets.exerciseId, exerciseId), eq(Schema.statsExerciseSets.userId, userId)),
+        and(
+          eq(Schema.statsExerciseSessions.exerciseId, exerciseId),
+          eq(Schema.statsExerciseSessions.userId, userId),
+          isNotNull(Schema.statsExerciseSessions.oneRepMaxEstimate),
+        ),
       )
-      .groupBy(Schema.statsExerciseSets.workoutId)
-      .orderBy(desc(Schema.statsExerciseSets.completedAt));
+      .orderBy(
+        desc(Schema.statsExerciseSessions.oneRepMaxEstimate),
+        asc(Schema.statsExerciseSessions.completedAt),
+      )
+      .limit(1);
 
-    const [estimatedRecord] = logged
-      .flatMap((session) => this.deps.OneRepMaxCandidates.from(session))
-      .toSorted((one, another) => Stats.Services.EstimatedRecordOrder.compare(one, another));
+    if (session === undefined) return undefined;
+    if (session.oneRepMaxEstimate === null) return undefined;
+    if (session.reps === null || session.load === null) return undefined;
 
-    return estimatedRecord;
+    return {
+      reps: session.reps,
+      load: session.load,
+      workoutId: session.workoutId,
+      completedAt: session.completedAt,
+      oneRepMaxEstimate: session.oneRepMaxEstimate,
+    };
   }
 }
 
-export const createGetExerciseEstimatedRecordQuery = (deps: Dependencies) =>
-  new GetExerciseEstimatedRecordQueryDrizzle(deps);
+export const GetExerciseEstimatedRecordQuery = new GetExerciseEstimatedRecordQueryDrizzle();
