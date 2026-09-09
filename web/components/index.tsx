@@ -2,6 +2,7 @@ export * from "./action-hint";
 export * from "./avatar";
 export * from "./button-cancel";
 export * from "./button-close";
+export * from "./delta-kg";
 export * from "./exercise-card";
 export * from "./exercise-image";
 export * from "./language-selector";
