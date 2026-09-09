@@ -470,7 +470,7 @@ infra/
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── statistics
-│   │   ├── get-exercise-one-rep-max.adapter.ts
+│   │   ├── get-exercise-one-rep-max-estimate.adapter.ts
 │   ├── system
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
@@ -499,7 +499,7 @@ infra/
 │       ├── get-workout-draft-for-owner-count.adapter.ts
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
-│       ├── list-logged-sets-for-exercise.adapter.ts
+│       ├── list-exercise-sets.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts

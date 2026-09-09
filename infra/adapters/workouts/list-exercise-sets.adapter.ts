@@ -5,11 +5,11 @@ import type * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
-class ListLoggedSetsForExerciseQueryDrizzle implements Workouts.Queries.ListLoggedSetsForExercise {
+class ListExerciseSetsQueryDrizzle implements Workouts.Queries.ListExerciseSets {
   async execute(
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
-  ): Promise<Array<Workouts.Queries.LoggedSetForExercise>> {
+  ): Promise<Array<Workouts.Queries.ExerciseSet>> {
     return db
       .select({
         id: Schema.workoutLoggedSets.id,
@@ -28,4 +28,4 @@ class ListLoggedSetsForExerciseQueryDrizzle implements Workouts.Queries.ListLogg
   }
 }
 
-export const ListLoggedSetsForExerciseQuery = new ListLoggedSetsForExerciseQueryDrizzle();
+export const ListExerciseSetsQuery = new ListExerciseSetsQueryDrizzle();

@@ -20,9 +20,7 @@ export async function bootstrap() {
   const Exercises = createExercisesAdapters();
   const Plans = createPlansAdapters({ ...System, ...Tools });
   const Workouts = createWorkoutsAdapters({ ...System, ...Tools });
-  const Statistics = createStatisticsAdapters({
-    ListLoggedSetsForExercise: Workouts.ListLoggedSetsForExerciseQuery,
-  });
+  const Statistics = createStatisticsAdapters({ ListExerciseSetsOHQ: Workouts.ListExerciseSetsQuery });
 
   return {
     Env,

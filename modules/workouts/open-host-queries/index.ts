@@ -1,3 +1,3 @@
-import type { ListLoggedSetsForExercise } from "+workouts/queries/list-logged-sets-for-exercise";
+import type { ListExerciseSets } from "+workouts/queries/list-exercise-sets";
 
-export type ListLoggedSetsForExerciseOHQ = ListLoggedSetsForExercise;
+export type ListExerciseSetsOHQ = ListExerciseSets;
