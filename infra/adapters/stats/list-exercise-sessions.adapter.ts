@@ -4,38 +4,36 @@ import type * as Exercises from "+exercises";
 import * as Stats from "+stats";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
-import { performedSets } from "./completed-exercise-sets";
-
-type Dependencies = { OneRepMaxCandidates: Stats.Services.OneRepMaxCandidates };
 
 class ListExerciseSessionsQueryDrizzle implements Stats.Queries.ListExerciseSessions {
-  constructor(private readonly deps: Dependencies) {}
-
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Array<Stats.VO.ExerciseSession>> {
     const sessions = await db
       .select({
-        workoutId: Schema.statsExerciseSets.workoutId,
-        completedAt: Schema.statsExerciseSets.completedAt,
-        sets: performedSets,
+        workoutId: Schema.statsExerciseSessions.workoutId,
+        completedAt: Schema.statsExerciseSessions.completedAt,
+        sets: Schema.statsExerciseSessions.sets,
+        volume: Schema.statsExerciseSessions.volume,
+        oneRepMaxEstimate: Schema.statsExerciseSessions.oneRepMaxEstimate,
       })
-      .from(Schema.statsExerciseSets)
+      .from(Schema.statsExerciseSessions)
       .where(
-        and(eq(Schema.statsExerciseSets.exerciseId, exerciseId), eq(Schema.statsExerciseSets.userId, userId)),
+        and(
+          eq(Schema.statsExerciseSessions.exerciseId, exerciseId),
+          eq(Schema.statsExerciseSessions.userId, userId),
+        ),
       )
-      .groupBy(Schema.statsExerciseSets.workoutId)
-      .orderBy(desc(Schema.statsExerciseSets.completedAt));
+      .orderBy(desc(Schema.statsExerciseSessions.completedAt));
 
-    const sessionsWithMeasurements = sessions.map((session) => ({
+    const measured = sessions.map((session) => ({
       ...session,
-      oneRepMaxEstimate: this.deps.OneRepMaxCandidates.from(session).at(0)?.oneRepMaxEstimate,
-      volume: Stats.Services.SessionVolume.calculate(session.sets),
+      oneRepMaxEstimate: session.oneRepMaxEstimate ?? undefined,
     }));
 
-    return sessionsWithMeasurements.map((session, order) => {
-      const previous = sessionsWithMeasurements.at(order + 1);
+    return measured.map((session, order) => {
+      const previous = measured.at(order + 1);
 
       if (previous === undefined) return session;
 
@@ -51,5 +49,4 @@ class ListExerciseSessionsQueryDrizzle implements Stats.Queries.ListExerciseSess
   }
 }
 
-export const createListExerciseSessionsQuery = (deps: Dependencies) =>
-  new ListExerciseSessionsQueryDrizzle(deps);
+export const ListExerciseSessionsQuery = new ListExerciseSessionsQueryDrizzle();
