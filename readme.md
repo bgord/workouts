@@ -263,6 +263,8 @@ modules/
 ├── statistics
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
+│   ├── queries
+│   │   ├── get-exercise-one-rep-max.ts
 │   ├── services
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
@@ -333,12 +335,14 @@ modules/
     │   ├── workout-scheduled-for-has-changed.ts
     │   ├── workout-scheduled-for-is-not-past.ts
     │   └── workout-scheduled-for-is-within-horizon.ts
+    ├── open-host-queries
     ├── ports
     │   └── workout-repository.ts
     ├── queries
     │   ├── get-workout-draft-for-owner-count.ts
     │   ├── get-workout-in-progress-for-owner-count.ts
     │   ├── get-workout.ts
+    │   ├── list-logged-sets-for-exercise.ts
     │   └── list-workouts.ts
     └── value-objects
         ├── exercise-prescription.ts
@@ -466,6 +470,7 @@ infra/
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── statistics
+│   │   ├── get-exercise-one-rep-max.adapter.ts
 │   ├── system
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
@@ -494,6 +499,7 @@ infra/
 │       ├── get-workout-draft-for-owner-count.adapter.ts
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
+│       ├── list-logged-sets-for-exercise.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
@@ -535,7 +541,6 @@ infra/
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts
 │   ├── profile-avatars.projector.ts
-│   ├── statistics-exercise-one-rep-max-estimates.projector.ts
 │   ├── workout-exercises.projector.ts
 │   ├── workout-logged-sets.projector.ts
 │   └── workouts.projector.ts
