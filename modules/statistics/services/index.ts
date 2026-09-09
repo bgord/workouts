@@ -1,5 +1,4 @@
 // cSpell:ignore epley brzycki
-export * from "./exercise-one-rep-max-estimator";
 export * from "./exercise-performance-calculator";
 export * from "./one-rep-estimator-brzycki.adapter";
 export * from "./one-rep-estimator-epley.adapter";

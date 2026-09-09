@@ -231,28 +231,6 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   statistics.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   statistics.get(
-    "/exercises/:exerciseId/one-rep-max-estimate",
-    bg.EndpointHonoAdapter.adapt(
-      HTTP.Statistics.ExerciseOneRepMaxEstimateGet({
-        ExerciseOneRepMaxEstimator: new Statistics.Services.ExerciseOneRepMaxEstimator({
-          OneRepEstimator,
-          ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery,
-        }),
-      }),
-    ),
-  );
-
-  statistics.get(
-    "/exercises/:exerciseId/sets",
-    bg.EndpointHonoAdapter.adapt(
-      HTTP.Statistics.ExerciseSetsGet({
-        ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery,
-        OneRepEstimator,
-      }),
-    ),
-  );
-
-  statistics.get(
     "/exercises/:exerciseId/performances",
     bg.EndpointHonoAdapter.adapt(
       HTTP.Statistics.ExercisePerformancesGet({

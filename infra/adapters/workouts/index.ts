@@ -4,7 +4,6 @@ import { GetWorkoutQuery } from "./get-workout.adapter";
 import { GetWorkoutDraftForOwnerCountQuery } from "./get-workout-draft-for-owner-count.adapter";
 import { GetWorkoutInProgressForOwnerCountQuery } from "./get-workout-in-progress-for-owner-count.adapter";
 import { ListExercisePerformancesQuery } from "./list-exercise-performances.adapter";
-import { ListExerciseSetsQuery } from "./list-exercise-sets.adapter";
 import { ListWorkoutsQuery } from "./list-workouts.adapter";
 import { createWorkoutRepository } from "./workout-repository.adapter";
 
@@ -21,7 +20,6 @@ export function createWorkoutsAdapters(deps: Dependencies) {
     GetWorkoutDraftForOwnerCountQuery,
     GetWorkoutInProgressForOwnerCountQuery,
     ListExercisePerformancesQuery,
-    ListExerciseSetsQuery,
     ListWorkoutsQuery,
     WorkoutRepository: createWorkoutRepository(deps),
   };

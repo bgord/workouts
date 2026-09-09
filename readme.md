@@ -264,13 +264,11 @@ modules/
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
 │   ├── services
-│   │   ├── exercise-one-rep-max-estimator.ts
 │   │   ├── exercise-performance-calculator.ts
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
 │       ├── exercise-performance.ts
-│       ├── exercise-set-one-rep-max-estimate.ts
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts
@@ -337,7 +335,6 @@ modules/
     │   ├── workout-scheduled-for-has-changed.ts
     │   ├── workout-scheduled-for-is-not-past.ts
     │   └── workout-scheduled-for-is-within-horizon.ts
-    ├── open-host-queries
     ├── ports
     │   └── workout-repository.ts
     ├── queries
@@ -345,7 +342,6 @@ modules/
     │   ├── get-workout-in-progress-for-owner-count.ts
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
-    │   ├── list-exercise-sets.ts
     │   └── list-workouts.ts
     └── value-objects
         ├── exercise-prescription.ts
@@ -416,9 +412,7 @@ app/
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
 │   ├── statistics
-│   │   ├── exercise-one-rep-max-estimate-get.ts
 │   │   ├── exercise-performances-get.ts
-│   │   ├── exercise-sets-get.ts
 │   └── workouts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
@@ -506,7 +500,6 @@ infra/
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts
-│       ├── list-exercise-sets.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
