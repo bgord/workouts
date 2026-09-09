@@ -240,6 +240,17 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     ),
   );
 
+  statistics.get(
+    "/exercises/:exerciseId/best-set",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Statistics.ExerciseBestSetGet({
+        ExerciseBestSetPicker: new Statistics.Services.ExerciseBestSetPicker({
+          ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery,
+        }),
+      }),
+    ),
+  );
+
   server.route("/statistics", statistics);
 
   // Workouts =================
