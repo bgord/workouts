@@ -31,20 +31,7 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({
-      performances: [
-        {
-          workoutId: mocks.workoutId,
-          performedAt: mocks.T0.ms,
-          sets: [
-            { setNumber: 1, reps: 5, load: 90_000, estimate: 105_000 },
-            { setNumber: 2, reps: 10, load: 90_000, estimate: 120_000 },
-          ],
-          volume: 1_350_000,
-          bestEstimate: 120_000,
-        },
-      ],
-    });
+    expect(json).toEqual({ performances: [mocks.calculatedExercisePerformance] });
   });
 
   test("happy path - no performances", async () => {

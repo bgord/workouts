@@ -9,6 +9,7 @@ import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Plans from "+plans";
 import type * as Preferences from "+preferences";
+import * as Statistics from "+statistics";
 import * as Workouts from "+workouts";
 
 // IDs
@@ -310,6 +311,27 @@ export const exercisePerformance = {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
     },
   ],
+};
+
+export const calculatedExercisePerformance = {
+  workoutId,
+  performedAt: T0.ms,
+  sets: [
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 1),
+      reps: v.parse(Workouts.VO.Reps, 5),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 105_000),
+    },
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 2),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
+    },
+  ],
+  volume: v.parse(tools.WeightGrams, 1_350_000),
+  bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
 };
 
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
