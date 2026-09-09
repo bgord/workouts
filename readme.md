@@ -264,7 +264,7 @@ modules/
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
 │   ├── queries
-│   │   ├── get-exercise-one-rep-max.ts
+│   │   ├── get-exercise-one-rep-max-estimate.ts
 │   ├── services
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
