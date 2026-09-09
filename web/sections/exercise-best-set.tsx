@@ -1,13 +1,14 @@
-import { useTranslations } from "@bgord/ui";
+import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Medal } from "lucide-react";
+import { DateFormat } from "../../app/services/date-format";
+import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExerciseSet } from "../api";
 
-const GRAMS_IN_KILOGRAM = 1000;
-
 export function ExerciseBestSet(props: { bestSet: ExerciseSet | null }) {
   const t = useTranslations();
+  const language = useLanguage();
 
   if (!props.bestSet) return null;
 
@@ -16,24 +17,37 @@ export function ExerciseBestSet(props: { bestSet: ExerciseSet | null }) {
       className="c-card"
       data-cross="center"
       data-gap="3"
-      data-hover-color="brand-300"
+      data-hover-bc="brand-500"
       data-stack="x"
       params={{ workoutId: props.bestSet.workoutId }}
       search={WorkoutHistoryFilters.default}
       to="/workouts/$workoutId"
     >
-      <Medal data-color="brand-500" data-size="lg" />
+      <div
+        data-bg="alpha-soft"
+        data-br="circle"
+        data-cross="center"
+        data-main="center"
+        data-p="2"
+        data-stack="x"
+      >
+        <Medal data-color="brand-300" data-size="md" />
+      </div>
 
-      <div data-gap="0" data-stack="y">
-        <div data-color="neutral-400" data-fs="xs" data-fw="medium">
+      <div data-gap="0-5" data-stack="y">
+        <div data-color="neutral-400" data-fs="xs" data-transform="uppercase">
           {t("statistics.exercise.best_set")}
         </div>
 
-        <div data-color="neutral-0" data-fs="xl" data-fw="bold">
+        <div data-color="neutral-0" data-fs="2xl" data-fw="bold" data-lh="tight">
           {t("statistics.exercise.best_set.value", {
-            load: props.bestSet.load / GRAMS_IN_KILOGRAM,
+            load: WeightFormat.kilograms(props.bestSet.load),
             reps: props.bestSet.reps,
           })}
+        </div>
+
+        <div data-color="neutral-500" data-fs="xs">
+          {DateFormat.dayWithTime(language, DateFormat.zoned(props.bestSet.createdAt))}
         </div>
       </div>
     </Link>
