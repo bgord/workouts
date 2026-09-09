@@ -264,6 +264,7 @@ modules/
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
 │   ├── services
+│   │   ├── exercise-best-set-picker.ts
 │   │   ├── exercise-one-rep-max-estimator.ts
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
@@ -412,6 +413,7 @@ app/
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
 │   ├── statistics
+│   │   ├── exercise-best-set-get.ts
 │   │   ├── exercise-one-rep-max-estimate-get.ts
 │   └── workouts
 │       ├── workout-complete.ts
