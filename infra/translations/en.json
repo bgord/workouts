@@ -141,6 +141,8 @@
   "profile.delete_account.header": "Delete account",
   "profile.delete_account.info": "This action is irreversible",
   "profile.header": "Profile settings",
+  "statistics.exercise.one_rep_max_estimate": "Estimated 1RM",
+  "statistics.exercise.one_rep_max_estimate.value": "{{load}} kg",
   "workout.complete.blocked.no_logged_sets": "Log at least one set first",
   "workout.complete.cta": "Complete",
   "workout.complete.error": "Could not complete the workout",

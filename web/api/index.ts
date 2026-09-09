@@ -3,4 +3,5 @@ export * from "./avatar.api";
 export * from "./exercises.api";
 export * from "./i18n.api";
 export * from "./plans.api";
+export * from "./statistics.api";
 export * from "./workouts.api";

@@ -1,4 +1,5 @@
 export * from "./exercise-catalog";
+export * from "./exercise-one-rep-max-estimate";
 export * from "./navigation";
 export * from "./plan-archive";
 export * from "./plan-create";
