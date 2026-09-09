@@ -40,7 +40,7 @@ describe(`GET ${url}`, async () => {
             { setNumber: 1, reps: 5, load: 90_000, estimate: 105_000 },
             { setNumber: 2, reps: 10, load: 90_000, estimate: 120_000 },
           ],
-          load: 1_350_000,
+          volume: 1_350_000,
           bestEstimate: 120_000,
         },
       ],

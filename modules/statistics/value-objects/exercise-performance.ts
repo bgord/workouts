@@ -11,6 +11,6 @@ export type ExercisePerformance = {
     load: Workouts.VO.LoadType;
     estimate: VO.OneRepMaxEstimateType;
   }>;
-  load: tools.WeightGramsType;
+  volume: tools.WeightGramsType;
   bestEstimate: VO.OneRepMaxEstimateType;
 };

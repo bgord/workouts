@@ -75,11 +75,11 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
 
                 <span data-color="neutral-100" data-fw="bold">
                   {t("statistics.exercise.history.volume_load.value", {
-                    load: WeightFormat.kilograms(performance.load),
+                    load: WeightFormat.kilograms(performance.volume),
                   })}
                 </span>
 
-                <DeltaKg current={performance.load} previous={previous?.load} />
+                <DeltaKg current={performance.volume} previous={previous?.volume} />
               </div>
 
               <div className="c-badge" data-gap="1-5" data-px="2-5" data-py="1" data-variant="outline">

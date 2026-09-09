@@ -29,7 +29,7 @@ export class ExercisePerformanceCalculator {
       return {
         ...performance,
         sets,
-        load: v.parse(
+        volume: v.parse(
           tools.WeightGrams,
           sets.reduce((total, set) => total + set.reps * set.load, 0),
         ),

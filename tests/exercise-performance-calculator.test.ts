@@ -38,7 +38,7 @@ describe("ExercisePerformanceCalculator", async () => {
             estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
           },
         ],
-        load: v.parse(tools.WeightGrams, 1_350_000),
+        volume: v.parse(tools.WeightGrams, 1_350_000),
         bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
       },
     ]);
