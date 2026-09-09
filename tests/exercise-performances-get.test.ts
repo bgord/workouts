@@ -19,7 +19,7 @@ describe(`GET ${url}`, async () => {
   });
 
   test("happy path", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Workouts.ListExercisePerformancesQuery, "execute").mockResolvedValue([
@@ -35,7 +35,7 @@ describe(`GET ${url}`, async () => {
   });
 
   test("happy path - no performances", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(spyOn(di.Adapters.Workouts.ListExercisePerformancesQuery, "execute").mockResolvedValue([]));
 
