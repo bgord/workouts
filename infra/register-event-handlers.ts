@@ -5,8 +5,11 @@ import type { BootstrapType } from "+infra/bootstrap";
 import type { EnvironmentResultType } from "+infra/env";
 import * as Projections from "+infra/projections";
 
-export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, Tools }: BootstrapType) {
-  const deps = { ...Adapters.System, ...Tools };
+export function registerEventHandlers(
+  _Env: EnvironmentResultType,
+  { Adapters, Services, Tools }: BootstrapType,
+) {
+  const deps = { ...Adapters.System, ...Services, ...Tools };
 
   // Projections
   new Projections.PreferencesProjector(deps);
