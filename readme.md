@@ -262,6 +262,7 @@ modules/
 │       └── profile-avatar-side.ts
 ├── statistics
 │   └── value-objects
+│       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts
     ├── aggregates
