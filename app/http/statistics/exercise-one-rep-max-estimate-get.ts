@@ -13,7 +13,7 @@ export const ExerciseOneRepMaxEstimateGet =
 
     const exerciseId = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
 
-    const estimate = await deps.ExerciseOneRepMaxEstimator.estimate(userId, exerciseId);
+    const oneRepMax = await deps.ExerciseOneRepMaxEstimator.estimate(userId, exerciseId);
 
-    return Response.json({ estimate });
+    return Response.json({ oneRepMax });
   };

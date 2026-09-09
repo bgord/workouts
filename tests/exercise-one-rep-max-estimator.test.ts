@@ -44,9 +44,10 @@ describe("ExerciseOneRepMaxEstimator", async () => {
       anotherExerciseSet,
     ]);
 
-    expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual(
-      v.parse(Statistics.VO.OneRepMaxEstimate, 106667),
-    );
+    expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual({
+      set: anotherExerciseSet,
+      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 106667),
+    });
   });
 
   test("no sets", async () => {
@@ -58,9 +59,10 @@ describe("ExerciseOneRepMaxEstimator", async () => {
   test("single set", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExerciseSetsQuery, "execute").mockResolvedValue([exerciseSet]);
 
-    expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual(
-      v.parse(Statistics.VO.OneRepMaxEstimate, 105000),
-    );
+    expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual({
+      set: exerciseSet,
+      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 105000),
+    });
   });
 
   test("estimate wins over load", async () => {
@@ -69,8 +71,9 @@ describe("ExerciseOneRepMaxEstimator", async () => {
       anotherExerciseSet,
     ]);
 
-    expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual(
-      v.parse(Statistics.VO.OneRepMaxEstimate, 106667),
-    );
+    expect(await estimator.estimate(mocks.userId, mocks.exerciseId)).toEqual({
+      set: anotherExerciseSet,
+      estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 106667),
+    });
   });
 });

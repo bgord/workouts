@@ -37,7 +37,12 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ estimate: 105000 });
+    expect(json).toEqual({
+      oneRepMax: {
+        set: { id: mocks.loggedSetId, workoutId: mocks.workoutId, reps: 5, load: 90000 },
+        estimate: 105000,
+      },
+    });
   });
 
   test("happy path - no sets logged", async () => {
@@ -49,6 +54,6 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ estimate: null });
+    expect(json).toEqual({ oneRepMax: null });
   });
 });
