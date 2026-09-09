@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { DateFormat } from "../../app/services/date-format";
 import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExerciseSetOneRepMaxEstimate } from "../../modules/statistics/value-objects/exercise-set-one-rep-max-estimate";
+import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 
 const WIDTH = 600;
 const HEIGHT = 200;
@@ -16,13 +16,13 @@ const PLOT_HEIGHT = HEIGHT - PADDING.top - PADDING.bottom;
 const MINIMAL_POINTS = 2;
 const GRIDLINES = [0, 0.5, 1];
 
-export function ExerciseProgressChart(props: { sets: Array<ExerciseSetOneRepMaxEstimate> }) {
+export function ExerciseProgressChart(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
   const language = useLanguage();
 
-  if (props.sets.length < MINIMAL_POINTS) return null;
+  if (props.performances.length < MINIMAL_POINTS) return null;
 
-  const estimates = props.sets.map((entry) => entry.estimate);
+  const estimates = props.performances.map((performance) => performance.bestEstimate);
 
   const lowest = Math.min(...estimates);
   const highest = Math.max(...estimates);
@@ -31,14 +31,14 @@ export function ExerciseProgressChart(props: { sets: Array<ExerciseSetOneRepMaxE
   const floor = lowest - padding;
   const ceiling = highest + padding;
 
-  const x = (index: number) => PADDING.left + (index * PLOT_WIDTH) / (props.sets.length - 1);
+  const x = (index: number) => PADDING.left + (index * PLOT_WIDTH) / (props.performances.length - 1);
   const y = (estimate: number) =>
     PADDING.top + PLOT_HEIGHT - ((estimate - floor) / (ceiling - floor)) * PLOT_HEIGHT;
 
-  const points = props.sets.map((entry, index) => ({
-    entry,
+  const points = props.performances.map((performance, index) => ({
+    performance,
     x: x(index),
-    y: y(entry.estimate),
+    y: y(performance.bestEstimate),
   }));
 
   return (
@@ -90,15 +90,15 @@ export function ExerciseProgressChart(props: { sets: Array<ExerciseSetOneRepMaxE
       {points.map((point) => (
         <Link
           data-color="brand-300"
-          key={point.entry.set.id}
-          params={{ workoutId: point.entry.set.workoutId }}
+          key={point.performance.workoutId}
+          params={{ workoutId: point.performance.workoutId }}
           search={WorkoutHistoryFilters.default}
           to="/workouts/$workoutId"
         >
           <title>
             {t("statistics.exercise.progress.point", {
-              date: DateFormat.dayWithTime(language, DateFormat.zoned(point.entry.set.createdAt)),
-              load: WeightFormat.kilograms(point.entry.estimate),
+              date: DateFormat.dayWithTime(language, DateFormat.zoned(point.performance.performedAt)),
+              load: WeightFormat.kilograms(point.performance.bestEstimate),
             })}
           </title>
 
@@ -107,7 +107,7 @@ export function ExerciseProgressChart(props: { sets: Array<ExerciseSetOneRepMaxE
       ))}
 
       <text data-color="neutral-500" fill="currentColor" fontSize="11" x={PADDING.left} y={HEIGHT - 6}>
-        {DateFormat.day(language, DateFormat.zoned(props.sets[0]?.set.createdAt ?? 0))}
+        {DateFormat.day(language, DateFormat.zoned(props.performances[0]!.performedAt))}
       </text>
 
       <text
@@ -118,7 +118,7 @@ export function ExerciseProgressChart(props: { sets: Array<ExerciseSetOneRepMaxE
         x={WIDTH - PADDING.right}
         y={HEIGHT - 6}
       >
-        {DateFormat.day(language, DateFormat.zoned(props.sets.at(-1)?.set.createdAt ?? 0))}
+        {DateFormat.day(language, DateFormat.zoned(props.performances.at(-1)!.performedAt))}
       </text>
     </svg>
   );

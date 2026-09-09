@@ -3,10 +3,16 @@ import { Link } from "@tanstack/react-router";
 import { Trophy } from "lucide-react";
 import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExerciseSetOneRepMaxEstimate } from "../../modules/statistics/value-objects/exercise-set-one-rep-max-estimate";
+import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 
-export function ExerciseOneRepMaxEstimate(props: ExerciseSetOneRepMaxEstimate) {
+export function ExerciseOneRepMaxEstimate(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
+
+  const best = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
+
+  if (!best) return null;
+
+  const set = best.sets.toSorted((a, b) => b.estimate - a.estimate)[0]!;
 
   return (
     <Link
@@ -15,7 +21,7 @@ export function ExerciseOneRepMaxEstimate(props: ExerciseSetOneRepMaxEstimate) {
       data-gap="3"
       data-hover-bc="brand-500"
       data-stack="x"
-      params={{ workoutId: props.set.workoutId }}
+      params={{ workoutId: best.workoutId }}
       search={WorkoutHistoryFilters.default}
       to="/workouts/$workoutId"
     >
@@ -37,14 +43,14 @@ export function ExerciseOneRepMaxEstimate(props: ExerciseSetOneRepMaxEstimate) {
 
         <div data-color="neutral-0" data-fs="2xl" data-fw="bold" data-lh="tight">
           {t("statistics.exercise.one_rep_max_estimate.value", {
-            load: WeightFormat.kilograms(props.estimate),
+            load: WeightFormat.kilograms(best.bestEstimate),
           })}
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
           {t("statistics.exercise.one_rep_max_estimate.set", {
-            load: WeightFormat.kilograms(props.set.load),
-            reps: props.set.reps,
+            load: WeightFormat.kilograms(set.load),
+            reps: set.reps,
           })}
         </div>
       </div>

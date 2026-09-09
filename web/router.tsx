@@ -88,8 +88,7 @@ export const exerciseRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/exercise"), "Exercise"),
   loader: async ({ context, params }) => ({
     exercise: await Exercises.get(context.request, params),
-    oneRepMax: await Statistics.getExerciseOneRepMax(context.request, params),
-    sets: await Statistics.getExerciseSets(context.request, params),
+    performances: await Statistics.getExercisePerformances(context.request, params),
   }),
 });
 

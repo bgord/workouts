@@ -9,7 +9,7 @@ import { ExerciseHistory, ExerciseOneRepMaxEstimate, ExerciseProgressChart } fro
 
 export function Exercise() {
   const t = useTranslations();
-  const { exercise, oneRepMax, sets } = exerciseRoute.useLoaderData();
+  const { exercise, performances } = exerciseRoute.useLoaderData();
 
   if (!exercise) {
     return (
@@ -75,11 +75,11 @@ export function Exercise() {
         </p>
 
         <div data-gap="8" data-mt="8" data-stack="y">
-          {oneRepMax && <ExerciseOneRepMaxEstimate {...oneRepMax} />}
+          <ExerciseOneRepMaxEstimate performances={performances} />
 
-          <ExerciseProgressChart sets={sets} />
+          <ExerciseProgressChart performances={performances} />
 
-          <ExerciseHistory sets={sets} />
+          <ExerciseHistory performances={performances} />
         </div>
       </div>
     </Main>
