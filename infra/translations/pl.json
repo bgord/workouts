@@ -146,6 +146,8 @@
   "statistics.exercise.one_rep_max_estimate": "Szacowany ciężar maksymalny",
   "statistics.exercise.one_rep_max_estimate.set": "z {{reps}} × {{load}} kg",
   "statistics.exercise.one_rep_max_estimate.value": "{{load}} kg",
+  "statistics.exercise.progress": "Postęp",
+  "statistics.exercise.progress.point": "{{date}} — {{load}} kg",
   "workout.complete.blocked.no_logged_sets": "Najpierw zapisz przynajmniej jedną serię",
   "workout.complete.cta": "Zakończ",
   "workout.complete.error": "Nie udało się zakończyć treningu",

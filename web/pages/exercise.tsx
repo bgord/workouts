@@ -5,7 +5,12 @@ import { ChevronLeft } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
-import { ExerciseBestSet, ExerciseHistory, ExerciseOneRepMaxEstimate } from "../sections";
+import {
+  ExerciseBestSet,
+  ExerciseHistory,
+  ExerciseOneRepMaxEstimate,
+  ExerciseProgressChart,
+} from "../sections";
 
 export function Exercise() {
   const t = useTranslations();
@@ -55,11 +60,6 @@ export function Exercise() {
 
         <ExerciseImage exercise={exercise} size={ExerciseImageSize.lg} />
 
-        <div data-gap="3" data-stack="x">
-          {oneRepMax && <ExerciseOneRepMaxEstimate {...oneRepMax} />}
-          {bestSet && <ExerciseBestSet {...bestSet} />}
-        </div>
-
         <ul data-gap="1" data-stack="x">
           {exercise.categories.map((category) => (
             <li key={category.id}>
@@ -79,7 +79,16 @@ export function Exercise() {
           {exercise.description}
         </p>
 
-        <ExerciseHistory sets={sets} />
+        <div data-gap="8" data-mt="8" data-stack="y">
+          <div data-gap="3" data-stack="x">
+            {oneRepMax && <ExerciseOneRepMaxEstimate {...oneRepMax} />}
+            {bestSet && <ExerciseBestSet {...bestSet} />}
+          </div>
+
+          <ExerciseProgressChart sets={sets} />
+
+          <ExerciseHistory sets={sets} />
+        </div>
       </div>
     </Main>
   );
