@@ -266,8 +266,12 @@ modules/
 │   ├── queries
 │   │   ├── get-exercise-history.ts
 │   ├── services
+│   │   ├── delta-calculator.ts
+│   │   ├── estimated-record-order.ts
+│   │   ├── one-rep-max-candidates.ts
 │   │   ├── one-rep-max-estimator-brzycki.ts
-│   │   └── one-rep-max-estimator-epley.ts
+│   │   ├── one-rep-max-estimator-epley.ts
+│   │   └── session-volume.ts
 │   └── value-objects
 │       ├── delta.ts
 │       ├── estimated-record.ts
