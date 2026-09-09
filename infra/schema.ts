@@ -295,6 +295,7 @@ export const statisticsExerciseOneRepMaxEstimates = sqliteTable(
     id,
     exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
     workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
+    loggedSetId: text("loggedSetId", { length: 36 }).notNull().$type<LoggedSetIdType>(),
     estimate: integer("estimate", { mode: "number" }).notNull().$type<OneRepMaxEstimateType>(),
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
     createdAt: timestamp("createdAt").notNull(),

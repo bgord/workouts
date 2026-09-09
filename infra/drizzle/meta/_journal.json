@@ -176,6 +176,13 @@
       "when": 1788946121299,
       "tag": "0024_famous_rattler",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "6",
+      "when": 1788949801660,
+      "tag": "0025_next_johnny_blaze",
+      "breakpoints": true
     }
   ]
 }
