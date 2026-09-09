@@ -22,7 +22,7 @@ class GetExerciseHistoryQueryDrizzle implements Stats.Queries.GetExerciseHistory
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
-  ): Promise<Stats.VO.ExerciseHistory> {
+  ): Promise<Stats.Queries.ExerciseHistoryGetResponse> {
     const completed = and(
       eq(Schema.statsExerciseSets.exerciseId, exerciseId),
       eq(Schema.statsExerciseSets.userId, userId),

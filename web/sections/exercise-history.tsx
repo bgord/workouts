@@ -3,10 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { ArrowDown, ArrowUp, TrendingUp, Trophy } from "lucide-react";
 import { useState } from "react";
 import { DateFormat } from "../../app/services/date-format";
-import type {
-  ExerciseHistory as ExerciseHistoryType,
-  ExerciseSession,
-} from "../../modules/stats/value-objects/exercise-history";
+import type { ExerciseHistoryGetResponse } from "../../modules/stats/queries/get-exercise-history";
+import type { ExerciseSession } from "../../modules/stats/value-objects/exercise-session";
 import { ExerciseHistoryChart } from "../components/exercise-history-chart";
 
 const GRAMS_IN_KILOGRAM = 1000;
@@ -33,7 +31,7 @@ function Delta(props: { value?: number }) {
   );
 }
 
-export function ExerciseHistory(props: { history: ExerciseHistoryType }) {
+export function ExerciseHistory(props: { history: ExerciseHistoryGetResponse }) {
   const t = useTranslations();
   const language = useLanguage();
 

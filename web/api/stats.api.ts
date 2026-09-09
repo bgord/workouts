@@ -1,11 +1,11 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
-import type { ExerciseHistory } from "../../modules/stats/value-objects/exercise-history";
+import type { ExerciseHistoryGetResponse } from "../../modules/stats/queries/get-exercise-history";
 
 export class Stats {
   static async getExerciseHistory(
     request: Request | null,
     params: { exerciseId: string },
-  ): Promise<ExerciseHistory> {
+  ): Promise<ExerciseHistoryGetResponse> {
     const BASE = `/api/stats/exercise/${params.exerciseId}/history`;
 
     const url = absoluteUrl(BASE, request);

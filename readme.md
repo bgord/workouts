@@ -270,8 +270,11 @@ modules/
 │   │   └── one-rep-max-estimator-epley.ts
 │   └── value-objects
 │       ├── delta.ts
-│       ├── exercise-history.ts
+│       ├── estimated-record.ts
+│       ├── exercise-record.ts
+│       ├── exercise-session.ts
 │       ├── one-rep-max-estimate.ts
+│       ├── performed-set.ts
 │       └── volume.ts
 ├── supported-languages.ts
 └── workouts

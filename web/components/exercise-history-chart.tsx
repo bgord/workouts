@@ -1,7 +1,8 @@
 // cSpell:ignore VIEWBOX
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { DateFormat } from "../../app/services/date-format";
-import type { ExerciseRecord, ExerciseSession } from "../../modules/stats/value-objects/exercise-history";
+import type { ExerciseRecord } from "../../modules/stats/value-objects/exercise-record";
+import type { ExerciseSession } from "../../modules/stats/value-objects/exercise-session";
 
 const GRAMS_IN_KILOGRAM = 1000;
 
