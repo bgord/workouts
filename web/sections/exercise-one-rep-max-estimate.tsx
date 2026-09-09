@@ -12,7 +12,9 @@ export function ExerciseOneRepMaxEstimate(props: { performances: Array<ExerciseP
 
   if (!best) return null;
 
-  const set = best.sets.toSorted((a, b) => b.estimate - a.estimate)[0]!;
+  const set = best.sets.toSorted((a, b) => b.estimate - a.estimate)[0];
+
+  if (!set) return null;
 
   return (
     <Link
