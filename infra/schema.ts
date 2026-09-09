@@ -285,5 +285,8 @@ export const workoutLoggedSets = sqliteTable(
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
     createdAt: timestamp("createdAt").notNull(),
   },
-  (table) => [index("workoutLoggedSets_workoutExerciseId_idx").on(table.workoutExerciseId)],
+  (table) => [
+    index("workoutLoggedSets_workoutExerciseId_idx").on(table.workoutExerciseId),
+    index("workoutLoggedSets_userId_idx").on(table.userId),
+  ],
 );
