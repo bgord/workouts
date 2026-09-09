@@ -264,7 +264,9 @@ modules/
 │   ├── ports
 │   │   └── one-rep-max-estimator.ts
 │   ├── queries
-│   │   ├── get-exercise-history.ts
+│   │   ├── get-exercise-estimated-record.ts
+│   │   ├── get-exercise-record.ts
+│   │   └── list-exercise-sessions.ts
 │   ├── services
 │   │   ├── delta-calculator.ts
 │   │   ├── estimated-record-order.ts
@@ -480,7 +482,10 @@ infra/
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── stats
-│   │   ├── get-exercise-history.adapter.ts
+│   │   ├── completed-exercise-sets.ts
+│   │   ├── get-exercise-estimated-record.adapter.ts
+│   │   ├── get-exercise-record.adapter.ts
+│   │   └── list-exercise-sessions.adapter.ts
 │   ├── system
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
