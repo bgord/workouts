@@ -17,6 +17,9 @@ import type { PlanSectionIdType } from "../modules/plans/value-objects/plan-sect
 import type { PlanSectionNameType } from "../modules/plans/value-objects/plan-section-name";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { SetsType } from "../modules/plans/value-objects/sets";
+import type { OneRepMaxEstimateType } from "../modules/stats/value-objects/one-rep-max-estimate";
+import type { PerformedSet } from "../modules/stats/value-objects/performed-set";
+import type { VolumeType } from "../modules/stats/value-objects/volume";
 import type { LoadType } from "../modules/workouts/value-objects/load";
 import type { LoggedSetIdType } from "../modules/workouts/value-objects/logged-set-id";
 import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-objects/reps";
@@ -290,6 +293,38 @@ export const statsExerciseSets = sqliteTable(
     index("statsExerciseSets_userId_exerciseId_idx").on(table.userId, table.exerciseId),
     index("statsExerciseSets_workoutId_idx").on(table.workoutId),
     index("statsExerciseSets_workoutExerciseId_idx").on(table.workoutExerciseId),
+  ],
+);
+
+export const statsExerciseSessions = sqliteTable(
+  "statsExerciseSessions",
+  {
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
+    workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
+    completedAt: timestamp("completedAt").notNull(),
+    sets: text("sets", { mode: "json" }).notNull().$type<Array<PerformedSet>>(),
+    volume: integer("volume", { mode: "number" }).notNull().$type<VolumeType>(),
+    oneRepMaxEstimate: integer("oneRepMaxEstimate", { mode: "number" }).$type<OneRepMaxEstimateType>(),
+    oneRepMaxEstimateReps: integer("oneRepMaxEstimateReps", { mode: "number" }).$type<WorkoutRepsType>(),
+    oneRepMaxEstimateLoad: integer("oneRepMaxEstimateLoad", { mode: "number" }).$type<LoadType>(),
+    topSetReps: integer("topSetReps", { mode: "number" }).notNull().$type<WorkoutRepsType>(),
+    topSetLoad: integer("topSetLoad", { mode: "number" }).notNull().$type<LoadType>(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.workoutId, table.exerciseId] }),
+    index("statsExerciseSessions_history_idx").on(table.userId, table.exerciseId, table.completedAt),
+    index("statsExerciseSessions_estimated_record_idx").on(
+      table.userId,
+      table.exerciseId,
+      table.oneRepMaxEstimate,
+    ),
+    index("statsExerciseSessions_record_idx").on(
+      table.userId,
+      table.exerciseId,
+      table.topSetLoad,
+      table.topSetReps,
+    ),
   ],
 );
 

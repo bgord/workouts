@@ -270,6 +270,7 @@ modules/
 │   ├── services
 │   │   ├── delta-calculator.ts
 │   │   ├── estimated-record-order.ts
+│   │   ├── exercise-record-order.ts
 │   │   ├── one-rep-max-candidates.ts
 │   │   ├── one-rep-max-estimator-brzycki.ts
 │   │   ├── one-rep-max-estimator-epley.ts
@@ -482,7 +483,6 @@ infra/
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── stats
-│   │   ├── completed-exercise-sets.ts
 │   │   ├── get-exercise-estimated-record.adapter.ts
 │   │   ├── get-exercise-record.adapter.ts
 │   │   └── list-exercise-sessions.adapter.ts
