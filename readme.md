@@ -411,6 +411,8 @@ app/
 │   │   ├── remove-profile-avatar.ts
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
+│   ├── statistics
+│   │   ├── exercise-one-rep-max-estimate-get.ts
 │   └── workouts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts

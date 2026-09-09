@@ -1,10 +1,13 @@
+// cSpell:ignore epley
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { Hono } from "hono";
 import { HTTP } from "+app";
 import * as Exercises from "+exercises";
 import type * as infra from "+infra";
 import { languages } from "+languages";
 import * as Preferences from "+preferences";
+import * as Statistics from "+statistics";
 import type { BootstrapType } from "+infra/bootstrap";
 import { host, localhost } from "+infra/config";
 
@@ -218,6 +221,26 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   );
 
   server.route("/plans", plans);
+
+  // Statistics =============
+  const statistics = new Hono<infra.Config>();
+
+  statistics.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  statistics.get(
+    "/exercises/:exerciseId/one-rep-max-estimate",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Statistics.ExerciseOneRepMaxEstimateGet({
+        ExerciseOneRepMaxEstimator: new Statistics.Services.ExerciseOneRepMaxEstimator({
+          OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley({
+            rounding: new tools.RoundingToNearestStrategy(),
+          }),
+          ListExerciseSetsOHQ: Adapters.Workouts.ListExerciseSetsQuery,
+        }),
+      }),
+    ),
+  );
+
+  server.route("/statistics", statistics);
 
   // Workouts =================
   const workouts = new Hono<infra.Config>();
