@@ -11,9 +11,7 @@ describe("ExercisePerformanceCalculator", async () => {
   const di = await bootstrap();
 
   const calculator = new Statistics.Services.ExercisePerformanceCalculator({
-    OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley({
-      rounding: new tools.RoundingToNearestStrategy(),
-    }),
+    OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
     ListExercisePerformances: di.Adapters.Workouts.ListExercisePerformancesQuery,
   });
 

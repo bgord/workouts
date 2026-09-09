@@ -4,10 +4,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Statistics from "+statistics";
 
-const rounding = new tools.RoundingToNearestStrategy();
-const adapter = new Statistics.Services.OneRepEstimatorEpley({
-  rounding,
-});
+const adapter = new Statistics.Services.OneRepEstimatorEpley();
 
 const load = tools.Weight.fromKilograms(100).get();
 

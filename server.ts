@@ -1,6 +1,5 @@
 // cSpell:ignore epley
 import * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import { Hono } from "hono";
 import { HTTP } from "+app";
 import * as Exercises from "+exercises";
@@ -22,9 +21,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   const redactor = new bg.RedactorMask(bg.RedactorMask.DEFAULT_KEYS);
 
-  const OneRepEstimator = new Statistics.Services.OneRepEstimatorEpley({
-    rounding: new tools.RoundingToNearestStrategy(),
-  });
+  const OneRepEstimator = new Statistics.Services.OneRepEstimatorEpley();
 
   const origin = [localhost, host];
 
