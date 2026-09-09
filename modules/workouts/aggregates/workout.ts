@@ -188,6 +188,7 @@ export class Workout {
       {
         workoutId: this.id,
         workoutExerciseId,
+        exerciseId: exercise!.exerciseId,
         loggedSet: { id: loggedSetId, setNumber, reps, load },
         requesterId,
       },
@@ -219,6 +220,7 @@ export class Workout {
       {
         workoutId: this.id,
         workoutExerciseId,
+        exerciseId: workoutExercise!.exerciseId,
         loggedSet: { id: loggedSetId, setNumber: current!.setNumber, reps, load },
         requesterId,
       },
@@ -249,7 +251,13 @@ export class Workout {
     const event = bg.event(
       Events.WorkoutSetRemovedEvent,
       Workout.getStream(this.id),
-      { workoutId: this.id, workoutExerciseId, loggedSetId, requesterId },
+      {
+        workoutId: this.id,
+        workoutExerciseId,
+        exerciseId: workoutExercise!.exerciseId,
+        loggedSetId,
+        requesterId,
+      },
       this.deps,
     );
 

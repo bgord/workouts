@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Auth from "+auth";
+import * as Exercises from "+exercises";
 import * as VO from "+workouts/value-objects";
 
 export const WORKOUT_SET_REMOVED_EVENT = "WORKOUT_SET_REMOVED_EVENT";
@@ -11,6 +12,7 @@ export const WorkoutSetRemovedEvent = v.object({
   payload: v.object({
     workoutId: VO.WorkoutId,
     workoutExerciseId: VO.WorkoutExerciseId,
+    exerciseId: Exercises.VO.ExerciseId,
     loggedSetId: VO.LoggedSetId,
     requesterId: Auth.VO.UserId,
   }),
