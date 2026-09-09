@@ -1,10 +1,11 @@
-import { desc } from "drizzle-orm";
+import { sql, desc, and, eq, isNotNull } from "drizzle-orm";
+import * as tools from "@bgord/tools";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import * as Stats from "+stats";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
-import { completed, completedAt, performedSets } from "./completed-exercise-sets";
+import { performedSets } from "./completed-exercise-sets";
 
 type Dependencies = { OneRepMaxCandidates: Stats.Services.OneRepMaxCandidates };
 
@@ -15,21 +16,29 @@ class ListExerciseSessionsQueryDrizzle implements Stats.Queries.ListExerciseSess
     exerciseId: Exercises.VO.ExerciseIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Array<Stats.VO.ExerciseSession>> {
-    const logged = await db
+    const completedAt = sql<tools.TimestampValueType>`${Schema.statsExerciseSets.completedAt}`;
+
+    const sessions = await db
       .select({ workoutId: Schema.statsExerciseSets.workoutId, completedAt, sets: performedSets })
       .from(Schema.statsExerciseSets)
-      .where(completed(exerciseId, userId))
+      .where(
+        and(
+          eq(Schema.statsExerciseSets.exerciseId, exerciseId),
+          eq(Schema.statsExerciseSets.userId, userId),
+          isNotNull(Schema.statsExerciseSets.completedAt),
+        ),
+      )
       .groupBy(Schema.statsExerciseSets.workoutId)
       .orderBy(desc(Schema.statsExerciseSets.completedAt));
 
-    const measured = logged.map((session) => ({
+    const sessionsWithMeasurements = sessions.map((session) => ({
       ...session,
       oneRepMaxEstimate: this.deps.OneRepMaxCandidates.from(session).at(0)?.oneRepMaxEstimate,
       volume: Stats.Services.SessionVolume.calculate(session.sets),
     }));
 
-    return measured.map((session, order) => {
-      const previous = measured.at(order + 1);
+    return sessionsWithMeasurements.map((session, order) => {
+      const previous = sessionsWithMeasurements.at(order + 1);
 
       if (previous === undefined) return session;
 
