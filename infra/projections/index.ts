@@ -6,7 +6,6 @@ export * from "./plan-sections.projector";
 export * from "./plans.projector";
 export * from "./preferences.projector";
 export * from "./profile-avatars.projector";
-export * from "./statistics-exercise-one-rep-max-estimates.projector";
 export * from "./workout-exercises.projector";
 export * from "./workout-logged-sets.projector";
 export * from "./workouts.projector";

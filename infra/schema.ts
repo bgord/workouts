@@ -17,7 +17,6 @@ import type { PlanSectionIdType } from "../modules/plans/value-objects/plan-sect
 import type { PlanSectionNameType } from "../modules/plans/value-objects/plan-section-name";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { SetsType } from "../modules/plans/value-objects/sets";
-import type { OneRepMaxEstimateType } from "../modules/statistics/value-objects/one-rep-max-estimate";
 import type { LoadType } from "../modules/workouts/value-objects/load";
 import type { LoggedSetIdType } from "../modules/workouts/value-objects/logged-set-id";
 import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-objects/reps";
@@ -53,7 +52,9 @@ export const events = sqliteTable(
   {
     id: identifier<bg.UUIDType>(),
     correlationId: text("correlationId").notNull().$type<bg.CorrelationIdType>(),
-    createdAt: integer("createdAt").default(sql`now`).notNull(),
+    createdAt: integer("createdAt")
+      .default(sql`now`)
+      .notNull(),
     name: text("name").notNull(),
     stream: text("stream").notNull().$type<bg.EventStreamType>(),
     version: integer("version").notNull(),
@@ -287,25 +288,4 @@ export const workoutLoggedSets = sqliteTable(
     createdAt: timestamp("createdAt").notNull(),
   },
   (table) => [index("workoutLoggedSets_workoutExerciseId_idx").on(table.workoutExerciseId)],
-);
-
-export const statisticsExerciseOneRepMaxEstimates = sqliteTable(
-  "statisticsExerciseOneRepMaxEstimates",
-  {
-    id,
-    exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
-    workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
-    loggedSetId: text("loggedSetId", { length: 36 }).notNull().$type<LoggedSetIdType>(),
-    estimate: integer("estimate", { mode: "number" }).notNull().$type<OneRepMaxEstimateType>(),
-    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
-    createdAt: timestamp("createdAt").notNull(),
-    updatedAt: timestamp("updatedAt").notNull(),
-  },
-  (table) => [
-    uniqueIndex("statisticsExerciseOneRepMaxEstimates_userId_exerciseId_uidx").on(
-      table.userId,
-      table.exerciseId,
-    ),
-    index("statisticsExerciseOneRepMaxEstimates_userId_idx").on(table.userId),
-  ],
 );
