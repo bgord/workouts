@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
@@ -24,7 +24,8 @@ class ListExerciseSetsQueryDrizzle implements Workouts.Queries.ListExerciseSets 
       )
       .where(
         and(eq(Schema.workoutLoggedSets.userId, userId), eq(Schema.workoutExercises.exerciseId, exerciseId)),
-      );
+      )
+      .orderBy(asc(Schema.workoutLoggedSets.createdAt), asc(Schema.workoutLoggedSets.id));
   }
 }
 
