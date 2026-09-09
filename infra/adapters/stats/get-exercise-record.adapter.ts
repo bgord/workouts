@@ -12,20 +12,22 @@ class GetExerciseRecordQueryDrizzle implements Stats.Queries.GetExerciseRecord {
   ): Promise<Stats.VO.ExerciseRecord | undefined> {
     const [record] = await db
       .select({
-        reps: Schema.statsExerciseSets.reps,
-        load: Schema.statsExerciseSets.load,
-        workoutId: Schema.statsExerciseSets.workoutId,
-        completedAt: Schema.statsExerciseSets.completedAt,
+        reps: Schema.statsExerciseSessions.topSetReps,
+        load: Schema.statsExerciseSessions.topSetLoad,
+        workoutId: Schema.statsExerciseSessions.workoutId,
+        completedAt: Schema.statsExerciseSessions.completedAt,
       })
-      .from(Schema.statsExerciseSets)
+      .from(Schema.statsExerciseSessions)
       .where(
-        and(eq(Schema.statsExerciseSets.exerciseId, exerciseId), eq(Schema.statsExerciseSets.userId, userId)),
+        and(
+          eq(Schema.statsExerciseSessions.exerciseId, exerciseId),
+          eq(Schema.statsExerciseSessions.userId, userId),
+        ),
       )
       .orderBy(
-        desc(Schema.statsExerciseSets.load),
-        desc(Schema.statsExerciseSets.reps),
-        asc(Schema.statsExerciseSets.completedAt),
-        asc(Schema.statsExerciseSets.loggedAt),
+        desc(Schema.statsExerciseSessions.topSetLoad),
+        desc(Schema.statsExerciseSessions.topSetReps),
+        asc(Schema.statsExerciseSessions.completedAt),
       )
       .limit(1);
 
