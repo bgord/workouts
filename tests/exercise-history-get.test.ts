@@ -31,8 +31,10 @@ describe("GET /api/stats/exercise/:exerciseId/history", async () => {
   test("empty history", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Adapters.Stats.ListExerciseSessionsQuery, "execute").mockResolvedValue([]));
+    spies.use(spyOn(di.Adapters.Stats.GetExerciseRecordQuery, "execute").mockResolvedValue(undefined));
     spies.use(
-      spyOn(di.Adapters.Stats.GetExerciseHistoryQuery, "execute").mockResolvedValue({ sessions: [] }),
+      spyOn(di.Adapters.Stats.GetExerciseEstimatedRecordQuery, "execute").mockResolvedValue(undefined),
     );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
@@ -46,11 +48,17 @@ describe("GET /api/stats/exercise/:exerciseId/history", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     const execute = spies.use(
-      spyOn(di.Adapters.Stats.GetExerciseHistoryQuery, "execute").mockResolvedValue({
-        sessions: [mocks.exerciseSession],
-        record: mocks.exerciseRecord,
-        estimatedRecord: mocks.exerciseEstimatedRecord,
-      }),
+      spyOn(di.Adapters.Stats.ListExerciseSessionsQuery, "execute").mockResolvedValue([
+        mocks.exerciseSession,
+      ]),
+    );
+    spies.use(
+      spyOn(di.Adapters.Stats.GetExerciseRecordQuery, "execute").mockResolvedValue(mocks.exerciseRecord),
+    );
+    spies.use(
+      spyOn(di.Adapters.Stats.GetExerciseEstimatedRecordQuery, "execute").mockResolvedValue(
+        mocks.exerciseEstimatedRecord,
+      ),
     );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);

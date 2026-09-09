@@ -2,8 +2,8 @@ import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ArrowDown, ArrowUp, TrendingUp, Trophy } from "lucide-react";
 import { useState } from "react";
+import type { ExerciseHistoryGetResponse } from "../../app/http/stats/exercise-history-get";
 import { DateFormat } from "../../app/services/date-format";
-import type { ExerciseHistoryGetResponse } from "../../modules/stats/queries/get-exercise-history";
 import type { ExerciseSession } from "../../modules/stats/value-objects/exercise-session";
 import { ExerciseHistoryChart } from "../components/exercise-history-chart";
 

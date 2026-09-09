@@ -1,5 +1,5 @@
 import { absoluteUrl, Cookies } from "@bgord/ui";
-import type { ExerciseHistoryGetResponse } from "../../modules/stats/queries/get-exercise-history";
+import type { ExerciseHistoryGetResponse } from "../../app/http/stats/exercise-history-get";
 
 export class Stats {
   static async getExerciseHistory(
