@@ -2,6 +2,7 @@ import { createAuthAdapters } from "+infra/adapters/auth";
 import { createExercisesAdapters } from "+infra/adapters/exercises";
 import { createPlansAdapters } from "+infra/adapters/plans";
 import { createPreferencesAdapters } from "+infra/adapters/preferences";
+import { createStatisticsAdapters } from "+infra/adapters/statistics";
 import { createSystemAdapters } from "+infra/adapters/system";
 import { createWorkoutsAdapters } from "+infra/adapters/workouts";
 import { createEnvironmentLoader } from "+infra/env";
@@ -19,8 +20,15 @@ export async function bootstrap() {
   const Exercises = createExercisesAdapters();
   const Plans = createPlansAdapters({ ...System, ...Tools });
   const Workouts = createWorkoutsAdapters({ ...System, ...Tools });
+  const Statistics = createStatisticsAdapters({
+    ListLoggedSetsForExercise: Workouts.ListLoggedSetsForExerciseQuery,
+  });
 
-  return { Env, Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts }, Tools: { ...Tools } };
+  return {
+    Env,
+    Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts, Statistics },
+    Tools: { ...Tools },
+  };
 }
 
 export type BootstrapType = Awaited<ReturnType<typeof bootstrap>>;

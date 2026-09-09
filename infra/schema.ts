@@ -52,9 +52,7 @@ export const events = sqliteTable(
   {
     id: identifier<bg.UUIDType>(),
     correlationId: text("correlationId").notNull().$type<bg.CorrelationIdType>(),
-    createdAt: integer("createdAt")
-      .default(sql`now`)
-      .notNull(),
+    createdAt: integer("createdAt").default(sql`now`).notNull(),
     name: text("name").notNull(),
     stream: text("stream").notNull().$type<bg.EventStreamType>(),
     version: integer("version").notNull(),

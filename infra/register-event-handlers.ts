@@ -1,9 +1,6 @@
-// cSpell:ignore epley
-import * as tools from "@bgord/tools";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Preferences from "+preferences";
-import * as Statistics from "+statistics";
 import type { BootstrapType } from "+infra/bootstrap";
 import type { EnvironmentResultType } from "+infra/env";
 import * as Projections from "+infra/projections";
@@ -23,12 +20,6 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
   new Projections.WorkoutsProjector(deps);
   new Projections.WorkoutExercisesProjector(deps);
   new Projections.WorkoutLoggedSetsProjector(deps);
-  new Projections.StatisticsExerciseOneRepMaxEstimatesProjector({
-    ...deps,
-    OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley({
-      rounding: new tools.RoundingToNearestStrategy(),
-    }),
-  });
 
   // Policies
   new Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
