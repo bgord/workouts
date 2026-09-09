@@ -202,9 +202,9 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(
-      mocks.anotherWorkoutExerciseId,
-    );
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValue(mocks.anotherWorkoutExerciseId);
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
