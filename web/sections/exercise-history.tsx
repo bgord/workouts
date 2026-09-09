@@ -6,11 +6,11 @@ import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExerciseSetOneRepMaxEstimate } from "../../modules/statistics/value-objects/exercise-set-one-rep-max-estimate";
 
-export function ExerciseHistory(props: { sets: Array<ExerciseSet> }) {
+export function ExerciseHistory(props: { sets: Array<ExerciseSetOneRepMaxEstimate> }) {
   const t = useTranslations();
   const language = useLanguage();
 
-  const sessions = [...Map.groupBy(props.sets, (set) => set.workoutId)].toReversed();
+  const sessions = [...Map.groupBy(props.sets, (entry) => entry.set.workoutId)].toReversed();
 
   return (
     <ul data-gap="3" data-stack="y">
@@ -27,14 +27,14 @@ export function ExerciseHistory(props: { sets: Array<ExerciseSet> }) {
               search={WorkoutHistoryFilters.default}
               to="/workouts/$workoutId"
             >
-              {sets[0] && DateFormat.dayWithTime(language, DateFormat.zoned(sets[0].createdAt))}
+              {sets[0] && DateFormat.dayWithTime(language, DateFormat.zoned(sets[0].set.createdAt))}
 
               <ChevronRight data-size="sm" />
             </Link>
           </div>
 
           <ul data-gap="0" data-stack="y">
-            {sets.map((set, index) => (
+            {sets.map((entry, index) => (
               <li
                 data-bct={index > 0 ? "alpha-subtle" : undefined}
                 data-bst={index > 0 ? "solid" : undefined}
@@ -43,7 +43,7 @@ export function ExerciseHistory(props: { sets: Array<ExerciseSet> }) {
                 data-gap="3"
                 data-py="2"
                 data-stack="x"
-                key={set.id}
+                key={entry.set.id}
               >
                 <div className="c-badge" data-variant="outline">
                   {index + 1}
@@ -51,8 +51,14 @@ export function ExerciseHistory(props: { sets: Array<ExerciseSet> }) {
 
                 <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
                   {t("workout.exercise.logged_set", {
-                    load: WeightFormat.kilograms(set.load),
-                    reps: set.reps,
+                    load: WeightFormat.kilograms(entry.set.load),
+                    reps: entry.set.reps,
+                  })}
+                </div>
+
+                <div data-color="neutral-500" data-fs="xs">
+                  {t("statistics.exercise.one_rep_max_estimate.value", {
+                    load: WeightFormat.kilograms(entry.estimate),
                   })}
                 </div>
               </li>

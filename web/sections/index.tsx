@@ -2,6 +2,7 @@ export * from "./exercise-best-set";
 export * from "./exercise-catalog";
 export * from "./exercise-history";
 export * from "./exercise-one-rep-max-estimate";
+export * from "./exercise-progress-chart";
 export * from "./navigation";
 export * from "./plan-archive";
 export * from "./plan-create";

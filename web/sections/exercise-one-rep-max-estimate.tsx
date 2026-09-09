@@ -6,7 +6,7 @@ import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExerciseSetOneRepMaxEstimate } from "../../modules/statistics/value-objects/exercise-set-one-rep-max-estimate";
 
-export function ExerciseOneRepMaxEstimate(props: ExerciseOneRepMaxEstimate) {
+export function ExerciseOneRepMaxEstimate(props: ExerciseSetOneRepMaxEstimate) {
   const t = useTranslations();
   const language = useLanguage();
 
