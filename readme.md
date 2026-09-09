@@ -429,13 +429,11 @@ app/
 │       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
-    ├── date-format.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
     ├── plan-section-create-form.ts
     ├── plan-section-exercise-instruction-add-form.ts
-    ├── weight-format.ts
     ├── workout-exercise-add-form.ts
     ├── workout-history-filters-form.ts
     └── workout-note-form.ts

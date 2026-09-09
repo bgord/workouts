@@ -1,5 +1,5 @@
 import { Triangle } from "lucide-react";
-import { WeightFormat } from "../../app/services/weight-format";
+import { WeightFormat } from "../services/weight-format";
 
 export function DeltaKg(props: { current: number; previous: number | undefined }) {
   if (props.previous === undefined) return null;

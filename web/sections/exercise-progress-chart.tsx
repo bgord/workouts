@@ -1,10 +1,10 @@
 // cSpell:ignore GRIDLINES
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { DateFormat } from "../../app/services/date-format";
-import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import { DateFormat } from "../services/date-format";
+import { WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
 const HEIGHT = 200;

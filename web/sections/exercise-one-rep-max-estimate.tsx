@@ -1,9 +1,9 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Trophy } from "lucide-react";
-import { WeightFormat } from "../../app/services/weight-format";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseOneRepMaxEstimate(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
