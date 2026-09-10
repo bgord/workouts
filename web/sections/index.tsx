@@ -1,3 +1,4 @@
+export * from "./exercise-add";
 export * from "./exercise-catalog";
 export * from "./exercise-category-add";
 export * from "./exercise-category-delete";
