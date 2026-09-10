@@ -7,7 +7,7 @@ type ExerciseCategoryLimitConfigType = { exerciseCategories: ReadonlyArray<VO.Ex
 
 class ExerciseCategoryLimitFactory extends bg.Invariant<ExerciseCategoryLimitConfigType> {
   passes(config: ExerciseCategoryLimitConfigType) {
-    return config.exerciseCategories.length <= 4;
+    return config.exerciseCategories.length < 4;
   }
 
   // Stryker disable next-line StringLiteral
