@@ -24,6 +24,7 @@ const MINIMAL_POINTS = 2;
 const GRIDLINES = [0, 0.5, 1];
 const GRIDLINE_LABEL_GAP = 8;
 const DATE_LABEL_BASELINE = HEIGHT - 6;
+const AREA_OPACITY = 0.08;
 
 export function ExerciseProgressChart(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
@@ -49,70 +50,100 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
 
   const first = points[0]!;
   const last = points.at(-1)!;
+  const line = points.map((point) => `${point.x},${point.y}`).join(" ");
 
   return (
-    <svg
-      aria-label={t("statistics.exercise.progress")}
-      role="img"
-      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-      width="100%"
-    >
-      <g data-color="neutral-800" stroke="currentColor">
-        {gridlines.map((gridline) => (
-          <line key={gridline.ratio} x1={PLOT.left} x2={PLOT.right} y1={gridline.y} y2={gridline.y} />
-        ))}
-      </g>
+    <div className="c-card" data-gap="4" data-stack="y">
+      <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+        <div className="c-card-title">{t("statistics.exercise.progress")}</div>
 
-      <g data-color="neutral-500" fill="currentColor" fontSize="11">
-        {gridlines.map((gridline) => (
-          <text
-            dominantBaseline="middle"
-            key={gridline.ratio}
-            textAnchor="end"
-            x={PLOT.left - GRIDLINE_LABEL_GAP}
-            y={gridline.y}
-          >
-            {t("statistics.exercise.one_rep_max_estimate.value", {
-              load: WeightFormat.kilograms(gridline.estimate),
-            })}
+        <div data-color="neutral-500" data-fs="xs" data-transform="uppercase">
+          {t("statistics.exercise.one_rep_max_estimate")}
+        </div>
+      </div>
+
+      <svg
+        aria-label={t("statistics.exercise.progress")}
+        role="img"
+        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        width="100%"
+      >
+        <g data-color="neutral-800" stroke="currentColor">
+          {gridlines.map((gridline) => (
+            <line key={gridline.ratio} x1={PLOT.left} x2={PLOT.right} y1={gridline.y} y2={gridline.y} />
+          ))}
+        </g>
+
+        <g data-color="neutral-500" fill="currentColor" fontSize="11">
+          {gridlines.map((gridline) => (
+            <text
+              dominantBaseline="middle"
+              key={gridline.ratio}
+              textAnchor="end"
+              x={PLOT.left - GRIDLINE_LABEL_GAP}
+              y={gridline.y}
+            >
+              {t("statistics.exercise.one_rep_max_estimate.value", {
+                load: WeightFormat.kilograms(gridline.estimate),
+              })}
+            </text>
+          ))}
+
+          <text x={PLOT.left} y={DATE_LABEL_BASELINE}>
+            {DateFormat.day(language, DateFormat.zoned(first.performance.performedAt))}
           </text>
+
+          <text textAnchor="end" x={PLOT.right} y={DATE_LABEL_BASELINE}>
+            {DateFormat.day(language, DateFormat.zoned(last.performance.performedAt))}
+          </text>
+        </g>
+
+        <polygon
+          data-color="brand-500"
+          fill="currentColor"
+          fillOpacity={AREA_OPACITY}
+          points={`${first.x},${PLOT.bottom} ${line} ${last.x},${PLOT.bottom}`}
+        />
+
+        <polyline
+          data-color="brand-400"
+          fill="none"
+          points={line}
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+        />
+
+        {points.map((point) => (
+          <Link
+            data-color="brand-300"
+            key={point.performance.workoutId}
+            params={{ workoutId: point.performance.workoutId }}
+            search={WorkoutHistoryFilters.default}
+            to="/workouts/$workoutId"
+          >
+            <title>
+              {t("statistics.exercise.progress.point", {
+                date: DateFormat.dayWithTime(language, DateFormat.zoned(point.performance.performedAt)),
+                load: WeightFormat.kilograms(point.performance.bestEstimate),
+              })}
+            </title>
+
+            <circle cx={point.x} cy={point.y} data-color="neutral-900" fill="currentColor" r="4" />
+
+            <circle
+              cx={point.x}
+              cy={point.y}
+              data-color="brand-400"
+              fill="none"
+              r="4"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+          </Link>
         ))}
-
-        <text x={PLOT.left} y={DATE_LABEL_BASELINE}>
-          {DateFormat.day(language, DateFormat.zoned(first.performance.performedAt))}
-        </text>
-
-        <text textAnchor="end" x={PLOT.right} y={DATE_LABEL_BASELINE}>
-          {DateFormat.day(language, DateFormat.zoned(last.performance.performedAt))}
-        </text>
-      </g>
-
-      <polyline
-        data-color="brand-400"
-        fill="none"
-        points={points.map((point) => `${point.x},${point.y}`).join(" ")}
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-
-      {points.map((point) => (
-        <Link
-          data-color="brand-300"
-          key={point.performance.workoutId}
-          params={{ workoutId: point.performance.workoutId }}
-          search={WorkoutHistoryFilters.default}
-          to="/workouts/$workoutId"
-        >
-          <title>
-            {t("statistics.exercise.progress.point", {
-              date: DateFormat.dayWithTime(language, DateFormat.zoned(point.performance.performedAt)),
-              load: WeightFormat.kilograms(point.performance.bestEstimate),
-            })}
-          </title>
-
-          <circle cx={point.x} cy={point.y} fill="currentColor" r="4" />
-        </Link>
-      ))}
-    </svg>
+      </svg>
+    </div>
   );
 }
