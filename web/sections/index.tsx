@@ -1,5 +1,6 @@
 export * from "./exercise-catalog";
 export * from "./exercise-category-add";
+export * from "./exercise-category-delete";
 export * from "./exercise-category-manage";
 export * from "./exercise-category-rename";
 export * from "./exercise-history";

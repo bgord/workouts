@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { catalogRoute } from "../router";
 import { ExerciseCategoryAdd } from "./exercise-category-add";
+import { ExerciseCategoryDelete } from "./exercise-category-delete";
 import { ExerciseCategoryRename } from "./exercise-category-rename";
 
 export function ExerciseCategoryManage() {
@@ -25,6 +26,8 @@ export function ExerciseCategoryManage() {
             ) : (
               <div data-grow="1">{category.name}</div>
             )}
+
+            {exerciseCategories.actions.delete.available && <ExerciseCategoryDelete {...category} />}
           </li>
         ))}
       </ul>
