@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { Tags } from "lucide-react";
 import { catalogRoute } from "../router";
 import { ExerciseCategoryAdd } from "./exercise-category-add";
 import { ExerciseCategoryDelete } from "./exercise-category-delete";
@@ -9,28 +10,68 @@ export function ExerciseCategoryManage() {
   const { exerciseCategories } = catalogRoute.useLoaderData();
 
   return (
-    <div className="c-card" data-gap="4" data-stack="y">
+    <section
+      className="c-card"
+      data-animation="grow-fade-in"
+      data-gap="4"
+      data-maxw="md"
+      data-stack="y"
+      data-width="100%"
+    >
+      <div data-cross="center" data-gap="2" data-stack="x">
+        <Tags data-color="neutral-400" data-size="sm" />
+
+        <div className="c-card-title" data-grow="1">
+          {t("exercise.category.manage.header")}
+        </div>
+
+        <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
+          {exerciseCategories.data.length}
+        </div>
+      </div>
+
       {exerciseCategories.actions.add.available && <ExerciseCategoryAdd />}
 
       {exerciseCategories.data.length === 0 && (
-        <div data-color="neutral-400" data-fs="sm">
-          {t("exercise.category.list.empty")}
+        <div data-cross="center" data-gap="1" data-py="6" data-stack="y">
+          <div data-color="neutral-300" data-fs="sm">
+            {t("exercise.category.list.empty")}
+          </div>
+
+          <div data-color="neutral-500" data-fs="xs">
+            {t("exercise.category.list.empty.hint")}
+          </div>
         </div>
       )}
 
-      <ul data-gap="2" data-stack="y">
-        {exerciseCategories.data.map((category) => (
-          <li data-cross="center" data-gap="3" data-stack="x" key={category.id}>
-            {exerciseCategories.actions.rename.available ? (
-              <ExerciseCategoryRename {...category} />
-            ) : (
-              <div data-grow="1">{category.name}</div>
-            )}
+      {exerciseCategories.data.length > 0 && (
+        <ul data-stack="y">
+          {exerciseCategories.data.map((category) => (
+            <li
+              data-bc="neutral-800"
+              data-br="sm"
+              data-bst="solid"
+              data-bwt="hairline"
+              data-cross="center"
+              data-gap="2"
+              data-hover-bg="alpha-subtle"
+              data-main="between"
+              data-px="2"
+              data-py="1-5"
+              data-stack="x"
+              key={category.id}
+            >
+              {exerciseCategories.actions.rename.available ? (
+                <ExerciseCategoryRename {...category} />
+              ) : (
+                <div data-fs="sm">{category.name}</div>
+              )}
 
-            {exerciseCategories.actions.delete.available && <ExerciseCategoryDelete {...category} />}
-          </li>
-        ))}
-      </ul>
-    </div>
+              {exerciseCategories.actions.delete.available && <ExerciseCategoryDelete {...category} />}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }
