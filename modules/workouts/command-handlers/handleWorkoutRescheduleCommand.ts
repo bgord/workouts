@@ -15,9 +15,14 @@ export const handleWorkoutRescheduleCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutRescheduleCommandType) => {
     const today = tools.Day.fromTimestamp(deps.Clock.now());
 
-    const horizon = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
+    const earliest = today.shift(v.parse(tools.Integer, -WorkoutScheduledForHorizonDaysMax)).toIsoId();
+    const latest = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
 
-    WorkoutScheduledForIsWithinHorizon.enforce({ scheduledFor: command.payload.scheduledFor, horizon });
+    WorkoutScheduledForIsWithinHorizon.enforce({
+      scheduledFor: command.payload.scheduledFor,
+      earliest,
+      latest,
+    });
 
     const workout = await deps.repo.load(command.payload.workoutId);
     command.revision.validate(workout.revision.value);

@@ -6,12 +6,13 @@ class WorkoutScheduledForIsWithinHorizonError extends Error {}
 
 type WorkoutScheduledForIsWithinHorizonConfigType = {
   scheduledFor: VO.WorkoutScheduledForType;
-  horizon: tools.DayIsoIdType;
+  earliest: tools.DayIsoIdType;
+  latest: tools.DayIsoIdType;
 };
 
 class WorkoutScheduledForIsWithinHorizonFactory extends bg.Invariant<WorkoutScheduledForIsWithinHorizonConfigType> {
   passes(config: WorkoutScheduledForIsWithinHorizonConfigType) {
-    return config.scheduledFor <= config.horizon;
+    return config.scheduledFor >= config.earliest && config.scheduledFor <= config.latest;
   }
 
   // Stryker disable next-line StringLiteral

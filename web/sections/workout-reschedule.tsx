@@ -67,6 +67,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         type="date"
         {...scheduledFor.input.props}
         max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+        min={Temporal.Now.plainDateISO().subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
       />
 
       <button

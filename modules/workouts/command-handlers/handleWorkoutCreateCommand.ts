@@ -24,9 +24,14 @@ export const handleWorkoutCreateCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutCreateCommandType) => {
     const today = tools.Day.fromTimestamp(deps.Clock.now());
 
-    const horizon = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
+    const earliest = today.shift(v.parse(tools.Integer, -WorkoutScheduledForHorizonDaysMax)).toIsoId();
+    const latest = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
 
-    WorkoutScheduledForIsWithinHorizon.enforce({ scheduledFor: command.payload.scheduledFor, horizon });
+    WorkoutScheduledForIsWithinHorizon.enforce({
+      scheduledFor: command.payload.scheduledFor,
+      earliest,
+      latest,
+    });
 
     const plan = await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId);
 
