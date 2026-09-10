@@ -15,8 +15,6 @@ export function WorkoutHistory() {
   );
 
   bg.useShortcuts({
-    [ShortcutDefinitions.ClearWorkoutFilters.trigger]: () =>
-      navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" }),
     [ShortcutDefinitions.OpenWorkout.trigger]: () => {
       if (matching[0]) {
         navigate({

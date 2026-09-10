@@ -27,17 +27,11 @@ export function ExerciseCatalog() {
     return byCategory && byName;
   });
 
-  const clear = () => {
-    name.clear();
-    navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
-  };
-
   bg.useShortcuts({
     [ShortcutDefinitions.SearchExercises.trigger]: (event) => {
       event.preventDefault();
       nameInput.current?.focus();
     },
-    [ShortcutDefinitions.ClearExerciseFilters.trigger]: clear,
     [ShortcutDefinitions.OpenExercise.trigger]: () => {
       if (matching[0]) {
         navigate({ params: { exerciseId: matching[0].id }, to: "/catalog/exercise/$exerciseId" });
@@ -73,7 +67,15 @@ export function ExerciseCatalog() {
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
-          <button className="c-button" data-variant="ghost" onClick={clear} type="button">
+          <button
+            className="c-button"
+            data-variant="ghost"
+            onClick={() => {
+              name.clear();
+              navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
+            }}
+            type="button"
+          >
             {t("app.clear")}
           </button>
         )}

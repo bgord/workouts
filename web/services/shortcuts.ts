@@ -13,22 +13,12 @@ export const ScheduleWorkout: ShortcutType = {
   trigger: "n",
   label: "workout.shortcuts.schedule",
 };
-export const ClearWorkoutFilters: ShortcutType = {
-  keys: "c",
-  trigger: "c",
-  label: "workout.shortcuts.clear",
-};
 export const OpenWorkout: ShortcutType = { keys: "o", trigger: "o", label: "workout.shortcuts.open" };
 
 export const SearchExercises: ShortcutType = {
   keys: "/",
   trigger: "/",
   label: "exercise.catalog.shortcuts.search",
-};
-export const ClearExerciseFilters: ShortcutType = {
-  keys: "c",
-  trigger: "c",
-  label: "exercise.catalog.shortcuts.clear",
 };
 export const OpenExercise: ShortcutType = {
   keys: "o",
@@ -38,6 +28,6 @@ export const OpenExercise: ShortcutType = {
 
 export const Global: Array<ShortcutType> = [GoToWorkouts, GoToCatalog, GoToPlans, ToggleHelp];
 
-export const Workouts: Array<ShortcutType> = [ScheduleWorkout, ClearWorkoutFilters, OpenWorkout];
+export const Workouts: Array<ShortcutType> = [ScheduleWorkout, OpenWorkout];
 
-export const Catalog: Array<ShortcutType> = [SearchExercises, ClearExerciseFilters, OpenExercise];
+export const Catalog: Array<ShortcutType> = [SearchExercises, OpenExercise];
