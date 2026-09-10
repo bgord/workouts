@@ -5,6 +5,7 @@ export * from "./button-close";
 export * from "./delta-kg";
 export * from "./exercise-card";
 export * from "./exercise-image";
+export * from "./kbd";
 export * from "./language-selector";
 export * from "./logo";
 export * from "./main";
