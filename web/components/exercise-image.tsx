@@ -19,17 +19,16 @@ const height: Record<ExerciseImageSize, number> = {
   [ExerciseImageSize.lg]: 240,
 };
 
-export function ExerciseImage(props: {
-  exercise: Pick<Exercise, "id" | "name" | "imageEtag">;
-  size: ExerciseImageSize;
-}) {
-  const src = props.exercise.imageEtag
-    ? `/api/exercises/${props.exercise.id}/image?etag=${props.exercise.imageEtag}`
-    : `/api/exercises/${props.exercise.id}/image`;
+type ExerciseImageProps = Pick<Exercise, "id" | "name" | "imageEtag"> & { size: ExerciseImageSize };
+
+export function ExerciseImage(props: ExerciseImageProps) {
+  const src = props.imageEtag
+    ? `/api/exercises/${props.id}/image?etag=${props.imageEtag}`
+    : `/api/exercises/${props.id}/image`;
 
   return (
     <img
-      alt={props.exercise.name}
+      alt={props.name}
       data-bg="neutral-0"
       data-br="sm"
       data-maxw="100%"

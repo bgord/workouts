@@ -32,7 +32,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           tabIndex={-1}
           to="/catalog/exercise/$exerciseId"
         >
-          <ExerciseImage exercise={exercise} size={ExerciseImageSize.sm} />
+          <ExerciseImage size={ExerciseImageSize.sm} {...exercise} />
         </Link>
 
         <div data-gap="2" data-grow="1" data-stack="y">

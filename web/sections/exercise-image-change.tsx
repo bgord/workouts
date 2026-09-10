@@ -43,14 +43,14 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
         type="button"
         {...change.props.controller}
       >
-        <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.lg} />
+        <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
       </button>
     );
   }
 
   return (
     <div data-gap="3" data-stack="y" {...change.props.target}>
-      <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.lg} />
+      <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
 
       <form data-gap="2" data-stack="y" encType="multipart/form-data" onSubmit={mutation.handleSubmit}>
         <div data-cross="center" data-gap="3" data-stack="x">

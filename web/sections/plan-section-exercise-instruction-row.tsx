@@ -37,7 +37,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         tabIndex={-1}
         to="/catalog/exercise/$exerciseId"
       >
-        <ExerciseImage exercise={exerciseInstruction.exercise} size={ExerciseImageSize.sm} />
+        <ExerciseImage size={ExerciseImageSize.sm} {...exerciseInstruction.exercise} />
       </Link>
 
       {change.on && (

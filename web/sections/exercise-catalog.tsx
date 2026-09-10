@@ -111,7 +111,7 @@ export function ExerciseCatalog() {
 
       <ul data-gap="4" data-stack="x">
         {matching.map((exercise) => (
-          <ExerciseCard exercise={exercise} key={exercise.id} />
+          <ExerciseCard key={exercise.id} {...exercise} />
         ))}
       </ul>
     </div>

@@ -73,7 +73,7 @@ export function Exercise() {
         {exercise.actions.imageChange.enabled ? (
           <ExerciseImageChange exercise={exercise.data} />
         ) : (
-          <ExerciseImage exercise={exercise.data} size={ExerciseImageSize.lg} />
+          <ExerciseImage size={ExerciseImageSize.lg} {...exercise.data} />
         )}
 
         {exercise.actions.categoryAssign.available ? (
