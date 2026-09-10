@@ -39,13 +39,14 @@ export function ExerciseAdd() {
       encType="multipart/form-data"
       onSubmit={mutation.handleSubmit}
     >
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-gap="3" data-stack="y">
         <label className="c-label" data-variant="inline" {...name.label.props}>
           {t("exercise.add.name.label")}
         </label>
 
         <input
           className="c-input"
+          data-mr="auto"
           placeholder={t("exercise.add.name.placeholder")}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}

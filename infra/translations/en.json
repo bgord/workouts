@@ -64,7 +64,7 @@
   "exercise.add.image.hint": "PNG, JPG or WebP, up to 10 MB and 4000 px per side",
   "exercise.add.image.selected": "Selected {{name}}",
   "exercise.add.name.label": "Exercise name",
-  "exercise.add.name.placeholder": "Bench Press Barbell Horizontal",
+  "exercise.add.name.placeholder": "Bench Press Horizontal",
   "exercise.add.submit.cta": "Add exercise",
   "exercise.catalog.count": "{{matching}} of {{total}}",
   "exercise.catalog.header": "Catalog",
