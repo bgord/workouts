@@ -14,5 +14,6 @@ export * from "./plan-status-badge";
 export * from "./reps-load";
 export * from "./select";
 export * from "./sets-reps";
+export * from "./sets-reps-load";
 export * from "./workout-card";
 export * from "./workout-status-badge";

@@ -29,10 +29,7 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
           </div>
 
           <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
-            {t("workout.exercise.logged_set", {
-              reps: loggedSet.reps,
-              load: loggedSet.load / GRAMS_IN_KILOGRAM,
-            })}
+            <RepsLoad load={loggedSet.load} reps={loggedSet.reps} />
           </div>
 
           <div data-stack="x">

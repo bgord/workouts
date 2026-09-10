@@ -174,7 +174,6 @@
   "workout.exercise.add.sets.label": "Serie",
   "workout.exercise.remove.title": "Usuń {{name}}",
   "workout.exercise.skipped": "Pominięte",
-  "workout.exercise.target": "{{sets}} × {{reps}} @ {{load}} kg",
   "workout.list.count": "{{matching}} z {{total}}",
   "workout.list.completed_at": "{{date}} · {{time}}",
   "workout.list.completed_on": "{{date}} · ukończono {{completed}}",
