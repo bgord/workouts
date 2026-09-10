@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { SearchX } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseCard } from "../components";
@@ -41,7 +42,7 @@ export function ExerciseCatalog() {
 
   return (
     <div data-gap="5" data-stack="y">
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
         <input
           className="c-input"
           id={ExerciseCatalogFiltersForm.Form.name.field.name}
@@ -62,13 +63,14 @@ export function ExerciseCatalog() {
           {...bg.Rhythm().times(20).style.width}
         />
 
-        <div data-color="neutral-400" data-fs="sm">
+        <div data-color="neutral-500" data-fs="sm" data-grow="1" data-transform="font-variant-numeric">
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
           <button
             className="c-button"
+            data-animation="grow-fade-in"
             data-variant="ghost"
             onClick={() => {
               name.clear();
@@ -81,7 +83,7 @@ export function ExerciseCatalog() {
         )}
       </div>
 
-      <ul data-gap="1" data-stack="x">
+      <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
         {exerciseCategories.data.map((category) => {
           const selected = search.category === category.id;
 
@@ -107,9 +109,21 @@ export function ExerciseCatalog() {
         })}
       </ul>
 
-      {matching.length === 0 && <div data-color="neutral-400">{t("exercise.catalog.no_matches")}</div>}
+      {matching.length === 0 && (
+        <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y">
+          <SearchX data-color="neutral-600" data-size="md" />
 
-      <ul data-gap="4" data-stack="x">
+          <div data-color="neutral-300" data-fs="sm" data-mt="2">
+            {t("exercise.catalog.no_matches")}
+          </div>
+
+          <div data-color="neutral-500" data-fs="xs">
+            {t("exercise.catalog.no_matches.hint")}
+          </div>
+        </div>
+      )}
+
+      <ul data-gap="3" data-stack="x" data-wrap="wrap">
         {matching.map((exercise) => (
           <ExerciseCard key={exercise.id} {...exercise} />
         ))}

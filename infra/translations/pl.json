@@ -72,6 +72,7 @@
   "exercise.catalog.header": "Katalog ćwiczeń",
   "exercise.catalog.name.placeholder": "Szukaj po nazwie",
   "exercise.catalog.no_matches": "Żadne ćwiczenie nie pasuje do filtrów",
+  "exercise.catalog.no_matches.hint": "Spróbuj innej nazwy lub kategorii",
   "exercise.catalog.shortcuts.open": "Otwórz pierwsze ćwiczenie",
   "exercise.catalog.shortcuts.search": "Ustaw kursor na wyszukiwaniu",
   "exercise.category.add.cta": "Nowa kategoria",

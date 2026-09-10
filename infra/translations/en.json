@@ -72,6 +72,7 @@
   "exercise.catalog.header": "Catalog",
   "exercise.catalog.name.placeholder": "Search by name",
   "exercise.catalog.no_matches": "No exercises match the filters",
+  "exercise.catalog.no_matches.hint": "Try another name or category",
   "exercise.catalog.shortcuts.open": "Open the first exercise",
   "exercise.catalog.shortcuts.search": "Focus the search",
   "exercise.category.add.cta": "New category",
