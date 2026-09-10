@@ -29,10 +29,11 @@ export function ExerciseCategoryRename(props: ExerciseCategory) {
   if (rename.off) {
     return (
       <button
-        data-color="neutral-0"
+        data-color="neutral-100"
         data-cursor="pointer"
-        data-grow="1"
-        data-self="start"
+        data-fs="sm"
+        data-hover-color="neutral-200"
+        data-transform="truncate"
         onClick={rename.enable}
         title={t("exercise.category.rename.cta")}
         type="button"
@@ -45,10 +46,11 @@ export function ExerciseCategoryRename(props: ExerciseCategory) {
 
   return (
     <form data-gap="2" data-grow="1" data-stack="y" onSubmit={mutation.handleSubmit} {...rename.props.target}>
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-gap="2" data-stack="x">
         <input
           aria-label={t("exercise.category.rename.label")}
           className="c-input"
+          data-grow="1"
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
