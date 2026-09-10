@@ -22,28 +22,16 @@ describe(`GET ${url}`, async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
-      spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute").mockResolvedValue({
-        data: [mocks.exerciseCategory],
-        actions: {
-          add: { available: false, enabled: false, hints: [] },
-          rename: { available: false, enabled: false, hints: [] },
-          delete: { available: false, enabled: false, hints: [] },
-        },
-      }),
+      spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute").mockResolvedValue(
+        mocks.exerciseCategoryListResponse,
+      ),
     );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({
-      data: [mocks.exerciseCategory],
-      actions: {
-        add: { available: false, enabled: false, hints: [] },
-        rename: { available: false, enabled: false, hints: [] },
-        delete: { available: false, enabled: false, hints: [] },
-      },
-    });
+    expect(json).toEqual(mocks.exerciseCategoryListResponse);
   });
 
   test("happy path - empty", async () => {
@@ -51,12 +39,8 @@ describe(`GET ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute").mockResolvedValue({
+        ...mocks.exerciseCategoryListResponse,
         data: [],
-        actions: {
-          add: { available: true, enabled: true, hints: [] },
-          rename: { available: true, enabled: true, hints: [] },
-          delete: { available: true, enabled: true, hints: [] },
-        },
       }),
     );
 
@@ -64,13 +48,6 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({
-      data: [],
-      actions: {
-        add: { available: true, enabled: true, hints: [] },
-        rename: { available: true, enabled: true, hints: [] },
-        delete: { available: true, enabled: true, hints: [] },
-      },
-    });
+    expect(json).toEqual({ ...mocks.exerciseCategoryListResponse, data: [] });
   });
 });

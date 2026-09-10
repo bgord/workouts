@@ -4,6 +4,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type { Session, User } from "better-auth";
 import * as v from "valibot";
+import type { ActionState } from "+action-state";
 import * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
@@ -97,6 +98,29 @@ export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
 export const exerciseWithCategories: Exercises.VO.ExerciseWithCategories = {
   ...exercise,
   categories: [exerciseCategory],
+};
+
+export const actionAvailable: ActionState = { available: true, enabled: true, hints: [] };
+
+export const exerciseListResponse: Exercises.Queries.ExerciseListResponse = {
+  data: [exerciseWithCategories],
+  actions: { add: actionAvailable },
+};
+
+export const exerciseCategoryListResponse: Exercises.Queries.ExerciseCategoryListResponse = {
+  data: [exerciseCategory],
+  actions: { add: actionAvailable, rename: actionAvailable, delete: actionAvailable },
+};
+
+export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
+  data: exerciseWithCategories,
+  actions: {
+    update: actionAvailable,
+    imageChange: actionAvailable,
+    delete: actionAvailable,
+    categoryAssign: actionAvailable,
+    categoryUnassign: actionAvailable,
+  },
 };
 
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");
