@@ -26,6 +26,7 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
       name: exercise.name,
       description: exercise.description,
       image: exercise.image,
+      imageEtag: exercise.imageEtag,
       categories: assignments
         .filter((assignment) => assignment.exerciseId === exercise.id)
         .map((assignment) => ({ id: assignment.id, name: assignment.name })),

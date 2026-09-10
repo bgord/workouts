@@ -37,6 +37,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         exerciseName: Schema.exercises.name,
         exerciseDescription: Schema.exercises.description,
         exerciseImage: Schema.exercises.image,
+        exerciseImageEtag: Schema.exercises.imageEtag,
       })
       .from(Schema.planSectionExerciseInstructions)
       .innerJoin(Schema.exercises, eq(Schema.planSectionExerciseInstructions.exerciseId, Schema.exercises.id))
@@ -70,6 +71,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
                 name: exerciseInstruction.exerciseName,
                 description: exerciseInstruction.exerciseDescription,
                 image: exerciseInstruction.exerciseImage,
+                imageEtag: exerciseInstruction.exerciseImageEtag,
               },
               sets: exerciseInstruction.sets,
               reps: v.parse(Plans.VO.Reps, {

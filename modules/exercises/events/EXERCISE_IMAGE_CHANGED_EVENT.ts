@@ -9,7 +9,12 @@ export const EXERCISE_IMAGE_CHANGED_EVENT = "EXERCISE_IMAGE_CHANGED_EVENT";
 export const ExerciseImageChangedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(EXERCISE_IMAGE_CHANGED_EVENT),
-  payload: v.object({ id: VO.ExerciseId, image: tools.ObjectKey, requesterId: Auth.VO.UserId }),
+  payload: v.object({
+    id: VO.ExerciseId,
+    image: tools.ObjectKey,
+    imageEtag: bg.HashValue,
+    requesterId: Auth.VO.UserId,
+  }),
 });
 
 export type ExerciseImageChangedEventType = v.InferOutput<typeof ExerciseImageChangedEvent>;

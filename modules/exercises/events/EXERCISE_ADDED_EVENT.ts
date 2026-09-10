@@ -14,6 +14,7 @@ export const ExerciseAddedEvent = v.object({
     name: VO.ExerciseName,
     description: VO.ExerciseDescription,
     image: tools.ObjectKey,
+    imageEtag: bg.HashValue,
     userId: Auth.VO.UserId,
   }),
 });

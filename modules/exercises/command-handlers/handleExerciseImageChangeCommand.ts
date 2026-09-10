@@ -52,13 +52,18 @@ export const handleExerciseImageChangeCommand =
     });
 
     const key = ExerciseImageKeyFactory.stable(command.payload.id);
-    await deps.RemoteFileStorage.putFromPath({ key, path: final });
+    const object = await deps.RemoteFileStorage.putFromPath({ key, path: final });
     await deps.TemporaryFile.cleanup(final.getFilename());
 
     const event = bg.event(
       ExerciseImageChangedEvent,
       `exercise_${command.payload.id}`,
-      { id: command.payload.id, image: key, requesterId: command.payload.requesterId },
+      {
+        id: command.payload.id,
+        image: key,
+        imageEtag: object.etag.get(),
+        requesterId: command.payload.requesterId,
+      },
       deps,
     );
 

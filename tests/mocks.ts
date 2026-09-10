@@ -56,6 +56,9 @@ export const exerciseDescription = v.parse(
   "Press the barbell upwards, while lying on the horizontal bench.",
 );
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
+export const exerciseImageEtag = bg.Hash.fromString(
+  "0000000000000000000000000000000000000000000000000000000000000000",
+).get();
 
 export const anotherExerciseId = v.parse(Exercises.VO.ExerciseId, "5cd386ef-8f86-4ead-b845-d69159e2aeb0");
 
@@ -71,6 +74,7 @@ export const exercise: Exercises.VO.Exercise = {
   name: exerciseName,
   description: exerciseDescription,
   image: exerciseImageKey,
+  imageEtag: exerciseImageEtag,
 };
 
 export const exerciseCategoryId = v.parse(
@@ -503,6 +507,7 @@ export const GenericExerciseAddedEvent = {
     name: exerciseName,
     description: exerciseDescription,
     image: exerciseImageKey,
+    imageEtag: exerciseImageEtag,
     userId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseAddedEventType;
@@ -574,7 +579,12 @@ export const GenericExerciseImageChangedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_IMAGE_CHANGED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey, requesterId: Auth.VO.ADMIN_USER_ID },
+  payload: {
+    id: exerciseId,
+    image: exerciseImageKey,
+    imageEtag: exerciseImageEtag,
+    requesterId: Auth.VO.ADMIN_USER_ID,
+  },
 } satisfies Exercises.Events.ExerciseImageChangedEventType;
 
 export const GenericExerciseCategoryAddedEvent = {

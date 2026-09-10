@@ -40,6 +40,7 @@ export class ExercisesProjector {
       name: event.payload.name,
       description: event.payload.description,
       image: event.payload.image,
+      imageEtag: event.payload.imageEtag,
       userId: event.payload.userId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
@@ -56,7 +57,11 @@ export class ExercisesProjector {
   async onExerciseImageChangedEvent(event: Exercises.Events.ExerciseImageChangedEventType) {
     await db
       .update(Schema.exercises)
-      .set({ image: event.payload.image, updatedAt: event.createdAt })
+      .set({
+        image: event.payload.image,
+        imageEtag: event.payload.imageEtag,
+        updatedAt: event.createdAt,
+      })
       .where(eq(Schema.exercises.id, event.payload.id));
   }
 

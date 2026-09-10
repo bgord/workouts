@@ -52,7 +52,7 @@ export const handleExerciseAddCommand =
     });
 
     const key = ExerciseImageKeyFactory.stable(command.payload.id);
-    await deps.RemoteFileStorage.putFromPath({ key, path: final });
+    const object = await deps.RemoteFileStorage.putFromPath({ key, path: final });
     await deps.TemporaryFile.cleanup(final.getFilename());
 
     const event = bg.event(
@@ -63,6 +63,7 @@ export const handleExerciseAddCommand =
         name: command.payload.name,
         description: command.payload.description,
         image: key,
+        imageEtag: object.etag.get(),
         userId: command.payload.userId,
       },
       deps,
