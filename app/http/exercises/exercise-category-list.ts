@@ -5,8 +5,10 @@ type Dependencies = { ListExerciseCategoriesQuery: Exercises.Queries.ListExercis
 
 export const ExerciseCategoryList =
   (deps: Dependencies): bg.EndpointPort =>
-  async () => {
-    const exerciseCategories = await deps.ListExerciseCategoriesQuery.execute();
+  async (context) => {
+    const requesterId = context.identity.authenticatedUserId();
+
+    const exerciseCategories = await deps.ListExerciseCategoriesQuery.execute(requesterId);
 
     return Response.json(exerciseCategories);
   };
