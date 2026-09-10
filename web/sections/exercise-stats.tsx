@@ -1,6 +1,6 @@
 import { Rhythm, useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { CalendarCheck, Sigma, Trophy } from "lucide-react";
+import { CalendarCheck, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import { RepsLoad } from "../components/reps-load";
@@ -45,7 +45,10 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
             data-transform="uppercase"
           >
             <Trophy data-color="brand-400" data-size="xs" />
-            {t("statistics.exercise.one_rep_max_estimate")}
+            <div data-cross="center" data-stack="x">
+              <EqualApproximately data-color="neutral-600" data-size="xs" />
+              {t("statistics.exercise.one_rep_max_estimate")}
+            </div>
           </div>
 
           <div data-color="neutral-0" data-fs="xl" data-fw="bold" data-lh="tight">

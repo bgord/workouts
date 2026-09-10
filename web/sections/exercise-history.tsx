@@ -89,20 +89,6 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
             data-stack="x"
           >
             <div data-cross="center" data-gap="1-5" data-stack="x">
-              <Sigma data-color="neutral-600" data-size="xs" />
-
-              <span data-color="neutral-300" data-fs="sm" data-fw="medium">
-                {t("statistics.exercise.history.volume_load.value", {
-                  load: WeightFormat.kilograms(performance.volume),
-                })}
-              </span>
-
-              <span data-fs="xs">
-                <DeltaKg current={performance.volume} previous={performances[index + 1]?.volume} />
-              </span>
-            </div>
-
-            <div data-cross="center" data-gap="1-5" data-stack="x">
               <EqualApproximately data-color="neutral-600" data-size="xs" />
 
               <span data-color="neutral-300" data-fs="sm" data-fw="medium">
@@ -116,6 +102,20 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
                   current={performance.bestEstimate}
                   previous={performances[index + 1]?.bestEstimate}
                 />
+              </span>
+            </div>
+
+            <div data-cross="center" data-gap="1-5" data-stack="x">
+              <Sigma data-color="neutral-600" data-size="xs" />
+
+              <span data-color="neutral-300" data-fs="sm" data-fw="medium">
+                {t("statistics.exercise.history.volume_load.value", {
+                  load: WeightFormat.kilograms(performance.volume),
+                })}
+              </span>
+
+              <span data-fs="xs">
+                <DeltaKg current={performance.volume} previous={performances[index + 1]?.volume} />
               </span>
             </div>
           </div>

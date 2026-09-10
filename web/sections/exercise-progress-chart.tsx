@@ -1,5 +1,6 @@
 // cSpell:ignore GRIDLINE GRIDLINES
 import { useLanguage, useTranslations } from "@bgord/ui";
+import { EqualApproximately } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
@@ -57,7 +58,14 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
         <div className="c-card-title">{t("statistics.exercise.progress")}</div>
 
-        <div data-color="neutral-500" data-fs="xs" data-transform="uppercase">
+        <div
+          data-stack="x"
+          data-cross="center"
+          data-color="neutral-500"
+          data-fs="xs"
+          data-transform="uppercase"
+        >
+          <EqualApproximately data-color="neutral-600" data-size="xs" />
           {t("statistics.exercise.one_rep_max_estimate")}
         </div>
       </div>
