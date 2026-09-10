@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { ActionHint, Select } from "../components";
+import { ActionHint, ButtonCancel, Select } from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -10,6 +10,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exerciseCategories } = exerciseRoute.useLoaderData();
+  const assignment = bg.useToggle({ name: "exercise-category-assign" });
 
   const assigned = props.exercise.data.categories;
   const assignable = exerciseCategories.data.filter(
@@ -33,25 +34,62 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
           exerciseCategoryId: exerciseCategoryId.value,
         }),
       }),
-    onSuccess: refresh,
+    onSuccess: bg.exec([refresh, assignment.disable]),
   });
 
+  const assignActionAvailable = props.exercise.actions.categoryAssign.available && assignable.length > 0;
+
   return (
-    <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
-      <ul data-gap="1" data-stack="x">
-        {assigned.map((category) => (
-          <li className="c-badge" data-cross="center" data-gap="1" data-variant="outline" key={category.id}>
-            {category.name}
+    <div data-gap="2" data-stack="y">
+      <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
+        {t("exercise.categories.header")}
+      </div>
 
-            {props.exercise.actions.categoryUnassign.available && (
-              <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
-            )}
-          </li>
-        ))}
-      </ul>
+      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
+        <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
+          {assigned.map((category) => (
+            <li className="c-badge" data-cross="center" data-gap="1" data-variant="outline" key={category.id}>
+              {category.name}
 
-      {props.exercise.actions.categoryAssign.available && assignable.length > 0 && (
-        <form data-cross="center" data-gap="2" data-stack="x" onSubmit={assign.handleSubmit}>
+              {props.exercise.actions.categoryUnassign.available && (
+                <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
+              )}
+            </li>
+          ))}
+
+          {assigned.length === 0 && (
+            <li data-color="neutral-500" data-fs="sm">
+              {t("exercise.categories.empty")}
+            </li>
+          )}
+        </ul>
+
+        {assignActionAvailable && assignment.off && (
+          <button
+            className="c-button"
+            data-variant="ghost"
+            disabled={!props.exercise.actions.categoryAssign.enabled}
+            onClick={assignment.enable}
+            type="button"
+            {...assignment.props.controller}
+          >
+            <Plus data-size="sm" />
+            {t("exercise.category.assign.cta")}
+          </button>
+        )}
+
+        <ActionHint action={props.exercise.actions.categoryAssign} />
+      </div>
+
+      {assignActionAvailable && assignment.on && (
+        <form
+          data-animation="grow-fade-in"
+          data-cross="center"
+          data-gap="2"
+          data-stack="x"
+          onSubmit={assign.handleSubmit}
+          {...assignment.props.target}
+        >
           <Select
             aria-label={t("exercise.category.assign.label")}
             disabled={!props.exercise.actions.categoryAssign.enabled}
@@ -66,15 +104,14 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
 
           <button
             className="c-button"
-            data-variant="ghost"
+            data-variant="secondary"
             disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
             type="submit"
           >
-            <Plus data-size="sm" />
             {t("exercise.category.assign.cta")}
           </button>
 
-          <ActionHint action={props.exercise.actions.categoryAssign} />
+          <ButtonCancel onClick={bg.exec([assign.reset, assignment.disable])} />
         </form>
       )}
 
