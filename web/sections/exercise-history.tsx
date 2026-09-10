@@ -1,6 +1,6 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronRight, EqualApproximately, Sigma } from "lucide-react";
+import { ChevronRight, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import { DeltaKg } from "../components/delta-kg";
@@ -13,6 +13,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
   const language = useLanguage();
 
   const performances = props.performances.toReversed();
+  const record = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
 
   return (
     <ul data-gap="5" data-stack="y">
@@ -22,7 +23,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
             <Link
               className="c-card-title"
               data-cross="center"
-              data-gap="1"
+              data-gap="2"
               data-hover-color="brand-300"
               data-stack="x"
               params={{ workoutId: performance.workoutId }}
@@ -32,6 +33,15 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
               {DateFormat.dayWithTime(language, DateFormat.zoned(performance.performedAt))}
 
               <ChevronRight data-size="sm" />
+
+              {performance.workoutId === record?.workoutId && (
+                <Trophy
+                  aria-label={t("statistics.exercise.one_rep_max_estimate")}
+                  data-color="brand-300"
+                  data-ml="auto"
+                  data-size="xs"
+                />
+              )}
             </Link>
           </div>
 
