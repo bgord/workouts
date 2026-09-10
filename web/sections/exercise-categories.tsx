@@ -40,36 +40,18 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
   const assignActionAvailable = props.exercise.actions.categoryAssign.available && assignable.length > 0;
 
   return (
-    <div data-gap="2" data-stack="y">
-      <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-        {t("exercise.categories.header")}
-      </div>
+    <div data-gap="3" data-stack="y">
+      <div data-cross="center" data-main="between" data-gap="3" data-stack="x" data-wrap="wrap">
+        <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
+          {t("exercise.categories.header")}
+        </div>
 
-      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
-        <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
-          {assigned.map((category) => (
-            <li className="c-badge" data-cross="center" data-gap="1" data-variant="outline" key={category.id}>
-              {category.name}
-
-              {props.exercise.actions.categoryUnassign.available && (
-                <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
-              )}
-            </li>
-          ))}
-
-          {assigned.length === 0 && (
-            <li data-color="neutral-500" data-fs="sm">
-              {t("exercise.categories.empty")}
-            </li>
-          )}
-        </ul>
-
-        {assignActionAvailable && assignment.off && (
+        {assignActionAvailable && (
           <button
             className="c-button"
             data-variant="ghost"
             disabled={!props.exercise.actions.categoryAssign.enabled}
-            onClick={assignment.enable}
+            onClick={assignment.toggle}
             type="button"
             {...assignment.props.controller}
           >
@@ -77,8 +59,6 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
             {t("exercise.category.assign.cta")}
           </button>
         )}
-
-        <ActionHint action={props.exercise.actions.categoryAssign} />
       </div>
 
       {assignActionAvailable && assignment.on && (
@@ -86,6 +66,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
           data-animation="grow-fade-in"
           data-cross="center"
           data-gap="2"
+          data-mb="2"
           data-stack="x"
           onSubmit={assign.handleSubmit}
           {...assignment.props.target}
@@ -114,6 +95,24 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
           <ButtonCancel onClick={bg.exec([assign.reset, assignment.disable])} />
         </form>
       )}
+
+      <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
+        {assigned.map((category) => (
+          <li className="c-badge" data-cross="center" data-gap="1" data-variant="outline" key={category.id}>
+            {category.name}
+
+            {props.exercise.actions.categoryUnassign.available && (
+              <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
+            )}
+          </li>
+        ))}
+
+        {assigned.length === 0 && (
+          <li data-color="neutral-500" data-fs="sm">
+            {t("exercise.categories.empty")}
+          </li>
+        )}
+      </ul>
 
       {assign.isError && (
         <output data-color="danger-400" data-fs="sm">

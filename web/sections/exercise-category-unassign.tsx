@@ -27,7 +27,9 @@ export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; ca
   return (
     <button
       data-color="neutral-400"
+      data-cross="center"
       data-cursor="pointer"
+      data-disp="flex"
       data-hover-color="danger-400"
       disabled={mutation.isLoading}
       onClick={() => mutation.mutate()}

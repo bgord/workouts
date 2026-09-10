@@ -76,7 +76,7 @@ export function Exercise() {
           <ExerciseImage size={ExerciseImageSize.lg} {...exercise.data} />
         )}
 
-        <div data-gap="5" data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.minWidth}>
+        <div data-gap="5" data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width}>
           {exercise.actions.categoryAssign.available ? (
             <ExerciseCategories exercise={exercise} />
           ) : (

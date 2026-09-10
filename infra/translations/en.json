@@ -79,7 +79,7 @@
   "exercise.category.add.name.label": "Category name",
   "exercise.category.add.name.placeholder": "Upper Chest",
   "exercise.category.add.submit.cta": "Add",
-  "exercise.category.assign.blocked.limit": "Unassign a category to add another one",
+  "exercise.category.assign.blocked.limit": "Up to 4 categories available",
   "exercise.category.assign.cta": "Assign",
   "exercise.category.assign.error": "Could not change the categories",
   "exercise.category.assign.label": "Category to assign",
