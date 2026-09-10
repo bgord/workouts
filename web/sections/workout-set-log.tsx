@@ -5,8 +5,7 @@ import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
-
-const GRAMS_IN_KILOGRAM = 1000;
+import { WeightFormat } from "../services/weight-format";
 
 export function WorkoutSetLog(props: {
   workout: Workout;
@@ -24,7 +23,7 @@ export function WorkoutSetLog(props: {
   const load = bg.useNumberField({
     name: `logged-load-${props.exercise.id}`,
     defaultValue: props.exercise.target
-      ? props.exercise.target.load / GRAMS_IN_KILOGRAM
+      ? WeightFormat.kilograms(props.exercise.target.load)
       : bg.NumberField.EMPTY,
   });
 
@@ -36,7 +35,7 @@ export function WorkoutSetLog(props: {
         headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.workout.revision) },
         body: JSON.stringify({
           reps: reps.value,
-          load: Math.round((load.value ?? 0) * GRAMS_IN_KILOGRAM),
+          load: WeightFormat.grams(load.value ?? 0),
         }),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),

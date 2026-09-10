@@ -1,14 +1,10 @@
-import { useTranslations } from "@bgord/ui";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
+import { RepsLoad } from "../components/reps-load";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
-const GRAMS_IN_KILOGRAM = 1000;
-
 export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExercise }) {
-  const t = useTranslations();
-
   if (props.exercise.loggedSets.length === 0) return null;
 
   return (
