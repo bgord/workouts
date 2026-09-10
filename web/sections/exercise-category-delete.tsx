@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleAlert, CircleX } from "lucide-react";
+import { CircleAlert, Trash2 } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import { ButtonCancel, ButtonClose } from "../components";
 import { catalogRoute } from "../router";
@@ -24,15 +24,15 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
     <>
       <button
         className="c-button"
-        data-color="neutral-400"
+        data-color="neutral-500"
         data-hover-color="danger-400"
-        data-variant="ghost"
+        data-variant="icon"
         onClick={dialog.enable}
         title={t("exercise.category.delete.title", { name: props.name })}
         type="button"
         {...dialog.props.controller}
       >
-        <CircleX data-size="sm" />
+        <Trash2 data-size="sm" />
       </button>
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
