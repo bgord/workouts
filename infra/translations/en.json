@@ -67,6 +67,8 @@
   "exercise.category.add.name.label": "Category name",
   "exercise.category.add.name.placeholder": "Upper Chest",
   "exercise.category.add.submit.cta": "Add",
+  "exercise.category.list.empty": "No categories yet",
+  "exercise.category.manage.cta": "Manage categories",
   "exercise.sets_reps": "{{sets}} × {{reps}}",
   "exercise.reps_load": "{{reps}} × {{load}} kg",
   "exercise.sets_reps_load": "{{sets}} × {{reps}} @ {{load}} kg",
