@@ -1,9 +1,10 @@
 import * as v from "valibot";
+import { ExerciseNameMax, ExerciseNameMin } from "./exercise-name.validation";
 
 export const ExerciseNameError = { Type: "exercise.name.type", Invalid: "exercise.name.invalid" };
 
 // 3 to 64 letters or digits, and spaces allowed
-const CHARS_WHITELIST = /^[a-zA-Z0-9 ]{3,64}$/;
+const CHARS_WHITELIST = new RegExp(`^[a-zA-Z0-9 ]{${ExerciseNameMin},${ExerciseNameMax}}$`);
 
 export const ExerciseName = v.pipe(
   v.string(ExerciseNameError.Type),

@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import { ExerciseDescriptionMax, ExerciseDescriptionMin } from "./exercise-description.validation";
 
 export const ExerciseDescriptionError = {
   Type: "exercise.description.type",
@@ -6,7 +7,7 @@ export const ExerciseDescriptionError = {
 };
 
 // 3 to 256 letters or digits, or spaces, commas, and dots allowed
-const CHARS_WHITELIST = /^[a-zA-Z0-9,. ]{3,256}$/;
+const CHARS_WHITELIST = new RegExp(`^[a-zA-Z0-9,. ]{${ExerciseDescriptionMin},${ExerciseDescriptionMax}}$`);
 
 export const ExerciseDescription = v.pipe(
   v.string(ExerciseDescriptionError.Type),

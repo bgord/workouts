@@ -133,6 +133,7 @@ modules/
 │       ├── exercise-category-name.validation.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
+│       ├── exercise-description.validation.ts
 │       ├── exercise-id.ts
 │       ├── exercise-image-key.ts
 │       ├── exercise-image-max-side.ts
@@ -140,6 +141,7 @@ modules/
 │       ├── exercise-image-mime-registry.ts
 │       ├── exercise-image-side.ts
 │       ├── exercise-name.ts
+│       ├── exercise-name.validation.ts
 │       ├── exercise-with-categories.ts
 │       ├── exercise.ts
 ├── languages.ts
@@ -429,6 +431,7 @@ app/
 │       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
+    ├── exercise-add-form.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
