@@ -14,7 +14,11 @@ import { WorkoutSetLog } from "./workout-set-log";
 export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise }) {
   const t = useTranslations();
 
-  const exercise = { id: props.exercise.exerciseId, name: props.exercise.exerciseName };
+  const exercise = {
+    id: props.exercise.exerciseId,
+    name: props.exercise.exerciseName,
+    imageEtag: props.exercise.exerciseImageEtag,
+  };
 
   const skipped =
     props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
