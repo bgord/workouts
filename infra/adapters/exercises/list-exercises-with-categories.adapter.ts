@@ -1,10 +1,11 @@
 import { asc, eq } from "drizzle-orm";
-import type * as Exercises from "+exercises";
+import type * as Auth from "+auth";
+import * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListExercisesWithCategories {
-  async execute(): Promise<ReadonlyArray<Exercises.VO.ExerciseWithCategories>> {
+  async execute(requesterId: Auth.VO.UserIdType): Promise<Exercises.Queries.ExerciseListResponse> {
     const exercises = await db.select().from(Schema.exercises).orderBy(asc(Schema.exercises.name));
 
     const assignments = await db
@@ -20,7 +21,7 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
       )
       .orderBy(asc(Schema.exerciseCategories.name));
 
-    return exercises.map((exercise) => ({
+    const data = exercises.map((exercise) => ({
       id: exercise.id,
       name: exercise.name,
       description: exercise.description,
@@ -29,6 +30,10 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
         .filter((assignment) => assignment.exerciseId === exercise.id)
         .map((assignment) => ({ id: assignment.id, name: assignment.name })),
     }));
+
+    const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });
+
+    return { data, actions: { add: { available: managed, enabled: managed, hints: [] } } };
   }
 }
 
