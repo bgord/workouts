@@ -11,7 +11,7 @@ import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise }) {
+export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise; position: number }) {
   const t = useTranslations();
 
   const exercise = {
@@ -24,8 +24,12 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
     props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
 
   return (
-    <li className="c-card">
-      <div data-cross="center" data-gap="4" data-stack="x">
+    <li className="c-card" data-gap="3" data-p="4">
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
+          {props.position}
+        </div>
+
         <Link
           aria-hidden
           params={{ exerciseId: props.exercise.exerciseId }}
@@ -35,7 +39,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           <ExerciseImage size={ExerciseImageSize.sm} {...exercise} />
         </Link>
 
-        <div data-gap="2" data-grow="1" data-stack="y">
+        <div data-gap="1" data-grow="1" data-stack="y" data-transform="truncate">
           <Link
             className="c-card-title"
             data-hover-color="brand-300"
@@ -47,7 +51,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
             {props.exercise.exerciseName}
           </Link>
 
-          <div data-cross="center" data-gap="3" data-stack="x">
+          <div data-cross="center" data-gap="2" data-stack="x">
             <div className="c-card-description" data-ls="wide" data-transform="nowrap">
               <SetsReps {...props.exercise.prescription} />
             </div>
@@ -56,7 +60,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
               <div
                 className="c-badge"
                 data-color={skipped ? "neutral-400" : "neutral-200"}
-                data-fs="sm"
+                data-fs="xs"
                 data-transform="nowrap"
                 data-variant={skipped ? "outline" : "primary"}
               >

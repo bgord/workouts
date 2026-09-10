@@ -42,8 +42,8 @@ export function Workout() {
 
   return (
     <Main>
-      <div data-gap="6" data-stack="y">
-        <div data-cross="center" data-gap="2" data-main="between" data-stack="x">
+      <div data-gap="4" data-stack="y">
+        <div data-cross="center" data-gap="2" data-stack="x">
           <Link
             aria-label={t("app.back")}
             className="c-button"
@@ -57,7 +57,7 @@ export function Workout() {
             <ChevronLeft data-size="md" />
           </Link>
 
-          <div data-gap="3" data-grow="1" data-stack="y">
+          <div data-gap="0-5" data-grow="1" data-stack="y" data-transform="truncate">
             <h1
               data-color="neutral-0"
               data-fs="2xl"
@@ -71,7 +71,7 @@ export function Workout() {
             {workout.actions.reschedule.available ? (
               <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
             ) : (
-              <div data-color="neutral-400" data-fs="sm">
+              <div data-color="neutral-500" data-fs="xs">
                 {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
               </div>
             )}
@@ -80,21 +80,24 @@ export function Workout() {
           <WorkoutStatusBadge status={workout.data.status} />
         </div>
 
-        <div data-cross="center" data-gap="3" data-stack="x">
-          {workout.data.completedAt && (
-            <div data-color="neutral-400" data-fs="sm">
-              {t("workout.completed_at", {
-                date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
-              })}
-            </div>
-          )}
+        <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
+          <div data-cross="center" data-gap="2" data-grow="1" data-stack="x" data-wrap="wrap">
+            {workout.actions.start.available && (
+              <WorkoutStart action={workout.actions.start} {...workout.data} />
+            )}
+            {workout.actions.complete.available && (
+              <WorkoutComplete action={workout.actions.complete} {...workout.data} />
+            )}
 
-          {workout.actions.start.available && (
-            <WorkoutStart action={workout.actions.start} {...workout.data} />
-          )}
-          {workout.actions.complete.available && (
-            <WorkoutComplete action={workout.actions.complete} {...workout.data} />
-          )}
+            {workout.data.completedAt && (
+              <div data-color="neutral-500" data-fs="sm">
+                {t("workout.completed_at", {
+                  date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
+                })}
+              </div>
+            )}
+          </div>
+
           {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
         </div>
 
@@ -104,8 +107,13 @@ export function Workout() {
       </div>
 
       <ul data-gap="3" data-stack="y">
-        {workout.data.exercises.map((exercise) => (
-          <WorkoutExerciseRow exercise={exercise} key={exercise.id} workout={workout.data} />
+        {workout.data.exercises.map((exercise, position) => (
+          <WorkoutExerciseRow
+            exercise={exercise}
+            key={exercise.id}
+            position={position + 1}
+            workout={workout.data}
+          />
         ))}
       </ul>
 

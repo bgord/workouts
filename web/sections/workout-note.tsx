@@ -30,6 +30,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
   return (
     <form
       data-gap="2"
+      data-mt="2"
       data-stack="y"
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) focus.disable();

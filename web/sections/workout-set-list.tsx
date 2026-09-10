@@ -17,11 +17,11 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
           data-bwt={index > 0 ? "hairline" : undefined}
           data-cross="center"
           data-gap="3"
-          data-py="2"
+          data-py="1-5"
           data-stack="x"
           key={loggedSet.id}
         >
-          <div className="c-badge" data-variant="outline">
+          <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
             {loggedSet.setNumber}
           </div>
 
