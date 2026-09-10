@@ -54,6 +54,7 @@ export class WorkoutLoggedSetsProjector {
       workoutId: event.payload.workoutId,
       reps: event.payload.loggedSet.reps,
       load: event.payload.loggedSet.load,
+      rir: event.payload.loggedSet.rir ?? null,
       userId: event.payload.requesterId,
       createdAt: event.createdAt,
     });
@@ -62,7 +63,11 @@ export class WorkoutLoggedSetsProjector {
   async onWorkoutSetCorrectedEvent(event: Workouts.Events.WorkoutSetCorrectedEventType) {
     await db
       .update(Schema.workoutLoggedSets)
-      .set({ reps: event.payload.loggedSet.reps, load: event.payload.loggedSet.load })
+      .set({
+        reps: event.payload.loggedSet.reps,
+        load: event.payload.loggedSet.load,
+        rir: event.payload.loggedSet.rir ?? null,
+      })
       .where(eq(Schema.workoutLoggedSets.id, event.payload.loggedSet.id));
   }
 

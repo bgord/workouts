@@ -20,6 +20,7 @@ import type { SetsType } from "../modules/plans/value-objects/sets";
 import type { LoadType } from "../modules/workouts/value-objects/load";
 import type { LoggedSetIdType } from "../modules/workouts/value-objects/logged-set-id";
 import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-objects/reps";
+import type { RirType } from "../modules/workouts/value-objects/rir";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
@@ -282,6 +283,7 @@ export const workoutLoggedSets = sqliteTable(
     workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
     reps: integer("reps", { mode: "number" }).notNull().$type<WorkoutRepsType>(),
     load: integer("load", { mode: "number" }).notNull().$type<LoadType>(),
+    rir: integer("rir", { mode: "number" }).$type<RirType>(),
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
     createdAt: timestamp("createdAt").notNull(),
   },
