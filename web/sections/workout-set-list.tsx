@@ -1,6 +1,7 @@
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { RepsLoad } from "../components/reps-load";
+import { RirBadge } from "../components/rir-badge";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
@@ -24,9 +25,11 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
             {loggedSet.setNumber}
           </div>
 
-          <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
-            <RepsLoad load={loggedSet.load} reps={loggedSet.reps} rir={loggedSet.rir} />
+          <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+            <RepsLoad load={loggedSet.load} reps={loggedSet.reps} />
           </div>
+
+          <div data-grow="1">{loggedSet.rir !== undefined && <RirBadge rir={loggedSet.rir} />}</div>
 
           <div data-stack="x">
             {loggedSet.actions.correct.available && (

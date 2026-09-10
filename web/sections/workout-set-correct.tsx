@@ -102,7 +102,7 @@ export function WorkoutSetCorrect(props: {
         placeholder={t("workout.set.rir.label")}
         type="number"
         {...rir.input.props}
-        {...bg.Rhythm(56).times(1).style.width}
+        {...bg.Rhythm(72).times(1).style.width}
       />
 
       <button

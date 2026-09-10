@@ -5,6 +5,7 @@ import { Form as WorkoutHistoryFilters } from "../../app/services/workout-histor
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import { DeltaKg } from "../components/delta-kg";
 import { RepsLoad } from "../components/reps-load";
+import { RirBadge } from "../components/rir-badge";
 import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
@@ -61,9 +62,11 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
                   {set.setNumber}
                 </div>
 
-                <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
-                  <RepsLoad load={set.load} reps={set.reps} rir={set.rir} />
+                <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+                  <RepsLoad load={set.load} reps={set.reps} />
                 </div>
+
+                <div data-grow="1">{set.rir !== undefined && <RirBadge rir={set.rir} />}</div>
 
                 <div data-color="neutral-500" data-fs="xs">
                   {t("statistics.exercise.one_rep_max_estimate.value", {
