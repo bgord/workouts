@@ -89,7 +89,6 @@ export const exerciseRoute = createRoute({
   loader: async ({ context, params }) => ({
     exercise: await Exercises.get(context.request, params),
     exerciseCategories: await Exercises.listCategories(context.request),
-    exerciseImageEtag: await Exercises.getImageEtag(context.request, params),
     performances: await Statistics.getExercisePerformances(context.request, params),
   }),
 });

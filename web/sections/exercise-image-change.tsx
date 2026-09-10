@@ -10,7 +10,6 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
   const t = bg.useTranslations();
   const router = useRouter();
   const change = bg.useToggle({ name: "exercise-image-change" });
-  const { exerciseImageEtag } = exerciseRoute.useLoaderData();
 
   const image = bg.useFile("exercise-image-change-file", { mimeTypes, maxSizeBytes: 10_000_000 });
 
@@ -44,14 +43,14 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
         type="button"
         {...change.props.controller}
       >
-        <ExerciseImage etag={exerciseImageEtag} exercise={props.exercise} size={ExerciseImageSize.lg} />
+        <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.lg} />
       </button>
     );
   }
 
   return (
     <div data-gap="3" data-stack="y" {...change.props.target}>
-      <ExerciseImage etag={exerciseImageEtag} exercise={props.exercise} size={ExerciseImageSize.lg} />
+      <ExerciseImage exercise={props.exercise} size={ExerciseImageSize.lg} />
 
       <form data-gap="2" data-stack="y" encType="multipart/form-data" onSubmit={mutation.handleSubmit}>
         <div data-cross="center" data-gap="3" data-stack="x">
