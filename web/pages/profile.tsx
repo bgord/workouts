@@ -15,12 +15,12 @@ export function Profile() {
 
   return (
     <Main>
-      <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
           {t("profile.header")}
         </h1>
 
-        <div data-color="neutral-400" data-fs="sm">
+        <div data-color="neutral-500" data-fs="sm" data-transform="truncate">
           {session.user.email}
         </div>
       </div>

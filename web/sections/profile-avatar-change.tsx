@@ -1,6 +1,6 @@
 import { exec, useFile, useMutation, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleUser } from "lucide-react";
+import { CircleUser, ImageUp } from "lucide-react";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -31,7 +31,7 @@ export function ProfileAvatarChange() {
   return (
     <section className="c-card" data-gap="5">
       <div data-cross="center" data-gap="3" data-stack="x">
-        <CircleUser data-size="md" />
+        <CircleUser data-color="neutral-400" data-size="sm" />
         <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 
@@ -45,9 +45,10 @@ export function ProfileAvatarChange() {
               data-cross="center"
               data-disp="flex"
               data-main="center"
-              data-variant="secondary"
+              data-variant="ghost"
               {...avatar.label.props}
             >
+              <ImageUp data-size="sm" />
               <span>{t("profile.avatar.select_file.cta")}</span>
               <input
                 className="c-visually-hidden"
@@ -61,7 +62,7 @@ export function ProfileAvatarChange() {
 
             <button
               className="c-button"
-              data-variant="primary"
+              data-variant="secondary"
               disabled={!avatar.isSelected || mutation.isLoading}
               type="submit"
             >
@@ -82,7 +83,7 @@ export function ProfileAvatarChange() {
             )}
           </div>
 
-          <div data-color="neutral-400" data-fs="xs">
+          <div data-color="neutral-500" data-fs="xs">
             {t("profile.avatar.hint")}
           </div>
 
