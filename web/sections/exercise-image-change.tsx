@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { ImageUp } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ButtonCancel, ExerciseImage, ExerciseImageSize } from "../components";
 import { exerciseRoute } from "../router";
@@ -35,16 +36,23 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
 
   if (change.off) {
     return (
-      <button
-        data-cursor="pointer"
-        data-self="start"
-        onClick={change.enable}
-        title={t("exercise.image.change.cta")}
-        type="button"
-        {...change.props.controller}
-      >
-        <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
-      </button>
+      <div data-cross="center" data-gap="2" data-stack="y">
+        <button
+          data-cursor="pointer"
+          data-disp="flex"
+          onClick={change.enable}
+          title={t("exercise.image.change.cta")}
+          type="button"
+          {...change.props.controller}
+        >
+          <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
+        </button>
+
+        <button className="c-button" data-fs="xs" data-variant="ghost" onClick={change.enable} type="button">
+          <ImageUp data-size="sm" />
+          {t("exercise.image.change.cta")}
+        </button>
+      </div>
     );
   }
 
