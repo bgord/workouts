@@ -6,6 +6,7 @@ import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
 import {
+  ExerciseCategories,
   ExerciseDelete,
   ExerciseDescriptionUpdate,
   ExerciseHistory,
@@ -75,20 +76,24 @@ export function Exercise() {
           <ExerciseImage exercise={exercise.data} size={ExerciseImageSize.lg} />
         )}
 
-        <ul data-gap="1" data-stack="x">
-          {exercise.data.categories.map((category) => (
-            <li key={category.id}>
-              <Link
-                className="c-badge"
-                data-variant="outline"
-                search={{ category: category.id, name: Form.default.name }}
-                to="/catalog"
-              >
-                {category.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {exercise.actions.categoryAssign.available ? (
+          <ExerciseCategories exercise={exercise} />
+        ) : (
+          <ul data-gap="1" data-stack="x">
+            {exercise.data.categories.map((category) => (
+              <li key={category.id}>
+                <Link
+                  className="c-badge"
+                  data-variant="outline"
+                  search={{ category: category.id, name: Form.default.name }}
+                  to="/catalog"
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {exercise.actions.update.enabled ? (
           <ExerciseDescriptionUpdate exercise={exercise.data} />
