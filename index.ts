@@ -6,6 +6,7 @@ import { db } from "+infra/db";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerCronTasks } from "+infra/register-cron-tasks";
 import { registerEventHandlers } from "+infra/register-event-handlers";
+import { AdminAccountCreator } from "./scripts/admin-account-creator";
 import { createServer } from "./server";
 import { handler } from "./web/entry-server";
 
@@ -21,6 +22,11 @@ void (async function main() {
   registerCronTasks(di);
 
   await new bg.PrerequisiteRunnerStartup(di.Adapters.System).check(di.Tools.Prerequisites.healthcheck);
+
+  await new AdminAccountCreator({ ...di.Adapters.System, ...di.Tools, Auth: di.Tools.Auth.config }).create(
+    di.Env.ADMIN_USERNAME,
+    di.Env.ADMIN_PASSWORD,
+  );
 
   const app = Bun.serve({
     port: di.Env.PORT,
