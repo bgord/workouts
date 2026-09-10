@@ -47,7 +47,7 @@ export function WorkoutHistory() {
         <button
           className="c-button"
           data-variant="ghost"
-          disabled={WorkoutHistoryFiltersForm.Form.isDefault(search)}
+          disabled={cleared}
           onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
           type="button"
         >
