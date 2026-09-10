@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { desc, eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import type { ActionState } from "+action-state";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
@@ -14,11 +14,19 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
       .where(eq(Schema.plans.userId, userId))
       .orderBy(desc(Schema.plans.updatedAt));
 
+    const sections = await db
+      .select({ planId: Schema.planSections.planId, count: count() })
+      .from(Schema.planSections)
+      .where(eq(Schema.planSections.userId, userId))
+      .groupBy(Schema.planSections.planId);
+
     const summaries = plans.map((plan) => ({
       id: plan.id,
       name: plan.name,
       status: plan.status,
       revision: plan.revision,
+      updatedAt: plan.updatedAt,
+      sections: tools.Int.nonNegative(sections.find((section) => section.planId === plan.id)?.count ?? 0),
     }));
 
     const active = summaries.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);

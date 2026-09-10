@@ -8,4 +8,6 @@ export type PlanSummary = {
   name: PlanNameType;
   status: PlanStatusEnum;
   revision: tools.RevisionValueType;
+  updatedAt: tools.TimestampValueType;
+  sections: tools.IntegerNonNegativeType;
 };

@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
 import { plansRoute } from "../router";
 
@@ -25,31 +26,23 @@ export function PlanCreate() {
 
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <label className="c-label" data-variant="inline" {...name.label.props}>
+      <div data-cross="center" data-gap="2" data-stack="x">
+        <label className="c-visually-hidden" {...name.label.props}>
           {t("plan.create.name.label")}
         </label>
 
         <input
           className="c-input"
+          data-grow="1"
           placeholder={t("plan.create.name.placeholder")}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
 
-        <button
-          className="c-button"
-          data-ml="2"
-          data-variant="primary"
-          disabled={mutation.isLoading}
-          type="submit"
-        >
-          {t("plan.create.submit.cta")}
-        </button>
-
         {name.changed && (
           <button
             className="c-button"
+            data-animation="grow-fade-in"
             data-variant="ghost"
             onClick={bg.exec([name.clear, mutation.reset])}
             type="button"
@@ -57,6 +50,16 @@ export function PlanCreate() {
             {t("app.clear")}
           </button>
         )}
+
+        <button
+          className="c-button"
+          data-variant="secondary"
+          disabled={mutation.isLoading || !name.changed}
+          type="submit"
+        >
+          <Plus data-size="sm" />
+          {t("plan.create.submit.cta")}
+        </button>
       </div>
 
       {mutation.isError && (

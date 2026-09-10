@@ -213,6 +213,8 @@ export const planSummary: Plans.VO.PlanSummary = {
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
   revision: revision.value,
+  updatedAt: T0.ms,
+  sections: tools.Int.nonNegative(2),
 };
 const planSection: Plans.VO.PlanSectionWithExercises = {
   id: planSectionId,

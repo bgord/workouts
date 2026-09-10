@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { ActionHint, ButtonCancel, Select } from "../components";
+import { ButtonCancel, Select } from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -41,7 +41,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
 
   return (
     <div data-gap="3" data-stack="y">
-      <div data-cross="center" data-main="between" data-gap="3" data-stack="x" data-wrap="wrap">
+      <div data-cross="center" data-gap="3" data-main="between" data-stack="x" data-wrap="wrap">
         <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
           {t("exercise.categories.header")}
         </div>
