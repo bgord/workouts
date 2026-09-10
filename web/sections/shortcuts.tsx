@@ -83,6 +83,10 @@ export function Shortcuts() {
           <ButtonClose onClick={help.disable} title={t("app.shortcuts.close")} />
         </div>
 
+        {pathname === "/catalog" && (
+          <ShortcutGroup header={t("app.catalog")} shortcuts={ShortcutDefinitions.Catalog} />
+        )}
+
         {pathname === "/workouts" && (
           <ShortcutGroup header={t("app.workouts")} shortcuts={ShortcutDefinitions.Workouts} />
         )}
