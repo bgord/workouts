@@ -14,7 +14,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
   const performances = props.performances.toReversed();
 
   return (
-    <ul data-gap="3" data-stack="y">
+    <ul data-gap="5" data-stack="y">
       {performances.map((performance, index) => (
         <li className="c-card" key={performance.workoutId}>
           <div className="c-card-header">
@@ -34,7 +34,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
             </Link>
           </div>
 
-          <ul data-gap="0" data-stack="y">
+          <ul data-stack="y">
             {performance.sets.map((set, index) => (
               <li
                 data-bct={index > 0 ? "alpha-subtle" : undefined}
