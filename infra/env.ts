@@ -17,6 +17,8 @@ export const EnvironmentSchema = v.object({
   BETTER_AUTH_SECRET: v.pipe(v.string(), v.length(32)),
   BETTER_AUTH_URL: tools.UrlWithoutSlash,
   SIGNUP_ENABLED: tools.FeatureFlagValue,
+  ADMIN_USERNAME: tools.Email,
+  ADMIN_PASSWORD: bg.BasicAuthPassword,
 });
 
 type EnvironmentType = v.InferOutput<typeof EnvironmentSchema>;
