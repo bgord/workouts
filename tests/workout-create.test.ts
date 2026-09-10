@@ -87,25 +87,6 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
   });
 
-  test("WorkoutScheduledForIsNotPast", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          planId: mocks.planId,
-          planSectionId: mocks.planSectionId,
-          scheduledFor: "2024-12-31",
-        }),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.not.past");
-  });
-
   test("WorkoutScheduledForIsWithinHorizon", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
@@ -221,6 +202,40 @@ describe(`POST ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([
       mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+    ]);
+  });
+
+  test("happy path - past scheduledFor", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.workoutId)
+      .mockReturnValue(mocks.workoutExerciseId);
+    spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
+    spies
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdHeaders,
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: mocks.pastWorkoutScheduledFor,
+        }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      mocks.PastGenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,
     ]);
   });

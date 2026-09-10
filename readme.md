@@ -333,7 +333,6 @@ modules/
     │   ├── workout-plan-section-ready.ts
     │   ├── workout-retains-logged-sets.ts
     │   ├── workout-scheduled-for-has-changed.ts
-    │   ├── workout-scheduled-for-is-not-past.ts
     │   └── workout-scheduled-for-is-within-horizon.ts
     ├── ports
     │   └── workout-repository.ts

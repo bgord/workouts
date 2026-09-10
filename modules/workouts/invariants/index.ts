@@ -18,5 +18,4 @@ export * from "./workout-plan-ready";
 export * from "./workout-plan-section-ready";
 export * from "./workout-retains-logged-sets";
 export * from "./workout-scheduled-for-has-changed";
-export * from "./workout-scheduled-for-is-not-past";
 export * from "./workout-scheduled-for-is-within-horizon";

@@ -254,6 +254,7 @@ export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
 export const workoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-01");
 export const anotherWorkoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-08");
+export const pastWorkoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2024-12-31");
 
 export const workoutExerciseId = v.parse(
   Workouts.VO.WorkoutExerciseId,
@@ -862,6 +863,25 @@ export const GenericWorkoutCreatedEvent = {
   },
 } satisfies Workouts.Events.WorkoutCreatedEventType;
 
+export const PastGenericWorkoutCreatedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_CREATED_EVENT",
+  payload: {
+    workoutId,
+    planId,
+    planName,
+    planSectionId,
+    planSectionName,
+    scheduledFor: pastWorkoutScheduledFor,
+    userId,
+  },
+} satisfies Workouts.Events.WorkoutCreatedEventType;
+
 export const GenericWorkoutExerciseAddedEvent = {
   id: expectAnyId,
   correlationId,
@@ -1034,6 +1054,17 @@ export const GenericWorkoutRescheduledEvent = {
   commit,
   name: "WORKOUT_RESCHEDULED_EVENT",
   payload: { workoutId, scheduledFor: anotherWorkoutScheduledFor, requesterId: userId },
+} satisfies Workouts.Events.WorkoutRescheduledEventType;
+
+export const PastGenericWorkoutRescheduledEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_RESCHEDULED_EVENT",
+  payload: { workoutId, scheduledFor: pastWorkoutScheduledFor, requesterId: userId },
 } satisfies Workouts.Events.WorkoutRescheduledEventType;
 
 export const AnotherGenericWorkoutSetLoggedEvent = {

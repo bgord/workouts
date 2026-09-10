@@ -7,7 +7,6 @@ import { Workout } from "../aggregates/workout";
 import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for-owner";
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 import { WorkoutPlanSectionReady } from "../invariants/workout-plan-section-ready";
-import { WorkoutScheduledForIsNotPast } from "../invariants/workout-scheduled-for-is-not-past";
 import { WorkoutScheduledForIsWithinHorizon } from "../invariants/workout-scheduled-for-is-within-horizon";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
 import { WorkoutScheduledForHorizonDaysMax } from "../value-objects/workout-scheduled-for-horizon";
@@ -24,11 +23,6 @@ type Dependencies = {
 export const handleWorkoutCreateCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutCreateCommandType) => {
     const today = tools.Day.fromTimestamp(deps.Clock.now());
-
-    WorkoutScheduledForIsNotPast.enforce({
-      scheduledFor: command.payload.scheduledFor,
-      today: today.toIsoId(),
-    });
 
     const horizon = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
 

@@ -70,22 +70,6 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
     expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
   });
 
-  test("WorkoutScheduledForIsNotPast", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "PATCH",
-        headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ scheduledFor: "2024-12-31" }),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.not.past");
-  });
-
   test("WorkoutScheduledForIsWithinHorizon", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
@@ -229,5 +213,26 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutRescheduledEvent]);
+  });
+
+  test("happy path - past scheduledFor", async () => {
+    const events = [mocks.GenericWorkoutCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        body: JSON.stringify({ scheduledFor: mocks.pastWorkoutScheduledFor }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.PastGenericWorkoutRescheduledEvent]);
   });
 });

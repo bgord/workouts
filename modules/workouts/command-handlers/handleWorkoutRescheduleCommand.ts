@@ -2,7 +2,6 @@ import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Workouts from "+workouts";
-import { WorkoutScheduledForIsNotPast } from "../invariants/workout-scheduled-for-is-not-past";
 import { WorkoutScheduledForIsWithinHorizon } from "../invariants/workout-scheduled-for-is-within-horizon";
 import { WorkoutScheduledForHorizonDaysMax } from "../value-objects/workout-scheduled-for-horizon";
 
@@ -15,11 +14,6 @@ type Dependencies = {
 export const handleWorkoutRescheduleCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutRescheduleCommandType) => {
     const today = tools.Day.fromTimestamp(deps.Clock.now());
-
-    WorkoutScheduledForIsNotPast.enforce({
-      scheduledFor: command.payload.scheduledFor,
-      today: today.toIsoId(),
-    });
 
     const horizon = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
 

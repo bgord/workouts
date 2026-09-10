@@ -45,7 +45,6 @@ export function WorkoutCreate() {
           type="date"
           {...scheduledFor.input.props}
           max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-          min={today}
         />
       </div>
 
