@@ -425,6 +425,7 @@ describe("Workout", async () => {
         mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
+        mocks.loggedSet.rir,
         mocks.userId,
       ),
     );
@@ -451,6 +452,7 @@ describe("Workout", async () => {
         mocks.anotherLoggedSet.id,
         mocks.anotherLoggedSet.reps,
         mocks.anotherLoggedSet.load,
+        mocks.anotherLoggedSet.rir,
         mocks.userId,
       ),
     );
@@ -478,6 +480,7 @@ describe("Workout", async () => {
         mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
+        mocks.loggedSet.rir,
         mocks.userId,
       ),
     );
@@ -510,6 +513,7 @@ describe("Workout", async () => {
         mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
+        mocks.loggedSet.rir,
         mocks.userId,
       ),
     ).toThrow(Workouts.Invariants.WorkoutIsInProgress.error);
@@ -533,6 +537,7 @@ describe("Workout", async () => {
         mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
+        mocks.loggedSet.rir,
         mocks.anotherUserId,
       ),
     ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
@@ -556,6 +561,7 @@ describe("Workout", async () => {
         mocks.loggedSet.id,
         mocks.loggedSet.reps,
         mocks.loggedSet.load,
+        mocks.loggedSet.rir,
         mocks.userId,
       ),
     ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
@@ -580,6 +586,7 @@ describe("Workout", async () => {
         mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
+        mocks.correctedLoggedSet.rir,
         mocks.userId,
       ),
     );
@@ -607,6 +614,7 @@ describe("Workout", async () => {
         mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
+        mocks.correctedLoggedSet.rir,
         mocks.userId,
       ),
     );
@@ -634,6 +642,7 @@ describe("Workout", async () => {
         mocks.anotherLoggedSet.id,
         mocks.anotherLoggedSet.reps,
         mocks.anotherLoggedSet.load,
+        mocks.anotherLoggedSet.rir,
         mocks.userId,
       ),
     );
@@ -654,6 +663,7 @@ describe("Workout", async () => {
         mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
+        mocks.correctedLoggedSet.rir,
         mocks.userId,
       ),
     ).toThrow(Workouts.Invariants.WorkoutIsCorrectable.error);
@@ -677,6 +687,7 @@ describe("Workout", async () => {
         mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
+        mocks.correctedLoggedSet.rir,
         mocks.userId,
       ),
     ).toThrow(Workouts.Invariants.WorkoutLoggedSetExists.error);
@@ -701,6 +712,7 @@ describe("Workout", async () => {
         mocks.correctedLoggedSet.id,
         mocks.correctedLoggedSet.reps,
         mocks.correctedLoggedSet.load,
+        mocks.correctedLoggedSet.rir,
         mocks.anotherUserId,
       ),
     ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
