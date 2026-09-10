@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { catalogRoute } from "../router";
 import { ExerciseCategoryAdd } from "./exercise-category-add";
+import { ExerciseCategoryRename } from "./exercise-category-rename";
 
 export function ExerciseCategoryManage() {
   const t = bg.useTranslations();
@@ -19,7 +20,11 @@ export function ExerciseCategoryManage() {
       <ul data-gap="2" data-stack="y">
         {exerciseCategories.data.map((category) => (
           <li data-cross="center" data-gap="3" data-stack="x" key={category.id}>
-            <div data-grow="1">{category.name}</div>
+            {exerciseCategories.actions.rename.available ? (
+              <ExerciseCategoryRename {...category} />
+            ) : (
+              <div data-grow="1">{category.name}</div>
+            )}
           </li>
         ))}
       </ul>
