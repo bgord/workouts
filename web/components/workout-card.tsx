@@ -18,6 +18,7 @@ export function WorkoutCard(props: WorkoutSummary) {
         data-cross="center"
         data-gap="3"
         data-hover-bc="brand-500"
+        data-opacity={props.status === "completed" ? "high" : "full"}
         data-p="4"
         data-stack="x"
         params={{ workoutId: props.id }}
