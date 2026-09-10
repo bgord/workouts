@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import { RepsLoad } from "../components/reps-load";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseOneRepMaxEstimate(props: { performances: Array<ExercisePerformance> }) {
@@ -53,10 +54,7 @@ export function ExerciseOneRepMaxEstimate(props: { performances: Array<ExerciseP
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {t("statistics.exercise.one_rep_max_estimate.set", {
-            load: WeightFormat.kilograms(set.load),
-            reps: set.reps,
-          })}
+          <RepsLoad load={set.load} reps={set.reps} />
         </div>
       </div>
     </Link>

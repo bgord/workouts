@@ -11,6 +11,7 @@ export * from "./main";
 export * from "./online-status-bar";
 export * from "./plan-card";
 export * from "./plan-status-badge";
+export * from "./reps-load";
 export * from "./select";
 export * from "./sets-reps";
 export * from "./workout-card";

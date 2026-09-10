@@ -4,6 +4,7 @@ import { ChevronRight, EqualApproximately, Sigma } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import { DeltaKg } from "../components/delta-kg";
+import { RepsLoad } from "../components/reps-load";
 import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
@@ -51,10 +52,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
                 </div>
 
                 <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
-                  {t("workout.exercise.logged_set", {
-                    load: WeightFormat.kilograms(set.load),
-                    reps: set.reps,
-                  })}
+                  <RepsLoad load={set.load} reps={set.reps} />
                 </div>
 
                 <div data-color="neutral-500" data-fs="xs">

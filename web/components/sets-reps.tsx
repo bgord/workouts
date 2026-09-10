@@ -6,7 +6,7 @@ export function SetsReps(props: ExercisePrescriptionType) {
 
   return (
     <span>
-      {t("workout.exercise.prescription", {
+      {t("exercise.sets_reps", {
         sets: props.sets,
         reps:
           props.reps.min === props.reps.max ? String(props.reps.min) : `${props.reps.min}-${props.reps.max}`,
