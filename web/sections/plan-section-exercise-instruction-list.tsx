@@ -10,27 +10,29 @@ export function PlanSectionExerciseInstructionList(props: {
 
   if (props.section.exerciseInstructions.length === 0) {
     return (
-      <div data-color="neutral-400" data-fs="sm">
+      <div
+        data-bct="alpha-subtle"
+        data-bst="solid"
+        data-bwt="hairline"
+        data-color="neutral-500"
+        data-fs="sm"
+        data-main="center"
+        data-py="5"
+        data-stack="x"
+      >
         {t("plan.section.exercise.list.empty")}
       </div>
     );
   }
 
   return (
-    <ul
-      data-bct="alpha-subtle"
-      data-bst="solid"
-      data-bwt="hairline"
-      data-gap="2"
-      data-pt="3"
-      data-stack="y"
-      data-width="100%"
-    >
-      {props.section.exerciseInstructions.map((exerciseInstruction) => (
+    <ul data-stack="y" data-width="100%">
+      {props.section.exerciseInstructions.map((exerciseInstruction, position) => (
         <PlanSectionExerciseInstructionRow
           exerciseInstruction={exerciseInstruction}
           key={exerciseInstruction.id}
           plan={props.plan}
+          position={position + 1}
           section={props.section}
         />
       ))}

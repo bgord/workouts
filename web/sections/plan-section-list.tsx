@@ -1,4 +1,5 @@
 import { useTranslations } from "@bgord/ui";
+import { Dumbbell, LayoutList } from "lucide-react";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
 import { PlanSectionCreate } from "./plan-section-create";
@@ -12,19 +13,12 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
 
   return (
     <div data-gap="3" data-stack="y">
-      <div data-cross="baseline" data-gap="2" data-stack="x">
-        <h2
-          data-color="neutral-300"
-          data-fs="xs"
-          data-fw="bold"
-          data-lh="none"
-          data-ls="widest"
-          data-transform="uppercase"
-        >
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
+        <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
           {t("plan.section.list.header")}
-        </h2>
+        </div>
 
-        <div data-color="neutral-400" data-fs="sm">
+        <div data-color="neutral-500" data-fs="sm" data-grow="1" data-transform="font-variant-numeric">
           {t("plan.section.list.count", {
             count: props.sections.length,
             max: PlanSectionLimitForPlanMax,
@@ -32,25 +26,51 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
         </div>
 
         {props.actions.sectionCreate.available && (
-          <div data-ml="auto">
-            <PlanSectionCreate action={props.actions.sectionCreate} {...props} />
-          </div>
+          <PlanSectionCreate action={props.actions.sectionCreate} {...props} />
         )}
       </div>
 
-      {props.sections.length === 0 && <div data-color="neutral-400">{t("plan.section.list.empty")}</div>}
+      {props.sections.length === 0 && (
+        <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y">
+          <LayoutList data-color="neutral-600" data-size="md" />
 
-      <ul data-gap="5" data-stack="y">
+          <div data-color="neutral-300" data-fs="sm" data-mt="2">
+            {t("plan.section.list.empty")}
+          </div>
+
+          <div data-color="neutral-500" data-fs="xs">
+            {t("plan.section.list.empty.hint")}
+          </div>
+        </div>
+      )}
+
+      <ul data-gap="3" data-stack="y">
         {props.sections.map((section) => (
           <li className="c-card" data-gap="3" data-p="4" key={section.id}>
             <div data-cross="center" data-gap="3" data-stack="x">
-              {props.actions.sectionRename.available && <PlanSectionRename plan={props} section={section} />}
+              <div data-grow="1" data-transform="truncate">
+                {props.actions.sectionRename.available && (
+                  <PlanSectionRename plan={props} section={section} />
+                )}
 
-              {!props.actions.sectionRename.available && (
-                <div className="c-card-title" data-transform="truncate" title={section.name}>
-                  {section.name}
-                </div>
-              )}
+                {!props.actions.sectionRename.available && (
+                  <div className="c-card-title" data-transform="truncate" title={section.name}>
+                    {section.name}
+                  </div>
+                )}
+              </div>
+
+              <div
+                data-color="neutral-500"
+                data-cross="center"
+                data-fs="xs"
+                data-gap="1"
+                data-stack="x"
+                title={t("plan.section.exercises")}
+              >
+                <Dumbbell data-size="xs" />
+                <span data-transform="font-variant-numeric">{section.exerciseInstructions.length}</span>
+              </div>
 
               {props.actions.sectionRemove.available && <PlanSectionRemove plan={props} section={section} />}
             </div>

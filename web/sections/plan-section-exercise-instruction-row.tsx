@@ -15,6 +15,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   plan: PlanGetResponse["data"];
   section: PlanSection;
   exerciseInstruction: PlanExerciseInstruction;
+  position: number;
 }) {
   const update = bg.useToggle({
     name: `plan-section-exercise-instruction-update-${props.exerciseInstruction.id}`,
@@ -30,7 +31,19 @@ export function PlanSectionExerciseInstructionRow(props: {
   const controls = actions.update.available || actions.exerciseChange.available || actions.remove.available;
 
   return (
-    <li data-cross="center" data-gap="3" data-stack="x">
+    <li
+      data-bct="alpha-subtle"
+      data-bst="solid"
+      data-bwt="hairline"
+      data-cross="center"
+      data-gap="3"
+      data-py="2"
+      data-stack="x"
+    >
+      <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
+        {props.position}
+      </div>
+
       <Link
         aria-hidden
         params={{ exerciseId: exerciseInstruction.exercise.id }}

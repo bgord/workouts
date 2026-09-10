@@ -34,7 +34,7 @@ export function Plan() {
 
   return (
     <Main>
-      <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+      <div data-cross="center" data-gap="2" data-stack="x">
         <Link
           aria-label={t("app.back")}
           className="c-button"
@@ -46,7 +46,8 @@ export function Plan() {
         >
           <ChevronLeft data-size="md" />
         </Link>
-        <div data-gap="1" data-grow="1" data-stack="y">
+
+        <div data-gap="0-5" data-grow="1" data-stack="y" data-transform="truncate">
           {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
           {!plan.actions.rename.available && (
@@ -61,7 +62,7 @@ export function Plan() {
             </h1>
           )}
 
-          <div data-color="neutral-400" data-fs="sm">
+          <div data-color="neutral-500" data-fs="xs">
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
             })}
@@ -71,7 +72,7 @@ export function Plan() {
         <PlanStatusBadge status={plan.data.status} />
       </div>
 
-      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
+      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
         {plan.actions.finalize.available && <PlanFinalize action={plan.actions.finalize} {...plan.data} />}
         {plan.actions.editingEnable.available && <PlanEditingEnable {...plan.data} />}
         {plan.actions.archive.available && <PlanArchive {...plan.data} />}
