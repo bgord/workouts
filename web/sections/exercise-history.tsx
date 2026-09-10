@@ -62,7 +62,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
                 </div>
 
                 <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-grow="1">
-                  <RepsLoad load={set.load} reps={set.reps} />
+                  <RepsLoad load={set.load} reps={set.reps} rir={set.rir} />
                 </div>
 
                 <div data-color="neutral-500" data-fs="xs">
