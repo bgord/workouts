@@ -117,6 +117,7 @@ modules/
 │   │   ├── get-exercise-category.ts
 │   │   ├── get-exercise-name-count.ts
 │   │   ├── get-exercise-usage-count.ts
+│   │   ├── get-exercise-with-categories.ts
 │   │   ├── get-exercise.ts
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
@@ -451,6 +452,7 @@ infra/
 │   │   ├── get-exercise-category.adapter.ts
 │   │   ├── get-exercise-name-count.adapter.ts
 │   │   ├── get-exercise-usage-count.adapter.ts
+│   │   ├── get-exercise-with-categories.adapter.ts
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-categories-assigned-to-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts

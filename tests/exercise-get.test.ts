@@ -31,42 +31,74 @@ describe("GET /api/exercises/:exerciseId", async () => {
   test("not found", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute").mockResolvedValue(null));
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseWithCategoriesQuery, "execute").mockResolvedValue(null));
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
 
     expect(response.status).toEqual(404);
   });
 
-  test("happy path - no categories", async () => {
-    const spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute").mockResolvedValue(mocks.exercise));
-    spies.use(
-      spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute").mockResolvedValue([]),
-    );
-
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(200);
-    expect(json).toEqual({ ...mocks.exercise, categories: [] });
-  });
-
   test("happy path", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute").mockResolvedValue(mocks.exercise));
     spies.use(
-      spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute").mockResolvedValue([
-        mocks.exerciseCategory,
-      ]),
+      spyOn(di.Adapters.Exercises.GetExerciseWithCategoriesQuery, "execute").mockResolvedValue({
+        data: { ...mocks.exercise, categories: [] },
+        actions: {
+          update: { available: false, enabled: false, hints: [] },
+          imageChange: { available: false, enabled: false, hints: [] },
+          delete: { available: false, enabled: false, hints: [] },
+          categoryAssign: { available: false, enabled: false, hints: [] },
+          categoryUnassign: { available: false, enabled: false, hints: [] },
+        },
+      }),
     );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ ...mocks.exercise, categories: [mocks.exerciseCategory] });
+    expect(json).toEqual({
+      data: { ...mocks.exercise, categories: [] },
+      actions: {
+        update: { available: false, enabled: false, hints: [] },
+        imageChange: { available: false, enabled: false, hints: [] },
+        delete: { available: false, enabled: false, hints: [] },
+        categoryAssign: { available: false, enabled: false, hints: [] },
+        categoryUnassign: { available: false, enabled: false, hints: [] },
+      },
+    });
+  });
+
+  test("happy path - admin", async () => {
+    const spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth));
+    spies.use(
+      spyOn(di.Adapters.Exercises.GetExerciseWithCategoriesQuery, "execute").mockResolvedValue({
+        data: { ...mocks.exercise, categories: [mocks.exerciseCategory] },
+        actions: {
+          update: { available: true, enabled: true, hints: [] },
+          imageChange: { available: true, enabled: true, hints: [] },
+          delete: { available: true, enabled: false, hints: ["exercise.delete.blocked.in_use"] },
+          categoryAssign: { available: true, enabled: true, hints: [] },
+          categoryUnassign: { available: true, enabled: true, hints: [] },
+        },
+      }),
+    );
+
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(200);
+    expect(json).toEqual({
+      data: { ...mocks.exercise, categories: [mocks.exerciseCategory] },
+      actions: {
+        update: { available: true, enabled: true, hints: [] },
+        imageChange: { available: true, enabled: true, hints: [] },
+        delete: { available: true, enabled: false, hints: ["exercise.delete.blocked.in_use"] },
+        categoryAssign: { available: true, enabled: true, hints: [] },
+        categoryUnassign: { available: true, enabled: true, hints: [] },
+      },
+    });
   });
 });
