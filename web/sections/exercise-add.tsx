@@ -46,6 +46,7 @@ export function ExerciseAdd() {
 
         <input
           className="c-input"
+          data-md-width="100%"
           data-mr="auto"
           placeholder={t("exercise.add.name.placeholder")}
           {...bg.Form.input(Form.name.pattern)}
@@ -68,6 +69,7 @@ export function ExerciseAdd() {
           data-cross="center"
           data-disp="flex"
           data-main="center"
+          data-md-width="100%"
           data-variant="secondary"
           {...image.label.props}
         >
@@ -88,24 +90,27 @@ export function ExerciseAdd() {
           </output>
         )}
 
-        <button
-          className="c-button"
-          data-ml="auto"
-          data-variant="primary"
-          disabled={!image.isSelected || mutation.isLoading}
-          type="submit"
-        >
-          {t("exercise.add.submit.cta")}
-        </button>
+        <div data-cross="center" data-gap="2" data-md-width="100%" data-ml="auto" data-stack="x">
+          <button
+            className="c-button"
+            data-md-grow="1"
+            data-variant="primary"
+            disabled={!image.isSelected || mutation.isLoading}
+            type="submit"
+          >
+            {t("exercise.add.submit.cta")}
+          </button>
 
-        <button
-          className="c-button"
-          data-variant="ghost"
-          onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
-          type="button"
-        >
-          {t("app.clear")}
-        </button>
+          <button
+            className="c-button"
+            data-md-grow="1"
+            data-variant="ghost"
+            onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
+            type="button"
+          >
+            {t("app.clear")}
+          </button>
+        </div>
       </div>
 
       <div data-color="neutral-400" data-fs="xs">

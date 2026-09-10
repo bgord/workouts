@@ -45,6 +45,7 @@ export function ExerciseCatalog() {
       <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
         <input
           className="c-input"
+          data-grow="1"
           id={ExerciseCatalogFiltersForm.Form.name.field.name}
           name={ExerciseCatalogFiltersForm.Form.name.field.name}
           onChange={(event) => {
@@ -60,10 +61,9 @@ export function ExerciseCatalog() {
           ref={nameInput}
           value={name.input.props.value}
           {...bg.Autocomplete.off}
-          {...bg.Rhythm().times(20).style.width}
         />
 
-        <div data-color="neutral-500" data-fs="sm" data-grow="1" data-transform="font-variant-numeric">
+        <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
         </div>
 
@@ -71,6 +71,7 @@ export function ExerciseCatalog() {
           <button
             className="c-button"
             data-animation="grow-fade-in"
+            data-ml="auto"
             data-variant="ghost"
             onClick={() => {
               name.clear();
@@ -123,7 +124,7 @@ export function ExerciseCatalog() {
         </div>
       )}
 
-      <ul data-gap="3" data-stack="x" data-wrap="wrap">
+      <ul data-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">
         {matching.map((exercise) => (
           <ExerciseCard key={exercise.id} {...exercise} />
         ))}

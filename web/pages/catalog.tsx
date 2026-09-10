@@ -21,13 +21,14 @@ export function Catalog() {
           {t("exercise.catalog.header")}
         </h1>
 
-        <div data-cross="center" data-gap="3" data-stack="x">
+        <div data-cross="center" data-gap="3" data-md-width="100%" data-stack="x">
           {exerciseCategories.actions.add.available && (
             <>
               <ActionHint action={exerciseCategories.actions.add} />
 
               <button
                 className="c-button"
+                data-md-grow="1"
                 data-variant="secondary"
                 disabled={!exerciseCategories.actions.add.enabled}
                 onClick={categoryManage.toggle}
@@ -45,6 +46,7 @@ export function Catalog() {
 
               <button
                 className="c-button"
+                data-md-grow="1"
                 data-variant="primary"
                 disabled={!exercises.actions.add.enabled}
                 onClick={exerciseAdd.toggle}

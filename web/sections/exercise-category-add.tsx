@@ -42,7 +42,6 @@ export function ExerciseCategoryAdd() {
         {name.changed && (
           <button
             className="c-button"
-            data-animation="grow-fade-in"
             data-variant="ghost"
             onClick={bg.exec([name.clear, mutation.reset])}
             type="button"
@@ -53,6 +52,7 @@ export function ExerciseCategoryAdd() {
 
         <button
           className="c-button"
+          data-md-grow="1"
           data-variant="secondary"
           disabled={mutation.isLoading || !name.changed}
           type="submit"
