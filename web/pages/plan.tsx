@@ -3,7 +3,6 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
-import { DateFormat } from "../../app/services/date-format";
 import { Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
@@ -13,6 +12,7 @@ import { PlanRemove } from "../sections/plan-remove";
 import { PlanRename } from "../sections/plan-rename";
 import { PlanRestore } from "../sections/plan-restore";
 import { PlanSectionList } from "../sections/plan-section-list";
+import { DateFormat } from "../services/date-format";
 
 export function Plan() {
   const t = useTranslations();

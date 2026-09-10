@@ -5,6 +5,7 @@ import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 import { SetsReps } from "../components/sets-reps";
+import { SetsRepsLoad } from "../components/sets-reps-load";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
@@ -55,11 +56,11 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
                 data-transform="nowrap"
                 data-variant={skipped ? "outline" : "primary"}
               >
-                {t("workout.exercise.target", {
-                  sets: props.exercise.target.sets,
-                  reps: props.exercise.target.reps,
-                  load: props.exercise.target.load / 1000,
-                })}
+                <SetsRepsLoad
+                  load={props.exercise.target.load}
+                  reps={props.exercise.target.reps}
+                  sets={props.exercise.target.sets}
+                />
               </div>
             )}
           </div>

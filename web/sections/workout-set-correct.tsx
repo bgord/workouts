@@ -6,8 +6,7 @@ import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
-
-const GRAMS_IN_KILOGRAM = 1000;
+import { WeightFormat } from "../services/weight-format";
 
 export function WorkoutSetCorrect(props: {
   workout: Workout;
@@ -27,7 +26,7 @@ export function WorkoutSetCorrect(props: {
 
   const load = bg.useNumberField({
     name: `corrected-load-${props.loggedSet.id}`,
-    defaultValue: props.loggedSet.load / GRAMS_IN_KILOGRAM,
+    defaultValue: WeightFormat.kilograms(props.loggedSet.load),
   });
 
   const mutation = bg.useMutation({
@@ -41,7 +40,7 @@ export function WorkoutSetCorrect(props: {
         },
         body: JSON.stringify({
           reps: reps.value,
-          load: Math.round((load.value ?? 0) * GRAMS_IN_KILOGRAM),
+          load: WeightFormat.grams(load.value ?? 0),
         }),
       }),
     onSuccess: async () => {

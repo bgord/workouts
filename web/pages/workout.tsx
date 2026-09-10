@@ -3,7 +3,6 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
-import { DateFormat } from "../../app/services/date-format";
 import { Main, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
@@ -13,6 +12,7 @@ import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutReschedule } from "../sections/workout-reschedule";
 import { WorkoutStart } from "../sections/workout-start";
+import { DateFormat } from "../services/date-format";
 
 export function Workout() {
   const t = useTranslations();

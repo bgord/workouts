@@ -25,6 +25,8 @@
       "+exercises/*": ["./modules/exercises/*"],
       "+plans": ["./modules/plans/index"],
       "+plans/*": ["./modules/plans/*"],
+      "+statistics": ["./modules/statistics/index"],
+      "+statistics/*": ["./modules/statistics/*"],
       "+system": ["./modules/system/index"],
       "+system/*": ["./modules/system/*"],
       "+preferences": ["./modules/preferences/index"],

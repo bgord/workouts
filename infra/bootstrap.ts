@@ -20,7 +20,11 @@ export async function bootstrap() {
   const Plans = createPlansAdapters({ ...System, ...Tools });
   const Workouts = createWorkoutsAdapters({ ...System, ...Tools });
 
-  return { Env, Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts }, Tools: { ...Tools } };
+  return {
+    Env,
+    Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts },
+    Tools: { ...Tools },
+  };
 }
 
 export type BootstrapType = Awaited<ReturnType<typeof bootstrap>>;

@@ -1,7 +1,7 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { DateFormat } from "../../app/services/date-format";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
+import { DateFormat } from "../services/date-format";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
 export function WorkoutCard(props: WorkoutSummary) {

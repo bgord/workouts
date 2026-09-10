@@ -1,3 +1,4 @@
+// cSpell:ignore epley
 import * as bg from "@bgord/bun";
 import { Hono } from "hono";
 import { HTTP } from "+app";
@@ -5,6 +6,7 @@ import * as Exercises from "+exercises";
 import type * as infra from "+infra";
 import { languages } from "+languages";
 import * as Preferences from "+preferences";
+import * as Statistics from "+statistics";
 import type { BootstrapType } from "+infra/bootstrap";
 import { host, localhost } from "+infra/config";
 
@@ -18,6 +20,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const CacheResolver = new bg.CacheResolverReadThroughStrategy({ CacheRepository });
 
   const redactor = new bg.RedactorMask(bg.RedactorMask.DEFAULT_KEYS);
+
+  const OneRepEstimator = new Statistics.Services.OneRepEstimatorEpley();
 
   const origin = [localhost, host];
 
@@ -218,6 +222,24 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   );
 
   server.route("/plans", plans);
+
+  // Statistics =============
+  const statistics = new Hono<infra.Config>();
+
+  statistics.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  statistics.get(
+    "/exercises/:exerciseId/performances",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Statistics.ExercisePerformancesGet({
+        ExercisePerformanceCalculator: new Statistics.Services.ExercisePerformanceCalculator({
+          OneRepEstimator,
+          ListExercisePerformances: Adapters.Workouts.ListExercisePerformancesQuery,
+        }),
+      }),
+    ),
+  );
+
+  server.route("/statistics", statistics);
 
   // Workouts =================
   const workouts = new Hono<infra.Config>();

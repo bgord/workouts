@@ -5,10 +5,11 @@ import { ChevronLeft } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
+import { ExerciseHistory, ExerciseOneRepMaxEstimate, ExerciseProgressChart } from "../sections";
 
 export function Exercise() {
   const t = useTranslations();
-  const { exercise } = exerciseRoute.useLoaderData();
+  const { exercise, performances } = exerciseRoute.useLoaderData();
 
   if (!exercise) {
     return (
@@ -72,6 +73,16 @@ export function Exercise() {
         <p className="c-prose" data-color="neutral-200">
           {exercise.description}
         </p>
+
+        <div data-gap="8" data-mt="8" data-stack="y">
+          <div data-stack="x">
+            <ExerciseOneRepMaxEstimate performances={performances} />
+          </div>
+
+          <ExerciseProgressChart performances={performances} />
+
+          <ExerciseHistory performances={performances} />
+        </div>
       </div>
     </Main>
   );

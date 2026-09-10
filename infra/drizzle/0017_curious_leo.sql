@@ -1,1 +1,0 @@
-ALTER TABLE `events` ADD `commit` text NOT NULL;

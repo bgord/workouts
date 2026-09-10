@@ -260,6 +260,16 @@ modules/
 │       ├── profile-avatar-max-size.ts
 │       ├── profile-avatar-mime-registry.ts
 │       └── profile-avatar-side.ts
+├── statistics
+│   ├── ports
+│   │   └── one-rep-estimator.port.ts
+│   ├── services
+│   │   ├── exercise-performance-calculator.ts
+│   │   ├── one-rep-estimator-brzycki.adapter.ts
+│   │   └── one-rep-estimator-epley.adapter.ts
+│   └── value-objects
+│       ├── exercise-performance.ts
+│       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts
     ├── aggregates
@@ -331,6 +341,7 @@ modules/
     │   ├── get-workout-draft-for-owner-count.ts
     │   ├── get-workout-in-progress-for-owner-count.ts
     │   ├── get-workout.ts
+    │   ├── list-exercise-performances.ts
     │   └── list-workouts.ts
     └── value-objects
         ├── exercise-prescription.ts
@@ -400,6 +411,8 @@ app/
 │   │   ├── remove-profile-avatar.ts
 │   │   ├── update-profile-avatar.ts
 │   │   └── update-user-language.ts
+│   ├── statistics
+│   │   ├── exercise-performances-get.ts
 │   └── workouts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
@@ -416,7 +429,6 @@ app/
 │       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
-    ├── date-format.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
@@ -485,6 +497,7 @@ infra/
 │       ├── get-workout-draft-for-owner-count.adapter.ts
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
+│       ├── list-exercise-performances.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
