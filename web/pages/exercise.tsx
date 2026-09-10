@@ -9,6 +9,7 @@ import {
   ExerciseDelete,
   ExerciseDescriptionUpdate,
   ExerciseHistory,
+  ExerciseImageChange,
   ExerciseNameUpdate,
   ExerciseOneRepMaxEstimate,
   ExerciseProgressChart,
@@ -68,7 +69,11 @@ export function Exercise() {
           )}
         </div>
 
-        <ExerciseImage exercise={exercise.data} size={ExerciseImageSize.lg} />
+        {exercise.actions.imageChange.enabled ? (
+          <ExerciseImageChange exercise={exercise.data} />
+        ) : (
+          <ExerciseImage exercise={exercise.data} size={ExerciseImageSize.lg} />
+        )}
 
         <ul data-gap="1" data-stack="x">
           {exercise.data.categories.map((category) => (

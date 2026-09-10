@@ -7,6 +7,7 @@ export * from "./exercise-category-rename";
 export * from "./exercise-delete";
 export * from "./exercise-description-update";
 export * from "./exercise-history";
+export * from "./exercise-image-change";
 export * from "./exercise-name-update";
 export * from "./exercise-one-rep-max-estimate";
 export * from "./exercise-progress-chart";

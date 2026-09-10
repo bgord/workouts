@@ -19,7 +19,15 @@ const height: Record<ExerciseImageSize, number> = {
   [ExerciseImageSize.lg]: 240,
 };
 
-export function ExerciseImage(props: { exercise: Pick<Exercise, "id" | "name">; size: ExerciseImageSize }) {
+export function ExerciseImage(props: {
+  exercise: Pick<Exercise, "id" | "name">;
+  size: ExerciseImageSize;
+  cacheKey?: number;
+}) {
+  const src = props.cacheKey
+    ? `/api/exercises/${props.exercise.id}/image?v=${props.cacheKey}`
+    : `/api/exercises/${props.exercise.id}/image`;
+
   return (
     <img
       alt={props.exercise.name}
@@ -28,7 +36,7 @@ export function ExerciseImage(props: { exercise: Pick<Exercise, "id" | "name">; 
       data-maxw="100%"
       data-object-fit="contain"
       loading="lazy"
-      src={`/api/exercises/${props.exercise.id}/image`}
+      src={src}
       style={{
         ...Rhythm(width[props.size]).times(1).width,
         ...Rhythm(height[props.size]).times(1).height,
