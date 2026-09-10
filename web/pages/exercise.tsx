@@ -1,5 +1,5 @@
 // fallow-ignore-file unused-export
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
@@ -7,13 +7,15 @@ import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
 import {
   ExerciseDelete,
+  ExerciseDescriptionUpdate,
   ExerciseHistory,
+  ExerciseNameUpdate,
   ExerciseOneRepMaxEstimate,
   ExerciseProgressChart,
 } from "../sections";
 
 export function Exercise() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const { exercise, performances } = exerciseRoute.useLoaderData();
 
   if (!exercise) {
@@ -53,9 +55,13 @@ export function Exercise() {
             <ChevronLeft data-size="md" />
           </Link>
 
-          <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
-            {exercise.data.name}
-          </h1>
+          {exercise.actions.update.enabled ? (
+            <ExerciseNameUpdate exercise={exercise.data} />
+          ) : (
+            <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
+              {exercise.data.name}
+            </h1>
+          )}
 
           {exercise.actions.delete.available && (
             <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
@@ -79,9 +85,13 @@ export function Exercise() {
           ))}
         </ul>
 
-        <p className="c-prose" data-color="neutral-200">
-          {exercise.data.description}
-        </p>
+        {exercise.actions.update.enabled ? (
+          <ExerciseDescriptionUpdate exercise={exercise.data} />
+        ) : (
+          <p className="c-prose" data-color="neutral-200">
+            {exercise.data.description}
+          </p>
+        )}
 
         <div data-gap="8" data-mt="8" data-stack="y">
           <div data-stack="x">
