@@ -35,16 +35,23 @@ export function ProfileAvatarChange() {
         <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 
-      <div data-gap="5" data-stack="x">
+      <div data-cross="center" data-gap="5" data-md-cross="start" data-md-stack="y" data-stack="x">
         <ProfileAvatarDelete />
 
-        <form data-gap="2" data-stack="y" encType="multipart/form-data" onSubmit={mutation.handleSubmit}>
+        <form
+          data-gap="2"
+          data-md-width="100%"
+          data-stack="y"
+          encType="multipart/form-data"
+          onSubmit={mutation.handleSubmit}
+        >
           <div data-gap="3" data-stack="x">
             <label
               className="c-button"
               data-cross="center"
               data-disp="flex"
               data-main="center"
+              data-md-grow="1"
               data-variant="ghost"
               {...avatar.label.props}
             >
@@ -62,6 +69,7 @@ export function ProfileAvatarChange() {
 
             <button
               className="c-button"
+              data-md-grow="1"
               data-variant="secondary"
               disabled={!avatar.isSelected || mutation.isLoading}
               type="submit"
