@@ -1,15 +1,19 @@
 import * as bg from "@bgord/ui";
+import { Plus } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseCard } from "../components";
+import { ActionHint, ExerciseCard } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
+import { ExerciseCategoryAdd } from "./exercise-category-add";
 
 export function ExerciseCatalog() {
   const t = bg.useTranslations();
   const { exercises, exerciseCategories } = catalogRoute.useLoaderData();
   const navigate = catalogRoute.useNavigate();
   const search = catalogRoute.useSearch();
+
+  const categoryAdd = bg.useToggle({ name: "exercise-category-add" });
 
   const nameInput = useRef<HTMLInputElement>(null);
 
@@ -81,31 +85,52 @@ export function ExerciseCatalog() {
         )}
       </div>
 
-      <ul data-gap="1" data-stack="x">
-        {exerciseCategories.data.map((category) => {
-          const selected = search.category === category.id;
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <ul data-gap="1" data-stack="x">
+          {exerciseCategories.data.map((category) => {
+            const selected = search.category === category.id;
 
-          return (
-            <li key={category.id}>
-              <button
-                aria-pressed={selected}
-                className="c-badge"
-                data-cursor="pointer"
-                data-variant={selected ? "primary" : "outline"}
-                onClick={() =>
-                  navigate({
-                    search: { category: selected ? undefined : category.id, name: search.name },
-                    to: "/catalog",
-                  })
-                }
-                type="button"
-              >
-                {category.name}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+            return (
+              <li key={category.id}>
+                <button
+                  aria-pressed={selected}
+                  className="c-badge"
+                  data-cursor="pointer"
+                  data-variant={selected ? "primary" : "outline"}
+                  onClick={() =>
+                    navigate({
+                      search: { category: selected ? undefined : category.id, name: search.name },
+                      to: "/catalog",
+                    })
+                  }
+                  type="button"
+                >
+                  {category.name}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+
+        {exerciseCategories.actions.add.available && (
+          <>
+            <ActionHint action={exerciseCategories.actions.add} />
+
+            <button
+              className="c-button"
+              data-variant="secondary"
+              disabled={!exerciseCategories.actions.add.enabled}
+              onClick={categoryAdd.toggle}
+              type="button"
+            >
+              <Plus data-size="sm" />
+              {t("exercise.category.add.cta")}
+            </button>
+          </>
+        )}
+      </div>
+
+      {exerciseCategories.actions.add.enabled && categoryAdd.on && <ExerciseCategoryAdd />}
 
       {matching.length === 0 && <div data-color="neutral-400">{t("exercise.catalog.no_matches")}</div>}
 
