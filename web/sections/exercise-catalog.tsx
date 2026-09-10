@@ -1,13 +1,17 @@
 import * as bg from "@bgord/ui";
+import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseCard } from "../components";
 import { catalogRoute } from "../router";
+import * as ShortcutDefinitions from "../services/shortcuts";
 
 export function ExerciseCatalog() {
   const t = bg.useTranslations();
   const { exercises, exerciseCategories } = catalogRoute.useLoaderData();
   const navigate = catalogRoute.useNavigate();
   const search = catalogRoute.useSearch();
+
+  const nameInput = useRef<HTMLInputElement>(null);
 
   const name = bg.useTextField({
     name: ExerciseCatalogFiltersForm.Form.name.field.name,
@@ -21,6 +25,24 @@ export function ExerciseCatalog() {
     const byName = exercise.name.toLowerCase().includes((search.name ?? "").trim().toLowerCase());
 
     return byCategory && byName;
+  });
+
+  const clear = () => {
+    name.clear();
+    navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
+  };
+
+  bg.useShortcuts({
+    [ShortcutDefinitions.SearchExercises.trigger]: (event) => {
+      event.preventDefault();
+      nameInput.current?.focus();
+    },
+    [ShortcutDefinitions.ClearExerciseFilters.trigger]: clear,
+    [ShortcutDefinitions.OpenExercise.trigger]: () => {
+      if (matching[0]) {
+        navigate({ params: { exerciseId: matching[0].id }, to: "/catalog/exercise/$exerciseId" });
+      }
+    },
   });
 
   return (
@@ -40,6 +62,7 @@ export function ExerciseCatalog() {
             });
           }}
           placeholder={t("exercise.catalog.name.placeholder")}
+          ref={nameInput}
           value={name.input.props.value}
           {...bg.Autocomplete.off}
           {...bg.Rhythm().times(20).style.width}
@@ -50,16 +73,7 @@ export function ExerciseCatalog() {
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
-          <button
-            className="c-button"
-            data-variant="ghost"
-            onClick={() => {
-              name.clear();
-
-              navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
-            }}
-            type="button"
-          >
+          <button className="c-button" data-variant="ghost" onClick={clear} type="button">
             {t("app.clear")}
           </button>
         )}
