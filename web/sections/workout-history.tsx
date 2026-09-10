@@ -13,6 +13,19 @@ export function WorkoutHistory() {
     (workout) => !search.section || workout.planSectionId === search.section,
   );
 
+  bg.useShortcuts({
+    c: () => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" }),
+    o: () => {
+      if (matching[0]) {
+        navigate({
+          params: { workoutId: matching[0].id },
+          search: { section: search.section },
+          to: "/workouts/$workoutId",
+        });
+      }
+    },
+  });
+
   if (workouts.data.length === 0) return <div data-color="neutral-400">{t("workout.list.empty")}</div>;
 
   return (
@@ -47,7 +60,7 @@ export function WorkoutHistory() {
         <button
           className="c-button"
           data-variant="ghost"
-          disabled={cleared}
+          disabled={WorkoutHistoryFiltersForm.Form.isDefault(search)}
           onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
           type="button"
         >
