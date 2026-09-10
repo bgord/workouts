@@ -50,7 +50,6 @@ export function WorkoutSetLog(props: {
   });
 
   const done = props.exercise.loggedSets.length;
-  const last = props.exercise.target !== undefined && done + 1 >= props.exercise.target.sets;
 
   return (
     <form className="c-card-footer" data-cross="end" data-gap="3" onSubmit={mutation.handleSubmit}>
@@ -83,22 +82,20 @@ export function WorkoutSetLog(props: {
         />
       </div>
 
-      {last && (
-        <div data-gap="1" data-stack="y">
-          <label className="c-label" data-variant="inline" {...rir.label.props}>
-            {t("workout.set.rir.label")}
-          </label>
+      <div data-gap="1" data-stack="y">
+        <label className="c-label" data-variant="inline" {...rir.label.props}>
+          {t("workout.set.rir.label")}
+        </label>
 
-          <input
-            className="c-input"
-            max={RirMax}
-            min="0"
-            type="number"
-            {...rir.input.props}
-            {...bg.Rhythm(56).times(1).style.width}
-          />
-        </div>
-      )}
+        <input
+          className="c-input"
+          max={RirMax}
+          min="0"
+          type="number"
+          {...rir.input.props}
+          {...bg.Rhythm(56).times(1).style.width}
+        />
+      </div>
 
       <div data-cross="center" data-gap="3" data-stack="x">
         <button

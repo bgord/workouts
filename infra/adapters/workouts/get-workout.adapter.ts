@@ -111,7 +111,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
           })),
         actions: {
           targetSet: {
-            available: draft || exercise.targetSets === null,
+            available: draft || (inProgress && exercise.targetSets === null),
             enabled: editable,
             hints: [],
           },
