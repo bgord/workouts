@@ -40,17 +40,19 @@ export function WorkoutCreate() {
       className="c-card"
       data-cross="end"
       data-gap="3"
+      data-md-cross="start"
+      data-md-stack="y"
       data-stack="x"
-      data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
     >
-      <div data-gap="1" data-stack="y">
+      <div data-gap="1" data-md-width="100%" data-stack="y">
         <label className="c-label" {...scheduledFor.label.props}>
           {t("workout.create.date.label")}
         </label>
 
         <input
           className="c-input"
+          data-md-width="100%"
           ref={schedule.ref}
           type="date"
           {...scheduledFor.input.props}
@@ -60,12 +62,12 @@ export function WorkoutCreate() {
       </div>
 
       {plan && (
-        <div data-gap="1" data-grow="1" data-stack="y">
+        <div data-gap="1" data-grow="1" data-md-width="100%" data-stack="y">
           <label className="c-label" {...planSectionId.label.props}>
             {plan.name}
           </label>
 
-          <Select {...planSectionId.input.props}>
+          <Select data-md-width="100%" {...planSectionId.input.props}>
             {plan.sections.map((section) => (
               <option key={section.id} value={section.id}>
                 {section.name}
@@ -77,6 +79,7 @@ export function WorkoutCreate() {
 
       <button
         className="c-button"
+        data-md-width="100%"
         data-variant="secondary"
         disabled={!workouts.actions.create.enabled || mutation.isLoading}
         type="submit"

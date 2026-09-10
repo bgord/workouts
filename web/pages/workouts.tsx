@@ -29,6 +29,7 @@ export function Workouts() {
 
         <button
           className="c-button"
+          data-md-width="100%"
           data-variant="primary"
           disabled={!workouts.actions.create.enabled}
           onClick={workoutCreate.toggle}
