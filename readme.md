@@ -349,6 +349,8 @@ modules/
         ├── logged-set-id.ts
         ├── logged-set.ts
         ├── reps.ts
+        ├── rir-limit.ts
+        ├── rir.ts
         ├── set-number.ts
         ├── sets.ts
         ├── workout-draft-limit-for-owner.ts
