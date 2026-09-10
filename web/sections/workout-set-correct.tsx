@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Pencil } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
+import { RirMax } from "../../modules/workouts/value-objects/rir-limit";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
@@ -29,6 +30,11 @@ export function WorkoutSetCorrect(props: {
     defaultValue: WeightFormat.kilograms(props.loggedSet.load),
   });
 
+  const rir = bg.useNumberField({
+    name: `corrected-rir-${props.loggedSet.id}`,
+    defaultValue: props.loggedSet.rir,
+  });
+
   const mutation = bg.useMutation({
     perform: () =>
       fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set/${props.loggedSet.id}`, {
@@ -41,6 +47,7 @@ export function WorkoutSetCorrect(props: {
         body: JSON.stringify({
           reps: reps.value,
           load: WeightFormat.grams(load.value ?? 0),
+          rir: rir.value,
         }),
       }),
     onSuccess: async () => {
@@ -86,6 +93,16 @@ export function WorkoutSetCorrect(props: {
         type="number"
         {...load.input.props}
         {...bg.Rhythm(72).times(1).style.width}
+      />
+
+      <input
+        className="c-input"
+        max={RirMax}
+        min="0"
+        placeholder={t("workout.set.rir.label")}
+        type="number"
+        {...rir.input.props}
+        {...bg.Rhythm(56).times(1).style.width}
       />
 
       <button
