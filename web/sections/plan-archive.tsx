@@ -30,7 +30,7 @@ export function PlanArchive(props: Plan) {
     <>
       <button
         className="c-button"
-        data-variant="secondary"
+        data-variant="bare"
         onClick={dialog.enable}
         type="button"
         {...dialog.props.controller}
