@@ -17,6 +17,7 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
         setNumber: Schema.workoutLoggedSets.setNumber,
         reps: Schema.workoutLoggedSets.reps,
         load: Schema.workoutLoggedSets.load,
+        rir: Schema.workoutLoggedSets.rir,
       })
       .from(Schema.workoutLoggedSets)
       .innerJoin(
@@ -37,7 +38,12 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
     return [...Map.groupBy(rows, (row) => row.workoutId)].map(([workoutId, rows]) => ({
       workoutId,
       performedAt: rows[0]!.performedAt!,
-      sets: rows.map((row) => ({ setNumber: row.setNumber, reps: row.reps, load: row.load })),
+      sets: rows.map((row) => ({
+        setNumber: row.setNumber,
+        reps: row.reps,
+        load: row.load,
+        rir: row.rir ?? undefined,
+      })),
     }));
   }
 }

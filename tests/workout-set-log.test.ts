@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -113,6 +114,24 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
 
     expect(response.status).toEqual(400);
     expect(json).toEqual({ message: "weight.grams.invalid" });
+  });
+
+  test("validation - rir - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.revisionHeaders(),
+        body: JSON.stringify({ reps: 9, load: 80000, rir: 6 }),
+      },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: Workouts.VO.RirError.Range });
   });
 
   test("WorkoutExists", async () => {
@@ -258,5 +277,32 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutSetLoggedEvent]);
+  });
+
+  test("happy path - with rir", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(mocks.loggedSetId);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        body: JSON.stringify(mocks.loggedSetWithRir),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutSetLoggedWithRirEvent]);
   });
 });

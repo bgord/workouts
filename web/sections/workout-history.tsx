@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutCard } from "../components";
 import { workoutsRoute } from "../router";
+import * as ShortcutDefinitions from "../services/shortcuts";
 
 export function WorkoutHistory() {
   const t = bg.useTranslations();
@@ -12,6 +13,18 @@ export function WorkoutHistory() {
   const matching = workouts.data.filter(
     (workout) => !search.section || workout.planSectionId === search.section,
   );
+
+  bg.useShortcuts({
+    [ShortcutDefinitions.OpenWorkout.trigger]: () => {
+      if (matching[0]) {
+        navigate({
+          params: { workoutId: matching[0].id },
+          search: { section: search.section },
+          to: "/workouts/$workoutId",
+        });
+      }
+    },
+  });
 
   if (workouts.data.length === 0) return <div data-color="neutral-400">{t("workout.list.empty")}</div>;
 

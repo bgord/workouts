@@ -297,6 +297,14 @@ export const anotherLoggedSet = v.parse(Workouts.VO.LoggedSet, {
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
 });
 
+export const loggedSetWithRir = v.parse(Workouts.VO.LoggedSet, {
+  id: loggedSetId,
+  setNumber: v.parse(Workouts.VO.SetNumber, 1),
+  reps: v.parse(Workouts.VO.Reps, 9),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+  rir: v.parse(Workouts.VO.Rir, 2),
+});
+
 export const exercisePerformance = {
   workoutId,
   performedAt: T0.ms,
@@ -969,6 +977,36 @@ export const GenericWorkoutSetLoggedEvent = {
   name: "WORKOUT_SET_LOGGED_EVENT",
   payload: { workoutId, workoutExerciseId, loggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
+
+export const GenericWorkoutSetLoggedWithRirEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_SET_LOGGED_EVENT",
+  payload: { workoutId, workoutExerciseId, loggedSet: loggedSetWithRir, requesterId: userId },
+} satisfies Workouts.Events.WorkoutSetLoggedEventType;
+
+export const correctedLoggedSetWithRir = v.parse(Workouts.VO.LoggedSet, {
+  id: loggedSetId,
+  setNumber: v.parse(Workouts.VO.SetNumber, 1),
+  reps: v.parse(Workouts.VO.Reps, 6),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(85).get()),
+  rir: v.parse(Workouts.VO.Rir, 1),
+});
+
+export const GenericWorkoutSetCorrectedWithRirEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_SET_CORRECTED_EVENT",
+  payload: { workoutId, workoutExerciseId, loggedSet: correctedLoggedSetWithRir, requesterId: userId },
+} satisfies Workouts.Events.WorkoutSetCorrectedEventType;
 
 export const correctedLoggedSet = v.parse(Workouts.VO.LoggedSet, {
   id: loggedSetId,

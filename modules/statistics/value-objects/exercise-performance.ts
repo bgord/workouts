@@ -9,6 +9,7 @@ export type ExercisePerformance = {
     setNumber: Workouts.VO.SetNumberType;
     reps: Workouts.VO.RepsType;
     load: Workouts.VO.LoadType;
+    rir?: Workouts.VO.RirType;
     estimate: VO.OneRepMaxEstimateType;
   }>;
   volume: tools.WeightGramsType;

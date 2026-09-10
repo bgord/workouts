@@ -5,6 +5,7 @@ import * as Auth from "+auth";
 import { Load } from "../value-objects/load";
 import { LoggedSetId } from "../value-objects/logged-set-id";
 import { Reps } from "../value-objects/reps";
+import { Rir } from "../value-objects/rir";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
 import { WorkoutId } from "../value-objects/workout-id";
 
@@ -21,6 +22,7 @@ export const WorkoutSetCorrectCommand = v.object({
     loggedSetId: LoggedSetId,
     reps: Reps,
     load: Load,
+    rir: v.optional(Rir),
     requesterId: Auth.VO.UserId,
   }),
 });

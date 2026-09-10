@@ -106,9 +106,18 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             setNumber: loggedSet.setNumber,
             reps: loggedSet.reps,
             load: loggedSet.load,
+            rir: loggedSet.rir ?? undefined,
             actions: { correct: whenCorrectable, remove: setRemove },
           })),
-        actions: { targetSet: whenEditable, remove: whenEditable, setLog: whenInProgress },
+        actions: {
+          targetSet: {
+            available: draft || (inProgress && exercise.targetSets === null),
+            enabled: editable,
+            hints: [],
+          },
+          remove: whenEditable,
+          setLog: whenInProgress,
+        },
       })),
     };
 

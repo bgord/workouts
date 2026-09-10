@@ -20,12 +20,13 @@ export const WorkoutSetCorrect =
     const loggedSetId = v.parse(Workouts.VO.LoggedSetId, params["loggedSetId"]);
     const reps = v.parse(Workouts.VO.Reps, body["reps"]);
     const load = v.parse(Workouts.VO.Load, body["load"]);
+    const rir = v.parse(v.optional(Workouts.VO.Rir), body["rir"] ?? undefined);
 
     const command = bg.command(
       Workouts.Commands.WorkoutSetCorrectCommand,
       {
         revision: context.middleware.revision.fromWeakETag(),
-        payload: { workoutId, workoutExerciseId, loggedSetId, reps, load, requesterId },
+        payload: { workoutId, workoutExerciseId, loggedSetId, reps, load, rir, requesterId },
       },
       deps,
     );

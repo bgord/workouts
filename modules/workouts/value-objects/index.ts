@@ -4,6 +4,8 @@ export * from "./load";
 export * from "./logged-set";
 export * from "./logged-set-id";
 export * from "./reps";
+export * from "./rir";
+export * from "./rir-limit";
 export * from "./set-number";
 export * from "./sets";
 export * from "./workout";

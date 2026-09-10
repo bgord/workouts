@@ -4,6 +4,7 @@ import { CalendarPlus } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import { ActionHint, Select } from "../components";
 import { workoutsRoute } from "../router";
+import * as ShortcutDefinitions from "../services/shortcuts";
 
 export function WorkoutCreate() {
   const t = bg.useTranslations();
@@ -12,6 +13,7 @@ export function WorkoutCreate() {
 
   const today = Temporal.Now.plainDateISO().toString();
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
+  const schedule = bg.useFocusKeyboardShortcut<HTMLInputElement>(ShortcutDefinitions.ScheduleWorkout.trigger);
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
 
   const mutation = bg.useMutation({
@@ -42,6 +44,7 @@ export function WorkoutCreate() {
 
         <input
           className="c-input"
+          ref={schedule.ref}
           type="date"
           {...scheduledFor.input.props}
           max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}

@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
+import { RirMax } from "../../modules/workouts/value-objects/rir-limit";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
@@ -27,6 +28,8 @@ export function WorkoutSetLog(props: {
       : bg.NumberField.EMPTY,
   });
 
+  const rir = bg.useNumberField({ name: `logged-rir-${props.exercise.id}` });
+
   const mutation = bg.useMutation({
     perform: () =>
       fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set`, {
@@ -36,9 +39,14 @@ export function WorkoutSetLog(props: {
         body: JSON.stringify({
           reps: reps.value,
           load: WeightFormat.grams(load.value ?? 0),
+          rir: rir.value,
         }),
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
+    onSuccess: () => {
+      rir.clear();
+
+      return router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
+    },
   });
 
   const done = props.exercise.loggedSets.length;
@@ -71,6 +79,21 @@ export function WorkoutSetLog(props: {
           type="number"
           {...load.input.props}
           {...bg.Rhythm(80).times(1).style.width}
+        />
+      </div>
+
+      <div data-gap="1" data-stack="y">
+        <label className="c-label" data-variant="inline" {...rir.label.props}>
+          {t("workout.set.rir.label")}
+        </label>
+
+        <input
+          className="c-input"
+          max={RirMax}
+          min="0"
+          type="number"
+          {...rir.input.props}
+          {...bg.Rhythm(56).times(1).style.width}
         />
       </div>
 
