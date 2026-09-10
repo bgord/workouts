@@ -5,7 +5,12 @@ import { ChevronLeft } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
-import { ExerciseHistory, ExerciseOneRepMaxEstimate, ExerciseProgressChart } from "../sections";
+import {
+  ExerciseDelete,
+  ExerciseHistory,
+  ExerciseOneRepMaxEstimate,
+  ExerciseProgressChart,
+} from "../sections";
 
 export function Exercise() {
   const t = useTranslations();
@@ -51,6 +56,10 @@ export function Exercise() {
           <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
             {exercise.data.name}
           </h1>
+
+          {exercise.actions.delete.available && (
+            <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
+          )}
         </div>
 
         <ExerciseImage exercise={exercise.data} size={ExerciseImageSize.lg} />

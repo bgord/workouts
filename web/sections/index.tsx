@@ -4,6 +4,7 @@ export * from "./exercise-category-add";
 export * from "./exercise-category-delete";
 export * from "./exercise-category-manage";
 export * from "./exercise-category-rename";
+export * from "./exercise-delete";
 export * from "./exercise-history";
 export * from "./exercise-one-rep-max-estimate";
 export * from "./exercise-progress-chart";
