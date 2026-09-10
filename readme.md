@@ -98,7 +98,7 @@ modules/
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
-│   │   ├── catalog-is-managed-by-system.ts
+│   │   ├── catalog-is-managed-by-admin.ts
 │   │   ├── exercise-category-exists.ts
 │   │   ├── exercise-category-limit.ts
 │   │   ├── exercise-category-name-is-unique.ts

@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryDeletedEvent } from "../events/EXERCISE_CATEGORY_DELETED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 
 type Dependencies = {
@@ -14,7 +14,7 @@ type Dependencies = {
 
 export const handleExerciseCategoryDeleteCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryDeleteCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
+    CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
 

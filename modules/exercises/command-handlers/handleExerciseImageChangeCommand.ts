@@ -3,7 +3,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import { ExerciseImageChangedEvent } from "../events/EXERCISE_IMAGE_CHANGED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
 import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
@@ -25,9 +25,9 @@ export const handleExerciseImageChangeCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseImageChangeCommandType) => {
     const temporary = tools.FilePathAbsolute.fromString(command.payload.absoluteFilePath);
 
-    if (!CatalogIsManagedBySystem.passes({ requesterId: command.payload.requesterId })) {
+    if (!CatalogIsManagedByAdmin.passes({ requesterId: command.payload.requesterId })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
-      throw new CatalogIsManagedBySystem.error();
+      throw new CatalogIsManagedByAdmin.error();
     }
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.id);

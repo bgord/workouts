@@ -1196,7 +1196,7 @@ export const systemSession: Session = {
 
 export const auth = { user, session, path: "/get-session", options: {} } as const;
 
-export const systemAuth = {
+export const adminAuth = {
   user: systemUser,
   session: systemSession,
   path: "/get-session",

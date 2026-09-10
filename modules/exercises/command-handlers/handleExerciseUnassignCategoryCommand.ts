@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryUnassignedEvent } from "../events/EXERCISE_CATEGORY_UNASSIGNED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsAssignedToCategory } from "../invariants/exercise-is-assigned-to-category";
@@ -18,7 +18,7 @@ type Dependencies = {
 
 export const handleExerciseUnassignCategoryCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseUnassignCategoryCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
+    CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.exerciseId);
 

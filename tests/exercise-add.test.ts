@@ -41,7 +41,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - name - missing", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const form = new FormData();
     form.append("file", mocks.png);
@@ -54,7 +54,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - name - invalid", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const form = new FormData();
     form.append("file", mocks.png);
@@ -68,7 +68,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - description - missing", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const form = new FormData();
     form.append("file", mocks.png);
@@ -82,7 +82,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("validation - description - invalid", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const form = new FormData();
     form.append("file", mocks.png);
@@ -96,7 +96,7 @@ describe(`POST ${url}`, async () => {
     expect(json).toEqual({ message: "exercise.description.invalid" });
   });
 
-  test("CatalogIsManagedBySystem", async () => {
+  test("CatalogIsManagedByAdmin", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -109,13 +109,13 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.system");
+    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.admin");
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("ExerciseNameIsUnique", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using spies = new DisposableStack();
@@ -140,7 +140,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - maxSide - width", async () => {
     const width = v.parse(tools.ImageWidth, 4100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -160,7 +160,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - maxSide - height", async () => {
     const height = v.parse(tools.ImageHeight, 4100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -180,7 +180,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - size", async () => {
     const size = tools.Size.fromMB(100);
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -200,7 +200,7 @@ describe(`POST ${url}`, async () => {
 
   test("ExerciseImageConstraints - mime", async () => {
     const mime = tools.Mimes.text.mime;
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     const ids = new bg.IdProviderDeterministicAdapter([mocks.temporaryFileId]);
@@ -219,7 +219,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("happy path", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.systemAuth);
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
     using imageProcessorProcess = spyOn(di.Adapters.System.ImageProcessor, "process");
