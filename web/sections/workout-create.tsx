@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CalendarPlus } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ActionHint, Select } from "../components";
+import { Select } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -36,9 +36,16 @@ export function WorkoutCreate() {
   });
 
   return (
-    <form data-cross="end" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
+    <form
+      className="c-card"
+      data-cross="end"
+      data-gap="3"
+      data-stack="x"
+      data-wrap="wrap"
+      onSubmit={mutation.handleSubmit}
+    >
       <div data-gap="1" data-stack="y">
-        <label className="c-label" data-variant="inline" {...scheduledFor.label.props}>
+        <label className="c-label" {...scheduledFor.label.props}>
           {t("workout.create.date.label")}
         </label>
 
@@ -53,8 +60,8 @@ export function WorkoutCreate() {
       </div>
 
       {plan && (
-        <div data-gap="1" data-stack="y">
-          <label className="c-label" data-variant="inline" {...planSectionId.label.props}>
+        <div data-gap="1" data-grow="1" data-stack="y">
+          <label className="c-label" {...planSectionId.label.props}>
             {plan.name}
           </label>
 
@@ -70,17 +77,13 @@ export function WorkoutCreate() {
 
       <button
         className="c-button"
-        data-variant="primary"
+        data-variant="secondary"
         disabled={!workouts.actions.create.enabled || mutation.isLoading}
         type="submit"
       >
         <CalendarPlus data-size="sm" />
         {t("workout.create.cta")}
       </button>
-
-      <div data-mb="2">
-        <ActionHint action={workouts.actions.create} />
-      </div>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm" data-mb="2">

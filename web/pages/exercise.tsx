@@ -121,11 +121,11 @@ export function Exercise() {
       {performances.length === 0 ? (
         <div
           className="c-card"
-          data-variant="flat"
           data-cross="center"
           data-gap="1"
           data-py="8"
           data-stack="y"
+          data-variant="flat"
         >
           <Dumbbell data-color="neutral-600" data-size="md" />
 

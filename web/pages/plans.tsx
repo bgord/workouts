@@ -23,7 +23,7 @@ export function Plans() {
 
         <button
           className="c-button"
-          data-variant="secondary"
+          data-variant="primary"
           disabled={!plans.actions.create.enabled}
           onClick={planCreate.toggle}
           type="button"
