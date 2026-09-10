@@ -7,7 +7,7 @@ type CatalogIsManagedBySystemConfigType = { requesterId: Auth.VO.UserIdType };
 
 class CatalogIsManagedBySystemFactory extends bg.Invariant<CatalogIsManagedBySystemConfigType> {
   passes(config: CatalogIsManagedBySystemConfigType) {
-    return config.requesterId === Auth.VO.SYSTEM_USER_ID;
+    return config.requesterId === Auth.VO.ADMIN_USER_ID;
   }
 
   // Stryker disable next-line StringLiteral

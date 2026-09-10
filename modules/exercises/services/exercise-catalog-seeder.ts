@@ -51,7 +51,7 @@ export class ExerciseCatalogSeeder {
       await this.deps.CommandBus.emit(
         bg.command(
           Commands.ExerciseCategoryAddCommand,
-          { payload: { id, name, userId: Auth.VO.SYSTEM_USER_ID } },
+          { payload: { id, name, userId: Auth.VO.ADMIN_USER_ID } },
           this.deps,
         ),
       );
@@ -86,7 +86,7 @@ export class ExerciseCatalogSeeder {
                 absoluteFilePath: temporary.get(),
                 name: entry.name,
                 description: entry.description,
-                userId: Auth.VO.SYSTEM_USER_ID,
+                userId: Auth.VO.ADMIN_USER_ID,
               },
             },
             this.deps,
@@ -106,7 +106,7 @@ export class ExerciseCatalogSeeder {
         await this.deps.CommandBus.emit(
           bg.command(
             Commands.ExerciseAssignCategoryCommand,
-            { payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID } },
+            { payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.ADMIN_USER_ID } },
             this.deps,
           ),
         );

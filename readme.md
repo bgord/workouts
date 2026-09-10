@@ -63,8 +63,8 @@ modules/
 │   │   ├── email-verification-notification-composer.ts
 │   │   └── password-reset-notification-composer.ts
 │   └── value-objects
+│       ├── admin-user-id.ts
 │       ├── password.ts
-│       ├── system-user-id.ts
 │       └── user-id.ts
 ├── exercises
 │   ├── command-handlers
