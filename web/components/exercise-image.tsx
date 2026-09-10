@@ -1,5 +1,6 @@
 import { Rhythm } from "@bgord/ui";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
+import type { ExerciseImageEtagType } from "../api/exercises.api";
 
 export enum ExerciseImageSize {
   sm = "sm",
@@ -22,10 +23,10 @@ const height: Record<ExerciseImageSize, number> = {
 export function ExerciseImage(props: {
   exercise: Pick<Exercise, "id" | "name">;
   size: ExerciseImageSize;
-  cacheKey?: number;
+  etag?: ExerciseImageEtagType | null;
 }) {
-  const src = props.cacheKey
-    ? `/api/exercises/${props.exercise.id}/image?v=${props.cacheKey}`
+  const src = props.etag
+    ? `/api/exercises/${props.exercise.id}/image?etag=${props.etag}`
     : `/api/exercises/${props.exercise.id}/image`;
 
   return (

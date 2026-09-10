@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { useState } from "react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ButtonCancel, ExerciseImage, ExerciseImageSize } from "../components";
 import { exerciseRoute } from "../router";
@@ -11,7 +10,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
   const t = bg.useTranslations();
   const router = useRouter();
   const change = bg.useToggle({ name: "exercise-image-change" });
-  const [cacheKey, setCacheKey] = useState(0);
+  const { exerciseImageEtag } = exerciseRoute.useLoaderData();
 
   const image = bg.useFile("exercise-image-change-file", { mimeTypes, maxSizeBytes: 10_000_000 });
 
@@ -30,7 +29,6 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
     onSuccess: async () => {
       change.disable();
       image.actions.clearFile();
-      setCacheKey((current) => current + 1);
 
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
     },
@@ -46,14 +44,14 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
         type="button"
         {...change.props.controller}
       >
-        <ExerciseImage cacheKey={cacheKey} exercise={props.exercise} size={ExerciseImageSize.lg} />
+        <ExerciseImage etag={exerciseImageEtag} exercise={props.exercise} size={ExerciseImageSize.lg} />
       </button>
     );
   }
 
   return (
     <div data-gap="3" data-stack="y" {...change.props.target}>
-      <ExerciseImage cacheKey={cacheKey} exercise={props.exercise} size={ExerciseImageSize.lg} />
+      <ExerciseImage etag={exerciseImageEtag} exercise={props.exercise} size={ExerciseImageSize.lg} />
 
       <form data-gap="2" data-stack="y" encType="multipart/form-data" onSubmit={mutation.handleSubmit}>
         <div data-cross="center" data-gap="3" data-stack="x">

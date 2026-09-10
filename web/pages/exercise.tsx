@@ -18,7 +18,7 @@ import {
 
 export function Exercise() {
   const t = bg.useTranslations();
-  const { exercise, performances } = exerciseRoute.useLoaderData();
+  const { exercise, exerciseImageEtag, performances } = exerciseRoute.useLoaderData();
 
   if (!exercise) {
     return (
@@ -73,7 +73,7 @@ export function Exercise() {
         {exercise.actions.imageChange.enabled ? (
           <ExerciseImageChange exercise={exercise.data} />
         ) : (
-          <ExerciseImage exercise={exercise.data} size={ExerciseImageSize.lg} />
+          <ExerciseImage etag={exerciseImageEtag} exercise={exercise.data} size={ExerciseImageSize.lg} />
         )}
 
         {exercise.actions.categoryAssign.available ? (
