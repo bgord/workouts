@@ -17,7 +17,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
   const { exercises } = planRoute.useLoaderData();
   const add = bg.useToggle({ name: `plan-section-exercise-instruction-add-${props.section.id}` });
 
-  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises[0]?.id ?? "" });
+  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises.data[0]?.id ?? "" });
   const sets = bg.useNumberField(Form.sets.field);
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
@@ -73,7 +73,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           </label>
 
           <Select {...exerciseId.input.props}>
-            {exercises.map((exercise) => (
+            {exercises.data.map((exercise) => (
               <option key={exercise.id} value={exercise.id}>
                 {exercise.name}
               </option>

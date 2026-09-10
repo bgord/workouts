@@ -13,7 +13,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
   const { exercises } = workoutRoute.useLoaderData();
   const add = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
 
-  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises[0]?.id ?? "" });
+  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises.data[0]?.id ?? "" });
   const sets = bg.useNumberField(Form.sets.field);
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
@@ -69,7 +69,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           </label>
 
           <Select {...exerciseId.input.props}>
-            {exercises.map((exercise) => (
+            {exercises.data.map((exercise) => (
               <option key={exercise.id} value={exercise.id}>
                 {exercise.name}
               </option>

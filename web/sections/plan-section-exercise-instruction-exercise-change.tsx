@@ -73,7 +73,7 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
       {...change.props.target}
     >
       <Select aria-label={t("plan.section.exercise.add.exercise.label")} {...exerciseId.input.props}>
-        {exercises.map((exercise) => (
+        {exercises.data.map((exercise) => (
           <option key={exercise.id} value={exercise.id}>
             {exercise.name}
           </option>

@@ -18,7 +18,7 @@ export function ExerciseCatalog() {
     defaultValue: search.name ?? "",
   });
 
-  const matching = exercises.filter((exercise) => {
+  const matching = exercises.data.filter((exercise) => {
     const byCategory =
       !search.category || exercise.categories.some((category) => category.id === search.category);
 
@@ -63,7 +63,7 @@ export function ExerciseCatalog() {
         />
 
         <div data-color="neutral-400" data-fs="sm">
-          {t("exercise.catalog.count", { matching: matching.length, total: exercises.length })}
+          {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
@@ -82,7 +82,7 @@ export function ExerciseCatalog() {
       </div>
 
       <ul data-gap="1" data-stack="x">
-        {exerciseCategories.map((category) => {
+        {exerciseCategories.data.map((category) => {
           const selected = search.category === category.id;
 
           return (

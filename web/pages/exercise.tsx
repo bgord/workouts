@@ -49,14 +49,14 @@ export function Exercise() {
           </Link>
 
           <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
-            {exercise.name}
+            {exercise.data.name}
           </h1>
         </div>
 
-        <ExerciseImage exercise={exercise} size={ExerciseImageSize.lg} />
+        <ExerciseImage exercise={exercise.data} size={ExerciseImageSize.lg} />
 
         <ul data-gap="1" data-stack="x">
-          {exercise.categories.map((category) => (
+          {exercise.data.categories.map((category) => (
             <li key={category.id}>
               <Link
                 className="c-badge"
@@ -71,7 +71,7 @@ export function Exercise() {
         </ul>
 
         <p className="c-prose" data-color="neutral-200">
-          {exercise.description}
+          {exercise.data.description}
         </p>
 
         <div data-gap="8" data-mt="8" data-stack="y">
