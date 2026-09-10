@@ -75,7 +75,9 @@ export function Exercise() {
         </p>
 
         <div data-gap="8" data-mt="8" data-stack="y">
-          <ExerciseOneRepMaxEstimate performances={performances} />
+          <div data-stack="x">
+            <ExerciseOneRepMaxEstimate performances={performances} />
+          </div>
 
           <ExerciseProgressChart performances={performances} />
 

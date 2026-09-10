@@ -1,6 +1,6 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Trophy } from "lucide-react";
+import { EqualApproximately, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import { WeightFormat } from "../services/weight-format";
@@ -39,8 +39,11 @@ export function ExerciseOneRepMaxEstimate(props: { performances: Array<ExerciseP
       </div>
 
       <div data-gap="0-5" data-stack="y">
-        <div data-color="neutral-400" data-fs="xs" data-transform="uppercase">
-          {t("statistics.exercise.one_rep_max_estimate")}
+        <div data-cross="center" data-gap="0-5" data-stack="x">
+          <EqualApproximately data-color="neutral-500" data-size="xs" />
+          <div data-color="neutral-400" data-fs="xs" data-transform="uppercase">
+            {t("statistics.exercise.one_rep_max_estimate")}
+          </div>
         </div>
 
         <div data-color="neutral-0" data-fs="2xl" data-fw="bold" data-lh="tight">
