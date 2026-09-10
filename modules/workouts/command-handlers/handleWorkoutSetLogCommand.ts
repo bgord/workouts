@@ -16,6 +16,7 @@ export const handleWorkoutSetLogCommand =
       command.payload.loggedSetId,
       command.payload.reps,
       command.payload.load,
+      command.payload.rir,
       command.payload.requesterId,
     );
     await deps.repo.save(workout);

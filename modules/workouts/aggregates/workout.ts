@@ -173,6 +173,7 @@ export class Workout {
     loggedSetId: VO.LoggedSetIdType,
     reps: VO.RepsType,
     load: VO.LoadType,
+    rir: VO.RirType | undefined,
     requesterId: Auth.VO.UserIdType,
   ) {
     Invariants.WorkoutIsInProgress.enforce({ status: this.status });
@@ -188,7 +189,7 @@ export class Workout {
       {
         workoutId: this.id,
         workoutExerciseId,
-        loggedSet: { id: loggedSetId, setNumber, reps, load },
+        loggedSet: { id: loggedSetId, setNumber, reps, load, rir },
         requesterId,
       },
       this.deps,
@@ -202,6 +203,7 @@ export class Workout {
     loggedSetId: VO.LoggedSetIdType,
     reps: VO.RepsType,
     load: VO.LoadType,
+    rir: VO.RirType | undefined,
     requesterId: Auth.VO.UserIdType,
   ) {
     const workoutExercise = this.exercises.find((exercise) => exercise.id === workoutExerciseId);
@@ -219,7 +221,7 @@ export class Workout {
       {
         workoutId: this.id,
         workoutExerciseId,
-        loggedSet: { id: loggedSetId, setNumber: current!.setNumber, reps, load },
+        loggedSet: { id: loggedSetId, setNumber: current!.setNumber, reps, load, rir },
         requesterId,
       },
       this.deps,
