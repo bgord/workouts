@@ -41,6 +41,7 @@ export const dashboardRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/dashboard"), "Dashboard"),
+  loader: async ({ context }) => ({ dashboard: await Workouts.dashboard(context.request) }),
 });
 
 export const workoutsRoute = createRoute({
