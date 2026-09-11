@@ -85,18 +85,18 @@ export function Shortcuts() {
         </div>
 
         {pathname === "/" && (
-          <ShortcutGroup header={t("app.dashboard")} shortcuts={ShortcutDefinitions.Dashboard} />
+          <ShortcutGroup header={t("app.dashboard")} shortcuts={ShortcutDefinitions.DashboardGroup} />
         )}
 
         {pathname === "/catalog" && (
-          <ShortcutGroup header={t("app.catalog")} shortcuts={ShortcutDefinitions.Catalog} />
+          <ShortcutGroup header={t("app.catalog")} shortcuts={ShortcutDefinitions.CatalogGroup} />
         )}
 
         {pathname === "/workouts" && (
-          <ShortcutGroup header={t("app.workouts")} shortcuts={ShortcutDefinitions.Workouts} />
+          <ShortcutGroup header={t("app.workouts")} shortcuts={ShortcutDefinitions.WorkoutsGroup} />
         )}
 
-        <ShortcutGroup header={t("app.shortcuts.global")} shortcuts={ShortcutDefinitions.Global} />
+        <ShortcutGroup header={t("app.shortcuts.global")} shortcuts={ShortcutDefinitions.GlobalGroup} />
       </div>
     </div>
   );

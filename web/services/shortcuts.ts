@@ -33,10 +33,10 @@ export const OpenExercise: ShortcutType = {
   label: "exercise.catalog.shortcuts.open",
 };
 
-export const Global: Array<ShortcutType> = [GoToDashboard, GoToCatalog, GoToPlans, ToggleHelp];
+export const GlobalGroup: Array<ShortcutType> = [GoToDashboard, GoToCatalog, GoToPlans, ToggleHelp];
 
-export const Dashboard: Array<ShortcutType> = [OpenUpcomingWorkout];
+export const DashboardGroup: Array<ShortcutType> = [OpenUpcomingWorkout];
 
-export const Workouts: Array<ShortcutType> = [ScheduleWorkout, OpenWorkout];
+export const WorkoutsGroup: Array<ShortcutType> = [ScheduleWorkout, OpenWorkout];
 
-export const Catalog: Array<ShortcutType> = [SearchExercises, OpenExercise];
+export const CatalogGroup: Array<ShortcutType> = [SearchExercises, OpenExercise];
