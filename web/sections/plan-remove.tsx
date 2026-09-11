@@ -42,7 +42,7 @@ export function PlanRemove(props: Plan) {
       </button>
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
-        <div data-main="between" data-stack="x">
+        <div data-cross="center" data-main="between" data-stack="x">
           <strong data-color="neutral-100">{t("plan.remove.header")}</strong>
           <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
         </div>

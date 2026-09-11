@@ -21,7 +21,15 @@ export function WorkoutStart(props: Workout & { action: ActionState }) {
   });
 
   return (
-    <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
+    <form
+      data-cross="center"
+      data-gap="3"
+      data-md-cross="start"
+      data-md-gap="2"
+      data-md-stack="y"
+      data-stack="x"
+      onSubmit={mutation.handleSubmit}
+    >
       <button
         className="c-button"
         data-variant="primary"

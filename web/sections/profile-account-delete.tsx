@@ -44,7 +44,7 @@ export function ProfileAccountDelete() {
       </button>
 
       <Dialog data-gap="8" data-mt="12" {...Rhythm().times(50).style.width} {...dialog}>
-        <div data-main="between" data-stack="x">
+        <div data-cross="center" data-main="between" data-stack="x">
           <strong data-color="neutral-100" data-cross="center" data-gap="2" data-stack="x">
             <UserX data-size="md" />
             {t("profile.delete_account.header")}

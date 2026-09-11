@@ -31,6 +31,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
       <button
         className="c-button"
         data-color="danger-400"
+        data-md-self="start"
         data-ml="auto"
         data-variant="ghost"
         onClick={dialog.enable}
@@ -42,7 +43,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
       </button>
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
-        <div data-main="between" data-stack="x">
+        <div data-cross="center" data-main="between" data-stack="x">
           <strong data-color="neutral-100">{t("workout.discard.header")}</strong>
           <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
         </div>

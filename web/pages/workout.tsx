@@ -43,7 +43,7 @@ export function Workout() {
   return (
     <Main>
       <div data-gap="4" data-stack="y">
-        <div data-cross="center" data-gap="2" data-stack="x">
+        <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
             className="c-button"
@@ -80,7 +80,7 @@ export function Workout() {
           <WorkoutStatusBadge status={workout.data.status} />
         </div>
 
-        <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
+        <div data-cross="center" data-gap="2" data-stack="x">
           <div data-cross="center" data-gap="2" data-grow="1" data-stack="x" data-wrap="wrap">
             {workout.actions.start.available && (
               <WorkoutStart action={workout.actions.start} {...workout.data} />
