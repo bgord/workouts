@@ -45,7 +45,7 @@ export function ProfileAvatarChange() {
           encType="multipart/form-data"
           onSubmit={mutation.handleSubmit}
         >
-          <div data-gap="3" data-stack="x">
+          <div data-gap="2" data-stack="x">
             <label
               className="c-button"
               data-cross="center"
