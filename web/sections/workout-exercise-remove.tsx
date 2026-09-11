@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleX } from "lucide-react";
+import { X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { ActionHint } from "../components";
@@ -42,7 +42,7 @@ export function WorkoutExerciseRemove(props: {
         title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
         type="submit"
       >
-        <CircleX data-size="sm" />
+        <X data-size="sm" />
       </button>
 
       <ActionHint action={props.action} />

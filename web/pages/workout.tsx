@@ -110,11 +110,11 @@ export function Workout() {
         {workout.data.exercises.map((exercise) => (
           <WorkoutExerciseRow exercise={exercise} key={exercise.id} workout={workout.data} />
         ))}
-      </ul>
 
-      {workout.actions.exerciseAdd.available && (
-        <WorkoutExerciseAdd action={workout.actions.exerciseAdd} {...workout.data} />
-      )}
+        {workout.actions.exerciseAdd.available && (
+          <WorkoutExerciseAdd action={workout.actions.exerciseAdd} {...workout.data} />
+        )}
+      </ul>
     </Main>
   );
 }

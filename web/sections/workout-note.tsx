@@ -29,7 +29,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
 
   return (
     <form
-      data-gap="2"
+      data-gap="3"
       data-mt="2"
       data-stack="y"
       onBlur={(event) => {
@@ -54,7 +54,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
       <ActionHint action={props.action} />
 
       {(focus.on || note.changed) && (
-        <div data-cross="center" data-gap="3" data-stack="x">
+        <div data-cross="center" data-gap="1" data-stack="x">
           <button
             className="c-button"
             data-variant="secondary"

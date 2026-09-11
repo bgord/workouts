@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleX } from "lucide-react";
+import { X } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import type { ExerciseIdType } from "../../modules/exercises/value-objects/exercise-id";
 import { exerciseRoute } from "../router";
@@ -36,7 +36,7 @@ export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; ca
       title={t("exercise.category.unassign.cta", { name: props.category.name })}
       type="button"
     >
-      <CircleX data-size="xs" />
+      <X data-size="xs" />
     </button>
   );
 }

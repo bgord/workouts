@@ -1,10 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleX } from "lucide-react";
+import { X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutSetRemove(props: {
@@ -44,10 +43,8 @@ export function WorkoutSetRemove(props: {
         title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
         type="submit"
       >
-        <CircleX data-size="sm" />
+        <X data-size="sm" />
       </button>
-
-      <ActionHint action={props.action} />
     </form>
   );
 }

@@ -63,12 +63,12 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...add.props.target}>
       <div data-cross="end" data-gap="3" data-stack="x">
-        <div data-cross="start" data-gap="1" data-stack="y">
+        <div data-cross="start" data-gap="1" data-md-width="100%" data-stack="y">
           <label className="c-label" {...exerciseId.label.props}>
             {t("workout.exercise.add.exercise.label")}
           </label>
 
-          <Select {...exerciseId.input.props}>
+          <Select data-md-width="100%" {...exerciseId.input.props}>
             {exercises.data.map((exercise) => (
               <option key={exercise.id} value={exercise.id}>
                 {exercise.name}
@@ -119,11 +119,19 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           </div>
         </div>
 
-        <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
-          {t("app.save")}
-        </button>
+        <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+          <button
+            className="c-button"
+            data-md-grow="1"
+            data-variant="secondary"
+            disabled={mutation.isLoading}
+            type="submit"
+          >
+            {t("app.save")}
+          </button>
 
-        <ButtonCancel onClick={bg.exec([mutation.reset, add.disable])} />
+          <ButtonCancel data-md-grow="1" onClick={bg.exec([mutation.reset, add.disable])} />
+        </div>
       </div>
 
       {mutation.isError && (

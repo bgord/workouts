@@ -12,8 +12,8 @@ export function ActionHint(props: { action: ActionState }) {
     <div
       data-color="neutral-400"
       data-cross="center"
-      data-fs="sm"
-      data-gap="1"
+      data-fs="xs"
+      data-gap="1-5"
       data-stack="x"
       data-wrap="nowrap"
       key={hint}
