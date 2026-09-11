@@ -98,18 +98,18 @@ export function WorkoutSetLog(props: {
         />
       </div>
 
-      <div data-cross="center" data-gap="3" data-grow="1" data-stack="x">
-        <button
-          aria-label={t("workout.set.cta")}
-          className="c-button"
-          data-variant={remaining ? "primary" : "secondary"}
-          disabled={!props.action.enabled || reps.empty || load.empty || mutation.isLoading}
-          title={t("workout.set.cta")}
-          type="submit"
-        >
-          <Plus data-size="sm" />
-        </button>
+      <button
+        aria-label={t("workout.set.cta")}
+        className="c-button"
+        data-variant={remaining ? "primary" : "secondary"}
+        disabled={!props.action.enabled || reps.empty || load.empty || mutation.isLoading}
+        title={t("workout.set.cta")}
+        type="submit"
+      >
+        <Plus data-size="sm" />
+      </button>
 
+      <div data-cross="center" data-gap="3" data-grow="1" data-md-width="100%" data-stack="x">
         <ActionHint action={props.action} />
 
         {props.exercise.target && (

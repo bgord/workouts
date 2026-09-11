@@ -107,13 +107,8 @@ export function Workout() {
       </div>
 
       <ul data-gap="3" data-stack="y">
-        {workout.data.exercises.map((exercise, position) => (
-          <WorkoutExerciseRow
-            exercise={exercise}
-            key={exercise.id}
-            position={position + 1}
-            workout={workout.data}
-          />
+        {workout.data.exercises.map((exercise) => (
+          <WorkoutExerciseRow exercise={exercise} key={exercise.id} workout={workout.data} />
         ))}
       </ul>
 

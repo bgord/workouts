@@ -58,7 +58,7 @@ export function WorkoutSetCorrect(props: {
 
   if (edit.off) {
     return (
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <button
           className="c-button"
           data-variant="ghost"

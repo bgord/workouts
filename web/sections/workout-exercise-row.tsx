@@ -11,7 +11,7 @@ import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise; position: number }) {
+export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise }) {
   const t = useTranslations();
 
   const exercise = {
@@ -24,12 +24,8 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
     props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
 
   return (
-    <li className="c-card" data-gap="3" data-p="4">
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
-          {props.position}
-        </div>
-
+    <li className="c-card" data-gap="3" data-md-p="2-5" data-p="4">
+      <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
         <Link
           aria-hidden
           params={{ exerciseId: props.exercise.exerciseId }}
@@ -43,6 +39,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           <Link
             className="c-card-title"
             data-hover-color="brand-300"
+            data-md-fs="sm"
             data-transform="truncate"
             params={{ exerciseId: props.exercise.exerciseId }}
             title={props.exercise.exerciseName}

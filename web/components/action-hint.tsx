@@ -9,7 +9,15 @@ export function ActionHint(props: { action: ActionState }) {
   if (!hint) return null;
 
   return (
-    <div data-color="neutral-400" data-cross="center" data-fs="sm" data-gap="1" data-stack="x" key={hint}>
+    <div
+      data-color="neutral-400"
+      data-cross="center"
+      data-fs="sm"
+      data-gap="1"
+      data-stack="x"
+      data-wrap="nowrap"
+      key={hint}
+    >
       <Info data-shrink="0" data-size="sm" />
       {t(hint)}
     </div>

@@ -31,7 +31,7 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
 
           <div data-grow="1">{loggedSet.rir !== undefined && <RirBadge rir={loggedSet.rir} />}</div>
 
-          <div data-stack="x">
+          <div data-stack="x" data-wrap="nowrap">
             {loggedSet.actions.correct.available && (
               <WorkoutSetCorrect
                 action={loggedSet.actions.correct}
