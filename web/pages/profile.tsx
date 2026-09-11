@@ -7,6 +7,7 @@ import {
   ProfileAvatarChange,
   ProfileLanguageSelector,
   ProfilePasswordChange,
+  ProfileWorkoutsExport,
 } from "../sections";
 
 export function Profile() {
@@ -30,6 +31,8 @@ export function Profile() {
       <ProfileLanguageSelector />
 
       <ProfilePasswordChange />
+
+      <ProfileWorkoutsExport />
 
       <ProfileAccountDelete />
     </Main>

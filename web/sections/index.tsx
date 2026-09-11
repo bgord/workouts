@@ -36,6 +36,7 @@ export * from "./profile-avatar-change";
 export * from "./profile-avatar-delete";
 export * from "./profile-language-selector";
 export * from "./profile-password-change";
+export * from "./profile-workouts-export";
 export * from "./shortcuts";
 export * from "./workout-complete";
 export * from "./workout-create";
