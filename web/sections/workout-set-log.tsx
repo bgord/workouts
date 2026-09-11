@@ -53,7 +53,13 @@ export function WorkoutSetLog(props: {
   const remaining = done < (props.exercise.target?.sets ?? Number.POSITIVE_INFINITY);
 
   return (
-    <form className="c-card-footer" data-cross="end" data-gap="2" data-pt="3" onSubmit={mutation.handleSubmit}>
+    <form
+      className="c-card-footer"
+      data-cross="end"
+      data-gap="2"
+      data-pt="3"
+      onSubmit={mutation.handleSubmit}
+    >
       <div data-gap="1" data-stack="y">
         <label className="c-label" data-variant="inline" {...reps.label.props}>
           {t("workout.set.reps.label")}

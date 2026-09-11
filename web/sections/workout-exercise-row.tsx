@@ -82,7 +82,13 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           data-stack="x"
           data-wrap="nowrap"
         >
-          {props.exercise.target && props.workout.status !== WorkoutStatusEnum.draft && (
+          {skipped && (
+            <div className="c-badge" data-color="neutral-400" data-variant="outline">
+              {t("workout.exercise.skipped")}
+            </div>
+          )}
+
+          {!skipped && props.exercise.target && props.workout.status !== WorkoutStatusEnum.draft && (
             <div
               data-color={done ? "positive-400" : "neutral-500"}
               data-cross="center"
@@ -112,20 +118,6 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           )}
         </div>
       </div>
-
-      {skipped && (
-        <div
-          className="c-card-description"
-          data-bcl="alpha-medium"
-          data-bsl="solid"
-          data-bwl="thin"
-          data-ls="wide"
-          data-px="2"
-          data-py="1"
-        >
-          {t("workout.exercise.skipped")}
-        </div>
-      )}
 
       <div data-gap="0" data-stack="y">
         <WorkoutSetList exercise={props.exercise} workout={props.workout} />
