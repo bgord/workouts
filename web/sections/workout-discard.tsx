@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { CircleAlert, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
-import { ButtonCancel, ButtonClose } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
 import { dashboardRoute } from "../router";
 
 export function WorkoutDiscard(props: WorkoutSummary) {
@@ -44,44 +44,21 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         <Trash2 data-size="sm" />
       </button>
 
-      <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
-        <div data-cross="center" data-main="between" data-stack="x">
-          <strong data-color="neutral-100">{t("workout.discard.header")}</strong>
-          <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
-        </div>
+      <Dialog {...dialog}>
+        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+          {t("workout.discard.header")}
+        </DialogHeader>
 
-        <div
-          data-color="danger-400"
-          data-cross="center"
-          data-fs="sm"
-          data-gap="3"
-          data-lh="loose"
-          data-stack="x"
-        >
-          <CircleAlert data-size="md" />
+        <DialogInfo variant="danger">
           {t("workout.discard.info", {
             name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
           })}
-        </div>
+        </DialogInfo>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && (
-            <output
-              aria-live="assertive"
-              data-color="danger-400"
-              data-cross="center"
-              data-fs="sm"
-              data-gap="3"
-              data-stack="x"
-            >
-              <CircleAlert data-size="md" />
-              {t("workout.discard.error")}
-            </output>
-          )}
+          {mutation.isError && <DialogError>{t("workout.discard.error")}</DialogError>}
 
-          <div data-gap="1" data-main="end" data-stack="x">
-            <ButtonCancel onClick={dialog.disable} />
-
+          <DialogFooter onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -90,9 +67,9 @@ export function WorkoutDiscard(props: WorkoutSummary) {
             >
               {t("workout.discard.cta")}
             </button>
-          </div>
+          </DialogFooter>
         </form>
-      </bg.Dialog>
+      </Dialog>
     </>
   );
 }

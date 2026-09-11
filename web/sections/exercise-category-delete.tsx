@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleAlert, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
-import { ButtonCancel, ButtonClose } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryDelete(props: ExerciseCategory) {
@@ -35,34 +35,17 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
         <Trash2 data-size="sm" />
       </button>
 
-      <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
-        <div data-cross="center" data-main="between" data-stack="x">
-          <strong data-color="neutral-100">{t("exercise.category.delete.header")}</strong>
-          <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
-        </div>
+      <Dialog {...dialog}>
+        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+          {t("exercise.category.delete.header")}
+        </DialogHeader>
 
-        <div
-          data-color="danger-400"
-          data-cross="center"
-          data-fs="sm"
-          data-gap="2"
-          data-lh="loose"
-          data-stack="x"
-        >
-          <CircleAlert data-size="md" />
-          {t("exercise.category.delete.info", { name: props.name })}
-        </div>
+        <DialogInfo variant="danger">{t("exercise.category.delete.info", { name: props.name })}</DialogInfo>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && (
-            <output aria-live="assertive" data-color="danger-400" data-fs="sm">
-              {t("exercise.category.delete.error")}
-            </output>
-          )}
+          {mutation.isError && <DialogError>{t("exercise.category.delete.error")}</DialogError>}
 
-          <div data-gap="1" data-main="end" data-stack="x">
-            <ButtonCancel onClick={dialog.disable} />
-
+          <DialogFooter onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -71,9 +54,9 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
             >
               {t("exercise.category.delete.cta")}
             </button>
-          </div>
+          </DialogFooter>
         </form>
-      </bg.Dialog>
+      </Dialog>
     </>
   );
 }

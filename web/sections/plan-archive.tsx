@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Archive, CircleAlert } from "lucide-react";
+import { Archive } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ButtonCancel, ButtonClose } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanArchive(props: Plan) {
@@ -42,40 +42,23 @@ export function PlanArchive(props: Plan) {
         <Archive data-size="sm" />
       </button>
 
-      <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
-        <div data-cross="center" data-main="between" data-stack="x">
-          <strong data-color="neutral-100">{t("plan.archive.header")}</strong>
-          <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
-        </div>
+      <Dialog {...dialog}>
+        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+          {t("plan.archive.header")}
+        </DialogHeader>
 
-        <div data-color="neutral-300" data-fs="sm" data-lh="loose">
-          {t("plan.archive.info", { name: props.name })}
-        </div>
+        <DialogInfo variant="neutral">{t("plan.archive.info", { name: props.name })}</DialogInfo>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && (
-            <output
-              aria-live="assertive"
-              data-color="danger-400"
-              data-cross="center"
-              data-fs="sm"
-              data-gap="3"
-              data-stack="x"
-            >
-              <CircleAlert data-size="md" />
-              {t("plan.archive.error")}
-            </output>
-          )}
+          {mutation.isError && <DialogError>{t("plan.archive.error")}</DialogError>}
 
-          <div data-gap="1" data-main="end" data-stack="x">
-            <ButtonCancel onClick={dialog.disable} />
-
+          <DialogFooter onCancel={dialog.disable}>
             <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
               {t("plan.archive.cta")}
             </button>
-          </div>
+          </DialogFooter>
         </form>
-      </bg.Dialog>
+      </Dialog>
     </>
   );
 }

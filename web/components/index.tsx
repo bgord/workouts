@@ -4,6 +4,7 @@ export * from "./button-cancel";
 export * from "./button-clear";
 export * from "./button-close";
 export * from "./delta-kg";
+export * from "./dialog";
 export * from "./exercise-card";
 export * from "./exercise-image";
 export * from "./kbd";

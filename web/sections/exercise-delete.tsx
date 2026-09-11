@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
-import { CircleAlert, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import type { ActionState } from "../../modules/action-state";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ButtonCancel, ButtonClose } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action: ActionState }) {
@@ -38,34 +38,17 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
         <Trash2 data-size="sm" />
       </button>
 
-      <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
-        <div data-cross="center" data-main="between" data-stack="x">
-          <strong data-color="neutral-100">{t("exercise.delete.header")}</strong>
-          <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
-        </div>
+      <Dialog {...dialog}>
+        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+          {t("exercise.delete.header")}
+        </DialogHeader>
 
-        <div
-          data-color="danger-400"
-          data-cross="center"
-          data-fs="sm"
-          data-gap="2"
-          data-lh="loose"
-          data-stack="x"
-        >
-          <CircleAlert data-size="md" />
-          {t("exercise.delete.info", { name: props.exercise.name })}
-        </div>
+        <DialogInfo variant="danger">{t("exercise.delete.info", { name: props.exercise.name })}</DialogInfo>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && (
-            <output aria-live="assertive" data-color="danger-400" data-fs="sm">
-              {t("exercise.delete.error")}
-            </output>
-          )}
+          {mutation.isError && <DialogError>{t("exercise.delete.error")}</DialogError>}
 
-          <div data-gap="1" data-main="end" data-stack="x">
-            <ButtonCancel onClick={dialog.disable} />
-
+          <DialogFooter onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -74,9 +57,9 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
             >
               {t("exercise.delete.cta")}
             </button>
-          </div>
+          </DialogFooter>
         </form>
-      </bg.Dialog>
+      </Dialog>
     </>
   );
 }
