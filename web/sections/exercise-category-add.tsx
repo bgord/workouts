@@ -35,8 +35,9 @@ export function ExerciseCategoryAdd() {
         <input
           className="c-input"
           data-grow="1"
+          data-variant="transparent"
           placeholder={t("exercise.category.add.name.placeholder")}
-          style={{ background: "transparent", ...bg.Rhythm().times(0).minWidth }}
+          style={{ ...bg.Rhythm().times(0).minWidth }}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />

@@ -67,10 +67,10 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
           <textarea
             aria-label={t("plan.description.label")}
             className="c-textarea"
+            data-variant="transparent"
             data-width="100%"
             placeholder={t("plan.description.placeholder")}
             rows={3}
-            style={{ background: "transparent" }}
             {...bg.Form.textarea(Form.description.pattern)}
             {...description.input.props}
           />

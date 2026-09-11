@@ -54,10 +54,10 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
           <textarea
             aria-label={t("workout.note.label")}
             className="c-textarea"
+            data-variant="transparent"
             data-width="100%"
             placeholder={t("workout.note.placeholder")}
             rows={3}
-            style={{ background: "transparent" }}
             {...bg.Form.textarea(Form.note.pattern)}
             {...note.input.props}
           />

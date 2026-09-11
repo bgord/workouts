@@ -49,6 +49,7 @@ export function ExerciseCatalog() {
           <input
             className="c-input"
             data-pl="8"
+            data-variant="transparent"
             data-width="100%"
             id={ExerciseCatalogFiltersForm.Form.name.field.name}
             name={ExerciseCatalogFiltersForm.Form.name.field.name}
@@ -63,7 +64,6 @@ export function ExerciseCatalog() {
             }}
             placeholder={t("exercise.catalog.name.placeholder")}
             ref={nameInput}
-            style={{ background: "transparent" }}
             value={name.input.props.value}
             {...bg.Autocomplete.off}
           />

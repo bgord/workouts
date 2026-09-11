@@ -59,9 +59,9 @@ export function ExerciseAdd() {
       <textarea
         aria-label={t("exercise.add.description.label")}
         className="c-textarea"
+        data-variant="transparent"
         placeholder={t("exercise.add.description.placeholder")}
         rows={3}
-        style={{ background: "transparent" }}
         {...bg.Form.textarea(Form.description.pattern)}
         {...description.input.props}
       />
