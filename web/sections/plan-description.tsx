@@ -75,7 +75,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
             {...description.input.props}
           />
 
-          <div data-cross="center" data-gap="3" data-stack="x">
+          <div data-cross="center" data-gap="1" data-stack="x">
             <button
               className="c-button"
               data-variant="secondary"

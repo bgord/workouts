@@ -67,7 +67,7 @@ export function PlanArchive(props: Plan) {
             </output>
           )}
 
-          <div data-gap="5" data-main="end" data-stack="x">
+          <div data-gap="1" data-main="end" data-stack="x">
             <ButtonCancel onClick={dialog.disable} />
 
             <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">

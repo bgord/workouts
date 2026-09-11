@@ -54,6 +54,7 @@ export function PlanRemove(props: Plan) {
           data-gap="3"
           data-lh="loose"
           data-stack="x"
+          data-wrap="nowrap"
         >
           <CircleAlert data-size="md" />
           {t("plan.remove.info", { name: props.name })}
@@ -74,7 +75,7 @@ export function PlanRemove(props: Plan) {
             </output>
           )}
 
-          <div data-gap="5" data-main="end" data-stack="x">
+          <div data-gap="1" data-main="end" data-stack="x">
             <ButtonCancel onClick={dialog.disable} />
 
             <button

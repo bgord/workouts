@@ -65,7 +65,7 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
             </output>
           )}
 
-          <div data-gap="5" data-main="end" data-stack="x">
+          <div data-gap="1" data-main="end" data-stack="x">
             <ButtonCancel onClick={dialog.disable} />
 
             <button
