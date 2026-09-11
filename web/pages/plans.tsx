@@ -10,7 +10,8 @@ export function Plans() {
   const { plans } = plansRoute.useLoaderData();
   const planCreate = bg.useToggle({ name: "plan-create" });
 
-  const empty = plans.data.active.length === 0 && plans.data.archived.length === 0;
+  const empty = plans.data.active.length === 0;
+  const fresh = empty && plans.data.archived.length === 0;
 
   return (
     <Main>
@@ -48,11 +49,11 @@ export function Plans() {
           <ClipboardList data-color="neutral-600" data-size="md" />
 
           <div data-color="neutral-300" data-fs="sm" data-mt="2">
-            {t("plan.list.empty")}
+            {t(fresh ? "plan.list.empty" : "plan.list.empty.active")}
           </div>
 
           <div data-color="neutral-500" data-fs="xs">
-            {t("plan.list.empty.hint")}
+            {t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}
           </div>
         </div>
       )}

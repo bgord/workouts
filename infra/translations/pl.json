@@ -151,6 +151,8 @@
   "plan.list.archived.header": "Zarchiwizowane",
   "plan.list.empty.hint": "Utwórz plan, aby zaplanować treningi",
   "plan.list.empty": "Nie utworzono jeszcze żadnego planu",
+  "plan.list.empty.active": "Brak aktywnego planu",
+  "plan.list.empty.active.hint": "Utwórz nowy plan lub przywróć zarchiwizowany",
   "plan.list.header": "Plany",
   "plan.list.limit.hint": "Zarchiwizuj bieżący plan, aby utworzyć nowy",
   "plan.not_found": "Nie znaleziono planu",
