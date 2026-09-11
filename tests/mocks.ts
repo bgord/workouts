@@ -405,6 +405,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
   exercises: workout.exercises.map((exercise) => ({
     ...exercise,
     exerciseImageEtag,
+    exerciseDescription,
     loggedSets: exercise.loggedSets.map((set) => ({
       ...set,
       actions: {
@@ -968,6 +969,7 @@ export const GenericWorkoutExerciseAddedEvent = {
     exerciseId,
     exerciseName,
     exerciseImageEtag,
+    exerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,
   },
@@ -995,6 +997,7 @@ export const AnotherGenericWorkoutExerciseAddedEvent = {
     exerciseId,
     exerciseName,
     exerciseImageEtag,
+    exerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,
   },

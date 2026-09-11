@@ -15,6 +15,7 @@ export type LoggedSet = VO.LoggedSetType & { actions: LoggedSetActions };
 
 export type WorkoutExercise = Omit<VO.WorkoutExercise, "loggedSets"> & {
   exerciseImageEtag: Exercises.VO.Exercise["imageEtag"];
+  exerciseDescription: Exercises.VO.Exercise["description"];
   loggedSets: Array<LoggedSet>;
   actions: WorkoutExerciseActions;
 };

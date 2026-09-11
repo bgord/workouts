@@ -62,6 +62,7 @@ export const handleWorkoutCreateCommand =
         instruction.exercise.id,
         instruction.exercise.name,
         instruction.exercise.imageEtag,
+        instruction.exercise.description,
         { sets: instruction.sets, reps: instruction.reps },
         command.payload.userId,
       );

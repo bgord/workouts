@@ -43,6 +43,13 @@
       "when": 1789126991309,
       "tag": "0005_stale_sabra",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1789127638949,
+      "tag": "0006_large_starfox",
+      "breakpoints": true
     }
   ]
 }

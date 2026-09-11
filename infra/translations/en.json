@@ -241,6 +241,7 @@
   "workout.exercise.add.reps.label": "Reps",
   "workout.exercise.add.reps.max.label": "Reps max",
   "workout.exercise.add.sets.label": "Sets",
+  "workout.exercise.description.toggle": "Description",
   "workout.exercise.list.count": "{{count}}/{{max}}",
   "workout.exercise.list.empty": "No exercises yet",
   "workout.exercise.list.empty.hint": "Add an exercise to start training",

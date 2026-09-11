@@ -88,6 +88,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         exerciseId: exercise.exerciseId,
         exerciseName: exercise.exerciseName,
         exerciseImageEtag: exercise.exerciseImageEtag,
+        exerciseDescription: exercise.exerciseDescription,
         prescription: v.parse(Workouts.VO.ExercisePrescription, {
           sets: exercise.prescriptionSets,
           reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },

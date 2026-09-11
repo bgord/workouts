@@ -103,6 +103,7 @@ export class Workout {
     exerciseId: Exercises.VO.ExerciseIdType,
     exerciseName: Exercises.VO.ExerciseNameType,
     exerciseImageEtag: Exercises.VO.Exercise["imageEtag"],
+    exerciseDescription: Exercises.VO.Exercise["description"],
     prescription: VO.ExercisePrescriptionType,
     requesterId: Auth.VO.UserIdType,
   ) {
@@ -119,6 +120,7 @@ export class Workout {
         exerciseId,
         exerciseName,
         exerciseImageEtag,
+        exerciseDescription,
         prescription,
         requesterId,
       },

@@ -23,6 +23,7 @@ export const handleWorkoutExerciseAddCommand =
       exercise!.id,
       exercise!.name,
       exercise!.imageEtag,
+      exercise!.description,
       command.payload.prescription,
       command.payload.requesterId,
     );

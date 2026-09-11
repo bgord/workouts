@@ -263,6 +263,7 @@ export const workoutExercises = sqliteTable("workoutExercises", {
   exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
   exerciseName: text("exerciseName").notNull().$type<ExerciseNameType>(),
   exerciseImageEtag: text("exerciseImageEtag").notNull().$type<bg.HashValueType>(),
+  exerciseDescription: text("exerciseDescription").notNull().$type<ExerciseDescriptionType>(),
   prescriptionSets: integer("prescriptionSets", { mode: "number" }).notNull().$type<SetsType>(),
   prescriptionRepsMin: integer("prescriptionRepsMin", { mode: "number" })
     .notNull()

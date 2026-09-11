@@ -242,6 +242,7 @@
   "workout.exercise.add.reps.label": "Powtórzenia",
   "workout.exercise.add.reps.max.label": "Maks. powtórzeń",
   "workout.exercise.add.sets.label": "Serie",
+  "workout.exercise.description.toggle": "Opis",
   "workout.exercise.list.count": "{{count}} z {{max}}",
   "workout.exercise.list.empty": "Brak ćwiczeń",
   "workout.exercise.list.empty.hint": "Dodaj ćwiczenie, aby zacząć trening",
