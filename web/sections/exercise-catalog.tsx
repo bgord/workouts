@@ -45,7 +45,7 @@ export function ExerciseCatalog() {
       <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
         <input
           className="c-input"
-          data-grow="1"
+          data-md-grow="1"
           id={ExerciseCatalogFiltersForm.Form.name.field.name}
           name={ExerciseCatalogFiltersForm.Form.name.field.name}
           onChange={(event) => {
