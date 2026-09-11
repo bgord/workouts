@@ -351,6 +351,8 @@ modules/
     │   ├── list-exercise-performances.ts
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
+    ├── services
+    │   └── workout-export-file-csv.ts
     └── value-objects
         ├── exercise-prescription.ts
         ├── exercise-target.ts
@@ -487,6 +489,7 @@ infra/
 │   ├── system
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
+│   │   ├── csv-stringifier.adapter.ts
 │   │   ├── disk-space-checker.adapter.ts
 │   │   ├── file-cleaner.adapter.ts
 │   │   ├── file-inspection.adapter.ts
