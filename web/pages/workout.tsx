@@ -2,7 +2,7 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, Dumbbell } from "lucide-react";
+import { ChevronLeft, Dumbbell, DumbbellIcon } from "lucide-react";
 import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
 import { ActionHint, Main, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
@@ -61,15 +61,22 @@ export function Workout() {
           <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
             <div data-cross="center" data-gap="2" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
               <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
-                <h1
-                  data-color="neutral-0"
-                  data-fs="2xl"
-                  data-fw="black"
-                  data-md-fs="xl"
-                  data-transform="truncate"
-                >
-                  {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
-                </h1>
+                <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+                  <DumbbellIcon data-color="neutral-400" data-shrink="0" data-size="md" />
+
+                  <h1
+                    data-color="neutral-0"
+                    data-fs="2xl"
+                    data-fw="black"
+                    data-md-fs="xl"
+                    data-transform="truncate"
+                  >
+                    {t("workout.title", {
+                      plan: workout.data.planName,
+                      section: workout.data.planSectionName,
+                    })}
+                  </h1>
+                </div>
 
                 <div
                   data-color="neutral-500"

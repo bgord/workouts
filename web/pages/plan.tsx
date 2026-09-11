@@ -2,7 +2,7 @@
 
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ClipboardList } from "lucide-react";
 import { ActionHint, Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
@@ -51,19 +51,23 @@ export function Plan() {
           <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
             <div data-cross="center" data-gap="2" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
               <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
-                {plan.actions.rename.available && <PlanRename {...plan.data} />}
+                <div data-cross="baseline" data-gap="2" data-stack="x" data-wrap="nowrap">
+                  <ClipboardList data-color="neutral-400" data-shrink="0" data-size="md" />
 
-                {!plan.actions.rename.available && (
-                  <h1
-                    data-color="neutral-0"
-                    data-fs="2xl"
-                    data-fw="black"
-                    data-md-fs="xl"
-                    data-transform="truncate"
-                  >
-                    {plan.data.name}
-                  </h1>
-                )}
+                  {plan.actions.rename.available && <PlanRename {...plan.data} />}
+
+                  {!plan.actions.rename.available && (
+                    <h1
+                      data-color="neutral-0"
+                      data-fs="2xl"
+                      data-fw="black"
+                      data-md-fs="xl"
+                      data-transform="truncate"
+                    >
+                      {plan.data.name}
+                    </h1>
+                  )}
+                </div>
 
                 <div data-color="neutral-500" data-fs="xs">
                   {t("plan.updated_at", {
