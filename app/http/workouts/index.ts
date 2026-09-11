@@ -1,5 +1,6 @@
 export * from "./workout-complete";
 export * from "./workout-create";
+export * from "./workout-dashboard";
 export * from "./workout-discard";
 export * from "./workout-exercise-add";
 export * from "./workout-exercise-remove";
