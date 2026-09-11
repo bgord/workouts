@@ -349,6 +349,7 @@ modules/
     │   ├── get-workout-in-progress-for-owner-count.ts
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
+    │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     └── value-objects
         ├── exercise-prescription.ts
@@ -513,6 +514,7 @@ infra/
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts
+│       ├── list-workout-export-rows.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
