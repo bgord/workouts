@@ -127,7 +127,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           </div>
         </div>
 
-        <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
           <button
             className="c-button"
             data-md-grow="1"

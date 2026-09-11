@@ -34,6 +34,7 @@ export function ExerciseAdd() {
   return (
     <form
       className="c-card"
+      data-md-p="2-5"
       data-gap="4"
       data-stack="y"
       encType="multipart/form-data"

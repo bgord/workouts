@@ -48,6 +48,7 @@ export function ExerciseCategoryManage() {
               data-main="between"
               data-px="2"
               data-py="1-5"
+              data-md-px="0-5"
               data-stack="x"
               key={category.id}
             >
