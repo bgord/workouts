@@ -6,6 +6,7 @@ describe("PlanName", () => {
   test("happy path", () => {
     expect(v.safeParse(Plans.VO.PlanName, "f".repeat(64)).success).toEqual(true);
     expect(v.safeParse(Plans.VO.PlanName, "Bench Press").success).toEqual(true);
+    expect(v.safeParse(Plans.VO.PlanName, "Upper / Lower").success).toEqual(true);
   });
 
   test("rejects non-string - null", () => {

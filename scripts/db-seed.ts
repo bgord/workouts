@@ -18,10 +18,7 @@ const tables = [
   Schema.verifications,
 ];
 
-const people = [
-  { email: "admin@example.com", password: "1234567890" },
-  { email: "user@example.com", password: "1234567890" },
-];
+const people = [{ email: "user@example.com", password: "1234567890" }];
 
 void (async function main() {
   for (const table of tables) await db.delete(table);

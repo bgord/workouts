@@ -11,6 +11,7 @@ import type { ExerciseDescriptionType } from "../modules/exercises/value-objects
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
 import type { ExerciseInstructionIdType } from "../modules/plans/value-objects/exercise-instruction-id";
+import type { PlanDescriptionType } from "../modules/plans/value-objects/plan-description";
 import type { PlanIdType } from "../modules/plans/value-objects/plan-id";
 import type { PlanNameType } from "../modules/plans/value-objects/plan-name";
 import type { PlanSectionIdType } from "../modules/plans/value-objects/plan-section-id";
@@ -183,6 +184,7 @@ export const exercises = sqliteTable("exercises", {
   name: text("name").notNull().$type<ExerciseNameType>(),
   description: text("description").notNull().$type<ExerciseDescriptionType>(),
   image: text("image").notNull().$type<tools.ObjectKeyType>(),
+  imageEtag: text("imageEtag").notNull().$type<bg.HashValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
@@ -209,6 +211,7 @@ export const exerciseCategoryAssignments = sqliteTable(
 export const plans = sqliteTable("plans", {
   id: identifier<PlanIdType>(),
   name: text("name").notNull().$type<PlanNameType>(),
+  description: text("description").$type<PlanDescriptionType>(),
   status: text("kind", toEnumList(PlanStatusEnum)).notNull().$type<PlanStatusEnum>(),
   revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
@@ -259,6 +262,8 @@ export const workoutExercises = sqliteTable("workoutExercises", {
   workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
   exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
   exerciseName: text("exerciseName").notNull().$type<ExerciseNameType>(),
+  exerciseImageEtag: text("exerciseImageEtag").notNull().$type<bg.HashValueType>(),
+  exerciseDescription: text("exerciseDescription").notNull().$type<ExerciseDescriptionType>(),
   prescriptionSets: integer("prescriptionSets", { mode: "number" }).notNull().$type<SetsType>(),
   prescriptionRepsMin: integer("prescriptionRepsMin", { mode: "number" })
     .notNull()

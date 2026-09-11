@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseUpdatedEvent } from "../events/EXERCISE_UPDATED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseHasChanged } from "../invariants/exercise-has-changed";
 import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
@@ -17,7 +17,7 @@ type Dependencies = {
 
 export const handleExerciseUpdateCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseUpdateCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
+    CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
 

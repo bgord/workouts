@@ -17,14 +17,17 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
   const record = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
 
   return (
-    <ul data-gap="5" data-stack="y">
+    <ul data-gap="3" data-stack="y">
       {performances.map((performance, index) => (
-        <li className="c-card" key={performance.workoutId}>
-          <div className="c-card-header">
+        <li className="c-card" data-gap="3" data-md-p="2-5" data-p="4" key={performance.workoutId}>
+          <div data-cross="center" data-gap="2" data-stack="x">
             <Link
-              className="c-card-title"
+              data-color="neutral-300"
               data-cross="center"
-              data-gap="2"
+              data-fs="sm"
+              data-fw="medium"
+              data-gap="1"
+              data-grow="1"
               data-hover-color="brand-300"
               data-stack="x"
               params={{ workoutId: performance.workoutId }}
@@ -33,32 +36,31 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
             >
               {DateFormat.dayWithTime(language, DateFormat.zoned(performance.performedAt))}
 
-              <ChevronRight data-size="sm" />
-
-              {performance.workoutId === record?.workoutId && (
-                <Trophy
-                  aria-label={t("statistics.exercise.one_rep_max_estimate")}
-                  data-color="brand-300"
-                  data-ml="auto"
-                  data-size="xs"
-                />
-              )}
+              <ChevronRight data-color="neutral-500" data-size="sm" />
             </Link>
+
+            {performance.workoutId === record?.workoutId && (
+              <Trophy
+                aria-label={t("statistics.exercise.one_rep_max_estimate")}
+                data-color="brand-400"
+                data-size="xs"
+              />
+            )}
           </div>
 
           <ul data-stack="y">
-            {performance.sets.map((set, index) => (
+            {performance.sets.map((set, position) => (
               <li
-                data-bct={index > 0 ? "alpha-subtle" : undefined}
-                data-bst={index > 0 ? "solid" : undefined}
-                data-bwt={index > 0 ? "hairline" : undefined}
+                data-bct="alpha-subtle"
+                data-bst={position > 0 ? "solid" : "none"}
+                data-bwt="hairline"
                 data-cross="center"
                 data-gap="3"
-                data-py="2"
+                data-py="1-5"
                 data-stack="x"
                 key={set.setNumber}
               >
-                <div className="c-badge" data-variant="outline">
+                <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
                   {set.setNumber}
                 </div>
 
@@ -77,29 +79,44 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
             ))}
           </ul>
 
-          <div data-cross="center" data-gap="2" data-main="between" data-mt="1" data-stack="x">
-            <div className="c-badge" data-gap="1-5" data-px="2-5" data-py="1" data-variant="outline">
-              <Sigma data-color="neutral-500" data-size="xs" />
+          <div
+            data-bct="alpha-subtle"
+            data-bst="solid"
+            data-bwt="hairline"
+            data-cross="center"
+            data-gap="5"
+            data-pt="3"
+            data-stack="x"
+          >
+            <div data-cross="center" data-gap="1-5" data-stack="x">
+              <EqualApproximately data-color="neutral-600" data-size="xs" />
 
-              <span data-color="neutral-100" data-fw="bold">
-                {t("statistics.exercise.history.volume_load.value", {
-                  load: WeightFormat.kilograms(performance.volume),
-                })}
-              </span>
-
-              <DeltaKg current={performance.volume} previous={performances[index + 1]?.volume} />
-            </div>
-
-            <div className="c-badge" data-gap="1-5" data-px="2-5" data-py="1" data-variant="outline">
-              <EqualApproximately data-color="neutral-500" data-size="xs" />
-
-              <span data-color="neutral-100" data-fw="bold">
+              <span data-color="neutral-300" data-fs="sm" data-fw="medium">
                 {t("statistics.exercise.one_rep_max_estimate.value", {
                   load: WeightFormat.kilograms(performance.bestEstimate),
                 })}
               </span>
 
-              <DeltaKg current={performance.bestEstimate} previous={performances[index + 1]?.bestEstimate} />
+              <span data-fs="xs">
+                <DeltaKg
+                  current={performance.bestEstimate}
+                  previous={performances[index + 1]?.bestEstimate}
+                />
+              </span>
+            </div>
+
+            <div data-cross="center" data-gap="1-5" data-stack="x">
+              <Sigma data-color="neutral-600" data-size="xs" />
+
+              <span data-color="neutral-300" data-fs="sm" data-fw="medium">
+                {t("statistics.exercise.history.volume_load.value", {
+                  load: WeightFormat.kilograms(performance.volume),
+                })}
+              </span>
+
+              <span data-fs="xs">
+                <DeltaKg current={performance.volume} previous={performances[index + 1]?.volume} />
+              </span>
             </div>
           </div>
         </li>

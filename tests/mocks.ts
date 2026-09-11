@@ -4,6 +4,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type { Session, User } from "better-auth";
 import * as v from "valibot";
+import type { ActionState } from "+action-state";
 import * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
@@ -55,6 +56,9 @@ export const exerciseDescription = v.parse(
   "Press the barbell upwards, while lying on the horizontal bench.",
 );
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
+export const exerciseImageEtag = bg.Hash.fromString(
+  "0000000000000000000000000000000000000000000000000000000000000000",
+).get();
 
 export const anotherExerciseId = v.parse(Exercises.VO.ExerciseId, "5cd386ef-8f86-4ead-b845-d69159e2aeb0");
 
@@ -70,6 +74,7 @@ export const exercise: Exercises.VO.Exercise = {
   name: exerciseName,
   description: exerciseDescription,
   image: exerciseImageKey,
+  imageEtag: exerciseImageEtag,
 };
 
 export const exerciseCategoryId = v.parse(
@@ -97,6 +102,29 @@ export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
 export const exerciseWithCategories: Exercises.VO.ExerciseWithCategories = {
   ...exercise,
   categories: [exerciseCategory],
+};
+
+export const actionAvailable: ActionState = { available: true, enabled: true, hints: [] };
+
+export const exerciseListResponse: Exercises.Queries.ExerciseListResponse = {
+  data: [exerciseWithCategories],
+  actions: { add: actionAvailable },
+};
+
+export const exerciseCategoryListResponse: Exercises.Queries.ExerciseCategoryListResponse = {
+  data: [exerciseCategory],
+  actions: { add: actionAvailable, rename: actionAvailable, delete: actionAvailable },
+};
+
+export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
+  data: exerciseWithCategories,
+  actions: {
+    update: actionAvailable,
+    imageChange: actionAvailable,
+    delete: actionAvailable,
+    categoryAssign: actionAvailable,
+    categoryUnassign: actionAvailable,
+  },
 };
 
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");
@@ -185,6 +213,8 @@ export const planSummary: Plans.VO.PlanSummary = {
   name: planName,
   status: Plans.VO.PlanStatusEnum.draft,
   revision: revision.value,
+  updatedAt: T0.ms,
+  sections: tools.Int.nonNegative(2),
 };
 const planSection: Plans.VO.PlanSectionWithExercises = {
   id: planSectionId,
@@ -374,6 +404,8 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
   ...workout,
   exercises: workout.exercises.map((exercise) => ({
     ...exercise,
+    exerciseImageEtag,
+    exerciseDescription,
     loggedSets: exercise.loggedSets.map((set) => ({
       ...set,
       actions: {
@@ -479,7 +511,8 @@ export const GenericExerciseAddedEvent = {
     name: exerciseName,
     description: exerciseDescription,
     image: exerciseImageKey,
-    userId: Auth.VO.SYSTEM_USER_ID,
+    imageEtag: exerciseImageEtag,
+    userId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseAddedEventType;
 
@@ -491,7 +524,7 @@ export const GenericExerciseDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_DELETED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey, requesterId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseId, image: exerciseImageKey, requesterId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseDeletedEventType;
 
 export const GenericExerciseUpdatedNameEvent = {
@@ -506,7 +539,7 @@ export const GenericExerciseUpdatedNameEvent = {
     id: exerciseId,
     name: anotherExerciseName,
     description: exerciseDescription,
-    requesterId: Auth.VO.SYSTEM_USER_ID,
+    requesterId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
@@ -522,7 +555,7 @@ export const GenericExerciseUpdatedDescriptionEvent = {
     id: exerciseId,
     name: exerciseName,
     description: anotherExerciseDescription,
-    requesterId: Auth.VO.SYSTEM_USER_ID,
+    requesterId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
@@ -538,7 +571,7 @@ export const GenericExerciseUpdatedEvent = {
     id: exerciseId,
     name: anotherExerciseName,
     description: anotherExerciseDescription,
-    requesterId: Auth.VO.SYSTEM_USER_ID,
+    requesterId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
 
@@ -550,7 +583,12 @@ export const GenericExerciseImageChangedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_IMAGE_CHANGED_EVENT",
-  payload: { id: exerciseId, image: exerciseImageKey, requesterId: Auth.VO.SYSTEM_USER_ID },
+  payload: {
+    id: exerciseId,
+    image: exerciseImageKey,
+    imageEtag: exerciseImageEtag,
+    requesterId: Auth.VO.ADMIN_USER_ID,
+  },
 } satisfies Exercises.Events.ExerciseImageChangedEventType;
 
 export const GenericExerciseCategoryAddedEvent = {
@@ -561,7 +599,7 @@ export const GenericExerciseCategoryAddedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_ADDED_EVENT",
-  payload: { id: exerciseCategoryId, name: exerciseCategoryName, userId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseCategoryId, name: exerciseCategoryName, userId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryAddedEventType;
 
 export const GenericExerciseCategoryDeletedEvent = {
@@ -572,7 +610,7 @@ export const GenericExerciseCategoryDeletedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_DELETED_EVENT",
-  payload: { id: exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseCategoryId, requesterId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryDeletedEventType;
 
 export const GenericExerciseCategoryRenamedEvent = {
@@ -583,7 +621,7 @@ export const GenericExerciseCategoryRenamedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_RENAMED_EVENT",
-  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName, requesterId: Auth.VO.SYSTEM_USER_ID },
+  payload: { id: exerciseCategoryId, name: anotherExerciseCategoryName, requesterId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryRenamedEventType;
 
 export const GenericExerciseCategoryAssignedEvent = {
@@ -594,7 +632,7 @@ export const GenericExerciseCategoryAssignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_ASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID },
+  payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
 
 export const GenericExerciseCategoryUnassignedEvent = {
@@ -605,7 +643,7 @@ export const GenericExerciseCategoryUnassignedEvent = {
   version: 1,
   commit,
   name: "EXERCISE_CATEGORY_UNASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.SYSTEM_USER_ID },
+  payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryUnassignedEventType;
 
 export const GenericPlanCreatedEvent = {
@@ -749,6 +787,33 @@ export const GenericPlanRenamedEvent = {
   name: "PLAN_RENAMED_EVENT",
   payload: { planId, planName: anotherPlanName, requesterId: userId },
 } satisfies Plans.Events.PlanRenamedEventType;
+
+export const planDescription = v.parse(
+  Plans.VO.PlanDescription,
+  "Push/pull/legs, 3x a week, rest every 4th week",
+);
+
+export const GenericPlanDescriptionSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_DESCRIPTION_SET_EVENT",
+  payload: { planId, description: planDescription, requesterId: userId },
+} satisfies Plans.Events.PlanDescriptionSetEventType;
+
+export const GenericPlanDescriptionUnsetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_DESCRIPTION_SET_EVENT",
+  payload: { planId, description: undefined, requesterId: userId },
+} satisfies Plans.Events.PlanDescriptionSetEventType;
 
 export const GenericPlanSectionExerciseInstructionAddedEvent = {
   id: expectAnyId,
@@ -903,6 +968,8 @@ export const GenericWorkoutExerciseAddedEvent = {
     workoutExerciseId,
     exerciseId,
     exerciseName,
+    exerciseImageEtag,
+    exerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,
   },
@@ -929,6 +996,8 @@ export const AnotherGenericWorkoutExerciseAddedEvent = {
     workoutExerciseId: anotherWorkoutExerciseId,
     exerciseId,
     exerciseName,
+    exerciseImageEtag,
+    exerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,
   },
@@ -1177,7 +1246,7 @@ export const systemUser = {
   createdAt: new Date(),
   // biome-ignore lint: lint/style/noRestrictedGlobals
   updatedAt: new Date(),
-  id: Auth.VO.SYSTEM_USER_ID,
+  id: Auth.VO.ADMIN_USER_ID,
 } satisfies User;
 
 export const systemSession: Session = {
@@ -1190,13 +1259,13 @@ export const systemSession: Session = {
   updatedAt: new Date(),
   ipAddress: "",
   userAgent: "Mozilla/5.0",
-  userId: Auth.VO.SYSTEM_USER_ID,
+  userId: Auth.VO.ADMIN_USER_ID,
   id: "Kk3wR7pVn0aZsQdHtXmL6yBgUfCe9iJx",
 };
 
 export const auth = { user, session, path: "/get-session", options: {} } as const;
 
-export const systemAuth = {
+export const adminAuth = {
   user: systemUser,
   session: systemSession,
   path: "/get-session",

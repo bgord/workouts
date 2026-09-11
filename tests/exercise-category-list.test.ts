@@ -22,27 +22,32 @@ describe(`GET ${url}`, async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
-      spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute").mockResolvedValue([
-        mocks.exerciseCategory,
-      ]),
+      spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute").mockResolvedValue(
+        mocks.exerciseCategoryListResponse,
+      ),
     );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([mocks.exerciseCategory]);
+    expect(json).toEqual(mocks.exerciseCategoryListResponse);
   });
 
   test("happy path - empty", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute").mockResolvedValue([]));
+    spies.use(
+      spyOn(di.Adapters.Exercises.ListExerciseCategoriesQuery, "execute").mockResolvedValue({
+        ...mocks.exerciseCategoryListResponse,
+        data: [],
+      }),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([]);
+    expect(json).toEqual({ ...mocks.exerciseCategoryListResponse, data: [] });
   });
 });

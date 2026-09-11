@@ -53,6 +53,10 @@ export class PlansProjector {
       deps.EventHandler.handle(this.onPlanRenamedEvent.bind(this)),
     );
     deps.EventBus.on(
+      Plans.Events.PLAN_DESCRIPTION_SET_EVENT,
+      deps.EventHandler.handle(this.onPlanDescriptionSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
       deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
@@ -130,6 +134,19 @@ export class PlansProjector {
     await db
       .update(Schema.plans)
       .set({ name: event.payload.planName, revision: event.revision, updatedAt: event.createdAt })
+      .where(
+        and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
+      );
+  }
+
+  async onPlanDescriptionSetEvent(event: Plans.Events.PlanDescriptionSetEventType) {
+    await db
+      .update(Schema.plans)
+      .set({
+        description: event.payload.description ?? null,
+        revision: event.revision,
+        updatedAt: event.createdAt,
+      })
       .where(
         and(eq(Schema.plans.id, event.payload.planId), eq(Schema.plans.userId, event.payload.requesterId)),
       );

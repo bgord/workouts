@@ -31,42 +31,26 @@ describe("GET /api/exercises/:exerciseId", async () => {
   test("not found", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute").mockResolvedValue(null));
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseWithCategoriesQuery, "execute").mockResolvedValue(null));
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
 
     expect(response.status).toEqual(404);
   });
 
-  test("happy path - no categories", async () => {
-    const spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute").mockResolvedValue(mocks.exercise));
-    spies.use(
-      spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute").mockResolvedValue([]),
-    );
-
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(200);
-    expect(json).toEqual({ ...mocks.exercise, categories: [] });
-  });
-
   test("happy path", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute").mockResolvedValue(mocks.exercise));
     spies.use(
-      spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute").mockResolvedValue([
-        mocks.exerciseCategory,
-      ]),
+      spyOn(di.Adapters.Exercises.GetExerciseWithCategoriesQuery, "execute").mockResolvedValue(
+        mocks.exerciseGetResponse,
+      ),
     );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ ...mocks.exercise, categories: [mocks.exerciseCategory] });
+    expect(json).toEqual(mocks.exerciseGetResponse);
   });
 });

@@ -50,9 +50,16 @@ export function WorkoutSetLog(props: {
   });
 
   const done = props.exercise.loggedSets.length;
+  const remaining = done < (props.exercise.target?.sets ?? Number.POSITIVE_INFINITY);
 
   return (
-    <form className="c-card-footer" data-cross="end" data-gap="3" onSubmit={mutation.handleSubmit}>
+    <form
+      className="c-card-footer"
+      data-cross="end"
+      data-gap="2"
+      data-pt="3"
+      onSubmit={mutation.handleSubmit}
+    >
       <div data-gap="1" data-stack="y">
         <label className="c-label" data-variant="inline" {...reps.label.props}>
           {t("workout.set.reps.label")}
@@ -97,25 +104,19 @@ export function WorkoutSetLog(props: {
         />
       </div>
 
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <button
-          aria-label={t("workout.set.cta")}
-          className="c-button"
-          data-variant="primary"
-          disabled={!props.action.enabled || reps.empty || load.empty || mutation.isLoading}
-          title={t("workout.set.cta")}
-          type="submit"
-        >
-          <Plus data-size="sm" />
-        </button>
+      <button
+        aria-label={t("workout.set.cta")}
+        className="c-button"
+        data-variant={remaining ? "primary" : "secondary"}
+        disabled={!props.action.enabled || reps.empty || load.empty || mutation.isLoading}
+        title={t("workout.set.cta")}
+        type="submit"
+      >
+        <Plus data-size="sm" />
+      </button>
 
+      <div data-cross="center" data-gap="3" data-grow="1" data-md-width="100%" data-stack="x">
         <ActionHint action={props.action} />
-
-        {props.exercise.target && (
-          <div data-color="neutral-400" data-fs="sm">
-            {t("workout.set.progress", { done, target: props.exercise.target.sets })}
-          </div>
-        )}
 
         {mutation.isError && (
           <output data-color="danger-400" data-fs="sm">

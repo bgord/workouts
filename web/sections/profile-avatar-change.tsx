@@ -1,6 +1,7 @@
 import { exec, useFile, useMutation, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleUser } from "lucide-react";
+import { CircleUser, ImageUp } from "lucide-react";
+import { ButtonClear } from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -29,25 +30,33 @@ export function ProfileAvatarChange() {
   });
 
   return (
-    <section className="c-card" data-gap="5">
+    <section className="c-card" data-gap="5" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
-        <CircleUser data-size="md" />
+        <CircleUser data-color="neutral-400" data-size="sm" />
         <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 
-      <div data-gap="5" data-stack="x">
+      <div data-cross="start" data-gap="5" data-md-stack="y" data-stack="x">
         <ProfileAvatarDelete />
 
-        <form data-gap="2" data-stack="y" encType="multipart/form-data" onSubmit={mutation.handleSubmit}>
-          <div data-gap="3" data-stack="x">
+        <form
+          data-gap="2"
+          data-md-width="100%"
+          data-stack="y"
+          encType="multipart/form-data"
+          onSubmit={mutation.handleSubmit}
+        >
+          <div data-gap="2" data-stack="x">
             <label
               className="c-button"
               data-cross="center"
               data-disp="flex"
               data-main="center"
-              data-variant="secondary"
+              data-md-grow="1"
+              data-variant="ghost"
               {...avatar.label.props}
             >
+              <ImageUp data-size="sm" />
               <span>{t("profile.avatar.select_file.cta")}</span>
               <input
                 className="c-visually-hidden"
@@ -61,28 +70,22 @@ export function ProfileAvatarChange() {
 
             <button
               className="c-button"
-              data-variant="primary"
+              data-md-grow="1"
+              data-variant="secondary"
               disabled={!avatar.isSelected || mutation.isLoading}
               type="submit"
             >
               {mutation.isLoading ? t("profile.avatar.upload.cta.loading") : t("profile.avatar.upload.cta")}
             </button>
 
-            {avatar.isSelected && (
-              <button
-                className="c-button"
-                data-animation="grow-fade-in"
-                data-variant="ghost"
-                disabled={mutation.isLoading}
-                onClick={exec([avatar.actions.clearFile, mutation.reset])}
-                type="button"
-              >
-                {t("app.clear")}
-              </button>
-            )}
+            <ButtonClear
+              data-md-grow="1"
+              disabled={!avatar.isSelected || mutation.isLoading}
+              onClick={exec([avatar.actions.clearFile, mutation.reset])}
+            />
           </div>
 
-          <div data-color="neutral-400" data-fs="xs">
+          <div data-color="neutral-500" data-fs="xs">
             {t("profile.avatar.hint")}
           </div>
 

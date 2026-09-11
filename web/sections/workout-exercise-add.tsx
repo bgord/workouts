@@ -13,7 +13,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
   const { exercises } = workoutRoute.useLoaderData();
   const add = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
 
-  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises[0]?.id ?? "" });
+  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises.data[0]?.id ?? "" });
   const sets = bg.useNumberField(Form.sets.field);
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
@@ -42,10 +42,12 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
 
   if (add.off) {
     return (
-      <div data-cross="center" data-gap="3" data-mr="auto" data-stack="x">
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <ActionHint action={props.action} />
+
         <button
           className="c-button"
-          data-variant="ghost"
+          data-variant="secondary"
           disabled={!props.action.enabled}
           onClick={add.enable}
           type="button"
@@ -54,22 +56,28 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           <Plus data-size="sm" />
           {t("workout.exercise.add.cta")}
         </button>
-
-        <ActionHint action={props.action} />
       </div>
     );
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...add.props.target}>
+    <form
+      className="c-card"
+      data-gap="2"
+      data-p="4"
+      data-stack="y"
+      data-width="100%"
+      onSubmit={mutation.handleSubmit}
+      {...add.props.target}
+    >
       <div data-cross="end" data-gap="3" data-stack="x">
-        <div data-cross="start" data-gap="1" data-stack="y">
+        <div data-cross="start" data-gap="1" data-md-width="100%" data-stack="y">
           <label className="c-label" {...exerciseId.label.props}>
             {t("workout.exercise.add.exercise.label")}
           </label>
 
-          <Select {...exerciseId.input.props}>
-            {exercises.map((exercise) => (
+          <Select data-md-width="100%" {...exerciseId.input.props}>
+            {exercises.data.map((exercise) => (
               <option key={exercise.id} value={exercise.id}>
                 {exercise.name}
               </option>
@@ -119,11 +127,19 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           </div>
         </div>
 
-        <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
-          {t("app.save")}
-        </button>
+        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
+          <button
+            className="c-button"
+            data-md-grow="1"
+            data-variant="secondary"
+            disabled={mutation.isLoading}
+            type="submit"
+          >
+            {t("app.save")}
+          </button>
 
-        <ButtonCancel onClick={bg.exec([mutation.reset, add.disable])} />
+          <ButtonCancel data-md-grow="1" onClick={bg.exec([mutation.reset, add.disable])} />
+        </div>
       </div>
 
       {mutation.isError && (

@@ -24,6 +24,7 @@ export type PlanGetResponse = {
   actions: {
     finalize: ActionState;
     rename: ActionState;
+    descriptionSet: ActionState;
     editingEnable: ActionState;
     archive: ActionState;
     restore: ActionState;

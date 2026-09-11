@@ -22,6 +22,34 @@
       "when": 1789031014482,
       "tag": "0002_lean_iron_fist",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789069643406,
+      "tag": "0003_nappy_dagger",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1789070453565,
+      "tag": "0004_milky_killer_shrike",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1789126991309,
+      "tag": "0005_stale_sabra",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1789127638949,
+      "tag": "0006_large_starfox",
+      "breakpoints": true
     }
   ]
 }

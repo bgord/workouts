@@ -11,6 +11,10 @@ describe("ExerciseDescription", () => {
         "Press the barbell upwards, while lying on the horizontal bench.",
       ).success,
     ).toEqual(true);
+    expect(
+      v.safeParse(Exercises.VO.ExerciseDescription, "Don't flare the elbows - keep them at ~45° (2-3s down)")
+        .success,
+    ).toEqual(true);
   });
 
   test("rejects non-string - null", () => {

@@ -37,6 +37,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         exerciseName: Schema.exercises.name,
         exerciseDescription: Schema.exercises.description,
         exerciseImage: Schema.exercises.image,
+        exerciseImageEtag: Schema.exercises.imageEtag,
       })
       .from(Schema.planSectionExerciseInstructions)
       .innerJoin(Schema.exercises, eq(Schema.planSectionExerciseInstructions.exerciseId, Schema.exercises.id))
@@ -54,6 +55,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     const data = {
       id: plan.id,
       name: plan.name,
+      description: plan.description ?? undefined,
       status: plan.status,
       revision: plan.revision,
       updatedAt: plan.updatedAt,
@@ -70,6 +72,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
                 name: exerciseInstruction.exerciseName,
                 description: exerciseInstruction.exerciseDescription,
                 image: exerciseInstruction.exerciseImage,
+                imageEtag: exerciseInstruction.exerciseImageEtag,
               },
               sets: exerciseInstruction.sets,
               reps: v.parse(Plans.VO.Reps, {
@@ -125,6 +128,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           hints: finalizeBlockers,
         },
         rename: whenEditable,
+        descriptionSet: whenEditable,
         editingEnable: { available: finalized, enabled: finalized, hints: [] },
         archive: { available: archivable, enabled: archivable, hints: [] },
         restore: { available: restorable, enabled: restorable, hints: [] },

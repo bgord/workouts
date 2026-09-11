@@ -1,5 +1,6 @@
 import type { ActionState } from "+action-state";
 import type * as Auth from "+auth";
+import type * as Exercises from "+exercises";
 import type * as VO from "+workouts/value-objects";
 
 export type WorkoutExerciseActions = {
@@ -13,6 +14,8 @@ export type LoggedSetActions = { correct: ActionState; remove: ActionState };
 export type LoggedSet = VO.LoggedSetType & { actions: LoggedSetActions };
 
 export type WorkoutExercise = Omit<VO.WorkoutExercise, "loggedSets"> & {
+  exerciseImageEtag: Exercises.VO.Exercise["imageEtag"];
+  exerciseDescription: Exercises.VO.Exercise["description"];
   loggedSets: Array<LoggedSet>;
   actions: WorkoutExerciseActions;
 };

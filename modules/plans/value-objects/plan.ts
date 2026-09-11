@@ -1,6 +1,7 @@
 import type * as tools from "@bgord/tools";
 import type * as Exercises from "+exercises";
 import type { ExerciseInstructionIdType } from "./exercise-instruction-id";
+import type { PlanDescriptionType } from "./plan-description";
 import type { PlanIdType } from "./plan-id";
 import type { PlanNameType } from "./plan-name";
 import type { PlanSectionIdType } from "./plan-section-id";
@@ -25,6 +26,7 @@ export type PlanSectionWithExercises = {
 export type Plan = {
   id: PlanIdType;
   name: PlanNameType;
+  description?: PlanDescriptionType;
   status: PlanStatusEnum;
   revision: tools.RevisionValueType;
   updatedAt: tools.TimestampValueType;

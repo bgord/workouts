@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
+import { CalendarOff, SearchX } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
-import { WorkoutCard } from "../components";
+import { ButtonClear, WorkoutCard } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -26,12 +27,32 @@ export function WorkoutHistory() {
     },
   });
 
-  if (workouts.data.length === 0) return <div data-color="neutral-400">{t("workout.list.empty")}</div>;
+  if (workouts.data.length === 0) {
+    return (
+      <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y" data-variant="flat">
+        <CalendarOff data-color="neutral-600" data-size="md" />
+
+        <div data-color="neutral-300" data-fs="sm" data-mt="2">
+          {t("workout.list.empty")}
+        </div>
+
+        <div data-color="neutral-500" data-fs="xs">
+          {t("workout.list.empty.hint")}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div data-gap="8" data-stack="y">
-      <div data-cross="baseline" data-gap="3" data-stack="x">
-        <ul data-gap="1" data-stack="x">
+    <div data-gap="5" data-stack="y">
+      <div
+        data-cross="center"
+        data-gap="2"
+        data-stack="x"
+        data-wrap="wrap"
+        {...bg.Rhythm(36).times(1).style.minHeight}
+      >
+        <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
           {workouts.sections.map((section) => (
             <li key={section.id}>
               <button
@@ -53,24 +74,39 @@ export function WorkoutHistory() {
           ))}
         </ul>
 
-        <div data-color="neutral-400" data-fs="sm">
+        <div data-color="neutral-500" data-fs="sm" data-grow="1" data-transform="font-variant-numeric">
           {t("workout.list.count", { matching: matching.length, total: workouts.data.length })}
         </div>
 
-        <button
-          className="c-button"
-          data-variant="ghost"
-          disabled={WorkoutHistoryFiltersForm.Form.isDefault(search)}
-          onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
-          type="button"
-        >
-          {t("app.clear")}
-        </button>
+        {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
+          <ButtonClear
+            onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
+          />
+        )}
       </div>
 
-      {matching.length === 0 && <div data-color="neutral-400">{t("workout.list.no_matches")}</div>}
+      {matching.length === 0 && (
+        <div
+          className="c-card"
+          data-cross="center"
+          data-gap="1"
+          data-py="8"
+          data-stack="y"
+          data-variant="flat"
+        >
+          <SearchX data-color="neutral-600" data-size="md" />
 
-      <ul data-gap="3" data-stack="y">
+          <div data-color="neutral-300" data-fs="sm" data-mt="2">
+            {t("workout.list.no_matches")}
+          </div>
+
+          <div data-color="neutral-500" data-fs="xs">
+            {t("workout.list.no_matches.hint")}
+          </div>
+        </div>
+      )}
+
+      <ul data-gap="2" data-stack="y">
         {matching.map((workout) => (
           <WorkoutCard key={workout.id} {...workout} />
         ))}

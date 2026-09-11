@@ -3,7 +3,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import { ExerciseAddedEvent } from "../events/EXERCISE_ADDED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
 import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
 import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
@@ -25,9 +25,9 @@ export const handleExerciseAddCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseAddCommandType) => {
     const temporary = tools.FilePathAbsolute.fromString(command.payload.absoluteFilePath);
 
-    if (!CatalogIsManagedBySystem.passes({ requesterId: command.payload.userId })) {
+    if (!CatalogIsManagedByAdmin.passes({ requesterId: command.payload.userId })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
-      throw new CatalogIsManagedBySystem.error();
+      throw new CatalogIsManagedByAdmin.error();
     }
 
     const count = await deps.GetExerciseNameCountQuery.execute(command.payload.name);
@@ -52,7 +52,7 @@ export const handleExerciseAddCommand =
     });
 
     const key = ExerciseImageKeyFactory.stable(command.payload.id);
-    await deps.RemoteFileStorage.putFromPath({ key, path: final });
+    const object = await deps.RemoteFileStorage.putFromPath({ key, path: final });
     await deps.TemporaryFile.cleanup(final.getFilename());
 
     const event = bg.event(
@@ -63,6 +63,7 @@ export const handleExerciseAddCommand =
         name: command.payload.name,
         description: command.payload.description,
         image: key,
+        imageEtag: object.etag.get(),
         userId: command.payload.userId,
       },
       deps,

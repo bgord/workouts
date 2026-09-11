@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryAddedEvent } from "../events/EXERCISE_CATEGORY_ADDED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryNameIsUnique } from "../invariants/exercise-category-name-is-unique";
 
 type Dependencies = {
@@ -14,7 +14,7 @@ type Dependencies = {
 
 export const handleExerciseCategoryAddCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryAddCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.userId });
+    CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.userId });
 
     const count = await deps.GetExerciseCategoryNameCountQuery.execute(command.payload.name);
 

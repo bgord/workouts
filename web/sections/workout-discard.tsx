@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { CircleAlert, Trash } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
-import { ButtonCancel, ButtonClose } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
 import { dashboardRoute } from "../router";
 
 export function WorkoutDiscard(props: WorkoutSummary) {
@@ -21,7 +21,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
       }),
     onSuccess: async () => {
       dialog.disable();
-      await navigate({ search: Form.default, to: "/" });
+      await navigate({ search: Form.default, to: "/workouts" });
       await router.invalidate({ filter: (route) => route.id === dashboardRoute.id, sync: true });
     },
   });
@@ -29,56 +29,36 @@ export function WorkoutDiscard(props: WorkoutSummary) {
   return (
     <>
       <button
+        aria-label={t("workout.discard.cta")}
         className="c-button"
-        data-color="danger-400"
-        data-ml="auto"
+        data-color="neutral-400"
+        data-hover-color="danger-400"
         data-variant="ghost"
         onClick={dialog.enable}
+        title={t("workout.discard.title", {
+          name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
+        })}
         type="button"
         {...dialog.props.controller}
       >
-        <Trash data-size="sm" />
-        {t("workout.discard.cta")}
+        <Trash2 data-size="sm" />
       </button>
 
-      <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>
-        <div data-main="between" data-stack="x">
-          <strong data-color="neutral-100">{t("workout.discard.header")}</strong>
-          <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
-        </div>
+      <Dialog {...dialog}>
+        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+          {t("workout.discard.header")}
+        </DialogHeader>
 
-        <div
-          data-color="danger-400"
-          data-cross="center"
-          data-fs="sm"
-          data-gap="3"
-          data-lh="loose"
-          data-stack="x"
-        >
-          <CircleAlert data-size="md" />
+        <DialogInfo variant="danger">
           {t("workout.discard.info", {
             name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
           })}
-        </div>
+        </DialogInfo>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && (
-            <output
-              aria-live="assertive"
-              data-color="danger-400"
-              data-cross="center"
-              data-fs="sm"
-              data-gap="3"
-              data-stack="x"
-            >
-              <CircleAlert data-size="md" />
-              {t("workout.discard.error")}
-            </output>
-          )}
+          {mutation.isError && <DialogError>{t("workout.discard.error")}</DialogError>}
 
-          <div data-gap="5" data-main="end" data-stack="x">
-            <ButtonCancel onClick={dialog.disable} />
-
+          <DialogFooter onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -87,9 +67,9 @@ export function WorkoutDiscard(props: WorkoutSummary) {
             >
               {t("workout.discard.cta")}
             </button>
-          </div>
+          </DialogFooter>
         </form>
-      </bg.Dialog>
+      </Dialog>
     </>
   );
 }

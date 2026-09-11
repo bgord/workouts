@@ -220,6 +220,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRename(deps)),
   );
+  plans.patch(
+    "/:planId/description",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanDescriptionSet(deps)),
+  );
 
   server.route("/plans", plans);
 
@@ -246,6 +252,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   workouts.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   workouts.get("/list", bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutList(Adapters.Workouts)));
+  workouts.get(
+    "/dashboard",
+    bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutDashboard({ ...deps, ...Adapters.Workouts })),
+  );
   workouts.get("/:workoutId", bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutGet(Adapters.Workouts)));
   workouts.post(
     "/create",

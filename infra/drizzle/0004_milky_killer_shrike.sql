@@ -1,0 +1,1 @@
+ALTER TABLE `workoutExercises` ADD `exerciseImageEtag` text NOT NULL;

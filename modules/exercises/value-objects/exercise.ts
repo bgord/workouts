@@ -1,3 +1,4 @@
+import type * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import type { ExerciseDescriptionType } from "./exercise-description";
 import type { ExerciseIdType } from "./exercise-id";
@@ -8,4 +9,5 @@ export type Exercise = {
   name: ExerciseNameType;
   description: ExerciseDescriptionType;
   image: tools.ObjectKeyType;
+  imageEtag: bg.HashValueType;
 };

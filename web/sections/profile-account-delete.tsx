@@ -1,6 +1,6 @@
-import { Autocomplete, Dialog, Rhythm, useMutation, useToggle, useTranslations } from "@bgord/ui";
+import { Autocomplete, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { CircleAlert, UserX } from "lucide-react";
-import { ButtonCancel, ButtonClose } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
 
 export function ProfileAccountDelete() {
   const t = useTranslations();
@@ -19,10 +19,10 @@ export function ProfileAccountDelete() {
   });
 
   return (
-    <section className="c-card" data-bc="danger-600" data-gap="5" data-md-p="3">
-      <div data-gap="3" data-main="between" data-stack="x">
+    <section className="c-card" data-bc="danger-600" data-gap="5" data-md-p="3" data-variant="flat">
+      <div data-gap="2" data-main="between" data-md-stack="y" data-stack="x">
         <div data-cross="center" data-gap="3" data-stack="x">
-          <UserX data-size="md" />
+          <UserX data-color="danger-400" data-size="sm" />
           <div className="c-card-title">{t("profile.delete_account.header")}</div>
         </div>
 
@@ -43,19 +43,12 @@ export function ProfileAccountDelete() {
         {t("profile.delete_account.cta_primary")}
       </button>
 
-      <Dialog data-gap="8" data-mt="12" {...Rhythm().times(50).style.width} {...dialog}>
-        <div data-main="between" data-stack="x">
-          <strong data-color="neutral-100" data-cross="center" data-gap="2" data-stack="x">
-            <UserX data-size="md" />
-            {t("profile.delete_account.header")}
-          </strong>
-          <ButtonClose disabled={mutation.isLoading} onClick={dialog.disable} />
-        </div>
+      <Dialog {...dialog}>
+        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+          {t("profile.delete_account.header")}
+        </DialogHeader>
 
-        <div data-color="danger-400" data-cross="center" data-fs="sm" data-gap="1" data-stack="x">
-          <CircleAlert data-size="sm" />
-          {t("profile.delete_account.info")}
-        </div>
+        <DialogInfo variant="danger">{t("profile.delete_account.info")}</DialogInfo>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           <div data-cross="start" data-gap="3" data-stack="y">
@@ -75,27 +68,9 @@ export function ProfileAccountDelete() {
             />
           </div>
 
-          {mutation.isError && (
-            <output
-              aria-live="assertive"
-              data-bg="danger-900"
-              data-br="md"
-              data-color="danger-100"
-              data-cross="center"
-              data-fs="sm"
-              data-gap="3"
-              data-mt="3"
-              data-p="3"
-              data-stack="x"
-            >
-              <CircleAlert data-size="md" />
-              {t("profile.delete_account.error")}
-            </output>
-          )}
+          {mutation.isError && <DialogError>{t("profile.delete_account.error")}</DialogError>}
 
-          <div data-gap="5" data-main="end" data-stack="x">
-            <ButtonCancel onClick={dialog.disable} />
-
+          <DialogFooter onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -104,7 +79,7 @@ export function ProfileAccountDelete() {
             >
               {t("profile.delete_account.cta_primary")}
             </button>
-          </div>
+          </DialogFooter>
         </form>
       </Dialog>
     </section>

@@ -1,7 +1,8 @@
 import * as bg from "@bgord/ui";
+import { Search, SearchX } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseCard } from "../components";
+import { ButtonClear, ExerciseCard } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -18,7 +19,7 @@ export function ExerciseCatalog() {
     defaultValue: search.name ?? "",
   });
 
-  const matching = exercises.filter((exercise) => {
+  const matching = exercises.data.filter((exercise) => {
     const byCategory =
       !search.category || exercise.categories.some((category) => category.id === search.category);
 
@@ -41,48 +42,50 @@ export function ExerciseCatalog() {
 
   return (
     <div data-gap="5" data-stack="y">
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <input
-          className="c-input"
-          id={ExerciseCatalogFiltersForm.Form.name.field.name}
-          name={ExerciseCatalogFiltersForm.Form.name.field.name}
-          onChange={(event) => {
-            name.handleChange(event);
+      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
+        <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
+          <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
-            navigate({
-              replace: true,
-              search: { category: search.category, name: event.currentTarget.value || undefined },
-              to: "/catalog",
-            });
-          }}
-          placeholder={t("exercise.catalog.name.placeholder")}
-          ref={nameInput}
-          value={name.input.props.value}
-          {...bg.Autocomplete.off}
-          {...bg.Rhythm().times(20).style.width}
-        />
+          <input
+            className="c-input"
+            data-pl="8"
+            data-width="100%"
+            id={ExerciseCatalogFiltersForm.Form.name.field.name}
+            name={ExerciseCatalogFiltersForm.Form.name.field.name}
+            onChange={(event) => {
+              name.handleChange(event);
 
-        <div data-color="neutral-400" data-fs="sm">
-          {t("exercise.catalog.count", { matching: matching.length, total: exercises.length })}
+              navigate({
+                replace: true,
+                search: { category: search.category, name: event.currentTarget.value || undefined },
+                to: "/catalog",
+              });
+            }}
+            placeholder={t("exercise.catalog.name.placeholder")}
+            ref={nameInput}
+            style={{ background: "transparent" }}
+            value={name.input.props.value}
+            {...bg.Autocomplete.off}
+          />
+        </div>
+
+        <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
+          {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
-          <button
-            className="c-button"
-            data-variant="ghost"
+          <ButtonClear
+            data-ml="auto"
             onClick={() => {
               name.clear();
               navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
             }}
-            type="button"
-          >
-            {t("app.clear")}
-          </button>
+          />
         )}
       </div>
 
-      <ul data-gap="1" data-stack="x">
-        {exerciseCategories.map((category) => {
+      <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
+        {exerciseCategories.data.map((category) => {
           const selected = search.category === category.id;
 
           return (
@@ -107,11 +110,30 @@ export function ExerciseCatalog() {
         })}
       </ul>
 
-      {matching.length === 0 && <div data-color="neutral-400">{t("exercise.catalog.no_matches")}</div>}
+      {matching.length === 0 && (
+        <div
+          className="c-card"
+          data-cross="center"
+          data-gap="1"
+          data-py="8"
+          data-stack="y"
+          data-variant="flat"
+        >
+          <SearchX data-color="neutral-600" data-size="md" />
 
-      <ul data-gap="4" data-stack="x">
+          <div data-color="neutral-300" data-fs="sm" data-mt="2">
+            {t("exercise.catalog.no_matches")}
+          </div>
+
+          <div data-color="neutral-500" data-fs="xs">
+            {t("exercise.catalog.no_matches.hint")}
+          </div>
+        </div>
+      )}
+
+      <ul data-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">
         {matching.map((exercise) => (
-          <ExerciseCard exercise={exercise} key={exercise.id} />
+          <ExerciseCard key={exercise.id} {...exercise} />
         ))}
       </ul>
     </div>

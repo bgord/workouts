@@ -55,6 +55,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
     <form
       data-cross="center"
       data-gap="2"
+      data-md-wrap="wrap"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
       {...reschedule.props.target}

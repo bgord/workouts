@@ -32,7 +32,7 @@ export function PlanRename(props: Plan) {
 
   if (rename.off) {
     return (
-      <h1 data-maxw="100%" data-transform="truncate">
+      <h1 data-fs="2xl" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
         <button
           data-color="neutral-0"
           data-cursor="pointer"
@@ -53,20 +53,31 @@ export function PlanRename(props: Plan) {
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...rename.props.target}>
-      <div data-cross="center" data-gap="3" data-stack="x">
+    <form
+      data-gap="2"
+      data-grow="1"
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...bg.Rhythm().times(0).style.minWidth}
+      {...rename.props.target}
+    >
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("plan.rename.label")}
           className="c-input"
+          data-grow="1"
+          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.name.pattern)}
           {...planName.input.props}
         />
 
-        <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
-          {t("app.save")}
-        </button>
+        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x">
+          <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
+            {t("app.save")}
+          </button>
 
-        <ButtonCancel onClick={bg.exec([planName.clear, mutation.reset, rename.disable])} />
+          <ButtonCancel onClick={bg.exec([planName.clear, mutation.reset, rename.disable])} />
+        </div>
       </div>
 
       {mutation.isError && (

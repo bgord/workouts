@@ -63,8 +63,8 @@ modules/
 │   │   ├── email-verification-notification-composer.ts
 │   │   └── password-reset-notification-composer.ts
 │   └── value-objects
+│       ├── admin-user-id.ts
 │       ├── password.ts
-│       ├── system-user-id.ts
 │       └── user-id.ts
 ├── exercises
 │   ├── command-handlers
@@ -98,7 +98,7 @@ modules/
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
-│   │   ├── catalog-is-managed-by-system.ts
+│   │   ├── catalog-is-managed-by-admin.ts
 │   │   ├── exercise-category-exists.ts
 │   │   ├── exercise-category-limit.ts
 │   │   ├── exercise-category-name-is-unique.ts
@@ -117,6 +117,7 @@ modules/
 │   │   ├── get-exercise-category.ts
 │   │   ├── get-exercise-name-count.ts
 │   │   ├── get-exercise-usage-count.ts
+│   │   ├── get-exercise-with-categories.ts
 │   │   ├── get-exercise.ts
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
@@ -124,8 +125,6 @@ modules/
 │   │   ├── list-exercises.ts
 │   │   ├── search-exercise-categories.ts
 │   │   └── search-exercises.ts
-│   ├── services
-│   │   ├── exercise-catalog-seeder.ts
 │   └── value-objects
 │       ├── exercise-catalog-entry.ts
 │       ├── exercise-catalog.ts
@@ -134,6 +133,7 @@ modules/
 │       ├── exercise-category-name.validation.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
+│       ├── exercise-description.validation.ts
 │       ├── exercise-id.ts
 │       ├── exercise-image-key.ts
 │       ├── exercise-image-max-side.ts
@@ -141,6 +141,7 @@ modules/
 │       ├── exercise-image-mime-registry.ts
 │       ├── exercise-image-side.ts
 │       ├── exercise-name.ts
+│       ├── exercise-name.validation.ts
 │       ├── exercise-with-categories.ts
 │       ├── exercise.ts
 ├── languages.ts
@@ -150,6 +151,7 @@ modules/
 │   ├── command-handlers
 │   │   ├── handlePlanArchiveCommand.ts
 │   │   ├── handlePlanCreateCommand.ts
+│   │   ├── handlePlanDescriptionSetCommand.ts
 │   │   ├── handlePlanEditingEnableCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
 │   │   ├── handlePlanRemoveCommand.ts
@@ -165,6 +167,7 @@ modules/
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_CREATE_COMMAND.ts
+│   │   ├── PLAN_DESCRIPTION_SET_COMMAND.ts
 │   │   ├── PLAN_EDITING_ENABLE_COMMAND.ts
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
 │   │   ├── PLAN_REMOVE_COMMAND.ts
@@ -180,6 +183,7 @@ modules/
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
 │   │   ├── PLAN_CREATED_EVENT.ts
+│   │   ├── PLAN_DESCRIPTION_SET_EVENT.ts
 │   │   ├── PLAN_EDITING_ENABLED_EVENT.ts
 │   │   ├── PLAN_FINALIZED_EVENT.ts
 │   │   ├── PLAN_REMOVED_EVENT.ts
@@ -194,6 +198,7 @@ modules/
 │   │   └── PLAN_SECTION_RENAMED_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-belongs-to-user.ts
+│   │   ├── plan-description-has-changed.ts
 │   │   ├── plan-exists.ts
 │   │   ├── plan-has-no-empty-sections.ts
 │   │   ├── plan-has-sections.ts
@@ -225,6 +230,8 @@ modules/
 │   └── value-objects
 │       ├── exercise-instruction-id.ts
 │       ├── exercise-instruction.ts
+│       ├── plan-description.ts
+│       ├── plan-description.validation.ts
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
@@ -337,6 +344,7 @@ modules/
     ├── ports
     │   └── workout-repository.ts
     ├── queries
+    │   ├── get-workout-dashboard.ts
     │   ├── get-workout-draft-for-owner-count.ts
     │   ├── get-workout-in-progress-for-owner-count.ts
     │   ├── get-workout.ts
@@ -393,6 +401,7 @@ app/
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create.ts
+│   │   ├── plan-description-set.ts
 │   │   ├── plan-editing-enable.ts
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-get.ts
@@ -417,6 +426,7 @@ app/
 │   └── workouts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
+│       ├── workout-dashboard.ts
 │       ├── workout-discard.ts
 │       ├── workout-exercise-add.ts
 │       ├── workout-exercise-remove.ts
@@ -430,9 +440,11 @@ app/
 │       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
+    ├── exercise-add-form.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
+    ├── plan-description-form.ts
     ├── plan-section-create-form.ts
     ├── plan-section-exercise-instruction-add-form.ts
     ├── workout-exercise-add-form.ts
@@ -453,6 +465,7 @@ infra/
 │   │   ├── get-exercise-category.adapter.ts
 │   │   ├── get-exercise-name-count.adapter.ts
 │   │   ├── get-exercise-usage-count.adapter.ts
+│   │   ├── get-exercise-with-categories.adapter.ts
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-categories-assigned-to-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
@@ -495,6 +508,7 @@ infra/
 │   │   ├── timeout-runner.adapter.ts
 │   │   └── tmp
 │   └── workouts
+│       ├── get-workout-dashboard.adapter.ts
 │       ├── get-workout-draft-for-owner-count.adapter.ts
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
@@ -507,30 +521,6 @@ infra/
 ├── e2e
 │   └── home.spec.ts
 ├── env.ts
-├── exercise-catalog
-│   ├── barbell-curl-straight-bar.png
-│   ├── bulgarian-split-squat.png
-│   ├── cable-overhead-tricep-extension.webp
-│   ├── calf-raise-machine.jpeg
-│   ├── concentration-curl-dumbbell.png
-│   ├── credits.json
-│   ├── dumbbell-lateral-raise.png
-│   ├── face-pull.webp
-│   ├── hammer-curl-dumbbell.png
-│   ├── incline-hammer-press.png
-│   ├── lat-pulldown.png
-│   ├── leg-curl-seated.png
-│   ├── leg-extension-single-leg.png
-│   ├── leg-press-horizontal.webp
-│   ├── low-row-machine.png
-│   ├── overhead-press-dumbbell.png
-│   ├── pec-deck.png
-│   ├── pec-fly-machine.png
-│   ├── romanian-deadlift-single-leg-dumbbell.png
-│   ├── straight-arm-pulldown.png
-│   ├── super-horizontal-bench-press-machine.webp
-│   └── tricep-bar-pushdown.png
-├── exercise-catalog.json
 ├── projections
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts

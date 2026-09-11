@@ -101,3 +101,5 @@ export function createShieldAuth(Env: EnvironmentResultType, deps: Dependencies)
 
   return { ShieldAuth: new bg.ShieldAuthHonoStrategy({ AuthSessionReader, ...deps }), config };
 }
+
+export type AuthInstance = ReturnType<typeof createShieldAuth>["config"];

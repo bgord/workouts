@@ -16,6 +16,7 @@ export function Shortcuts() {
   bg.useScrollLock(help.on);
 
   bg.useShortcuts({
+    [ShortcutDefinitions.GoToDashboard.trigger]: () => navigate({ to: "/" }),
     [ShortcutDefinitions.GoToWorkouts.trigger]: () =>
       navigate({ search: WorkoutHistoryFilters.default, to: "/workouts" }),
     [ShortcutDefinitions.GoToCatalog.trigger]: () =>
@@ -82,6 +83,10 @@ export function Shortcuts() {
 
           <ButtonClose onClick={help.disable} title={t("app.shortcuts.close")} />
         </div>
+
+        {pathname === "/" && (
+          <ShortcutGroup header={t("app.dashboard")} shortcuts={ShortcutDefinitions.Dashboard} />
+        )}
 
         {pathname === "/catalog" && (
           <ShortcutGroup header={t("app.catalog")} shortcuts={ShortcutDefinitions.Catalog} />

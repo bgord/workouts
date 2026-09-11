@@ -26,6 +26,7 @@ type AcceptedCommand =
   | PlansCommands.PlanRemoveCommandType
   | PlansCommands.PlanEditingEnableCommandType
   | PlansCommands.PlanRenameCommandType
+  | PlansCommands.PlanDescriptionSetCommandType
   | PlansCommands.PlanSectionExerciseInstructionAddCommandType
   | PlansCommands.PlanSectionExerciseInstructionRemoveCommandType
   | PlansCommands.PlanSectionExerciseInstructionUpdateCommandType

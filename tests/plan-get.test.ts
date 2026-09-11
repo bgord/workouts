@@ -47,6 +47,7 @@ describe("GET /api/plans/:planId", async () => {
         actions: {
           finalize: { available: true, enabled: true, hints: [] },
           rename: { available: true, enabled: true, hints: [] },
+          descriptionSet: { available: true, enabled: true, hints: [] },
           editingEnable: { available: false, enabled: false, hints: [] },
           archive: { available: true, enabled: true, hints: [] },
           restore: { available: false, enabled: false, hints: [] },
@@ -67,6 +68,7 @@ describe("GET /api/plans/:planId", async () => {
       actions: {
         finalize: { available: true, enabled: true, hints: [] },
         rename: { available: true, enabled: true, hints: [] },
+        descriptionSet: { available: true, enabled: true, hints: [] },
         editingEnable: { available: false, enabled: false, hints: [] },
         archive: { available: true, enabled: true, hints: [] },
         restore: { available: false, enabled: false, hints: [] },

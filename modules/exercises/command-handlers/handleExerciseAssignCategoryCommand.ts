@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryAssignedEvent } from "../events/EXERCISE_CATEGORY_ASSIGNED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseCategoryLimit } from "../invariants/exercise-category-limit";
 import { ExerciseExists } from "../invariants/exercise-exists";
@@ -19,7 +19,7 @@ type Dependencies = {
 
 export const handleExerciseAssignCategoryCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseAssignCategoryCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
+    CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.exerciseId);
 

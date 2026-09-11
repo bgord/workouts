@@ -22,6 +22,7 @@ class SearchExercisesQueryDrizzle implements Exercises.Queries.SearchExercises {
       name: exercise.name,
       description: exercise.description,
       image: exercise.image,
+      imageEtag: exercise.imageEtag,
     }));
   }
 }

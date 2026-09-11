@@ -102,6 +102,8 @@ export class Workout {
     workoutExerciseId: VO.WorkoutExerciseIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
     exerciseName: Exercises.VO.ExerciseNameType,
+    exerciseImageEtag: Exercises.VO.Exercise["imageEtag"],
+    exerciseDescription: Exercises.VO.Exercise["description"],
     prescription: VO.ExercisePrescriptionType,
     requesterId: Auth.VO.UserIdType,
   ) {
@@ -112,7 +114,16 @@ export class Workout {
     const event = bg.event(
       Events.WorkoutExerciseAddedEvent,
       Workout.getStream(this.id),
-      { workoutId: this.id, workoutExerciseId, exerciseId, exerciseName, prescription, requesterId },
+      {
+        workoutId: this.id,
+        workoutExerciseId,
+        exerciseId,
+        exerciseName,
+        exerciseImageEtag,
+        exerciseDescription,
+        prescription,
+        requesterId,
+      },
       this.deps,
     );
 

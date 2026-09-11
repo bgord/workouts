@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import { ExerciseCategoryRenamedEvent } from "../events/EXERCISE_CATEGORY_RENAMED_EVENT";
-import { CatalogIsManagedBySystem } from "../invariants/catalog-is-managed-by-system";
+import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseCategoryNameIsUnique } from "../invariants/exercise-category-name-is-unique";
 
@@ -16,7 +16,7 @@ type Dependencies = {
 
 export const handleExerciseCategoryRenameCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryRenameCommandType) => {
-    CatalogIsManagedBySystem.enforce({ requesterId: command.payload.requesterId });
+    CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
 

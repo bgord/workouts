@@ -3,6 +3,7 @@ export * from "./get-exercise-category";
 export * from "./get-exercise-category-name-count";
 export * from "./get-exercise-name-count";
 export * from "./get-exercise-usage-count";
+export * from "./get-exercise-with-categories";
 export * from "./list-categories-assigned-to-exercise";
 export * from "./list-exercise-categories";
 export * from "./list-exercises";
