@@ -48,8 +48,7 @@ export function ExerciseAdd() {
 
         <input
           className="c-input"
-          data-md-width="100%"
-          data-mr="auto"
+          data-width="100%"
           placeholder={t("exercise.add.name.placeholder")}
           style={{ background: "transparent" }}
           {...bg.Form.input(Form.name.pattern)}

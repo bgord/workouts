@@ -37,7 +37,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-bwt="hairline"
       data-cross="center"
       data-gap="3"
-      data-md-wrap="wrap"
+      data-md-wrap={change.on ? "wrap" : undefined}
       data-py="2"
       data-stack="x"
       data-wrap={update.on ? undefined : "nowrap"}
@@ -56,24 +56,26 @@ export function PlanSectionExerciseInstructionRow(props: {
         <ExerciseImage size={ExerciseImageSize.sm} {...exerciseInstruction.exercise} />
       </Link>
 
-      {change.on && (
-        <PlanSectionExerciseInstructionExerciseChange
-          exerciseInstruction={exerciseInstruction}
-          plan={props.plan}
-          section={props.section}
-          toggle={change}
-        />
-      )}
-
-      {change.off && (
+      <div
+        data-cross="center"
+        data-disp={change.on ? "none" : "flex"}
+        data-gap="3"
+        data-grow="1"
+        data-md-cross="start"
+        data-md-gap="1"
+        data-md-stack="y"
+        data-wrap="nowrap"
+        {...bg.Rhythm().times(0).style.minWidth}
+      >
         <div
           data-cross="center"
           data-gap="1"
           data-grow="1"
+          data-md-width="100%"
           data-stack="x"
           data-transform="truncate"
           data-wrap="nowrap"
-          {...bg.Rhythm().times(0).style.width}
+          style={{ ...bg.Rhythm().times(0).minWidth, ...bg.Rhythm().times(3).minHeight }}
         >
           <Link
             data-color="neutral-100"
@@ -88,7 +90,7 @@ export function PlanSectionExerciseInstructionRow(props: {
             {exerciseInstruction.exercise.name}
           </Link>
 
-          {update.off && actions.exerciseChange.available && (
+          {update.off && change.off && actions.exerciseChange.available && (
             <PlanSectionExerciseInstructionExerciseChange
               exerciseInstruction={exerciseInstruction}
               plan={props.plan}
@@ -97,49 +99,82 @@ export function PlanSectionExerciseInstructionRow(props: {
             />
           )}
         </div>
-      )}
 
-      {change.off && !controls && (
-        <div
-          data-color="neutral-400"
-          data-fs="sm"
-          data-md-main="end"
-          data-md-width="100%"
-          data-ml="auto"
-          data-shrink="0"
-          data-stack="x"
-        >
-          <SetsReps {...exerciseInstruction} />
+        {!controls && (
+          <div
+            data-color="neutral-400"
+            data-fs="sm"
+            data-md-ml="0"
+            data-ml="auto"
+            data-shrink="0"
+            data-stack="x"
+          >
+            <SetsReps {...exerciseInstruction} />
+          </div>
+        )}
+
+        {controls && update.on && (
+          <div
+            data-color="neutral-500"
+            data-cross="center"
+            data-disp="none"
+            data-fs="sm"
+            data-md-disp="flex"
+            {...bg.Rhythm().times(3).style.minHeight}
+          >
+            <SetsReps {...exerciseInstruction} />
+          </div>
+        )}
+
+        {controls && update.off && (
+          <div
+            data-cross="center"
+            data-gap="2"
+            data-md-ml="0"
+            data-ml="auto"
+            data-shrink="0"
+            data-stack="x"
+            data-wrap="nowrap"
+          >
+            {actions.update.available && (
+              <PlanSectionExerciseInstructionUpdate
+                exerciseInstruction={exerciseInstruction}
+                plan={props.plan}
+                section={props.section}
+                toggle={update}
+              />
+            )}
+
+            {actions.remove.available && (
+              <PlanSectionExerciseInstructionRemove
+                exerciseInstruction={exerciseInstruction}
+                plan={props.plan}
+                section={props.section}
+              />
+            )}
+          </div>
+        )}
+      </div>
+
+      {change.on && (
+        <div data-grow="1" data-md-width="100%" data-stack="x">
+          <PlanSectionExerciseInstructionExerciseChange
+            exerciseInstruction={exerciseInstruction}
+            plan={props.plan}
+            section={props.section}
+            toggle={change}
+          />
         </div>
       )}
 
-      {change.off && controls && (
-        <div
-          data-cross="center"
-          data-gap="2"
-          data-md-main={update.on ? undefined : "end"}
-          data-md-width="100%"
-          data-ml="auto"
-          data-shrink="0"
-          data-stack="x"
-          data-wrap="nowrap"
-        >
-          {actions.update.available && (
-            <PlanSectionExerciseInstructionUpdate
-              exerciseInstruction={exerciseInstruction}
-              plan={props.plan}
-              section={props.section}
-              toggle={update}
-            />
-          )}
-
-          {update.off && actions.remove.available && (
-            <PlanSectionExerciseInstructionRemove
-              exerciseInstruction={exerciseInstruction}
-              plan={props.plan}
-              section={props.section}
-            />
-          )}
+      {change.off && controls && update.on && (
+        <div data-md-width="100%" data-ml="auto" data-shrink="0" data-stack="x">
+          <PlanSectionExerciseInstructionUpdate
+            exerciseInstruction={exerciseInstruction}
+            plan={props.plan}
+            section={props.section}
+            toggle={update}
+          />
         </div>
       )}
     </li>
