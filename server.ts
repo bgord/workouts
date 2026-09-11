@@ -256,6 +256,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     "/dashboard",
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutDashboard({ ...deps, ...Adapters.Workouts })),
   );
+  workouts.get(
+    "/export",
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutExport({ ...deps, ...Adapters.Workouts })),
+  );
   workouts.get("/:workoutId", bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutGet(Adapters.Workouts)));
   workouts.post(
     "/create",
