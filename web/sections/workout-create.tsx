@@ -71,9 +71,15 @@ export function WorkoutCreate() {
 
       {plan && (
         <div data-gap="1" data-grow="1" data-md-width="100%" data-stack="y">
-          <label className="c-label" {...planSectionId.label.props}>
-            {plan.name}
-          </label>
+          <div data-cross="baseline" data-gap="2" data-stack="x">
+            <label className="c-label" {...planSectionId.label.props}>
+              {t("workout.create.section.label")}
+            </label>
+
+            <span data-color="neutral-500" data-fs="xs" data-transform="truncate">
+              {t("workout.create.plan", { name: plan.name })}
+            </span>
+          </div>
 
           <Select data-md-width="100%" {...planSectionId.input.props}>
             {plan.sections.map((section) => (
