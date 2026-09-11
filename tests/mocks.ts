@@ -787,6 +787,33 @@ export const GenericPlanRenamedEvent = {
   payload: { planId, planName: anotherPlanName, requesterId: userId },
 } satisfies Plans.Events.PlanRenamedEventType;
 
+export const planDescription = v.parse(
+  Plans.VO.PlanDescription,
+  "Push/pull/legs, 3x a week, deload every 4th week",
+);
+
+export const GenericPlanDescriptionSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_DESCRIPTION_SET_EVENT",
+  payload: { planId, description: planDescription, requesterId: userId },
+} satisfies Plans.Events.PlanDescriptionSetEventType;
+
+export const GenericPlanDescriptionUnsetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_DESCRIPTION_SET_EVENT",
+  payload: { planId, description: undefined, requesterId: userId },
+} satisfies Plans.Events.PlanDescriptionSetEventType;
+
 export const GenericPlanSectionExerciseInstructionAddedEvent = {
   id: expectAnyId,
   correlationId,

@@ -1,5 +1,6 @@
 export * from "./plan-archive";
 export * from "./plan-create";
+export * from "./plan-description-set";
 export * from "./plan-editing-enable";
 export * from "./plan-finalize";
 export * from "./plan-get";
