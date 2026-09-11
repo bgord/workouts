@@ -131,7 +131,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
         <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
         {props.exercise.actions.targetSet.available && (
-          <div className="c-card-footer" data-cross="end" data-gap="3">
+          <div className="c-card-footer" data-cross="end" data-gap="3" data-pt="3">
             <WorkoutExerciseTargetSet
               action={props.exercise.actions.targetSet}
               exercise={props.exercise}

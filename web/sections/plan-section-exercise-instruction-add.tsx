@@ -46,10 +46,10 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   if (add.off) {
     return (
-      <div data-cross="center" data-gap="3" data-mr="auto" data-stack="x">
+      <div className="c-card-footer" data-cross="center" data-gap="3" data-pt="2" data-stack="x">
         <button
           className="c-button"
-          data-variant="secondary"
+          data-variant="ghost"
           disabled={!props.action.enabled}
           onClick={add.enable}
           type="button"

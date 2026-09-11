@@ -1,5 +1,5 @@
 import { useTranslations } from "@bgord/ui";
-import { Dumbbell, LayoutList } from "lucide-react";
+import { Dumbbell, Layers, LayoutList } from "lucide-react";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
 import { PlanSectionCreate } from "./plan-section-create";
@@ -13,16 +13,24 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
 
   return (
     <div data-gap="3" data-stack="y">
-      <div data-cross="baseline" data-gap="3" data-stack="x" data-wrap="wrap">
-        <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-          {t("plan.section.list.header")}
-        </div>
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
+        <div
+          data-color="neutral-500"
+          data-cross="center"
+          data-fs="sm"
+          data-gap="1-5"
+          data-grow="1"
+          data-stack="x"
+          title={t("plan.section.list.header")}
+        >
+          <Layers data-size="xs" />
 
-        <div data-color="neutral-500" data-fs="sm" data-grow="1" data-transform="font-variant-numeric">
-          {t("plan.section.list.count", {
-            count: props.sections.length,
-            max: PlanSectionLimitForPlanMax,
-          })}
+          <span data-transform="font-variant-numeric">
+            {t("plan.section.list.count", {
+              count: props.sections.length,
+              max: PlanSectionLimitForPlanMax,
+            })}
+          </span>
         </div>
 
         {props.actions.sectionCreate.available && (
@@ -33,11 +41,11 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
       {props.sections.length === 0 && (
         <div
           className="c-card"
-          data-variant="flat"
           data-cross="center"
           data-gap="1"
           data-py="8"
           data-stack="y"
+          data-variant="flat"
         >
           <LayoutList data-color="neutral-600" data-size="md" />
 
@@ -82,15 +90,17 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
               {props.actions.sectionRemove.available && <PlanSectionRemove plan={props} section={section} />}
             </div>
 
-            <PlanSectionExerciseInstructionList plan={props} section={section} />
+            <div data-gap="0" data-stack="y">
+              <PlanSectionExerciseInstructionList plan={props} section={section} />
 
-            {section.actions.exerciseInstructionAdd.available && (
-              <PlanSectionExerciseInstructionAdd
-                action={section.actions.exerciseInstructionAdd}
-                plan={props}
-                section={section}
-              />
-            )}
+              {section.actions.exerciseInstructionAdd.available && (
+                <PlanSectionExerciseInstructionAdd
+                  action={section.actions.exerciseInstructionAdd}
+                  plan={props}
+                  section={section}
+                />
+              )}
+            </div>
           </li>
         ))}
       </ul>

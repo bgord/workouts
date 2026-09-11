@@ -37,6 +37,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-bwt="hairline"
       data-cross="center"
       data-gap="3"
+      data-md-wrap="wrap"
       data-py="2"
       data-stack="x"
       data-wrap={update.on ? undefined : "nowrap"}
@@ -72,6 +73,7 @@ export function PlanSectionExerciseInstructionRow(props: {
           data-stack="x"
           data-transform="truncate"
           data-wrap="nowrap"
+          {...bg.Rhythm().times(0).style.width}
         >
           <Link
             data-color="neutral-100"
@@ -98,7 +100,15 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {change.off && !controls && (
-        <div data-color="neutral-400" data-fs="sm" data-ml="auto" data-shrink="0">
+        <div
+          data-color="neutral-400"
+          data-fs="sm"
+          data-md-main="end"
+          data-md-width="100%"
+          data-ml="auto"
+          data-shrink="0"
+          data-stack="x"
+        >
           <SetsReps {...exerciseInstruction} />
         </div>
       )}
@@ -107,7 +117,8 @@ export function PlanSectionExerciseInstructionRow(props: {
         <div
           data-cross="center"
           data-gap="2"
-          data-md-width={update.on ? "100%" : undefined}
+          data-md-main={update.on ? undefined : "end"}
+          data-md-width="100%"
           data-ml="auto"
           data-shrink="0"
           data-stack="x"
