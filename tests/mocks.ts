@@ -352,6 +352,23 @@ export const exercisePerformance = {
   ],
 };
 
+export const workoutExportRow = {
+  workoutId,
+  completedAt: T0.ms,
+  planName,
+  planSectionName,
+  exerciseName,
+  setNumber: v.parse(Workouts.VO.SetNumber, 1),
+  reps: v.parse(Workouts.VO.Reps, 9),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+  rir: v.parse(Workouts.VO.Rir, 2),
+};
+
+export const workoutCsv = [
+  "workoutId,completedAt,planName,planSectionName,exerciseName,setNumber,reps,load,rir",
+  `${workoutId},${T0.ms},${planName},${planSectionName},${exerciseName},1,9,80000,2`,
+].join("");
+
 export const calculatedExercisePerformance = {
   workoutId,
   performedAt: T0.ms,
