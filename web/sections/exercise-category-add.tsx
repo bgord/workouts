@@ -35,6 +35,7 @@ export function ExerciseCategoryAdd() {
           className="c-input"
           data-grow="1"
           placeholder={t("exercise.category.add.name.placeholder")}
+          style={{ background: "transparent" }}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />

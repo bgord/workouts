@@ -59,8 +59,8 @@ export function ExerciseCatalog() {
           }}
           placeholder={t("exercise.catalog.name.placeholder")}
           ref={nameInput}
-          value={name.input.props.value}
           style={{ background: "transparent" }}
+          value={name.input.props.value}
           {...bg.Autocomplete.off}
         />
 

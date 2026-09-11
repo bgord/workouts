@@ -49,6 +49,7 @@ export function ExerciseAdd() {
           data-md-width="100%"
           data-mr="auto"
           placeholder={t("exercise.add.name.placeholder")}
+          style={{ background: "transparent" }}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
@@ -59,6 +60,7 @@ export function ExerciseAdd() {
         className="c-textarea"
         placeholder={t("exercise.add.description.placeholder")}
         rows={3}
+        style={{ background: "transparent" }}
         {...bg.Form.textarea(Form.description.pattern)}
         {...description.input.props}
       />
