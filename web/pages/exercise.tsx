@@ -69,7 +69,14 @@ export function Exercise() {
         )}
       </div>
 
-      <div className="c-card" data-cross="start" data-gap="5" data-stack="x" data-wrap="wrap">
+      <div
+        className="c-card"
+        data-cross="start"
+        data-gap="5"
+        data-stack="x"
+        data-variant="flat"
+        data-wrap="wrap"
+      >
         {exercise.actions.imageChange.enabled ? (
           <ExerciseImageChange exercise={exercise.data} />
         ) : (

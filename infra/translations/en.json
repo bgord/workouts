@@ -87,7 +87,7 @@
   "exercise.category.delete.cta": "Delete",
   "exercise.category.delete.error": "Could not delete the category",
   "exercise.category.delete.header": "Delete category",
-  "exercise.category.delete.info": "Deleting {{name}} unassigns it from every exercise. This cannot be undone.",
+  "exercise.category.delete.info": "Deleting {{name}} removes it from every exercise. This cannot be undone.",
   "exercise.category.delete.title": "Delete {{name}}",
   "exercise.category.list.empty": "No categories yet",
   "exercise.category.list.empty.hint": "Add one above to group your exercises",

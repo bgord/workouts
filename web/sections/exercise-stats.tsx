@@ -23,7 +23,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
 
   return (
     <ul data-gap="3" data-stack="x" data-wrap="wrap">
-      <li data-grow="1" {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}>
+      <li data-grow="1" data-md-width="100%" {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}>
         <Link
           className="c-card"
           data-gap="1"
@@ -69,6 +69,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
         className="c-card"
         data-gap="1"
         data-grow="1"
+        data-md-width="100%"
         data-p="4"
         data-stack="y"
         {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}
@@ -101,6 +102,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
         className="c-card"
         data-gap="1"
         data-grow="1"
+        data-md-width="100%"
         data-p="4"
         data-stack="y"
         {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}

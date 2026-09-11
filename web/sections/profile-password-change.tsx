@@ -19,7 +19,7 @@ export function ProfilePasswordChange() {
   });
 
   return (
-    <section className="c-card" data-gap="5">
+    <section className="c-card" data-gap="5" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <KeyRound data-color="neutral-400" data-size="sm" />
         <div className="c-card-title">{t("auth.change_password.header")}</div>

@@ -10,7 +10,14 @@ export function ExerciseCategoryManage() {
   const { exerciseCategories } = catalogRoute.useLoaderData();
 
   return (
-    <section className="c-card" data-gap="4" data-maxw="md" data-stack="y" data-width="100%">
+    <section
+      className="c-card"
+      data-gap="4"
+      data-maxw="md"
+      data-stack="y"
+      data-variant="flat"
+      data-width="100%"
+    >
       <div data-cross="center" data-gap="2" data-stack="x">
         <Tags data-color="neutral-400" data-size="sm" />
 
@@ -42,9 +49,6 @@ export function ExerciseCategoryManage() {
           {exerciseCategories.data.map((category) => (
             <li
               data-bc="neutral-800"
-              data-br="sm"
-              data-bst="solid"
-              data-bwt="hairline"
               data-cross="center"
               data-gap="2"
               data-hover-bg="alpha-subtle"

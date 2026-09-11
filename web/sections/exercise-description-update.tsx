@@ -35,6 +35,7 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
         className="c-prose"
         data-color="neutral-200"
         data-cursor="pointer"
+        data-fs="sm"
         data-self="start"
         data-ta="start"
         onClick={update.enable}
