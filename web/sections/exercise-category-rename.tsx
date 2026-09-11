@@ -46,7 +46,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory) {
 
   return (
     <form data-gap="2" data-grow="1" data-stack="y" onSubmit={mutation.handleSubmit} {...rename.props.target}>
-      <div data-cross="center" data-gap="2" data-stack="x">
+      <div data-cross="center" data-gap="1" data-stack="x">
         <input
           aria-label={t("exercise.category.rename.label")}
           className="c-input"
