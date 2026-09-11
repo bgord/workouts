@@ -112,17 +112,6 @@ export function WorkoutSetLog(props: {
       <div data-cross="center" data-gap="3" data-grow="1" data-md-width="100%" data-stack="x">
         <ActionHint action={props.action} />
 
-        {props.exercise.target && (
-          <div
-            data-color={remaining ? "neutral-500" : "positive-400"}
-            data-fs="xs"
-            data-ml="auto"
-            data-transform="font-variant-numeric"
-          >
-            {t("workout.set.progress", { done, target: props.exercise.target.sets })}
-          </div>
-        )}
-
         {mutation.isError && (
           <output data-color="danger-400" data-fs="sm">
             {t("workout.set.error")}

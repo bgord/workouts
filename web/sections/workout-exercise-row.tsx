@@ -1,5 +1,6 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
+import { ListChecks } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
@@ -22,6 +23,8 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
 
   const skipped =
     props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
+
+  const done = props.exercise.target ? props.exercise.loggedSets.length >= props.exercise.target.sets : false;
 
   return (
     <li className="c-card" data-gap="3" data-md-p="2-5" data-p="4">
@@ -71,13 +74,43 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           </div>
         </div>
 
-        {props.exercise.actions.remove.available && (
-          <WorkoutExerciseRemove
-            action={props.exercise.actions.remove}
-            exercise={props.exercise}
-            workout={props.workout}
-          />
-        )}
+        <div
+          data-cross="center"
+          data-gap="3"
+          data-self="start"
+          data-shrink="0"
+          data-stack="x"
+          data-wrap="nowrap"
+        >
+          {props.exercise.target && props.workout.status !== WorkoutStatusEnum.draft && (
+            <div
+              data-color={done ? "positive-400" : "neutral-500"}
+              data-cross="center"
+              data-fs="xs"
+              data-gap="1"
+              data-stack="x"
+              data-wrap="nowrap"
+              title={t("workout.set.progress.title")}
+            >
+              <ListChecks data-size="xs" />
+
+              <span data-transform="font-variant-numeric">
+                {t("workout.set.progress", {
+                  done: props.exercise.loggedSets.length,
+                  target: props.exercise.target.sets,
+                })}
+              </span>
+            </div>
+          )}
+
+          {props.exercise.actions.remove.available && (
+            <WorkoutExerciseRemove
+              action={props.exercise.actions.remove}
+              exercise={props.exercise}
+              workout={props.workout}
+            />
+          )}
+        </div>
       </div>
 
       {skipped && (
