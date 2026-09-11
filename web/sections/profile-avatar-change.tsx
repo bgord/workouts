@@ -36,7 +36,7 @@ export function ProfileAvatarChange() {
         <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 
-      <div data-cross="center" data-gap="5" data-md-cross="start" data-md-stack="y" data-stack="x">
+      <div data-cross="start" data-gap="5" data-md-stack="y" data-stack="x">
         <ProfileAvatarDelete />
 
         <form
@@ -78,13 +78,11 @@ export function ProfileAvatarChange() {
               {mutation.isLoading ? t("profile.avatar.upload.cta.loading") : t("profile.avatar.upload.cta")}
             </button>
 
-            {avatar.isSelected && (
-              <ButtonClear
-                data-animation="grow-fade-in"
-                disabled={mutation.isLoading}
-                onClick={exec([avatar.actions.clearFile, mutation.reset])}
-              />
-            )}
+            <ButtonClear
+              data-md-grow="1"
+              disabled={!avatar.isSelected || mutation.isLoading}
+              onClick={exec([avatar.actions.clearFile, mutation.reset])}
+            />
           </div>
 
           <div data-color="neutral-500" data-fs="xs">
