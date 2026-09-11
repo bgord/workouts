@@ -109,6 +109,7 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
+    expect(await response.json()).toEqual({ id: mocks.planId });
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanCreatedEvent]);
   });
 });

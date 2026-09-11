@@ -8,6 +8,7 @@ import { plansRoute } from "../router";
 export function PlanCreate() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const navigate = plansRoute.useNavigate();
 
   const name = bg.useTextField(Form.name.field);
 
@@ -18,10 +19,14 @@ export function PlanCreate() {
         credentials: "include",
         body: JSON.stringify({ name: name.value }),
       }),
-    onSuccess: async (_, context) => {
-      await router.invalidate({ filter: (route) => route.id === plansRoute.id, sync: true });
+    onSuccess: async (response, context) => {
+      const { id } = await response.json();
+
       bg.Fields.clearAll([name]);
       context.form?.reset();
+
+      await navigate({ params: { planId: id }, to: "/plans/$planId" });
+      await router.invalidate({ filter: (route) => route.id === plansRoute.id, sync: true });
     },
   });
 

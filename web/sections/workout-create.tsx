@@ -9,6 +9,7 @@ import * as ShortcutDefinitions from "../services/shortcuts";
 export function WorkoutCreate() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const navigate = workoutsRoute.useNavigate();
   const { plan, workouts } = workoutsRoute.useLoaderData();
 
   const today = Temporal.Now.plainDateISO().toString();
@@ -28,10 +29,17 @@ export function WorkoutCreate() {
           scheduledFor: scheduledFor.value,
         }),
       }),
-    onSuccess: () => {
+    onSuccess: async (response) => {
+      const { id } = await response.json();
+
       scheduledFor.clear();
 
-      return router.invalidate({ filter: (route) => route.id === workoutsRoute.id, sync: true });
+      await navigate({
+        params: { workoutId: id },
+        search: (prev) => ({ section: prev.section }),
+        to: "/workouts/$workoutId",
+      });
+      await router.invalidate({ filter: (route) => route.id === workoutsRoute.id, sync: true });
     },
   });
 
