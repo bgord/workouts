@@ -81,7 +81,6 @@ export function WorkoutHistory() {
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
           <button
             className="c-button"
-            data-animation="grow-fade-in"
             data-variant="ghost"
             onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
             type="button"

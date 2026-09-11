@@ -60,6 +60,7 @@ export function ExerciseCatalog() {
           placeholder={t("exercise.catalog.name.placeholder")}
           ref={nameInput}
           value={name.input.props.value}
+          style={{ background: "transparent" }}
           {...bg.Autocomplete.off}
         />
 
@@ -70,7 +71,6 @@ export function ExerciseCatalog() {
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
           <button
             className="c-button"
-            data-animation="grow-fade-in"
             data-ml="auto"
             data-variant="ghost"
             onClick={() => {

@@ -63,7 +63,6 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
 
       {assignActionAvailable && assignment.on && (
         <form
-          data-animation="grow-fade-in"
           data-cross="center"
           data-gap="2"
           data-mb="2"

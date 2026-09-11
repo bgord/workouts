@@ -1,6 +1,6 @@
-import { useTranslations } from "@bgord/ui";
+import { useToggle, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ListChecks } from "lucide-react";
+import { Info, ListChecks } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
@@ -14,6 +14,7 @@ import { WorkoutSetLog } from "./workout-set-log";
 
 export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise }) {
   const t = useTranslations();
+  const description = useToggle({ name: `workout-exercise-description-${props.exercise.id}` });
 
   const exercise = {
     id: props.exercise.exerciseId,
@@ -39,17 +40,34 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
         </Link>
 
         <div data-gap="1" data-grow="1" data-stack="y" data-transform="truncate">
-          <Link
-            className="c-card-title"
-            data-hover-color="brand-300"
-            data-md-fs="sm"
-            data-transform="truncate"
-            params={{ exerciseId: props.exercise.exerciseId }}
-            title={props.exercise.exerciseName}
-            to="/catalog/exercise/$exerciseId"
-          >
-            {props.exercise.exerciseName}
-          </Link>
+          <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+            <Link
+              className="c-card-title"
+              data-hover-color="brand-300"
+              data-md-fs="sm"
+              data-transform="truncate"
+              params={{ exerciseId: props.exercise.exerciseId }}
+              title={props.exercise.exerciseName}
+              to="/catalog/exercise/$exerciseId"
+            >
+              {props.exercise.exerciseName}
+            </Link>
+
+            <button
+              aria-label={t("workout.exercise.description.toggle")}
+              className="c-button"
+              data-color={description.on ? "neutral-0" : "neutral-500"}
+              data-hover-color="neutral-0"
+              data-shrink="0"
+              data-variant="ghost"
+              onClick={description.toggle}
+              title={t("workout.exercise.description.toggle")}
+              type="button"
+              {...description.props.controller}
+            >
+              <Info data-size="sm" />
+            </button>
+          </div>
 
           <div data-cross="center" data-gap="2" data-stack="x">
             <div className="c-card-description" data-ls="wide" data-transform="nowrap">
@@ -120,6 +138,12 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           )}
         </div>
       </div>
+
+      {description.on && (
+        <div className="c-prose" data-color="neutral-300" data-fs="sm" {...description.props.target}>
+          {props.exercise.exerciseDescription}
+        </div>
+      )}
 
       <div data-gap="0" data-stack="y">
         <WorkoutSetList exercise={props.exercise} workout={props.workout} />
