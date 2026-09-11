@@ -49,6 +49,7 @@ export function WorkoutCreate() {
       data-cross="end"
       data-gap="3"
       data-md-cross="start"
+      data-md-p="2-5"
       data-md-stack="y"
       data-stack="x"
       onSubmit={mutation.handleSubmit}

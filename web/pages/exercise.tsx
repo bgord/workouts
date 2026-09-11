@@ -86,6 +86,7 @@ export function Exercise() {
         className="c-card"
         data-cross="start"
         data-gap="5"
+        data-md-p="2-5"
         data-stack="x"
         data-variant="flat"
         data-wrap="wrap"
@@ -138,7 +139,7 @@ export function Exercise() {
         </div>
       </div>
 
-      {performances.length === 0 ? (
+      {performances.length === 0 && (
         <div
           className="c-card"
           data-cross="center"
@@ -157,7 +158,9 @@ export function Exercise() {
             {t("statistics.exercise.history.empty.hint")}
           </div>
         </div>
-      ) : (
+      )}
+
+      {performances.length > 0 && (
         <div data-gap="6" data-stack="y">
           <ExerciseStats performances={performances} />
 

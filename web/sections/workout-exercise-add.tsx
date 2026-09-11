@@ -64,6 +64,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
     <form
       className="c-card"
       data-gap="2"
+      data-md-p="2-5"
       data-p="4"
       data-stack="y"
       data-width="100%"
