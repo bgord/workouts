@@ -42,6 +42,7 @@ export function Plan() {
             className="c-button"
             data-interaction="subtle-scale"
             data-self="start"
+            data-shrink="0"
             data-variant="icon"
             title={t("app.back")}
             to="/plans"
@@ -80,6 +81,7 @@ export function Plan() {
               <div
                 data-cross="center"
                 data-gap="2"
+                data-md-width="100%"
                 data-self="start"
                 data-stack="x"
                 data-wrap="nowrap"

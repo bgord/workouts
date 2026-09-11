@@ -32,7 +32,7 @@ export function PlanRename(props: Plan) {
 
   if (rename.off) {
     return (
-      <h1 data-maxw="100%" data-transform="truncate">
+      <h1 data-fs="2xl" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
         <button
           data-color="neutral-0"
           data-cursor="pointer"

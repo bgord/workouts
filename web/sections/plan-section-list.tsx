@@ -1,4 +1,4 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Dumbbell, Layers, LayoutList } from "lucide-react";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
 import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
@@ -9,11 +9,17 @@ import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
 
 export function PlanSectionList(props: PlanGetResponse["data"] & { actions: PlanGetResponse["actions"] }) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <div data-gap="3" data-stack="y">
-      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
+      <div
+        data-cross="center"
+        data-gap="3"
+        data-stack="x"
+        data-wrap="wrap"
+        {...bg.Rhythm().times(3).style.minHeight}
+      >
         <div
           data-color="neutral-500"
           data-cross="center"
