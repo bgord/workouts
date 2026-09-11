@@ -344,6 +344,7 @@ modules/
     ├── ports
     │   └── workout-repository.ts
     ├── queries
+    │   ├── get-workout-dashboard.ts
     │   ├── get-workout-draft-for-owner-count.ts
     │   ├── get-workout-in-progress-for-owner-count.ts
     │   ├── get-workout.ts
@@ -425,6 +426,7 @@ app/
 │   └── workouts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
+│       ├── workout-dashboard.ts
 │       ├── workout-discard.ts
 │       ├── workout-exercise-add.ts
 │       ├── workout-exercise-remove.ts
@@ -506,6 +508,7 @@ infra/
 │   │   ├── timeout-runner.adapter.ts
 │   │   └── tmp
 │   └── workouts
+│       ├── get-workout-dashboard.adapter.ts
 │       ├── get-workout-draft-for-owner-count.adapter.ts
 │       ├── get-workout-in-progress-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
