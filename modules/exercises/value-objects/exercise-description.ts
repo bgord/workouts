@@ -6,12 +6,10 @@ export const ExerciseDescriptionError = {
   Invalid: "exercise.description.invalid",
 };
 
-// 3 to 256 letters or digits, or spaces, commas, and dots allowed
-const CHARS_WHITELIST = new RegExp(`^[a-zA-Z0-9,. ]{${ExerciseDescriptionMin},${ExerciseDescriptionMax}}$`);
-
 export const ExerciseDescription = v.pipe(
   v.string(ExerciseDescriptionError.Type),
-  v.regex(CHARS_WHITELIST, ExerciseDescriptionError.Invalid),
+  v.minLength(ExerciseDescriptionMin, ExerciseDescriptionError.Invalid),
+  v.maxLength(ExerciseDescriptionMax, ExerciseDescriptionError.Invalid),
   // Stryker disable next-line StringLiteral
   v.brand("ExerciseDescription"),
 );

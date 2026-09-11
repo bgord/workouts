@@ -6,6 +6,7 @@ describe("ExerciseCategoryName", () => {
   test("happy path", () => {
     expect(v.safeParse(Exercises.VO.ExerciseCategoryName, "f".repeat(64)).success).toEqual(true);
     expect(v.safeParse(Exercises.VO.ExerciseCategoryName, "Upper Chest").success).toEqual(true);
+    expect(v.safeParse(Exercises.VO.ExerciseCategoryName, "Chest & Triceps").success).toEqual(true);
   });
 
   test("rejects non-string - null", () => {

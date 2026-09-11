@@ -6,12 +6,10 @@ export const ExerciseCategoryNameError = {
   Invalid: "exercise.category.name.invalid",
 };
 
-// 3 to 64 letters or digits, and spaces allowed
-const CHARS_WHITELIST = new RegExp(`^[a-zA-Z0-9 ]{${ExerciseCategoryNameMin},${ExerciseCategoryNameMax}}$`);
-
 export const ExerciseCategoryName = v.pipe(
   v.string(ExerciseCategoryNameError.Type),
-  v.regex(CHARS_WHITELIST, ExerciseCategoryNameError.Invalid),
+  v.minLength(ExerciseCategoryNameMin, ExerciseCategoryNameError.Invalid),
+  v.maxLength(ExerciseCategoryNameMax, ExerciseCategoryNameError.Invalid),
   // Stryker disable next-line StringLiteral
   v.brand("ExerciseCategoryName"),
 );
