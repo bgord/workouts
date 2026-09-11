@@ -29,14 +29,17 @@ export function PlanArchive(props: Plan) {
   return (
     <>
       <button
+        aria-label={t("plan.archive.cta")}
         className="c-button"
-        data-variant="bare"
+        data-color="neutral-400"
+        data-hover-color="neutral-0"
+        data-variant="ghost"
         onClick={dialog.enable}
+        title={t("plan.archive.header")}
         type="button"
         {...dialog.props.controller}
       >
         <Archive data-size="sm" />
-        {t("plan.archive.cta")}
       </button>
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>

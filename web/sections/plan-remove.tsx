@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleAlert, Trash } from "lucide-react";
+import { CircleAlert, Trash2 } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { ButtonCancel, ButtonClose } from "../components";
 import { planRoute, plansRoute } from "../router";
@@ -28,17 +28,17 @@ export function PlanRemove(props: Plan) {
   return (
     <>
       <button
+        aria-label={t("plan.remove.cta")}
         className="c-button"
-        data-color="danger-400"
-        data-ml="auto"
+        data-color="neutral-400"
+        data-hover-color="danger-400"
         data-variant="ghost"
         onClick={dialog.enable}
         title={t("plan.remove.header")}
         type="button"
         {...dialog.props.controller}
       >
-        <Trash data-size="sm" />
-        {t("plan.remove.cta")}
+        <Trash2 data-size="sm" />
       </button>
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>

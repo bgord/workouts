@@ -3,7 +3,6 @@ import { useRouter } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHint } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanFinalize(props: Plan & { action: ActionState }) {
@@ -25,7 +24,7 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
   });
 
   return (
-    <form data-cross="center" data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
+    <form data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap" onSubmit={mutation.handleSubmit}>
       <button
         className="c-button"
         data-variant="primary"
@@ -35,8 +34,6 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
         <Check data-size="sm" />
         {t("plan.finalize.cta")}
       </button>
-
-      <ActionHint action={props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

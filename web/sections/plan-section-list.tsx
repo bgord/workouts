@@ -31,7 +31,14 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
       </div>
 
       {props.sections.length === 0 && (
-        <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y">
+        <div
+          className="c-card"
+          data-variant="flat"
+          data-cross="center"
+          data-gap="1"
+          data-py="8"
+          data-stack="y"
+        >
           <LayoutList data-color="neutral-600" data-size="md" />
 
           <div data-color="neutral-300" data-fs="sm" data-mt="2">
