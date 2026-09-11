@@ -62,6 +62,7 @@
   "dashboard.last_completed.header": "Last completed",
   "dashboard.empty": "Nothing scheduled",
   "dashboard.empty.hint": "Schedule a workout to see it here",
+  "dashboard.shortcuts.open": "Open the upcoming workout",
   "dashboard.empty.cta": "Go to workouts",
   "exercise.add.cta": "New exercise",
   "exercise.add.description.label": "Description",

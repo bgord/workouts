@@ -62,6 +62,7 @@
   "dashboard.last_completed.header": "Ostatnio ukończony",
   "dashboard.empty": "Nic nie zaplanowano",
   "dashboard.empty.hint": "Zaplanuj trening, aby zobaczyć go tutaj",
+  "dashboard.shortcuts.open": "Otwórz nadchodzący trening",
   "dashboard.empty.cta": "Przejdź do treningów",
   "exercise.add.cta": "Nowe ćwiczenie",
   "exercise.add.description.label": "Opis",

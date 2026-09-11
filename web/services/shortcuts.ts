@@ -2,11 +2,18 @@ import type { TranslationsKeyType } from "@bgord/ui";
 
 export type ShortcutType = { keys: string; trigger: string; label: TranslationsKeyType };
 
+export const GoToDashboard: ShortcutType = { keys: "g d", trigger: "g d", label: "app.dashboard" };
 export const GoToWorkouts: ShortcutType = { keys: "g w", trigger: "g w", label: "app.workouts" };
 export const GoToCatalog: ShortcutType = { keys: "g c", trigger: "g c", label: "app.catalog" };
 export const GoToPlans: ShortcutType = { keys: "g p", trigger: "g p", label: "app.plans" };
 export const ToggleHelp: ShortcutType = { keys: "?", trigger: "[Shift]+?", label: "app.shortcuts.help" };
 export const CloseHelp: ShortcutType = { keys: "Esc", trigger: "Escape", label: "app.shortcuts.close" };
+
+export const OpenUpcomingWorkout: ShortcutType = {
+  keys: "o",
+  trigger: "o",
+  label: "dashboard.shortcuts.open",
+};
 
 export const ScheduleWorkout: ShortcutType = {
   keys: "n",
@@ -26,7 +33,9 @@ export const OpenExercise: ShortcutType = {
   label: "exercise.catalog.shortcuts.open",
 };
 
-export const Global: Array<ShortcutType> = [GoToWorkouts, GoToCatalog, GoToPlans, ToggleHelp];
+export const Global: Array<ShortcutType> = [GoToDashboard, GoToCatalog, GoToPlans, ToggleHelp];
+
+export const Dashboard: Array<ShortcutType> = [OpenUpcomingWorkout];
 
 export const Workouts: Array<ShortcutType> = [ScheduleWorkout, OpenWorkout];
 

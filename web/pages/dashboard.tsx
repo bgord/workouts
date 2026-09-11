@@ -5,15 +5,29 @@ import { CalendarOff } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { Main, WorkoutCard } from "../components";
 import { dashboardRoute } from "../router";
+import * as ShortcutDefinitions from "../services/shortcuts";
 
 const tile = { flexBasis: 0, minWidth: 0 };
 
 export function Dashboard() {
   const t = bg.useTranslations();
   const { dashboard } = dashboardRoute.useLoaderData();
+  const navigate = dashboardRoute.useNavigate();
 
   const upcoming = dashboard.inProgress ?? dashboard.nextUp;
   const empty = !(upcoming || dashboard.lastCompleted);
+
+  bg.useShortcuts({
+    [ShortcutDefinitions.OpenUpcomingWorkout.trigger]: () => {
+      if (upcoming) {
+        navigate({
+          params: { workoutId: upcoming.id },
+          search: WorkoutHistoryFilters.default,
+          to: "/workouts/$workoutId",
+        });
+      }
+    },
+  });
 
   return (
     <Main>
