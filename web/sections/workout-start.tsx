@@ -3,7 +3,6 @@ import { useRouter } from "@tanstack/react-router";
 import { Play } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutStart(props: Workout & { action: ActionState }) {
@@ -21,19 +20,9 @@ export function WorkoutStart(props: Workout & { action: ActionState }) {
   });
 
   return (
-    <form
-      data-cross="center"
-      data-gap="3"
-      data-md-cross="start"
-      data-md-gap="2"
-      data-md-stack="y"
-      data-md-width="100%"
-      data-stack="x"
-      onSubmit={mutation.handleSubmit}
-    >
+    <form data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap" onSubmit={mutation.handleSubmit}>
       <button
         className="c-button"
-        data-md-width="100%"
         data-variant="primary"
         disabled={!props.action.enabled || mutation.isLoading}
         type="submit"
@@ -41,8 +30,6 @@ export function WorkoutStart(props: Workout & { action: ActionState }) {
         <Play data-size="sm" />
         {t("workout.start.cta")}
       </button>
-
-      <ActionHint action={props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

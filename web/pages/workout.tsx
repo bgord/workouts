@@ -4,7 +4,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Dumbbell } from "lucide-react";
 import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
-import { Main, WorkoutStatusBadge } from "../components";
+import { ActionHint, Main, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutDiscard } from "../sections/workout-discard";
@@ -59,69 +59,87 @@ export function Workout() {
           </Link>
 
           <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
-            <h1
-              data-color="neutral-0"
-              data-fs="2xl"
-              data-fw="black"
-              data-md-fs="xl"
-              data-transform="truncate"
-            >
-              {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
-            </h1>
+            <div data-cross="center" data-gap="2" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+              <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
+                <h1
+                  data-color="neutral-0"
+                  data-fs="2xl"
+                  data-fw="black"
+                  data-md-fs="xl"
+                  data-transform="truncate"
+                >
+                  {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
+                </h1>
 
-            <div
-              data-color="neutral-500"
-              data-cross="center"
-              data-fs="xs"
-              data-gap="1-5"
-              data-stack="x"
-              data-wrap="wrap"
-            >
-              {workout.actions.reschedule.available ? (
-                <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
-              ) : (
-                <div>
-                  {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
+                <div
+                  data-color="neutral-500"
+                  data-cross="center"
+                  data-fs="xs"
+                  data-gap="1-5"
+                  data-stack="x"
+                  data-wrap="wrap"
+                >
+                  {workout.actions.reschedule.available ? (
+                    <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
+                  ) : (
+                    <div>
+                      {DateFormat.dayWithWeekday(
+                        language,
+                        Temporal.PlainDate.from(workout.data.scheduledFor),
+                      )}
+                    </div>
+                  )}
+
+                  {workout.data.completedAt && (
+                    <>
+                      <div data-color="neutral-600">·</div>
+
+                      <div>
+                        {t("workout.completed_at", {
+                          date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
+                        })}
+                      </div>
+                    </>
+                  )}
                 </div>
-              )}
+              </div>
 
-              {workout.data.completedAt && (
-                <>
-                  <div data-color="neutral-600">·</div>
+              <div
+                data-cross="center"
+                data-gap="2"
+                data-md-gap="0"
+                data-self="start"
+                data-stack="x"
+                data-wrap="nowrap"
+                {...bg.Rhythm().times(3).style.height}
+              >
+                <WorkoutStatusBadge data-mr="4" status={workout.data.status} />
 
-                  <div>
-                    {t("workout.completed_at", {
-                      date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
-                    })}
-                  </div>
-                </>
-              )}
+                {workout.actions.start.available && (
+                  <WorkoutStart action={workout.actions.start} {...workout.data} />
+                )}
+
+                {workout.actions.complete.available && (
+                  <WorkoutComplete action={workout.actions.complete} {...workout.data} />
+                )}
+
+                {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
+              </div>
             </div>
+
+            {workout.actions.start.available && (
+              <ActionHint action={workout.actions.start} data-md-ml="0" data-md-mt="3" data-ml="auto" />
+            )}
+
+            {workout.actions.complete.available && (
+              <ActionHint action={workout.actions.complete} data-md-ml="0" data-md-mt="3" data-ml="auto" />
+            )}
 
             {workout.actions.noteSet.available && (
               <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
             )}
           </div>
-
-          <div
-            data-cross="center"
-            data-gap="1"
-            data-self="start"
-            data-stack="x"
-            data-wrap="nowrap"
-            {...bg.Rhythm().times(3).style.height}
-          >
-            <WorkoutStatusBadge status={workout.data.status} />
-
-            {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
-          </div>
         </div>
-
-        {workout.actions.start.available && <WorkoutStart action={workout.actions.start} {...workout.data} />}
-
-        {workout.actions.complete.available && (
-          <WorkoutComplete action={workout.actions.complete} {...workout.data} />
-        )}
       </div>
 
       <div data-gap="3" data-stack="y">
