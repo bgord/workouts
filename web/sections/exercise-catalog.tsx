@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { SearchX } from "lucide-react";
+import { Search, SearchX } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
 import { ExerciseCard } from "../components";
@@ -43,26 +43,31 @@ export function ExerciseCatalog() {
   return (
     <div data-gap="5" data-stack="y">
       <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
-        <input
-          className="c-input"
-          data-md-grow="1"
-          id={ExerciseCatalogFiltersForm.Form.name.field.name}
-          name={ExerciseCatalogFiltersForm.Form.name.field.name}
-          onChange={(event) => {
-            name.handleChange(event);
+        <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
+          <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
-            navigate({
-              replace: true,
-              search: { category: search.category, name: event.currentTarget.value || undefined },
-              to: "/catalog",
-            });
-          }}
-          placeholder={t("exercise.catalog.name.placeholder")}
-          ref={nameInput}
-          style={{ background: "transparent" }}
-          value={name.input.props.value}
-          {...bg.Autocomplete.off}
-        />
+          <input
+            className="c-input"
+            data-pl="8"
+            data-width="100%"
+            id={ExerciseCatalogFiltersForm.Form.name.field.name}
+            name={ExerciseCatalogFiltersForm.Form.name.field.name}
+            onChange={(event) => {
+              name.handleChange(event);
+
+              navigate({
+                replace: true,
+                search: { category: search.category, name: event.currentTarget.value || undefined },
+                to: "/catalog",
+              });
+            }}
+            placeholder={t("exercise.catalog.name.placeholder")}
+            ref={nameInput}
+            style={{ background: "transparent" }}
+            value={name.input.props.value}
+            {...bg.Autocomplete.off}
+          />
+        </div>
 
         <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
