@@ -134,13 +134,11 @@ export function Workout() {
               </div>
             </div>
 
-            {workout.actions.start.available && (
-              <ActionHint action={workout.actions.start} data-md-ml="0" data-md-mt="3" data-ml="auto" />
-            )}
+            <div data-md-ml="0" data-md-mt="3" data-ml="auto" {...bg.Rhythm(18).times(1).style.minHeight}>
+              {workout.actions.start.available && <ActionHint action={workout.actions.start} />}
 
-            {workout.actions.complete.available && (
-              <ActionHint action={workout.actions.complete} data-md-ml="0" data-md-mt="3" data-ml="auto" />
-            )}
+              {workout.actions.complete.available && <ActionHint action={workout.actions.complete} />}
+            </div>
 
             {workout.actions.noteSet.available && (
               <WorkoutNote action={workout.actions.noteSet} {...workout.data} />

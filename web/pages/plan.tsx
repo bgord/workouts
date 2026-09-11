@@ -109,9 +109,9 @@ export function Plan() {
               </div>
             </div>
 
-            {plan.actions.finalize.available && (
-              <ActionHint action={plan.actions.finalize} data-md-ml="0" data-md-mt="3" data-ml="auto" />
-            )}
+            <div data-md-ml="0" data-md-mt="3" data-ml="auto" {...bg.Rhythm(18).times(1).style.minHeight}>
+              {plan.actions.finalize.available && <ActionHint action={plan.actions.finalize} />}
+            </div>
 
             <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
           </div>
