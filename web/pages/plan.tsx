@@ -53,7 +53,13 @@ export function Plan() {
           <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
             <div data-cross="center" data-gap="2" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
               <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
-                <div data-cross="baseline" data-gap="2" data-stack="x" data-wrap="nowrap">
+                <div
+                  data-cross="center"
+                  data-gap="2"
+                  data-stack="x"
+                  data-wrap="nowrap"
+                  {...bg.Rhythm().times(3).style.minHeight}
+                >
                   <ClipboardList data-color="neutral-400" data-shrink="0" data-size="md" />
 
                   {plan.actions.rename.available && <PlanRename {...plan.data} />}

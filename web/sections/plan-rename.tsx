@@ -53,31 +53,30 @@ export function PlanRename(props: Plan) {
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...rename.props.target}>
-      <div data-cross="center" data-gap="3" data-stack="x">
+    <form
+      data-gap="2"
+      data-grow="1"
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...bg.Rhythm().times(0).style.minWidth}
+      {...rename.props.target}
+    >
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("plan.rename.label")}
           className="c-input"
-          data-md-width="100%"
+          data-grow="1"
+          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.name.pattern)}
           {...planName.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-          <button
-            className="c-button"
-            data-md-grow="1"
-            data-variant="secondary"
-            disabled={mutation.isLoading}
-            type="submit"
-          >
+        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x">
+          <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
             {t("app.save")}
           </button>
 
-          <ButtonCancel
-            data-md-grow="1"
-            onClick={bg.exec([planName.clear, mutation.reset, rename.disable])}
-          />
+          <ButtonCancel onClick={bg.exec([planName.clear, mutation.reset, rename.disable])} />
         </div>
       </div>
 
