@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
+import { ButtonClear } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryAdd() {
@@ -40,16 +41,7 @@ export function ExerciseCategoryAdd() {
           {...name.input.props}
         />
 
-        {name.changed && (
-          <button
-            className="c-button"
-            data-variant="ghost"
-            onClick={bg.exec([name.clear, mutation.reset])}
-            type="button"
-          >
-            {t("app.clear")}
-          </button>
-        )}
+        {name.changed && <ButtonClear onClick={bg.exec([name.clear, mutation.reset])} />}
 
         <button
           className="c-button"

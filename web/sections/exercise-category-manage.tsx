@@ -46,9 +46,9 @@ export function ExerciseCategoryManage() {
               data-gap="2"
               data-hover-bg="alpha-subtle"
               data-main="between"
+              data-md-px="0-5"
               data-px="2"
               data-py="1-5"
-              data-md-px="0-5"
               data-stack="x"
               key={category.id}
             >

@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Search, SearchX } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseCard } from "../components";
+import { ButtonClear, ExerciseCard } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -74,18 +74,13 @@ export function ExerciseCatalog() {
         </div>
 
         {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
-          <button
-            className="c-button"
+          <ButtonClear
             data-ml="auto"
-            data-variant="ghost"
             onClick={() => {
               name.clear();
               navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
             }}
-            type="button"
-          >
-            {t("app.clear")}
-          </button>
+          />
         )}
       </div>
 

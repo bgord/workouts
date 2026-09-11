@@ -1,6 +1,7 @@
 export * from "./action-hint";
 export * from "./avatar";
 export * from "./button-cancel";
+export * from "./button-clear";
 export * from "./button-close";
 export * from "./delta-kg";
 export * from "./exercise-card";

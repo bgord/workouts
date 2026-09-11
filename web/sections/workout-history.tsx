@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { CalendarOff, SearchX } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
-import { WorkoutCard } from "../components";
+import { ButtonClear, WorkoutCard } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -79,14 +79,9 @@ export function WorkoutHistory() {
         </div>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
-          <button
-            className="c-button"
-            data-variant="ghost"
+          <ButtonClear
             onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
-            type="button"
-          >
-            {t("app.clear")}
-          </button>
+          />
         )}
       </div>
 

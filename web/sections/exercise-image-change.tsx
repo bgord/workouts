@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ImageUp } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ButtonCancel, ExerciseImage, ExerciseImageSize } from "../components";
+import { ButtonClear, ExerciseImage, ExerciseImageSize } from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -34,88 +34,97 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
     },
   });
 
-  if (change.off) {
-    return (
-      <div data-cross="center" data-gap="2" data-stack="y">
-        <button
-          data-cursor="pointer"
-          data-disp="flex"
-          onClick={change.enable}
-          title={t("exercise.image.change.cta")}
-          type="button"
-          {...change.props.controller}
-        >
-          <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
-        </button>
-
-        <button className="c-button" data-fs="xs" data-variant="ghost" onClick={change.enable} type="button">
-          <ImageUp data-size="sm" />
-          {t("exercise.image.change.cta")}
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div data-gap="3" data-stack="y" {...change.props.target}>
-      <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
+    <div data-gap="3" data-stack="y">
+      <button
+        data-cursor="pointer"
+        data-disp="flex"
+        data-self="center"
+        onClick={change.toggle}
+        title={t("exercise.image.change.cta")}
+        type="button"
+        {...change.props.controller}
+      >
+        <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
+      </button>
 
-      <form data-gap="2" data-stack="y" encType="multipart/form-data" onSubmit={mutation.handleSubmit}>
-        <div data-cross="center" data-gap="3" data-stack="x">
-          <label
-            className="c-button"
-            data-cross="center"
-            data-disp="flex"
-            data-main="center"
-            data-md-width="100%"
-            data-variant="secondary"
-            {...image.label.props}
-          >
-            <span>{t("exercise.image.change.select.cta")}</span>
-            <input
-              className="c-visually-hidden"
-              disabled={image.isSelected}
-              onChange={image.actions.selectFile}
-              required
-              type="file"
-              {...image.input.props}
-            />
-          </label>
+      <button
+        className="c-button"
+        data-fs="xs"
+        data-self="center"
+        data-variant="ghost"
+        onClick={change.toggle}
+        type="button"
+      >
+        <ImageUp data-size="sm" />
+        {t("exercise.image.change.cta")}
+      </button>
 
-          {image.isSelected && (
-            <output data-color="neutral-300" data-fs="xs" data-md-width="100%">
-              {t("exercise.image.change.selected", { name: image.data.name })}
+      {change.on && (
+        <form
+          data-gap="2"
+          data-stack="y"
+          encType="multipart/form-data"
+          onSubmit={mutation.handleSubmit}
+          {...change.props.target}
+        >
+          <div data-cross="center" data-gap="3" data-stack="x">
+            <label
+              className="c-button"
+              data-cross="center"
+              data-disp="flex"
+              data-main="center"
+              data-md-width="100%"
+              data-variant="secondary"
+              {...image.label.props}
+            >
+              <span>{t("exercise.image.change.select.cta")}</span>
+              <input
+                className="c-visually-hidden"
+                disabled={image.isSelected}
+                onChange={image.actions.selectFile}
+                required
+                type="file"
+                {...image.input.props}
+              />
+            </label>
+
+            {image.isSelected && (
+              <output data-color="neutral-300" data-fs="xs" data-md-width="100%">
+                {t("exercise.image.change.selected", { name: image.data.name })}
+              </output>
+            )}
+
+            <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
+              <button
+                className="c-button"
+                data-md-grow="1"
+                data-variant="secondary"
+                disabled={!image.isSelected || mutation.isLoading}
+                type="submit"
+              >
+                {t("app.save")}
+              </button>
+
+              <ButtonClear
+                data-md-grow="1"
+                disabled={!image.isSelected}
+                onClick={bg.exec([image.actions.clearFile, mutation.reset])}
+              />
+            </div>
+          </div>
+
+          <div data-color="neutral-400" data-fs="xs">
+            {t("exercise.image.change.hint")}
+          </div>
+
+          {mutation.isError && (
+            <output data-color="danger-400" data-fs="sm">
+              {t("exercise.image.change.error")}
             </output>
           )}
-
-          <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-            <button
-              className="c-button"
-              data-md-grow="1"
-              data-variant="secondary"
-              disabled={!image.isSelected || mutation.isLoading}
-              type="submit"
-            >
-              {t("app.save")}
-            </button>
-
-            <ButtonCancel
-              data-md-grow="1"
-              onClick={bg.exec([image.actions.clearFile, mutation.reset, change.disable])}
-            />
-          </div>
-        </div>
-
-        <div data-color="neutral-400" data-fs="xs">
-          {t("exercise.image.change.hint")}
-        </div>
-
-        {mutation.isError && (
-          <output data-color="danger-400" data-fs="sm">
-            {t("exercise.image.change.error")}
-          </output>
-        )}
-      </form>
+        </form>
+      )}
     </div>
   );
 }

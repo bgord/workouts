@@ -1,6 +1,7 @@
 import { exec, useFile, useMutation, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CircleUser, ImageUp } from "lucide-react";
+import { ButtonClear } from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -78,16 +79,11 @@ export function ProfileAvatarChange() {
             </button>
 
             {avatar.isSelected && (
-              <button
-                className="c-button"
+              <ButtonClear
                 data-animation="grow-fade-in"
-                data-variant="ghost"
                 disabled={mutation.isLoading}
                 onClick={exec([avatar.actions.clearFile, mutation.reset])}
-                type="button"
-              >
-                {t("app.clear")}
-              </button>
+              />
             )}
           </div>
 

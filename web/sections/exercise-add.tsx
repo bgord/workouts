@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/exercise-add-form";
+import { ButtonClear } from "../components";
 import { catalogRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -34,8 +35,8 @@ export function ExerciseAdd() {
   return (
     <form
       className="c-card"
-      data-md-p="2-5"
       data-gap="4"
+      data-md-p="2-5"
       data-stack="y"
       encType="multipart/form-data"
       onSubmit={mutation.handleSubmit}
@@ -104,15 +105,10 @@ export function ExerciseAdd() {
             {t("exercise.add.submit.cta")}
           </button>
 
-          <button
-            className="c-button"
+          <ButtonClear
             data-md-grow="1"
-            data-variant="ghost"
             onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
-            type="button"
-          >
-            {t("app.clear")}
-          </button>
+          />
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
+import { ButtonClear } from "../components";
 import { plansRoute } from "../router";
 
 export function PlanCreate() {
@@ -51,16 +52,11 @@ export function PlanCreate() {
             <Plus data-size="sm" />
             {t("plan.create.submit.cta")}
           </button>
-          <button
-            className="c-button"
+          <ButtonClear
             data-md-grow="1"
-            data-variant="ghost"
             disabled={name.unchanged}
             onClick={bg.exec([name.clear, mutation.reset])}
-            type="button"
-          >
-            {t("app.clear")}
-          </button>
+          />
         </div>
       </div>
 
