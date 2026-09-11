@@ -27,11 +27,13 @@ export function WorkoutStart(props: Workout & { action: ActionState }) {
       data-md-cross="start"
       data-md-gap="2"
       data-md-stack="y"
+      data-md-width="100%"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
     >
       <button
         className="c-button"
+        data-md-width="100%"
         data-variant="primary"
         disabled={!props.action.enabled || mutation.isLoading}
         type="submit"

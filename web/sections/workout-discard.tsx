@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { CircleAlert, Trash } from "lucide-react";
+import { CircleAlert, Trash2 } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { ButtonCancel, ButtonClose } from "../components";
@@ -29,17 +29,19 @@ export function WorkoutDiscard(props: WorkoutSummary) {
   return (
     <>
       <button
+        aria-label={t("workout.discard.cta")}
         className="c-button"
-        data-color="danger-400"
-        data-md-self="start"
-        data-ml="auto"
+        data-color="neutral-400"
+        data-hover-color="danger-400"
         data-variant="ghost"
         onClick={dialog.enable}
+        title={t("workout.discard.title", {
+          name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
+        })}
         type="button"
         {...dialog.props.controller}
       >
-        <Trash data-size="sm" />
-        {t("workout.discard.cta")}
+        <Trash2 data-size="sm" />
       </button>
 
       <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...dialog}>

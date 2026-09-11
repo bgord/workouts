@@ -1,6 +1,6 @@
 // fallow-ignore-file unused-export
 /* cSpell:disable */
-import { useLanguage, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { Main, WorkoutStatusBadge } from "../components";
@@ -15,8 +15,8 @@ import { WorkoutStart } from "../sections/workout-start";
 import { DateFormat } from "../services/date-format";
 
 export function Workout() {
-  const t = useTranslations();
-  const language = useLanguage();
+  const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const { workout } = workoutRoute.useLoaderData();
   const search = workoutRoute.useSearch();
 
@@ -42,7 +42,7 @@ export function Workout() {
 
   return (
     <Main>
-      <div data-gap="4" data-stack="y">
+      <div data-gap="3" data-stack="y">
         <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
@@ -68,38 +68,55 @@ export function Workout() {
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
             </h1>
 
-            {workout.actions.reschedule.available ? (
-              <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
-            ) : (
-              <div data-color="neutral-500" data-fs="xs">
-                {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
-              </div>
-            )}
+            <div
+              data-color="neutral-500"
+              data-cross="center"
+              data-fs="xs"
+              data-gap="1-5"
+              data-stack="x"
+              data-wrap="wrap"
+            >
+              {workout.actions.reschedule.available ? (
+                <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
+              ) : (
+                <div>
+                  {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
+                </div>
+              )}
+
+              {workout.data.completedAt && (
+                <>
+                  <div data-color="neutral-600">·</div>
+
+                  <div>
+                    {t("workout.completed_at", {
+                      date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
-          <WorkoutStatusBadge status={workout.data.status} />
-        </div>
+          <div
+            data-cross="center"
+            data-gap="1"
+            data-self="start"
+            data-stack="x"
+            data-wrap="nowrap"
+            {...bg.Rhythm().times(3).style.height}
+          >
+            <WorkoutStatusBadge status={workout.data.status} />
 
-        <div data-cross="center" data-gap="2" data-stack="x">
-          <div data-cross="center" data-gap="2" data-grow="1" data-stack="x" data-wrap="wrap">
-            {workout.actions.start.available && (
-              <WorkoutStart action={workout.actions.start} {...workout.data} />
-            )}
-            {workout.actions.complete.available && (
-              <WorkoutComplete action={workout.actions.complete} {...workout.data} />
-            )}
-
-            {workout.data.completedAt && (
-              <div data-color="neutral-500" data-fs="sm">
-                {t("workout.completed_at", {
-                  date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
-                })}
-              </div>
-            )}
+            {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
           </div>
-
-          {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
         </div>
+
+        {workout.actions.start.available && <WorkoutStart action={workout.actions.start} {...workout.data} />}
+
+        {workout.actions.complete.available && (
+          <WorkoutComplete action={workout.actions.complete} {...workout.data} />
+        )}
 
         {workout.actions.noteSet.available && (
           <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
