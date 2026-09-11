@@ -5,6 +5,7 @@ import { CalendarOff } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { Main, WorkoutCard } from "../components";
 import { dashboardRoute } from "../router";
+import { DashboardCompleted } from "../sections/dashboard-completed";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
 const tile = { flexBasis: 0, minWidth: 0 };
@@ -91,6 +92,8 @@ export function Dashboard() {
           </div>
         )}
       </div>
+
+      <DashboardCompleted />
     </Main>
   );
 }

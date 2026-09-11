@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
@@ -31,6 +32,11 @@ describe(`GET ${url}`, async () => {
           status: Workouts.VO.WorkoutStatusEnum.completed,
           completedAt: mocks.T0.ms,
         },
+        completed: {
+          month: tools.Int.nonNegative(1),
+          year: tools.Int.nonNegative(2),
+          total: tools.Int.nonNegative(3),
+        },
       }),
     );
 
@@ -46,6 +52,7 @@ describe(`GET ${url}`, async () => {
         status: Workouts.VO.WorkoutStatusEnum.completed,
         completedAt: mocks.T0.ms,
       },
+      completed: { month: 1, year: 2, total: 3 },
     });
   });
 
@@ -57,6 +64,11 @@ describe(`GET ${url}`, async () => {
         inProgress: null,
         nextUp: null,
         lastCompleted: null,
+        completed: {
+          month: tools.Int.nonNegative(0),
+          year: tools.Int.nonNegative(0),
+          total: tools.Int.nonNegative(0),
+        },
       }),
     );
 
@@ -64,6 +76,11 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ inProgress: null, nextUp: null, lastCompleted: null });
+    expect(json).toEqual({
+      inProgress: null,
+      nextUp: null,
+      lastCompleted: null,
+      completed: { month: 0, year: 0, total: 0 },
+    });
   });
 });

@@ -1,3 +1,4 @@
+import * as tools from "@bgord/tools";
 import { absoluteUrl, Cookies } from "@bgord/ui";
 import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-workout";
 import type { WorkoutDashboardResponse } from "../../modules/workouts/queries/get-workout-dashboard";
@@ -25,7 +26,11 @@ export class Workouts {
 
     const response = await fetch(url, { headers, credentials: "include" });
 
-    if (!response?.ok) return { inProgress: null, nextUp: null, lastCompleted: null };
+    if (!response?.ok) {
+      const zero = tools.Int.nonNegative(0);
+      const completed = { month: zero, year: zero, total: zero };
+      return { inProgress: null, nextUp: null, lastCompleted: null, completed };
+    }
     return response.json().catch();
   }
 

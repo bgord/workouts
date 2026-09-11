@@ -252,7 +252,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   workouts.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   workouts.get("/list", bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutList(Adapters.Workouts)));
-  workouts.get("/dashboard", bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutDashboard(Adapters.Workouts)));
+  workouts.get(
+    "/dashboard",
+    bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutDashboard({ ...deps, ...Adapters.Workouts })),
+  );
   workouts.get("/:workoutId", bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutGet(Adapters.Workouts)));
   workouts.post(
     "/create",
