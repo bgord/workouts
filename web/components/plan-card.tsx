@@ -22,10 +22,16 @@ export function PlanCard(props: PlanSummary) {
         title={props.name}
         to="/plans/$planId"
       >
-        <div data-gap="1" data-grow="1" data-stack="y" data-transform="truncate">
+        <div data-gap="2" data-grow="1" data-stack="y" data-transform="truncate">
           <div className="c-card-title" data-transform="truncate">
             {props.name}
           </div>
+
+          {props.description && (
+            <div data-color="neutral-400" data-fs="xs" data-transform="truncate">
+              {props.description}
+            </div>
+          )}
 
           <div data-color="neutral-500" data-cross="center" data-fs="xs" data-gap="3" data-stack="x">
             <div data-cross="center" data-gap="1" data-stack="x" title={t("plan.sections")}>

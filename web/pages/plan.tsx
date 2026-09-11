@@ -6,6 +6,7 @@ import { ChevronLeft, ClipboardList } from "lucide-react";
 import { ActionHint, Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
+import { PlanDescription } from "../sections/plan-description";
 import { PlanEditingEnable } from "../sections/plan-editing-enable";
 import { PlanFinalize } from "../sections/plan-finalize";
 import { PlanRemove } from "../sections/plan-remove";
@@ -109,6 +110,8 @@ export function Plan() {
                 data-mt="1"
               />
             )}
+
+            <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
           </div>
         </div>
       </div>
