@@ -57,7 +57,7 @@ export function Workout() {
             <ChevronLeft data-size="md" />
           </Link>
 
-          <div data-gap="0-5" data-grow="1" data-stack="y" data-transform="truncate">
+          <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
             <h1
               data-color="neutral-0"
               data-fs="2xl"
@@ -96,6 +96,10 @@ export function Workout() {
                 </>
               )}
             </div>
+
+            {workout.actions.noteSet.available && (
+              <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
+            )}
           </div>
 
           <div
@@ -116,10 +120,6 @@ export function Workout() {
 
         {workout.actions.complete.available && (
           <WorkoutComplete action={workout.actions.complete} {...workout.data} />
-        )}
-
-        {workout.actions.noteSet.available && (
-          <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
         )}
       </div>
 

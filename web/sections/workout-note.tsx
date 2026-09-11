@@ -9,7 +9,7 @@ import { workoutRoute } from "../router";
 export function WorkoutNote(props: Workout & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const focus = bg.useToggle({ name: `workout-note-focus-${props.id}` });
+  const update = bg.useToggle({ name: `workout-note-update-${props.id}` });
 
   const note = bg.useTextField({ ...Form.note.field, defaultValue: props.note ?? "" });
 
@@ -22,57 +22,66 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
         body: JSON.stringify({ note: note.value?.trim() || null }),
       }),
     onSuccess: async () => {
-      focus.disable();
+      update.disable();
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
     },
   });
 
   return (
-    <form
-      data-gap="3"
-      data-mt="2"
-      data-stack="y"
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) focus.disable();
-      }}
-      onFocus={focus.enable}
-      onSubmit={mutation.handleSubmit}
-    >
-      <textarea
-        aria-label={t("workout.note.label")}
-        className="c-textarea"
-        data-bc="alpha-subtle"
-        data-bg="alpha-subtle"
-        data-shadow="none"
-        disabled={!props.action.enabled}
-        placeholder={t("workout.note.placeholder")}
-        rows={2}
-        {...bg.Form.textarea(Form.note.pattern)}
-        {...note.input.props}
-      />
-
-      <ActionHint action={props.action} />
-
-      {(focus.on || note.changed) && (
-        <div data-cross="center" data-gap="1" data-stack="x">
-          <button
-            className="c-button"
-            data-variant="secondary"
-            disabled={note.unchanged || mutation.isLoading}
-            type="submit"
-          >
-            {t("app.save")}
-          </button>
-
-          <ButtonCancel onClick={bg.exec([note.clear, mutation.reset, focus.disable])} />
-
-          {mutation.isError && (
-            <output data-color="danger-400" data-fs="sm">
-              {t("workout.note.error")}
-            </output>
-          )}
-        </div>
+    <div data-gap="2" data-my="5" data-stack="y">
+      {update.off && (
+        <button
+          className="c-prose"
+          data-color={props.note ? "neutral-200" : "neutral-500"}
+          data-cursor="pointer"
+          data-fs="sm"
+          data-self="start"
+          data-ta="start"
+          disabled={!props.action.enabled}
+          onClick={update.enable}
+          title={t("workout.note.label")}
+          type="button"
+          {...update.props.controller}
+        >
+          {props.note ?? t("workout.note.placeholder")}
+        </button>
       )}
-    </form>
+
+      {update.off && <ActionHint action={props.action} />}
+
+      {update.on && (
+        <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...update.props.target}>
+          <textarea
+            aria-label={t("workout.note.label")}
+            className="c-textarea"
+            data-width="100%"
+            placeholder={t("workout.note.placeholder")}
+            rows={3}
+            style={{ background: "transparent" }}
+            {...bg.Form.textarea(Form.note.pattern)}
+            {...note.input.props}
+          />
+
+          <div data-cross="center" data-gap="3" data-stack="x">
+            <button
+              className="c-button"
+              data-variant="secondary"
+              disabled={note.unchanged || mutation.isLoading}
+              type="submit"
+            >
+              {t("app.save")}
+            </button>
+
+            <ButtonCancel onClick={bg.exec([note.clear, mutation.reset, update.disable])} />
+
+            {mutation.isError && (
+              <output data-color="danger-400" data-fs="sm">
+                {t("workout.note.error")}
+              </output>
+            )}
+          </div>
+        </form>
+      )}
+    </div>
   );
 }
