@@ -76,7 +76,9 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
 
         <div
           data-cross="center"
-          data-gap="3"
+          data-md-cross="end"
+          data-md-dir="column-reverse"
+          data-md-gap="1"
           data-self="start"
           data-shrink="0"
           data-stack="x"
