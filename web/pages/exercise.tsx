@@ -3,7 +3,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseImage, ExerciseImageSize, Main } from "../components";
+import { ActionHint, ExerciseImage, ExerciseImageSize, Main } from "../components";
 import { exerciseRoute } from "../router";
 import {
   ExerciseCategories,
@@ -42,31 +42,42 @@ export function Exercise() {
 
   return (
     <Main>
-      <div data-cross="center" data-gap="2" data-stack="x">
-        <Link
-          aria-label={t("app.back")}
-          className="c-button"
-          data-interaction="subtle-scale"
-          data-self="start"
-          data-variant="icon"
-          search={Form.default}
-          title={t("app.back")}
-          to="/catalog"
-        >
-          <ChevronLeft data-size="md" />
-        </Link>
+      <div data-gap="2" data-stack="y">
+        <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+          <Link
+            aria-label={t("app.back")}
+            className="c-button"
+            data-interaction="subtle-scale"
+            data-self="start"
+            data-variant="icon"
+            search={Form.default}
+            title={t("app.back")}
+            to="/catalog"
+          >
+            <ChevronLeft data-size="md" />
+          </Link>
 
-        {exercise.actions.update.enabled ? (
-          <ExerciseNameUpdate exercise={exercise.data} />
-        ) : (
-          <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
-            {exercise.data.name}
-          </h1>
-        )}
+          {exercise.actions.update.enabled ? (
+            <ExerciseNameUpdate exercise={exercise.data} />
+          ) : (
+            <h1
+              data-color="neutral-0"
+              data-fs="2xl"
+              data-fw="black"
+              data-grow="1"
+              data-md-fs="xl"
+              data-transform="truncate"
+            >
+              {exercise.data.name}
+            </h1>
+          )}
 
-        {exercise.actions.delete.available && (
-          <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
-        )}
+          {exercise.actions.delete.available && (
+            <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
+          )}
+        </div>
+
+        {exercise.actions.delete.available && <ActionHint data-ml="auto" action={exercise.actions.delete} />}
       </div>
 
       <div

@@ -3,7 +3,7 @@ import { CircleAlert, Trash2 } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import type { ActionState } from "../../modules/action-state";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ActionHint, ButtonCancel, ButtonClose } from "../components";
+import { ButtonCancel, ButtonClose } from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action: ActionState }) {
@@ -23,12 +23,11 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
 
   return (
     <>
-      <ActionHint action={props.action} />
-
       <button
         className="c-button"
         data-color="neutral-400"
         data-hover-color="danger-400"
+        data-self="start"
         data-variant="ghost"
         disabled={!props.action.enabled}
         onClick={dialog.enable}

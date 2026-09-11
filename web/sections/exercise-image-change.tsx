@@ -67,6 +67,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
             data-cross="center"
             data-disp="flex"
             data-main="center"
+            data-md-width="100%"
             data-variant="secondary"
             {...image.label.props}
           >
@@ -82,21 +83,27 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
           </label>
 
           {image.isSelected && (
-            <output data-color="neutral-300" data-fs="xs">
+            <output data-color="neutral-300" data-fs="xs" data-md-width="100%">
               {t("exercise.image.change.selected", { name: image.data.name })}
             </output>
           )}
 
-          <button
-            className="c-button"
-            data-variant="secondary"
-            disabled={!image.isSelected || mutation.isLoading}
-            type="submit"
-          >
-            {t("app.save")}
-          </button>
+          <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+            <button
+              className="c-button"
+              data-md-grow="1"
+              data-variant="secondary"
+              disabled={!image.isSelected || mutation.isLoading}
+              type="submit"
+            >
+              {t("app.save")}
+            </button>
 
-          <ButtonCancel onClick={bg.exec([image.actions.clearFile, mutation.reset, change.disable])} />
+            <ButtonCancel
+              data-md-grow="1"
+              onClick={bg.exec([image.actions.clearFile, mutation.reset, change.disable])}
+            />
+          </div>
         </div>
 
         <div data-color="neutral-400" data-fs="xs">

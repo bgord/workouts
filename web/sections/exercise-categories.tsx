@@ -73,6 +73,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         >
           <Select
             aria-label={t("exercise.category.assign.label")}
+            data-md-width="100%"
             disabled={!props.exercise.actions.categoryAssign.enabled}
             {...exerciseCategoryId.input.props}
           >
@@ -83,16 +84,19 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
             ))}
           </Select>
 
-          <button
-            className="c-button"
-            data-variant="secondary"
-            disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
-            type="submit"
-          >
-            {t("exercise.category.assign.cta")}
-          </button>
+          <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+            <button
+              className="c-button"
+              data-md-grow="1"
+              data-variant="secondary"
+              disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
+              type="submit"
+            >
+              {t("exercise.category.assign.cta")}
+            </button>
 
-          <ButtonCancel onClick={bg.exec([assign.reset, assignment.disable])} />
+            <ButtonCancel data-md-grow="1" onClick={bg.exec([assign.reset, assignment.disable])} />
+          </div>
         </form>
       )}
 

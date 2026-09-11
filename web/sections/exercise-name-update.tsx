@@ -54,20 +54,24 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
         <input
           aria-label={t("exercise.update.name.label")}
           className="c-input"
+          data-md-width="100%"
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
 
-        <button
-          className="c-button"
-          data-variant="secondary"
-          disabled={name.unchanged || mutation.isLoading}
-          type="submit"
-        >
-          {t("app.save")}
-        </button>
+        <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+          <button
+            className="c-button"
+            data-md-grow="1"
+            data-variant="secondary"
+            disabled={name.unchanged || mutation.isLoading}
+            type="submit"
+          >
+            {t("app.save")}
+          </button>
 
-        <ButtonCancel onClick={bg.exec([name.clear, mutation.reset, update.disable])} />
+          <ButtonCancel data-md-grow="1" onClick={bg.exec([name.clear, mutation.reset, update.disable])} />
+        </div>
       </div>
 
       {mutation.isError && (

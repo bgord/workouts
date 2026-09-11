@@ -19,7 +19,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
   return (
     <ul data-gap="3" data-stack="y">
       {performances.map((performance, index) => (
-        <li className="c-card" data-gap="3" data-p="4" key={performance.workoutId}>
+        <li className="c-card" data-gap="3" data-md-p="3" data-p="4" key={performance.workoutId}>
           <div data-cross="center" data-gap="2" data-stack="x">
             <Link
               data-color="neutral-100"
