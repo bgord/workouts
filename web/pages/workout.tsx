@@ -157,6 +157,7 @@ export function Workout() {
             data-grow="1"
             data-stack="x"
             title={t("workout.exercise.list.header")}
+            {...bg.Rhythm().times(3).style.minHeight}
           >
             <Dumbbell data-size="xs" />
 
