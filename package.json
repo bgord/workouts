@@ -13,7 +13,7 @@
     "@types/react-dom": "19.2.7",
     "actions-up": "1.19.0",
     "better-sqlite3": "13.0.3",
-    "cspell": "10.2.2",
+    "cspell": "10.3.0",
     "drizzle-kit": "0.31.10",
     "fallow": "3.22.0",
     "gzip-cli": "1.2.0",
