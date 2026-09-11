@@ -55,6 +55,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     const data = {
       id: plan.id,
       name: plan.name,
+      description: plan.description ?? undefined,
       status: plan.status,
       revision: plan.revision,
       updatedAt: plan.updatedAt,
@@ -127,6 +128,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           hints: finalizeBlockers,
         },
         rename: whenEditable,
+        descriptionSet: whenEditable,
         editingEnable: { available: finalized, enabled: finalized, hints: [] },
         archive: { available: archivable, enabled: archivable, hints: [] },
         restore: { available: restorable, enabled: restorable, hints: [] },

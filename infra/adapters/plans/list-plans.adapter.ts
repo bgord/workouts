@@ -23,6 +23,7 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
     const summaries = plans.map((plan) => ({
       id: plan.id,
       name: plan.name,
+      description: plan.description ?? undefined,
       status: plan.status,
       revision: plan.revision,
       updatedAt: plan.updatedAt,

@@ -220,6 +220,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRename(deps)),
   );
+  plans.patch(
+    "/:planId/description",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanDescriptionSet(deps)),
+  );
 
   server.route("/plans", plans);
 

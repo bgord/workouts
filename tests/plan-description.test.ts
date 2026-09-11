@@ -6,7 +6,7 @@ describe("PlanDescription", () => {
   test("happy path", () => {
     expect(v.safeParse(Plans.VO.PlanDescription, "f".repeat(500)).success).toEqual(true);
     expect(
-      v.safeParse(Plans.VO.PlanDescription, "Push/pull/legs\n3x a week, deload every 4th week.").success,
+      v.safeParse(Plans.VO.PlanDescription, "Push/pull/legs\n3x a week, rest every 4th week.").success,
     ).toEqual(true);
   });
 

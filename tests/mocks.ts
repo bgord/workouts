@@ -789,7 +789,7 @@ export const GenericPlanRenamedEvent = {
 
 export const planDescription = v.parse(
   Plans.VO.PlanDescription,
-  "Push/pull/legs, 3x a week, deload every 4th week",
+  "Push/pull/legs, 3x a week, rest every 4th week",
 );
 
 export const GenericPlanDescriptionSetEvent = {
