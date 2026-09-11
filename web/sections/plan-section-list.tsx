@@ -46,7 +46,7 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
 
       <ul data-gap="3" data-stack="y">
         {props.sections.map((section) => (
-          <li className="c-card" data-gap="3" data-p="4" key={section.id}>
+          <li className="c-card" data-md-p="2-5" data-gap="3" data-p="4" key={section.id}>
             <div data-cross="center" data-gap="3" data-stack="x">
               <div data-grow="1" data-transform="truncate">
                 {props.actions.sectionRename.available && (

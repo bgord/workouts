@@ -33,33 +33,35 @@ export function PlanCreate() {
 
         <input
           className="c-input"
-          data-grow="1"
+          data-md-grow="1"
+          data-md-width="100%"
           placeholder={t("plan.create.name.placeholder")}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
 
-        {name.changed && (
+        <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
           <button
             className="c-button"
-            data-animation="grow-fade-in"
+            data-md-grow="1"
+            data-variant="secondary"
+            disabled={mutation.isLoading || !name.changed}
+            type="submit"
+          >
+            <Plus data-size="sm" />
+            {t("plan.create.submit.cta")}
+          </button>
+          <button
+            className="c-button"
+            data-md-grow="1"
             data-variant="ghost"
+            disabled={name.unchanged}
             onClick={bg.exec([name.clear, mutation.reset])}
             type="button"
           >
             {t("app.clear")}
           </button>
-        )}
-
-        <button
-          className="c-button"
-          data-variant="secondary"
-          disabled={mutation.isLoading || !name.changed}
-          type="submit"
-        >
-          <Plus data-size="sm" />
-          {t("plan.create.submit.cta")}
-        </button>
+        </div>
       </div>
 
       {mutation.isError && (

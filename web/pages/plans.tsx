@@ -19,10 +19,11 @@ export function Plans() {
           {t("plan.list.header")}
         </h1>
 
-        <ActionHint action={plans.actions.create} />
+        <ActionHint action={plans.actions.create} data-md-width="100%" />
 
         <button
           className="c-button"
+          data-md-width="100%"
           data-variant="primary"
           disabled={!plans.actions.create.enabled}
           onClick={planCreate.toggle}

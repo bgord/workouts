@@ -77,7 +77,7 @@ export function Exercise() {
           )}
         </div>
 
-        {exercise.actions.delete.available && <ActionHint data-ml="auto" action={exercise.actions.delete} />}
+        {exercise.actions.delete.available && <ActionHint action={exercise.actions.delete} data-ml="auto" />}
       </div>
 
       <div
