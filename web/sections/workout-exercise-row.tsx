@@ -40,7 +40,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
         </Link>
 
         <div data-gap="1" data-grow="1" data-stack="y" data-transform="truncate">
-          <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+          <div data-cross="center" data-gap="0" data-stack="x" data-wrap="nowrap">
             <Link
               className="c-card-title"
               data-hover-color="brand-300"

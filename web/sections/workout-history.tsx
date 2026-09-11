@@ -91,7 +91,14 @@ export function WorkoutHistory() {
       </div>
 
       {matching.length === 0 && (
-        <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y">
+        <div
+          className="c-card"
+          data-cross="center"
+          data-gap="1"
+          data-py="8"
+          data-stack="y"
+          data-variant="flat"
+        >
           <SearchX data-color="neutral-600" data-size="md" />
 
           <div data-color="neutral-300" data-fs="sm" data-mt="2">

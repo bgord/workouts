@@ -42,7 +42,7 @@ export function Exercise() {
 
   return (
     <Main>
-      <div data-gap="2" data-stack="y">
+      <div data-gap="0-5" data-stack="y">
         <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
@@ -77,7 +77,9 @@ export function Exercise() {
           )}
         </div>
 
-        {exercise.actions.delete.available && <ActionHint action={exercise.actions.delete} data-ml="auto" />}
+        {exercise.actions.delete.available && (
+          <ActionHint action={exercise.actions.delete} data-md-ml="0" data-md-mt="3" data-ml="auto" />
+        )}
       </div>
 
       <div

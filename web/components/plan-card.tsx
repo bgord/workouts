@@ -28,7 +28,7 @@ export function PlanCard(props: PlanSummary) {
           </div>
 
           {props.description && (
-            <div data-color="neutral-400" data-fs="xs" data-transform="truncate">
+            <div data-color="neutral-300" data-fs="xs" data-transform="truncate">
               {props.description}
             </div>
           )}

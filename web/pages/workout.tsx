@@ -176,7 +176,14 @@ export function Workout() {
         </div>
 
         {workout.data.exercises.length === 0 && (
-          <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y">
+          <div
+            className="c-card"
+            data-cross="center"
+            data-gap="1"
+            data-py="8"
+            data-stack="y"
+            data-variant="flat"
+          >
             <Dumbbell data-color="neutral-600" data-size="md" />
 
             <div data-color="neutral-300" data-fs="sm" data-mt="2">
