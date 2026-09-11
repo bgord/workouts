@@ -17,6 +17,7 @@ export type PlanEventType =
   | Events.PlanRemovedEventType
   | Events.PlanEditingEnabledEventType
   | Events.PlanRenamedEventType
+  | Events.PlanDescriptionSetEventType
   | Events.PlanSectionExerciseInstructionAddedEventType
   | Events.PlanSectionExerciseInstructionRemovedEventType
   | Events.PlanSectionExerciseInstructionUpdatedEventType
@@ -41,6 +42,7 @@ export class Plan {
     [Events.PLAN_REMOVED_EVENT]: Events.PlanRemovedEvent,
     [Events.PLAN_EDITING_ENABLED_EVENT]: Events.PlanEditingEnabledEvent,
     [Events.PLAN_RENAMED_EVENT]: Events.PlanRenamedEvent,
+    [Events.PLAN_DESCRIPTION_SET_EVENT]: Events.PlanDescriptionSetEvent,
     [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT]: Events.PlanSectionExerciseInstructionAddedEvent,
     [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT]:
       Events.PlanSectionExerciseInstructionRemovedEvent,
@@ -55,6 +57,7 @@ export class Plan {
   revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
   status = VO.PlanStatusEnum.initial;
   name?: VO.PlanNameType;
+  description?: VO.PlanDescriptionType;
   sections: Array<VO.PlanSection> = [];
   userId?: Auth.VO.UserIdType;
 
@@ -233,6 +236,21 @@ export class Plan {
       Events.PlanRenamedEvent,
       Plan.getStream(this.id),
       { planId: this.id, planName, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
+  setDescription(description: VO.PlanDescriptionType | undefined, requesterId: Auth.VO.UserIdType) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.PlanDescriptionHasChanged.enforce({ current: this.description, incoming: description });
+
+    const event = bg.event(
+      Events.PlanDescriptionSetEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, description, requesterId },
       this.deps,
     );
 
@@ -429,6 +447,12 @@ export class Plan {
       case Events.PLAN_RENAMED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.name = event.payload.planName;
+        break;
+      }
+
+      case Events.PLAN_DESCRIPTION_SET_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.description = event.payload.description;
         break;
       }
 

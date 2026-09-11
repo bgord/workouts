@@ -527,6 +527,80 @@ describe("Plan", async () => {
     );
   });
 
+  test("setDescription", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.setDescription(mocks.planDescription, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanDescriptionSetEvent]);
+  });
+
+  test("setDescription - clears an existing description", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanDescriptionSetEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () => plan.setDescription(undefined, mocks.userId));
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanDescriptionUnsetEvent]);
+  });
+
+  test("setDescription - PlanIsEditable - archived", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      deps,
+    );
+
+    expect(() => plan.setDescription(mocks.planDescription, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
+  test("setDescription - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      deps,
+    );
+
+    expect(() => plan.setDescription(mocks.planDescription, mocks.userId)).toThrow(
+      Plans.Invariants.PlanIsEditable.error,
+    );
+  });
+
+  test("setDescription - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+
+    expect(() => plan.setDescription(mocks.planDescription, mocks.anotherUserId)).toThrow(
+      Plans.Invariants.PlanBelongsToUser.error,
+    );
+  });
+
+  test("setDescription - PlanDescriptionHasChanged", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanDescriptionSetEvent],
+      deps,
+    );
+
+    expect(() => plan.setDescription(mocks.planDescription, mocks.userId)).toThrow(
+      Plans.Invariants.PlanDescriptionHasChanged.error,
+    );
+  });
+
+  test("setDescription - PlanDescriptionHasChanged - clearing an absent description", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+
+    expect(() => plan.setDescription(undefined, mocks.userId)).toThrow(
+      Plans.Invariants.PlanDescriptionHasChanged.error,
+    );
+  });
+
   test("addSectionExerciseInstruction - first", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
