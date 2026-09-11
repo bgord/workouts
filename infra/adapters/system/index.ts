@@ -1,6 +1,8 @@
+// cSpell:ignore stringifier
 import type { EnvironmentResultType } from "+infra/env";
 import { createCertificateInspector } from "./certificate-inspector.adapter";
 import { createClock } from "./clock.adapter";
+import { CsvStringifier } from "./csv-stringifier.adapter";
 import { createDiskSpaceChecker } from "./disk-space-checker.adapter";
 import { createFileCleaner } from "./file-cleaner.adapter";
 import { createFileInspection } from "./file-inspection.adapter";
@@ -37,6 +39,7 @@ export async function createSystemAdapters(Env: EnvironmentResultType) {
   return {
     CertificateInspector: createCertificateInspector(Env, { Clock }),
     Clock,
+    CsvStringifier,
     DiskSpaceChecker: createDiskSpaceChecker(Env),
     IdProvider,
     NonceProvider,
