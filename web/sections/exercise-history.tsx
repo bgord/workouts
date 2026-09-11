@@ -22,7 +22,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
         <li className="c-card" data-gap="3" data-md-p="3" data-p="4" key={performance.workoutId}>
           <div data-cross="center" data-gap="2" data-stack="x">
             <Link
-              data-color="neutral-100"
+              data-color="neutral-300"
               data-cross="center"
               data-fs="sm"
               data-fw="medium"

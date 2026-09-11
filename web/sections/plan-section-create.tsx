@@ -57,16 +57,28 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
       <div data-cross="center" data-gap="3" data-stack="x">
         <input
           className="c-input"
+          data-md-width="100%"
           placeholder={t("plan.section.create.placeholder")}
           {...bg.Form.input(Form.planSectionName.pattern)}
           {...planSectionName.input.props}
         />
 
-        <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
-          {t("app.save")}
-        </button>
+        <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+          <button
+            className="c-button"
+            data-md-grow="1"
+            data-variant="secondary"
+            disabled={mutation.isLoading}
+            type="submit"
+          >
+            {t("app.save")}
+          </button>
 
-        <ButtonCancel onClick={bg.exec([planSectionName.clear, mutation.reset, create.disable])} />
+          <ButtonCancel
+            data-md-grow="1"
+            onClick={bg.exec([planSectionName.clear, mutation.reset, create.disable])}
+          />
+        </div>
       </div>
 
       {mutation.isError && (

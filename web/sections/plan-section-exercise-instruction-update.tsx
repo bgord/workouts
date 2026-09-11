@@ -60,6 +60,7 @@ export function PlanSectionExerciseInstructionUpdate(props: {
         data-cursor="pointer"
         data-fs="sm"
         data-hover-color="neutral-0"
+        data-shrink="0"
         onClick={update.enable}
         title={t("plan.section.exercise.update.cta")}
         type="button"
@@ -74,6 +75,7 @@ export function PlanSectionExerciseInstructionUpdate(props: {
     <form
       data-cross="end"
       data-gap="1"
+      data-md-cross="start"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...update.props.target}
@@ -111,13 +113,22 @@ export function PlanSectionExerciseInstructionUpdate(props: {
           {...bg.Rhythm().times(5).style.width}
         />
 
-        <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
-          {t("app.save")}
-        </button>
+        <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+          <button
+            className="c-button"
+            data-md-grow="1"
+            data-variant="secondary"
+            disabled={mutation.isLoading}
+            type="submit"
+          >
+            {t("app.save")}
+          </button>
 
-        <ButtonCancel
-          onClick={bg.exec([sets.clear, repsMin.clear, repsMax.clear, mutation.reset, update.disable])}
-        />
+          <ButtonCancel
+            data-md-grow="1"
+            onClick={bg.exec([sets.clear, repsMin.clear, repsMax.clear, mutation.reset, update.disable])}
+          />
+        </div>
       </div>
 
       {mutation.isError && (

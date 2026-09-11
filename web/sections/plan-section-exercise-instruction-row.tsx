@@ -39,6 +39,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-gap="3"
       data-py="2"
       data-stack="x"
+      data-wrap={update.on ? undefined : "nowrap"}
     >
       <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
         {props.position}
@@ -46,6 +47,7 @@ export function PlanSectionExerciseInstructionRow(props: {
 
       <Link
         aria-hidden
+        data-shrink="0"
         params={{ exerciseId: exerciseInstruction.exercise.id }}
         tabIndex={-1}
         to="/catalog/exercise/$exerciseId"
@@ -63,7 +65,14 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {change.off && (
-        <div data-cross="center" data-gap="1" data-grow="1" data-stack="x">
+        <div
+          data-cross="center"
+          data-gap="1"
+          data-grow="1"
+          data-stack="x"
+          data-transform="truncate"
+          data-wrap="nowrap"
+        >
           <Link
             data-color="neutral-100"
             data-fs="sm"
@@ -89,13 +98,21 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {change.off && !controls && (
-        <div data-color="neutral-400" data-fs="sm" data-ml="auto">
+        <div data-color="neutral-400" data-fs="sm" data-ml="auto" data-shrink="0">
           <SetsReps {...exerciseInstruction} />
         </div>
       )}
 
       {change.off && controls && (
-        <div data-cross="center" data-gap="2" data-ml="auto" data-stack="x">
+        <div
+          data-cross="center"
+          data-gap="2"
+          data-md-width={update.on ? "100%" : undefined}
+          data-ml="auto"
+          data-shrink="0"
+          data-stack="x"
+          data-wrap="nowrap"
+        >
           {actions.update.available && (
             <PlanSectionExerciseInstructionUpdate
               exerciseInstruction={exerciseInstruction}

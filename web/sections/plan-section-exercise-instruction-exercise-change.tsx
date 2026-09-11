@@ -72,7 +72,11 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
       onSubmit={mutation.handleSubmit}
       {...change.props.target}
     >
-      <Select aria-label={t("plan.section.exercise.add.exercise.label")} {...exerciseId.input.props}>
+      <Select
+        aria-label={t("plan.section.exercise.add.exercise.label")}
+        data-md-width="100%"
+        {...exerciseId.input.props}
+      >
         {exercises.data.map((exercise) => (
           <option key={exercise.id} value={exercise.id}>
             {exercise.name}
@@ -80,11 +84,22 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
         ))}
       </Select>
 
-      <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
-        {t("app.save")}
-      </button>
+      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+        <button
+          className="c-button"
+          data-md-grow="1"
+          data-variant="secondary"
+          disabled={mutation.isLoading}
+          type="submit"
+        >
+          {t("app.save")}
+        </button>
 
-      <ButtonCancel onClick={bg.exec([exerciseId.clear, mutation.reset, change.disable])} />
+        <ButtonCancel
+          data-md-grow="1"
+          onClick={bg.exec([exerciseId.clear, mutation.reset, change.disable])}
+        />
+      </div>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

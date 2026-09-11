@@ -34,7 +34,7 @@ export function Plan() {
 
   return (
     <Main>
-      <div data-cross="center" data-gap="2" data-stack="x">
+      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
         <Link
           aria-label={t("app.back")}
           className="c-button"
