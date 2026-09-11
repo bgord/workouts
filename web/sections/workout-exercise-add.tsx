@@ -42,10 +42,12 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
 
   if (add.off) {
     return (
-      <div data-cross="center" data-gap="3" data-mr="auto" data-stack="x">
+      <div data-cross="center" data-gap="3" data-stack="x">
+        <ActionHint action={props.action} />
+
         <button
           className="c-button"
-          data-variant="ghost"
+          data-variant="secondary"
           disabled={!props.action.enabled}
           onClick={add.enable}
           type="button"
@@ -54,14 +56,20 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
           <Plus data-size="sm" />
           {t("workout.exercise.add.cta")}
         </button>
-
-        <ActionHint action={props.action} />
       </div>
     );
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...add.props.target}>
+    <form
+      className="c-card"
+      data-gap="2"
+      data-p="4"
+      data-stack="y"
+      data-width="100%"
+      onSubmit={mutation.handleSubmit}
+      {...add.props.target}
+    >
       <div data-cross="end" data-gap="3" data-stack="x">
         <div data-cross="start" data-gap="1" data-md-width="100%" data-stack="y">
           <label className="c-label" {...exerciseId.label.props}>
