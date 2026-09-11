@@ -1,5 +1,5 @@
 import { useScrollLock, useToggle, useTranslations, useWindowDimensions } from "@bgord/ui";
-import { createLink, Link } from "@tanstack/react-router";
+import { createLink, Link, type LinkComponent } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useEffect } from "react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
@@ -184,16 +184,28 @@ function NavigationMobile() {
   );
 }
 
-const NavigationLink = createLink((props: React.JSX.IntrinsicElements["a"]) => (
-  <a
-    data-color="neutral-300"
-    data-fs="sm"
-    data-fw="medium"
-    data-hover-color="brand-300"
-    data-ls="wide"
+function NavigationAnchor(props: React.JSX.IntrinsicElements["a"]) {
+  return (
+    <a
+      data-color="neutral-300"
+      data-fs="sm"
+      data-fw="medium"
+      data-hover-color="brand-300"
+      data-ls="wide"
+      {...props}
+    />
+  );
+}
+
+const NavigationAnchorLink = createLink(NavigationAnchor);
+
+const NavigationLink: LinkComponent<typeof NavigationAnchor> = (props) => (
+  <NavigationAnchorLink
+    activeOptions={{ exact: false, includeSearch: false }}
+    activeProps={{ "data-color": "neutral-0" }}
     {...props}
   />
-));
+);
 
 function NavigationShell() {
   return (
