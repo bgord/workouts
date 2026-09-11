@@ -37,7 +37,14 @@ export function Plans() {
       {plans.actions.create.enabled && planCreate.on && <PlanCreate />}
 
       {empty && (
-        <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y">
+        <div
+          className="c-card"
+          data-cross="center"
+          data-gap="1"
+          data-py="8"
+          data-stack="y"
+          data-variant="flat"
+        >
           <ClipboardList data-color="neutral-600" data-size="md" />
 
           <div data-color="neutral-300" data-fs="sm" data-mt="2">

@@ -29,7 +29,7 @@ export function WorkoutHistory() {
 
   if (workouts.data.length === 0) {
     return (
-      <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y">
+      <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y" data-variant="flat">
         <CalendarOff data-color="neutral-600" data-size="md" />
 
         <div data-color="neutral-300" data-fs="sm" data-mt="2">
