@@ -151,6 +151,7 @@ modules/
 │   ├── command-handlers
 │   │   ├── handlePlanArchiveCommand.ts
 │   │   ├── handlePlanCreateCommand.ts
+│   │   ├── handlePlanDescriptionSetCommand.ts
 │   │   ├── handlePlanEditingEnableCommand.ts
 │   │   ├── handlePlanFinalizeCommand.ts
 │   │   ├── handlePlanRemoveCommand.ts
@@ -166,6 +167,7 @@ modules/
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_CREATE_COMMAND.ts
+│   │   ├── PLAN_DESCRIPTION_SET_COMMAND.ts
 │   │   ├── PLAN_EDITING_ENABLE_COMMAND.ts
 │   │   ├── PLAN_FINALIZE_COMMAND.ts
 │   │   ├── PLAN_REMOVE_COMMAND.ts
@@ -181,6 +183,7 @@ modules/
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
 │   │   ├── PLAN_CREATED_EVENT.ts
+│   │   ├── PLAN_DESCRIPTION_SET_EVENT.ts
 │   │   ├── PLAN_EDITING_ENABLED_EVENT.ts
 │   │   ├── PLAN_FINALIZED_EVENT.ts
 │   │   ├── PLAN_REMOVED_EVENT.ts
@@ -195,6 +198,7 @@ modules/
 │   │   └── PLAN_SECTION_RENAMED_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-belongs-to-user.ts
+│   │   ├── plan-description-has-changed.ts
 │   │   ├── plan-exists.ts
 │   │   ├── plan-has-no-empty-sections.ts
 │   │   ├── plan-has-sections.ts
@@ -226,6 +230,8 @@ modules/
 │   └── value-objects
 │       ├── exercise-instruction-id.ts
 │       ├── exercise-instruction.ts
+│       ├── plan-description.ts
+│       ├── plan-description.validation.ts
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
@@ -394,6 +400,7 @@ app/
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create.ts
+│   │   ├── plan-description-set.ts
 │   │   ├── plan-editing-enable.ts
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-get.ts
@@ -435,6 +442,7 @@ app/
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
+    ├── plan-description-form.ts
     ├── plan-section-create-form.ts
     ├── plan-section-exercise-instruction-add-form.ts
     ├── workout-exercise-add-form.ts
