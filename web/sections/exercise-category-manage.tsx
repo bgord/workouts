@@ -50,6 +50,7 @@ export function ExerciseCategoryManage() {
               data-px="2"
               data-py="1-5"
               data-stack="x"
+              data-wrap="nowrap"
               key={category.id}
             >
               {exerciseCategories.actions.rename.available ? (

@@ -26,6 +26,7 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
         className="c-button"
         data-color="neutral-500"
         data-hover-color="danger-400"
+        data-shrink="0"
         data-variant="icon"
         onClick={dialog.enable}
         title={t("exercise.category.delete.title", { name: props.name })}

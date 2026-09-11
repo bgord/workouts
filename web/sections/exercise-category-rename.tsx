@@ -45,21 +45,35 @@ export function ExerciseCategoryRename(props: ExerciseCategory) {
   }
 
   return (
-    <form data-gap="2" data-grow="1" data-stack="y" onSubmit={mutation.handleSubmit} {...rename.props.target}>
-      <div data-cross="center" data-gap="1" data-stack="x">
+    <form
+      data-gap="2"
+      data-grow="1"
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...bg.Rhythm().times(0).style.minWidth}
+      {...rename.props.target}
+    >
+      <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("exercise.category.rename.label")}
           className="c-input"
           data-grow="1"
+          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
 
-        <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
+        <button
+          className="c-button"
+          data-shrink="0"
+          data-variant="secondary"
+          disabled={mutation.isLoading}
+          type="submit"
+        >
           {t("app.save")}
         </button>
 
-        <ButtonCancel onClick={bg.exec([name.clear, mutation.reset, rename.disable])} />
+        <ButtonCancel data-shrink="0" onClick={bg.exec([name.clear, mutation.reset, rename.disable])} />
       </div>
 
       {mutation.isError && (
