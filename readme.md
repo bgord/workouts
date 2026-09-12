@@ -150,10 +150,12 @@ modules/
 │   │   ├── handleBodyWeightMeasureCommand.ts
 │   │   ├── handleBodyWeightMeasurementCorrectCommand.ts
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
+│   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   ├── commands
 │   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
+│   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   ├── events
 │   │   ├── BODY_WEIGHT_MEASURED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
@@ -163,14 +165,19 @@ modules/
 │   │   ├── body-weight-measurement-belongs-to-user.ts
 │   │   ├── body-weight-measurement-exists.ts
 │   │   ├── body-weight-measurement-has-changed.ts
+│   ├── ports
+│   │   ├── csv-parser.ts
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
 │   │   └── list-body-weight-measurements.ts
 │   ├── services
 │   │   ├── body-weight-measurement-export-file-csv.ts
+│   │   ├── body-weight-measurement-import-file-csv.ts
 │   └── value-objects
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
+│       ├── body-weight-measurement-import-max-size.ts
+│       ├── body-weight-measurement-import-mime-registry.ts
 │       ├── body-weight-measurement.ts
 │       ├── body-weight.ts
 ├── plans
@@ -433,6 +440,7 @@ app/
 │   │   ├── body-weight-measure.ts
 │   │   ├── body-weight-measurement-correct.ts
 │   │   ├── body-weight-measurement-export.ts
+│   │   ├── body-weight-measurement-import.ts
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
 │   ├── plans
@@ -527,6 +535,7 @@ infra/
 │   ├── system
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
+│   │   ├── csv-parser.adapter.ts
 │   │   ├── csv-stringifier.adapter.ts
 │   │   ├── disk-space-checker.adapter.ts
 │   │   ├── file-cleaner.adapter.ts
