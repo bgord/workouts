@@ -163,8 +163,9 @@ modules/
 │   │   ├── body-weight-entry-exists.ts
 │   │   ├── body-weight-entry-has-changed.ts
 │   ├── queries
-│   │   ├── get-body-weight-entry.ts
-│   │   └── list-body-weight-entries.ts
+│   │   ├── get-body-weight-measurement.ts
+│   │   ├── list-body-weight-entries.ts
+│   │   └── list-body-weight-measurements.ts
 │   └── value-objects
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
