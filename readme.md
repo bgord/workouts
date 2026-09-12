@@ -151,9 +151,9 @@ modules/
 │   │   ├── handleBodyWeightEntryAdjustCommand.ts
 │   │   ├── handleBodyWeightEntryRemoveCommand.ts
 │   ├── commands
-│   │   ├── BODY_WEIGHT_ENTRY_ADD_COMMAND.ts
-│   │   ├── BODY_WEIGHT_ENTRY_ADJUST_COMMAND.ts
-│   │   ├── BODY_WEIGHT_ENTRY_REMOVE_COMMAND.ts
+│   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
+│   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
+│   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
 │   ├── events
 │   │   ├── BODY_WEIGHT_MEASURED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
