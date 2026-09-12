@@ -165,6 +165,8 @@ modules/
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
 │   │   └── list-body-weight-measurements.ts
+│   ├── services
+│   │   ├── body-weight-measurement-export-file-csv.ts
 │   └── value-objects
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
@@ -429,6 +431,7 @@ app/
 │   ├── measurements
 │   │   ├── body-weight-measure.ts
 │   │   ├── body-weight-measurement-correct.ts
+│   │   ├── body-weight-measurement-export.ts
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
 │   ├── plans
