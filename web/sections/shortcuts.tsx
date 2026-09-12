@@ -22,6 +22,7 @@ export function Shortcuts() {
     [ShortcutDefinitions.GoToCatalog.trigger]: () =>
       navigate({ search: ExerciseCatalogFilters.default, to: "/catalog" }),
     [ShortcutDefinitions.GoToPlans.trigger]: () => navigate({ to: "/plans" }),
+    [ShortcutDefinitions.GoToMeasurements.trigger]: () => navigate({ to: "/measurements" }),
     [ShortcutDefinitions.ToggleHelp.trigger]: help.toggle,
     [ShortcutDefinitions.CloseHelp.trigger]: help.disable,
   });
@@ -94,6 +95,10 @@ export function Shortcuts() {
 
         {pathname === "/workouts" && (
           <ShortcutGroup header={t("app.workouts")} shortcuts={ShortcutDefinitions.WorkoutsGroup} />
+        )}
+
+        {pathname === "/measurements" && (
+          <ShortcutGroup header={t("app.measurements")} shortcuts={ShortcutDefinitions.MeasurementsGroup} />
         )}
 
         <ShortcutGroup header={t("app.shortcuts.global")} shortcuts={ShortcutDefinitions.GlobalGroup} />

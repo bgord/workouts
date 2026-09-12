@@ -6,6 +6,7 @@ export const GoToDashboard: ShortcutType = { keys: "g d", trigger: "g d", label:
 export const GoToWorkouts: ShortcutType = { keys: "g w", trigger: "g w", label: "app.workouts" };
 export const GoToCatalog: ShortcutType = { keys: "g c", trigger: "g c", label: "app.catalog" };
 export const GoToPlans: ShortcutType = { keys: "g p", trigger: "g p", label: "app.plans" };
+export const GoToMeasurements: ShortcutType = { keys: "g m", trigger: "g m", label: "app.measurements" };
 export const ToggleHelp: ShortcutType = { keys: "?", trigger: "[Shift]+?", label: "app.shortcuts.help" };
 export const CloseHelp: ShortcutType = { keys: "Esc", trigger: "Escape", label: "app.shortcuts.close" };
 
@@ -33,7 +34,19 @@ export const OpenExercise: ShortcutType = {
   label: "exercise.catalog.shortcuts.open",
 };
 
-export const GlobalGroup: Array<ShortcutType> = [GoToDashboard, GoToCatalog, GoToPlans, ToggleHelp];
+export const LogBodyWeight: ShortcutType = {
+  keys: "n",
+  trigger: "n",
+  label: "measurements.body_weight.shortcuts.log",
+};
+
+export const GlobalGroup: Array<ShortcutType> = [
+  GoToDashboard,
+  GoToCatalog,
+  GoToPlans,
+  GoToMeasurements,
+  ToggleHelp,
+];
 
 export const DashboardGroup: Array<ShortcutType> = [OpenUpcomingWorkout];
 
