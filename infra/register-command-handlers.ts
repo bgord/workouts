@@ -310,4 +310,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetBodyWeightMeasurementQuery: Adapters.Measurements.GetBodyWeightMeasurementQuery,
     }),
   );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_WEIGHT_REFERENCE_SET_COMMAND,
+    MeasurementsCommandHandlers.handleBodyWeightReferenceSetCommand({
+      ...deps,
+      GetBodyWeightMeasurementQuery: Adapters.Measurements.GetBodyWeightMeasurementQuery,
+    }),
+  );
 }

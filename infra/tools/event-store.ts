@@ -9,6 +9,7 @@ import type {
   BodyWeightMeasuredEventType,
   BodyWeightMeasurementCorrectedEventType,
   BodyWeightMeasurementRemovedEventType,
+  BodyWeightReferenceSetEventType,
 } from "+measurements/events";
 import type { PlanEventType } from "+plans/aggregates";
 import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
@@ -32,7 +33,8 @@ export type AcceptedEventType =
   | ProfileAvatarRemovedEventType
   | BodyWeightMeasuredEventType
   | BodyWeightMeasurementCorrectedEventType
-  | BodyWeightMeasurementRemovedEventType;
+  | BodyWeightMeasurementRemovedEventType
+  | BodyWeightReferenceSetEventType;
 
 export function createEventStore(
   Env: EnvironmentResultType,

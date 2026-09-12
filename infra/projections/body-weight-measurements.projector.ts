@@ -9,6 +9,7 @@ type Dependencies = {
     | measurements.Events.BodyWeightMeasuredEventType
     | measurements.Events.BodyWeightMeasurementCorrectedEventType
     | measurements.Events.BodyWeightMeasurementRemovedEventType
+    | measurements.Events.BodyWeightReferenceSetEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -26,6 +27,10 @@ export class BodyWeightMeasurementsProjector {
     deps.EventBus.on(
       measurements.Events.BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT,
       deps.EventHandler.handle(this.onBodyWeightMeasurementRemovedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      measurements.Events.BODY_WEIGHT_REFERENCE_SET_EVENT,
+      deps.EventHandler.handle(this.onBodyWeightReferenceSetEvent.bind(this)),
     );
   }
 
@@ -55,5 +60,17 @@ export class BodyWeightMeasurementsProjector {
     await db
       .delete(Schema.bodyWeightMeasurements)
       .where(eq(Schema.bodyWeightMeasurements.id, event.payload.id));
+  }
+
+  async onBodyWeightReferenceSetEvent(event: measurements.Events.BodyWeightReferenceSetEventType) {
+    await db
+      .update(Schema.bodyWeightMeasurements)
+      .set({ reference: false })
+      .where(eq(Schema.bodyWeightMeasurements.userId, event.payload.userId));
+
+    await db
+      .update(Schema.bodyWeightMeasurements)
+      .set({ reference: true })
+      .where(eq(Schema.bodyWeightMeasurements.id, event.payload.measurementId));
   }
 }

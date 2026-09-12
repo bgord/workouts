@@ -1,0 +1,1 @@
+ALTER TABLE `bodyWeightMeasurements` ADD `reference` integer DEFAULT false NOT NULL;
