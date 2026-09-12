@@ -561,7 +561,7 @@ infra/
 │   └── home.spec.ts
 ├── env.ts
 ├── projections
-│   ├── body-weight-entries.projector.ts
+│   ├── body-weight-measurements.projector.ts
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts
 │   ├── exercises.projector.ts

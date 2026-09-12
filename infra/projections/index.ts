@@ -1,3 +1,4 @@
+export * from "./body-weight-measurements.projector";
 export * from "./exercise-categories.projector";
 export * from "./exercise-category-assignments.projector";
 export * from "./exercises.projector";

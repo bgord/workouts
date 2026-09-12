@@ -306,7 +306,7 @@ export const bodyWeightMeasurements = sqliteTable(
   {
     id: identifier<BodyWeightMeasurementIdType>(),
     weight: integer("weight", { mode: "number" }).notNull().$type<BodyWeightType>(),
-    recordedOn: text("recordedOn").notNull().$type<BodyWeightMeasuredOnType>(),
+    measuredOn: text("measuredOn").notNull().$type<BodyWeightMeasuredOnType>(),
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
     createdAt: timestamp("createdAt").notNull(),
     updatedAt: timestamp("updatedAt").notNull(),
