@@ -50,6 +50,7 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
 
   const first = points[0]!;
   const last = points.at(-1)!;
+  const reference = points.find((point) => point.measurement.reference);
   const line = points.map((point) => `${point.x},${point.y}`).join(" ");
 
   return (
@@ -91,6 +92,15 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
             {DateFormat.plainDay(language, Temporal.PlainDate.from(last.measurement.measuredOn))}
           </text>
         </g>
+
+        {reference && (
+          <g data-color="brand-300" stroke="currentColor" strokeDasharray="4 4">
+            <title>{t("measurements.body_weight.stats.since_reference")}</title>
+
+            <line x1={PLOT.left} x2={PLOT.right} y1={reference.y} y2={reference.y} />
+            <line x1={reference.x} x2={reference.x} y1={PLOT.top} y2={PLOT.bottom} />
+          </g>
+        )}
 
         <polygon
           data-color="brand-500"
