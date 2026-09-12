@@ -409,11 +409,6 @@ modules/
 ```
 app/
 ├── http
-│   ├── body-weight
-│   │   ├── body-weight-entry-add.ts
-│   │   ├── body-weight-entry-adjust.ts
-│   │   ├── body-weight-entry-list.ts
-│   │   ├── body-weight-entry-remove.ts
 │   ├── error-handler.ts
 │   ├── exercises
 │   │   ├── exercise-add.ts
@@ -431,6 +426,11 @@ app/
 │   │   ├── exercise-search.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
+│   ├── measurements
+│   │   ├── body-weight-measure.ts
+│   │   ├── body-weight-measurement-correct.ts
+│   │   ├── body-weight-measurement-list.ts
+│   │   ├── body-weight-measurement-remove.ts
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create.ts

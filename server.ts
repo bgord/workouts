@@ -337,6 +337,35 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   server.route("/workouts", workouts);
 
+  // Body weight =================
+  const measurements = new Hono<infra.Config>();
+
+  measurements.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  measurements.get(
+    "/body-weight/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementList(Adapters.Measurements)),
+  );
+  measurements.post(
+    "/body-weight/measure",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasure(deps)),
+  );
+  measurements.patch(
+    "/body-weight/measurement/:bodyWeightMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementCorrect(deps)),
+  );
+  measurements.delete(
+    "/body-weight/measurement/:bodyWeightMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementRemove(deps)),
+  );
+
+  server.route("/measurements", measurements);
+
   // Probes =================
   server.get("/liveness", ...new bg.LivenessHonoHandler().handle());
   server.get(
