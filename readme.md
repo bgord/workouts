@@ -166,8 +166,8 @@ modules/
 │   │   ├── get-body-weight-entry.ts
 │   │   └── list-body-weight-entries.ts
 │   └── value-objects
-│       ├── body-weight-entry-id.ts
 │       ├── body-weight-entry.ts
+│       ├── body-weight-measurement-id.ts
 │       ├── body-weight-recorded-on.ts
 │       ├── body-weight.ts
 ├── plans
@@ -494,9 +494,6 @@ infra/
 │   ├── auth
 │   │   ├── user-contact.adapter.ts
 │   │   └── user-directory.adapter.ts
-│   ├── body-weight
-│   │   ├── get-body-weight-entry.adapter.ts
-│   │   └── list-body-weight-entries.adapter.ts
 │   ├── exercises
 │   │   ├── get-exercise-category-name-count.adapter.ts
 │   │   ├── get-exercise-category.adapter.ts
@@ -510,6 +507,9 @@ infra/
 │   │   ├── list-exercises.adapter.ts
 │   │   ├── search-exercise-categories.adapter.ts
 │   │   └── search-exercises.adapter.ts
+│   ├── measurements
+│   │   ├── get-body-weight-entry.adapter.ts
+│   │   └── list-body-weight-entries.adapter.ts
 │   ├── plans
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
