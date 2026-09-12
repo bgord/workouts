@@ -155,9 +155,9 @@ modules/
 │   │   ├── BODY_WEIGHT_ENTRY_ADJUST_COMMAND.ts
 │   │   ├── BODY_WEIGHT_ENTRY_REMOVE_COMMAND.ts
 │   ├── events
-│   │   ├── BODY_WEIGHT_ENTRY_ADDED_EVENT.ts
 │   │   ├── BODY_WEIGHT_ENTRY_ADJUSTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_ENTRY_REMOVED_EVENT.ts
+│   │   ├── BODY_WEIGHT_MEASURED_EVENT.ts
 │   ├── invariants
 │   │   ├── body-weight-entry-belongs-to-user.ts
 │   │   ├── body-weight-entry-exists.ts
