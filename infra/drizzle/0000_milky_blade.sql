@@ -20,6 +20,7 @@ CREATE TABLE `bodyWeightMeasurements` (
 	`id` text(36) PRIMARY KEY NOT NULL,
 	`weight` integer NOT NULL,
 	`measuredOn` text NOT NULL,
+	`reference` integer DEFAULT false NOT NULL,
 	`userId` text(36) NOT NULL,
 	`createdAt` integer NOT NULL,
 	`updatedAt` integer NOT NULL
