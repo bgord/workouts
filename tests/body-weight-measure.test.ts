@@ -6,6 +6,7 @@ import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
+import * as testcases from "./testcases";
 
 const url = "/api/measurements/body-weight/measure";
 
@@ -73,6 +74,23 @@ describe(`POST ${url}`, async () => {
 
     expect(response.status).toEqual(400);
     expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
+  });
+
+  test("BodyWeightMeasuredOnIsNotInFuture", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ weight: mocks.bodyWeight, measuredOn: mocks.futureBodyWeightMeasuredOn }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "body.weight.measured.on.is.not.in.future");
+    expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("happy path", async () => {

@@ -1216,7 +1216,8 @@ export const bodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromK
 export const anotherBodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(81).get());
 
 export const bodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-01");
-export const anotherBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-02");
+export const anotherBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2024-12-31");
+export const futureBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-02");
 
 export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   id: bodyWeightMeasurementId,

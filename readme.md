@@ -159,6 +159,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   ├── invariants
+│   │   ├── body-weight-measured-on-is-not-in-future.ts
 │   │   ├── body-weight-measurement-belongs-to-user.ts
 │   │   ├── body-weight-measurement-exists.ts
 │   │   ├── body-weight-measurement-has-changed.ts
