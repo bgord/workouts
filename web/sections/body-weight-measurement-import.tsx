@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Download } from "lucide-react";
 import { ButtonClear } from "../components";
 import { measurementsRoute } from "../router";
 
@@ -34,7 +35,7 @@ export function BodyWeightMeasurementImport(props: { toggle: bg.UseToggleReturnT
   return (
     <form
       className="c-card"
-      data-gap="3"
+      data-gap="4"
       data-md-p="2-5"
       data-stack="y"
       encType="multipart/form-data"
@@ -89,13 +90,18 @@ export function BodyWeightMeasurementImport(props: { toggle: bg.UseToggleReturnT
 
       <a
         className="c-link"
+        data-color="neutral-300"
         data-fs="xs"
+        data-gap="2"
+        data-ml="1"
         data-self="start"
+        data-stack="x"
         download
         href="/public/body-weight-measurements-template.csv"
         rel="noopener"
         target="_blank"
       >
+        <Download data-size="sm" />
         {t("measurements.body_weight.import.template.cta")}
       </a>
 

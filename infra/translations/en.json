@@ -144,7 +144,7 @@
   "measurements.body_weight.import.select.cta": "Select CSV",
   "measurements.body_weight.import.selected": "Selected: {{name}}",
   "measurements.body_weight.import.cta": "Import",
-  "measurements.body_weight.import.template.cta": "Download the CSV template",
+  "measurements.body_weight.import.template.cta": "CSV template",
   "measurements.body_weight.import.error": "Could not import the measurements",
   "measurements.body_weight.empty": "No measurements logged yet",
   "measurements.body_weight.empty.hint": "Log your body weight to track progress here",
