@@ -7,6 +7,7 @@ import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/wo
 import { ActionHint, Main, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
+import { WorkoutCopy } from "../sections/workout-copy";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
@@ -113,14 +114,17 @@ export function Workout() {
 
               <div
                 data-cross="center"
-                data-gap="2"
-                data-md-gap="0"
+                data-gap="0"
                 data-self="start"
                 data-stack="x"
                 data-wrap="nowrap"
                 {...bg.Rhythm().times(3).style.height}
               >
                 <WorkoutStatusBadge data-mr="4" status={workout.data.status} />
+
+                {workout.data.completedAt && (
+                  <WorkoutCopy {...workout.data} completedAt={workout.data.completedAt} />
+                )}
 
                 {workout.actions.start.available && (
                   <WorkoutStart action={workout.actions.start} {...workout.data} />
