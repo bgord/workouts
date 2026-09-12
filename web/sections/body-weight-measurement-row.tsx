@@ -23,22 +23,39 @@ export function BodyWeightMeasurementRow(props: {
       data-bwt={props.index > 0 ? "hairline" : undefined}
       data-cross="center"
       data-gap="3"
+      data-md-gap="1-5"
       data-py="1-5"
       data-stack="x"
       data-wrap="nowrap"
     >
       {edit.off && (
-        <div data-color="neutral-300" data-fs="sm" data-fw="medium" data-grow="1">
+        <button
+          data-color="neutral-300"
+          data-cursor="pointer"
+          data-fs="sm"
+          data-fw="medium"
+          data-grow="1"
+          data-md-fs="xs"
+          data-transform="nowrap"
+          onClick={edit.enable}
+        >
           {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
-        </div>
+        </button>
       )}
 
       {edit.off && (
-        <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+        <button
+          data-color="neutral-100"
+          data-cursor="pointer"
+          data-fs="sm"
+          data-fw="medium"
+          data-transform="nowrap"
+          onClick={edit.enable}
+        >
           {t("measurements.body_weight.value", {
             weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
           })}
-        </div>
+        </button>
       )}
 
       {edit.off && (

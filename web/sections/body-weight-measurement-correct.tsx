@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Pencil, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { measurementsRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
@@ -37,20 +37,7 @@ export function BodyWeightMeasurementCorrect(props: {
     },
   });
 
-  if (edit.off) {
-    return (
-      <button
-        className="c-button"
-        data-variant="ghost"
-        onClick={edit.enable}
-        title={t("measurements.body_weight.correct.title")}
-        type="button"
-        {...edit.props.controller}
-      >
-        <Pencil data-size="sm" />
-      </button>
-    );
-  }
+  if (edit.off) return null;
 
   return (
     <form
