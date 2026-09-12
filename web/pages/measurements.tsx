@@ -1,10 +1,11 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Download, Scale } from "lucide-react";
+import { Download, Scale, Upload } from "lucide-react";
 import { Main } from "../components";
 import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
+  BodyWeightMeasurementImport,
   BodyWeightMeasurementList,
   BodyWeightProgressChart,
   BodyWeightStats,
@@ -13,6 +14,7 @@ import {
 export function Measurements() {
   const t = bg.useTranslations();
   const { measurements } = measurementsRoute.useLoaderData();
+  const bodyWeightImport = bg.useToggle({ name: "body-weight-measurement-import" });
 
   return (
     <Main>
@@ -20,6 +22,17 @@ export function Measurements() {
         <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
           {t("measurements.body_weight.header")}
         </h1>
+
+        <button
+          className="c-button"
+          data-variant="secondary"
+          onClick={bodyWeightImport.toggle}
+          type="button"
+          {...bodyWeightImport.props.controller}
+        >
+          <Upload data-size="sm" />
+          {t("measurements.body_weight.import.toggle.cta")}
+        </button>
 
         {measurements.length > 0 && (
           <a
@@ -35,6 +48,8 @@ export function Measurements() {
           </a>
         )}
       </div>
+
+      {bodyWeightImport.on && <BodyWeightMeasurementImport toggle={bodyWeightImport} />}
 
       <BodyWeightMeasure />
 
