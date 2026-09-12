@@ -1,16 +1,31 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Scale } from "lucide-react";
+import { useRef } from "react";
 import { measurementsRoute } from "../router";
-import { WeightFormat } from "../services/weight-format";
+import * as ShortcutDefinitions from "../services/shortcuts";
+import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 export function BodyWeightMeasure() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { measurements } = measurementsRoute.useLoaderData();
+  const latest = measurements[0];
 
   const today = Temporal.Now.plainDateISO().toString();
   const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
-  const weight = bg.useNumberField({ name: "body-weight" });
+  const weight = bg.useNumberField({
+    name: "body-weight",
+    defaultValue: latest ? WeightFormat.kilograms(latest.weight, BodyWeightDecimals) : undefined,
+  });
+  const weightInput = useRef<HTMLInputElement>(null);
+
+  bg.useShortcuts({
+    [ShortcutDefinitions.LogBodyWeight.trigger]: (event) => {
+      event.preventDefault();
+      weightInput.current?.focus();
+    },
+  });
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -21,8 +36,6 @@ export function BodyWeightMeasure() {
         body: JSON.stringify({ measuredOn: measuredOn.value, weight: WeightFormat.grams(weight.value ?? 0) }),
       }),
     onSuccess: async () => {
-      weight.clear();
-
       await router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true });
     },
   });
@@ -64,7 +77,8 @@ export function BodyWeightMeasure() {
           data-md-width="100%"
           data-variant="transparent"
           min="0"
-          step="0.01"
+          ref={weightInput}
+          step="0.05"
           type="number"
           {...weight.input.props}
         />

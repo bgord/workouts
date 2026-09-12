@@ -53,3 +53,5 @@ export const DashboardGroup: Array<ShortcutType> = [OpenUpcomingWorkout];
 export const WorkoutsGroup: Array<ShortcutType> = [ScheduleWorkout, OpenWorkout];
 
 export const CatalogGroup: Array<ShortcutType> = [SearchExercises, OpenExercise];
+
+export const MeasurementsGroup: Array<ShortcutType> = [LogBodyWeight];

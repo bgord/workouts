@@ -77,7 +77,7 @@ export function BodyWeightMeasurementCorrect(props: {
         className="c-input"
         data-px="2"
         min="0"
-        step="0.01"
+        step="0.05"
         type="number"
         {...weight.input.props}
         {...bg.Rhythm(80).times(1).style.width}

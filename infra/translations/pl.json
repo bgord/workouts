@@ -151,6 +151,7 @@
   "measurements.body_weight.stats.latest": "Ostatni",
   "measurements.body_weight.stats.since_first": "Od pierwszego",
   "measurements.body_weight.stats.count": "Pomiary",
+  "measurements.body_weight.shortcuts.log": "Ustaw kursor na masie",
   "measurements.body_weight.progress": "Postęp",
   "measurements.body_weight.progress.point": "{{date}} — {{weight}} kg",
   "measurements.body_weight.history": "Historia",

@@ -44,6 +44,7 @@ export function Measurements() {
             target="_blank"
           >
             <Download data-size="sm" />
+            {t("measurements.body_weight.export.cta")}
           </a>
         )}
       </div>

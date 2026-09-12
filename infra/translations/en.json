@@ -151,6 +151,7 @@
   "measurements.body_weight.stats.latest": "Latest",
   "measurements.body_weight.stats.since_first": "Since first",
   "measurements.body_weight.stats.count": "Measurements",
+  "measurements.body_weight.shortcuts.log": "Focus the weight input",
   "measurements.body_weight.progress": "Progress",
   "measurements.body_weight.progress.point": "{{date}} — {{weight}} kg",
   "measurements.body_weight.history": "History",
