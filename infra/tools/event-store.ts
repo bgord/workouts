@@ -5,6 +5,11 @@ import type { AccountCreatedEventType, AccountDeletedEventType } from "+auth/eve
 import { db } from "+infra/db";
 import type { EnvironmentResultType } from "+infra/env";
 import * as schema from "+infra/schema";
+import type {
+  BodyWeightMeasuredEventType,
+  BodyWeightMeasurementCorrectedEventType,
+  BodyWeightMeasurementRemovedEventType,
+} from "+measurements/events";
 import type { PlanEventType } from "+plans/aggregates";
 import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
 import type { WorkoutEventType } from "+workouts/aggregates";
@@ -24,7 +29,10 @@ export type AcceptedEventType =
   | WorkoutEventType
   | bg.Preferences.Events.UserLanguageSetEventType
   | ProfileAvatarUpdatedEventType
-  | ProfileAvatarRemovedEventType;
+  | ProfileAvatarRemovedEventType
+  | BodyWeightMeasuredEventType
+  | BodyWeightMeasurementCorrectedEventType
+  | BodyWeightMeasurementRemovedEventType;
 
 export function createEventStore(
   Env: EnvironmentResultType,

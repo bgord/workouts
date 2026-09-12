@@ -3,6 +3,8 @@ import { languages } from "+languages";
 import * as ExercisesCommandHandlers from "+exercises/command-handlers";
 import * as ExercisesCommands from "+exercises/commands";
 import type { BootstrapType } from "+infra/bootstrap";
+import * as MeasurementsCommandHandlers from "+measurements/command-handlers";
+import * as MeasurementsCommands from "+measurements/commands";
 import * as PlansCommandHandlers from "+plans/command-handlers";
 import * as PlansCommands from "+plans/commands";
 import * as PreferencesCommandHandlers from "+preferences/command-handlers";
@@ -282,6 +284,26 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     WorkoutsCommandHandlers.handleWorkoutRescheduleCommand({
       ...deps,
       repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
+
+  // Body weight ============================================================
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_WEIGHT_MEASURE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyWeightMeasureCommand(deps),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND,
+    MeasurementsCommandHandlers.handleBodyWeightMeasurementCorrectCommand({
+      ...deps,
+      GetBodyWeightEntryQuery: Adapters.BodyWeight.GetBodyWeightEntryQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyWeightMeasurementRemoveCommand({
+      ...deps,
+      GetBodyWeightEntryQuery: Adapters.BodyWeight.GetBodyWeightEntryQuery,
     }),
   );
 }

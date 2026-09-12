@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type hono from "hono";
 import * as Exercises from "+exercises";
+import * as Measurements from "+measurements";
 import * as Plans from "+plans";
 import * as Preferences from "+preferences";
 import * as Workouts from "+workouts";
@@ -41,6 +42,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
 ]);
 
 const invariants = new bg.ErrorClassifierInvariantStrategy([
+  Measurements.Invariants,
   Exercises.Invariants,
   Plans.Invariants,
   Preferences.Invariants,
