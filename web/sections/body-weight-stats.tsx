@@ -13,9 +13,10 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
 
   const latest = props.measurements[0];
   const previous = props.measurements[1];
-  const first = props.measurements.at(-1);
+  const reference = props.measurements.find((measurement) => measurement.reference);
+  const baseline = reference ?? props.measurements.at(-1);
 
-  if (!(latest && first)) return null;
+  if (!(latest && baseline)) return null;
 
   return (
     <ul data-gap="3" data-stack="x" data-wrap="wrap">
@@ -85,19 +86,23 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           data-transform="uppercase"
         >
           <TrendingUp data-size="xs" />
-          {t("measurements.body_weight.stats.since_first")}
+          {t(
+            reference
+              ? "measurements.body_weight.stats.since_reference"
+              : "measurements.body_weight.stats.since_first",
+          )}
         </div>
 
         <div data-color="neutral-0" data-fs="xl" data-fw="bold" data-lh="tight">
-          {latest.weight === first.weight ? (
+          {latest.weight === baseline.weight ? (
             t("measurements.body_weight.value", { weight: 0 })
           ) : (
-            <DeltaKg current={latest.weight} decimals={BodyWeightDecimals} previous={first.weight} />
+            <DeltaKg current={latest.weight} decimals={BodyWeightDecimals} previous={baseline.weight} />
           )}
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(first.measuredOn))}
+          {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn))}
         </div>
       </li>
     </ul>

@@ -148,6 +148,8 @@
   "measurements.body_weight.import.error": "Could not import the measurements",
   "measurements.body_weight.empty": "No measurements logged yet",
   "measurements.body_weight.empty.hint": "Log your body weight to track progress here",
+  "measurements.body_weight.reference.title": "Use as the reference point",
+  "measurements.body_weight.stats.since_reference": "Since reference",
   "measurements.body_weight.stats.latest": "Latest",
   "measurements.body_weight.stats.since_first": "Since first",
   "measurements.body_weight.stats.count": "Measurements",

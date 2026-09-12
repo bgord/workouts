@@ -5,6 +5,7 @@ import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
 import { BodyWeightMeasurementRemove } from "./body-weight-measurement-remove";
+import { BodyWeightReferenceSet } from "./body-weight-reference-set";
 
 export function BodyWeightMeasurementRow(props: {
   measurement: BodyWeightMeasurement;
@@ -51,6 +52,8 @@ export function BodyWeightMeasurementRow(props: {
       )}
 
       <div data-grow={edit.on ? "1" : undefined} data-stack="x">
+        {edit.off && <BodyWeightReferenceSet measurement={props.measurement} />}
+
         <BodyWeightMeasurementCorrect measurement={props.measurement} toggle={edit} />
 
         {edit.off && <BodyWeightMeasurementRemove measurement={props.measurement} />}

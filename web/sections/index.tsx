@@ -5,6 +5,7 @@ export * from "./body-weight-measurement-list";
 export * from "./body-weight-measurement-remove";
 export * from "./body-weight-measurement-row";
 export * from "./body-weight-progress-chart";
+export * from "./body-weight-reference-set";
 export * from "./body-weight-stats";
 export * from "./exercise-add";
 export * from "./exercise-catalog";

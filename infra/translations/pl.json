@@ -148,6 +148,8 @@
   "measurements.body_weight.import.error": "Nie udało się zaimportować pomiarów",
   "measurements.body_weight.empty": "Brak zapisanych pomiarów",
   "measurements.body_weight.empty.hint": "Zapisz masę ciała, aby śledzić tu postępy",
+  "measurements.body_weight.reference.title": "Ustaw jako punkt odniesienia",
+  "measurements.body_weight.stats.since_reference": "Od punktu odniesienia",
   "measurements.body_weight.stats.latest": "Ostatni",
   "measurements.body_weight.stats.since_first": "Od pierwszego",
   "measurements.body_weight.stats.count": "Pomiary",
