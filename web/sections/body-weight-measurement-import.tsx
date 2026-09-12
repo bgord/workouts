@@ -87,9 +87,17 @@ export function BodyWeightMeasurementImport(props: { toggle: bg.UseToggleReturnT
         </div>
       </div>
 
-      <div data-color="neutral-400" data-fs="xs">
-        {t("measurements.body_weight.import.hint")}
-      </div>
+      <a
+        className="c-link"
+        data-fs="xs"
+        data-self="start"
+        download
+        href="/public/body-weight-measurements-template.csv"
+        rel="noopener"
+        target="_blank"
+      >
+        {t("measurements.body_weight.import.template.cta")}
+      </a>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

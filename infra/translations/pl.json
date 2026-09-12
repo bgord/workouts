@@ -144,7 +144,7 @@
   "measurements.body_weight.import.select.cta": "Wybierz CSV",
   "measurements.body_weight.import.selected": "Wybrano: {{name}}",
   "measurements.body_weight.import.cta": "Importuj",
-  "measurements.body_weight.import.hint": "Plik CSV z kolumnami id, weight (gramy) i measuredOn, jak w eksporcie",
+  "measurements.body_weight.import.template.cta": "Pobierz szablon CSV",
   "measurements.body_weight.import.error": "Nie udało się zaimportować pomiarów",
   "measurements.body_weight.empty": "Brak zapisanych pomiarów",
   "measurements.body_weight.empty.hint": "Zapisz masę ciała, aby śledzić tu postępy",
