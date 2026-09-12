@@ -1,32 +1,35 @@
 import * as bg from "@bgord/bun";
 import type * as Measurements from "+measurements";
 import { BodyWeightMeasurementCorrectedEvent } from "../events/BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT";
-import { BodyWeightEntryBelongsToUser } from "../invariants/body-weight-entry-belongs-to-user";
-import { BodyWeightEntryExists } from "../invariants/body-weight-entry-exists";
-import { BodyWeightEntryHasChanged } from "../invariants/body-weight-entry-has-changed";
+import { BodyWeightMeasurementBelongsToUser } from "../invariants/body-weight-measurement-belongs-to-user";
+import { BodyWeightMeasurementExists } from "../invariants/body-weight-measurement-exists";
+import { BodyWeightMeasurementHasChanged } from "../invariants/body-weight-measurement-has-changed";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Measurements.Events.BodyWeightMeasurementCorrectedEventType>;
-  GetBodyWeightEntryQuery: Measurements.Queries.GetBodyWeightEntry;
+  GetBodyWeightMeasurementQuery: Measurements.Queries.GetBodyWeightMeasurement;
 };
 
 export const handleBodyWeightMeasurementCorrectCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyWeightMeasurementCorrectCommandType) => {
-    const entry = await deps.GetBodyWeightEntryQuery.execute(command.payload.id);
+    const measurement = await deps.GetBodyWeightMeasurementQuery.execute(command.payload.id);
 
-    BodyWeightEntryExists.enforce({ entry });
-    BodyWeightEntryBelongsToUser.enforce({ userId: entry!.userId, requesterId: command.payload.requesterId });
-    BodyWeightEntryHasChanged.enforce({
-      current: entry!,
+    BodyWeightMeasurementExists.enforce({ measurement });
+    BodyWeightMeasurementBelongsToUser.enforce({
+      userId: measurement!.userId,
+      requesterId: command.payload.requesterId,
+    });
+    BodyWeightMeasurementHasChanged.enforce({
+      current: measurement!,
       incoming: { weight: command.payload.weight, measuredOn: command.payload.measuredOn },
     });
 
     const event = bg.event(
       BodyWeightMeasurementCorrectedEvent,
-      `body_weight_entry_${command.payload.id}`,
+      `body_weight_measurement_${command.payload.id}`,
       {
         id: command.payload.id,
         weight: command.payload.weight,

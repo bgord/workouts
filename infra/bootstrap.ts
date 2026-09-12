@@ -1,5 +1,6 @@
 import { createAuthAdapters } from "+infra/adapters/auth";
 import { createExercisesAdapters } from "+infra/adapters/exercises";
+import { createMeasurementsAdapters } from "+infra/adapters/measurements";
 import { createPlansAdapters } from "+infra/adapters/plans";
 import { createPreferencesAdapters } from "+infra/adapters/preferences";
 import { createSystemAdapters } from "+infra/adapters/system";
@@ -19,10 +20,11 @@ export async function bootstrap() {
   const Exercises = createExercisesAdapters();
   const Plans = createPlansAdapters({ ...System, ...Tools });
   const Workouts = createWorkoutsAdapters({ ...System, ...Tools });
+  const Measurements = createMeasurementsAdapters();
 
   return {
     Env,
-    Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts },
+    Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts, Measurements },
     Tools: { ...Tools },
   };
 }

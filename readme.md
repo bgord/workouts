@@ -508,8 +508,8 @@ infra/
 │   │   ├── search-exercise-categories.adapter.ts
 │   │   └── search-exercises.adapter.ts
 │   ├── measurements
-│   │   ├── get-body-weight-entry.adapter.ts
-│   │   └── list-body-weight-entries.adapter.ts
+│   │   ├── get-body-weight-measurement.adapter.ts
+│   │   └── list-body-weight-measurements.adapter.ts
 │   ├── plans
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
