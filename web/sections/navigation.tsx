@@ -1,7 +1,6 @@
-import { useScrollLock, useToggle, useTranslations, useWindowDimensions } from "@bgord/ui";
-import { createLink, Link, type LinkComponent } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
-import { useEffect } from "react";
+import { useTranslations, useWindowDimensions } from "@bgord/ui";
+import { createLink, type LinkComponent } from "@tanstack/react-router";
+import { ClipboardList, Dumbbell, LogOut, Scale, Tags } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { Avatar, AvatarSize, Logo } from "../components";
@@ -10,7 +9,7 @@ export function Navigation() {
   const { width } = useWindowDimensions();
 
   if (!width) return <NavigationShell />; // Don't SSR navigation
-  if (width <= 768) return <NavigationMobile />;
+  if (width <= 768) return <NavigationMobileDrawer />;
   return <NavigationDesktop />;
 }
 
@@ -68,143 +67,57 @@ function NavigationDesktop() {
           <Avatar size={AvatarSize.md} />
         </NavigationLink>
 
-        <NavigationLogout />
+        <NavigationLogout>{t("auth.logout.cta")}</NavigationLogout>
       </div>
     </nav>
   );
 }
 
-function NavigationMobile() {
-  const navigation = useToggle({ name: "navigation" });
+function NavigationMobileDrawer() {
   const t = useTranslations();
 
-  useScrollLock(navigation.on);
-
-  useEffect(() => {
-    if (navigation.off) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") navigation.disable();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [navigation.off, navigation.disable]);
-
   return (
-    <>
-      <nav
-        data-bcb="alpha-subtle"
-        data-bsb="solid"
-        data-bwb="hairline"
-        data-cross="center"
-        data-disp="flex"
-        data-main="between"
-        data-position="sticky"
-        data-px="3"
-        data-top="0"
-        data-z="2"
-        style={{
-          backdropFilter: "blur(12px)",
-          backgroundColor: "color-mix(in oklab, var(--surface-base) 80%, transparent)",
-          height: "70px",
-        }}
-      >
-        <Logo />
+    <nav
+      data-bct="neutral-800"
+      data-bg="neutral-950"
+      data-bottom="0"
+      data-bst="solid"
+      data-bwt="hairline"
+      data-left="0"
+      data-main="between"
+      data-p="4"
+      data-position="fixed"
+      data-right="0"
+      data-stack="x"
+      data-wrap="nowrap"
+      data-z="3"
+    >
+      <Logo />
 
-        <div data-cross="center" data-gap="3" data-stack="x">
-          <button
-            className="c-button"
-            data-variant="icon"
-            onClick={navigation.toggle}
-            title={t("app.menu.show")}
-            type="button"
-            {...navigation.props.controller}
-          >
-            <Menu data-size="lg" />
-          </button>
-        </div>
-      </nav>
+      <NavigationLink search={WorkoutHistoryFilters.default} title={t("app.workouts")} to="/workouts">
+        <Dumbbell data-size="md" />
+      </NavigationLink>
 
-      {navigation.on && (
-        <nav
-          data-dir="column"
-          data-disp="flex"
-          data-inset="0"
-          data-overflow="auto"
-          data-position="fixed"
-          data-wrap="nowrap"
-          data-z="3"
-          style={{ backgroundColor: "var(--surface-base)" }}
-          {...navigation.props.target}
-        >
-          <div data-cross="center" data-disp="flex" data-main="between" data-p="2" style={{ height: "70px" }}>
-            <Logo />
+      <NavigationLink search={Form.default} title={t("app.catalog")} to="/catalog">
+        <Tags data-size="md" />
+      </NavigationLink>
 
-            <button
-              className="c-button"
-              data-interaction="subtle-scale"
-              data-variant="icon"
-              onClick={navigation.disable}
-              title={t("app.menu.close")}
-              type="button"
-              {...navigation.props.controller}
-            >
-              <X data-size="lg" />
-            </button>
-          </div>
+      <NavigationLink title={t("app.plans")} to="/plans">
+        <ClipboardList data-size="md" />
+      </NavigationLink>
 
-          <div
-            data-animation="grow-fade-in"
-            data-cross="center"
-            data-dir="column"
-            data-disp="flex"
-            data-gap="6"
-            data-mt="12"
-          >
-            <Link data-fs="base" data-fw="medium" onClick={navigation.disable} to="/profile">
-              <Avatar size={AvatarSize.sm} />
-            </Link>
+      <NavigationLink title={t("app.measurements")} to="/measurements">
+        <Scale data-size="md" />
+      </NavigationLink>
 
-            <NavigationLink
-              activeOptions={{ exact: true }}
-              onClick={navigation.disable}
-              search={WorkoutHistoryFilters.default}
-              to="/"
-            >
-              {t("app.dashboard")}
-            </NavigationLink>
+      <NavigationLink to="/profile">
+        <Avatar size={AvatarSize.sm} />
+      </NavigationLink>
 
-            <NavigationLink
-              onClick={navigation.disable}
-              search={WorkoutHistoryFilters.default}
-              to="/workouts"
-            >
-              {t("app.workouts")}
-            </NavigationLink>
-
-            <NavigationLink onClick={navigation.disable} search={Form.default} to="/catalog">
-              {t("app.catalog")}
-            </NavigationLink>
-
-            <NavigationLink onClick={navigation.disable} to="/plans">
-              {t("app.plans")}
-            </NavigationLink>
-
-            <NavigationLink onClick={navigation.disable} to="/measurements">
-              {t("app.measurements")}
-            </NavigationLink>
-
-            <NavigationLink onClick={navigation.disable} to="/profile">
-              {t("app.profile")}
-            </NavigationLink>
-
-            <NavigationLogout data-mt="8" />
-          </div>
-        </nav>
-      )}
-    </>
+      <NavigationLogout>
+        <LogOut data-size="md" />
+      </NavigationLogout>
+    </nav>
   );
 }
 
@@ -212,10 +125,13 @@ function NavigationAnchor(props: React.JSX.IntrinsicElements["a"]) {
   return (
     <a
       data-color="neutral-300"
+      data-cross="center"
       data-fs="sm"
       data-fw="medium"
       data-hover-color="brand-300"
       data-ls="wide"
+      data-main="center"
+      data-stack="x"
       {...props}
     />
   );
@@ -226,7 +142,7 @@ const NavigationAnchorLink = createLink(NavigationAnchor);
 const NavigationLink: LinkComponent<typeof NavigationAnchor> = (props) => (
   <NavigationAnchorLink
     activeOptions={{ exact: false, includeSearch: false }}
-    activeProps={{ "data-color": "neutral-0" }}
+    activeProps={{ "data-color": "brand-300" }}
     {...props}
   />
 );
@@ -240,8 +156,6 @@ function NavigationShell() {
 }
 
 function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
-  const t = useTranslations();
-
   return (
     <button
       data-cursor="pointer"
@@ -255,8 +169,6 @@ function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
       }}
       type="button"
       {...props}
-    >
-      {t("auth.logout.cta")}
-    </button>
+    />
   );
 }
