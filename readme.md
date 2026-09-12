@@ -159,12 +159,11 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   ├── invariants
-│   │   ├── body-weight-entry-belongs-to-user.ts
-│   │   ├── body-weight-entry-exists.ts
-│   │   ├── body-weight-entry-has-changed.ts
+│   │   ├── body-weight-measurement-belongs-to-user.ts
+│   │   ├── body-weight-measurement-exists.ts
+│   │   ├── body-weight-measurement-has-changed.ts
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
-│   │   ├── list-body-weight-entries.ts
 │   │   └── list-body-weight-measurements.ts
 │   └── value-objects
 │       ├── body-weight-measured-on.ts
