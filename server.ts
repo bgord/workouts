@@ -387,6 +387,13 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementRemove(deps)),
   );
 
+  measurements.post(
+    "/body-weight/measurement/:bodyWeightMeasurementId/reference",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightReferenceSet(deps)),
+  );
+
   server.route("/measurements", measurements);
 
   // Probes =================
