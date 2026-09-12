@@ -9,7 +9,7 @@ export function WorkoutCard(props: WorkoutSummary) {
   const t = useTranslations();
   const language = useLanguage();
 
-  const scheduledFor = DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor));
+  const scheduledFor = DateFormat.dayWithWeekday(language, new Date(props.scheduledFor));
 
   return (
     <li>

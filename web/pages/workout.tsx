@@ -90,12 +90,7 @@ export function Workout() {
                   {workout.actions.reschedule.available ? (
                     <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
                   ) : (
-                    <div>
-                      {DateFormat.dayWithWeekday(
-                        language,
-                        Temporal.PlainDate.from(workout.data.scheduledFor),
-                      )}
-                    </div>
+                    <div>{DateFormat.dayWithWeekday(language, new Date(workout.data.scheduledFor))}</div>
                   )}
 
                   {workout.data.completedAt && (

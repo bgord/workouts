@@ -7,6 +7,12 @@ import { ActionHint, ButtonCancel } from "../components";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
+const getOffsetDateISO = (days: number): string => {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+};
+
 export function WorkoutReschedule(props: Workout & { action: ActionState }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
@@ -46,7 +52,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         {...reschedule.props.controller}
         {...bg.Rhythm().times(3).style.height}
       >
-        {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor))}
+        {DateFormat.dayWithWeekday(language, new Date(props.scheduledFor))}
       </button>
     );
   }
@@ -67,8 +73,8 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         disabled={!props.action.enabled}
         type="date"
         {...scheduledFor.input.props}
-        max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-        min={Temporal.Now.plainDateISO().subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+        max={getOffsetDateISO(WorkoutScheduledForHorizonDaysMax)}
+        min={getOffsetDateISO(-WorkoutScheduledForHorizonDaysMax)}
       />
 
       <button

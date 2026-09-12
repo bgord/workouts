@@ -13,7 +13,7 @@ export function BodyWeightMeasure() {
   const { measurements } = measurementsRoute.useLoaderData();
   const latest = measurements[0];
 
-  const today = Temporal.Now.plainDateISO().toString();
+  const today = new Date().toISOString().slice(0, 10);
   const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
   const weight = bg.useNumberField({
     name: "body-weight",

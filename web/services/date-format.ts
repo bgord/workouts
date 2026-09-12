@@ -2,18 +2,16 @@ const DAY: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: 
 const TIME: Intl.DateTimeFormatOptions = { hour: "2-digit", hour12: false, minute: "2-digit" };
 
 export const DateFormat = {
-  zoned: (timestamp: number) =>
-    Temporal.Instant.fromEpochMilliseconds(timestamp).toZonedDateTimeISO(Temporal.Now.timeZoneId()),
+  zoned: (timestamp: number) => new Date(timestamp),
 
-  day: (language: string, moment: Temporal.ZonedDateTime) => moment.toLocaleString(language, DAY),
+  day: (language: string, date: Date) => date.toLocaleDateString(language, DAY),
 
-  plainDay: (language: string, date: Temporal.PlainDate) => date.toLocaleString(language, DAY),
+  plainDay: (language: string, date: Date) => date.toLocaleDateString(language, DAY),
 
-  dayWithWeekday: (language: string, date: Temporal.PlainDate) =>
-    date.toLocaleString(language, { ...DAY, weekday: "short" }),
+  dayWithWeekday: (language: string, date: Date) =>
+    date.toLocaleDateString(language, { ...DAY, weekday: "short" }),
 
-  dayWithTime: (language: string, moment: Temporal.ZonedDateTime) =>
-    moment.toLocaleString(language, { ...DAY, ...TIME }),
+  dayWithTime: (language: string, date: Date) => date.toLocaleString(language, { ...DAY, ...TIME }),
 
-  time: (language: string, moment: Temporal.ZonedDateTime) => moment.toLocaleString(language, TIME),
+  time: (language: string, date: Date) => date.toLocaleTimeString(language, TIME),
 };

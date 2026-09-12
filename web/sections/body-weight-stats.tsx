@@ -8,6 +8,12 @@ import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 const TILE_MIN_WIDTH = 168;
 const ROLLING_WINDOW_DAYS = 7;
 
+const subtractDays = (dateStr: string, days: number): string => {
+  const date = new Date(dateStr);
+  date.setUTCDate(date.getUTCDate() - days);
+  return date.toISOString().slice(0, 10);
+};
+
 const average = (measurements: ReadonlyArray<BodyWeightMeasurement>) =>
   measurements.reduce((sum, measurement) => sum + measurement.weight, 0) / measurements.length;
 
@@ -22,9 +28,8 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
 
   if (!(latest && baseline)) return null;
 
-  const anchor = Temporal.PlainDate.from(latest.measuredOn);
-  const windowStart = anchor.subtract({ days: ROLLING_WINDOW_DAYS - 1 }).toString();
-  const previousWindowStart = anchor.subtract({ days: ROLLING_WINDOW_DAYS * 2 - 1 }).toString();
+  const windowStart = subtractDays(latest.measuredOn, ROLLING_WINDOW_DAYS - 1);
+  const previousWindowStart = subtractDays(latest.measuredOn, ROLLING_WINDOW_DAYS * 2 - 1);
 
   const window = props.measurements.filter((measurement) => measurement.measuredOn >= windowStart);
   const previousWindow = props.measurements.filter(
@@ -75,7 +80,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(latest.measuredOn))}
+          {DateFormat.dayWithWeekday(language, new Date(latest.measuredOn))}
         </div>
       </li>
 
@@ -167,7 +172,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn))}
+          {DateFormat.dayWithWeekday(language, new Date(baseline.measuredOn))}
         </div>
       </li>
     </ul>

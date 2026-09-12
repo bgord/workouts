@@ -40,7 +40,7 @@ export function BodyWeightMeasurementRow(props: {
           onClick={edit.enable}
           type="button"
         >
-          {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
+          {DateFormat.dayWithWeekday(language, new Date(props.measurement.measuredOn))}
         </button>
       )}
 

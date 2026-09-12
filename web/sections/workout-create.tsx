@@ -6,13 +6,19 @@ import { Select } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
+const getOffsetDateISO = (days: number): string => {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+};
+
 export function WorkoutCreate() {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = workoutsRoute.useNavigate();
   const { plan, workouts } = workoutsRoute.useLoaderData();
 
-  const today = Temporal.Now.plainDateISO().toString();
+  const today = new Date().toISOString().slice(0, 10);
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
   const schedule = bg.useFocusKeyboardShortcut<HTMLInputElement>(ShortcutDefinitions.ScheduleWorkout.trigger);
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
@@ -65,8 +71,8 @@ export function WorkoutCreate() {
           ref={schedule.ref}
           type="date"
           {...scheduledFor.input.props}
-          max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-          min={Temporal.Now.plainDateISO().subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+          max={getOffsetDateISO(WorkoutScheduledForHorizonDaysMax)}
+          min={getOffsetDateISO(-WorkoutScheduledForHorizonDaysMax)}
         />
       </div>
 

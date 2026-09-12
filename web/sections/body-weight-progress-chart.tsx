@@ -85,11 +85,11 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
           ))}
 
           <text x={PLOT.left} y={DATE_LABEL_BASELINE}>
-            {DateFormat.plainDay(language, Temporal.PlainDate.from(first.measurement.measuredOn))}
+            {DateFormat.plainDay(language, new Date(first.measurement.measuredOn))}
           </text>
 
           <text textAnchor="end" x={PLOT.right} y={DATE_LABEL_BASELINE}>
-            {DateFormat.plainDay(language, Temporal.PlainDate.from(last.measurement.measuredOn))}
+            {DateFormat.plainDay(language, new Date(last.measurement.measuredOn))}
           </text>
         </g>
 
@@ -123,7 +123,7 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
           <g key={point.measurement.id}>
             <title>
               {t("measurements.body_weight.progress.point", {
-                date: DateFormat.plainDay(language, Temporal.PlainDate.from(point.measurement.measuredOn)),
+                date: DateFormat.plainDay(language, new Date(point.measurement.measuredOn)),
                 weight: WeightFormat.kilograms(point.measurement.weight, BodyWeightDecimals),
               })}
             </title>
