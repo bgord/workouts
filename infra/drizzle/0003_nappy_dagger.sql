@@ -1,1 +1,0 @@
-ALTER TABLE `exercises` ADD `imageEtag` text NOT NULL;

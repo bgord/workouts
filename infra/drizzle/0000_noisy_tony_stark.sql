@@ -16,6 +16,16 @@ CREATE TABLE `accounts` (
 );
 --> statement-breakpoint
 CREATE INDEX `accounts_userId_idx` ON `accounts` (`user_id`);--> statement-breakpoint
+CREATE TABLE `bodyWeightMeasurements` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`weight` integer NOT NULL,
+	`measuredOn` text NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE INDEX `bodyWeightMeasurements_userId_idx` ON `bodyWeightMeasurements` (`userId`);--> statement-breakpoint
 CREATE TABLE `events` (
 	`id` text(36) PRIMARY KEY NOT NULL,
 	`correlationId` text NOT NULL,
@@ -50,6 +60,7 @@ CREATE TABLE `exercises` (
 	`name` text NOT NULL,
 	`description` text NOT NULL,
 	`image` text NOT NULL,
+	`imageEtag` text NOT NULL,
 	`userId` text(36) NOT NULL,
 	`createdAt` integer NOT NULL,
 	`updatedAt` integer NOT NULL
@@ -80,6 +91,7 @@ CREATE TABLE `planSections` (
 CREATE TABLE `plans` (
 	`id` text(36) PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
+	`description` text,
 	`kind` text NOT NULL,
 	`revision` integer DEFAULT 0 NOT NULL,
 	`userId` text(36) NOT NULL,
@@ -148,6 +160,8 @@ CREATE TABLE `workoutExercises` (
 	`workoutId` text(36) NOT NULL,
 	`exerciseId` text(36) NOT NULL,
 	`exerciseName` text NOT NULL,
+	`exerciseImageEtag` text NOT NULL,
+	`exerciseDescription` text NOT NULL,
 	`prescriptionSets` integer NOT NULL,
 	`prescriptionRepsMin` integer NOT NULL,
 	`prescriptionRepsMax` integer NOT NULL,
@@ -166,11 +180,13 @@ CREATE TABLE `workoutLoggedSets` (
 	`workoutId` text(36) NOT NULL,
 	`reps` integer NOT NULL,
 	`load` integer NOT NULL,
+	`rir` integer,
 	`userId` text(36) NOT NULL,
 	`createdAt` integer NOT NULL
 );
 --> statement-breakpoint
 CREATE INDEX `workoutLoggedSets_workoutExerciseId_idx` ON `workoutLoggedSets` (`workoutExerciseId`);--> statement-breakpoint
+CREATE INDEX `workoutLoggedSets_userId_idx` ON `workoutLoggedSets` (`userId`);--> statement-breakpoint
 CREATE TABLE `workouts` (
 	`id` text(36) PRIMARY KEY NOT NULL,
 	`planId` text(36) NOT NULL,

@@ -1,1 +1,0 @@
-ALTER TABLE `bodyWeightMeasurements` RENAME COLUMN "recordedOn" TO "measuredOn";

@@ -1,1 +1,0 @@
-ALTER TABLE `workoutLoggedSets` ADD `rir` integer;

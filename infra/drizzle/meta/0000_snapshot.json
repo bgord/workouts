@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "e9e616ce-685c-43a0-8074-0763d3410b3d",
+  "id": "79f9b286-8b84-4806-8592-f33b333f5589",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -102,7 +102,9 @@
       "indexes": {
         "accounts_userId_idx": {
           "name": "accounts_userId_idx",
-          "columns": ["user_id"],
+          "columns": [
+            "user_id"
+          ],
           "isUnique": false
         }
       },
@@ -111,12 +113,76 @@
           "name": "accounts_user_id_users_id_fk",
           "tableFrom": "accounts",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "bodyWeightMeasurements": {
+      "name": "bodyWeightMeasurements",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text(36)",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "weight": {
+          "name": "weight",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "measuredOn": {
+          "name": "measuredOn",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text(36)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "bodyWeightMeasurements_userId_idx": {
+          "name": "bodyWeightMeasurements_userId_idx",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -193,12 +259,17 @@
       "indexes": {
         "stream_idx": {
           "name": "stream_idx",
-          "columns": ["stream"],
+          "columns": [
+            "stream"
+          ],
           "isUnique": false
         },
         "stream_revision_uidx": {
           "name": "stream_revision_uidx",
-          "columns": ["stream", "revision"],
+          "columns": [
+            "stream",
+            "revision"
+          ],
           "isUnique": true
         }
       },
@@ -281,7 +352,10 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "exercise_category_assignments_exerciseId_exerciseCategoryId_pk": {
-          "columns": ["exerciseId", "exerciseCategoryId"],
+          "columns": [
+            "exerciseId",
+            "exerciseCategoryId"
+          ],
           "name": "exercise_category_assignments_exerciseId_exerciseCategoryId_pk"
         }
       },
@@ -314,6 +388,13 @@
         },
         "image": {
           "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "imageEtag": {
+          "name": "imageEtag",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -496,6 +577,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "kind": {
           "name": "kind",
           "type": "text",
@@ -602,7 +690,9 @@
       "indexes": {
         "sessions_token_unique": {
           "name": "sessions_token_unique",
-          "columns": ["token"],
+          "columns": [
+            "token"
+          ],
           "isUnique": true
         }
       },
@@ -611,8 +701,12 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -663,17 +757,24 @@
       "indexes": {
         "user_preferences_userId_preference_uidx": {
           "name": "user_preferences_userId_preference_uidx",
-          "columns": ["userId", "preference"],
+          "columns": [
+            "userId",
+            "preference"
+          ],
           "isUnique": true
         },
         "user_preferences_userId_idx": {
           "name": "user_preferences_userId_idx",
-          "columns": ["userId"],
+          "columns": [
+            "userId"
+          ],
           "isUnique": false
         },
         "user_preferences_preference_idx": {
           "name": "user_preferences_preference_idx",
-          "columns": ["preference"],
+          "columns": [
+            "preference"
+          ],
           "isUnique": false
         }
       },
@@ -682,8 +783,12 @@
           "name": "user_preferences_userId_users_id_fk",
           "tableFrom": "user_preferences",
           "tableTo": "users",
-          "columnsFrom": ["userId"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -734,12 +839,16 @@
       "indexes": {
         "user_profile_avatars_userId_idx": {
           "name": "user_profile_avatars_userId_idx",
-          "columns": ["userId"],
+          "columns": [
+            "userId"
+          ],
           "isUnique": false
         },
         "user_profile_avatars_userId_uniq": {
           "name": "user_profile_avatars_userId_uniq",
-          "columns": ["userId"],
+          "columns": [
+            "userId"
+          ],
           "isUnique": true
         }
       },
@@ -748,8 +857,12 @@
           "name": "user_profile_avatars_userId_users_id_fk",
           "tableFrom": "user_profile_avatars",
           "tableTo": "users",
-          "columnsFrom": ["userId"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -814,7 +927,9 @@
       "indexes": {
         "users_email_unique": {
           "name": "users_email_unique",
-          "columns": ["email"],
+          "columns": [
+            "email"
+          ],
           "isUnique": true
         }
       },
@@ -901,6 +1016,20 @@
         },
         "exerciseName": {
           "name": "exerciseName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exerciseImageEtag": {
+          "name": "exerciseImageEtag",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exerciseDescription": {
+          "name": "exerciseDescription",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -1021,6 +1150,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "rir": {
+          "name": "rir",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "userId": {
           "name": "userId",
           "type": "text(36)",
@@ -1039,7 +1175,16 @@
       "indexes": {
         "workoutLoggedSets_workoutExerciseId_idx": {
           "name": "workoutLoggedSets_workoutExerciseId_idx",
-          "columns": ["workoutExerciseId"],
+          "columns": [
+            "workoutExerciseId"
+          ],
+          "isUnique": false
+        },
+        "workoutLoggedSets_userId_idx": {
+          "name": "workoutLoggedSets_userId_idx",
+          "columns": [
+            "userId"
+          ],
           "isUnique": false
         }
       },

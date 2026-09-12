@@ -1,1 +1,0 @@
-CREATE INDEX `workoutLoggedSets_userId_idx` ON `workoutLoggedSets` (`userId`);
