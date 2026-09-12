@@ -26,6 +26,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
       <li data-grow="1" data-md-width="100%" {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}>
         <Link
           className="c-card"
+          data-cross="center"
           data-gap="1"
           data-height="100%"
           data-hover-bc="brand-500"
@@ -67,6 +68,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
 
       <li
         className="c-card"
+        data-cross="center"
         data-gap="1"
         data-grow="1"
         data-md-width="100%"
@@ -100,6 +102,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
 
       <li
         className="c-card"
+        data-cross="center"
         data-gap="1"
         data-grow="1"
         data-md-width="100%"

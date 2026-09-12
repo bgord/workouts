@@ -16,6 +16,7 @@ export function DashboardCompleted() {
     <section className="c-card" data-gap="5" data-p="5" data-variant="sunken">
       <div
         data-color="neutral-500"
+        data-main="center"
         data-cross="center"
         data-fs="xs"
         data-gap="1-5"
