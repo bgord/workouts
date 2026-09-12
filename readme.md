@@ -147,9 +147,9 @@ modules/
 ├── languages.ts
 ├── measurements
 │   ├── command-handlers
-│   │   ├── handleBodyWeightEntryAddCommand.ts
-│   │   ├── handleBodyWeightEntryAdjustCommand.ts
-│   │   ├── handleBodyWeightEntryRemoveCommand.ts
+│   │   ├── handleBodyWeightMeasureCommand.ts
+│   │   ├── handleBodyWeightMeasurementCorrectCommand.ts
+│   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
 │   ├── commands
 │   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
