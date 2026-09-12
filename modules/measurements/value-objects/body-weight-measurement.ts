@@ -8,4 +8,5 @@ export type BodyWeightMeasurement = {
   weight: BodyWeightType;
   measuredOn: BodyWeightMeasuredOnType;
   userId: Auth.VO.UserIdType;
+  reference: boolean;
 };

@@ -151,20 +151,24 @@ modules/
 │   │   ├── handleBodyWeightMeasurementCorrectCommand.ts
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
+│   │   ├── handleBodyWeightReferenceSetCommand.ts
 │   ├── commands
 │   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
+│   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
 │   ├── events
 │   │   ├── BODY_WEIGHT_MEASURED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
+│   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
 │   ├── invariants
 │   │   ├── body-weight-measured-on-is-not-in-future.ts
 │   │   ├── body-weight-measurement-belongs-to-user.ts
 │   │   ├── body-weight-measurement-exists.ts
 │   │   ├── body-weight-measurement-has-changed.ts
+│   │   ├── body-weight-measurement-is-not-reference.ts
 │   ├── ports
 │   │   ├── csv-parser.ts
 │   ├── queries
@@ -443,6 +447,7 @@ app/
 │   │   ├── body-weight-measurement-import.ts
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
+│   │   ├── body-weight-reference-set.ts
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create.ts
