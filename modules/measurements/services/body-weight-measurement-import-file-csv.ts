@@ -1,8 +1,8 @@
+import type * as bg from "@bgord/bun";
 import * as v from "valibot";
-import type * as Ports from "+measurements/ports";
 import * as VO from "+measurements/value-objects";
 
-type Dependencies = { CsvParser: Ports.CsvParserPort };
+type Dependencies = { CsvParser: bg.CsvParserPort };
 
 const Row = v.object({ weight: VO.BodyWeight, measuredOn: VO.BodyWeightMeasuredOn });
 

@@ -170,7 +170,6 @@ modules/
 │   │   ├── body-weight-measurement-has-changed.ts
 │   │   ├── body-weight-measurement-is-not-reference.ts
 │   ├── ports
-│   │   ├── csv-parser.ts
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
 │   │   └── list-body-weight-measurements.ts

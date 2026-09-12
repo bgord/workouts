@@ -5,7 +5,7 @@ import * as Measurements from "+measurements";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  CsvParser: Measurements.Ports.CsvParserPort;
+  CsvParser: bg.CsvParserPort;
   CommandBus: bg.CommandBusPort<Measurements.Commands.BodyWeightMeasurementsImportCommandType>;
 };
 
