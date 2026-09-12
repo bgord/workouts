@@ -139,7 +139,7 @@
   "measurements.body_weight.correct.title": "Correct the measurement",
   "measurements.body_weight.correct.error": "Could not correct the measurement",
   "measurements.body_weight.remove.title": "Remove the measurement",
-  "measurements.body_weight.export.cta": "Download CSV",
+  "measurements.body_weight.export.cta": "Export",
   "measurements.body_weight.import.toggle.cta": "Import",
   "measurements.body_weight.import.select.cta": "Select CSV",
   "measurements.body_weight.import.selected": "Selected: {{name}}",

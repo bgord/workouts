@@ -1,10 +1,11 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { CalendarOff } from "lucide-react";
+import { CalendarOff, ChevronRight } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { Main, WorkoutCard } from "../components";
 import { dashboardRoute } from "../router";
+import { BodyWeightStats } from "../sections/body-weight-stats";
 import { DashboardCompleted } from "../sections/dashboard-completed";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -12,7 +13,7 @@ const tile = { flexBasis: 0, minWidth: 0 };
 
 export function Dashboard() {
   const t = bg.useTranslations();
-  const { dashboard } = dashboardRoute.useLoaderData();
+  const { dashboard, measurements } = dashboardRoute.useLoaderData();
   const navigate = dashboardRoute.useNavigate();
 
   const upcoming = dashboard.inProgress ?? dashboard.nextUp;
@@ -94,6 +95,28 @@ export function Dashboard() {
       </div>
 
       <DashboardCompleted />
+
+      {measurements.length > 0 && (
+        <div data-gap="2" data-stack="y">
+          <Link
+            data-color="neutral-500"
+            data-cross="center"
+            data-fs="xs"
+            data-gap="1"
+            data-hover-color="brand-300"
+            data-ls="wide"
+            data-self="start"
+            data-stack="x"
+            data-transform="uppercase"
+            to="/measurements"
+          >
+            {t("measurements.body_weight.header")}
+            <ChevronRight data-size="xs" />
+          </Link>
+
+          <BodyWeightStats measurements={measurements} />
+        </div>
+      )}
     </Main>
   );
 }

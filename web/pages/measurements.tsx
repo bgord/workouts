@@ -25,7 +25,7 @@ export function Measurements() {
 
         <button
           className="c-button"
-          data-variant="secondary"
+          data-variant="ghost"
           onClick={bodyWeightImport.toggle}
           type="button"
           {...bodyWeightImport.props.controller}
@@ -37,14 +37,13 @@ export function Measurements() {
         {measurements.length > 0 && (
           <a
             className="c-button"
-            data-variant="secondary"
+            data-variant="ghost"
             download
             href="/api/measurements/body-weight/export"
             rel="noopener"
             target="_blank"
           >
             <Download data-size="sm" />
-            {t("measurements.body_weight.export.cta")}
           </a>
         )}
       </div>
