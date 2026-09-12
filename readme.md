@@ -145,6 +145,31 @@ modules/
 │       ├── exercise-with-categories.ts
 │       ├── exercise.ts
 ├── languages.ts
+├── measurements
+│   ├── command-handlers
+│   │   ├── handleBodyWeightEntryAddCommand.ts
+│   │   ├── handleBodyWeightEntryAdjustCommand.ts
+│   │   ├── handleBodyWeightEntryRemoveCommand.ts
+│   ├── commands
+│   │   ├── BODY_WEIGHT_ENTRY_ADD_COMMAND.ts
+│   │   ├── BODY_WEIGHT_ENTRY_ADJUST_COMMAND.ts
+│   │   ├── BODY_WEIGHT_ENTRY_REMOVE_COMMAND.ts
+│   ├── events
+│   │   ├── BODY_WEIGHT_ENTRY_ADDED_EVENT.ts
+│   │   ├── BODY_WEIGHT_ENTRY_ADJUSTED_EVENT.ts
+│   │   ├── BODY_WEIGHT_ENTRY_REMOVED_EVENT.ts
+│   ├── invariants
+│   │   ├── body-weight-entry-belongs-to-user.ts
+│   │   ├── body-weight-entry-exists.ts
+│   │   ├── body-weight-entry-has-changed.ts
+│   ├── queries
+│   │   ├── get-body-weight-entry.ts
+│   │   └── list-body-weight-entries.ts
+│   └── value-objects
+│       ├── body-weight-entry-id.ts
+│       ├── body-weight-entry.ts
+│       ├── body-weight-recorded-on.ts
+│       ├── body-weight.ts
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
@@ -384,6 +409,11 @@ modules/
 ```
 app/
 ├── http
+│   ├── body-weight
+│   │   ├── body-weight-entry-add.ts
+│   │   ├── body-weight-entry-adjust.ts
+│   │   ├── body-weight-entry-list.ts
+│   │   ├── body-weight-entry-remove.ts
 │   ├── error-handler.ts
 │   ├── exercises
 │   │   ├── exercise-add.ts
@@ -464,6 +494,9 @@ infra/
 │   ├── auth
 │   │   ├── user-contact.adapter.ts
 │   │   └── user-directory.adapter.ts
+│   ├── body-weight
+│   │   ├── get-body-weight-entry.adapter.ts
+│   │   └── list-body-weight-entries.adapter.ts
 │   ├── exercises
 │   │   ├── get-exercise-category-name-count.adapter.ts
 │   │   ├── get-exercise-category.adapter.ts
@@ -528,6 +561,7 @@ infra/
 │   └── home.spec.ts
 ├── env.ts
 ├── projections
+│   ├── body-weight-entries.projector.ts
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts
 │   ├── exercises.projector.ts

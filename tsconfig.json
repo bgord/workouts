@@ -21,6 +21,8 @@
       "+languages": ["./modules/languages.ts"],
       "+auth": ["./modules/auth/index"],
       "+auth/*": ["./modules/auth/*"],
+      "+measurements": ["./modules/measurements/index"],
+      "+measurements/*": ["./modules/measurements/*"],
       "+exercises": ["./modules/exercises/index"],
       "+exercises/*": ["./modules/exercises/*"],
       "+plans": ["./modules/plans/index"],
