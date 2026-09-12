@@ -296,14 +296,14 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     MeasurementsCommands.BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND,
     MeasurementsCommandHandlers.handleBodyWeightMeasurementCorrectCommand({
       ...deps,
-      GetBodyWeightEntryQuery: Adapters.BodyWeight.GetBodyWeightEntryQuery,
+      GetBodyWeightMeasurementQuery: Adapters.Measurements.GetBodyWeightMeasurementQuery,
     }),
   );
   Tools.CommandBus.on(
     MeasurementsCommands.BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND,
     MeasurementsCommandHandlers.handleBodyWeightMeasurementRemoveCommand({
       ...deps,
-      GetBodyWeightEntryQuery: Adapters.BodyWeight.GetBodyWeightEntryQuery,
+      GetBodyWeightMeasurementQuery: Adapters.Measurements.GetBodyWeightMeasurementQuery,
     }),
   );
 }
