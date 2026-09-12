@@ -48,6 +48,7 @@ type AcceptedCommand =
   | WorkoutsCommands.WorkoutNoteSetCommandType
   | WorkoutsCommands.WorkoutRescheduleCommandType
   | MeasurementsCommands.BodyWeightMeasureCommandType
+  | MeasurementsCommands.BodyWeightMeasurementsImportCommandType
   | MeasurementsCommands.BodyWeightMeasurementCorrectCommandType
   | MeasurementsCommands.BodyWeightMeasurementRemoveCommandType;
 

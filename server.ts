@@ -1,10 +1,12 @@
 // cSpell:ignore epley
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { Hono } from "hono";
 import { HTTP } from "+app";
 import * as Exercises from "+exercises";
 import type * as infra from "+infra";
 import { languages } from "+languages";
+import * as Measurements from "+measurements";
 import * as Preferences from "+preferences";
 import * as Statistics from "+statistics";
 import type { BootstrapType } from "+infra/bootstrap";
@@ -351,6 +353,20 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(
       HTTP.Measurements.BodyWeightMeasurementExport({ ...deps, ...Adapters.Measurements }),
     ),
+  );
+  measurements.post(
+    "/body-weight/import",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Measurements.VO.BodyWeightMeasurementImportMaxSize,
+        MimeRegistry: Measurements.VO.BodyWeightMeasurementImportMimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorTextStrategy(tools.Mimes.csv.mime) },
+    ).handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementImport(deps)),
   );
   measurements.post(
     "/body-weight/measure",

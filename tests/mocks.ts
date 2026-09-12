@@ -1212,6 +1212,15 @@ export const bodyWeightMeasurementStream = v.parse(
   `body_weight_measurement_${bodyWeightMeasurementId}`,
 );
 
+export const anotherBodyWeightMeasurementId = v.parse(
+  Measurements.VO.BodyWeightMeasurementId,
+  "9f2d6b1c-7e3a-4c5d-b8a1-0e4f7c2d9a63",
+);
+export const anotherBodyWeightMeasurementStream = v.parse(
+  bg.EventStream,
+  `body_weight_measurement_${anotherBodyWeightMeasurementId}`,
+);
+
 export const bodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(80).get());
 export const anotherBodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(81).get());
 
@@ -1231,6 +1240,9 @@ export const bodyWeightMeasurementCsv = [
   `${bodyWeightMeasurementId},${bodyWeight},${bodyWeightMeasuredOn}`,
 ].join("");
 
+export const bodyWeightMeasurementCsvFile = (content: string) =>
+  new File([content], "body-weight.csv", { type: tools.Mimes.csv.mime.toString() });
+
 export const GenericBodyWeightMeasuredEvent = {
   id: expectAnyId,
   correlationId,
@@ -1240,6 +1252,22 @@ export const GenericBodyWeightMeasuredEvent = {
   commit,
   name: "BODY_WEIGHT_MEASURED_EVENT",
   payload: { id: bodyWeightMeasurementId, weight: bodyWeight, measuredOn: bodyWeightMeasuredOn, userId },
+} satisfies Measurements.Events.BodyWeightMeasuredEventType;
+
+export const GenericAnotherBodyWeightMeasuredEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: anotherBodyWeightMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_WEIGHT_MEASURED_EVENT",
+  payload: {
+    id: anotherBodyWeightMeasurementId,
+    weight: anotherBodyWeight,
+    measuredOn: anotherBodyWeightMeasuredOn,
+    userId,
+  },
 } satisfies Measurements.Events.BodyWeightMeasuredEventType;
 
 export const GenericBodyWeightMeasurementCorrectedEvent = {
