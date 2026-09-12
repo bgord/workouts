@@ -7,6 +7,8 @@ export const DateFormat = {
 
   day: (language: string, moment: Temporal.ZonedDateTime) => moment.toLocaleString(language, DAY),
 
+  plainDay: (language: string, date: Temporal.PlainDate) => date.toLocaleString(language, DAY),
+
   dayWithWeekday: (language: string, date: Temporal.PlainDate) =>
     date.toLocaleString(language, { ...DAY, weekday: "short" }),
 

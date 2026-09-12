@@ -3,7 +3,7 @@ import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
 export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<BodyWeightMeasurement> }) {
   return (
-    <ul className="c-card" data-variant="flat" data-md-p="2-5" data-p="4" data-stack="y">
+    <ul className="c-card" data-md-p="2-5" data-p="4" data-stack="y" data-variant="flat">
       {props.measurements.map((measurement, index) => (
         <BodyWeightMeasurementRow
           index={index}

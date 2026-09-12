@@ -62,6 +62,8 @@ function NavigationDesktop() {
 
         <NavigationLink to="/plans">{t("app.plans")}</NavigationLink>
 
+        <NavigationLink to="/measurements">{t("app.measurements")}</NavigationLink>
+
         <NavigationLink to="/profile">
           <Avatar size={AvatarSize.md} />
         </NavigationLink>
@@ -188,6 +190,10 @@ function NavigationMobile() {
 
             <NavigationLink onClick={navigation.disable} to="/plans">
               {t("app.plans")}
+            </NavigationLink>
+
+            <NavigationLink onClick={navigation.disable} to="/measurements">
+              {t("app.measurements")}
             </NavigationLink>
 
             <NavigationLink onClick={navigation.disable} to="/profile">

@@ -10,7 +10,7 @@ import {
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
-import { Avatar, Exercises, I18N, Plans, Session, Statistics, Workouts } from "./api";
+import { Avatar, Exercises, I18N, Measurements, Plans, Session, Statistics, Workouts } from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
 
@@ -127,6 +127,13 @@ export const workoutRoute = createRoute({
   }),
 });
 
+export const measurementsRoute = createRoute({
+  path: "/measurements",
+  getParentRoute: () => rootRoute,
+  component: lazyRouteComponent(() => import("./pages/measurements"), "Measurements"),
+  loader: async ({ context }) => ({ measurements: await Measurements.listBodyWeight(context.request) }),
+});
+
 const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
@@ -141,6 +148,7 @@ const routeTree = rootRoute.addChildren([
   plansRoute,
   planRoute,
   workoutRoute,
+  measurementsRoute,
   profileRoute,
 ]);
 
