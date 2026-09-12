@@ -64,7 +64,7 @@ export function BodyWeightMeasure() {
           data-md-width="100%"
           data-variant="transparent"
           min="0"
-          step="0.1"
+          step="0.01"
           type="number"
           {...weight.input.props}
         />

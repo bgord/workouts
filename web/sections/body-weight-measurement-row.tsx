@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { DeltaKg } from "../components/delta-kg";
 import { DateFormat } from "../services/date-format";
-import { WeightFormat } from "../services/weight-format";
+import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
 import { BodyWeightMeasurementRemove } from "./body-weight-measurement-remove";
 
@@ -34,13 +34,19 @@ export function BodyWeightMeasurementRow(props: {
 
       {edit.off && (
         <div data-color="neutral-100" data-fs="sm" data-fw="medium">
-          {t("measurements.body_weight.value", { weight: WeightFormat.kilograms(props.measurement.weight) })}
+          {t("measurements.body_weight.value", {
+            weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
+          })}
         </div>
       )}
 
       {edit.off && (
         <div data-fs="xs" {...bg.Rhythm(56).times(1).style.minWidth}>
-          <DeltaKg current={props.measurement.weight} previous={props.previous?.weight} />
+          <DeltaKg
+            current={props.measurement.weight}
+            decimals={BodyWeightDecimals}
+            previous={props.previous?.weight}
+          />
         </div>
       )}
 

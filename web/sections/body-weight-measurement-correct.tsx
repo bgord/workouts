@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, Pencil, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { measurementsRoute } from "../router";
-import { WeightFormat } from "../services/weight-format";
+import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 export function BodyWeightMeasurementCorrect(props: {
   measurement: BodyWeightMeasurement;
@@ -20,7 +20,7 @@ export function BodyWeightMeasurementCorrect(props: {
 
   const weight = bg.useNumberField({
     name: `corrected-weight-${props.measurement.id}`,
-    defaultValue: WeightFormat.kilograms(props.measurement.weight),
+    defaultValue: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
   });
 
   const mutation = bg.useMutation({
@@ -77,7 +77,7 @@ export function BodyWeightMeasurementCorrect(props: {
         className="c-input"
         data-px="2"
         min="0"
-        step="0.1"
+        step="0.01"
         type="number"
         {...weight.input.props}
         {...bg.Rhythm(80).times(1).style.width}

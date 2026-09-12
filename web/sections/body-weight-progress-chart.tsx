@@ -3,7 +3,7 @@ import { useLanguage, useTranslations } from "@bgord/ui";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { ChartScale } from "../services/chart-scale";
 import { DateFormat } from "../services/date-format";
-import { WeightFormat } from "../services/weight-format";
+import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
 const HEIGHT = 200;
@@ -77,7 +77,9 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
               x={PLOT.left - GRIDLINE_LABEL_GAP}
               y={gridline.y}
             >
-              {t("measurements.body_weight.value", { weight: WeightFormat.kilograms(gridline.weight) })}
+              {t("measurements.body_weight.value", {
+                weight: WeightFormat.kilograms(gridline.weight, BodyWeightDecimals),
+              })}
             </text>
           ))}
 
@@ -112,7 +114,7 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
             <title>
               {t("measurements.body_weight.progress.point", {
                 date: DateFormat.plainDay(language, Temporal.PlainDate.from(point.measurement.measuredOn)),
-                weight: WeightFormat.kilograms(point.measurement.weight),
+                weight: WeightFormat.kilograms(point.measurement.weight, BodyWeightDecimals),
               })}
             </title>
 

@@ -3,7 +3,7 @@ import { Scale, TrendingUp } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { DeltaKg } from "../components/delta-kg";
 import { DateFormat } from "../services/date-format";
-import { WeightFormat } from "../services/weight-format";
+import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 const TILE_MIN_WIDTH = 168;
 
@@ -51,10 +51,12 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           data-lh="tight"
           data-stack="x"
         >
-          {t("measurements.body_weight.value", { weight: WeightFormat.kilograms(latest.weight) })}
+          {t("measurements.body_weight.value", {
+            weight: WeightFormat.kilograms(latest.weight, BodyWeightDecimals),
+          })}
 
           <span data-fs="xs">
-            <DeltaKg current={latest.weight} previous={previous?.weight} />
+            <DeltaKg current={latest.weight} decimals={BodyWeightDecimals} previous={previous?.weight} />
           </span>
         </div>
 
@@ -90,7 +92,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           {latest.weight === first.weight ? (
             t("measurements.body_weight.value", { weight: 0 })
           ) : (
-            <DeltaKg current={latest.weight} previous={first.weight} />
+            <DeltaKg current={latest.weight} decimals={BodyWeightDecimals} previous={first.weight} />
           )}
         </div>
 
