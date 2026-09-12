@@ -149,6 +149,8 @@
   "measurements.body_weight.empty": "No measurements logged yet",
   "measurements.body_weight.empty.hint": "Log your body weight to track progress here",
   "measurements.body_weight.reference.title": "Use as the reference point",
+  "measurements.body_weight.stats.week_average": "7-day average",
+  "measurements.body_weight.stats.week_average.count": "{{count}} weigh-ins",
   "measurements.body_weight.stats.since_reference": "Since reference",
   "measurements.body_weight.stats.latest": "Latest",
   "measurements.body_weight.stats.since_first": "Since first",
