@@ -293,6 +293,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     MeasurementsCommandHandlers.handleBodyWeightMeasureCommand(deps),
   );
   Tools.CommandBus.on(
+    MeasurementsCommands.BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND,
+    MeasurementsCommandHandlers.handleBodyWeightMeasurementsImportCommand(deps),
+  );
+  Tools.CommandBus.on(
     MeasurementsCommands.BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND,
     MeasurementsCommandHandlers.handleBodyWeightMeasurementCorrectCommand({
       ...deps,
