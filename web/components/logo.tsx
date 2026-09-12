@@ -3,7 +3,7 @@ import { Form } from "../../app/services/workout-history-filters-form";
 
 export function Logo() {
   return (
-    <Link search={Form.default} to="/">
+    <Link data-cross="center" data-main="center" data-stack="x" search={Form.default} to="/">
       <div
         className="logo"
         data-color="brand-500"
