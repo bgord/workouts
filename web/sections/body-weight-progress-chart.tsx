@@ -127,18 +127,6 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
                 weight: WeightFormat.kilograms(point.measurement.weight, BodyWeightDecimals),
               })}
             </title>
-
-            <circle cx={point.x} cy={point.y} data-color="neutral-900" fill="currentColor" r="4" />
-
-            <circle
-              cx={point.x}
-              cy={point.y}
-              data-color="brand-400"
-              fill="none"
-              r="4"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
           </g>
         ))}
       </svg>
