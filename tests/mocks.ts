@@ -1233,7 +1233,15 @@ export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   weight: bodyWeight,
   measuredOn: bodyWeightMeasuredOn,
   userId,
+  reference: false,
 };
+
+export const bodyWeightReferenceMeasurement: Measurements.VO.BodyWeightMeasurement = {
+  ...bodyWeightMeasurement,
+  reference: true,
+};
+
+export const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
 
 export const bodyWeightMeasurementCsv = [
   "id,weight,measuredOn",
@@ -1269,6 +1277,17 @@ export const GenericAnotherBodyWeightMeasuredEvent = {
     userId,
   },
 } satisfies Measurements.Events.BodyWeightMeasuredEventType;
+
+export const GenericBodyWeightReferenceSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyWeightReferenceStream,
+  version: 1,
+  commit,
+  name: "BODY_WEIGHT_REFERENCE_SET_EVENT",
+  payload: { measurementId: bodyWeightMeasurementId, userId },
+} satisfies Measurements.Events.BodyWeightReferenceSetEventType;
 
 export const GenericBodyWeightMeasurementCorrectedEvent = {
   id: expectAnyId,
