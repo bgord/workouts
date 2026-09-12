@@ -308,6 +308,7 @@
   "workout.list.completed_on": "{{date}} · completed {{completed}}",
   "workout.list.empty": "No workouts yet",
   "workout.list.empty.hint": "Schedule one from a finalized plan to start training",
+  "workout.list.empty.cta": "Go to plans",
   "workout.list.header": "Workouts",
   "workout.list.no_matches": "No workouts match the filters",
   "workout.list.no_matches.hint": "Try another section or clear the filters",

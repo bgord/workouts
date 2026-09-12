@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { Link } from "@tanstack/react-router";
 import { CalendarOff, SearchX } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { ButtonClear, WorkoutCard } from "../components";
@@ -39,6 +40,10 @@ export function WorkoutHistory() {
         <div data-color="neutral-500" data-fs="xs">
           {t("workout.list.empty.hint")}
         </div>
+
+        <Link className="c-link" data-fs="sm" data-mt="2" to="/plans">
+          {t("workout.list.empty.cta")}
+        </Link>
       </div>
     );
   }

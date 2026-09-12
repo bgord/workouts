@@ -308,6 +308,7 @@
   "workout.list.completed_on": "{{date}} · ukończono {{completed}}",
   "workout.list.empty": "Brak treningów",
   "workout.list.empty.hint": "Zaplanuj trening z sfinalizowanego planu, aby zacząć",
+  "workout.list.empty.cta": "Przejdź do planów",
   "workout.list.header": "Treningi",
   "workout.list.no_matches": "Żaden trening nie pasuje do filtrów",
   "workout.list.no_matches.hint": "Spróbuj innej sekcji lub wyczyść filtry",
