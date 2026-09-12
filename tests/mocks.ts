@@ -1225,6 +1225,11 @@ export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   userId,
 };
 
+export const bodyWeightMeasurementCsv = [
+  "id,weight,measuredOn",
+  `${bodyWeightMeasurementId},${bodyWeight},${bodyWeightMeasuredOn}`,
+].join("");
+
 export const GenericBodyWeightMeasuredEvent = {
   id: expectAnyId,
   correlationId,
