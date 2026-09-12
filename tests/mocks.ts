@@ -8,6 +8,7 @@ import type { ActionState } from "+action-state";
 import * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
+import * as Measurements from "+measurements";
 import * as Plans from "+plans";
 import type * as Preferences from "+preferences";
 import * as Statistics from "+statistics";
@@ -1201,6 +1202,66 @@ export const AnotherGenericWorkoutSetLoggedEvent = {
   name: "WORKOUT_SET_LOGGED_EVENT",
   payload: { workoutId, workoutExerciseId, loggedSet: anotherLoggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
+
+export const bodyWeightMeasurementId = v.parse(
+  Measurements.VO.BodyWeightMeasurementId,
+  "3c7a9e21-5b4d-4f8e-a1c6-9d2b7e0f4a58",
+);
+export const bodyWeightMeasurementStream = v.parse(
+  bg.EventStream,
+  `body_weight_measurement_${bodyWeightMeasurementId}`,
+);
+
+export const bodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(80).get());
+export const anotherBodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(81).get());
+
+export const bodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-01");
+export const anotherBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-02");
+
+export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
+  id: bodyWeightMeasurementId,
+  weight: bodyWeight,
+  measuredOn: bodyWeightMeasuredOn,
+  userId,
+};
+
+export const GenericBodyWeightMeasuredEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyWeightMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_WEIGHT_MEASURED_EVENT",
+  payload: { id: bodyWeightMeasurementId, weight: bodyWeight, measuredOn: bodyWeightMeasuredOn, userId },
+} satisfies Measurements.Events.BodyWeightMeasuredEventType;
+
+export const GenericBodyWeightMeasurementCorrectedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyWeightMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT",
+  payload: {
+    id: bodyWeightMeasurementId,
+    weight: anotherBodyWeight,
+    measuredOn: anotherBodyWeightMeasuredOn,
+    requesterId: userId,
+  },
+} satisfies Measurements.Events.BodyWeightMeasurementCorrectedEventType;
+
+export const GenericBodyWeightMeasurementRemovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyWeightMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT",
+  payload: { id: bodyWeightMeasurementId, requesterId: userId },
+} satisfies Measurements.Events.BodyWeightMeasurementRemovedEventType;
 
 export const user = {
   name: email,
