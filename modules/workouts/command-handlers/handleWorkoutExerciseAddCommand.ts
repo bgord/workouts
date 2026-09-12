@@ -1,3 +1,4 @@
+// biome-ignore-all lint: lint/style/noNonNullAssertion
 import type * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";

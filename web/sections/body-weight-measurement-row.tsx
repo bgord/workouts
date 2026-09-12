@@ -38,6 +38,7 @@ export function BodyWeightMeasurementRow(props: {
           data-md-fs="xs"
           data-transform="nowrap"
           onClick={edit.enable}
+          type="button"
         >
           {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
         </button>
@@ -51,6 +52,7 @@ export function BodyWeightMeasurementRow(props: {
           data-fw="medium"
           data-transform="nowrap"
           onClick={edit.enable}
+          type="button"
         >
           {t("measurements.body_weight.value", {
             weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),

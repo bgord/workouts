@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Scale } from "lucide-react";
 import { useRef } from "react";
-import { ButtonClear } from "../components/button-clear.tsx";
+import { ButtonClear } from "../components/button-clear";
 import { measurementsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
