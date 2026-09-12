@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Scale } from "lucide-react";
 import { useRef } from "react";
+import { ButtonClear } from "../components/button-clear.tsx";
 import { measurementsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
@@ -84,16 +85,24 @@ export function BodyWeightMeasure() {
         />
       </div>
 
-      <button
-        className="c-button"
-        data-md-width="100%"
-        data-variant="secondary"
-        disabled={measuredOn.empty || weight.empty || mutation.isLoading}
-        type="submit"
-      >
-        <Scale data-size="sm" />
-        {t("measurements.body_weight.measure.cta")}
-      </button>
+      <div data-gap="2" data-md-width="100%" data-stack="x">
+        <button
+          className="c-button"
+          data-md-grow="1"
+          data-variant="secondary"
+          disabled={measuredOn.empty || weight.empty || mutation.isLoading}
+          type="submit"
+        >
+          <Scale data-size="sm" />
+          {t("measurements.body_weight.measure.cta")}
+        </button>
+
+        <ButtonClear
+          data-md-grow="1"
+          disabled={measuredOn.unchanged && weight.unchanged}
+          onClick={bg.exec([measuredOn.clear, weight.clear])}
+        />
+      </div>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm" data-mb="2">
