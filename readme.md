@@ -167,8 +167,8 @@ modules/
 │   │   └── list-body-weight-entries.ts
 │   └── value-objects
 │       ├── body-weight-entry.ts
+│       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
-│       ├── body-weight-recorded-on.ts
 │       ├── body-weight.ts
 ├── plans
 │   ├── aggregates
