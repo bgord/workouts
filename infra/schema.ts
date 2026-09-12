@@ -10,6 +10,9 @@ import type { ExerciseCategoryNameType } from "../modules/exercises/value-object
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
+import type { BodyWeightType } from "../modules/measurements/value-objects/body-weight";
+import type { BodyWeightMeasuredOnType } from "../modules/measurements/value-objects/body-weight-measured-on";
+import type { BodyWeightMeasurementIdType } from "../modules/measurements/value-objects/body-weight-measurement-id";
 import type { ExerciseInstructionIdType } from "../modules/plans/value-objects/exercise-instruction-id";
 import type { PlanDescriptionType } from "../modules/plans/value-objects/plan-description";
 import type { PlanIdType } from "../modules/plans/value-objects/plan-id";
@@ -296,4 +299,17 @@ export const workoutLoggedSets = sqliteTable(
     index("workoutLoggedSets_workoutExerciseId_idx").on(table.workoutExerciseId),
     index("workoutLoggedSets_userId_idx").on(table.userId),
   ],
+);
+
+export const bodyWeightMeasurements = sqliteTable(
+  "bodyWeightMeasurements",
+  {
+    id: identifier<BodyWeightMeasurementIdType>(),
+    weight: integer("weight", { mode: "number" }).notNull().$type<BodyWeightType>(),
+    recordedOn: text("recordedOn").notNull().$type<BodyWeightMeasuredOnType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [index("bodyWeightMeasurements_userId_idx").on(table.userId)],
 );
