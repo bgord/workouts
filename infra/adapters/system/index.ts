@@ -2,6 +2,7 @@
 import type { EnvironmentResultType } from "+infra/env";
 import { createCertificateInspector } from "./certificate-inspector.adapter";
 import { createClock } from "./clock.adapter";
+import { CsvParser } from "./csv-parser.adapter";
 import { CsvStringifier } from "./csv-stringifier.adapter";
 import { createDiskSpaceChecker } from "./disk-space-checker.adapter";
 import { createFileCleaner } from "./file-cleaner.adapter";
@@ -39,6 +40,7 @@ export async function createSystemAdapters(Env: EnvironmentResultType) {
   return {
     CertificateInspector: createCertificateInspector(Env, { Clock }),
     Clock,
+    CsvParser,
     CsvStringifier,
     DiskSpaceChecker: createDiskSpaceChecker(Env),
     IdProvider,
