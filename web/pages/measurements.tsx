@@ -18,7 +18,7 @@ export function Measurements() {
 
   return (
     <Main>
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-stack="x">
         <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
           {t("measurements.body_weight.header")}
         </h1>
@@ -31,7 +31,6 @@ export function Measurements() {
           {...bodyWeightImport.props.controller}
         >
           <Upload data-size="sm" />
-          {t("measurements.body_weight.import.toggle.cta")}
         </button>
 
         {measurements.length > 0 && (
@@ -44,7 +43,6 @@ export function Measurements() {
             target="_blank"
           >
             <Download data-size="sm" />
-            {t("measurements.body_weight.export.cta")}
           </a>
         )}
       </div>
