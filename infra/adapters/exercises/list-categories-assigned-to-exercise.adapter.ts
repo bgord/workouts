@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import type * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -17,7 +17,7 @@ class ListCategoriesAssignedToExerciseQueryDrizzle
         eq(Schema.exerciseCategories.id, Schema.exerciseCategoryAssignments.exerciseCategoryId),
       )
       .where(eq(Schema.exerciseCategoryAssignments.exerciseId, exerciseId))
-      .orderBy(desc(Schema.exerciseCategories.updatedAt));
+      .orderBy(asc(Schema.exerciseCategories.createdAt));
 
     return result.map((row) => ({ id: row.exercise_categories.id, name: row.exercise_categories.name }));
   }
