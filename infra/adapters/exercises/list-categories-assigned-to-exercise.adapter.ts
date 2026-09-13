@@ -17,7 +17,9 @@ class ListCategoriesAssignedToExerciseQueryDrizzle
         eq(Schema.exerciseCategories.id, Schema.exerciseCategoryAssignments.exerciseCategoryId),
       )
       .where(eq(Schema.exerciseCategoryAssignments.exerciseId, exerciseId))
-      .orderBy(asc(Schema.exerciseCategories.createdAt));
+      .orderBy(asc(Schema.exerciseCategoryAssignments.createdAt));
+
+    console.log(result);
 
     return result.map((row) => ({ id: row.exercise_categories.id, name: row.exercise_categories.name }));
   }
