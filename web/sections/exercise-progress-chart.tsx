@@ -1,11 +1,10 @@
 // cSpell:ignore GRIDLINE GRIDLINES
-import { useLanguage, useTranslations } from "@bgord/ui";
+import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import { ChartScale } from "../services/chart-scale";
-import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
@@ -29,7 +28,6 @@ const AREA_OPACITY = 0.08;
 
 export function ExerciseProgressChart(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
-  const language = useLanguage();
 
   if (props.performances.length < MINIMAL_POINTS) return null;
 
@@ -98,11 +96,11 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
           ))}
 
           <text x={PLOT.left} y={DATE_LABEL_BASELINE}>
-            {DateFormat.day(language, DateFormat.zoned(first.performance.performedAt))}
+            {first.performance.scheduledFor}
           </text>
 
           <text textAnchor="end" x={PLOT.right} y={DATE_LABEL_BASELINE}>
-            {DateFormat.day(language, DateFormat.zoned(last.performance.performedAt))}
+            {last.performance.scheduledFor}
           </text>
         </g>
 
@@ -133,7 +131,7 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
           >
             <title>
               {t("statistics.exercise.progress.point", {
-                date: DateFormat.dayWithTime(language, DateFormat.zoned(point.performance.performedAt)),
+                date: point.performance.scheduledFor,
                 load: WeightFormat.kilograms(point.performance.bestEstimate),
               })}
             </title>

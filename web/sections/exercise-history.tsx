@@ -1,4 +1,4 @@
-import { useLanguage, useTranslations } from "@bgord/ui";
+import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
@@ -6,12 +6,10 @@ import type { ExercisePerformance } from "../../modules/statistics/value-objects
 import { DeltaKg } from "../components/delta-kg";
 import { RepsLoad } from "../components/reps-load";
 import { RirBadge } from "../components/rir-badge";
-import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseHistory(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
-  const language = useLanguage();
 
   const performances = props.performances.toReversed();
   const record = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
@@ -34,7 +32,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
               search={WorkoutHistoryFilters.default}
               to="/workouts/$workoutId"
             >
-              {DateFormat.dayWithTime(language, DateFormat.zoned(performance.performedAt))}
+              {performance.scheduledFor}
 
               <ChevronRight data-color="neutral-500" data-size="sm" />
             </Link>

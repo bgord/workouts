@@ -13,7 +13,7 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
     const rows = await db
       .select({
         workoutId: Schema.workoutLoggedSets.workoutId,
-        performedAt: Schema.workouts.completedAt,
+        scheduledFor: Schema.workouts.scheduledFor,
         setNumber: Schema.workoutLoggedSets.setNumber,
         reps: Schema.workoutLoggedSets.reps,
         load: Schema.workoutLoggedSets.load,
@@ -33,11 +33,11 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
           isNotNull(Schema.workouts.completedAt),
         ),
       )
-      .orderBy(asc(Schema.workouts.completedAt), asc(Schema.workoutLoggedSets.setNumber));
+      .orderBy(asc(Schema.workouts.scheduledFor), asc(Schema.workoutLoggedSets.setNumber));
 
     return [...Map.groupBy(rows, (row) => row.workoutId)].map(([workoutId, rows]) => ({
       workoutId,
-      performedAt: rows[0]!.performedAt!,
+      scheduledFor: rows[0]!.scheduledFor!,
       sets: rows.map((row) => ({
         setNumber: row.setNumber,
         reps: row.reps,

@@ -4,7 +4,7 @@ import type * as VO from "+statistics/value-objects";
 
 export type ExercisePerformance = {
   workoutId: Workouts.VO.WorkoutIdType;
-  performedAt: tools.TimestampValueType;
+  scheduledFor: tools.DayIsoIdType;
   sets: Array<{
     setNumber: Workouts.VO.SetNumberType;
     reps: Workouts.VO.RepsType;

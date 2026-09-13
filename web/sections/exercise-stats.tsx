@@ -1,17 +1,15 @@
-import { Rhythm, useLanguage, useTranslations } from "@bgord/ui";
+import { Rhythm, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { CalendarCheck, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import { RepsLoad } from "../components/reps-load";
-import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
 const TILE_MIN_WIDTH = 168;
 
 export function ExerciseStats(props: { performances: Array<ExercisePerformance> }) {
   const t = useTranslations();
-  const language = useLanguage();
 
   const best = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
   const heaviest = props.performances.toSorted((a, b) => b.volume - a.volume)[0];
@@ -96,7 +94,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {DateFormat.day(language, DateFormat.zoned(heaviest.performedAt))}
+          {heaviest.scheduledFor}
         </div>
       </li>
 
@@ -128,7 +126,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {DateFormat.day(language, DateFormat.zoned(latest.performedAt))}
+          {latest.scheduledFor}
         </div>
       </li>
     </ul>

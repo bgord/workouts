@@ -338,7 +338,7 @@ export const loggedSetWithRir = v.parse(Workouts.VO.LoggedSet, {
 
 export const exercisePerformance = {
   workoutId,
-  performedAt: T0.ms,
+  scheduledFor: workoutScheduledFor,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -372,7 +372,7 @@ export const workoutCsv = [
 
 export const calculatedExercisePerformance = {
   workoutId,
-  performedAt: T0.ms,
+  scheduledFor: workoutScheduledFor,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
