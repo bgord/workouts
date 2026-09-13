@@ -31,12 +31,7 @@ export function WorkoutCard(props: WorkoutSummary) {
           </div>
 
           <div data-color="neutral-500" data-fs="xs" data-transform="truncate">
-            {props.completedAt
-              ? t("workout.list.completed_at", {
-                  date: scheduledFor,
-                  time: DateFormat.time(language, DateFormat.zoned(props.completedAt)),
-                })
-              : t("workout.list.scheduled_for", { date: scheduledFor })}
+            {scheduledFor}
           </div>
         </div>
 

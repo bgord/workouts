@@ -303,8 +303,6 @@
   "workout.exercise.remove.title": "Remove {{name}}",
   "workout.exercise.skipped": "Skipped",
   "workout.list.count": "{{matching}} of {{total}}",
-  "workout.list.scheduled_for": "{{date}}",
-  "workout.list.completed_at": "{{date}} · {{time}}",
   "workout.list.completed_on": "{{date}} · completed {{completed}}",
   "workout.list.empty": "No workouts yet",
   "workout.list.empty.hint": "Schedule one from a finalized plan to start training",
