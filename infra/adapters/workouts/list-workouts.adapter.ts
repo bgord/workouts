@@ -13,7 +13,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       .select()
       .from(Schema.workouts)
       .where(eq(Schema.workouts.userId, userId))
-      .orderBy(desc(Schema.workouts.createdAt));
+      .orderBy(desc(Schema.workouts.scheduledFor));
 
     const finalizedPlan = await db
       .select({
