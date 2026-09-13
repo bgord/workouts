@@ -72,7 +72,6 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   exercises.patch(
     "/:exerciseId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseUpdate(deps)),
   );
   exercises.patch(
@@ -102,31 +101,26 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   exercises.post(
     "/category",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryAdd(deps)),
   );
   exercises.patch(
     "/category/:exerciseCategoryId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryRename(deps)),
   );
   exercises.delete(
     "/category/:exerciseCategoryId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryDelete(deps)),
   );
   exercises.post(
     "/category/assign",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseAssignCategory(deps)),
   );
   exercises.post(
     "/category/unassign",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseUnassignCategory(deps)),
   );
 
@@ -141,91 +135,76 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   plans.post(
     "/create",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanCreate(deps)),
   );
   plans.post(
     "/:planId/section",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionCreate(deps)),
   );
   plans.post(
     "/:planId/section/:planSectionId/rename",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionRename(deps)),
   );
   plans.delete(
     "/:planId/section/:planSectionId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionRemove(deps)),
   );
   plans.post(
     "/:planId/section/:planSectionId/exercise-instruction",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionAdd(deps)),
   );
   plans.patch(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/instruction",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionUpdate(deps)),
   );
   plans.patch(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/exercise",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionExerciseChange(deps)),
   );
   plans.delete(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionRemove(deps)),
   );
   plans.post(
     "/:planId/archive",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanArchive(deps)),
   );
   plans.post(
     "/:planId/finalize",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanFinalize(deps)),
   );
   plans.post(
     "/:planId/restore",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRestore(deps)),
   );
   plans.delete(
     "/:planId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRemove(deps)),
   );
   plans.post(
     "/:planId/editing/enable",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanEditingEnable(deps)),
   );
   plans.post(
     "/:planId/rename",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanRename(deps)),
   );
   plans.patch(
     "/:planId/description",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanDescriptionSet(deps)),
   );
 
@@ -267,73 +246,61 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   workouts.post(
     "/create",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutCreate(deps)),
   );
   workouts.patch(
     "/:workoutId/exercise/:workoutExerciseId/target",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutExerciseSetTarget(deps)),
   );
   workouts.patch(
     "/:workoutId/start",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutStart(deps)),
   );
   workouts.post(
     "/:workoutId/exercise",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutExerciseAdd(deps)),
   );
   workouts.delete(
     "/:workoutId/exercise/:workoutExerciseId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutExerciseRemove(deps)),
   );
   workouts.delete(
     "/:workoutId/exercise/:workoutExerciseId/set/:loggedSetId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutSetRemove(deps)),
   );
   workouts.patch(
     "/:workoutId/exercise/:workoutExerciseId/set/:loggedSetId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutSetCorrect(deps)),
   );
   workouts.post(
     "/:workoutId/exercise/:workoutExerciseId/set",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutSetLog(deps)),
   );
   workouts.patch(
     "/:workoutId/complete",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutComplete(deps)),
   );
   workouts.delete(
     "/:workoutId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutDiscard(deps)),
   );
   workouts.patch(
     "/:workoutId/note",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutNoteSet(deps)),
   );
   workouts.patch(
     "/:workoutId/scheduled-for",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutReschedule(deps)),
   );
 
@@ -371,26 +338,22 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   measurements.post(
     "/body-weight/measure",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasure(deps)),
   );
   measurements.patch(
     "/body-weight/measurement/:bodyWeightMeasurementId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementCorrect(deps)),
   );
   measurements.delete(
     "/body-weight/measurement/:bodyWeightMeasurementId",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementRemove(deps)),
   );
 
   measurements.post(
     "/body-weight/measurement/:bodyWeightMeasurementId/reference",
     Tools.ShieldCaptcha.handle(),
-    Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightReferenceSet(deps)),
   );
 
