@@ -19,7 +19,7 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
         Schema.exerciseCategories,
         eq(Schema.exerciseCategoryAssignments.exerciseCategoryId, Schema.exerciseCategories.id),
       )
-      .orderBy(asc(Schema.exerciseCategories.name));
+      .orderBy(asc(Schema.exerciseCategoryAssignments.createdAt));
 
     const data = exercises.map((exercise) => ({
       id: exercise.id,
