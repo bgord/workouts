@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, Flag } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { ButtonClear, Select } from "../components";
 import { DateFormat } from "../services/date-format";
+import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
 const VISIBLE = 15;
@@ -27,7 +28,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
     props.measurements[props.measurements.indexOf(measurement) + 1];
 
   return (
-    <div data-gap="3" data-stack="y">
+    <div data-gap="5" data-stack="y">
       <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
         <div data-md-grow="1">
           <Select aria-label={t("measurements.body_weight.history.month.label")} {...month.input.props}>
@@ -45,17 +46,36 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
       </div>
 
       {reference && (
-        <div className="c-card" data-gap="0" data-md-px="2" data-p="3" data-pb="0">
-          <div data-color="neutral-500" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
-            <Flag data-size="xs" fill="currentColor" />
-            {t("measurements.body_weight.history.reference")}
+        <div
+          className="c-card"
+          data-cross="baseline"
+          data-gap="3"
+          data-p="4"
+          data-stack="x"
+          data-wrap="nowrap"
+        >
+          <div data-color="neutral-0" data-fs="lg" data-fw="bold" data-lh="tight">
+            {t("measurements.body_weight.value", {
+              weight: WeightFormat.kilograms(reference.weight, BodyWeightDecimals),
+            })}
           </div>
 
-          <table>
-            <tbody>
-              <BodyWeightMeasurementRow measurement={reference} previous={previous(reference)} />
-            </tbody>
-          </table>
+          <div data-color="neutral-500" data-fs="xs" data-grow="1">
+            {DateFormat.dayWithWeekday(language, new Date(reference.measuredOn))}
+          </div>
+
+          <div
+            data-color="neutral-500"
+            data-cross="center"
+            data-fs="xs"
+            data-gap="1-5"
+            data-ls="wide"
+            data-stack="x"
+            data-transform="uppercase"
+          >
+            <Flag data-color="brand-400" data-size="xs" fill="currentColor" />
+            {t("measurements.body_weight.history.reference")}
+          </div>
         </div>
       )}
 
