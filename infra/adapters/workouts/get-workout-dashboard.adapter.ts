@@ -56,7 +56,7 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
         )
         .orderBy(asc(Schema.workouts.scheduledFor), asc(Schema.workouts.createdAt))
         .get(),
-      db.select().from(Schema.workouts).where(completed).orderBy(desc(Schema.workouts.completedAt)).get(),
+      db.select().from(Schema.workouts).where(completed).orderBy(desc(Schema.workouts.scheduledFor)).get(),
       db.$count(
         Schema.workouts,
         and(
