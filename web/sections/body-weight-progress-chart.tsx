@@ -1,7 +1,6 @@
 // cSpell:ignore GRIDLINE GRIDLINES
 import { useLanguage, useTranslations } from "@bgord/ui";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { ChartScale } from "../services/chart-scale";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -19,7 +18,8 @@ const PLOT = {
 };
 
 const MINIMAL_POINTS = 2;
-const GRIDLINES = [0, 0.5, 1];
+const GRIDLINES_LIMIT = 5;
+const SCALE_MARGIN = 1;
 const GRIDLINE_LABEL_GAP = 8;
 const DATE_LABEL_BASELINE = HEIGHT - 6;
 const AREA_OPACITY = 0.08;
@@ -32,20 +32,26 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
 
   const measurements = props.measurements.toReversed();
 
-  const scale = ChartScale.of(measurements.map((measurement) => measurement.weight));
+  const kilograms = measurements.map((measurement) =>
+    WeightFormat.kilograms(measurement.weight, BodyWeightDecimals),
+  );
 
-  const toY = (weight: number) => PLOT.bottom - scale.ratio(weight) * PLOT.height;
+  const floor = Math.floor(Math.min(...kilograms)) - SCALE_MARGIN;
+  const ceiling = Math.ceil(Math.max(...kilograms)) + SCALE_MARGIN;
+  const step = Math.ceil((ceiling - floor) / GRIDLINES_LIMIT);
 
-  const gridlines = GRIDLINES.map((ratio) => {
-    const weight = scale.at(ratio);
+  const toY = (weight: number) => PLOT.bottom - ((weight - floor) / (ceiling - floor)) * PLOT.height;
 
-    return { ratio, weight, y: toY(weight) };
+  const gridlines = Array.from({ length: Math.floor((ceiling - floor) / step) + 1 }, (_, index) => {
+    const weight = floor + index * step;
+
+    return { weight, y: toY(weight) };
   });
 
   const points = measurements.map((measurement, index) => ({
     measurement,
     x: PLOT.left + (index * PLOT.width) / (measurements.length - 1),
-    y: toY(measurement.weight),
+    y: toY(kilograms[index]!),
   }));
 
   const first = points[0]!;
@@ -65,7 +71,7 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
       >
         <g data-color="neutral-800" stroke="currentColor">
           {gridlines.map((gridline) => (
-            <line key={gridline.ratio} x1={PLOT.left} x2={PLOT.right} y1={gridline.y} y2={gridline.y} />
+            <line key={gridline.weight} x1={PLOT.left} x2={PLOT.right} y1={gridline.y} y2={gridline.y} />
           ))}
         </g>
 
@@ -73,14 +79,12 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
           {gridlines.map((gridline) => (
             <text
               dominantBaseline="middle"
-              key={gridline.ratio}
+              key={gridline.weight}
               textAnchor="end"
               x={PLOT.left - GRIDLINE_LABEL_GAP}
               y={gridline.y}
             >
-              {t("measurements.body_weight.value", {
-                weight: WeightFormat.kilograms(gridline.weight, BodyWeightDecimals),
-              })}
+              {t("measurements.body_weight.value", { weight: gridline.weight })}
             </text>
           ))}
 
