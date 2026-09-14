@@ -29,6 +29,7 @@ export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeas
         className="c-button"
         data-color="neutral-400"
         data-hover-color="danger-400"
+        data-md-px="1"
         data-variant="ghost"
         disabled={mutation.isLoading}
         title={t("measurements.body_weight.remove.title")}

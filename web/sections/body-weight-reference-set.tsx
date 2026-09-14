@@ -29,6 +29,7 @@ export function BodyWeightReferenceSet(props: { measurement: BodyWeightMeasureme
         className="c-button"
         data-color={props.measurement.reference ? "brand-400" : "neutral-400"}
         data-hover-color="brand-300"
+        data-md-px="1"
         data-variant="ghost"
         disabled={props.measurement.reference || mutation.isLoading}
         title={t("measurements.body_weight.reference.title")}

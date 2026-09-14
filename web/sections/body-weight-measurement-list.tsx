@@ -45,61 +45,95 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
       </div>
 
       {reference && (
-        <ul className="c-card" data-gap="0" data-md-px="2" data-p="3" data-pb="0" data-stack="y">
-          <li data-color="neutral-500" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
+        <div className="c-card" data-gap="0" data-md-px="2" data-p="3" data-pb="0">
+          <div data-color="neutral-500" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
             <Flag data-size="xs" fill="currentColor" />
             {t("measurements.body_weight.history.reference")}
-          </li>
+          </div>
 
-          <BodyWeightMeasurementRow index={0} measurement={reference} previous={previous(reference)} />
-        </ul>
+          <table>
+            <tbody>
+              <BodyWeightMeasurementRow measurement={reference} previous={previous(reference)} />
+            </tbody>
+          </table>
+        </div>
       )}
 
-      <ul
-        className="c-card"
-        data-md-bw="none"
-        data-md-p="2-5"
-        data-md-px="0"
-        data-p="4"
-        data-stack="y"
-        data-variant="flat"
-      >
-        {visible.map((measurement, index) => (
-          <BodyWeightMeasurementRow
-            index={index}
-            key={measurement.id}
-            measurement={measurement}
-            previous={previous(measurement)}
-          />
-        ))}
-
-        {(hidden > 0 || all.on) && (
-          <li data-mt="2">
-            <button
-              className="c-link"
-              data-color="neutral-400"
-              data-cross="center"
+      <table data-mt="2">
+        <thead>
+          <tr data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
+            <th
+              data-color="neutral-600"
               data-fs="xs"
-              data-gap="1"
-              data-stack="x"
-              onClick={all.toggle}
-              type="button"
+              data-fw="regular"
+              data-md-pr="1"
+              data-pl="0"
+              data-pr="1-5"
+              data-py="1"
             >
-              {all.on ? (
-                <>
-                  {t("measurements.body_weight.history.less")}
-                  <ChevronUp data-size="xs" />
-                </>
-              ) : (
-                <>
-                  {t("measurements.body_weight.history.more", { count: hidden })}
-                  <ChevronDown data-size="xs" />
-                </>
-              )}
-            </button>
-          </li>
-        )}
-      </ul>
+              {t("measurements.body_weight.history.date")}
+            </th>
+            <th
+              data-color="neutral-600"
+              data-fs="xs"
+              data-fw="regular"
+              data-md-px="1"
+              data-px="1-5"
+              data-py="1"
+            >
+              {t("measurements.body_weight.history.weight")}
+            </th>
+            <th
+              data-color="neutral-600"
+              data-fs="xs"
+              data-fw="regular"
+              data-md-px="1"
+              data-px="1-5"
+              data-py="1"
+            >
+              {t("measurements.body_weight.history.delta")}
+            </th>
+            <th data-md-pl="1" data-pl="1-5" data-pr="0" data-py="1" />
+          </tr>
+        </thead>
+
+        <tbody>
+          {visible.map((measurement) => (
+            <BodyWeightMeasurementRow
+              key={measurement.id}
+              measurement={measurement}
+              previous={previous(measurement)}
+            />
+          ))}
+        </tbody>
+      </table>
+
+      {(hidden > 0 || all.on) && (
+        <div data-mt="2">
+          <button
+            className="c-link"
+            data-color="neutral-400"
+            data-cross="center"
+            data-fs="xs"
+            data-gap="1"
+            data-stack="x"
+            onClick={all.toggle}
+            type="button"
+          >
+            {all.on ? (
+              <>
+                {t("measurements.body_weight.history.less")}
+                <ChevronUp data-size="xs" />
+              </>
+            ) : (
+              <>
+                {t("measurements.body_weight.history.more", { count: hidden })}
+                <ChevronDown data-size="xs" />
+              </>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
