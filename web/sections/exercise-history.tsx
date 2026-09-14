@@ -68,7 +68,8 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
 
                 <div data-grow="1">{set.rir !== undefined && <RirBadge rir={set.rir} />}</div>
 
-                <div data-color="neutral-500" data-fs="xs">
+                <div data-color="neutral-500" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
+                  <EqualApproximately data-color="neutral-600" data-size="xs" />
                   {t("statistics.exercise.one_rep_max_estimate.value", {
                     load: WeightFormat.kilograms(set.estimate),
                   })}
