@@ -62,7 +62,10 @@ export const workoutsRoute = createRoute({
     const finalized = plans.data.active.find((plan) => plan.status === PlanStatusEnum.finalized);
     const plan = finalized ? await Plans.get(context.request, { planId: finalized.id }) : null;
 
-    return { workouts: await Workouts.list(context.request), plan: plan?.data ?? null };
+    return {
+      workouts: await Workouts.list(context.request, { filter: undefined }),
+      plan: plan?.data ?? null,
+    };
   },
 });
 
