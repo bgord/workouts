@@ -1,4 +1,4 @@
-import { useToggle, useTranslations } from "@bgord/ui";
+import { Rhythm, useToggle, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Info, ListChecks, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
@@ -39,8 +39,8 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
           <ExerciseImage size={ExerciseImageSize.sm} {...exercise} />
         </Link>
 
-        <div data-gap="1" data-grow="1" data-stack="y" data-transform="truncate">
-          <div data-cross="center" data-gap="0" data-stack="x" data-wrap="nowrap">
+        <div data-gap="1-5" data-grow="1" data-mb="auto" data-stack="y" data-transform="truncate">
+          <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
             <Link
               className="c-card-title"
               data-hover-color="brand-300"
@@ -58,11 +58,13 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
               className="c-button"
               data-color={description.on ? "neutral-0" : "neutral-500"}
               data-hover-color="neutral-0"
+              data-p="0"
               data-shrink="0"
               data-variant="ghost"
               onClick={description.toggle}
               title={t("workout.exercise.description.toggle")}
               type="button"
+              {...Rhythm(24).times(1).style.height}
               {...description.props.controller}
             >
               <Info data-size="sm" />
@@ -117,6 +119,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
               data-gap="1"
               data-stack="x"
               data-wrap="nowrap"
+              data-mt="0-5"
               title={t("workout.set.progress.title")}
             >
               <ListChecks data-size="xs" />
