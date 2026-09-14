@@ -408,6 +408,8 @@ modules/
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts
+        ├── workout-list-filter-options.ts
+        ├── workout-list-filter.ts
         ├── workout-note.ts
         ├── workout-note.validation.ts
         ├── workout-scheduled-for-horizon.ts
