@@ -24,6 +24,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
   Exercises.VO.ExerciseCategoryNameError,
   Exercises.VO.ExerciseDescriptionError,
   Exercises.VO.ExerciseNameError,
+  Measurements.VO.BodyWeightGoalError,
   Plans.VO.PlanDescriptionError,
   Plans.VO.PlanNameError,
   Plans.VO.PlanSectionNameError,

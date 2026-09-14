@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as Measurements from "+measurements";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -37,6 +38,30 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
     expect(json).toEqual({ message: "uuid.type" });
   });
 
+  test("validation - goal - missing", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: Measurements.VO.BodyWeightGoalError.invalid });
+  });
+
+  test("validation - goal - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ goal: "recomp" }) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: Measurements.VO.BodyWeightGoalError.invalid });
+  });
+
   test("BodyWeightMeasurementExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -45,7 +70,11 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       .use(spyOn(di.Adapters.Measurements.GetBodyWeightMeasurementQuery, "execute"))
       .mockResolvedValue(null);
 
-    const response = await server.request(url, { method: "POST" }, mocks.ip);
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ goal: Measurements.VO.BodyWeightGoalOptions.bulk }) },
+      mocks.ip,
+    );
 
     await testcases.assertInvariantError(response, 404, "body.weight.measurement.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
@@ -59,13 +88,17 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       .use(spyOn(di.Adapters.Measurements.GetBodyWeightMeasurementQuery, "execute"))
       .mockResolvedValue(mocks.bodyWeightMeasurement);
 
-    const response = await server.request(url, { method: "POST" }, mocks.ip);
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ goal: Measurements.VO.BodyWeightGoalOptions.bulk }) },
+      mocks.ip,
+    );
 
     await testcases.assertInvariantError(response, 403, "body.weight.measurement.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("BodyWeightMeasurementIsNotReference", async () => {
+  test("BodyWeightReferenceHasChanged", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -73,9 +106,13 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       .use(spyOn(di.Adapters.Measurements.GetBodyWeightMeasurementQuery, "execute"))
       .mockResolvedValue(mocks.bodyWeightReferenceMeasurement);
 
-    const response = await server.request(url, { method: "POST" }, mocks.ip);
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ goal: Measurements.VO.BodyWeightGoalOptions.maintain }) },
+      mocks.ip,
+    );
 
-    await testcases.assertInvariantError(response, 403, "body.weight.measurement.is.not.reference");
+    await testcases.assertInvariantError(response, 403, "body.weight.reference.has.changed");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -89,7 +126,11 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdHeaders },
+      {
+        method: "POST",
+        headers: mocks.correlationIdHeaders,
+        body: JSON.stringify({ goal: Measurements.VO.BodyWeightGoalOptions.bulk }),
+      },
       mocks.ip,
     );
 
