@@ -27,7 +27,6 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
     now: tools.Timestamp,
   ): Promise<Workouts.Queries.WorkoutDashboardResponse> {
     const today = now.toZonedDateTimeUTC().startOfDay();
-    const monthStart = tools.Timestamp.fromInstant(today.with({ day: 1 }).toInstant()).ms;
     const yearStart = tools.Timestamp.fromInstant(today.with({ month: 1, day: 1 }).toInstant()).ms;
 
     const completed = and(
@@ -58,7 +57,19 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
         .orderBy(asc(Schema.workouts.scheduledFor), asc(Schema.workouts.createdAt))
         .get(),
       db.select().from(Schema.workouts).where(completed).orderBy(desc(Schema.workouts.completedAt)).get(),
-      db.$count(Schema.workouts, and(completed, gte(Schema.workouts.completedAt, monthStart))),
+      db.$count(
+        Schema.workouts,
+        and(
+          completed,
+          gte(
+            // @ts-expect-error
+            Schema.workouts.scheduledFor,
+            tools.Day.fromTimestamp(
+              tools.Timestamp.fromInstant(today.with({ day: 1 }).toInstant()),
+            ).toIsoId(),
+          ),
+        ),
+      ),
       db.$count(Schema.workouts, and(completed, gte(Schema.workouts.completedAt, yearStart))),
       db.$count(Schema.workouts, completed),
     ]);
