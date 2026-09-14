@@ -31,7 +31,11 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
     <div data-gap="5" data-stack="y">
       <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
         <div data-md-grow="1">
-          <Select aria-label={t("measurements.body_weight.history.month.label")} {...month.input.props}>
+          <Select
+            aria-label={t("measurements.body_weight.history.month.label")}
+            {...month.input.props}
+            {...bg.Autocomplete.off}
+          >
             <option value="">{t("measurements.body_weight.history.month.all")}</option>
             {months.map((value) => (
               <option key={value} value={value}>
