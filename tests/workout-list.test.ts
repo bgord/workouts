@@ -1,21 +1,37 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
 
 const url = "/api/workouts/list";
 
-describe(`GET ${url}`, async () => {
+describe(`QUERY ${url}`, async () => {
   const di = await bootstrap();
   const server = createServer(di);
 
   test("validation - AccessDeniedAuthShieldError", async () => {
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(401);
     expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+  });
+
+  test("validation - filter - invalid", async () => {
+    const spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ filter: "ok" }) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "workout.list.filter.invalid" });
   });
 
   test("happy path", async () => {
@@ -31,7 +47,14 @@ describe(`GET ${url}`, async () => {
       }),
     );
 
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(
+      url,
+      {
+        method: "QUERY",
+        body: JSON.stringify({ filter: Workouts.VO.WorkoutListFilterOptions.last_week }),
+      },
+      mocks.ip,
+    );
     const json = await response.json();
 
     expect(response.status).toEqual(200);
@@ -53,7 +76,14 @@ describe(`GET ${url}`, async () => {
       }),
     );
 
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(
+      url,
+      {
+        method: "QUERY",
+        body: JSON.stringify({ filter: Workouts.VO.WorkoutListFilterOptions.last_week }),
+      },
+      mocks.ip,
+    );
     const json = await response.json();
 
     expect(response.status).toEqual(200);

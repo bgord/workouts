@@ -8,7 +8,10 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
-  async execute(userId: Auth.VO.UserIdType): Promise<Workouts.Queries.WorkoutListResponse> {
+  async execute(
+    userId: Auth.VO.UserIdType,
+    _filter: Workouts.VO.WorkoutListFilterOptions,
+  ): Promise<Workouts.Queries.WorkoutListResponse> {
     const workouts = await db
       .select()
       .from(Schema.workouts)
