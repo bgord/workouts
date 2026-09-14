@@ -30,7 +30,7 @@ export function Workout() {
           data-cross="center"
           data-gap="1"
           data-stack="x"
-          search={{ section: search.section }}
+          search={search}
           to="/workouts"
         >
           <ChevronLeft data-size="sm" />
@@ -52,7 +52,7 @@ export function Workout() {
             data-interaction="subtle-scale"
             data-self="start"
             data-variant="icon"
-            search={{ section: search.section }}
+            search={search}
             title={t("app.back")}
             to="/workouts"
           >

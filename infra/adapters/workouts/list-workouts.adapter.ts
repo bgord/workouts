@@ -1,6 +1,6 @@
 import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import { and, desc, eq, max, sql } from "drizzle-orm";
+import { and, desc, eq, gte, max, sql } from "drizzle-orm";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
@@ -10,12 +10,29 @@ import * as Schema from "+infra/schema";
 class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
   async execute(
     userId: Auth.VO.UserIdType,
-    _filter: Workouts.VO.WorkoutListFilterOptions,
+    filter: Workouts.VO.WorkoutListFilterOptions,
+    now: tools.Timestamp,
   ): Promise<Workouts.Queries.WorkoutListResponse> {
+    const today = now.toZonedDateTimeUTC().startOfDay();
+    const range = {
+      [Workouts.VO.WorkoutListFilterOptions.last_week]: today.subtract({ weeks: 1 }),
+      [Workouts.VO.WorkoutListFilterOptions.last_month]: today.subtract({ months: 1 }),
+      [Workouts.VO.WorkoutListFilterOptions.all_time]: null,
+    }[filter];
+    const since = range
+      ? tools.Day.fromTimestamp(tools.Timestamp.fromInstant(range.toInstant())).toIsoId()
+      : null;
+
+    const scope = and(
+      eq(Schema.workouts.userId, userId),
+      // @ts-expect-error
+      since ? gte(Schema.workouts.scheduledFor, since) : undefined,
+    );
+
     const workouts = await db
       .select()
       .from(Schema.workouts)
-      .where(eq(Schema.workouts.userId, userId))
+      .where(scope)
       .orderBy(desc(Schema.workouts.scheduledFor));
 
     const finalizedPlan = await db
@@ -56,11 +73,17 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
           finalizedPlan ? eq(Schema.planSections.planId, finalizedPlan.id) : sql`0`,
         ),
       )
-      .where(eq(Schema.workouts.userId, userId))
+      .where(scope)
       .groupBy(Schema.workouts.planSectionId)
       .orderBy(desc(max(Schema.workouts.createdAt)));
 
-    const drafts = data.filter((workout) => workout.status === Workouts.VO.WorkoutStatusEnum.draft).length;
+    const drafts = await db.$count(
+      Schema.workouts,
+      and(
+        eq(Schema.workouts.userId, userId),
+        eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.draft),
+      ),
+    );
 
     const planReady = Workouts.Invariants.WorkoutPlanReady.passes({ plan: finalizedPlan ?? null });
     const draftsAvailable = Workouts.Invariants.WorkoutDraftLimitForOwner.passes({

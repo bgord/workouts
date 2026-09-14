@@ -1,3 +1,4 @@
+import type * as tools from "@bgord/tools";
 import type { ActionState } from "+action-state";
 import type * as Auth from "+auth";
 import type * as Plans from "+plans";
@@ -12,5 +13,9 @@ export type WorkoutListResponse = {
 };
 
 export interface ListWorkouts {
-  execute(userId: Auth.VO.UserIdType, filter: VO.WorkoutListFilterOptions): Promise<WorkoutListResponse>;
+  execute(
+    userId: Auth.VO.UserIdType,
+    filter: VO.WorkoutListFilterOptions,
+    now: tools.Timestamp,
+  ): Promise<WorkoutListResponse>;
 }

@@ -10,6 +10,7 @@ import {
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
+import { WorkoutListFilterOptions } from "../modules/workouts/value-objects/workout-list-filter-options";
 import { Avatar, Exercises, I18N, Measurements, Plans, Session, Statistics, Workouts } from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
@@ -56,14 +57,18 @@ export const workoutsRoute = createRoute({
       typeof value["section"] === "string" && value["section"] !== ""
         ? value["section"]
         : WorkoutHistoryFiltersForm.Form.default.section,
+    filter: Object.values(WorkoutListFilterOptions).includes(value["filter"] as WorkoutListFilterOptions)
+      ? (value["filter"] as WorkoutListFilterOptions)
+      : WorkoutHistoryFiltersForm.Form.default.filter,
   }),
-  loader: async ({ context }) => {
+  loaderDeps: ({ search }) => search,
+  loader: async ({ context, deps }) => {
     const plans = await Plans.list(context.request);
     const finalized = plans.data.active.find((plan) => plan.status === PlanStatusEnum.finalized);
     const plan = finalized ? await Plans.get(context.request, { planId: finalized.id }) : null;
 
     return {
-      workouts: await Workouts.list(context.request, { filter: undefined }),
+      workouts: await Workouts.list(context.request, deps),
       plan: plan?.data ?? null,
     };
   },
@@ -126,6 +131,9 @@ export const workoutRoute = createRoute({
       typeof value["section"] === "string" && value["section"] !== ""
         ? value["section"]
         : WorkoutHistoryFiltersForm.Form.default.section,
+    filter: Object.values(WorkoutListFilterOptions).includes(value["filter"] as WorkoutListFilterOptions)
+      ? (value["filter"] as WorkoutListFilterOptions)
+      : WorkoutHistoryFiltersForm.Form.default.filter,
   }),
   loader: async ({ context, params }) => ({
     workout: await Workouts.get(context.request, params),

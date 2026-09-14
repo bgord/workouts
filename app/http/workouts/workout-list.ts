@@ -2,7 +2,7 @@ import type * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Workouts from "+workouts";
 
-type Dependencies = { ListWorkoutsQuery: Workouts.Queries.ListWorkouts };
+type Dependencies = { Clock: bg.ClockPort; ListWorkoutsQuery: Workouts.Queries.ListWorkouts };
 
 export const WorkoutList =
   (deps: Dependencies): bg.EndpointPort =>
@@ -14,7 +14,7 @@ export const WorkoutList =
       v.parse(Workouts.VO.WorkoutListFilter, body["filter"]) ??
       Workouts.VO.WorkoutListFilterOptions.last_week;
 
-    const workouts = await deps.ListWorkoutsQuery.execute(userId, filter);
+    const workouts = await deps.ListWorkoutsQuery.execute(userId, filter, deps.Clock.now());
 
     return Response.json(workouts);
   };

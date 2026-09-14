@@ -22,7 +22,7 @@ export function WorkoutCard(props: WorkoutSummary) {
         data-p="4"
         data-stack="x"
         params={{ workoutId: props.id }}
-        search={(prev) => ({ section: prev.section })}
+        search={(prev) => ({ section: prev.section, filter: prev.filter })}
         to="/workouts/$workoutId"
       >
         <div data-gap="1" data-grow="1" data-stack="y" data-transform="truncate">

@@ -232,7 +232,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const workouts = new Hono<infra.Config>();
 
   workouts.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
-  workouts.query("/list", bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutList(Adapters.Workouts)));
+  workouts.query(
+    "/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutList({ ...deps, ...Adapters.Workouts })),
+  );
   workouts.get(
     "/dashboard",
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutDashboard({ ...deps, ...Adapters.Workouts })),

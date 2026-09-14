@@ -42,7 +42,7 @@ export function WorkoutCreate() {
 
       await navigate({
         params: { workoutId: id },
-        search: (prev) => ({ section: prev.section }),
+        search: (prev) => prev,
         to: "/workouts/$workoutId",
       });
       await router.invalidate({ filter: (route) => route.id === workoutsRoute.id, sync: true });

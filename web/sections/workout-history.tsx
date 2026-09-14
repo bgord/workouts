@@ -2,7 +2,8 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { CalendarOff, SearchX } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
-import { ButtonClear, WorkoutCard } from "../components";
+import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
+import { ButtonClear, Select, WorkoutCard } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -12,6 +13,11 @@ export function WorkoutHistory() {
   const navigate = workoutsRoute.useNavigate();
   const search = workoutsRoute.useSearch();
 
+  const filter = bg.useTextField<WorkoutListFilterOptions>({
+    name: WorkoutHistoryFiltersForm.Form.filter.field.name,
+    defaultValue: search.filter ?? WorkoutListFilterOptions.last_week,
+  });
+
   const matching = workouts.data.filter(
     (workout) => !search.section || workout.planSectionId === search.section,
   );
@@ -19,11 +25,7 @@ export function WorkoutHistory() {
   bg.useShortcuts({
     [ShortcutDefinitions.OpenWorkout.trigger]: () => {
       if (matching[0]) {
-        navigate({
-          params: { workoutId: matching[0].id },
-          search: { section: search.section },
-          to: "/workouts/$workoutId",
-        });
+        navigate({ params: { workoutId: matching[0].id }, search, to: "/workouts/$workoutId" });
       }
     },
   });
@@ -57,7 +59,39 @@ export function WorkoutHistory() {
         data-wrap="wrap"
         {...bg.Rhythm(36).times(1).style.minHeight}
       >
-        <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
+        <Select
+          aria-label={t("workout.list.filter.label")}
+          id={WorkoutHistoryFiltersForm.Form.filter.field.name}
+          name={WorkoutHistoryFiltersForm.Form.filter.field.name}
+          onChange={(event) => {
+            filter.handleChange(event);
+            navigate({
+              search: {
+                section: search.section,
+                filter:
+                  event.currentTarget.value === WorkoutListFilterOptions.last_week
+                    ? undefined
+                    : (event.currentTarget.value as WorkoutListFilterOptions),
+              },
+              to: "/workouts",
+            });
+          }}
+          value={filter.value}
+        >
+          {Object.values(WorkoutListFilterOptions).map((option) => (
+            <option key={option} value={option}>
+              {t(`workout.list.filter.${option}`)}
+            </option>
+          ))}
+        </Select>
+
+        <ul
+          data-gap="1-5"
+          data-cross="center"
+          data-stack="x"
+          data-wrap="wrap"
+          {...bg.Rhythm(36).times(1).style.height}
+        >
           {workouts.sections.map((section) => (
             <li key={section.id}>
               <button
@@ -67,7 +101,10 @@ export function WorkoutHistory() {
                 data-variant={search.section === section.id ? "primary" : "outline"}
                 onClick={() =>
                   navigate({
-                    search: { section: search.section === section.id ? undefined : section.id },
+                    search: {
+                      section: search.section === section.id ? undefined : section.id,
+                      filter: undefined,
+                    },
                     to: "/workouts",
                   })
                 }
