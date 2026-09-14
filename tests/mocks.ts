@@ -1234,6 +1234,7 @@ export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   measuredOn: bodyWeightMeasuredOn,
   userId,
   reference: false,
+  goal: Measurements.VO.BodyWeightGoalOptions.maintain,
 };
 
 export const bodyWeightReferenceMeasurement: Measurements.VO.BodyWeightMeasurement = {
@@ -1286,7 +1287,11 @@ export const GenericBodyWeightReferenceSetEvent = {
   version: 1,
   commit,
   name: "BODY_WEIGHT_REFERENCE_SET_EVENT",
-  payload: { measurementId: bodyWeightMeasurementId, userId },
+  payload: {
+    measurementId: bodyWeightMeasurementId,
+    goal: Measurements.VO.BodyWeightGoalOptions.bulk,
+    userId,
+  },
 } satisfies Measurements.Events.BodyWeightReferenceSetEventType;
 
 export const GenericBodyWeightMeasurementCorrectedEvent = {

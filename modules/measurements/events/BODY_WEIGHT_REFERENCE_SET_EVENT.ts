@@ -8,7 +8,11 @@ export const BODY_WEIGHT_REFERENCE_SET_EVENT = "BODY_WEIGHT_REFERENCE_SET_EVENT"
 export const BodyWeightReferenceSetEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(BODY_WEIGHT_REFERENCE_SET_EVENT),
-  payload: v.object({ measurementId: VO.BodyWeightMeasurementId, userId: Auth.VO.UserId }),
+  payload: v.object({
+    measurementId: VO.BodyWeightMeasurementId,
+    goal: VO.BodyWeightGoal,
+    userId: Auth.VO.UserId,
+  }),
 });
 
 export type BodyWeightReferenceSetEventType = v.InferOutput<typeof BodyWeightReferenceSetEvent>;
