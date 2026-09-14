@@ -32,23 +32,22 @@ export function PlanRename(props: Plan) {
 
   if (rename.off) {
     return (
-      <h1 data-fs="2xl" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
-        <button
-          data-color="neutral-0"
-          data-cursor="pointer"
-          data-fs="2xl"
-          data-fw="black"
-          data-maxw="100%"
-          data-md-fs="xl"
-          data-transform="truncate"
-          onClick={rename.enable}
-          title={t("plan.rename.cta")}
-          type="button"
-          {...rename.props.controller}
-        >
+      <button
+        data-color="neutral-0"
+        data-cursor="pointer"
+        data-fs="2xl"
+        data-maxw="100%"
+        data-md-fs="xl"
+        data-transform="truncate"
+        onClick={rename.enable}
+        title={t("plan.rename.cta")}
+        type="button"
+        {...rename.props.controller}
+      >
+        <h1 data-fs="2xl" data-fw="black" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
           {props.name}
-        </button>
-      </h1>
+        </h1>
+      </button>
     );
   }
 

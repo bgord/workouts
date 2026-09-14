@@ -74,9 +74,9 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
                 className="c-button"
                 data-cross="center"
                 data-disp="flex"
+                data-grow="1"
                 data-main="center"
                 data-variant="secondary"
-                data-grow="1"
                 tabIndex={0}
                 {...image.label.props}
               >
@@ -112,19 +112,19 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
 
             {image.isSelected && (
               <output
-                data-disp="block"
                 data-color="neutral-300"
+                data-disp="block"
                 data-fs="xs"
                 data-maxw="100%"
-                data-transform="truncate"
                 data-self="start"
+                data-transform="truncate"
               >
                 {t("exercise.image.change.selected", { name: image.data.name })}
               </output>
             )}
           </div>
 
-          <div data-stack="x" data-cross="center" data-gap="1" data-color="neutral-400" data-fs="xs">
+          <div data-color="neutral-400" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
             <InfoIcon data-size="xs" />
             {t("exercise.image.change.hint")}
           </div>

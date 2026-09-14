@@ -54,6 +54,7 @@ export function ProfileAvatarChange() {
               data-main="center"
               data-md-grow="1"
               data-variant="ghost"
+              tabIndex={0}
               {...avatar.label.props}
             >
               <ImageUp data-size="sm" />
