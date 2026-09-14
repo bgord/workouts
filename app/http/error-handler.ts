@@ -30,6 +30,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
   Plans.VO.RepsError,
   Workouts.VO.RirError,
   Workouts.VO.WorkoutNoteError,
+  Workouts.VO.WorkoutListFilterError,
   bg.HashValueError,
   bg.UUIDError,
   tools.DayIsoIdError,
