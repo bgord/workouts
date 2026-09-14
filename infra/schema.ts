@@ -11,6 +11,8 @@ import type { ExerciseDescriptionType } from "../modules/exercises/value-objects
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
 import type { BodyWeightType } from "../modules/measurements/value-objects/body-weight";
+import type { BodyWeightGoalType } from "../modules/measurements/value-objects/body-weight-goal";
+import { BodyWeightGoalOptions } from "../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasuredOnType } from "../modules/measurements/value-objects/body-weight-measured-on";
 import type { BodyWeightMeasurementIdType } from "../modules/measurements/value-objects/body-weight-measurement-id";
 import type { ExerciseInstructionIdType } from "../modules/plans/value-objects/exercise-instruction-id";
@@ -308,6 +310,7 @@ export const bodyWeightMeasurements = sqliteTable(
     weight: integer("weight", { mode: "number" }).notNull().$type<BodyWeightType>(),
     measuredOn: text("measuredOn").notNull().$type<BodyWeightMeasuredOnType>(),
     reference: integer("reference", { mode: "boolean" }).notNull().default(false),
+    goal: text("goal").notNull().$type<BodyWeightGoalType>().default(BodyWeightGoalOptions.maintain),
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
     createdAt: timestamp("createdAt").notNull(),
     updatedAt: timestamp("updatedAt").notNull(),

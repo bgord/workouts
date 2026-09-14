@@ -1,0 +1,1 @@
+ALTER TABLE `bodyWeightMeasurements` ADD `goal` text DEFAULT 'maintain' NOT NULL;
