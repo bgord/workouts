@@ -45,10 +45,12 @@ export function WorkoutExerciseRemove(props: {
           className="c-button"
           data-color="neutral-400"
           data-hover-color="danger-400"
+          data-p="2"
           data-variant="ghost"
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
           type="submit"
+          {...bg.Rhythm(24).times(1).style.height}
           {...dialog.props.controller}
         >
           <X data-size="sm" />
