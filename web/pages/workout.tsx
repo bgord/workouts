@@ -79,32 +79,13 @@ export function Workout() {
                   </h1>
                 </div>
 
-                <div
-                  data-color="neutral-500"
-                  data-cross="center"
-                  data-fs="xs"
-                  data-gap="1-5"
-                  data-stack="x"
-                  data-wrap="wrap"
-                >
-                  {workout.actions.reschedule.available ? (
-                    <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
-                  ) : (
-                    <div>{DateFormat.dayWithWeekday(language, new Date(workout.data.scheduledFor))}</div>
-                  )}
-
-                  {workout.data.completedAt && (
-                    <>
-                      <div data-color="neutral-600">·</div>
-
-                      <div>
-                        {t("workout.completed_at", {
-                          date: DateFormat.dayWithTime(language, DateFormat.zoned(workout.data.completedAt)),
-                        })}
-                      </div>
-                    </>
-                  )}
-                </div>
+                {workout.actions.reschedule.available ? (
+                  <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
+                ) : (
+                  <div data-fs="xs" data-color="neutral-500">
+                    {DateFormat.dayWithWeekday(language, new Date(workout.data.scheduledFor))}
+                  </div>
+                )}
               </div>
 
               <div

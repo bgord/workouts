@@ -267,7 +267,6 @@
   "workout.complete.blocked.no_logged_sets": "Najpierw zapisz przynajmniej jedną serię",
   "workout.complete.cta": "Zakończ",
   "workout.complete.error": "Nie udało się zakończyć treningu",
-  "workout.completed_at": "Ukończono {{date}}",
   "workout.copy.cta": "Kopiuj trening",
   "workout.copy.done": "Skopiowano do schowka",
   "workout.copy.title": "Skopiuj zapisane serie",

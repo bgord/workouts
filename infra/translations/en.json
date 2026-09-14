@@ -267,7 +267,6 @@
   "workout.complete.blocked.no_logged_sets": "Log at least one set first",
   "workout.complete.cta": "Complete",
   "workout.complete.error": "Could not complete the workout",
-  "workout.completed_at": "Completed {{date}}",
   "workout.copy.cta": "Copy workout",
   "workout.copy.done": "Copied to the clipboard",
   "workout.copy.title": "Copy the logged sets",
