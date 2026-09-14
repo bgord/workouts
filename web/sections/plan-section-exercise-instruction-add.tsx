@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import { ActionHint, ButtonCancel, Select } from "../components";
+import { ActionHint, ButtonCancel } from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionAdd(props: {
@@ -17,7 +17,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
   const { exercises } = planRoute.useLoaderData();
   const add = bg.useToggle({ name: `plan-section-exercise-instruction-add-${props.section.id}` });
 
-  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises.data[0]?.id ?? "" });
+  const exerciseName = bg.useTextField(Form.exerciseName.field);
   const sets = bg.useNumberField(Form.sets.field);
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
@@ -29,7 +29,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
         credentials: "include",
         headers: bg.WeakETag.fromRevision(props.plan.revision),
         body: JSON.stringify({
-          exerciseId: exerciseId.value,
+          exerciseId: exercises.data.find((exercise) => exercise.name === exerciseName.value)?.id,
           sets: sets.value,
           reps: { min: repsMin.value, max: repsMax.value },
         }),
@@ -39,7 +39,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
 
-      bg.Fields.clearAll([exerciseId, sets, repsMin, repsMax]);
+      bg.Fields.clearAll([exerciseName, sets, repsMin, repsMax]);
       context.form?.reset();
     },
   });
@@ -65,20 +65,25 @@ export function PlanSectionExerciseInstructionAdd(props: {
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...add.props.target}>
-      <div data-cross="end" data-gap="3" data-stack="x">
-        <div data-cross="start" data-gap="1" data-md-width="100%" data-stack="y">
-          <label className="c-label" {...exerciseId.label.props}>
+    <form
+      className="c-card-footer"
+      data-gap="2"
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...add.props.target}
+    >
+      <div data-cross="end" data-gap="3" data-self="start" data-stack="x" data-width="100%">
+        <div data-cross="start" data-gap="1" data-grow="1" data-md-width="100%" data-stack="y">
+          <label className="c-label" {...exerciseName.label.props}>
             {t("plan.section.exercise.add.exercise.label")}
           </label>
 
-          <Select data-md-width="100%" {...exerciseId.input.props}>
+          <input className="c-input" list="exercises" {...exerciseName.input.props} data-width="100%" />
+          <datalist id="exercises">
             {exercises.data.map((exercise) => (
-              <option key={exercise.id} value={exercise.id}>
-                {exercise.name}
-              </option>
+              <option value={exercise.name}>{exercise.name}</option>
             ))}
-          </Select>
+          </datalist>
         </div>
 
         <div data-cross="start" data-gap="1" data-stack="y">

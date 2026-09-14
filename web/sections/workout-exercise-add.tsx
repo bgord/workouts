@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, ButtonCancel, Select } from "../components";
+import { ActionHint, ButtonCancel } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
@@ -13,7 +13,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
   const { exercises } = workoutRoute.useLoaderData();
   const add = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
 
-  const exerciseId = bg.useTextField({ ...Form.exerciseId.field, defaultValue: exercises.data[0]?.id ?? "" });
+  const exerciseName = bg.useTextField(Form.exerciseName.field);
   const sets = bg.useNumberField(Form.sets.field);
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
@@ -25,7 +25,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
         credentials: "include",
         headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.revision) },
         body: JSON.stringify({
-          exerciseId: exerciseId.value,
+          exerciseId: exercises.data.find((exercise) => exercise.name === exerciseName.value)?.id,
           sets: sets.value,
           reps: { min: repsMin.value, max: repsMax.value },
         }),
@@ -35,7 +35,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
 
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
 
-      bg.Fields.clearAll([exerciseId, sets, repsMin, repsMax]);
+      bg.Fields.clearAll([exerciseName, sets, repsMin, repsMax]);
       context.form?.reset();
     },
   });
@@ -72,18 +72,17 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
       {...add.props.target}
     >
       <div data-cross="end" data-gap="3" data-stack="x">
-        <div data-cross="start" data-gap="1" data-md-width="100%" data-stack="y">
-          <label className="c-label" {...exerciseId.label.props}>
+        <div data-cross="start" data-gap="1" data-grow="1" data-md-width="100%" data-stack="y">
+          <label className="c-label" {...exerciseName.label.props}>
             {t("workout.exercise.add.exercise.label")}
           </label>
 
-          <Select data-md-width="100%" {...exerciseId.input.props}>
+          <input className="c-input" list="exercises" {...exerciseName.input.props} data-width="100%" />
+          <datalist id="exercises">
             {exercises.data.map((exercise) => (
-              <option key={exercise.id} value={exercise.id}>
-                {exercise.name}
-              </option>
+              <option value={exercise.name}>{exercise.name}</option>
             ))}
-          </Select>
+          </datalist>
         </div>
 
         <div data-cross="start" data-gap="1" data-stack="y">

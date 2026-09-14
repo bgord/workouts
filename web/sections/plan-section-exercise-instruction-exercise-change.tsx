@@ -7,7 +7,7 @@ import type {
   Plan,
   PlanSectionWithExercises,
 } from "../../modules/plans/value-objects/plan";
-import { ButtonCancel, Select } from "../components";
+import { ButtonCancel } from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionExerciseChange(props: {
@@ -21,9 +21,8 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
   const { exercises } = planRoute.useLoaderData();
   const change = props.toggle;
 
-  const exerciseId = bg.useTextField({
-    name: `${Form.exerciseId.field.name}-${props.exerciseInstruction.id}`,
-    defaultValue: props.exerciseInstruction.exercise.id,
+  const exerciseName = bg.useTextField({
+    name: `${Form.exerciseName.field.name}-${props.exerciseInstruction.id}`,
   });
 
   const mutation = bg.useMutation({
@@ -34,7 +33,9 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
           method: "PATCH",
           credentials: "include",
           headers: bg.WeakETag.fromRevision(props.plan.revision),
-          body: JSON.stringify({ exerciseId: exerciseId.value }),
+          body: JSON.stringify({
+            exerciseId: exercises.data.find((exercise) => exercise.name === exerciseName.value)?.id ?? "",
+          }),
         },
       ),
     onSuccess: async () => {
@@ -72,17 +73,12 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
       onSubmit={mutation.handleSubmit}
       {...change.props.target}
     >
-      <Select
-        aria-label={t("plan.section.exercise.add.exercise.label")}
-        data-md-width="100%"
-        {...exerciseId.input.props}
-      >
+      <input className="c-input" list="exercises" {...exerciseName.input.props} data-grow="1" />
+      <datalist id="exercises">
         {exercises.data.map((exercise) => (
-          <option key={exercise.id} value={exercise.id}>
-            {exercise.name}
-          </option>
+          <option value={exercise.name}>{exercise.name}</option>
         ))}
-      </Select>
+      </datalist>
 
       <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
         <button
@@ -97,7 +93,7 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
 
         <ButtonCancel
           data-md-grow="1"
-          onClick={bg.exec([exerciseId.clear, mutation.reset, change.disable])}
+          onClick={bg.exec([exerciseName.clear, mutation.reset, change.disable])}
         />
       </div>
 
