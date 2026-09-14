@@ -165,6 +165,7 @@
   "measurements.body_weight.history.month.all": "All months",
   "measurements.body_weight.history.more": "+{{count}} more",
   "measurements.body_weight.history.less": "Show less",
+  "measurements.body_weight.history.reference": "Reference",
   "plan.archive.cta": "Archive",
   "plan.archive.error": "Could not archive the plan",
   "plan.archive.header": "Archive plan",

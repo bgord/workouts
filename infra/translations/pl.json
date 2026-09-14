@@ -165,6 +165,7 @@
   "measurements.body_weight.history.month.all": "Wszystkie miesiące",
   "measurements.body_weight.history.more": "+{{count}} więcej",
   "measurements.body_weight.history.less": "Pokaż mniej",
+  "measurements.body_weight.history.reference": "Punkt odniesienia",
   "plan.archive.cta": "Archiwizuj",
   "plan.archive.error": "Nie udało się zarchiwizować planu",
   "plan.archive.header": "Archiwizacja planu",

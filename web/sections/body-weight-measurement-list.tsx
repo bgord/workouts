@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Flag } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { Select } from "../components";
 import { DateFormat } from "../services/date-format";
@@ -43,6 +43,17 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
         ))}
       </Select>
 
+      {pinned && (
+        <ul className="c-card" data-gap="0" data-md-px="2" data-p="3" data-pb="0" data-stack="y">
+          <li data-color="neutral-500" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
+            <Flag data-size="xs" fill="currentColor" />
+            {t("measurements.body_weight.history.reference")}
+          </li>
+
+          <BodyWeightMeasurementRow index={0} measurement={pinned} previous={previous(pinned)} />
+        </ul>
+      )}
+
       <ul
         className="c-card"
         data-md-bw="none"
@@ -52,14 +63,6 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
         data-stack="y"
         data-variant="flat"
       >
-        {pinned && (
-          <>
-            <BodyWeightMeasurementRow index={0} measurement={pinned} previous={previous(pinned)} />
-
-            <li data-bct="alpha-subtle" data-bst="solid" data-bwt="hairline" data-mb="2" data-mt="2" />
-          </>
-        )}
-
         {visible.map((measurement, index) => (
           <BodyWeightMeasurementRow
             index={index}
