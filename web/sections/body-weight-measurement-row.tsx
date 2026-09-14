@@ -21,7 +21,7 @@ export function BodyWeightMeasurementRow(props: {
       data-bct={props.index > 0 ? "alpha-subtle" : undefined}
       data-bst={props.index > 0 ? "solid" : undefined}
       data-bwt={props.index > 0 ? "hairline" : undefined}
-      data-cross="center"
+      data-cross="baseline"
       data-gap="3"
       data-md-gap="1-5"
       data-py="1-5"

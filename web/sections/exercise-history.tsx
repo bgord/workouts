@@ -86,7 +86,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
             data-pt="3"
             data-stack="x"
           >
-            <div data-cross="center" data-gap="1-5" data-stack="x">
+            <div data-cross="baseline" data-gap="1-5" data-stack="x">
               <EqualApproximately data-color="neutral-600" data-size="xs" />
 
               <span data-color="neutral-300" data-fs="sm" data-fw="medium">
@@ -103,7 +103,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
               </span>
             </div>
 
-            <div data-cross="center" data-gap="1-5" data-stack="x">
+            <div data-cross="baseline" data-gap="1-5" data-stack="x">
               <Sigma data-color="neutral-600" data-size="xs" />
 
               <span data-color="neutral-300" data-fs="sm" data-fw="medium">
