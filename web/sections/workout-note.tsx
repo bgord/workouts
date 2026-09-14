@@ -28,7 +28,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
   });
 
   return (
-    <div data-gap="2" data-my="5" data-stack="y">
+    <div data-gap="2" data-stack="y">
       {update.off && (
         <button
           className="c-prose"
