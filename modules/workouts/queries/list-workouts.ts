@@ -12,5 +12,5 @@ export type WorkoutListResponse = {
 };
 
 export interface ListWorkouts {
-  execute(userId: Auth.VO.UserIdType): Promise<WorkoutListResponse>;
+  execute(userId: Auth.VO.UserIdType, filter: VO.WorkoutListFilterOptions): Promise<WorkoutListResponse>;
 }
