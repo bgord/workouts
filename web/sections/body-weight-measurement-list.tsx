@@ -81,7 +81,9 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
               data-px="1-5"
               data-py="1"
             >
-              {t("measurements.body_weight.history.weight")}
+              <div data-main="end" data-stack="x">
+                {t("measurements.body_weight.history.weight")}
+              </div>
             </th>
             <th
               data-color="neutral-600"
@@ -91,7 +93,9 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
               data-px="1-5"
               data-py="1"
             >
-              {t("measurements.body_weight.history.delta")}
+              <div data-main="end" data-stack="x">
+                {t("measurements.body_weight.history.delta")}
+              </div>
             </th>
             <th data-md-pl="1" data-pl="1-5" data-pr="0" data-py="1" />
           </tr>

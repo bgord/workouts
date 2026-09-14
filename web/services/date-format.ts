@@ -11,6 +11,8 @@ export const DateFormat = {
   month: (language: string, date: Date) =>
     date.toLocaleDateString(language, { month: "long", year: "numeric" }),
 
+  weekday: (language: string, date: Date) => date.toLocaleDateString(language, { weekday: "short" }),
+
   dayWithWeekday: (language: string, date: Date) =>
     date.toLocaleDateString(language, { ...DAY, weekday: "short" }),
 

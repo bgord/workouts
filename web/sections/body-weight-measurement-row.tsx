@@ -16,7 +16,7 @@ export function BodyWeightMeasurementRow(props: {
   const edit = bg.useToggle({ name: `correct-${props.measurement.id}` });
 
   return (
-    <tr>
+    <tr data-hover-bg="alpha-subtle">
       {edit.on && (
         <td colSpan={4} data-px="0" data-py="1-5">
           <BodyWeightMeasurementCorrect measurement={props.measurement} toggle={edit} />
@@ -26,36 +26,43 @@ export function BodyWeightMeasurementRow(props: {
       {edit.off && (
         <td data-md-pr="1" data-pl="0" data-pr="1-5" data-py="1-5" data-width="100%">
           <button
-            data-color="neutral-300"
+            data-color="neutral-200"
             data-cursor="pointer"
             data-fs="sm"
             data-fw="medium"
+            data-gap="1"
             data-md-fs="xs"
+            data-stack="x"
             data-transform="nowrap"
             onClick={edit.enable}
             type="button"
           >
-            {DateFormat.dayWithWeekday(language, new Date(props.measurement.measuredOn))}
+            {DateFormat.day(language, new Date(props.measurement.measuredOn))}
+            <span data-color="neutral-500" data-mr="1-5">
+              {`(${DateFormat.weekday(language, new Date(props.measurement.measuredOn))})`}
+            </span>
           </button>
         </td>
       )}
 
       {edit.off && (
         <td data-md-px="1" data-px="1-5" data-py="1-5">
-          <button
-            data-color="neutral-100"
-            data-cursor="pointer"
-            data-fs="sm"
-            data-fw="medium"
-            data-md-fs="xs"
-            data-transform="nowrap"
-            onClick={edit.enable}
-            type="button"
-          >
-            {t("measurements.body_weight.value", {
-              weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
-            })}
-          </button>
+          <div data-main="end" data-stack="x">
+            <button
+              data-color="neutral-0"
+              data-cursor="pointer"
+              data-fs="sm"
+              data-fw="semibold"
+              data-md-fs="xs"
+              data-transform="nowrap"
+              onClick={edit.enable}
+              type="button"
+            >
+              {t("measurements.body_weight.value", {
+                weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
+              })}
+            </button>
+          </div>
         </td>
       )}
 
