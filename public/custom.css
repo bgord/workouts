@@ -56,3 +56,10 @@
 a {
   text-decoration: none;
 }
+
+.chart-point {
+  visibility: hidden;
+}
+g:hover > .chart-point {
+  visibility: visible;
+}

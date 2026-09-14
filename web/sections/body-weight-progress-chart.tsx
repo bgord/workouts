@@ -23,6 +23,7 @@ const SCALE_MARGIN = 1;
 const GRIDLINE_LABEL_GAP = 8;
 const DATE_LABEL_BASELINE = HEIGHT - 6;
 const AREA_OPACITY = 0.08;
+const POINT_HIT_RADIUS = 8;
 
 export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<BodyWeightMeasurement> }) {
   const t = useTranslations();
@@ -124,13 +125,17 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
         />
 
         {points.map((point) => (
-          <g key={point.measurement.id}>
+          <g data-color="brand-300" key={point.measurement.id}>
             <title>
               {t("measurements.body_weight.progress.point", {
                 date: DateFormat.plainDay(language, new Date(point.measurement.measuredOn)),
                 weight: WeightFormat.kilograms(point.measurement.weight, BodyWeightDecimals),
               })}
             </title>
+
+            <circle className="chart-point" cx={point.x} cy={point.y} fill="currentColor" r="4" />
+
+            <circle cx={point.x} cy={point.y} fill="transparent" r={POINT_HIT_RADIUS} />
           </g>
         ))}
       </svg>
