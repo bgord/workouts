@@ -1,5 +1,6 @@
 import type * as Auth from "+auth";
 import type { BodyWeightType } from "./body-weight";
+import type { BodyWeightGoalType } from "./body-weight-goal";
 import type { BodyWeightMeasuredOnType } from "./body-weight-measured-on";
 import type { BodyWeightMeasurementIdType } from "./body-weight-measurement-id";
 
@@ -9,4 +10,5 @@ export type BodyWeightMeasurement = {
   measuredOn: BodyWeightMeasuredOnType;
   userId: Auth.VO.UserIdType;
   reference: boolean;
+  goal: BodyWeightGoalType;
 };

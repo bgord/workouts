@@ -168,7 +168,7 @@ modules/
 │   │   ├── body-weight-measurement-belongs-to-user.ts
 │   │   ├── body-weight-measurement-exists.ts
 │   │   ├── body-weight-measurement-has-changed.ts
-│   │   ├── body-weight-measurement-is-not-reference.ts
+│   │   ├── body-weight-reference-has-changed.ts
 │   ├── ports
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
@@ -177,6 +177,8 @@ modules/
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   └── value-objects
+│       ├── body-weight-goal-options.ts
+│       ├── body-weight-goal.ts
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
 │       ├── body-weight-measurement-import-max-size.ts
