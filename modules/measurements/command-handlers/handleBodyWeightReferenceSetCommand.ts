@@ -3,7 +3,7 @@ import type * as Measurements from "+measurements";
 import { BodyWeightReferenceSetEvent } from "../events/BODY_WEIGHT_REFERENCE_SET_EVENT";
 import { BodyWeightMeasurementBelongsToUser } from "../invariants/body-weight-measurement-belongs-to-user";
 import { BodyWeightMeasurementExists } from "../invariants/body-weight-measurement-exists";
-import { BodyWeightMeasurementIsNotReference } from "../invariants/body-weight-measurement-is-not-reference";
+import { BodyWeightReferenceHasChanged } from "../invariants/body-weight-reference-has-changed";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -22,12 +22,16 @@ export const handleBodyWeightReferenceSetCommand =
       userId: measurement!.userId,
       requesterId: command.payload.requesterId,
     });
-    BodyWeightMeasurementIsNotReference.enforce({ measurement: measurement! });
+    BodyWeightReferenceHasChanged.enforce({ measurement: measurement!, goal: command.payload.goal });
 
     const event = bg.event(
       BodyWeightReferenceSetEvent,
       `body_weight_reference_${command.payload.requesterId}`,
-      { measurementId: command.payload.measurementId, userId: command.payload.requesterId },
+      {
+        measurementId: command.payload.measurementId,
+        goal: command.payload.goal,
+        userId: command.payload.requesterId,
+      },
       deps,
     );
 
