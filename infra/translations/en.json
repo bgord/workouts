@@ -81,6 +81,8 @@
   "exercise.add.submit.cta": "Add exercise",
   "exercise.categories.empty": "No categories assigned",
   "exercise.categories.header": "Categories",
+  "exercise.catalog.categories.less": "Show less",
+  "exercise.catalog.categories.more": "+{{count}} more",
   "exercise.catalog.count": "{{matching}} of {{total}}",
   "exercise.catalog.header": "Catalog",
   "exercise.catalog.name.placeholder": "Search by name",

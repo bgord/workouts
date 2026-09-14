@@ -81,6 +81,8 @@
   "exercise.add.submit.cta": "Dodaj ćwiczenie",
   "exercise.categories.empty": "Brak przypisanych kategorii",
   "exercise.categories.header": "Kategorie",
+  "exercise.catalog.categories.less": "Pokaż mniej",
+  "exercise.catalog.categories.more": "+{{count}} więcej",
   "exercise.catalog.count": "{{matching}} z {{total}}",
   "exercise.catalog.header": "Katalog ćwiczeń",
   "exercise.catalog.name.placeholder": "Szukaj po nazwie",

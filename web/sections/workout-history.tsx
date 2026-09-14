@@ -86,8 +86,8 @@ export function WorkoutHistory() {
         </Select>
 
         <ul
-          data-gap="1-5"
           data-cross="center"
+          data-gap="1-5"
           data-stack="x"
           data-wrap="wrap"
           {...bg.Rhythm(36).times(1).style.height}

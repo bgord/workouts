@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Search, SearchX } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, SearchX } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
 import { ButtonClear, ExerciseCard } from "../components";
@@ -18,6 +18,12 @@ export function ExerciseCatalog() {
     name: ExerciseCatalogFiltersForm.Form.name.field.name,
     defaultValue: search.name ?? "",
   });
+
+  const categoryList = bg.useToggle({ name: "exercise-catalog-categories" });
+
+  const categories = categoryList.on ? exerciseCategories.data : exerciseCategories.data.slice(0, 5);
+
+  const hidden = exerciseCategories.data.length - categories.length;
 
   const matching = exercises.data.filter((exercise) => {
     const byCategory =
@@ -85,7 +91,7 @@ export function ExerciseCatalog() {
       </div>
 
       <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
-        {exerciseCategories.data.map((category) => {
+        {categories.map((category) => {
           const selected = search.category === category.id;
 
           return (
@@ -108,6 +114,35 @@ export function ExerciseCatalog() {
             </li>
           );
         })}
+
+        {(hidden > 0 || categoryList.on) && (
+          <li>
+            <button
+              className="c-link"
+              data-cursor="pointer"
+              data-color="neutral-400"
+              data-cross="center"
+              data-fs="xs"
+              data-gap="1"
+              data-stack="x"
+              data-mx="1"
+              onClick={categoryList.toggle}
+              type="button"
+            >
+              {categoryList.on ? (
+                <>
+                  {t("exercise.catalog.categories.less")}
+                  <ChevronUp data-size="xs" />
+                </>
+              ) : (
+                <>
+                  {t("exercise.catalog.categories.more", { count: hidden })}
+                  <ChevronDown data-size="xs" />
+                </>
+              )}
+            </button>
+          </li>
+        )}
       </ul>
 
       {matching.length === 0 && (
