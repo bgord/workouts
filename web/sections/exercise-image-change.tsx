@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ImageUp } from "lucide-react";
+import { ImageUp, InfoIcon } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ButtonClear, ExerciseImage, ExerciseImageSize } from "../components";
 import { exerciseRoute } from "../router";
@@ -35,7 +35,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
   });
 
   return (
-    <div data-gap="3" data-stack="y">
+    <div data-gap="3" data-stack="y" style={{ maxWidth: "320px" }}>
       <button
         data-cursor="pointer"
         data-disp="flex"
@@ -68,53 +68,64 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
           onSubmit={mutation.handleSubmit}
           {...change.props.target}
         >
-          <div data-cross="center" data-gap="3" data-stack="x">
-            <label
-              className="c-button"
-              data-cross="center"
-              data-disp="flex"
-              data-main="center"
-              data-md-width="100%"
-              data-variant="secondary"
-              {...image.label.props}
-            >
-              <span>{t("exercise.image.change.select.cta")}</span>
-              <input
-                className="c-visually-hidden"
-                disabled={image.isSelected}
-                onChange={image.actions.selectFile}
-                required
-                type="file"
-                {...image.input.props}
-              />
-            </label>
+          <div data-cross="center" data-gap="3" data-stack="y">
+            <div data-gap="3" data-stack="x" data-width="100%">
+              <label
+                className="c-button"
+                data-cross="center"
+                data-disp="flex"
+                data-main="center"
+                data-variant="secondary"
+                data-grow="1"
+                tabIndex={0}
+                {...image.label.props}
+              >
+                <span>{t("exercise.image.change.select.cta")}</span>
+                <input
+                  className="c-visually-hidden"
+                  disabled={image.isSelected}
+                  onChange={image.actions.selectFile}
+                  required
+                  type="file"
+                  {...image.input.props}
+                />
+              </label>
+
+              <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
+                <button
+                  className="c-button"
+                  data-md-grow="1"
+                  data-variant="secondary"
+                  disabled={!image.isSelected || mutation.isLoading}
+                  type="submit"
+                >
+                  {t("app.save")}
+                </button>
+
+                <ButtonClear
+                  data-md-grow="1"
+                  disabled={!image.isSelected}
+                  onClick={bg.exec([image.actions.clearFile, mutation.reset])}
+                />
+              </div>
+            </div>
 
             {image.isSelected && (
-              <output data-color="neutral-300" data-fs="xs" data-md-width="100%">
+              <output
+                data-disp="block"
+                data-color="neutral-300"
+                data-fs="xs"
+                data-maxw="100%"
+                data-transform="truncate"
+                data-self="start"
+              >
                 {t("exercise.image.change.selected", { name: image.data.name })}
               </output>
             )}
-
-            <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-              <button
-                className="c-button"
-                data-md-grow="1"
-                data-variant="secondary"
-                disabled={!image.isSelected || mutation.isLoading}
-                type="submit"
-              >
-                {t("app.save")}
-              </button>
-
-              <ButtonClear
-                data-md-grow="1"
-                disabled={!image.isSelected}
-                onClick={bg.exec([image.actions.clearFile, mutation.reset])}
-              />
-            </div>
           </div>
 
-          <div data-color="neutral-400" data-fs="xs">
+          <div data-stack="x" data-cross="center" data-gap="1" data-color="neutral-400" data-fs="xs">
+            <InfoIcon data-size="xs" />
             {t("exercise.image.change.hint")}
           </div>
 
