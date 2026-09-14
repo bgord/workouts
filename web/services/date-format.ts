@@ -8,6 +8,9 @@ export const DateFormat = {
 
   plainDay: (language: string, date: Date) => date.toLocaleDateString(language, DAY),
 
+  month: (language: string, date: Date) =>
+    date.toLocaleDateString(language, { month: "long", year: "numeric" }),
+
   dayWithWeekday: (language: string, date: Date) =>
     date.toLocaleDateString(language, { ...DAY, weekday: "short" }),
 

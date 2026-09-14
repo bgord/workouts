@@ -119,13 +119,13 @@ export function ExerciseCatalog() {
           <li>
             <button
               className="c-link"
-              data-cursor="pointer"
               data-color="neutral-400"
               data-cross="center"
+              data-cursor="pointer"
               data-fs="xs"
               data-gap="1"
-              data-stack="x"
               data-mx="1"
+              data-stack="x"
               onClick={categoryList.toggle}
               type="button"
             >
