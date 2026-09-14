@@ -34,14 +34,14 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
     if (!props.description) return null;
 
     return (
-      <div className="c-prose" data-color="neutral-200" data-fs="sm" data-my="5">
+      <div className="c-prose" data-color="neutral-200" data-fs="sm">
         {props.description}
       </div>
     );
   }
 
   return (
-    <div data-gap="2" data-my="5" data-stack="y">
+    <div data-gap="2" data-stack="y">
       {update.off && (
         <button
           className="c-prose"

@@ -117,9 +117,9 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
               data-cross="center"
               data-fs="xs"
               data-gap="1"
+              data-mt="0-5"
               data-stack="x"
               data-wrap="nowrap"
-              data-mt="0-5"
               title={t("workout.set.progress.title")}
             >
               <ListChecks data-size="xs" />
