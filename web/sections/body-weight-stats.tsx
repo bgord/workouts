@@ -1,7 +1,8 @@
 import { Rhythm, useLanguage, useTranslations } from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { DeltaKg } from "../components/delta-kg";
+import { BodyWeightDelta } from "../components/body-weight-delta";
+import { BodyWeightGoalIcon } from "../components/body-weight-goal-icon";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -25,6 +26,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
   const previous = props.measurements[1];
   const reference = props.measurements.find((measurement) => measurement.reference);
   const baseline = reference ?? props.measurements.at(-1);
+  const goal = reference?.goal;
 
   if (!(latest && baseline)) return null;
 
@@ -75,7 +77,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           })}
 
           <span data-fs="xs">
-            <DeltaKg current={latest.weight} decimals={BodyWeightDecimals} previous={previous?.weight} />
+            <BodyWeightDelta current={latest.weight} goal={goal} previous={previous?.weight} />
           </span>
         </div>
 
@@ -122,11 +124,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
 
           {previousWindow.length > 0 && (
             <span data-fs="xs">
-              <DeltaKg
-                current={average(window)}
-                decimals={BodyWeightDecimals}
-                previous={average(previousWindow)}
-              />
+              <BodyWeightDelta current={average(window)} goal={goal} previous={average(previousWindow)} />
             </span>
           )}
         </div>
@@ -155,7 +153,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           data-stack="x"
           data-transform="uppercase"
         >
-          <TrendingUp data-size="xs" />
+          {goal ? <BodyWeightGoalIcon goal={goal} size="xs" /> : <TrendingUp data-size="xs" />}
           {t(
             reference
               ? "measurements.body_weight.stats.since_reference"
@@ -167,12 +165,17 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           {latest.weight === baseline.weight ? (
             t("measurements.body_weight.value", { weight: 0 })
           ) : (
-            <DeltaKg current={latest.weight} decimals={BodyWeightDecimals} previous={baseline.weight} />
+            <BodyWeightDelta current={latest.weight} goal={goal} previous={baseline.weight} />
           )}
         </div>
 
         <div data-color="neutral-500" data-fs="xs">
-          {DateFormat.dayWithWeekday(language, new Date(baseline.measuredOn))}
+          {goal
+            ? t("measurements.body_weight.stats.since_reference.goal", {
+                goal: t(`measurements.body_weight.goal.${goal}`),
+                date: DateFormat.dayWithWeekday(language, new Date(baseline.measuredOn)),
+              })
+            : DateFormat.dayWithWeekday(language, new Date(baseline.measuredOn))}
         </div>
       </li>
     </ul>

@@ -1,6 +1,8 @@
 import * as bg from "@bgord/ui";
+import { Flag } from "lucide-react";
+import type { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { DeltaKg } from "../components/delta-kg";
+import { BodyWeightDelta } from "../components/body-weight-delta";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
@@ -10,20 +12,24 @@ import { BodyWeightReferenceSet } from "./body-weight-reference-set";
 export function BodyWeightMeasurementRow(props: {
   measurement: BodyWeightMeasurement;
   previous: BodyWeightMeasurement | undefined;
+  goal: BodyWeightGoalOptions | undefined;
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const edit = bg.useToggle({ name: `correct-${props.measurement.id}` });
+  const reference = bg.useToggle({ name: `reference-${props.measurement.id}` });
+  const open = edit.on || reference.on;
 
   return (
     <tr data-hover-bg="alpha-subtle">
-      {edit.on && (
+      {open && (
         <td colSpan={4} data-px="0" data-py="1-5">
           <BodyWeightMeasurementCorrect measurement={props.measurement} toggle={edit} />
+          <BodyWeightReferenceSet measurement={props.measurement} toggle={reference} />
         </td>
       )}
 
-      {edit.off && (
+      {!open && (
         <td data-md-pr="1" data-pl="0" data-pr="1-5" data-py="1-5" data-width="100%">
           <button
             data-color="neutral-200"
@@ -45,7 +51,7 @@ export function BodyWeightMeasurementRow(props: {
         </td>
       )}
 
-      {edit.off && (
+      {!open && (
         <td data-md-px="1" data-px="1-5" data-py="1-5">
           <div data-main="end" data-stack="x">
             <button
@@ -66,7 +72,7 @@ export function BodyWeightMeasurementRow(props: {
         </td>
       )}
 
-      {edit.off && (
+      {!open && (
         <td
           data-fs="xs"
           data-md-px="1"
@@ -74,18 +80,30 @@ export function BodyWeightMeasurementRow(props: {
           data-py="1-5"
           {...bg.Rhythm(56).times(1).style.minWidth}
         >
-          <DeltaKg
+          <BodyWeightDelta
             current={props.measurement.weight}
-            decimals={BodyWeightDecimals}
+            goal={props.goal}
             previous={props.previous?.weight}
           />
         </td>
       )}
 
-      {edit.off && (
+      {!open && (
         <td data-md-pl="1" data-pl="1-5" data-pr="0" data-py="1-5">
           <div data-stack="x" data-wrap="nowrap">
-            <BodyWeightReferenceSet measurement={props.measurement} />
+            <button
+              className="c-button"
+              data-color={props.measurement.reference ? "brand-400" : "neutral-400"}
+              data-hover-color="brand-300"
+              data-md-px="1"
+              data-variant="ghost"
+              onClick={reference.enable}
+              title={t("measurements.body_weight.reference.title")}
+              type="button"
+              {...reference.props.controller}
+            >
+              <Flag data-size="sm" fill={props.measurement.reference ? "currentColor" : "none"} />
+            </button>
 
             <BodyWeightMeasurementRemove measurement={props.measurement} />
           </div>
