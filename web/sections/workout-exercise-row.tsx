@@ -1,6 +1,6 @@
 import { useToggle, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Info, ListChecks } from "lucide-react";
+import { Info, ListChecks, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
@@ -82,6 +82,7 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
                 data-transform="nowrap"
                 data-variant={skipped ? "outline" : "primary"}
               >
+                <Target data-size="sm" />
                 <SetsRepsLoad
                   load={props.exercise.target.load}
                   reps={props.exercise.target.reps}
