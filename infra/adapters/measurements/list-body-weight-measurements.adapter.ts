@@ -18,6 +18,7 @@ class ListBodyWeightMeasurementsQueryDrizzle implements Measurements.Queries.Lis
       measuredOn: entry.measuredOn,
       userId: entry.userId,
       reference: entry.reference,
+      goal: entry.goal,
     }));
   }
 }

@@ -65,12 +65,12 @@ export class BodyWeightMeasurementsProjector {
   async onBodyWeightReferenceSetEvent(event: measurements.Events.BodyWeightReferenceSetEventType) {
     await db
       .update(Schema.bodyWeightMeasurements)
-      .set({ reference: false })
+      .set({ reference: false, goal: measurements.VO.BodyWeightGoalOptions.maintain })
       .where(eq(Schema.bodyWeightMeasurements.userId, event.payload.userId));
 
     await db
       .update(Schema.bodyWeightMeasurements)
-      .set({ reference: true })
+      .set({ reference: true, goal: event.payload.goal })
       .where(eq(Schema.bodyWeightMeasurements.id, event.payload.measurementId));
   }
 }
