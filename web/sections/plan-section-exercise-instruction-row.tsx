@@ -39,6 +39,8 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-gap="3"
       data-md-wrap={change.on ? "wrap" : undefined}
       data-py="2"
+      data-ml="3"
+      data-md-ml="0"
       data-stack="x"
       data-wrap={update.on ? undefined : "nowrap"}
     >

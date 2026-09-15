@@ -7,6 +7,8 @@ import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-o
 import { ActionHint, ButtonCancel } from "../components";
 import { planRoute } from "../router";
 
+const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
+
 export function PlanSectionExerciseInstructionAdd(props: {
   plan: Plan;
   section: PlanSectionWithExercises;
@@ -46,22 +48,57 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   if (add.off) {
     return (
-      <div className="c-card-footer" data-cross="center" data-gap="3" data-pt="1" data-stack="x">
+      <div
+        data-bct="alpha-subtle"
+        data-bst="solid"
+        data-bwt="hairline"
+        data-cross="center"
+        data-gap="3"
+        data-stack="x"
+        data-ml="3"
+        data-md-ml="0"
+        data-wrap="nowrap"
+      >
         <button
-          className="c-button"
           data-color="neutral-400"
+          data-cross="center"
+          data-cursor="pointer"
+          data-fs="sm"
+          data-fw="medium"
+          data-gap="3"
+          data-grow="1"
           data-hover-color="neutral-0"
-          data-variant="ghost"
+          data-py="2"
+          data-stack="x"
+          data-wrap="nowrap"
           disabled={!props.action.enabled}
           onClick={add.enable}
           type="button"
           {...add.props.controller}
         >
-          <Plus data-size="sm" />
+          <div aria-hidden data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
+            {props.section.exerciseInstructions.length + 1}
+          </div>
+
+          <div
+            data-bc="neutral-700"
+            data-br="sm"
+            data-bs="dashed"
+            data-bw="hairline"
+            data-color="neutral-500"
+            data-cross="center"
+            data-main="center"
+            data-shrink="0"
+            data-stack="x"
+            style={placeholder}
+          >
+            <Plus data-size="sm" />
+          </div>
+
           {t("plan.section.exercise.add.cta")}
         </button>
 
-        <ActionHint action={props.action} />
+        <ActionHint action={props.action} data-shrink="0" />
       </div>
     );
   }
