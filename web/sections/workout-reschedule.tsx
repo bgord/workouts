@@ -36,15 +36,15 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
   if (reschedule.off) {
     return (
       <button
-        data-color="neutral-400"
+        data-color="neutral-500"
         data-cursor="pointer"
-        data-fs="sm"
-        data-hover-color="neutral-0"
+        data-fs="xs"
+        data-hover-color="neutral-200"
+        data-self="start"
         onClick={reschedule.enable}
         title={t("workout.reschedule.cta")}
         type="button"
         {...reschedule.props.controller}
-        {...bg.Rhythm().times(3).style.height}
       >
         {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor))}
       </button>
