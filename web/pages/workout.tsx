@@ -3,7 +3,6 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Dumbbell } from "lucide-react";
-import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { ActionHint, Main, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
@@ -129,31 +128,11 @@ export function Workout() {
       </div>
 
       <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="3" data-stack="x" data-wrap="wrap">
-          <div
-            data-color="neutral-500"
-            data-cross="center"
-            data-fs="sm"
-            data-gap="1-5"
-            data-grow="1"
-            data-stack="x"
-            title={t("workout.exercise.list.header")}
-            {...bg.Rhythm().times(3).style.minHeight}
-          >
-            <Dumbbell data-size="xs" />
-
-            <span data-transform="font-variant-numeric">
-              {t("workout.exercise.list.count", {
-                count: workout.data.exercises.length,
-                max: WorkoutExerciseLimitMax,
-              })}
-            </span>
-          </div>
-
-          {workout.actions.exerciseAdd.available && (
+        {workout.actions.exerciseAdd.available && (
+          <div data-main="end" data-stack="x">
             <WorkoutExerciseAdd action={workout.actions.exerciseAdd} {...workout.data} />
-          )}
-        </div>
+          </div>
+        )}
 
         {workout.data.exercises.length === 0 && (
           <div
@@ -176,9 +155,15 @@ export function Workout() {
           </div>
         )}
 
-        <ul data-gap="3" data-stack="y">
-          {workout.data.exercises.map((exercise) => (
-            <WorkoutExerciseRow exercise={exercise} key={exercise.id} workout={workout.data} />
+        <ul data-stack="y">
+          {workout.data.exercises.map((exercise, index) => (
+            <WorkoutExerciseRow
+              exercise={exercise}
+              index={index}
+              key={exercise.id}
+              last={index === workout.data.exercises.length - 1}
+              workout={workout.data}
+            />
           ))}
         </ul>
       </div>
