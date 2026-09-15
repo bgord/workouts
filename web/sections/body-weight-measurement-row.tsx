@@ -36,7 +36,7 @@ export function BodyWeightMeasurementRow(props: {
             data-cursor="pointer"
             data-fs="sm"
             data-fw="medium"
-            data-gap="1"
+            data-gap="2"
             data-md-fs="xs"
             data-stack="x"
             data-transform="nowrap"
@@ -45,7 +45,7 @@ export function BodyWeightMeasurementRow(props: {
           >
             {DateFormat.day(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
             <span data-color="neutral-500" data-mr="1-5">
-              {`(${DateFormat.weekday(language, Temporal.PlainDate.from(props.measurement.measuredOn))})`}
+              {`${DateFormat.weekday(language, Temporal.PlainDate.from(props.measurement.measuredOn))}`}
             </span>
           </button>
         </td>
