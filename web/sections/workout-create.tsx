@@ -1,21 +1,26 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CalendarPlus } from "lucide-react";
+import { CalendarDays, CalendarPlus, Circle, CircleCheck } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ButtonClear, Select } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
 import { workoutsRoute } from "../router";
-import * as ShortcutDefinitions from "../services/shortcuts";
+import { DateFormat } from "../services/date-format";
 
-export function WorkoutCreate() {
+const QUICK_DAYS = 3;
+
+export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const router = useRouter();
   const navigate = workoutsRoute.useNavigate();
   const { plan, workouts } = workoutsRoute.useLoaderData();
 
-  const today = Temporal.Now.plainDateISO().toString();
-  const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
-  const schedule = bg.useFocusKeyboardShortcut<HTMLInputElement>(ShortcutDefinitions.ScheduleWorkout.trigger);
+  const today = Temporal.Now.plainDateISO();
+  const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today.toString() });
+  const custom = bg.useToggle({ name: "workout-create-custom-date" });
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
+
+  const quick = Array.from({ length: QUICK_DAYS }, (_, offset) => today.add({ days: offset }));
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -32,7 +37,9 @@ export function WorkoutCreate() {
     onSuccess: async (response) => {
       const { id } = await response.json();
 
+      props.toggle.disable();
       scheduledFor.clear();
+      custom.disable();
 
       await navigate({
         params: { workoutId: id },
@@ -43,79 +50,157 @@ export function WorkoutCreate() {
     },
   });
 
+  const label = (date: Temporal.PlainDate, offset: number) => {
+    if (offset === 0) return t("workout.create.when.today");
+    if (offset === 1) return t("workout.create.when.tomorrow");
+    return DateFormat.weekdayWithDay(language, date);
+  };
+
   return (
-    <form
-      className="c-card"
-      data-cross="end"
-      data-gap="3"
-      data-md-cross="start"
-      data-md-p="2-5"
-      data-md-stack="y"
-      data-stack="x"
-      onSubmit={mutation.handleSubmit}
-    >
-      <div data-gap="1" data-md-width="100%" data-stack="y">
-        <label className="c-label" {...scheduledFor.label.props}>
-          {t("workout.create.date.label")}
-        </label>
+    <Dialog {...props.toggle}>
+      <DialogHeader disabled={mutation.isLoading} onClose={props.toggle.disable}>
+        {t("workout.create.toggle.cta")}
+        {plan && (
+          <span data-color="neutral-500" data-fw="regular" data-ml="2">
+            · {plan.name}
+          </span>
+        )}
+      </DialogHeader>
 
-        <input
-          className="c-input"
-          data-md-width="100%"
-          ref={schedule.ref}
-          type="date"
-          {...scheduledFor.input.props}
-          max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-          min={Temporal.Now.plainDateISO().subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-        />
-      </div>
+      <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
+        {plan && (
+          <div data-gap="1-5" data-stack="y">
+            <div className="c-label">{t("workout.create.section.label")}</div>
 
-      {plan && (
-        <div data-gap="1" data-grow="1" data-md-width="100%" data-stack="y">
-          <div data-cross="baseline" data-gap="2" data-stack="x">
-            <label className="c-label" {...planSectionId.label.props}>
-              {t("workout.create.section.label")}
-            </label>
+            <ul data-gap="2" data-stack="y">
+              {plan.sections.map((option) => {
+                const selected = option.id === planSectionId.value;
 
-            <span data-color="neutral-500" data-fs="xs" data-transform="truncate">
-              {t("workout.create.plan", { name: plan.name })}
-            </span>
+                return (
+                  <li key={option.id}>
+                    <label
+                      data-bc={selected ? "brand-500" : "neutral-800"}
+                      data-br="md"
+                      data-bs="solid"
+                      data-bw="hairline"
+                      data-cross="center"
+                      data-cursor="pointer"
+                      data-gap="3"
+                      data-hover-bc={selected ? "brand-500" : "neutral-600"}
+                      data-p="3"
+                      data-stack="x"
+                      data-wrap="nowrap"
+                    >
+                      <input
+                        checked={selected}
+                        className="c-visually-hidden"
+                        name={planSectionId.input.props.name}
+                        onChange={planSectionId.input.props.onChange}
+                        type="radio"
+                        value={option.id}
+                      />
+
+                      {selected ? (
+                        <CircleCheck data-color="brand-400" data-shrink="0" data-size="sm" />
+                      ) : (
+                        <Circle data-color="neutral-600" data-shrink="0" data-size="sm" />
+                      )}
+
+                      <div data-gap="0-5" data-grow="1" data-stack="y" data-transform="truncate">
+                        <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+                          {option.name}
+                        </div>
+
+                        <div data-color="neutral-500" data-fs="xs" data-transform="truncate">
+                          {option.exerciseInstructions
+                            .map((instruction) => instruction.exercise.name)
+                            .join(" · ")}
+                        </div>
+                      </div>
+
+                      <div
+                        data-color="neutral-500"
+                        data-fs="xs"
+                        data-shrink="0"
+                        data-transform="font-variant-numeric"
+                      >
+                        {t("workout.create.section.exercises", { count: option.exerciseInstructions.length })}
+                      </div>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
+        <div data-gap="1-5" data-stack="y">
+          <label className="c-label" {...scheduledFor.label.props}>
+            {t("workout.create.when.label")}
+          </label>
+
+          <div data-gap="1-5" data-stack="x" data-wrap="wrap">
+            {quick.map((date, offset) => {
+              const selected = custom.off && scheduledFor.value === date.toString();
+
+              return (
+                <button
+                  className="c-badge"
+                  data-cursor="pointer"
+                  data-variant={selected ? "primary" : "outline"}
+                  key={date.toString()}
+                  onClick={() => {
+                    custom.disable();
+                    scheduledFor.set(date.toString());
+                  }}
+                  type="button"
+                >
+                  {label(date, offset)}
+                </button>
+              );
+            })}
+
+            <button
+              className="c-badge"
+              data-cursor="pointer"
+              data-variant={custom.on ? "primary" : "outline"}
+              onClick={custom.enable}
+              type="button"
+              {...custom.props.controller}
+            >
+              <CalendarDays data-size="xs" />
+              {t("workout.create.when.custom")}
+            </button>
           </div>
 
-          <Select data-md-width="100%" {...planSectionId.input.props}>
-            {plan.sections.map((section) => (
-              <option key={section.id} value={section.id}>
-                {section.name}
-              </option>
-            ))}
-          </Select>
+          {custom.on && (
+            <input
+              className="c-input"
+              data-variant="transparent"
+              data-width="100%"
+              type="date"
+              {...scheduledFor.input.props}
+              {...custom.props.target}
+              max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+              min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+            />
+          )}
         </div>
-      )}
 
-      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
-        <button
-          className="c-button"
-          data-md-grow="1"
-          data-variant="secondary"
-          disabled={!workouts.actions.create.enabled || mutation.isLoading}
-          type="submit"
-        >
-          <CalendarPlus data-size="sm" />
-          {t("workout.create.cta")}
-        </button>
+        {mutation.isError && <DialogError>{t("workout.create.error")}</DialogError>}
 
-        <ButtonClear
-          data-md-grow="1"
-          disabled={scheduledFor.unchanged && planSectionId.unchanged}
-          onClick={bg.exec([scheduledFor.clear, planSectionId.clear, mutation.reset])}
-        />
-      </div>
-
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm" data-mb="2">
-          {t("workout.create.error")}
-        </output>
-      )}
-    </form>
+        <DialogFooter disabled={mutation.isLoading} onCancel={props.toggle.disable}>
+          <button
+            className="c-button"
+            data-variant="primary"
+            disabled={!workouts.actions.create.enabled || scheduledFor.empty || mutation.isLoading}
+            type="submit"
+          >
+            <CalendarPlus data-size="sm" />
+            {t("workout.create.cta")}
+          </button>
+        </DialogFooter>
+      </form>
+    </Dialog>
   );
 }

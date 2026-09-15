@@ -14,7 +14,7 @@ export function ExerciseCategoryManage(props: { toggle: bg.UseToggleReturnType }
     <Dialog {...props.toggle}>
       <DialogHeader onClose={props.toggle.disable}>
         {t("exercise.category.manage.header")}
-        <span data-color="neutral-500" data-fw="regular" data-ml="1">
+        <span data-color="neutral-500" data-fw="regular" data-ml="2">
           · {exerciseCategories.data.length}
         </span>
       </DialogHeader>

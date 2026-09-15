@@ -30,15 +30,16 @@ export function Workouts() {
           data-md-width="100%"
           data-variant="primary"
           disabled={!workouts.actions.create.enabled}
-          onClick={workoutCreate.toggle}
+          onClick={workoutCreate.enable}
           type="button"
+          {...workoutCreate.props.controller}
         >
           <CalendarPlus data-size="sm" />
           {t("workout.create.toggle.cta")}
         </button>
       </div>
 
-      {workouts.actions.create.enabled && workoutCreate.on && <WorkoutCreate />}
+      {workouts.actions.create.enabled && <WorkoutCreate toggle={workoutCreate} />}
 
       <WorkoutHistory />
     </Main>
