@@ -53,7 +53,7 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ goal: "recomp" }) },
+      { method: "POST", body: JSON.stringify({ goal: "recomposition" }) },
       mocks.ip,
     );
     const json = await response.json();
