@@ -1,5 +1,6 @@
 import { useTranslations } from "@bgord/ui";
 import { CalendarCheck } from "lucide-react";
+import { TileHeader } from "../components/tile";
 import { dashboardRoute } from "../router";
 
 export function DashboardCompleted() {
@@ -14,19 +15,10 @@ export function DashboardCompleted() {
 
   return (
     <section className="c-card" data-gap="5" data-p="5" data-variant="sunken">
-      <div
-        data-color="neutral-500"
-        data-cross="center"
-        data-fs="xs"
-        data-gap="1-5"
-        data-ls="wide"
-        data-main="center"
-        data-stack="x"
-        data-transform="uppercase"
-      >
+      <TileHeader data-main="center">
         <CalendarCheck data-color="brand-400" data-size="xs" />
         {t("dashboard.completed.header")}
-      </div>
+      </TileHeader>
 
       <ul data-stack="x">
         {tiles.map((tile, index) => (
@@ -42,11 +34,11 @@ export function DashboardCompleted() {
           >
             <div
               data-color="neutral-0"
-              data-fs="3xl"
-              data-fw="black"
+              data-fs="2xl"
+              data-fw="bold"
               data-lh="none"
               data-ls="tight"
-              data-md-fs="2xl"
+              data-md-fs="xl"
               data-transform="font-variant-numeric"
             >
               {tile.value}
