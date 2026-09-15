@@ -25,7 +25,12 @@ export function WorkoutSetRow(props: {
       data-stack="y"
     >
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
-        <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
+        <div
+          data-color="neutral-600"
+          data-fs="xs"
+          data-md-disp={edit.on ? "none" : undefined}
+          data-transform="font-variant-numeric"
+        >
           {props.loggedSet.setNumber}
         </div>
 
@@ -41,7 +46,14 @@ export function WorkoutSetRow(props: {
           </div>
         )}
 
-        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
+        <div
+          data-cross="center"
+          data-gap="1"
+          data-grow={edit.on ? "1" : undefined}
+          data-shrink="0"
+          data-stack="x"
+          data-wrap="nowrap"
+        >
           {props.loggedSet.actions.correct.available && (
             <WorkoutSetCorrect
               action={props.loggedSet.actions.correct}
@@ -64,9 +76,7 @@ export function WorkoutSetRow(props: {
       </div>
 
       {edit.off && props.loggedSet.actions.remove.available && (
-        <div data-pl="5">
-          <ActionHint action={props.loggedSet.actions.remove} />
-        </div>
+        <ActionHint action={props.loggedSet.actions.remove} data-pl="5" />
       )}
     </li>
   );
