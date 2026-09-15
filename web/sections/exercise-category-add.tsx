@@ -57,7 +57,7 @@ export function ExerciseCategoryAdd() {
         <ButtonClear
           data-md-px="2"
           data-shrink="0"
-          disabled={!name.changed}
+          disabled={name.unchanged}
           onClick={bg.exec([name.clear, mutation.reset])}
         />
       </div>

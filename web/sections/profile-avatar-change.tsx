@@ -81,7 +81,7 @@ export function ProfileAvatarChange() {
 
             <ButtonClear
               data-md-grow="1"
-              disabled={!avatar.isSelected || mutation.isLoading}
+              disabled={!avatar.isSelected}
               onClick={exec([avatar.actions.clearFile, mutation.reset])}
             />
           </div>

@@ -100,7 +100,7 @@ export function BodyWeightMeasure() {
         <ButtonClear
           data-md-grow="1"
           disabled={measuredOn.unchanged && weight.unchanged}
-          onClick={bg.exec([measuredOn.clear, weight.clear])}
+          onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset])}
         />
       </div>
 

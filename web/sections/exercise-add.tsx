@@ -108,6 +108,7 @@ export function ExerciseAdd() {
 
           <ButtonClear
             data-md-grow="1"
+            disabled={name.unchanged && description.unchanged && !image.isSelected}
             onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
           />
         </div>
