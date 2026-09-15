@@ -2,9 +2,8 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
-import { RirMax } from "../../modules/workouts/value-objects/rir-limit";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint } from "../components";
+import { ActionHint, RirSegments, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -16,12 +15,12 @@ export function WorkoutSetLog(props: {
   const t = bg.useTranslations();
   const router = useRouter();
 
-  const reps = bg.useNumberField({
+  const reps = bg.useNumberField<number>({
     name: `logged-reps-${props.exercise.id}`,
     defaultValue: props.exercise.target?.reps,
   });
 
-  const load = bg.useNumberField({
+  const load = bg.useNumberField<number>({
     name: `logged-load-${props.exercise.id}`,
     defaultValue: props.exercise.target
       ? WeightFormat.kilograms(props.exercise.target.load)
@@ -49,81 +48,86 @@ export function WorkoutSetLog(props: {
     },
   });
 
-  const done = props.exercise.loggedSets.length;
-  const remaining = done < (props.exercise.target?.sets ?? Number.POSITIVE_INFINITY);
+  const busy = !props.action.enabled || mutation.isLoading;
 
   return (
     <form
-      className="c-card-footer"
-      data-cross="end"
-      data-gap="2"
-      data-pt="3"
+      aria-busy={mutation.isLoading}
+      data-bct="alpha-subtle"
+      data-bst="solid"
+      data-bwt="hairline"
+      data-cross="center"
+      data-gap="2-5"
+      data-md-gap="2"
+      data-pt="2"
+      data-stack="x"
       onSubmit={mutation.handleSubmit}
     >
-      <div data-gap="1" data-stack="y">
-        <label className="c-label" data-variant="inline" {...reps.label.props}>
-          {t("workout.set.reps.label")}
-        </label>
-
-        <input
-          className="c-input"
-          min="1"
-          type="number"
-          {...reps.input.props}
-          {...bg.Rhythm(64).times(1).style.width}
-        />
-      </div>
-
-      <div data-gap="1" data-stack="y">
-        <label className="c-label" data-variant="inline" {...load.label.props}>
-          {t("workout.set.load.label")}
-        </label>
-
-        <input
-          className="c-input"
-          min="0"
-          step="0.5"
-          type="number"
-          {...load.input.props}
-          {...bg.Rhythm(80).times(1).style.width}
-        />
-      </div>
-
-      <div data-gap="1" data-stack="y">
-        <label className="c-label" data-variant="inline" {...rir.label.props}>
-          {t("workout.set.rir.label")}
-        </label>
-
-        <input
-          className="c-input"
-          max={RirMax}
-          min="0"
-          type="number"
-          {...rir.input.props}
-          {...bg.Rhythm(56).times(1).style.width}
-        />
-      </div>
-
-      <button
-        aria-label={t("workout.set.cta")}
-        className="c-button"
-        data-variant={remaining ? "primary" : "secondary"}
-        disabled={!props.action.enabled || reps.empty || load.empty || mutation.isLoading}
-        title={t("workout.set.cta")}
-        type="submit"
+      <div
+        aria-hidden
+        data-color="neutral-600"
+        data-fs="xs"
+        data-md-disp="none"
+        data-transform="font-variant-numeric"
       >
-        <Plus data-size="sm" />
-      </button>
-
-      <div data-cross="center" data-gap="3" data-grow="1" data-md-width="100%" data-stack="x">
-        <ActionHint action={props.action} />
-
-        {mutation.isError && (
-          <output data-color="danger-400" data-fs="sm">
-            {t("workout.set.error")}
-          </output>
-        )}
+        {props.exercise.loggedSets.length + 1}
       </div>
+
+      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
+        <Stepper
+          disabled={busy}
+          field={reps}
+          label={t("workout.set.reps.label")}
+          max={100}
+          min={1}
+          step={1}
+          width={40}
+        />
+
+        <span data-color="neutral-500" data-fs="sm">
+          ×
+        </span>
+
+        <Stepper
+          disabled={busy}
+          field={load}
+          label={t("workout.set.load.label")}
+          max={1000}
+          min={0}
+          step={0.5}
+          unit="kg"
+          width={52}
+        />
+      </div>
+
+      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
+        <span data-color="neutral-500" data-fs="xs" data-md-disp="none">
+          {t("workout.set.rir.label")}
+        </span>
+
+        <RirSegments disabled={busy} field={rir} />
+
+        <button
+          className="c-button"
+          data-md-ml="0"
+          data-ml="auto"
+          data-shrink="0"
+          data-variant="primary"
+          disabled={busy || reps.empty || load.empty}
+          type="submit"
+        >
+          <Plus data-size="sm" />
+          {t("workout.set.cta")}
+        </button>
+      </div>
+
+      <ActionHint action={props.action} />
+
+      {mutation.isError && (
+        <output data-color="danger-400" data-fs="sm">
+          {t("workout.set.error")}
+        </output>
+      )}
     </form>
   );
 }
