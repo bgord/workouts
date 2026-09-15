@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { ClipboardList, Plus } from "lucide-react";
-import { ActionHint, Main, PlanCard } from "../components";
+import { ActionHint, Header, Main, PlanCard } from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
@@ -16,9 +16,7 @@ export function Plans() {
   return (
     <Main>
       <div data-cross="center" data-gap="3" data-stack="x">
-        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
-          {t("plan.list.header")}
-        </h1>
+        <Header data-grow="1">{t("plan.list.header")}</Header>
 
         <ActionHint action={plans.actions.create} data-md-width="100%" />
 

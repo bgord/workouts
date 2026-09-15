@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Download, Scale, Upload } from "lucide-react";
-import { Main } from "../components";
+import { Header, Main } from "../components";
 import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
@@ -19,9 +19,7 @@ export function Measurements() {
   return (
     <Main>
       <div data-cross="center" data-stack="x">
-        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-grow="1" data-md-fs="xl">
-          {t("measurements.body_weight.header")}
-        </h1>
+        <Header data-grow="1">{t("measurements.body_weight.header")}</Header>
 
         <button
           className="c-button"

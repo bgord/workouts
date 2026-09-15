@@ -3,7 +3,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { CalendarOff, ChevronRight } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import { Main, WorkoutCard } from "../components";
+import { Header, Main, WorkoutCard } from "../components";
 import { dashboardRoute } from "../router";
 import { BodyWeightStats } from "../sections/body-weight-stats";
 import { DashboardCompleted } from "../sections/dashboard-completed";
@@ -33,9 +33,7 @@ export function Dashboard() {
 
   return (
     <Main>
-      <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">
-        {t("dashboard.header")}
-      </h1>
+      <Header>{t("dashboard.header")}</Header>
 
       {empty && (
         <div

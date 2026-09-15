@@ -2,7 +2,7 @@
 
 import * as bg from "@bgord/ui";
 import { Plus, Tags } from "lucide-react";
-import { ActionHint, Main } from "../components";
+import { ActionHint, Header, Main } from "../components";
 import { catalogRoute } from "../router";
 import { ExerciseAdd } from "../sections/exercise-add";
 import { ExerciseCatalog } from "../sections/exercise-catalog";
@@ -17,9 +17,7 @@ export function Catalog() {
   return (
     <Main>
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-        <h1 data-color="neutral-0" data-fs="2xl" data-fw="black" data-md-fs="xl">
-          {t("exercise.catalog.header")}
-        </h1>
+        <Header>{t("exercise.catalog.header")}</Header>
 
         <div data-cross="center" data-gap="3" data-md-width="100%" data-stack="x">
           {exerciseCategories.actions.add.available && (
