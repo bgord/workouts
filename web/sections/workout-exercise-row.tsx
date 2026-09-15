@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronRight, Info, Pencil, Target } from "lucide-react";
+import { ChevronDown, ChevronRight, Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
@@ -36,9 +36,25 @@ export function WorkoutExerciseRow(props: {
 
   const expandable = props.exercise.loggedSets.length > 0 || props.exercise.actions.setLog.available;
 
+  const { width } = bg.useWindowDimensions();
+  const mobile = width !== undefined && width <= 768;
+  const compact = mobile && expandable;
+
   const open = usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
   const target = bg.useToggle({ name: `workout-exercise-target-${props.exercise.id}` });
   const description = bg.useToggle({ name: `workout-exercise-description-${props.exercise.id}` });
+
+  const actions = (
+    <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
+      {props.exercise.actions.remove.available && (
+        <WorkoutExerciseRemove
+          action={props.exercise.actions.remove}
+          exercise={props.exercise}
+          workout={props.workout}
+        />
+      )}
+    </div>
+  );
 
   return (
     <li
@@ -83,16 +99,21 @@ export function WorkoutExerciseRow(props: {
           </div>
         )}
 
-        <Link
-          aria-hidden
+        <button
+          aria-label={t("workout.exercise.description.toggle")}
+          data-br="md"
+          data-cursor="pointer"
+          data-hover-opacity="medium"
+          data-p="0"
           data-shrink="0"
           data-stack="x"
-          params={{ exerciseId: props.exercise.exerciseId }}
-          tabIndex={-1}
-          to="/catalog/exercise/$exerciseId"
+          onClick={description.toggle}
+          title={t("workout.exercise.description.toggle")}
+          type="button"
+          {...description.props.controller}
         >
-          <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
-        </Link>
+          <ExerciseImage size={mobile ? ExerciseImageSize.xs : ExerciseImageSize.sm} {...exercise} />
+        </button>
 
         <div data-gap="1" data-grow="1" data-stack="y" style={body}>
           <Link
@@ -180,6 +201,15 @@ export function WorkoutExerciseRow(props: {
             >
               <SetsReps {...props.exercise.prescription} />
             </div>
+
+            {mobile &&
+              !skipped &&
+              props.exercise.target &&
+              props.workout.status !== WorkoutStatusEnum.draft && (
+                <div data-self="center">
+                  <SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
+                </div>
+              )}
           </div>
         </div>
 
@@ -189,35 +219,13 @@ export function WorkoutExerciseRow(props: {
           </div>
         )}
 
-        {!skipped && props.exercise.target && props.workout.status !== WorkoutStatusEnum.draft && (
-          <SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
-        )}
-
-        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
-          <button
-            aria-label={t("workout.exercise.description.toggle")}
-            className="c-button"
-            data-color={description.on ? "neutral-0" : "neutral-500"}
-            data-hover-color="neutral-0"
-            data-px="0"
-            data-variant="ghost"
-            onClick={description.toggle}
-            title={t("workout.exercise.description.toggle")}
-            type="button"
-            {...bg.Rhythm().times(3).style.width}
-            {...description.props.controller}
-          >
-            <Info data-size="sm" />
-          </button>
-
-          {props.exercise.actions.remove.available && (
-            <WorkoutExerciseRemove
-              action={props.exercise.actions.remove}
-              exercise={props.exercise}
-              workout={props.workout}
-            />
+        {!(mobile || skipped) &&
+          props.exercise.target &&
+          props.workout.status !== WorkoutStatusEnum.draft && (
+            <SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
           )}
-        </div>
+
+        {!compact && actions}
       </div>
 
       {description.on && (
@@ -246,6 +254,16 @@ export function WorkoutExerciseRow(props: {
 
       {expandable && open.on && (
         <div data-gap="0" data-md-pl="0" data-pl="12" data-stack="y" {...open.props.target}>
+          {compact && (
+            <div data-cross="center" data-main="between" data-pb="1" data-stack="x">
+              <div data-color="neutral-500" data-fs="xs" data-transform="uppercase">
+                {t("workout.exercise.sets.title")}
+              </div>
+
+              {actions}
+            </div>
+          )}
+
           <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
           {props.exercise.actions.setLog.available && (
