@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
 import { ButtonClear } from "../components";
 import { catalogRoute } from "../router";
@@ -101,6 +102,7 @@ export function ExerciseAdd() {
             disabled={!image.isSelected || mutation.isLoading}
             type="submit"
           >
+            <Plus data-size="sm" />
             {t("exercise.add.submit.cta")}
           </button>
 

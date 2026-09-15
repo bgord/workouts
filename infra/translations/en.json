@@ -78,7 +78,7 @@
   "exercise.add.image.selected": "Selected {{name}}",
   "exercise.add.name.label": "Exercise name",
   "exercise.add.name.placeholder": "Bench Press Horizontal",
-  "exercise.add.submit.cta": "Add exercise",
+  "exercise.add.submit.cta": "Add",
   "exercise.categories.empty": "No categories assigned",
   "exercise.categories.header": "Categories",
   "exercise.catalog.categories.less": "Show less",
