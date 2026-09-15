@@ -14,6 +14,7 @@ import {
   ExerciseImage,
   ExerciseImageSize,
   ExercisePicker,
+  Stepper,
 } from "../components";
 import { planRoute } from "../router";
 
@@ -40,17 +41,17 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
   const query = bg.useTextField({ name: `${Form.query.field.name}-${exerciseInstruction.id}` });
 
-  const sets = bg.useNumberField({
+  const sets = bg.useNumberField<number>({
     name: `${Form.sets.field.name}-${exerciseInstruction.id}`,
     defaultValue: exerciseInstruction.sets,
   });
 
-  const repsMin = bg.useNumberField({
+  const repsMin = bg.useNumberField<number>({
     name: `${Form.repsMin.field.name}-${exerciseInstruction.id}`,
     defaultValue: exerciseInstruction.reps.min,
   });
 
-  const repsMax = bg.useNumberField({
+  const repsMax = bg.useNumberField<number>({
     name: `${Form.repsMax.field.name}-${exerciseInstruction.id}`,
     defaultValue: exerciseInstruction.reps.max,
   });
@@ -192,51 +193,44 @@ export function PlanSectionExerciseInstructionEdit(props: {
           )}
 
           {actions.update.available && (
-            <div data-cross="end" data-gap="4" data-stack="x" data-wrap="nowrap">
-              <div data-gap="1" data-stack="y">
-                <label className="c-label" {...sets.label.props}>
-                  {t("plan.section.exercise.add.sets.label")}
-                </label>
+            <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+              <Stepper
+                disabled={!actions.update.enabled}
+                field={sets}
+                label={t("plan.section.exercise.add.sets.label")}
+                max={Form.sets.pattern.max}
+                min={Form.sets.pattern.min}
+                step={1}
+                variant="fill"
+              />
 
-                <input
-                  className="c-input"
-                  disabled={!actions.update.enabled}
-                  type="number"
-                  {...Form.sets.pattern}
-                  {...sets.input.props}
-                  {...bg.Rhythm().times(5).style.width}
-                />
-              </div>
+              <span data-color="neutral-500" data-fs="sm">
+                ×
+              </span>
 
-              <div data-gap="1" data-stack="y">
-                <label className="c-label" {...repsMin.label.props}>
-                  {t("plan.section.exercise.add.reps.label")}
-                </label>
+              <Stepper
+                disabled={!actions.update.enabled}
+                field={repsMin}
+                label={t("plan.section.exercise.add.reps.label")}
+                max={Form.repsMin.pattern.max}
+                min={Form.repsMin.pattern.min}
+                step={1}
+                variant="fill"
+              />
 
-                <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
-                  <input
-                    className="c-input"
-                    disabled={!actions.update.enabled}
-                    type="number"
-                    {...Form.repsMin.pattern}
-                    {...repsMin.input.props}
-                    {...bg.Rhythm().times(5).style.width}
-                  />
+              <span data-color="neutral-500" data-fs="sm">
+                –
+              </span>
 
-                  <div data-color="neutral-400">-</div>
-
-                  <input
-                    aria-label={t("plan.section.exercise.add.reps.max.label")}
-                    className="c-input"
-                    disabled={!actions.update.enabled}
-                    type="number"
-                    {...Form.repsMax.pattern}
-                    min={repsMin.value}
-                    {...repsMax.input.props}
-                    {...bg.Rhythm().times(5).style.width}
-                  />
-                </div>
-              </div>
+              <Stepper
+                disabled={!actions.update.enabled}
+                field={repsMax}
+                label={t("plan.section.exercise.add.reps.max.label")}
+                max={Form.repsMax.pattern.max}
+                min={repsMin.value ?? Form.repsMax.pattern.min}
+                step={1}
+                variant="fill"
+              />
             </div>
           )}
 

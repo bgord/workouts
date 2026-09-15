@@ -1,7 +1,11 @@
 import * as bg from "@bgord/ui";
 import { Minus, Plus } from "lucide-react";
 
-const control = { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm().times(3).height };
+const control = {
+  default: { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm().times(3).height },
+  compact: { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm().times(3).height },
+  fill: { ...bg.Rhythm(28).times(1).width, ...bg.Rhythm().times(3).height },
+};
 const inputs = { textAlign: "center" as const, minWidth: 0, paddingInline: 0, outline: "none" };
 
 export function Stepper(props: {
@@ -11,10 +15,11 @@ export function Stepper(props: {
   max: number;
   step: number;
   unit?: string;
-  width: number;
+  width?: number;
   disabled?: boolean;
-  variant?: "default" | "compact";
+  variant?: "default" | "compact" | "fill";
 }) {
+  const variant = props.variant ?? "default";
   const value = props.field.value ?? props.min;
   const round = (next: number) => Number(next.toFixed(2));
 
@@ -28,9 +33,10 @@ export function Stepper(props: {
       data-bs="solid"
       data-bw="hairline"
       data-cross="center"
-      data-md-grow={props.variant === "compact" ? undefined : "1"}
+      data-grow={variant === "fill" ? "1" : undefined}
+      data-md-grow={variant === "compact" ? undefined : "1"}
       data-overflow="hidden"
-      data-shrink="0"
+      data-shrink={variant === "fill" ? undefined : "0"}
       data-stack="x"
       data-wrap="nowrap"
     >
@@ -42,11 +48,11 @@ export function Stepper(props: {
         data-disp="flex"
         data-hover-color="neutral-0"
         data-main="center"
-        data-md-disp={props.variant === "compact" ? "none" : undefined}
+        data-md-disp={variant === "compact" ? "none" : undefined}
         data-shrink="0"
         disabled={props.disabled || value <= props.min}
         onClick={decrement}
-        style={control}
+        style={control[variant]}
         type="button"
       >
         <Minus data-size="sm" />
@@ -59,7 +65,8 @@ export function Stepper(props: {
         data-bs="none"
         data-color="neutral-0"
         data-fw="medium"
-        data-md-grow={props.variant === "compact" ? undefined : "1"}
+        data-grow={variant === "fill" ? "1" : undefined}
+        data-md-grow={variant === "compact" ? undefined : "1"}
         data-spin="none"
         data-transform="font-variant-numeric"
         data-variant="transparent"
@@ -69,7 +76,10 @@ export function Stepper(props: {
         step={props.step}
         type="number"
         {...props.field.input.props}
-        style={{ ...inputs, ...bg.Rhythm(props.width).times(1).width }}
+        style={{
+          ...inputs,
+          ...(variant === "fill" ? { width: 0 } : bg.Rhythm(props.width ?? 40).times(1).width),
+        }}
       />
 
       {props.unit && (
@@ -86,11 +96,11 @@ export function Stepper(props: {
         data-disp="flex"
         data-hover-color="neutral-0"
         data-main="center"
-        data-md-disp={props.variant === "compact" ? "none" : undefined}
+        data-md-disp={variant === "compact" ? "none" : undefined}
         data-shrink="0"
         disabled={props.disabled || value >= props.max}
         onClick={increment}
-        style={control}
+        style={control[variant]}
         type="button"
       >
         <Plus data-size="sm" />

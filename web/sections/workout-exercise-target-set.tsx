@@ -61,8 +61,8 @@ export function WorkoutExerciseTargetSet(props: {
       data-cross="center"
       data-gap="2-5"
       data-md-gap="2"
-      data-stack="x"
       data-mt="2"
+      data-stack="x"
       onSubmit={mutation.handleSubmit}
       {...edit.props.target}
     >

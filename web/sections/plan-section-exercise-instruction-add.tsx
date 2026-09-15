@@ -12,6 +12,7 @@ import {
   DialogFooter,
   DialogHeader,
   ExercisePicker,
+  Stepper,
 } from "../components";
 import { planRoute } from "../router";
 
@@ -199,48 +200,41 @@ export function PlanSectionExerciseInstructionAdd(props: {
             value={exerciseId.value}
           />
 
-          <div data-cross="end" data-gap="4" data-stack="x" data-wrap="nowrap">
-            <div data-gap="1" data-stack="y">
-              <label className="c-label" {...sets.label.props}>
-                {t("plan.section.exercise.add.sets.label")}
-              </label>
+          <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+            <Stepper
+              field={sets}
+              label={t("plan.section.exercise.add.sets.label")}
+              max={Form.sets.pattern.max}
+              min={Form.sets.pattern.min}
+              step={1}
+              variant="fill"
+            />
 
-              <input
-                className="c-input"
-                type="number"
-                {...Form.sets.pattern}
-                {...sets.input.props}
-                {...bg.Rhythm().times(5).style.width}
-              />
-            </div>
+            <span data-color="neutral-500" data-fs="sm">
+              ×
+            </span>
 
-            <div data-gap="1" data-stack="y">
-              <label className="c-label" {...repsMin.label.props}>
-                {t("plan.section.exercise.add.reps.label")}
-              </label>
+            <Stepper
+              field={repsMin}
+              label={t("plan.section.exercise.add.reps.label")}
+              max={Form.repsMin.pattern.max}
+              min={Form.repsMin.pattern.min}
+              step={1}
+              variant="fill"
+            />
 
-              <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
-                <input
-                  className="c-input"
-                  type="number"
-                  {...Form.repsMin.pattern}
-                  {...repsMin.input.props}
-                  {...bg.Rhythm().times(5).style.width}
-                />
+            <span data-color="neutral-500" data-fs="sm">
+              –
+            </span>
 
-                <div data-color="neutral-400">-</div>
-
-                <input
-                  aria-label={t("plan.section.exercise.add.reps.max.label")}
-                  className="c-input"
-                  type="number"
-                  {...Form.repsMax.pattern}
-                  min={repsMin.value}
-                  {...repsMax.input.props}
-                  {...bg.Rhythm().times(5).style.width}
-                />
-              </div>
-            </div>
+            <Stepper
+              field={repsMax}
+              label={t("plan.section.exercise.add.reps.max.label")}
+              max={Form.repsMax.pattern.max}
+              min={repsMin.value ?? Form.repsMax.pattern.min}
+              step={1}
+              variant="fill"
+            />
           </div>
 
           {mutation.isError && <DialogError>{t("plan.section.exercise.add.error")}</DialogError>}
