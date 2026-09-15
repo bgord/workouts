@@ -1,9 +1,8 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp, Flag } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { BodyWeightGoalBadge, ButtonClear, Select } from "../components";
+import { ButtonClear, Select } from "../components";
 import { DateFormat } from "../services/date-format";
-import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
 const VISIBLE = 15;
@@ -48,39 +47,6 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
 
         {month.value && <ButtonClear onClick={month.clear} />}
       </div>
-
-      {reference && (
-        <div className="c-card" data-cross="center" data-gap="3" data-p="4" data-stack="x" data-wrap="nowrap">
-          <div data-gap="1" data-grow="1" data-stack="y">
-            <div
-              data-color="neutral-500"
-              data-cross="center"
-              data-fs="xs"
-              data-gap="1-5"
-              data-ls="wide"
-              data-stack="x"
-              data-transform="uppercase"
-            >
-              <Flag data-color="brand-400" data-size="xs" fill="currentColor" />
-              {t("measurements.body_weight.history.reference")}
-            </div>
-
-            <div data-cross="baseline" data-gap="2" data-stack="x">
-              <div data-color="neutral-0" data-fs="lg" data-fw="bold" data-lh="tight">
-                {t("measurements.body_weight.value", {
-                  weight: WeightFormat.kilograms(reference.weight, BodyWeightDecimals),
-                })}
-              </div>
-
-              <div data-color="neutral-500" data-fs="xs">
-                {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(reference.measuredOn))}
-              </div>
-            </div>
-          </div>
-
-          <BodyWeightGoalBadge goal={reference.goal} />
-        </div>
-      )}
 
       <table data-mt="2">
         <thead>
