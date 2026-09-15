@@ -38,8 +38,6 @@ export function WorkoutExerciseRow(props: {
 
   const { width } = bg.useWindowDimensions();
   const mobile = width !== undefined && width <= 768;
-  const compact = mobile && expandable;
-
   const open = usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
   const target = bg.useToggle({ name: `workout-exercise-target-${props.exercise.id}` });
   const description = bg.useToggle({ name: `workout-exercise-description-${props.exercise.id}` });
@@ -225,7 +223,7 @@ export function WorkoutExerciseRow(props: {
             <SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
           )}
 
-        {!compact && actions}
+        {actions}
       </div>
 
       {description.on && (
@@ -254,16 +252,6 @@ export function WorkoutExerciseRow(props: {
 
       {expandable && open.on && (
         <div data-gap="0" data-md-pl="0" data-pl="12" data-stack="y" {...open.props.target}>
-          {compact && (
-            <div data-cross="center" data-main="between" data-pb="1" data-stack="x">
-              <div data-color="neutral-500" data-fs="xs" data-transform="uppercase">
-                {t("workout.exercise.sets.title")}
-              </div>
-
-              {actions}
-            </div>
-          )}
-
           <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
           {props.exercise.actions.setLog.available && (
