@@ -127,14 +127,8 @@ export function Workout() {
         </div>
       </div>
 
-      <div data-gap="3" data-mt="3" data-stack="y">
-        {workout.actions.exerciseAdd.available && (
-          <div data-main="end" data-stack="x">
-            <WorkoutExerciseAdd action={workout.actions.exerciseAdd} {...workout.data} />
-          </div>
-        )}
-
-        {workout.data.exercises.length === 0 && (
+      <div data-mt="3" data-stack="y">
+        {workout.data.exercises.length === 0 && !workout.actions.exerciseAdd.available && (
           <div
             className="c-card"
             data-cross="center"
@@ -148,10 +142,6 @@ export function Workout() {
             <div data-color="neutral-300" data-fs="sm" data-mt="2">
               {t("workout.exercise.list.empty")}
             </div>
-
-            <div data-color="neutral-500" data-fs="xs">
-              {t("workout.exercise.list.empty.hint")}
-            </div>
           </div>
         )}
 
@@ -161,11 +151,27 @@ export function Workout() {
               exercise={exercise}
               index={index}
               key={exercise.id}
-              last={index === workout.data.exercises.length - 1}
+              last={index === workout.data.exercises.length - 1 && !workout.actions.exerciseAdd.available}
               workout={workout.data}
             />
           ))}
         </ul>
+
+        {workout.actions.exerciseAdd.available && (
+          <div data-gap="2" data-stack="y">
+            <WorkoutExerciseAdd
+              action={workout.actions.exerciseAdd}
+              first={workout.data.exercises.length === 0}
+              {...workout.data}
+            />
+
+            {workout.data.exercises.length === 0 && (
+              <div data-color="neutral-500" data-fs="xs">
+                {t("workout.exercise.list.empty.hint")}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </Main>
   );

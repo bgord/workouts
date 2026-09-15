@@ -31,11 +31,10 @@ export function WorkoutExerciseRow(props: {
 
   const completed = props.workout.status === WorkoutStatusEnum.completed;
   const skipped = completed && props.exercise.loggedSets.length === 0;
-  const done = props.exercise.target ? props.exercise.loggedSets.length >= props.exercise.target.sets : false;
 
   const open = useToggle({
     name: `workout-exercise-${props.exercise.id}`,
-    defaultValue: !(completed || done),
+    defaultValue: props.workout.status === WorkoutStatusEnum.draft,
   });
   const description = useToggle({ name: `workout-exercise-description-${props.exercise.id}` });
 

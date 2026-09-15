@@ -4,16 +4,28 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, ButtonCancel } from "../components";
+import {
+  ActionHint,
+  ButtonClear,
+  Dialog,
+  DialogError,
+  DialogFooter,
+  DialogHeader,
+  ExercisePicker,
+} from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
+const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
+const shrinkable = { minHeight: 0 };
+
+export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first: boolean }) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercises } = workoutRoute.useLoaderData();
   const add = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
 
-  const exerciseName = bg.useTextField(Form.exerciseName.field);
+  const exerciseId = bg.useTextField(Form.exerciseId.field);
+  const query = bg.useTextField(Form.query.field);
   const sets = bg.useNumberField(Form.sets.field);
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
@@ -25,7 +37,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
         credentials: "include",
         headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.revision) },
         body: JSON.stringify({
-          exerciseId: exercises.data.find((exercise) => exercise.name === exerciseName.value)?.id,
+          exerciseId: exerciseId.value,
           sets: sets.value,
           reps: { min: repsMin.value, max: repsMax.value },
         }),
@@ -35,130 +47,158 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
 
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
 
-      bg.Fields.clearAll([exerciseName, sets, repsMin, repsMax]);
+      bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax]);
       context.form?.reset();
     },
   });
 
-  if (add.off) {
-    return (
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <ActionHint action={props.action} />
+  const clear = bg.exec([
+    exerciseId.clear,
+    query.clear,
+    sets.clear,
+    repsMin.clear,
+    repsMax.clear,
+    mutation.reset,
+  ]);
 
+  return (
+    <>
+      <div
+        data-bct={props.first ? undefined : "alpha-soft"}
+        data-bst={props.first ? undefined : "solid"}
+        data-bwt={props.first ? undefined : "hairline"}
+        data-cross="center"
+        data-gap="3"
+        data-pt={props.first ? undefined : "4"}
+        data-stack="x"
+        data-wrap="nowrap"
+      >
         <button
-          className="c-button"
-          data-variant="secondary"
+          data-color="neutral-400"
+          data-cross="center"
+          data-cursor="pointer"
+          data-fs="sm"
+          data-fw="medium"
+          data-gap="3"
+          data-grow="1"
+          data-hover-color="neutral-0"
+          data-stack="x"
+          data-wrap="nowrap"
           disabled={!props.action.enabled}
           onClick={add.enable}
           type="button"
           {...add.props.controller}
         >
-          <Plus data-size="sm" />
+          <div
+            data-bc="neutral-700"
+            data-br="sm"
+            data-bs="dashed"
+            data-bw="hairline"
+            data-color="neutral-500"
+            data-cross="center"
+            data-main="center"
+            data-shrink="0"
+            data-stack="x"
+            style={placeholder}
+          >
+            <Plus data-size="sm" />
+          </div>
+
           {t("workout.exercise.add.cta")}
         </button>
+
+        <ActionHint action={props.action} data-shrink="0" />
       </div>
-    );
-  }
 
-  return (
-    <form
-      className="c-card"
-      data-gap="2"
-      data-md-p="2-5"
-      data-p="4"
-      data-stack="y"
-      data-width="100%"
-      onSubmit={mutation.handleSubmit}
-      {...add.props.target}
-    >
-      <div data-cross="end" data-gap="3" data-stack="x">
-        <div data-cross="start" data-gap="1" data-grow="1" data-md-width="100%" data-stack="y">
-          <label className="c-label" {...exerciseName.label.props}>
-            {t("workout.exercise.add.exercise.label")}
-          </label>
+      <Dialog {...add}>
+        <DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, add.disable])}>
+          {t("workout.exercise.add.cta")}
+        </DialogHeader>
 
-          <input className="c-input" list="exercises" {...exerciseName.input.props} data-width="100%" />
-          <datalist id="exercises">
-            {exercises.data.map((exercise) => (
-              <option value={exercise.name}>{exercise.name}</option>
-            ))}
-          </datalist>
-        </div>
-
-        <div data-cross="start" data-gap="1" data-stack="y">
-          <label className="c-label" {...sets.label.props}>
-            {t("workout.exercise.add.sets.label")}
-          </label>
-
-          <input
-            className="c-input"
-            type="number"
-            {...Form.sets.pattern}
-            {...sets.input.props}
-            {...bg.Rhythm().times(5).style.width}
+        <form
+          aria-busy={mutation.isLoading}
+          data-gap="6"
+          data-stack="y"
+          data-wrap="nowrap"
+          onSubmit={mutation.handleSubmit}
+          style={shrinkable}
+        >
+          <ExercisePicker
+            exercises={exercises.data}
+            name={exerciseId.input.props.name}
+            onChange={exerciseId.set}
+            query={query}
+            value={exerciseId.value}
           />
-        </div>
 
-        <div data-cross="start" data-gap="1" data-stack="y">
-          <label className="c-label" {...repsMin.label.props}>
-            {t("workout.exercise.add.reps.label")}
-          </label>
+          <div data-cross="end" data-gap="4" data-stack="x" data-wrap="nowrap">
+            <div data-gap="1" data-stack="y">
+              <label className="c-label" {...sets.label.props}>
+                {t("workout.exercise.add.sets.label")}
+              </label>
 
-          <div data-cross="center" data-gap="2" data-stack="x">
-            <input
-              className="c-input"
-              type="number"
-              {...Form.repsMin.pattern}
-              {...repsMin.input.props}
-              {...bg.Rhythm().times(5).style.width}
-            />
+              <input
+                className="c-input"
+                type="number"
+                {...Form.sets.pattern}
+                {...sets.input.props}
+                {...bg.Rhythm().times(5).style.width}
+              />
+            </div>
 
-            <div data-color="neutral-400">-</div>
+            <div data-gap="1" data-stack="y">
+              <label className="c-label" {...repsMin.label.props}>
+                {t("workout.exercise.add.reps.label")}
+              </label>
 
-            <input
-              aria-label={t("workout.exercise.add.reps.max.label")}
-              className="c-input"
-              type="number"
-              {...Form.repsMax.pattern}
-              min={repsMin.value}
-              {...repsMax.input.props}
-              {...bg.Rhythm().times(5).style.width}
-            />
+              <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+                <input
+                  className="c-input"
+                  type="number"
+                  {...Form.repsMin.pattern}
+                  {...repsMin.input.props}
+                  {...bg.Rhythm().times(5).style.width}
+                />
+
+                <div data-color="neutral-400">-</div>
+
+                <input
+                  aria-label={t("workout.exercise.add.reps.max.label")}
+                  className="c-input"
+                  type="number"
+                  {...Form.repsMax.pattern}
+                  min={repsMin.value}
+                  {...repsMax.input.props}
+                  {...bg.Rhythm().times(5).style.width}
+                />
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-          <button
-            className="c-button"
-            data-md-grow="1"
-            data-variant="secondary"
-            disabled={
-              exerciseName.empty || sets.empty || repsMin.empty || repsMax.empty || mutation.isLoading
-            }
-            type="submit"
-          >
-            {t("app.save")}
-          </button>
+          {mutation.isError && <DialogError>{t("workout.exercise.add.error")}</DialogError>}
 
-          <ButtonCancel
-            data-md-grow="1"
-            onClick={bg.exec([
-              exerciseName.clear,
-              sets.clear,
-              repsMin.clear,
-              repsMax.clear,
-              mutation.reset,
-              add.disable,
-            ])}
-          />
-        </div>
-      </div>
+          <DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([clear, add.disable])}>
+            <ButtonClear
+              disabled={
+                exerciseId.empty && query.empty && sets.unchanged && repsMin.unchanged && repsMax.unchanged
+              }
+              onClick={clear}
+            />
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("workout.exercise.add.error")}
-        </output>
-      )}
-    </form>
+            <button
+              className="c-button"
+              data-variant="primary"
+              disabled={
+                exerciseId.empty || sets.empty || repsMin.empty || repsMax.empty || mutation.isLoading
+              }
+              type="submit"
+            >
+              <Plus data-size="sm" />
+              {t("workout.exercise.add.cta")}
+            </button>
+          </DialogFooter>
+        </form>
+      </Dialog>
+    </>
   );
 }
