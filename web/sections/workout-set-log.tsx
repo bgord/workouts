@@ -100,10 +100,6 @@ export function WorkoutSetLog(props: {
       </div>
 
       <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
-        <span data-color="neutral-500" data-fs="xs" data-md-disp="none">
-          {t("workout.set.rir.label")}
-        </span>
-
         <RirSegments disabled={busy} field={rir} />
 
         <button

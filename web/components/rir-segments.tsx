@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 
-const RirOptions = [0, 1, 2, 3];
+const RirOptions = [0, 1, 2];
 
-const segment = { ...bg.Rhythm(26).times(1).width, ...bg.Rhythm(26).times(1).height };
+const segment = { ...bg.Rhythm(36).times(1).width, ...bg.Rhythm(36).times(1).height };
 
 export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disabled?: boolean }) {
   const t = bg.useTranslations();
