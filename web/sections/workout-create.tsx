@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CalendarPlus } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { Select } from "../components";
+import { ButtonClear, Select } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -92,16 +92,24 @@ export function WorkoutCreate() {
         </div>
       )}
 
-      <button
-        className="c-button"
-        data-md-width="100%"
-        data-variant="secondary"
-        disabled={!workouts.actions.create.enabled || mutation.isLoading}
-        type="submit"
-      >
-        <CalendarPlus data-size="sm" />
-        {t("workout.create.cta")}
-      </button>
+      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
+        <button
+          className="c-button"
+          data-md-grow="1"
+          data-variant="secondary"
+          disabled={!workouts.actions.create.enabled || mutation.isLoading}
+          type="submit"
+        >
+          <CalendarPlus data-size="sm" />
+          {t("workout.create.cta")}
+        </button>
+
+        <ButtonClear
+          data-md-grow="1"
+          disabled={scheduledFor.unchanged && planSectionId.unchanged}
+          onClick={bg.exec([scheduledFor.clear, planSectionId.clear, mutation.reset])}
+        />
+      </div>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm" data-mb="2">
