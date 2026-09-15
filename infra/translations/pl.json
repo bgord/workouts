@@ -137,6 +137,7 @@
   "measurements.body_weight.value": "{{weight}} kg",
   "measurements.body_weight.measure.date.label": "Data",
   "measurements.body_weight.measure.weight.label": "Masa (kg)",
+  "measurements.body_weight.measure.weight.unit": "kg",
   "measurements.body_weight.measure.cta": "Zapisz",
   "measurements.body_weight.measure.error": "Nie udało się zapisać masy ciała",
   "measurements.body_weight.correct.title": "Popraw pomiar",

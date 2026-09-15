@@ -63,3 +63,12 @@ a {
 g:hover > .chart-point {
   visibility: visible;
 }
+
+[data-spin="none"] {
+  appearance: textfield;
+}
+[data-spin="none"]::-webkit-inner-spin-button,
+[data-spin="none"]::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}

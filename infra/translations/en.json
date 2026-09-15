@@ -137,6 +137,7 @@
   "measurements.body_weight.value": "{{weight}} kg",
   "measurements.body_weight.measure.date.label": "Date",
   "measurements.body_weight.measure.weight.label": "Weight (kg)",
+  "measurements.body_weight.measure.weight.unit": "kg",
   "measurements.body_weight.measure.cta": "Log",
   "measurements.body_weight.measure.error": "Could not log the body weight",
   "measurements.body_weight.correct.title": "Correct the measurement",
