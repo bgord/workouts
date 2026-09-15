@@ -7,6 +7,8 @@ import type { Plan } from "../../modules/plans/value-objects/plan";
 import { ActionHint, ButtonCancel } from "../components";
 import { planRoute } from "../router";
 
+const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
+
 export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -34,44 +36,85 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
 
   if (create.off) {
     return (
-      <div data-cross="center" data-gap="3" data-stack="x">
-        <ActionHint action={props.action} />
-
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <button
-          className="c-button"
-          data-variant="secondary"
+          data-color="neutral-400"
+          data-cross="center"
+          data-cursor="pointer"
+          data-fs="sm"
+          data-fw="medium"
+          data-gap="3"
+          data-grow="1"
+          data-hover-color="neutral-0"
+          data-stack="x"
+          data-wrap="nowrap"
           disabled={!props.action.enabled}
           onClick={create.enable}
           type="button"
           {...create.props.controller}
         >
-          <Plus data-size="sm" />
+          <div
+            data-bc="neutral-700"
+            data-br="sm"
+            data-bs="dashed"
+            data-bw="hairline"
+            data-color="neutral-500"
+            data-cross="center"
+            data-main="center"
+            data-shrink="0"
+            data-stack="x"
+            style={placeholder}
+          >
+            <Plus data-size="sm" />
+          </div>
+
           {t("plan.section.create.cta")}
         </button>
+
+        <ActionHint action={props.action} data-shrink="0" />
       </div>
     );
   }
 
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...create.props.target}>
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+        <div
+          data-bc="neutral-700"
+          data-br="sm"
+          data-bs="dashed"
+          data-bw="hairline"
+          data-color="neutral-500"
+          data-cross="center"
+          data-main="center"
+          data-shrink="0"
+          data-stack="x"
+          style={placeholder}
+        >
+          <Plus data-size="sm" />
+        </div>
+
         <input
+          aria-label={t("plan.section.create.cta")}
           className="c-input"
-          data-md-width="100%"
+          data-grow="1"
+          data-variant="transparent"
           placeholder={t("plan.section.create.placeholder")}
+          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.planSectionName.pattern)}
           {...planSectionName.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
+        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x" data-wrap="nowrap">
           <button
             className="c-button"
             data-md-grow="1"
-            data-variant="secondary"
-            disabled={mutation.isLoading}
+            data-variant="primary"
+            disabled={planSectionName.empty || mutation.isLoading}
             type="submit"
           >
-            {t("app.save")}
+            <Plus data-size="sm" />
+            {t("plan.section.create.submit.cta")}
           </button>
 
           <ButtonCancel
