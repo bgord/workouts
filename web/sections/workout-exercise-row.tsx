@@ -1,10 +1,11 @@
 import { Rhythm, useToggle, useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Info, ListChecks, Target } from "lucide-react";
+import { ChevronDown, ChevronRight, Info, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
+import { SetDots } from "../components/set-dots";
 import { SetsReps } from "../components/sets-reps";
 import { SetsRepsLoad } from "../components/sets-reps-load";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
@@ -12,9 +13,15 @@ import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutExercise }) {
+const body = { flexBasis: 0, minWidth: 0 };
+
+export function WorkoutExerciseRow(props: {
+  workout: Workout;
+  exercise: WorkoutExercise;
+  index: number;
+  last: boolean;
+}) {
   const t = useTranslations();
-  const description = useToggle({ name: `workout-exercise-description-${props.exercise.id}` });
 
   const exercise = {
     id: props.exercise.exerciseId,
@@ -22,69 +29,83 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
     imageEtag: props.exercise.exerciseImageEtag,
   };
 
-  const skipped =
-    props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
-
+  const completed = props.workout.status === WorkoutStatusEnum.completed;
+  const skipped = completed && props.exercise.loggedSets.length === 0;
   const done = props.exercise.target ? props.exercise.loggedSets.length >= props.exercise.target.sets : false;
 
+  const open = useToggle({
+    name: `workout-exercise-${props.exercise.id}`,
+    defaultValue: !(completed || done),
+  });
+  const description = useToggle({ name: `workout-exercise-description-${props.exercise.id}` });
+
   return (
-    <li className="c-card" data-gap="3" data-md-p="2-5" data-p="4">
+    <li
+      data-bct={props.index === 0 ? undefined : "alpha-soft"}
+      data-bst={props.index === 0 ? undefined : "solid"}
+      data-bwt={props.index === 0 ? undefined : "hairline"}
+      data-gap="2"
+      data-pb={props.last ? undefined : "4"}
+      data-pt={props.index === 0 ? undefined : "4"}
+      data-stack="y"
+    >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
+        <button
+          aria-label={open.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")}
+          data-color="neutral-400"
+          data-cursor="pointer"
+          data-hover-color="neutral-0"
+          data-md-p="1"
+          data-p="2-5"
+          data-shrink="0"
+          data-stack="x"
+          onClick={open.toggle}
+          title={open.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")}
+          type="button"
+          {...open.props.controller}
+        >
+          {open.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
+        </button>
+
         <Link
           aria-hidden
+          data-shrink="0"
+          data-stack="x"
           params={{ exerciseId: props.exercise.exerciseId }}
           tabIndex={-1}
           to="/catalog/exercise/$exerciseId"
         >
-          <ExerciseImage size={ExerciseImageSize.sm} {...exercise} />
+          <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
         </Link>
 
-        <div data-gap="1-5" data-grow="1" data-mb="auto" data-stack="y" data-transform="truncate">
+        <div data-gap="1" data-grow="1" data-stack="y" style={body}>
+          <Link
+            data-color="neutral-100"
+            data-fs="sm"
+            data-fw="medium"
+            data-hover-color="brand-300"
+            data-transform="truncate"
+            params={{ exerciseId: props.exercise.exerciseId }}
+            title={props.exercise.exerciseName}
+            to="/catalog/exercise/$exerciseId"
+          >
+            {props.exercise.exerciseName}
+          </Link>
+
           <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
-            <Link
-              className="c-card-title"
-              data-hover-color="brand-300"
-              data-md-fs="sm"
-              data-transform="truncate"
-              params={{ exerciseId: props.exercise.exerciseId }}
-              title={props.exercise.exerciseName}
-              to="/catalog/exercise/$exerciseId"
-            >
-              {props.exercise.exerciseName}
-            </Link>
-
-            <button
-              aria-label={t("workout.exercise.description.toggle")}
-              className="c-button"
-              data-color={description.on ? "neutral-0" : "neutral-500"}
-              data-hover-color="neutral-0"
-              data-p="0"
-              data-shrink="0"
-              data-variant="ghost"
-              onClick={description.toggle}
-              title={t("workout.exercise.description.toggle")}
-              type="button"
-              {...Rhythm(24).times(1).style.height}
-              {...description.props.controller}
-            >
-              <Info data-size="sm" />
-            </button>
-          </div>
-
-          <div data-cross="center" data-gap="2" data-stack="x">
-            <div className="c-card-description" data-ls="wide" data-transform="nowrap">
-              <SetsReps {...props.exercise.prescription} />
-            </div>
-
             {props.exercise.target && (
               <div
-                className="c-badge"
-                data-color={skipped ? "neutral-400" : "neutral-200"}
-                data-fs="xs"
-                data-transform="nowrap"
-                data-variant={skipped ? "outline" : "primary"}
+                data-color="neutral-100"
+                data-cross="center"
+                data-fs="sm"
+                data-fw="medium"
+                data-gap="1"
+                data-shrink="0"
+                data-stack="x"
+                data-transform="font-variant-numeric"
+                data-wrap="nowrap"
               >
-                <Target data-size="sm" />
+                <Target data-color="brand-400" data-size="xs" />
                 <SetsRepsLoad
                   load={props.exercise.target.load}
                   reps={props.exercise.target.reps}
@@ -92,46 +113,44 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
                 />
               </div>
             )}
+
+            <div
+              data-color="neutral-500"
+              data-fs="xs"
+              data-md-disp={props.exercise.target ? "none" : undefined}
+              data-transform="font-variant-numeric"
+            >
+              <SetsReps {...props.exercise.prescription} />
+            </div>
           </div>
         </div>
 
-        <div
-          data-cross="center"
-          data-md-cross="end"
-          data-md-dir="column-reverse"
-          data-md-gap="1"
-          data-self="start"
-          data-shrink="0"
-          data-stack="x"
-          data-wrap="nowrap"
-        >
-          {skipped && (
-            <div className="c-badge" data-color="neutral-400" data-variant="outline">
-              {t("workout.exercise.skipped")}
-            </div>
-          )}
+        {skipped && (
+          <div className="c-badge" data-color="neutral-400" data-shrink="0" data-variant="outline">
+            {t("workout.exercise.skipped")}
+          </div>
+        )}
 
-          {!skipped && props.exercise.target && props.workout.status !== WorkoutStatusEnum.draft && (
-            <div
-              data-color={done ? "positive-400" : "neutral-500"}
-              data-cross="center"
-              data-fs="xs"
-              data-gap="1"
-              data-mt="0-5"
-              data-stack="x"
-              data-wrap="nowrap"
-              title={t("workout.set.progress.title")}
-            >
-              <ListChecks data-size="xs" />
+        {!skipped && props.exercise.target && props.workout.status !== WorkoutStatusEnum.draft && (
+          <SetDots done={props.exercise.loggedSets.length} target={props.exercise.target.sets} />
+        )}
 
-              <span data-transform="font-variant-numeric">
-                {t("workout.set.progress", {
-                  done: props.exercise.loggedSets.length,
-                  target: props.exercise.target.sets,
-                })}
-              </span>
-            </div>
-          )}
+        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
+          <button
+            aria-label={t("workout.exercise.description.toggle")}
+            className="c-button"
+            data-color={description.on ? "neutral-0" : "neutral-500"}
+            data-hover-color="neutral-0"
+            data-px="0"
+            data-variant="ghost"
+            onClick={description.toggle}
+            title={t("workout.exercise.description.toggle")}
+            type="button"
+            {...Rhythm().times(3).style.width}
+            {...description.props.controller}
+          >
+            <Info data-size="sm" />
+          </button>
 
           {props.exercise.actions.remove.available && (
             <WorkoutExerciseRemove
@@ -144,32 +163,41 @@ export function WorkoutExerciseRow(props: { workout: Workout; exercise: WorkoutE
       </div>
 
       {description.on && (
-        <div className="c-prose" data-color="neutral-300" data-fs="sm" {...description.props.target}>
+        <div
+          className="c-prose"
+          data-color="neutral-300"
+          data-fs="sm"
+          data-md-pl="0"
+          data-pl="12"
+          {...description.props.target}
+        >
           {props.exercise.exerciseDescription}
         </div>
       )}
 
-      <div data-gap="0" data-stack="y">
-        <WorkoutSetList exercise={props.exercise} workout={props.workout} />
+      {open.on && (
+        <div data-gap="0" data-md-pl="0" data-pl="12" data-stack="y" {...open.props.target}>
+          <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
-        {props.exercise.actions.targetSet.available && (
-          <div className="c-card-footer" data-cross="end" data-gap="3" data-pt="3">
-            <WorkoutExerciseTargetSet
-              action={props.exercise.actions.targetSet}
+          {props.exercise.actions.targetSet.available && (
+            <div data-cross="end" data-gap="3" data-pt="1">
+              <WorkoutExerciseTargetSet
+                action={props.exercise.actions.targetSet}
+                exercise={props.exercise}
+                workout={props.workout}
+              />
+            </div>
+          )}
+
+          {props.exercise.actions.setLog.available && (
+            <WorkoutSetLog
+              action={props.exercise.actions.setLog}
               exercise={props.exercise}
               workout={props.workout}
             />
-          </div>
-        )}
-
-        {props.exercise.actions.setLog.available && (
-          <WorkoutSetLog
-            action={props.exercise.actions.setLog}
-            exercise={props.exercise}
-            workout={props.workout}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </li>
   );
 }

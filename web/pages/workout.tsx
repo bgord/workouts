@@ -127,7 +127,7 @@ export function Workout() {
         </div>
       </div>
 
-      <div data-gap="3" data-stack="y">
+      <div data-gap="3" data-mt="3" data-stack="y">
         {workout.actions.exerciseAdd.available && (
           <div data-main="end" data-stack="x">
             <WorkoutExerciseAdd action={workout.actions.exerciseAdd} {...workout.data} />

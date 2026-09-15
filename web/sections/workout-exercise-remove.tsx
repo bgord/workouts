@@ -36,7 +36,6 @@ export function WorkoutExerciseRemove(props: {
       <form
         data-cross="center"
         data-gap="3"
-        data-mb="auto"
         data-stack="x"
         data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
@@ -45,12 +44,13 @@ export function WorkoutExerciseRemove(props: {
           className="c-button"
           data-color="neutral-400"
           data-hover-color="danger-400"
-          data-p="2"
+          data-px="0"
+          data-shrink="0"
           data-variant="ghost"
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
           type="submit"
-          {...bg.Rhythm(24).times(1).style.height}
+          {...bg.Rhythm().times(3).style.width}
           {...dialog.props.controller}
         >
           <X data-size="sm" />
