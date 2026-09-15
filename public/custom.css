@@ -72,3 +72,32 @@ g:hover > .chart-point {
   appearance: none;
   margin: 0;
 }
+
+[data-stepper] > button {
+  inline-size: 34px;
+}
+[data-stepper] > input {
+  inline-size: var(--stepper-input);
+}
+[data-stepper="fill"] > button {
+  inline-size: 28px;
+}
+[data-rir] > label,
+[data-rir] > button {
+  inline-size: 36px;
+}
+@media (width <= 768px) {
+  [data-stepper="default"] > button {
+    inline-size: 24px;
+  }
+  [data-stepper="default"] > input {
+    inline-size: 0;
+  }
+  [data-stepper="default"] > [data-unit] {
+    display: none;
+  }
+  [data-rir="dense"] > label,
+  [data-rir="dense"] > button {
+    inline-size: 34px;
+  }
+}

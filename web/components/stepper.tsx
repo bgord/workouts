@@ -1,12 +1,11 @@
 import * as bg from "@bgord/ui";
 import { Minus, Plus } from "lucide-react";
+import type React from "react";
 
-const control = {
-  default: { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm().times(3).height },
-  compact: { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm().times(3).height },
-  fill: { ...bg.Rhythm(28).times(1).width, ...bg.Rhythm().times(3).height },
-};
+const control = bg.Rhythm().times(3).height;
 const inputs = { textAlign: "center" as const, minWidth: 0, paddingInline: 0, outline: "none" };
+const width = (value?: number): React.CSSProperties | undefined =>
+  value ? ({ "--stepper-input": bg.Rhythm(value).times(1).width.width } as React.CSSProperties) : undefined;
 
 export function Stepper(props: {
   field: bg.UseNumberFieldReturnType;
@@ -38,7 +37,9 @@ export function Stepper(props: {
       data-overflow="hidden"
       data-shrink={variant === "fill" ? undefined : "0"}
       data-stack="x"
+      data-stepper={variant}
       data-wrap="nowrap"
+      style={width(props.width)}
     >
       <button
         aria-label={`${props.label} −${props.step}`}
@@ -52,7 +53,7 @@ export function Stepper(props: {
         data-shrink="0"
         disabled={props.disabled || value <= props.min}
         onClick={decrement}
-        style={control[variant]}
+        style={control}
         type="button"
       >
         <Minus data-size="sm" />
@@ -76,14 +77,11 @@ export function Stepper(props: {
         step={props.step}
         type="number"
         {...props.field.input.props}
-        style={{
-          ...inputs,
-          ...(variant === "fill" ? { width: 0 } : bg.Rhythm(props.width ?? 40).times(1).width),
-        }}
+        style={{ ...inputs, ...(variant === "fill" ? { width: 0 } : {}) }}
       />
 
       {props.unit && (
-        <span data-color="neutral-500" data-fs="xs" data-pr="2" data-shrink="0">
+        <span data-color="neutral-500" data-fs="xs" data-pr="2" data-shrink="0" data-unit>
           {props.unit}
         </span>
       )}
@@ -100,7 +98,7 @@ export function Stepper(props: {
         data-shrink="0"
         disabled={props.disabled || value >= props.max}
         onClick={increment}
-        style={control[variant]}
+        style={control}
         type="button"
       >
         <Plus data-size="sm" />

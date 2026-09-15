@@ -2,9 +2,13 @@ import * as bg from "@bgord/ui";
 
 const RirOptions = [0, 1, 2];
 
-const segment = { ...bg.Rhythm(36).times(1).width, ...bg.Rhythm(36).times(1).height };
+const segment = bg.Rhythm(36).times(1).height;
 
-export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disabled?: boolean }) {
+export function RirSegments(props: {
+  field: bg.UseNumberFieldReturnType;
+  disabled?: boolean;
+  variant?: "default" | "dense";
+}) {
   const t = bg.useTranslations();
 
   const options = [bg.NumberField.EMPTY, ...RirOptions];
@@ -19,6 +23,7 @@ export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disable
       data-md-grow="1"
       data-overflow="hidden"
       data-p="0"
+      data-rir={props.variant ?? "default"}
       data-shrink="0"
       data-stack="x"
       data-wrap="nowrap"
@@ -31,7 +36,7 @@ export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disable
         return (
           <label
             data-bcl={index === 0 ? undefined : "alpha-soft"}
-            data-bg={active ? "alpha-medium" : undefined}
+            data-bg={active ? "neutral-900" : undefined}
             data-bsl={index === 0 ? undefined : "solid"}
             data-bwl={index === 0 ? undefined : "hairline"}
             data-color={

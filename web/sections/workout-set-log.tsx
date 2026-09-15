@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, RirSegments, Stepper } from "../components";
+import { ActionHint, RirSubmit, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -27,7 +27,7 @@ export function WorkoutSetLog(props: {
       : bg.NumberField.EMPTY,
   });
 
-  const rir = bg.useNumberField({ name: `logged-rir-${props.exercise.id}` });
+  const rir = useRef<number | undefined>(undefined);
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -38,14 +38,10 @@ export function WorkoutSetLog(props: {
         body: JSON.stringify({
           reps: reps.value,
           load: WeightFormat.grams(load.value ?? 0),
-          rir: rir.value,
+          rir: rir.current,
         }),
       }),
-    onSuccess: () => {
-      rir.clear();
-
-      return router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
-    },
+    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });
 
   const busy = !props.action.enabled || mutation.isLoading;
@@ -56,7 +52,7 @@ export function WorkoutSetLog(props: {
       data-cross="center"
       data-gap="2-5"
       data-mb="5"
-      data-md-gap="2"
+      data-md-gap="1"
       data-mt="1"
       data-pt="2"
       data-stack="x"
@@ -72,7 +68,14 @@ export function WorkoutSetLog(props: {
         {props.exercise.loggedSets.length + 1}
       </div>
 
-      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
+      <div
+        data-cross="center"
+        data-gap="2"
+        data-md-gap="1"
+        data-md-grow="1"
+        data-stack="x"
+        data-wrap="nowrap"
+      >
         <Stepper
           disabled={busy}
           field={reps}
@@ -99,22 +102,13 @@ export function WorkoutSetLog(props: {
         />
       </div>
 
-      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
-        <RirSegments disabled={busy} field={rir} />
-
-        <button
-          className="c-button"
-          data-md-ml="0"
-          data-ml="auto"
-          data-shrink="0"
-          data-variant="primary"
-          disabled={busy || reps.empty || load.empty}
-          type="submit"
-        >
-          <Plus data-size="sm" />
-          {t("workout.set.cta")}
-        </button>
-      </div>
+      <RirSubmit
+        disabled={busy || reps.empty || load.empty}
+        onSelect={(value) => {
+          rir.current = value;
+        }}
+        variant="dense"
+      />
 
       <ActionHint action={props.action} />
 

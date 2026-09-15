@@ -21,6 +21,7 @@ export * from "./plan-status-badge";
 export * from "./reps-load";
 export * from "./rir-badge";
 export * from "./rir-segments";
+export * from "./rir-submit";
 export * from "./row";
 export * from "./select";
 export * from "./set-dots";
