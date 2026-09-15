@@ -375,11 +375,10 @@
   "workout.status.draft": "Szkic",
   "workout.status.in_progress": "W trakcie",
   "workout.status.initial": "Początkowy",
-  "workout.target.cta": "Ustaw",
+  "workout.target.cta": "Ustaw cel",
   "workout.target.error": "Nie udało się ustawić celu",
   "workout.target.load.label": "Ciężar (kg)",
   "workout.target.reps.label": "Powtórzenia",
-  "workout.target.saved": "Zapisano",
   "workout.target.sets.label": "Serie",
   "workout.title": "{{plan}} · {{section}}"
 }

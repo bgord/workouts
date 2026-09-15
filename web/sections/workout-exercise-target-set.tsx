@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleCheck } from "lucide-react";
+import { Check, X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint } from "../components";
+import { ActionHint, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -11,21 +11,23 @@ export function WorkoutExerciseTargetSet(props: {
   workout: Workout;
   exercise: WorkoutExerciseWithSets;
   action: ActionState;
+  toggle: bg.UseToggleReturnType;
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const edit = props.toggle;
 
-  const sets = bg.useNumberField({
+  const sets = bg.useNumberField<number>({
     name: `sets-${props.exercise.id}`,
     defaultValue: props.exercise.target?.sets ?? props.exercise.prescription.sets,
   });
 
-  const reps = bg.useNumberField({
+  const reps = bg.useNumberField<number>({
     name: `reps-${props.exercise.id}`,
     defaultValue: props.exercise.target?.reps ?? props.exercise.prescription.reps.min,
   });
 
-  const load = bg.useNumberField({
+  const load = bg.useNumberField<number>({
     name: `load-${props.exercise.id}`,
     defaultValue: props.exercise.target
       ? WeightFormat.kilograms(props.exercise.target.load)
@@ -44,92 +46,104 @@ export function WorkoutExerciseTargetSet(props: {
           load: WeightFormat.grams(load.value ?? 0),
         }),
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
-    autoResetDelayMs: 3000,
+    onSuccess: async () => {
+      edit.disable();
+      await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
+    },
   });
 
-  const incomplete = sets.empty || reps.empty || load.empty;
+  const cancel = bg.exec([sets.clear, reps.clear, load.clear, mutation.reset, edit.disable]);
+  const unchanged = props.exercise.target && sets.unchanged && reps.unchanged && load.unchanged;
 
   return (
     <form
       aria-busy={mutation.isLoading}
-      data-cross="end"
-      data-gap="2"
-      data-grow="1"
+      data-cross="center"
+      data-gap="2-5"
+      data-md-gap="2"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
+      {...edit.props.target}
     >
-      <div data-gap="1" data-stack="y">
-        <label className="c-label" data-variant="inline" {...sets.label.props}>
-          {t("workout.target.sets.label")}
-        </label>
+      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
+        <Stepper
+          disabled={mutation.isLoading}
+          field={sets}
+          label={t("workout.target.sets.label")}
+          max={20}
+          min={1}
+          step={1}
+          width={40}
+        />
 
-        <input
-          className="c-input"
-          min="1"
-          type="number"
-          {...sets.input.props}
-          {...bg.Rhythm(64).times(1).style.width}
+        <span data-color="neutral-500" data-fs="sm">
+          ×
+        </span>
+
+        <Stepper
+          disabled={mutation.isLoading}
+          field={reps}
+          label={t("workout.target.reps.label")}
+          max={100}
+          min={1}
+          step={1}
+          width={40}
+        />
+
+        <span data-color="neutral-500" data-fs="sm">
+          @
+        </span>
+
+        <Stepper
+          disabled={mutation.isLoading}
+          field={load}
+          label={t("workout.target.load.label")}
+          max={1000}
+          min={0}
+          step={0.5}
+          unit="kg"
+          width={52}
         />
       </div>
 
-      <div data-gap="1" data-stack="y">
-        <label className="c-label" data-variant="inline" {...reps.label.props}>
-          {t("workout.target.reps.label")}
-        </label>
+      <div data-cross="center" data-gap="1" data-ml="auto" data-shrink="0" data-stack="x" data-wrap="nowrap">
+        <button
+          aria-label={t("app.save")}
+          className="c-button"
+          data-color="positive-400"
+          data-hover-color="positive-200"
+          data-px="0"
+          data-variant="ghost"
+          disabled={
+            !props.action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
+          }
+          title={t("app.save")}
+          type="submit"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <Check data-size="sm" />
+        </button>
 
-        <input
-          className="c-input"
-          min="1"
-          type="number"
-          {...reps.input.props}
-          {...bg.Rhythm(64).times(1).style.width}
-        />
+        <button
+          aria-label={t("app.cancel")}
+          className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
+          data-px="0"
+          data-variant="ghost"
+          onClick={cancel}
+          title={t("app.cancel")}
+          type="button"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <X data-size="sm" />
+        </button>
       </div>
-
-      <div data-gap="1" data-stack="y">
-        <label className="c-label" data-variant="inline" {...load.label.props}>
-          {t("workout.target.load.label")}
-        </label>
-
-        <input
-          className="c-input"
-          min="0"
-          step="0.5"
-          type="number"
-          {...load.input.props}
-          {...bg.Rhythm(80).times(1).style.width}
-        />
-      </div>
-
-      <button
-        className="c-button"
-        data-variant="secondary"
-        disabled={!props.action.enabled || incomplete || mutation.isLoading}
-        type="submit"
-      >
-        {t("workout.target.cta")}
-      </button>
 
       <ActionHint action={props.action} />
 
-      {mutation.isDone && (
-        <output
-          aria-live="polite"
-          data-color="positive-400"
-          data-cross="center"
-          data-fs="sm"
-          data-gap="2"
-          data-mb="2"
-          data-stack="x"
-        >
-          <CircleCheck data-size="sm" />
-          {t("workout.target.saved")}
-        </output>
-      )}
-
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm" data-mb="2">
+        <output data-color="danger-400" data-fs="xs" data-width="100%">
           {t("workout.target.error")}
         </output>
       )}
