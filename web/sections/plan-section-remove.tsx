@@ -30,12 +30,14 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
         className="c-button"
         data-color="neutral-400"
         data-hover-color="danger-400"
-        data-ml="auto"
+        data-px="0"
+        data-shrink="0"
         data-variant="ghost"
         onClick={dialog.enable}
         title={t("plan.section.remove.title", { name: props.section.name })}
         type="button"
         {...dialog.props.controller}
+        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
       </button>

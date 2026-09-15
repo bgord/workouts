@@ -46,9 +46,11 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   if (add.off) {
     return (
-      <div className="c-card-footer" data-cross="center" data-gap="3" data-pt="2" data-stack="x">
+      <div className="c-card-footer" data-cross="center" data-gap="3" data-pt="1" data-stack="x">
         <button
           className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
           data-variant="ghost"
           disabled={!props.action.enabled}
           onClick={add.enable}
@@ -68,6 +70,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
     <form
       className="c-card-footer"
       data-gap="2"
+      data-pt="3"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...add.props.target}

@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Dumbbell, Layers, LayoutList } from "lucide-react";
-import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
-import { PlanSectionLimitForPlanMax } from "../../modules/plans/value-objects/plan-section-limit-for-plan";
+import { ChevronDown, ChevronRight, LayoutList } from "lucide-react";
+import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
 import { PlanSectionCreate } from "./plan-section-create";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -12,37 +11,12 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
   const t = bg.useTranslations();
 
   return (
-    <div data-gap="3" data-stack="y">
-      <div
-        data-cross="center"
-        data-gap="3"
-        data-stack="x"
-        data-wrap="wrap"
-        {...bg.Rhythm().times(3).style.minHeight}
-      >
-        <div
-          data-color="neutral-500"
-          data-cross="center"
-          data-fs="sm"
-          data-gap="1-5"
-          data-grow="1"
-          data-stack="x"
-          title={t("plan.section.list.header")}
-        >
-          <Layers data-size="xs" />
-
-          <span data-transform="font-variant-numeric">
-            {t("plan.section.list.count", {
-              count: props.sections.length,
-              max: PlanSectionLimitForPlanMax,
-            })}
-          </span>
-        </div>
-
-        {props.actions.sectionCreate.available && (
+    <div data-gap="6" data-stack="y">
+      {props.actions.sectionCreate.available && (
+        <div data-main="end" data-stack="x" {...bg.Rhythm().times(3).style.minHeight}>
           <PlanSectionCreate action={props.actions.sectionCreate} {...props} />
-        )}
-      </div>
+        </div>
+      )}
 
       {props.sections.length === 0 && (
         <div
@@ -65,51 +39,102 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
         </div>
       )}
 
-      <ul data-gap="3" data-stack="y">
-        {props.sections.map((section) => (
-          <li className="c-card" data-gap="3" data-md-p="2-5" data-p="4" key={section.id}>
-            <div data-cross="center" data-gap="3" data-stack="x">
-              <div data-grow="1" data-transform="truncate">
-                {props.actions.sectionRename.available && (
-                  <PlanSectionRename plan={props} section={section} />
-                )}
-
-                {!props.actions.sectionRename.available && (
-                  <div className="c-card-title" data-transform="truncate" title={section.name}>
-                    {section.name}
-                  </div>
-                )}
-              </div>
-
-              <div
-                data-color="neutral-500"
-                data-cross="center"
-                data-fs="xs"
-                data-gap="1"
-                data-stack="x"
-                title={t("plan.section.exercises")}
-              >
-                <Dumbbell data-size="xs" />
-                <span data-transform="font-variant-numeric">{section.exerciseInstructions.length}</span>
-              </div>
-
-              {props.actions.sectionRemove.available && <PlanSectionRemove plan={props} section={section} />}
-            </div>
-
-            <div data-gap="0" data-stack="y">
-              <PlanSectionExerciseInstructionList plan={props} section={section} />
-
-              {section.actions.exerciseInstructionAdd.available && (
-                <PlanSectionExerciseInstructionAdd
-                  action={section.actions.exerciseInstructionAdd}
-                  plan={props}
-                  section={section}
-                />
-              )}
-            </div>
-          </li>
+      <ul data-stack="y">
+        {props.sections.map((section, index) => (
+          <PlanSectionItem
+            actions={props.actions}
+            index={index}
+            key={section.id}
+            last={index === props.sections.length - 1}
+            plan={props}
+            section={section}
+          />
         ))}
       </ul>
     </div>
+  );
+}
+
+function PlanSectionItem(props: {
+  plan: PlanGetResponse["data"];
+  section: PlanSection;
+  actions: PlanGetResponse["actions"];
+  index: number;
+  last: boolean;
+}) {
+  const t = bg.useTranslations();
+  const pluralize = bg.usePluralize();
+  const { plan, section, actions, index, last } = props;
+  const open = bg.useToggle({ name: `plan-section-${section.id}` });
+
+  return (
+    <li
+      data-bct={index === 0 ? undefined : "alpha-soft"}
+      data-bst={index === 0 ? undefined : "solid"}
+      data-bwt={index === 0 ? undefined : "hairline"}
+      data-gap="2"
+      data-pb={last ? undefined : "4"}
+      data-pt={index === 0 ? undefined : "4"}
+      data-stack="y"
+    >
+      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+        <button
+          aria-label={open.on ? t("plan.section.collapse") : t("plan.section.expand")}
+          data-color="neutral-400"
+          data-cursor="pointer"
+          data-hover-color="neutral-0"
+          data-md-p="1"
+          data-p="2-5"
+          data-shrink="0"
+          data-stack="x"
+          onClick={open.toggle}
+          title={open.on ? t("plan.section.collapse") : t("plan.section.expand")}
+          type="button"
+          {...open.props.controller}
+        >
+          {open.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
+        </button>
+
+        <div data-grow="1" data-transform="truncate">
+          {actions.sectionRename.available && <PlanSectionRename plan={plan} section={section} />}
+
+          {!actions.sectionRename.available && (
+            <div className="c-card-title" data-transform="truncate" title={section.name}>
+              {section.name}
+            </div>
+          )}
+        </div>
+
+        <div data-color="neutral-500" data-fs="xs" data-shrink="0" data-transform="font-variant-numeric">
+          {section.exerciseInstructions.length === 0
+            ? t("plan.section.exercise.list.empty")
+            : t("plan.section.exercise.count", {
+                count: section.exerciseInstructions.length,
+                noun: pluralize({
+                  value: section.exerciseInstructions.length,
+                  singular: t("plan.section.exercise.noun.singular"),
+                  plural: t("plan.section.exercise.noun.plural"),
+                  genitive: t("plan.section.exercise.noun.genitive"),
+                }),
+              })}
+        </div>
+
+        {actions.sectionRemove.available && <PlanSectionRemove plan={plan} section={section} />}
+      </div>
+
+      {open.on && (
+        <div data-gap="0" data-stack="y" {...open.props.target}>
+          <PlanSectionExerciseInstructionList plan={plan} section={section} />
+
+          {section.actions.exerciseInstructionAdd.available && (
+            <PlanSectionExerciseInstructionAdd
+              action={section.actions.exerciseInstructionAdd}
+              plan={plan}
+              section={section}
+            />
+          )}
+        </div>
+      )}
+    </li>
   );
 }
