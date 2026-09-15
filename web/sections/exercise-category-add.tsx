@@ -27,7 +27,7 @@ export function ExerciseCategoryAdd() {
 
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
-      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-gap="2" data-md-gap="1" data-stack="x" data-wrap="nowrap">
         <label className="c-visually-hidden" {...name.label.props}>
           {t("exercise.category.add.name.label")}
         </label>
@@ -44,6 +44,7 @@ export function ExerciseCategoryAdd() {
 
         <button
           className="c-button"
+          data-md-px="2"
           data-shrink="0"
           data-variant="secondary"
           disabled={mutation.isLoading || !name.changed}
@@ -54,6 +55,7 @@ export function ExerciseCategoryAdd() {
         </button>
 
         <ButtonClear
+          data-md-px="2"
           data-shrink="0"
           disabled={!name.changed}
           onClick={bg.exec([name.clear, mutation.reset])}
