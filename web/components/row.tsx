@@ -18,6 +18,7 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
         data-opacity={opacity[variant]}
         data-p="4"
         data-stack="x"
+        data-wrap="nowrap"
         {...rest}
       />
     </li>
@@ -37,5 +38,5 @@ export function RowMeta(props: React.JSX.IntrinsicElements["div"]) {
 }
 
 export function RowChevron() {
-  return <ChevronRight data-color="neutral-600" data-size="sm" />;
+  return <ChevronRight data-color="neutral-500" data-size="sm" />;
 }
