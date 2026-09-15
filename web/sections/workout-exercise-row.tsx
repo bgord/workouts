@@ -91,7 +91,7 @@ export function WorkoutExerciseRow(props: {
             {props.exercise.exerciseName}
           </Link>
 
-          <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+          <div data-cross="baseline" data-gap="2" data-stack="x" data-wrap="nowrap">
             {props.exercise.target && (
               <div
                 data-color="neutral-100"

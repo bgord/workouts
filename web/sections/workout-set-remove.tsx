@@ -4,6 +4,8 @@ import { X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutSetRemove(props: {
@@ -14,6 +16,13 @@ export function WorkoutSetRemove(props: {
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const dialog = bg.useToggle({ name: `workout-set-remove-${props.loggedSet.id}` });
+  const guarded = props.workout.status === WorkoutStatusEnum.completed;
+
+  const confirm = (event: React.FormEvent) => {
+    event.preventDefault();
+    dialog.enable();
+  };
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -26,25 +35,56 @@ export function WorkoutSetRemove(props: {
   });
 
   return (
-    <form
-      data-cross="center"
-      data-gap="3"
-      data-self="start"
-      data-stack="x"
-      data-wrap="nowrap"
-      onSubmit={mutation.handleSubmit}
-    >
-      <button
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="danger-400"
-        data-variant="ghost"
-        disabled={!props.action.enabled || mutation.isLoading}
-        title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
-        type="submit"
+    <>
+      <form
+        data-cross="center"
+        data-gap="3"
+        data-self="start"
+        data-stack="x"
+        data-wrap="nowrap"
+        onSubmit={guarded ? confirm : mutation.handleSubmit}
       >
-        <X data-size="sm" />
-      </button>
-    </form>
+        <button
+          className="c-button"
+          data-color="neutral-400"
+          data-hover-color="danger-400"
+          data-variant="ghost"
+          disabled={!props.action.enabled || mutation.isLoading}
+          title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
+          type="submit"
+          {...dialog.props.controller}
+        >
+          <X data-size="sm" />
+        </button>
+      </form>
+
+      <Dialog {...dialog}>
+        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+          {t("workout.set.remove.header")}
+        </DialogHeader>
+
+        <DialogInfo variant="danger">
+          {t("workout.set.remove.info", {
+            setNumber: props.loggedSet.setNumber,
+            name: props.exercise.exerciseName,
+          })}
+        </DialogInfo>
+
+        <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
+          {mutation.isError && <DialogError>{t("workout.set.remove.error")}</DialogError>}
+
+          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+            <button
+              className="c-button"
+              data-variant="destructive"
+              disabled={mutation.isLoading}
+              type="submit"
+            >
+              {t("workout.set.remove.cta")}
+            </button>
+          </DialogFooter>
+        </form>
+      </Dialog>
+    </>
   );
 }
