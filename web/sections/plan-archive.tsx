@@ -52,7 +52,7 @@ export function PlanArchive(props: Plan) {
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("plan.archive.error")}</DialogError>}
 
-          <DialogFooter onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
             <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
               {t("plan.archive.cta")}
             </button>

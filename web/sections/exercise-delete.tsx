@@ -48,7 +48,7 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("exercise.delete.error")}</DialogError>}
 
-          <DialogFooter onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"

@@ -142,7 +142,7 @@ export function WorkoutSetCorrect(props: {
         className="c-button"
         data-px="2"
         data-variant="ghost"
-        onClick={edit.disable}
+        onClick={bg.exec([reps.clear, load.clear, rir.clear, mutation.reset, edit.disable])}
         title={t("app.cancel")}
         type="button"
       >

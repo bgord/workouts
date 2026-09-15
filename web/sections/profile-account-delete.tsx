@@ -70,7 +70,7 @@ export function ProfileAccountDelete() {
 
           {mutation.isError && <DialogError>{t("profile.delete_account.error")}</DialogError>}
 
-          <DialogFooter onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"

@@ -140,7 +140,17 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState }) {
             {t("app.save")}
           </button>
 
-          <ButtonCancel data-md-grow="1" onClick={bg.exec([mutation.reset, add.disable])} />
+          <ButtonCancel
+            data-md-grow="1"
+            onClick={bg.exec([
+              exerciseName.clear,
+              sets.clear,
+              repsMin.clear,
+              repsMax.clear,
+              mutation.reset,
+              add.disable,
+            ])}
+          />
         </div>
       </div>
 

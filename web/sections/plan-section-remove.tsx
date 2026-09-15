@@ -52,7 +52,7 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("plan.section.remove.error")}</DialogError>}
 
-          <DialogFooter onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"

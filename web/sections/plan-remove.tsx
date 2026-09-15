@@ -51,7 +51,7 @@ export function PlanRemove(props: Plan) {
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("plan.remove.error")}</DialogError>}
 
-          <DialogFooter onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
             <button
               className="c-button"
               data-variant="destructive"

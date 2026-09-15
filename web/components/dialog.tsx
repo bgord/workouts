@@ -53,10 +53,10 @@ export function DialogError(props: { children: React.ReactNode }) {
   );
 }
 
-export function DialogFooter(props: { onCancel: () => void; children: React.ReactNode }) {
+export function DialogFooter(props: { disabled?: boolean; onCancel: () => void; children: React.ReactNode }) {
   return (
     <div data-gap="1" data-main="end" data-stack="x">
-      <ButtonCancel onClick={props.onCancel} />
+      <ButtonCancel disabled={props.disabled} onClick={props.onCancel} />
       {props.children}
     </div>
   );
