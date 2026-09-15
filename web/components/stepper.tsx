@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Minus, Plus } from "lucide-react";
 
 const control = { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm().times(3).height };
-const inputs = { textAlign: "center" as const, minWidth: 0, paddingInline: 0 };
+const inputs = { textAlign: "center" as const, minWidth: 0, paddingInline: 0, outline: "none" };
 
 export function Stepper(props: {
   field: bg.UseNumberFieldReturnType;
@@ -13,6 +13,7 @@ export function Stepper(props: {
   unit?: string;
   width: number;
   disabled?: boolean;
+  variant?: "default" | "compact";
 }) {
   const value = props.field.value ?? props.min;
   const round = (next: number) => Number(next.toFixed(2));
@@ -27,7 +28,7 @@ export function Stepper(props: {
       data-bs="solid"
       data-bw="hairline"
       data-cross="center"
-      data-md-grow="1"
+      data-md-grow={props.variant === "compact" ? undefined : "1"}
       data-overflow="hidden"
       data-shrink="0"
       data-stack="x"
@@ -38,10 +39,11 @@ export function Stepper(props: {
         data-color="neutral-400"
         data-cross="center"
         data-cursor="pointer"
+        data-disp="flex"
         data-hover-color="neutral-0"
         data-main="center"
+        data-md-disp={props.variant === "compact" ? "none" : undefined}
         data-shrink="0"
-        data-stack="x"
         disabled={props.disabled || value <= props.min}
         onClick={decrement}
         style={control}
@@ -57,7 +59,7 @@ export function Stepper(props: {
         data-bs="none"
         data-color="neutral-0"
         data-fw="medium"
-        data-md-grow="1"
+        data-md-grow={props.variant === "compact" ? undefined : "1"}
         data-spin="none"
         data-transform="font-variant-numeric"
         data-variant="transparent"
@@ -81,10 +83,11 @@ export function Stepper(props: {
         data-color="neutral-400"
         data-cross="center"
         data-cursor="pointer"
+        data-disp="flex"
         data-hover-color="neutral-0"
         data-main="center"
+        data-md-disp={props.variant === "compact" ? "none" : undefined}
         data-shrink="0"
-        data-stack="x"
         disabled={props.disabled || value >= props.max}
         onClick={increment}
         style={control}

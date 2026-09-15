@@ -234,7 +234,7 @@ export function WorkoutExerciseRow(props: {
       )}
 
       {target.on && props.exercise.actions.targetSet.available && (
-        <div data-md-pl="0" data-pl="12">
+        <div data-md-pl="8" data-pl="12">
           <WorkoutExerciseTargetSet
             action={props.exercise.actions.targetSet}
             exercise={props.exercise}

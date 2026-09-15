@@ -62,10 +62,11 @@ export function WorkoutExerciseTargetSet(props: {
       data-gap="2-5"
       data-md-gap="2"
       data-stack="x"
+      data-mt="2"
       onSubmit={mutation.handleSubmit}
       {...edit.props.target}
     >
-      <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-gap="2" data-md-gap="1" data-stack="x" data-wrap="nowrap">
         <Stepper
           disabled={mutation.isLoading}
           field={sets}
@@ -73,6 +74,7 @@ export function WorkoutExerciseTargetSet(props: {
           max={20}
           min={1}
           step={1}
+          variant="compact"
           width={40}
         />
 
@@ -87,6 +89,7 @@ export function WorkoutExerciseTargetSet(props: {
           max={100}
           min={1}
           step={1}
+          variant="compact"
           width={40}
         />
 
@@ -102,6 +105,7 @@ export function WorkoutExerciseTargetSet(props: {
           min={0}
           step={0.5}
           unit="kg"
+          variant="compact"
           width={52}
         />
       </div>
