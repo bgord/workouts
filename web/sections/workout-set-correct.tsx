@@ -61,11 +61,16 @@ export function WorkoutSetCorrect(props: {
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <button
           className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
+          data-px="0"
+          data-shrink="0"
           data-variant="ghost"
           disabled={!props.action.enabled}
           onClick={edit.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
           type="button"
+          {...bg.Rhythm().times(3).style.width}
           {...edit.props.controller}
         >
           <Pencil data-size="sm" />

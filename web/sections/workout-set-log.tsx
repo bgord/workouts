@@ -53,12 +53,11 @@ export function WorkoutSetLog(props: {
   return (
     <form
       aria-busy={mutation.isLoading}
-      data-bct="alpha-subtle"
-      data-bst="solid"
-      data-bwt="hairline"
       data-cross="center"
       data-gap="2-5"
+      data-mb="5"
       data-md-gap="2"
+      data-mt="1"
       data-pt="2"
       data-stack="x"
       onSubmit={mutation.handleSubmit}

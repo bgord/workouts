@@ -41,7 +41,7 @@ export function WorkoutSetRow(props: {
           </div>
         )}
 
-        <div data-stack="x">
+        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
           {props.loggedSet.actions.correct.available && (
             <WorkoutSetCorrect
               action={props.loggedSet.actions.correct}

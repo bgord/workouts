@@ -48,10 +48,13 @@ export function WorkoutSetRemove(props: {
           className="c-button"
           data-color="neutral-400"
           data-hover-color="danger-400"
+          data-px="0"
+          data-shrink="0"
           data-variant="ghost"
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           type="submit"
+          {...bg.Rhythm().times(3).style.width}
           {...dialog.props.controller}
         >
           <X data-size="sm" />

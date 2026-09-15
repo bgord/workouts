@@ -94,7 +94,7 @@ export function WorkoutExerciseRow(props: {
           <div data-cross="baseline" data-gap="2" data-stack="x" data-wrap="nowrap">
             {props.exercise.target && (
               <div
-                data-color="neutral-100"
+                data-color="neutral-300"
                 data-cross="center"
                 data-fs="sm"
                 data-fw="medium"

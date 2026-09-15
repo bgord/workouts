@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 
 const RirOptions = [0, 1, 2, 3];
 
-const segment = { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm().times(3).height };
+const segment = { ...bg.Rhythm(26).times(1).width, ...bg.Rhythm(26).times(1).height };
 
 export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disabled?: boolean }) {
   const t = bg.useTranslations();
@@ -12,8 +12,8 @@ export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disable
   return (
     <fieldset
       aria-label={t("workout.set.rir.label")}
-      data-bc="neutral-800"
-      data-br="md"
+      data-bc="alpha-soft"
+      data-br="sm"
       data-bs="solid"
       data-bw="hairline"
       data-md-grow="1"
@@ -30,7 +30,7 @@ export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disable
 
         return (
           <label
-            data-bcl={index === 0 ? undefined : "neutral-800"}
+            data-bcl={index === 0 ? undefined : "alpha-soft"}
             data-bg={active ? "alpha-medium" : undefined}
             data-bsl={index === 0 ? undefined : "solid"}
             data-bwl={index === 0 ? undefined : "hairline"}
@@ -39,7 +39,7 @@ export function RirSegments(props: { field: bg.UseNumberFieldReturnType; disable
             }
             data-cross="center"
             data-cursor="pointer"
-            data-fs="sm"
+            data-fs="xs"
             data-hover-bg="alpha-subtle"
             data-main="center"
             data-md-grow="1"
