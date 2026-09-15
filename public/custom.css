@@ -82,7 +82,6 @@ g:hover > .chart-point {
 [data-stepper="fill"] > button {
   inline-size: 28px;
 }
-[data-rir] > label,
 [data-rir] > button {
   inline-size: 36px;
 }
@@ -96,7 +95,6 @@ g:hover > .chart-point {
   [data-stepper="default"] > [data-unit] {
     display: none;
   }
-  [data-rir="dense"] > label,
   [data-rir="dense"] > button {
     inline-size: 34px;
   }

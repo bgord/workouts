@@ -4,10 +4,11 @@ import { RirColor } from "./rir-color";
 
 const RirOptions = [2, 1, 0];
 
-const segment = bg.Rhythm(36).times(1).height;
+const segment = bg.Rhythm(34).times(1).height;
 
 export function RirSubmit(props: {
   onSelect: (rir: number | undefined) => void;
+  value?: number;
   disabled?: boolean;
   variant?: "default" | "dense";
 }) {
@@ -34,6 +35,7 @@ export function RirSubmit(props: {
         <button
           aria-label={option === undefined ? t("workout.set.cta") : `${t("workout.set.cta")} · RIR ${option}`}
           data-bcl={index === 0 ? undefined : "alpha-soft"}
+          data-bg={option !== undefined && option === props.value ? "neutral-900" : undefined}
           data-bsl={index === 0 ? undefined : "solid"}
           data-bwl={index === 0 ? undefined : "hairline"}
           data-color={option === undefined ? "positive-400" : RirColor(option)}

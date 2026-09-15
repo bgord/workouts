@@ -2,8 +2,8 @@ import * as bg from "@bgord/ui";
 import { Minus, Plus } from "lucide-react";
 import type React from "react";
 
-const control = bg.Rhythm().times(3).height;
-const inputs = { textAlign: "center" as const, minWidth: 0, paddingInline: 0, outline: "none" };
+const control = bg.Rhythm(34).times(1).height;
+const inputs = { ...control, textAlign: "center" as const, minWidth: 0, paddingInline: 0, outline: "none" };
 const width = (value?: number): React.CSSProperties | undefined =>
   value ? ({ "--stepper-input": bg.Rhythm(value).times(1).width.width } as React.CSSProperties) : undefined;
 
