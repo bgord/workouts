@@ -56,7 +56,7 @@ export function BodyWeightMeasurementCorrect(props: {
         data-px="2"
         type="date"
         {...measuredOn.input.props}
-        max={new Date().toISOString().slice(0, 10)}
+        max={Temporal.Now.plainDateISO().toString()}
       />
 
       <input

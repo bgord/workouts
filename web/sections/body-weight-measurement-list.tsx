@@ -39,7 +39,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
             <option value="">{t("measurements.body_weight.history.month.all")}</option>
             {months.map((value) => (
               <option key={value} value={value}>
-                {DateFormat.month(language, new Date(`${value}-01`))} (
+                {DateFormat.month(language, Temporal.PlainDate.from(`${value}-01`))} (
                 {props.measurements.filter((measurement) => measurement.measuredOn.startsWith(value)).length})
               </option>
             ))}
@@ -73,7 +73,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
               </div>
 
               <div data-color="neutral-500" data-fs="xs">
-                {DateFormat.dayWithWeekday(language, new Date(reference.measuredOn))}
+                {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(reference.measuredOn))}
               </div>
             </div>
           </div>

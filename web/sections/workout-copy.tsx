@@ -15,7 +15,7 @@ const WorkoutReport = {
     return [
       `# Workout: ${workout.planName} - ${workout.planSectionName}`,
       "",
-      `Completed at: ${new Date(workout.completedAt).toISOString()}`,
+      `Completed at: ${Temporal.Instant.fromEpochMilliseconds(workout.completedAt).toString()}`,
       `Workout id: ${workout.id}`,
       `Logged sets: ${rows.length}`,
       "",
