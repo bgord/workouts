@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
+import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { PlanSectionCreate } from "./plan-section-create";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -57,7 +58,7 @@ function PlanSectionItem(props: {
   const t = bg.useTranslations();
   const pluralize = bg.usePluralize();
   const { plan, section, actions, index, last } = props;
-  const open = bg.useToggle({ name: `plan-section-${section.id}` });
+  const open = usePersistedToggle({ name: `plan-section-${section.id}` });
 
   return (
     <li

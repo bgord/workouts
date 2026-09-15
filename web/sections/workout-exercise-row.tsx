@@ -8,6 +8,7 @@ import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 import { SetDots } from "../components/set-dots";
 import { SetsReps } from "../components/sets-reps";
 import { SetsRepsLoad } from "../components/sets-reps-load";
+import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
@@ -32,7 +33,7 @@ export function WorkoutExerciseRow(props: {
   const completed = props.workout.status === WorkoutStatusEnum.completed;
   const skipped = completed && props.exercise.loggedSets.length === 0;
 
-  const open = useToggle({
+  const open = usePersistedToggle({
     name: `workout-exercise-${props.exercise.id}`,
     defaultValue: props.workout.status === WorkoutStatusEnum.draft,
   });
