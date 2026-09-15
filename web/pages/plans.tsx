@@ -25,15 +25,16 @@ export function Plans() {
           data-md-width="100%"
           data-variant="primary"
           disabled={!plans.actions.create.enabled}
-          onClick={planCreate.toggle}
+          onClick={planCreate.enable}
           type="button"
+          {...planCreate.props.controller}
         >
           <Plus data-size="sm" />
           {t("plan.create.cta")}
         </button>
       </div>
 
-      {plans.actions.create.enabled && planCreate.on && <PlanCreate />}
+      {plans.actions.create.enabled && <PlanCreate toggle={planCreate} />}
 
       {empty && (
         <div

@@ -2,10 +2,10 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
-import { ButtonClear } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
 import { plansRoute } from "../router";
 
-export function PlanCreate() {
+export function PlanCreate(props: { toggle: bg.UseToggleReturnType }) {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = plansRoute.useNavigate();
@@ -22,6 +22,7 @@ export function PlanCreate() {
     onSuccess: async (response, context) => {
       const { id } = await response.json();
 
+      props.toggle.disable();
       bg.Fields.clearAll([name]);
       context.form?.reset();
 
@@ -31,45 +32,41 @@ export function PlanCreate() {
   });
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
-      <div data-cross="center" data-gap="2" data-stack="x">
-        <label className="c-visually-hidden" {...name.label.props}>
-          {t("plan.create.name.label")}
-        </label>
+    <Dialog data-md-mt="12" {...props.toggle}>
+      <DialogHeader disabled={mutation.isLoading} onClose={props.toggle.disable}>
+        {t("plan.create.cta")}
+      </DialogHeader>
 
-        <input
-          className="c-input"
-          data-md-grow="1"
-          data-md-width="100%"
-          placeholder={t("plan.create.name.placeholder")}
-          {...bg.Form.input(Form.name.pattern)}
-          {...name.input.props}
-        />
+      <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
+        <div data-gap="1" data-stack="y">
+          <label className="c-label" {...name.label.props}>
+            {t("plan.create.name.label")}
+          </label>
 
-        <div data-cross="center" data-gap="2" data-md-width="100%" data-stack="x">
+          <input
+            className="c-input"
+            data-variant="transparent"
+            data-width="100%"
+            placeholder={t("plan.create.name.placeholder")}
+            {...bg.Form.input(Form.name.pattern)}
+            {...name.input.props}
+          />
+        </div>
+
+        {mutation.isError && <DialogError>{t("plan.create.error")}</DialogError>}
+
+        <DialogFooter disabled={mutation.isLoading} onCancel={props.toggle.disable}>
           <button
             className="c-button"
-            data-md-grow="1"
-            data-variant="secondary"
+            data-variant="primary"
             disabled={name.unchanged || mutation.isLoading}
             type="submit"
           >
             <Plus data-size="sm" />
             {t("plan.create.submit.cta")}
           </button>
-          <ButtonClear
-            data-md-grow="1"
-            disabled={name.unchanged}
-            onClick={bg.exec([name.clear, mutation.reset])}
-          />
-        </div>
-      </div>
-
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("plan.create.error")}
-        </output>
-      )}
-    </form>
+        </DialogFooter>
+      </form>
+    </Dialog>
   );
 }
