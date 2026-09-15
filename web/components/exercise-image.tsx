@@ -2,25 +2,28 @@ import { Rhythm } from "@bgord/ui";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
 
 export enum ExerciseImageSize {
+  xs = "xs",
   sm = "sm",
   md = "md",
   lg = "lg",
 }
 
 const width: Record<ExerciseImageSize, number> = {
+  [ExerciseImageSize.xs]: 48,
   [ExerciseImageSize.sm]: 80,
   [ExerciseImageSize.md]: 208,
   [ExerciseImageSize.lg]: 320,
 };
 
 const height: Record<ExerciseImageSize, number> = {
+  [ExerciseImageSize.xs]: 36,
   [ExerciseImageSize.sm]: 60,
   [ExerciseImageSize.md]: 156,
   [ExerciseImageSize.lg]: 240,
 };
 
 const style = (size: ExerciseImageSize) =>
-  size === ExerciseImageSize.sm
+  size === ExerciseImageSize.xs || size === ExerciseImageSize.sm
     ? { ...Rhythm(width[size]).times(1).width, ...Rhythm(height[size]).times(1).height }
     : { width: "100%", aspectRatio: `${width[size]} / ${height[size]}` };
 

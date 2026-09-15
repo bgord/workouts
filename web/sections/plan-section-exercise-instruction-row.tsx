@@ -37,10 +37,10 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-bwt="hairline"
       data-cross="center"
       data-gap="3"
-      data-md-wrap={change.on ? "wrap" : undefined}
-      data-py="2"
-      data-ml="3"
       data-md-ml="0"
+      data-md-wrap={change.on ? "wrap" : undefined}
+      data-ml="3"
+      data-py="2"
       data-stack="x"
       data-wrap={update.on ? undefined : "nowrap"}
     >

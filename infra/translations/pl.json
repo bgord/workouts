@@ -224,6 +224,8 @@
   "plan.section.exercise.add.exercise.label": "Ćwiczenie",
   "plan.section.exercise.add.reps.label": "Powtórzenia",
   "plan.section.exercise.add.reps.max.label": "Maks. powtórzeń",
+  "plan.section.exercise.add.search.empty": "Brak pasujących ćwiczeń",
+  "plan.section.exercise.add.search.placeholder": "Szukaj ćwiczeń",
   "plan.section.exercise.add.sets.label": "Serie",
   "plan.section.exercise.change.cta": "Zmień",
   "plan.section.exercise.change.error": "Nie udało się zmienić ćwiczenia",
