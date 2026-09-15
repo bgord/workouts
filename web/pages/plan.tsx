@@ -2,7 +2,7 @@
 
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ClipboardList } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { ActionHint, Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
@@ -60,8 +60,6 @@ export function Plan() {
                   data-wrap="nowrap"
                   {...bg.Rhythm().times(3).style.minHeight}
                 >
-                  <ClipboardList data-color="neutral-400" data-shrink="0" data-size="md" />
-
                   {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
                   {!plan.actions.rename.available && (

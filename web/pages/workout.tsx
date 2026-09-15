@@ -2,7 +2,7 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, Dumbbell, DumbbellIcon } from "lucide-react";
+import { ChevronLeft, Dumbbell } from "lucide-react";
 import { WorkoutExerciseLimitMax } from "../../modules/workouts/value-objects/workout-exercise-limit";
 import { ActionHint, Main, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
@@ -51,6 +51,7 @@ export function Workout() {
             className="c-button"
             data-interaction="subtle-scale"
             data-self="start"
+            data-shrink="0"
             data-variant="icon"
             search={search}
             title={t("app.back")}
@@ -62,9 +63,13 @@ export function Workout() {
           <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
             <div data-cross="center" data-gap="2" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
               <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
-                <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
-                  <DumbbellIcon data-color="neutral-400" data-shrink="0" data-size="md" />
-
+                <div
+                  data-cross="center"
+                  data-gap="2"
+                  data-stack="x"
+                  data-wrap="nowrap"
+                  {...bg.Rhythm().times(3).style.minHeight}
+                >
                   <h1
                     data-color="neutral-0"
                     data-fs="2xl"

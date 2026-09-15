@@ -49,6 +49,7 @@ export function Exercise() {
             className="c-button"
             data-interaction="subtle-scale"
             data-self="start"
+            data-shrink="0"
             data-variant="icon"
             search={Form.default}
             title={t("app.back")}
@@ -57,20 +58,30 @@ export function Exercise() {
             <ChevronLeft data-size="md" />
           </Link>
 
-          {exercise.actions.update.enabled ? (
-            <ExerciseNameUpdate exercise={exercise.data} />
-          ) : (
-            <h1
-              data-color="neutral-0"
-              data-fs="2xl"
-              data-fw="black"
-              data-grow="1"
-              data-md-fs="xl"
-              data-transform="truncate"
-            >
-              {exercise.data.name}
-            </h1>
-          )}
+          <div
+            data-cross="center"
+            data-gap="2"
+            data-grow="1"
+            data-stack="x"
+            data-wrap="nowrap"
+            {...bg.Rhythm().times(0).style.minWidth}
+            {...bg.Rhythm().times(3).style.minHeight}
+          >
+            {exercise.actions.update.enabled ? (
+              <ExerciseNameUpdate exercise={exercise.data} />
+            ) : (
+              <h1
+                data-color="neutral-0"
+                data-fs="2xl"
+                data-fw="black"
+                data-grow="1"
+                data-md-fs="xl"
+                data-transform="truncate"
+              >
+                {exercise.data.name}
+              </h1>
+            )}
+          </div>
 
           {exercise.actions.delete.available && (
             <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />

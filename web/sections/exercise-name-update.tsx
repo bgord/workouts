@@ -28,7 +28,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
 
   if (update.off) {
     return (
-      <h1 data-grow="1" data-maxw="100%" data-transform="truncate">
+      <h1 data-fs="2xl" data-grow="1" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
         <button
           data-color="neutral-0"
           data-cursor="pointer"
