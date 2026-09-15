@@ -51,7 +51,7 @@ export function PlanCreate() {
             className="c-button"
             data-md-grow="1"
             data-variant="secondary"
-            disabled={mutation.isLoading || !name.changed}
+            disabled={name.unchanged || mutation.isLoading}
             type="submit"
           >
             <Plus data-size="sm" />

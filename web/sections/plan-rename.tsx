@@ -71,7 +71,12 @@ export function PlanRename(props: Plan) {
         />
 
         <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x">
-          <button className="c-button" data-variant="secondary" disabled={mutation.isLoading} type="submit">
+          <button
+            className="c-button"
+            data-variant="secondary"
+            disabled={planName.unchanged || mutation.isLoading}
+            type="submit"
+          >
             {t("app.save")}
           </button>
 

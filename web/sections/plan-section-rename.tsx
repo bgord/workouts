@@ -63,7 +63,7 @@ export function PlanSectionRename(props: { plan: Plan; section: PlanSectionWithE
             className="c-button"
             data-md-grow="1"
             data-variant="secondary"
-            disabled={mutation.isLoading}
+            disabled={planSectionName.unchanged || mutation.isLoading}
             type="submit"
           >
             {t("app.save")}

@@ -125,7 +125,12 @@ export function WorkoutSetCorrect(props: {
         data-ml="auto"
         data-px="2"
         data-variant="secondary"
-        disabled={reps.empty || load.empty || mutation.isLoading}
+        disabled={
+          reps.empty ||
+          load.empty ||
+          (reps.unchanged && load.unchanged && rir.unchanged) ||
+          mutation.isLoading
+        }
         title={t("app.save")}
         type="submit"
       >

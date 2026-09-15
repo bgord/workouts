@@ -47,7 +47,7 @@ export function ExerciseCategoryAdd() {
           data-md-px="2"
           data-shrink="0"
           data-variant="secondary"
-          disabled={mutation.isLoading || !name.changed}
+          disabled={name.unchanged || mutation.isLoading}
           type="submit"
         >
           <Plus data-size="sm" />

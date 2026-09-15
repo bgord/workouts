@@ -67,7 +67,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory) {
           className="c-button"
           data-shrink="0"
           data-variant="secondary"
-          disabled={mutation.isLoading}
+          disabled={name.unchanged || mutation.isLoading}
           type="submit"
         >
           {t("app.save")}

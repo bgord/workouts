@@ -85,7 +85,7 @@ export function PlanSectionExerciseInstructionExerciseChange(props: {
           className="c-button"
           data-md-grow="1"
           data-variant="secondary"
-          disabled={mutation.isLoading}
+          disabled={exerciseName.empty || exerciseName.unchanged || mutation.isLoading}
           type="submit"
         >
           {t("app.save")}

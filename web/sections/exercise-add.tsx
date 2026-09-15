@@ -98,7 +98,7 @@ export function ExerciseAdd() {
           <button
             className="c-button"
             data-md-grow="1"
-            data-variant="primary"
+            data-variant="secondary"
             disabled={!image.isSelected || mutation.isLoading}
             type="submit"
           >
