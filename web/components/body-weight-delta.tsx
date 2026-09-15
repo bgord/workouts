@@ -30,7 +30,13 @@ export function BodyWeightDelta(props: {
       data-transform="nowrap"
       data-wrap="nowrap"
     >
-      <Triangle data-rotate={positive ? "0" : "180"} fill="currentColor" size={9} strokeWidth={0} />
+      <Triangle
+        data-mt={positive ? "0" : "0-5"}
+        data-rotate={positive ? "0" : "180"}
+        fill="currentColor"
+        size={9}
+        strokeWidth={0}
+      />
 
       {WeightFormat.kilograms(Math.abs(difference), BodyWeightDecimals)}
 
