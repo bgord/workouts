@@ -22,6 +22,7 @@ export * from "./reps-load";
 export * from "./rir-badge";
 export * from "./row";
 export * from "./select";
+export * from "./set-dots";
 export * from "./sets-reps";
 export * from "./sets-reps-load";
 export * from "./tile";

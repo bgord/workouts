@@ -29,10 +29,10 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-bwt="hairline"
       data-cross="center"
       data-gap="3"
+      data-md-ml="0"
+      data-ml="3"
       data-py="2"
       data-stack="x"
-      data-ml="3"
-      data-md-ml="0"
       data-wrap="nowrap"
     >
       <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">

@@ -11,7 +11,7 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
   const t = bg.useTranslations();
 
   return (
-    <div data-stack="y" data-mt="3">
+    <div data-mt="3" data-stack="y">
       <ul data-stack="y">
         {props.sections.map((section, index) => (
           <PlanSectionItem
