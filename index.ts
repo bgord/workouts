@@ -42,7 +42,7 @@ void (async function main() {
           : bg.StaticFileStrategyNoop,
       ),
       "/api/*": server.fetch,
-      "/*": bg.SSRBun.essentials(handler, di.Adapters.System),
+      "/*": bg.SSRBun.essentials(handler, di.Adapters.System, { csp: { imgSources: ["blob:"] } }),
     },
   });
 

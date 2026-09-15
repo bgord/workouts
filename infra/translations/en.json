@@ -76,6 +76,7 @@
   "exercise.add.error": "Could not add the exercise",
   "exercise.add.image.cta": "Select an image",
   "exercise.add.image.hint": "PNG, JPG or WebP, up to 10 MB and 4000 px per side",
+  "exercise.add.image.replace": "Replace",
   "exercise.add.image.selected": "Selected {{name}}",
   "exercise.add.name.label": "Exercise name",
   "exercise.add.name.placeholder": "Bench Press Horizontal",

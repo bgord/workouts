@@ -76,6 +76,7 @@
   "exercise.add.error": "Nie udało się dodać ćwiczenia",
   "exercise.add.image.cta": "Wybierz obraz",
   "exercise.add.image.hint": "PNG, JPG lub WebP, do 10 MB i 4000 px na bok",
+  "exercise.add.image.replace": "Zmień",
   "exercise.add.image.selected": "Wybrano {{name}}",
   "exercise.add.name.label": "Nazwa ćwiczenia",
   "exercise.add.name.placeholder": "Wyciskanie sztangi na ławce poziomej",

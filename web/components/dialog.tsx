@@ -4,7 +4,17 @@ import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
 
 export function Dialog(props: bg.DialogPropsType) {
-  return <bg.Dialog data-gap="8" data-mt="12" {...bg.Rhythm().times(50).style.width} {...props} />;
+  return (
+    <bg.Dialog
+      data-gap="8"
+      data-md-mt="4"
+      data-mt="12"
+      data-overflow="auto"
+      data-wrap="nowrap"
+      style={{ ...bg.Rhythm().times(50).width, maxWidth: "calc(100% - 2rem)" }}
+      {...props}
+    />
+  );
 }
 
 export function DialogHeader(props: { disabled?: boolean; onClose: () => void; children: React.ReactNode }) {
