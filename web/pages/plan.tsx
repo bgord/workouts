@@ -3,6 +3,7 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
+import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import { ActionHint, Main, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
@@ -14,6 +15,9 @@ import { PlanRename } from "../sections/plan-rename";
 import { PlanRestore } from "../sections/plan-restore";
 import { PlanSectionList } from "../sections/plan-section-list";
 import { DateFormat } from "../services/date-format";
+
+const title = { flexBasis: 0, minWidth: 0 };
+const secondary = { marginLeft: "auto" };
 
 export function Plan() {
   const t = bg.useTranslations();
@@ -36,7 +40,7 @@ export function Plan() {
   return (
     <Main>
       <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+        <div data-cross="center" data-gap="2" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
             className="c-button"
@@ -50,69 +54,61 @@ export function Plan() {
             <ChevronLeft data-size="md" />
           </Link>
 
-          <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
-            <div data-cross="center" data-gap="2" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
-              <div data-gap="0-5" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
-                <div
-                  data-cross="center"
-                  data-gap="2"
-                  data-stack="x"
-                  data-wrap="nowrap"
-                  {...bg.Rhythm().times(3).style.minHeight}
-                >
-                  {plan.actions.rename.available && <PlanRename {...plan.data} />}
+          <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
+            {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
-                  {!plan.actions.rename.available && (
-                    <h1
-                      data-color="neutral-0"
-                      data-fs="2xl"
-                      data-fw="black"
-                      data-md-fs="xl"
-                      data-transform="truncate"
-                    >
-                      {plan.data.name}
-                    </h1>
-                  )}
-                </div>
-
-                <div data-color="neutral-500" data-fs="xs">
-                  {t("plan.updated_at", {
-                    date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
-                  })}
-                </div>
-              </div>
-
-              <div
-                data-cross="center"
-                data-gap="2"
-                data-md-width="100%"
-                data-self="start"
-                data-stack="x"
-                data-wrap="nowrap"
-                {...bg.Rhythm().times(3).style.height}
+            {!plan.actions.rename.available && (
+              <h1
+                data-color={plan.data.status === PlanStatusEnum.archived ? "neutral-300" : "neutral-0"}
+                data-fs="2xl"
+                data-fw="black"
+                data-md-fs="xl"
+                data-transform="truncate"
               >
-                <PlanStatusBadge data-mr="4" status={plan.data.status} />
+                {plan.data.name}
+              </h1>
+            )}
 
-                {plan.actions.finalize.available && (
-                  <PlanFinalize action={plan.actions.finalize} {...plan.data} />
-                )}
-
-                {plan.actions.editingEnable.available && <PlanEditingEnable {...plan.data} />}
-
-                {plan.actions.restore.available && <PlanRestore {...plan.data} />}
-
-                {plan.actions.archive.available && <PlanArchive {...plan.data} />}
-
-                {plan.actions.remove.available && <PlanRemove {...plan.data} />}
-              </div>
+            <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
+              <PlanStatusBadge status={plan.data.status} />
             </div>
-
-            <div data-md-ml="0" data-md-mt="3" data-ml="auto" {...bg.Rhythm(18).times(1).style.minHeight}>
-              {plan.actions.finalize.available && <ActionHint action={plan.actions.finalize} />}
-            </div>
-
-            <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
           </div>
+
+          <div
+            data-cross="center"
+            data-gap="2"
+            data-md-mt="1"
+            data-md-width="100%"
+            data-shrink="0"
+            data-stack="x"
+            data-wrap="nowrap"
+          >
+            {plan.actions.finalize.available && (
+              <PlanFinalize action={plan.actions.finalize} {...plan.data} />
+            )}
+
+            {plan.actions.editingEnable.available && <PlanEditingEnable {...plan.data} />}
+
+            {plan.actions.restore.available && <PlanRestore {...plan.data} />}
+
+            <div data-cross="center" data-stack="x" data-wrap="nowrap" style={secondary}>
+              {plan.actions.archive.available && <PlanArchive {...plan.data} />}
+
+              {plan.actions.remove.available && <PlanRemove {...plan.data} />}
+            </div>
+          </div>
+        </div>
+
+        <div data-gap="3" data-md-pl="0" data-pl="12" data-stack="y">
+          <div data-color="neutral-500" data-fs="xs">
+            {t("plan.updated_at", {
+              date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
+            })}
+          </div>
+
+          <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
+
+          {plan.actions.finalize.available && <ActionHint action={plan.actions.finalize} />}
         </div>
       </div>
 

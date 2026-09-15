@@ -60,7 +60,7 @@ export function PlanRename(props: Plan) {
       {...bg.Rhythm().times(0).style.minWidth}
       {...rename.props.target}
     >
-      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("plan.rename.label")}
           className="c-input"
@@ -70,7 +70,7 @@ export function PlanRename(props: Plan) {
           {...planName.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x">
+        <div data-cross="center" data-gap="1" data-md-width="100%" data-shrink="0" data-stack="x">
           <button
             className="c-button"
             data-variant="secondary"
