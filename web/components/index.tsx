@@ -23,5 +23,6 @@ export * from "./rir-badge";
 export * from "./select";
 export * from "./sets-reps";
 export * from "./sets-reps-load";
+export * from "./tile";
 export * from "./workout-card";
 export * from "./workout-status-badge";
