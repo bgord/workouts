@@ -190,7 +190,7 @@ export function WorkoutExerciseRow(props: {
         )}
 
         {!skipped && props.exercise.target && props.workout.status !== WorkoutStatusEnum.draft && (
-          <SetDots done={props.exercise.loggedSets.length} target={props.exercise.target.sets} />
+          <SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
         )}
 
         <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
