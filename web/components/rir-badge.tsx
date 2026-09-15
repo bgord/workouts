@@ -1,28 +1,25 @@
 import { useTranslations } from "@bgord/ui";
+import { RirColor } from "./rir-color";
 
-type Variant = "primary" | "outline" | "danger";
-
-function variant(rir: number): Variant {
-  if (rir === 0) return "danger";
-  if (rir <= 2) return "primary";
-  return "outline";
-}
+const dot = { width: 6, height: 6 };
 
 export function RirBadge(props: { rir: number }) {
   const t = useTranslations();
 
   return (
     <span
-      className="c-badge"
-      data-cross="baseline"
-      data-variant={variant(props.rir)}
+      data-color={RirColor(props.rir)}
+      data-cross="center"
+      data-fs="xs"
+      data-fw="medium"
+      data-gap="1-5"
+      data-stack="x"
+      data-transform="font-variant-numeric"
+      data-wrap="nowrap"
       title={t("workout.set.rir.title")}
     >
-      <span data-fs="xs" data-ls="widest" data-opacity="medium">
-        {t("workout.set.rir.label")}
-      </span>
-
-      <span data-fw="semibold">{props.rir}</span>
+      <span data-bg={RirColor(props.rir)} data-br="circle" style={dot} />
+      {t("workout.set.rir.label")} {props.rir}
     </span>
   );
 }

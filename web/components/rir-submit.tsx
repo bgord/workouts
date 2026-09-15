@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Check } from "lucide-react";
+import { RirColor } from "./rir-color";
 
 const RirOptions = [2, 1, 0];
 
@@ -35,7 +36,7 @@ export function RirSubmit(props: {
           data-bcl={index === 0 ? undefined : "alpha-soft"}
           data-bsl={index === 0 ? undefined : "solid"}
           data-bwl={index === 0 ? undefined : "hairline"}
-          data-color="positive-400"
+          data-color={option === undefined ? "positive-400" : RirColor(option)}
           data-cross="center"
           data-cursor="pointer"
           data-disp="flex"
