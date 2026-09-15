@@ -19,6 +19,11 @@ const height: Record<ExerciseImageSize, number> = {
   [ExerciseImageSize.lg]: 240,
 };
 
+const style = (size: ExerciseImageSize) =>
+  size === ExerciseImageSize.sm
+    ? { ...Rhythm(width[size]).times(1).width, ...Rhythm(height[size]).times(1).height }
+    : { width: "100%", aspectRatio: `${width[size]} / ${height[size]}` };
+
 type ExerciseImageProps = Pick<Exercise, "id" | "name" | "imageEtag"> & { size: ExerciseImageSize };
 
 export function ExerciseImage(props: ExerciseImageProps) {
@@ -35,10 +40,7 @@ export function ExerciseImage(props: ExerciseImageProps) {
       data-object-fit="contain"
       loading="lazy"
       src={src}
-      style={{
-        ...Rhythm(width[props.size]).times(1).width,
-        ...Rhythm(height[props.size]).times(1).height,
-      }}
+      style={style(props.size)}
     />
   );
 }

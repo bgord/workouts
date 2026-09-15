@@ -10,7 +10,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
   const rest = props.categories.length - visible.length;
 
   return (
-    <li data-maxw="100%" data-stack="y" {...bg.Rhythm(232).times(1).style.width}>
+    <li data-maxw="100%" data-md-grow="1" data-stack="y" {...bg.Rhythm(232).times(1).style.width}>
       <Link
         className="c-card"
         data-gap="3"

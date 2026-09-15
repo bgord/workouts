@@ -16,6 +16,8 @@ import {
   ExerciseStats,
 } from "../sections";
 
+const image = { flexBasis: 320, minWidth: 0 };
+
 export function Exercise() {
   const t = bg.useTranslations();
   const { exercise, performances } = exerciseRoute.useLoaderData();
@@ -102,11 +104,13 @@ export function Exercise() {
         data-variant="flat"
         data-wrap="wrap"
       >
-        {exercise.actions.imageChange.enabled ? (
-          <ExerciseImageChange exercise={exercise.data} />
-        ) : (
-          <ExerciseImage size={ExerciseImageSize.lg} {...exercise.data} />
-        )}
+        <div data-md-grow="1" style={image}>
+          {exercise.actions.imageChange.enabled ? (
+            <ExerciseImageChange exercise={exercise.data} />
+          ) : (
+            <ExerciseImage size={ExerciseImageSize.lg} {...exercise.data} />
+          )}
+        </div>
 
         <div data-gap="5" data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width}>
           {exercise.actions.categoryAssign.available ? (

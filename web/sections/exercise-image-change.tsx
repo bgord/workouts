@@ -35,11 +35,10 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
   });
 
   return (
-    <div data-gap="3" data-stack="y" style={{ maxWidth: "320px" }}>
+    <div data-gap="3" data-stack="y">
       <button
         data-cursor="pointer"
         data-disp="flex"
-        data-self="center"
         onClick={change.toggle}
         title={t("exercise.image.change.cta")}
         type="button"
