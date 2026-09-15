@@ -53,9 +53,11 @@ export function BodyWeightMeasurementCorrect(props: {
         aria-label={t("measurements.body_weight.measure.date.label")}
         className="c-input"
         data-fs="sm"
+        data-grow="1"
         data-px="2"
         type="date"
         {...measuredOn.input.props}
+        {...bg.Rhythm().times(0).style.minWidth}
         max={Temporal.Now.plainDateISO().toString()}
       />
 
