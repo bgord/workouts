@@ -367,5 +367,5 @@
   "workout.target.reps.label": "Reps",
   "workout.target.saved": "Saved",
   "workout.target.sets.label": "Sets",
-  "workout.title": "{{plan}} - {{section}}"
+  "workout.title": "{{plan}} – {{section}}"
 }

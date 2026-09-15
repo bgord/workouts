@@ -367,5 +367,5 @@
   "workout.target.reps.label": "Powtórzenia",
   "workout.target.saved": "Zapisano",
   "workout.target.sets.label": "Serie",
-  "workout.title": "{{plan}} - {{section}}"
+  "workout.title": "{{plan}} · {{section}}"
 }
