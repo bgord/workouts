@@ -160,7 +160,7 @@
   "measurements.body_weight.goal.bulk": "Bulk",
   "measurements.body_weight.goal.cut": "Cut",
   "measurements.body_weight.goal.maintain": "Maintain",
-  "measurements.body_weight.stats.latest": "Latest",
+  "measurements.body_weight.stats.latest": "Latest weight",
   "measurements.body_weight.stats.since_first": "Since first",
   "measurements.body_weight.stats.count": "Measurements",
   "measurements.body_weight.shortcuts.log": "Focus the weight input",

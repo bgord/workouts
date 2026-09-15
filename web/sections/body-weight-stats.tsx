@@ -1,12 +1,12 @@
-import { Rhythm, useLanguage, useTranslations } from "@bgord/ui";
+import { useLanguage, useTranslations } from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { BodyWeightDelta } from "../components/body-weight-delta";
 import { BodyWeightGoalIcon } from "../components/body-weight-goal-icon";
+import { Tile, TileContext, TileHeader, TileValue } from "../components/tile";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
-const TILE_MIN_WIDTH = 168;
 const ROLLING_WINDOW_DAYS = 7;
 
 const average = (measurements: ReadonlyArray<BodyWeightMeasurement>) =>
@@ -35,38 +35,13 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
 
   return (
     <ul data-gap="3" data-stack="x" data-wrap="wrap">
-      <li
-        className="c-card"
-        data-cross="center"
-        data-gap="1"
-        data-grow="1"
-        data-md-width="100%"
-        data-p="4"
-        data-stack="y"
-        {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}
-      >
-        <div
-          data-color="neutral-500"
-          data-cross="center"
-          data-fs="xs"
-          data-gap="1-5"
-          data-ls="wide"
-          data-stack="x"
-          data-transform="uppercase"
-        >
+      <Tile>
+        <TileHeader>
           <Scale data-color="brand-400" data-size="xs" />
           {t("measurements.body_weight.stats.latest")}
-        </div>
+        </TileHeader>
 
-        <div
-          data-color="neutral-0"
-          data-cross="baseline"
-          data-fs="xl"
-          data-fw="bold"
-          data-gap="2"
-          data-lh="tight"
-          data-stack="x"
-        >
+        <TileValue>
           {t("measurements.body_weight.value", {
             weight: WeightFormat.kilograms(latest.weight, BodyWeightDecimals),
           })}
@@ -74,45 +49,20 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           <span data-fs="xs">
             <BodyWeightDelta current={latest.weight} goal={goal} previous={previous?.weight} />
           </span>
-        </div>
+        </TileValue>
 
-        <div data-color="neutral-500" data-fs="xs">
+        <TileContext>
           {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(latest.measuredOn))}
-        </div>
-      </li>
+        </TileContext>
+      </Tile>
 
-      <li
-        className="c-card"
-        data-cross="center"
-        data-gap="1"
-        data-grow="1"
-        data-md-width="100%"
-        data-p="4"
-        data-stack="y"
-        {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}
-      >
-        <div
-          data-color="neutral-500"
-          data-cross="center"
-          data-fs="xs"
-          data-gap="1-5"
-          data-ls="wide"
-          data-stack="x"
-          data-transform="uppercase"
-        >
+      <Tile>
+        <TileHeader>
           <CalendarRange data-size="xs" />
           {t("measurements.body_weight.stats.week_average")}
-        </div>
+        </TileHeader>
 
-        <div
-          data-color="neutral-0"
-          data-cross="baseline"
-          data-fs="xl"
-          data-fw="bold"
-          data-gap="2"
-          data-lh="tight"
-          data-stack="x"
-        >
+        <TileValue>
           {t("measurements.body_weight.value", {
             weight: WeightFormat.kilograms(average(window), BodyWeightDecimals),
           })}
@@ -122,57 +72,40 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
               <BodyWeightDelta current={average(window)} goal={goal} previous={average(previousWindow)} />
             </span>
           )}
-        </div>
+        </TileValue>
 
-        <div data-color="neutral-500" data-fs="xs">
+        <TileContext>
           {t("measurements.body_weight.stats.week_average.count", { count: window.length })}
-        </div>
-      </li>
+        </TileContext>
+      </Tile>
 
-      <li
-        className="c-card"
-        data-cross="center"
-        data-gap="1"
-        data-grow="1"
-        data-md-width="100%"
-        data-p="4"
-        data-stack="y"
-        {...Rhythm(TILE_MIN_WIDTH).times(1).style.minWidth}
-      >
-        <div
-          data-color="neutral-500"
-          data-cross="center"
-          data-fs="xs"
-          data-gap="1-5"
-          data-ls="wide"
-          data-stack="x"
-          data-transform="uppercase"
-        >
+      <Tile>
+        <TileHeader>
           {goal ? <BodyWeightGoalIcon goal={goal} size="xs" /> : <TrendingUp data-size="xs" />}
           {t(
             reference
               ? "measurements.body_weight.stats.since_reference"
               : "measurements.body_weight.stats.since_first",
           )}
-        </div>
+        </TileHeader>
 
-        <div data-color="neutral-0" data-fs="xl" data-fw="bold" data-lh="tight">
+        <TileValue>
           {latest.weight === baseline.weight ? (
             t("measurements.body_weight.value", { weight: 0 })
           ) : (
             <BodyWeightDelta current={latest.weight} goal={goal} previous={baseline.weight} />
           )}
-        </div>
+        </TileValue>
 
-        <div data-color="neutral-500" data-fs="xs">
+        <TileContext>
           {goal
             ? t("measurements.body_weight.stats.since_reference.goal", {
                 goal: t(`measurements.body_weight.goal.${goal}`),
                 date: DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn)),
               })
             : DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn))}
-        </div>
-      </li>
+        </TileContext>
+      </Tile>
     </ul>
   );
 }
