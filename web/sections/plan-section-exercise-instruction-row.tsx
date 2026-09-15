@@ -62,7 +62,8 @@ export function PlanSectionExerciseInstructionRow(props: {
         data-gap="3"
         data-grow="1"
         data-md-cross="start"
-        data-md-gap="1"
+        data-md-gap={controls ? "0" : "1"}
+        data-md-self="start"
         data-md-stack="y"
         data-wrap="nowrap"
         {...bg.Rhythm().times(0).style.minWidth}
@@ -75,7 +76,7 @@ export function PlanSectionExerciseInstructionRow(props: {
           data-stack="x"
           data-transform="truncate"
           data-wrap="nowrap"
-          style={{ ...bg.Rhythm().times(0).minWidth, ...bg.Rhythm().times(3).minHeight }}
+          style={{ ...bg.Rhythm().times(0).minWidth, ...(controls && bg.Rhythm().times(3).minHeight) }}
         >
           <Link
             data-color="neutral-100"
@@ -130,7 +131,10 @@ export function PlanSectionExerciseInstructionRow(props: {
           <div
             data-cross="center"
             data-gap="2"
+            data-md-cross="start"
+            data-md-main="between"
             data-md-ml="0"
+            data-md-width="100%"
             data-ml="auto"
             data-shrink="0"
             data-stack="x"

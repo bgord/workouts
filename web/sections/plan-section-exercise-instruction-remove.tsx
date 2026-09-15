@@ -35,10 +35,12 @@ export function PlanSectionExerciseInstructionRemove(props: {
         className="c-button"
         data-color="neutral-400"
         data-hover-color="danger-400"
+        data-px="0"
         data-variant="ghost"
         disabled={mutation.isLoading}
         title={t("plan.section.exercise.remove.title", { name: props.exerciseInstruction.exercise.name })}
         type="submit"
+        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
       </button>
