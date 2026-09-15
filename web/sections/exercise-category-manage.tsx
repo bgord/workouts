@@ -1,27 +1,23 @@
 import * as bg from "@bgord/ui";
-import { Tags } from "lucide-react";
+import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
+import { Dialog, DialogHeader } from "../components";
 import { catalogRoute } from "../router";
 import { ExerciseCategoryAdd } from "./exercise-category-add";
 import { ExerciseCategoryDelete } from "./exercise-category-delete";
 import { ExerciseCategoryRename } from "./exercise-category-rename";
 
-export function ExerciseCategoryManage() {
+export function ExerciseCategoryManage(props: { toggle: bg.UseToggleReturnType }) {
   const t = bg.useTranslations();
   const { exerciseCategories } = catalogRoute.useLoaderData();
 
   return (
-    <section className="c-card" data-gap="4" data-maxw="md" data-md-p="2-5" data-stack="y" data-width="100%">
-      <div data-cross="center" data-gap="2" data-stack="x">
-        <Tags data-color="neutral-400" data-size="sm" />
-
-        <div className="c-card-title" data-grow="1">
-          {t("exercise.category.manage.header")}
-        </div>
-
-        <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
-          {exerciseCategories.data.length}
-        </div>
-      </div>
+    <Dialog {...props.toggle}>
+      <DialogHeader onClose={props.toggle.disable}>
+        {t("exercise.category.manage.header")}
+        <span data-color="neutral-500" data-fw="regular" data-ml="1">
+          · {exerciseCategories.data.length}
+        </span>
+      </DialogHeader>
 
       {exerciseCategories.actions.add.available && <ExerciseCategoryAdd />}
 
@@ -40,30 +36,38 @@ export function ExerciseCategoryManage() {
       {exerciseCategories.data.length > 0 && (
         <ul data-stack="y">
           {exerciseCategories.data.map((category) => (
-            <li
-              data-bc="neutral-800"
-              data-cross="center"
-              data-gap="2"
-              data-hover-bg="alpha-subtle"
-              data-main="between"
-              data-md-px="0-5"
-              data-px="2"
-              data-py="1-5"
-              data-stack="x"
-              data-wrap="nowrap"
-              key={category.id}
-            >
-              {exerciseCategories.actions.rename.available ? (
-                <ExerciseCategoryRename {...category} />
-              ) : (
-                <div data-fs="sm">{category.name}</div>
-              )}
-
-              {exerciseCategories.actions.delete.available && <ExerciseCategoryDelete {...category} />}
-            </li>
+            <ExerciseCategoryRow key={category.id} {...category} />
           ))}
         </ul>
       )}
-    </section>
+    </Dialog>
+  );
+}
+
+function ExerciseCategoryRow(props: ExerciseCategory) {
+  const { exerciseCategories } = catalogRoute.useLoaderData();
+  const rename = bg.useToggle({ name: `exercise-category-rename-${props.id}` });
+
+  return (
+    <li
+      data-bc="neutral-800"
+      data-cross="center"
+      data-gap="3"
+      data-hover-bg={rename.off ? "alpha-subtle" : undefined}
+      data-main="between"
+      data-md-px={rename.off ? "0-5" : "0"}
+      data-px={rename.off ? "2" : "0"}
+      data-py="1-5"
+      data-stack="x"
+      data-wrap="nowrap"
+    >
+      {exerciseCategories.actions.rename.available ? (
+        <ExerciseCategoryRename {...props} toggle={rename} />
+      ) : (
+        <div data-fs="sm">{props.name}</div>
+      )}
+
+      {exerciseCategories.actions.delete.available && rename.off && <ExerciseCategoryDelete {...props} />}
+    </li>
   );
 }

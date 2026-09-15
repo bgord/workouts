@@ -46,7 +46,7 @@ export function ExerciseCategoryAdd() {
           className="c-button"
           data-md-px="2"
           data-shrink="0"
-          data-variant="secondary"
+          data-variant="primary"
           disabled={name.unchanged || mutation.isLoading}
           type="submit"
         >

@@ -1,14 +1,15 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Pencil } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import { ButtonCancel } from "../components";
 import { catalogRoute } from "../router";
 
-export function ExerciseCategoryRename(props: ExerciseCategory) {
+export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.UseToggleReturnType }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const rename = bg.useToggle({ name: `exercise-category-rename-${props.id}` });
+  const rename = props.toggle;
 
   const name = bg.useTextField({ ...Form.name.field, defaultValue: props.name });
 
@@ -30,16 +31,22 @@ export function ExerciseCategoryRename(props: ExerciseCategory) {
     return (
       <button
         data-color="neutral-100"
+        data-cross="center"
         data-cursor="pointer"
         data-fs="sm"
+        data-gap="3"
+        data-grow="1"
         data-hover-color="neutral-200"
-        data-transform="truncate"
+        data-main="between"
+        data-stack="x"
+        data-wrap="nowrap"
         onClick={rename.enable}
         title={t("exercise.category.rename.cta")}
         type="button"
         {...rename.props.controller}
       >
-        {props.name}
+        <span data-transform="truncate">{props.name}</span>
+        <Pencil data-color="neutral-500" data-shrink="0" data-size="xs" />
       </button>
     );
   }

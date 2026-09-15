@@ -8,10 +8,15 @@ export function Dialog(props: bg.DialogPropsType) {
     <bg.Dialog
       data-gap="8"
       data-md-mt="4"
+      data-md-p="3"
       data-mt="12"
       data-overflow="auto"
       data-wrap="nowrap"
-      style={{ ...bg.Rhythm().times(50).width, maxWidth: "calc(100% - 2rem)" }}
+      style={{
+        ...bg.Rhythm().times(50).width,
+        maxHeight: "calc(100% - 8rem)",
+        maxWidth: "calc(100% - 2rem)",
+      }}
       {...props}
     />
   );

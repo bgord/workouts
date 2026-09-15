@@ -29,8 +29,9 @@ export function Catalog() {
                 data-md-grow="1"
                 data-variant="secondary"
                 disabled={!exerciseCategories.actions.add.enabled}
-                onClick={categoryManage.toggle}
+                onClick={categoryManage.enable}
                 type="button"
+                {...categoryManage.props.controller}
               >
                 <Tags data-size="sm" />
                 {t("exercise.category.manage.cta")}
@@ -59,7 +60,7 @@ export function Catalog() {
         </div>
       </div>
 
-      {categoryManage.on && <ExerciseCategoryManage />}
+      <ExerciseCategoryManage toggle={categoryManage} />
 
       {exercises.actions.add.enabled && <ExerciseAdd toggle={exerciseAdd} />}
 
