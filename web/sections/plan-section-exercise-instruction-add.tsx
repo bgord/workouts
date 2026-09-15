@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Plus, Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
@@ -11,15 +11,12 @@ import {
   DialogError,
   DialogFooter,
   DialogHeader,
-  ExerciseImage,
-  ExerciseImageSize,
+  ExercisePicker,
 } from "../components";
 import { planRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
 const shrinkable = { minHeight: 0 };
-const list = { ...shrinkable, maxHeight: "40vh" };
-const categories = { flexShrink: 2, maxWidth: "40%" };
 
 export function PlanSectionExerciseInstructionAdd(props: {
   plan: Plan;
@@ -116,10 +113,6 @@ export function PlanSectionExerciseInstructionAdd(props: {
     );
   }
 
-  const matching = exercises.data.filter((exercise) =>
-    exercise.name.toLowerCase().includes((query.value ?? "").trim().toLowerCase()),
-  );
-
   const clear = bg.exec([
     exerciseId.clear,
     query.clear,
@@ -198,94 +191,13 @@ export function PlanSectionExerciseInstructionAdd(props: {
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
         >
-          <div data-gap="2" data-stack="y" data-wrap="nowrap" style={shrinkable}>
-            <div data-cross="center" data-position="relative" data-stack="x">
-              <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
-
-              <input
-                aria-label={t("plan.section.exercise.add.exercise.label")}
-                className="c-input"
-                data-pl="8"
-                data-variant="transparent"
-                data-width="100%"
-                placeholder={t("plan.section.exercise.add.search.placeholder")}
-                type="search"
-                {...query.input.props}
-              />
-            </div>
-
-            <ul
-              aria-label={t("plan.section.exercise.add.exercise.label")}
-              data-bc="neutral-800"
-              data-br="md"
-              data-bs="solid"
-              data-bw="hairline"
-              data-overflow="auto"
-              data-stack="y"
-              style={list}
-            >
-              {matching.length === 0 && (
-                <li data-color="neutral-500" data-fs="sm" data-main="center" data-py="4" data-stack="x">
-                  {t("plan.section.exercise.add.search.empty")}
-                </li>
-              )}
-
-              {matching.map((exercise, index) => (
-                <li
-                  data-bct={index === 0 ? undefined : "alpha-subtle"}
-                  data-bst={index === 0 ? undefined : "solid"}
-                  data-bwt={index === 0 ? undefined : "hairline"}
-                  key={exercise.id}
-                >
-                  <label
-                    data-bg={exerciseId.value === exercise.id ? "alpha-subtle" : undefined}
-                    data-color={exerciseId.value === exercise.id ? "neutral-0" : "neutral-200"}
-                    data-cross="center"
-                    data-cursor="pointer"
-                    data-fs="sm"
-                    data-gap="3"
-                    data-hover-bg="alpha-subtle"
-                    data-position="relative"
-                    data-px="3"
-                    data-py="2"
-                    data-stack="x"
-                    data-wrap="nowrap"
-                  >
-                    <input
-                      checked={exerciseId.value === exercise.id}
-                      className="c-visually-hidden"
-                      name={exerciseId.input.props.name}
-                      onChange={() => exerciseId.set(exercise.id)}
-                      type="radio"
-                      value={exercise.id}
-                    />
-
-                    <span data-shrink="0" data-stack="x">
-                      <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
-                    </span>
-
-                    <span data-grow="1" data-transform="truncate" title={exercise.name}>
-                      {exercise.name}
-                    </span>
-
-                    <span
-                      data-color="neutral-500"
-                      data-fs="xs"
-                      data-md-disp="none"
-                      data-transform="truncate"
-                      style={categories}
-                    >
-                      {exercise.categories.map((category) => category.name).join(", ")}
-                    </span>
-
-                    {exerciseId.value === exercise.id && (
-                      <Check data-color="brand-400" data-shrink="0" data-size="sm" />
-                    )}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ExercisePicker
+            exercises={exercises.data}
+            name={exerciseId.input.props.name}
+            onChange={exerciseId.set}
+            query={query}
+            value={exerciseId.value}
+          />
 
           <div data-cross="end" data-gap="4" data-stack="x" data-wrap="nowrap">
             <div data-gap="1" data-stack="y">

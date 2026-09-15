@@ -9,6 +9,7 @@ export * from "./delta-kg";
 export * from "./dialog";
 export * from "./exercise-card";
 export * from "./exercise-image";
+export * from "./exercise-picker";
 export * from "./header";
 export * from "./kbd";
 export * from "./language-selector";
