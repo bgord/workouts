@@ -126,7 +126,7 @@
   "exercise.delete.cta": "Delete",
   "exercise.delete.error": "Could not delete the exercise",
   "exercise.delete.header": "Delete exercise",
-  "exercise.delete.info": "Deleting {{name}} removes it from the catalog. This cannot be undone.",
+  "exercise.delete.info": "Deleting {{name}} removes it from the catalog.",
   "exercise.delete.title": "Delete {{name}}",
   "exercise.image.change.cta": "Change image",
   "exercise.image.change.error": "Could not change the image",

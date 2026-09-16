@@ -3,7 +3,7 @@ import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import type { ActionState } from "../../modules/action-state";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action: ActionState }) {
@@ -45,7 +45,10 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
           {t("exercise.delete.header")}
         </DialogHeader>
 
-        <DialogInfo variant="danger">{t("exercise.delete.info", { name: props.exercise.name })}</DialogInfo>
+        <div data-gap="3" data-stack="y">
+          <DialogInfo>{t("exercise.delete.info", { name: props.exercise.name })}</DialogInfo>
+          <DialogStatus variant="irreversible" />
+        </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("exercise.delete.error")}</DialogError>}
