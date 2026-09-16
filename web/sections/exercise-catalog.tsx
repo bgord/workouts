@@ -1,10 +1,12 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp, Search, SearchX } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ButtonClear, ExerciseCard } from "../components";
+import { ExerciseCard } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
+
+const count = bg.Rhythm(64).times(1).minWidth;
 
 export function ExerciseCatalog() {
   const t = bg.useTranslations();
@@ -46,9 +48,11 @@ export function ExerciseCatalog() {
     },
   });
 
+  const pristine = ExerciseCatalogFiltersForm.Form.isDefault(search);
+
   return (
     <div data-gap="5" data-stack="y">
-      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="wrap">
+      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
         <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
@@ -75,19 +79,39 @@ export function ExerciseCatalog() {
           />
         </div>
 
-        <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
+        <div
+          data-color="neutral-500"
+          data-fs="sm"
+          data-main="end"
+          data-shrink="0"
+          data-stack="x"
+          data-transform="font-variant-numeric"
+          style={count}
+        >
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
         </div>
 
-        {!ExerciseCatalogFiltersForm.Form.isDefault(search) && (
-          <ButtonClear
-            data-ml="auto"
-            onClick={() => {
-              name.clear();
-              navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
-            }}
-          />
-        )}
+        <button
+          aria-label={t("app.clear")}
+          className="c-button"
+          data-color="neutral-400"
+          data-disp={pristine ? "none" : undefined}
+          data-hover-color="neutral-0"
+          data-md-disp={pristine ? "flex" : undefined}
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          disabled={pristine}
+          onClick={() => {
+            name.clear();
+            navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
+          }}
+          title={t("app.clear")}
+          type="button"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <X data-size="sm" />
+        </button>
       </div>
 
       <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
