@@ -1,6 +1,6 @@
 import { useTranslations, useWindowDimensions } from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { ClipboardList, Dumbbell, LogOut, Scale, Tags } from "lucide-react";
+import { CalendarCheck, Dumbbell, ListChecks, LogOut, Weight } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import { Avatar, AvatarSize, Logo } from "../components";
@@ -95,19 +95,19 @@ function NavigationMobileDrawer() {
       <Logo />
 
       <NavigationLink search={WorkoutHistoryFilters.default} title={t("app.workouts")} to="/workouts">
-        <Dumbbell data-size="md" />
+        <CalendarCheck data-size="md" />
       </NavigationLink>
 
       <NavigationLink search={Form.default} title={t("app.catalog")} to="/catalog">
-        <Tags data-size="md" />
+        <Dumbbell data-size="md" />
       </NavigationLink>
 
       <NavigationLink title={t("app.plans")} to="/plans">
-        <ClipboardList data-size="md" />
+        <ListChecks data-size="md" />
       </NavigationLink>
 
       <NavigationLink title={t("app.measurements")} to="/measurements">
-        <Scale data-size="md" />
+        <Weight data-size="md" />
       </NavigationLink>
 
       <NavigationLink to="/profile">
