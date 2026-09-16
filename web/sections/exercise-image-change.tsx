@@ -1,11 +1,12 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ImageUp, InfoIcon } from "lucide-react";
+import { Check, FileImage, ImageUp, X } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ButtonClear, ExerciseImage, ExerciseImageSize } from "../components";
+import { ExerciseImage, ExerciseImageSize } from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
+const label = { minWidth: 0 };
 
 export function ExerciseImageChange(props: { exercise: ExerciseWithCategories }) {
   const t = bg.useTranslations();
@@ -39,7 +40,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
       <button
         data-cursor="pointer"
         data-disp="flex"
-        onClick={change.toggle}
+        onClick={change.enable}
         title={t("exercise.image.change.cta")}
         type="button"
         {...change.props.controller}
@@ -47,17 +48,19 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
         <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
       </button>
 
-      <button
-        className="c-button"
-        data-fs="xs"
-        data-self="center"
-        data-variant="ghost"
-        onClick={change.toggle}
-        type="button"
-      >
-        <ImageUp data-size="sm" />
-        {t("exercise.image.change.cta")}
-      </button>
+      {change.off && (
+        <button
+          className="c-button"
+          data-fs="xs"
+          data-self="center"
+          data-variant="ghost"
+          onClick={change.enable}
+          type="button"
+        >
+          <ImageUp data-size="sm" />
+          {t("exercise.image.change.cta")}
+        </button>
+      )}
 
       {change.on && (
         <form
@@ -67,69 +70,77 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
           onSubmit={mutation.handleSubmit}
           {...change.props.target}
         >
-          <div data-cross="center" data-gap="3" data-stack="y">
-            <div data-gap="3" data-stack="x" data-width="100%">
-              <label
-                className="c-button"
-                data-cross="center"
-                data-disp="flex"
-                data-grow="1"
-                data-main="center"
-                data-variant="secondary"
-                tabIndex={0}
-                {...image.label.props}
-              >
-                <span>{t("exercise.image.change.select.cta")}</span>
-                <input
-                  className="c-visually-hidden"
-                  disabled={image.isSelected}
-                  onChange={image.actions.selectFile}
-                  required
-                  type="file"
-                  {...image.input.props}
-                />
-              </label>
+          <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
+            <label
+              className="c-button"
+              data-cross="center"
+              data-disp="flex"
+              data-gap="2"
+              data-grow="1"
+              data-main="center"
+              data-variant="secondary"
+              data-wrap="nowrap"
+              style={label}
+              tabIndex={0}
+              {...image.label.props}
+            >
+              {image.isSelected ? (
+                <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />
+              ) : (
+                <ImageUp data-shrink="0" data-size="sm" />
+              )}
 
-              <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-                <button
-                  className="c-button"
-                  data-md-grow="1"
-                  data-variant="secondary"
-                  disabled={!image.isSelected || mutation.isLoading}
-                  type="submit"
-                >
-                  {t("app.save")}
-                </button>
+              <span data-transform="truncate">
+                {image.isSelected ? image.data.name : t("exercise.image.change.select.cta")}
+              </span>
 
-                <ButtonClear
-                  data-md-grow="1"
-                  disabled={!image.isSelected}
-                  onClick={bg.exec([image.actions.clearFile, mutation.reset])}
-                />
-              </div>
-            </div>
+              <input
+                className="c-visually-hidden"
+                disabled={image.isSelected}
+                onChange={image.actions.selectFile}
+                required
+                type="file"
+                {...image.input.props}
+              />
+            </label>
 
-            {image.isSelected && (
-              <output
-                data-color="neutral-300"
-                data-disp="block"
-                data-fs="xs"
-                data-maxw="100%"
-                data-self="start"
-                data-transform="truncate"
-              >
-                {t("exercise.image.change.selected", { name: image.data.name })}
-              </output>
-            )}
+            <button
+              aria-label={t("app.save")}
+              className="c-button"
+              data-color="positive-400"
+              data-hover-color="positive-200"
+              data-px="0"
+              data-variant="ghost"
+              disabled={!image.isSelected || mutation.isLoading}
+              title={t("app.save")}
+              type="submit"
+              {...bg.Rhythm().times(3).style.width}
+            >
+              <Check data-size="sm" />
+            </button>
+
+            <button
+              aria-label={t("app.cancel")}
+              className="c-button"
+              data-color="neutral-400"
+              data-hover-color="neutral-0"
+              data-px="0"
+              data-variant="ghost"
+              onClick={bg.exec([image.actions.clearFile, mutation.reset, change.disable])}
+              title={t("app.cancel")}
+              type="button"
+              {...bg.Rhythm().times(3).style.width}
+            >
+              <X data-size="sm" />
+            </button>
           </div>
 
-          <div data-color="neutral-400" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
-            <InfoIcon data-size="xs" />
+          <div data-color="neutral-500" data-fs="xs">
             {t("exercise.image.change.hint")}
           </div>
 
           {mutation.isError && (
-            <output data-color="danger-400" data-fs="sm">
+            <output data-color="danger-400" data-fs="xs">
               {t("exercise.image.change.error")}
             </output>
           )}

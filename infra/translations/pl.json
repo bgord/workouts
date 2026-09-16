@@ -130,7 +130,6 @@
   "exercise.image.change.error": "Nie udało się zmienić obrazu",
   "exercise.image.change.hint": "PNG, JPG lub WebP, do 10 MB i 4000 px na bok",
   "exercise.image.change.select.cta": "Wybierz obraz",
-  "exercise.image.change.selected": "Wybrano {{name}}",
   "exercise.not_found": "Nie znaleziono ćwiczenia",
   "exercise.update.description.cta": "Edytuj opis",
   "exercise.update.description.label": "Opis",

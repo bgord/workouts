@@ -130,7 +130,6 @@
   "exercise.image.change.error": "Could not change the image",
   "exercise.image.change.hint": "PNG, JPG or WebP, up to 10 MB and 4000 px per side",
   "exercise.image.change.select.cta": "Select an image",
-  "exercise.image.change.selected": "Selected {{name}}",
   "exercise.not_found": "Exercise not found",
   "exercise.update.description.cta": "Edit the description",
   "exercise.update.description.label": "Description",
