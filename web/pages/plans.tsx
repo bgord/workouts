@@ -77,10 +77,6 @@ export function Plans() {
             >
               {t("plan.list.archived.header")}
             </div>
-
-            <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
-              {plans.data.archived.length}
-            </div>
           </div>
 
           <ul data-gap="2" data-opacity="high" data-stack="y">
