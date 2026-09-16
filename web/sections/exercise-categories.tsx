@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { Check, Plus, X } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { ButtonCancel, Select } from "../components";
+import { Select } from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -41,17 +41,24 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
 
   return (
     <div data-gap="3" data-stack="y">
-      <div data-cross="center" data-gap="3" data-main="between" data-stack="x" data-wrap="wrap">
+      <div
+        data-cross="center"
+        data-gap="3"
+        data-main="between"
+        data-stack="x"
+        data-wrap="nowrap"
+        {...bg.Rhythm().times(3).style.minHeight}
+      >
         <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
           {t("exercise.categories.header")}
         </div>
 
-        {assignActionAvailable && (
+        {assignActionAvailable && assignment.off && (
           <button
             className="c-button"
             data-variant="ghost"
             disabled={!props.exercise.actions.categoryAssign.enabled}
-            onClick={assignment.toggle}
+            onClick={assignment.enable}
             type="button"
             {...assignment.props.controller}
           >
@@ -64,16 +71,16 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
       {assignActionAvailable && assignment.on && (
         <form
           data-cross="center"
-          data-gap="2"
-          data-mb="2"
+          data-gap="1"
           data-stack="x"
+          data-wrap="nowrap"
           onSubmit={assign.handleSubmit}
           {...assignment.props.target}
         >
           <Select
             aria-label={t("exercise.category.assign.label")}
-            data-md-width="100%"
             disabled={!props.exercise.actions.categoryAssign.enabled}
+            style={{ background: "transparent" }}
             {...exerciseCategoryId.input.props}
           >
             {assignable.map((category) => (
@@ -83,19 +90,37 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
             ))}
           </Select>
 
-          <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-            <button
-              className="c-button"
-              data-md-grow="1"
-              data-variant="secondary"
-              disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
-              type="submit"
-            >
-              {t("exercise.category.assign.cta")}
-            </button>
+          <button
+            aria-label={t("exercise.category.assign.cta")}
+            className="c-button"
+            data-color="positive-400"
+            data-hover-color="positive-200"
+            data-px="0"
+            data-shrink="0"
+            data-variant="ghost"
+            disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
+            title={t("exercise.category.assign.cta")}
+            type="submit"
+            {...bg.Rhythm().times(3).style.width}
+          >
+            <Check data-size="sm" />
+          </button>
 
-            <ButtonCancel data-md-grow="1" onClick={bg.exec([assign.reset, assignment.disable])} />
-          </div>
+          <button
+            aria-label={t("app.cancel")}
+            className="c-button"
+            data-color="neutral-400"
+            data-hover-color="neutral-0"
+            data-px="0"
+            data-shrink="0"
+            data-variant="ghost"
+            onClick={bg.exec([assign.reset, assignment.disable])}
+            title={t("app.cancel")}
+            type="button"
+            {...bg.Rhythm().times(3).style.width}
+          >
+            <X data-size="sm" />
+          </button>
         </form>
       )}
 
