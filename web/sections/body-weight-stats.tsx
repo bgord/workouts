@@ -37,7 +37,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
     <ul data-gap="3" data-stack="x" data-wrap="wrap">
       <Tile>
         <TileHeader>
-          <Scale data-color="brand-400" data-size="xs" />
+          <Scale data-size="xs" />
           {t("measurements.body_weight.stats.latest")}
         </TileHeader>
 

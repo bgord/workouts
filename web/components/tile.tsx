@@ -35,14 +35,12 @@ export const TileLink = createLink((props: React.JSX.IntrinsicElements["a"]) => 
 export function TileHeader(props: React.JSX.IntrinsicElements["div"]) {
   return (
     <div
-      data-color="neutral-500"
+      data-color="neutral-600"
       data-cross="center"
       data-fs="xs"
       data-gap="1-5"
-      data-ls="wide"
       data-md-width="100%"
       data-stack="x"
-      data-transform="uppercase"
       {...props}
     />
   );
