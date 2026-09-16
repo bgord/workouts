@@ -3,7 +3,15 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
+import {
+  ActionHint,
+  Dialog,
+  DialogError,
+  DialogFooter,
+  DialogHeader,
+  DialogInfo,
+  DialogStatus,
+} from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutExerciseRemove(props: {
@@ -64,9 +72,10 @@ export function WorkoutExerciseRemove(props: {
           {t("workout.exercise.remove.header")}
         </DialogHeader>
 
-        <DialogInfo variant="danger">
-          {t("workout.exercise.remove.info", { name: props.exercise.exerciseName })}
-        </DialogInfo>
+        <div data-gap="3" data-stack="y">
+          <DialogInfo>{t("workout.exercise.remove.info", { name: props.exercise.exerciseName })}</DialogInfo>
+          <DialogStatus variant="irreversible" />
+        </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("workout.exercise.remove.error")}</DialogError>}

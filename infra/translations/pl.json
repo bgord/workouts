@@ -319,7 +319,7 @@
   "workout.exercise.remove.cta": "Usuń",
   "workout.exercise.remove.error": "Nie udało się usunąć ćwiczenia",
   "workout.exercise.remove.header": "Usuwanie ćwiczenia",
-  "workout.exercise.remove.info": "Usunięcie {{name}} skasuje też wszystkie zapisane dla niego serie. Tej operacji nie można cofnąć.",
+  "workout.exercise.remove.info": "Usunięcie {{name}} skasuje też wszystkie zapisane dla niego serie.",
   "workout.exercise.remove.title": "Usuń {{name}}",
   "workout.exercise.skipped": "Pominięte",
   "workout.list.count": "{{matching}} z {{total}}",

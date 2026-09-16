@@ -319,7 +319,7 @@
   "workout.exercise.remove.cta": "Remove",
   "workout.exercise.remove.error": "Could not remove the exercise",
   "workout.exercise.remove.header": "Remove exercise",
-  "workout.exercise.remove.info": "Removing {{name}} also deletes every set logged for it. This cannot be undone.",
+  "workout.exercise.remove.info": "Removing {{name}} also deletes every set logged for it.",
   "workout.exercise.remove.title": "Remove {{name}}",
   "workout.exercise.skipped": "Skipped",
   "workout.list.count": "{{matching}} of {{total}}",
