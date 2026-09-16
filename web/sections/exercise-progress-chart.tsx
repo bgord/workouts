@@ -4,7 +4,6 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
-import { ChartScale } from "../services/chart-scale";
 import { WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
@@ -21,7 +20,8 @@ const PLOT = {
 };
 
 const MINIMAL_POINTS = 2;
-const GRIDLINES = [0, 0.5, 1];
+const SCALE_MARGIN = 1;
+const GRIDLINES_LIMIT = 5;
 const GRIDLINE_LABEL_GAP = 8;
 const DATE_LABEL_BASELINE = HEIGHT - 6;
 const AREA_OPACITY = 0.08;
@@ -31,20 +31,24 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
 
   if (props.performances.length < MINIMAL_POINTS) return null;
 
-  const scale = ChartScale.of(props.performances.map((performance) => performance.bestEstimate));
+  const kilograms = props.performances.map((performance) => WeightFormat.kilograms(performance.bestEstimate));
 
-  const toY = (estimate: number) => PLOT.bottom - scale.ratio(estimate) * PLOT.height;
+  const floor = Math.max(Math.floor(Math.min(...kilograms)) - SCALE_MARGIN, 0);
+  const ceiling = Math.ceil(Math.max(...kilograms)) + SCALE_MARGIN;
+  const step = Math.ceil((ceiling - floor) / GRIDLINES_LIMIT);
 
-  const gridlines = GRIDLINES.map((ratio) => {
-    const estimate = scale.at(ratio);
+  const toY = (estimate: number) => PLOT.bottom - ((estimate - floor) / (ceiling - floor)) * PLOT.height;
 
-    return { ratio, estimate, y: toY(estimate) };
+  const gridlines = Array.from({ length: Math.floor((ceiling - floor) / step) + 1 }, (_, index) => {
+    const estimate = floor + index * step;
+
+    return { estimate, y: toY(estimate) };
   });
 
   const points = props.performances.map((performance, index) => ({
     performance,
     x: PLOT.left + (index * PLOT.width) / (props.performances.length - 1),
-    y: toY(performance.bestEstimate),
+    y: toY(kilograms[index]!),
   }));
 
   const first = points[0]!;
@@ -76,7 +80,7 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
       >
         <g data-color="neutral-800" stroke="currentColor">
           {gridlines.map((gridline) => (
-            <line key={gridline.ratio} x1={PLOT.left} x2={PLOT.right} y1={gridline.y} y2={gridline.y} />
+            <line key={gridline.estimate} x1={PLOT.left} x2={PLOT.right} y1={gridline.y} y2={gridline.y} />
           ))}
         </g>
 
@@ -84,14 +88,12 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
           {gridlines.map((gridline) => (
             <text
               dominantBaseline="middle"
-              key={gridline.ratio}
+              key={gridline.estimate}
               textAnchor="end"
               x={PLOT.left - GRIDLINE_LABEL_GAP}
               y={gridline.y}
             >
-              {t("statistics.exercise.one_rep_max_estimate.value", {
-                load: WeightFormat.kilograms(gridline.estimate),
-              })}
+              {t("statistics.exercise.one_rep_max_estimate.value", { load: gridline.estimate })}
             </text>
           ))}
 
