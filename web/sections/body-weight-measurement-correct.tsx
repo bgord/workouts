@@ -88,7 +88,10 @@ export function BodyWeightMeasurementCorrect(props: {
           data-main="center"
           data-shrink="0"
           disabled={
-            measuredOn.empty || weight.empty || (measuredOn.unchanged && weight.unchanged) || mutation.isLoading
+            measuredOn.empty ||
+            weight.empty ||
+            (measuredOn.unchanged && weight.unchanged) ||
+            mutation.isLoading
           }
           style={submit}
           title={t("app.save")}

@@ -96,7 +96,9 @@ function PlanSectionItem(props: {
         </button>
 
         <div data-grow="1" data-transform="truncate">
-          {actions.sectionRename.available && <PlanSectionRename plan={plan} section={section} toggle={rename} />}
+          {actions.sectionRename.available && (
+            <PlanSectionRename plan={plan} section={section} toggle={rename} />
+          )}
 
           {!actions.sectionRename.available && (
             <div className="c-card-title" data-transform="truncate" title={section.name}>
