@@ -3,6 +3,8 @@ import { CalendarCheck } from "lucide-react";
 import { TileHeader } from "../components/tile";
 import { dashboardRoute } from "../router";
 
+const column = { flexBasis: 0 };
+
 export function DashboardCompleted() {
   const t = useTranslations();
   const { dashboard } = dashboardRoute.useLoaderData();
@@ -14,7 +16,7 @@ export function DashboardCompleted() {
   ] as const;
 
   return (
-    <section className="c-card" data-gap="5" data-p="5" data-variant="sunken">
+    <section className="c-card" data-gap="3" data-p="4" data-variant="sunken">
       <TileHeader data-main="center">
         <CalendarCheck data-color="brand-400" data-size="xs" />
         {t("dashboard.completed.header")}
@@ -31,6 +33,7 @@ export function DashboardCompleted() {
             data-grow="1"
             data-stack="y"
             key={tile.label}
+            style={column}
           >
             <div
               data-color="neutral-0"

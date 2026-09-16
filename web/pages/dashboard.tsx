@@ -66,7 +66,7 @@ export function Dashboard() {
         </div>
       )}
 
-      <div data-gap="6" data-md-stack="y" data-stack="x">
+      <div data-gap="3" data-md-gap="6" data-md-stack="y" data-stack="x">
         {upcoming && (
           <div data-gap="2" data-grow="1" data-stack="y" style={tile}>
             <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">

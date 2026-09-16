@@ -1,7 +1,7 @@
 export function Select(props: React.JSX.IntrinsicElements["select"]) {
   return (
     <div className="c-select-wrapper" data-md-width="100%">
-      <select data-variant="transparent" className="c-select" data-md-width="100%" {...props} />
+      <select className="c-select" data-md-width="100%" data-variant="transparent" {...props} />
     </div>
   );
 }

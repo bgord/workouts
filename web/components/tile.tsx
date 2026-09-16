@@ -13,6 +13,11 @@ const card = {
   className: "c-card",
   "data-cross": "center",
   "data-gap": "1",
+  "data-md-cross": "baseline",
+  "data-md-main": "between",
+  "data-md-py": "3",
+  "data-md-stack": "x",
+  "data-md-wrap": "wrap",
   "data-p": "4",
   "data-stack": "y",
 } as const;
@@ -35,6 +40,7 @@ export function TileHeader(props: React.JSX.IntrinsicElements["div"]) {
       data-fs="xs"
       data-gap="1-5"
       data-ls="wide"
+      data-md-width="100%"
       data-stack="x"
       data-transform="uppercase"
       {...props}
@@ -58,5 +64,5 @@ export function TileValue(props: React.JSX.IntrinsicElements["div"]) {
 }
 
 export function TileContext(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-color="neutral-500" data-fs="xs" {...props} />;
+  return <div data-color="neutral-500" data-fs="xs" data-md-ml="auto" {...props} />;
 }
