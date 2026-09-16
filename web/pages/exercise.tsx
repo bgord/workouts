@@ -3,7 +3,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
-import { ActionHint, ExerciseImage, ExerciseImageSize, Main } from "../components";
+import { ActionHint, ExerciseImage, ExerciseImageSize, Main, SectionHeading } from "../components";
 import { exerciseRoute } from "../router";
 import {
   ExerciseCategories,
@@ -177,9 +177,7 @@ export function Exercise() {
           <ExerciseProgressChart performances={performances} />
 
           <div data-gap="3" data-stack="y">
-            <div className="c-card-title" data-grow="1">
-              {t("statistics.exercise.history")}
-            </div>
+            <SectionHeading>{t("statistics.exercise.history")}</SectionHeading>
 
             <ExerciseHistory performances={performances} />
           </div>

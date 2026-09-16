@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import { SectionHeading } from "../components/section-heading";
 import { WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
@@ -66,7 +67,7 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
   return (
     <div data-gap="3" data-stack="y" data-variant="flat">
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-        <div className="c-card-title">{t("statistics.exercise.progress")}</div>
+        <SectionHeading>{t("statistics.exercise.progress")}</SectionHeading>
 
         <div
           data-color="neutral-500"

@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Download, Scale, Upload } from "lucide-react";
-import { Header, Main } from "../components";
+import { Header, Main, SectionHeading } from "../components";
 import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
@@ -81,9 +81,7 @@ export function Measurements() {
           <BodyWeightProgressChart measurements={measurements} />
 
           <div data-gap="3" data-stack="y">
-            <div className="c-card-title" data-grow="1">
-              {t("measurements.body_weight.history")}
-            </div>
+            <SectionHeading>{t("measurements.body_weight.history")}</SectionHeading>
 
             <BodyWeightMeasurementList measurements={measurements} />
           </div>

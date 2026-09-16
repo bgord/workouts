@@ -1,6 +1,7 @@
 // cSpell:ignore GRIDLINE GRIDLINES
 import { useLanguage, useTranslations } from "@bgord/ui";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
+import { SectionHeading } from "../components/section-heading";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -70,7 +71,7 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
 
   return (
     <div data-gap="3" data-stack="y" data-variant="flat">
-      <div className="c-card-title">{t("measurements.body_weight.progress")}</div>
+      <SectionHeading>{t("measurements.body_weight.progress")}</SectionHeading>
 
       <svg
         aria-label={t("measurements.body_weight.progress")}
