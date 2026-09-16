@@ -4,8 +4,8 @@ import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-
 type Variant = "primary" | "outline" | "positive" | "danger";
 
 const variant: Record<WorkoutStatusEnum, Variant> = {
-  [WorkoutStatusEnum.initial]: "primary",
-  [WorkoutStatusEnum.draft]: "primary",
+  [WorkoutStatusEnum.initial]: "outline",
+  [WorkoutStatusEnum.draft]: "outline",
   [WorkoutStatusEnum.in_progress]: "primary",
   [WorkoutStatusEnum.completed]: "positive",
   [WorkoutStatusEnum.discarded]: "outline",
