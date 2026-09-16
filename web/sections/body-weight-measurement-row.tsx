@@ -10,6 +10,7 @@ import { BodyWeightMeasurementRemove } from "./body-weight-measurement-remove";
 import { BodyWeightReferenceSet } from "./body-weight-reference-set";
 
 const date = { minWidth: 0 };
+const first = { borderTopColor: "transparent" };
 const day = bg.Rhythm(100).times(1).width;
 const delta = bg.Rhythm(56).times(1).minWidth;
 
@@ -27,15 +28,16 @@ export function BodyWeightMeasurementRow(props: {
 
   return (
     <li
-      data-bct={props.first ? undefined : "alpha-soft"}
-      data-bst={props.first ? undefined : "solid"}
-      data-bwt={props.first ? undefined : "hairline"}
+      data-bct="alpha-soft"
+      data-bst="solid"
+      data-bwt="hairline"
       data-cross="center"
       data-gap="3"
       data-md-gap="2"
       data-py="1"
       data-stack="x"
       data-wrap="nowrap"
+      style={props.first ? first : undefined}
     >
       {open && (
         <>

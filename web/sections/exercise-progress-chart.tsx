@@ -64,7 +64,7 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
   const line = points.map((point) => `${point.x},${point.y}`).join(" ");
 
   return (
-    <div data-gap="4" data-md-p="2-5" data-stack="y" data-variant="flat">
+    <div data-gap="3" data-stack="y" data-variant="flat">
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
         <div className="c-card-title">{t("statistics.exercise.progress")}</div>
 
