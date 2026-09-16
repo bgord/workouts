@@ -351,7 +351,7 @@
   "workout.set.remove.cta": "Remove",
   "workout.set.remove.error": "Could not remove the set",
   "workout.set.remove.header": "Remove set",
-  "workout.set.remove.info": "Removing set {{setNumber}} of {{name}} changes this completed workout. This cannot be undone.",
+  "workout.set.remove.info": "Removing set {{setNumber}} of {{name}} changes this completed workout.",
   "workout.set.remove.title": "Remove set {{setNumber}}",
   "workout.set.reps.label": "Reps",
   "workout.set.rir.label": "RIR",

@@ -351,7 +351,7 @@
   "workout.set.remove.cta": "Usuń",
   "workout.set.remove.error": "Nie udało się usunąć serii",
   "workout.set.remove.header": "Usuwanie serii",
-  "workout.set.remove.info": "Usunięcie serii {{setNumber}} z {{name}} zmieni ukończony trening. Tej operacji nie można cofnąć.",
+  "workout.set.remove.info": "Usunięcie serii {{setNumber}} z {{name}} zmieni ukończony trening.",
   "workout.set.remove.title": "Usuń serię {{setNumber}}",
   "workout.set.reps.label": "Powtórzenia",
   "workout.set.rir.label": "RIR",
