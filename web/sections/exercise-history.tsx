@@ -14,7 +14,7 @@ export function ExerciseHistory(props: { performances: Array<ExercisePerformance
   const record = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
 
   return (
-    <ul data-mt="3" data-stack="y">
+    <ul data-stack="y">
       {performances.map((performance, index) => (
         <ExerciseHistoryRow
           index={index}

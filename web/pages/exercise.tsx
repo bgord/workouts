@@ -96,7 +96,7 @@ export function Exercise() {
         )}
       </div>
 
-      <div data-cross="start" data-gap="5" data-md-px="0" data-px="4" data-stack="x" data-wrap="wrap">
+      <div data-cross="start" data-gap="6" data-md-px="0" data-px="4" data-stack="x" data-wrap="wrap">
         <div data-md-grow="1" style={image}>
           {exercise.actions.imageChange.enabled ? (
             <ExerciseImageChange exercise={exercise.data} />
@@ -105,7 +105,7 @@ export function Exercise() {
           )}
         </div>
 
-        <div data-gap="5" data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width}>
+        <div data-gap="4" data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width}>
           {exercise.actions.categoryAssign.available ? (
             <ExerciseCategories exercise={exercise} />
           ) : (
@@ -152,7 +152,7 @@ export function Exercise() {
           className="c-card"
           data-cross="center"
           data-gap="1"
-          data-md-mx="1"
+          data-md-mx="0"
           data-mx="4"
           data-py="8"
           data-stack="y"
@@ -171,7 +171,7 @@ export function Exercise() {
       )}
 
       {performances.length > 0 && (
-        <div data-gap="6" data-md-px="1" data-px="4" data-stack="y">
+        <div data-gap="6" data-md-px="0" data-px="4" data-stack="y">
           <ExerciseStats performances={performances} />
 
           <ExerciseProgressChart performances={performances} />
