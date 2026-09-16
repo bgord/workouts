@@ -4,8 +4,8 @@ import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 type Variant = "primary" | "outline" | "positive" | "danger";
 
 const variant: Record<PlanStatusEnum, Variant> = {
-  [PlanStatusEnum.initial]: "primary",
-  [PlanStatusEnum.draft]: "primary",
+  [PlanStatusEnum.initial]: "outline",
+  [PlanStatusEnum.draft]: "outline",
   [PlanStatusEnum.finalized]: "positive",
   [PlanStatusEnum.archived]: "outline",
   [PlanStatusEnum.removed]: "outline",
