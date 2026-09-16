@@ -243,7 +243,7 @@
   "plan.section.remove.cta": "Usuń",
   "plan.section.remove.error": "Nie udało się usunąć sekcji",
   "plan.section.remove.header": "Usuwanie sekcji",
-  "plan.section.remove.info": "Usunięcie {{name}} kasuje sekcję wraz ze wszystkimi jej ćwiczeniami. Tej operacji nie można cofnąć.",
+  "plan.section.remove.info": "Usunięcie {{name}} kasuje sekcję wraz ze wszystkimi jej ćwiczeniami.",
   "plan.section.remove.title": "Usuń {{name}}",
   "plan.section.rename.cta": "Zmień nazwę",
   "plan.section.rename.error": "Nie udało się zmienić nazwy sekcji",

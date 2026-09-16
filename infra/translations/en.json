@@ -243,7 +243,7 @@
   "plan.section.remove.cta": "Remove",
   "plan.section.remove.error": "Could not remove the section",
   "plan.section.remove.header": "Remove section",
-  "plan.section.remove.info": "Removing {{name}} deletes it and all of its exercises. This cannot be undone.",
+  "plan.section.remove.info": "Removing {{name}} deletes it and all of its exercises.",
   "plan.section.remove.title": "Remove {{name}}",
   "plan.section.rename.cta": "Rename",
   "plan.section.rename.error": "Could not rename the section",
