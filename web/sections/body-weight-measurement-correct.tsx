@@ -2,8 +2,12 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
+import { Stepper } from "../components";
 import { measurementsRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
+
+const date = { flexShrink: 0, minWidth: 0, width: "auto" };
+const submit = { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm(34).times(1).height };
 
 export function BodyWeightMeasurementCorrect(props: {
   measurement: BodyWeightMeasurement;
@@ -41,66 +45,77 @@ export function BodyWeightMeasurementCorrect(props: {
 
   return (
     <form
+      aria-busy={mutation.isLoading}
       data-cross="center"
-      data-gap="2"
+      data-gap="1"
       data-grow="1"
       data-stack="x"
-      data-wrap="nowrap"
+      data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
       {...edit.props.target}
     >
       <input
         aria-label={t("measurements.body_weight.measure.date.label")}
         className="c-input"
-        data-fs="sm"
-        data-grow="1"
-        data-px="2"
+        data-variant="transparent"
+        style={date}
         type="date"
         {...measuredOn.input.props}
-        {...bg.Rhythm().times(0).style.minWidth}
         max={Temporal.Now.plainDateISO().toString()}
       />
 
-      <input
-        aria-label={t("measurements.body_weight.measure.weight.label")}
-        className="c-input"
-        data-px="2"
-        min="0"
-        step="0.05"
-        type="number"
-        {...weight.input.props}
-        {...bg.Rhythm(80).times(1).style.width}
-      />
-
-      <button
-        aria-label={t("app.save")}
-        className="c-button"
-        data-ml="auto"
-        data-px="2"
-        data-variant="secondary"
-        disabled={
-          measuredOn.empty || weight.empty || (measuredOn.unchanged && weight.unchanged) || mutation.isLoading
-        }
-        title={t("app.save")}
-        type="submit"
+      <Stepper
+        disabled={mutation.isLoading}
+        field={weight}
+        label={t("measurements.body_weight.measure.weight.label")}
+        max={500}
+        min={0}
+        step={0.05}
+        unit={t("measurements.body_weight.measure.weight.unit")}
+        width={72}
       >
-        <Check data-size="sm" />
-      </button>
+        <button
+          aria-label={t("app.save")}
+          data-bcl="neutral-800"
+          data-bg="alpha-subtle"
+          data-bsl="solid"
+          data-bwl="hairline"
+          data-color="positive-400"
+          data-cross="center"
+          data-cursor="pointer"
+          data-disp="flex"
+          data-hover-bg="alpha-soft"
+          data-main="center"
+          data-shrink="0"
+          disabled={
+            measuredOn.empty || weight.empty || (measuredOn.unchanged && weight.unchanged) || mutation.isLoading
+          }
+          style={submit}
+          title={t("app.save")}
+          type="submit"
+        >
+          <Check data-size="sm" />
+        </button>
+      </Stepper>
 
       <button
         aria-label={t("app.cancel")}
         className="c-button"
-        data-px="2"
+        data-color="neutral-400"
+        data-hover-color="neutral-0"
+        data-px="0"
+        data-shrink="0"
         data-variant="ghost"
         onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset, edit.disable])}
         title={t("app.cancel")}
         type="button"
+        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
       </button>
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs" data-width="100%">
           {t("measurements.body_weight.correct.error")}
         </output>
       )}

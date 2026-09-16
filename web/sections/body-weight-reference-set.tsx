@@ -48,7 +48,7 @@ export function BodyWeightReferenceSet(props: {
       onSubmit={mutation.handleSubmit}
       {...picker.props.target}
     >
-      <div data-color="neutral-0" data-fs="sm" data-fw="semibold" data-md-fs="xs" data-transform="nowrap">
+      <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
         {t("measurements.body_weight.value", {
           weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
         })}
@@ -80,11 +80,15 @@ export function BodyWeightReferenceSet(props: {
       <button
         aria-label={t("app.save")}
         className="c-button"
-        data-px="2"
-        data-variant="secondary"
+        data-color="positive-400"
+        data-hover-color="positive-200"
+        data-px="0"
+        data-shrink="0"
+        data-variant="ghost"
         disabled={goal.empty || goal.unchanged || mutation.isLoading}
         title={t("app.save")}
         type="submit"
+        {...bg.Rhythm().times(3).style.width}
       >
         <Check data-size="sm" />
       </button>
@@ -92,11 +96,15 @@ export function BodyWeightReferenceSet(props: {
       <button
         aria-label={t("app.cancel")}
         className="c-button"
-        data-px="2"
+        data-color="neutral-400"
+        data-hover-color="neutral-0"
+        data-px="0"
+        data-shrink="0"
         data-variant="ghost"
         onClick={bg.exec([goal.clear, mutation.reset, picker.disable])}
         title={t("app.cancel")}
         type="button"
+        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
       </button>
