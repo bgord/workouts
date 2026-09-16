@@ -4,7 +4,7 @@ import { RirColor } from "./rir-color";
 const dot = { width: 8, height: 8 };
 const ring = (color: RirColor) => ({ ...dot, boxShadow: `inset 0 0 0 2px var(--color-${color})` });
 
-export function SetDots(props: { sets: { rir?: number }[]; target: number }) {
+export function SetDots(props: { sets: Array<{ rir?: number }>; target: number }) {
   const t = useTranslations();
 
   const label = t("workout.set.progress", { done: props.sets.length, target: props.target });

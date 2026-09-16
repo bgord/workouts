@@ -18,7 +18,6 @@ export function RirSubmit(props: {
 
   return (
     <div
-      aria-label={t("workout.set.cta")}
       data-bc="alpha-soft"
       data-br="sm"
       data-bs="solid"
@@ -28,7 +27,6 @@ export function RirSubmit(props: {
       data-shrink="0"
       data-stack="x"
       data-wrap="nowrap"
-      role="group"
       title={t("workout.set.rir.title")}
     >
       {options.map((option, index) => (
