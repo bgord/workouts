@@ -268,7 +268,7 @@
   "profile.delete_account.cta_primary": "Delete account",
   "profile.delete_account.error": "Error while deleting account",
   "profile.delete_account.header": "Delete account",
-  "profile.delete_account.info": "This action is irreversible",
+  "profile.delete_account.info": "Deleting your account removes every plan, workout and measurement.",
   "profile.export_workouts.cta": "Download CSV",
   "profile.export_workouts.header": "Export workouts",
   "profile.export_workouts.hint": "Every logged set from your completed workouts",

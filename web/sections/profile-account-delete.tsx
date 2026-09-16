@@ -1,6 +1,14 @@
 import { Autocomplete, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { CircleAlert, UserX } from "lucide-react";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, SectionHeading } from "../components";
+import {
+  Dialog,
+  DialogError,
+  DialogFooter,
+  DialogHeader,
+  DialogInfo,
+  DialogStatus,
+  SectionHeading,
+} from "../components";
 
 export function ProfileAccountDelete() {
   const t = useTranslations();
@@ -28,7 +36,7 @@ export function ProfileAccountDelete() {
 
         <div data-color="danger-400" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
           <CircleAlert data-size="sm" />
-          {t("profile.delete_account.info")}
+          {t("app.dialog.irreversible")}
         </div>
       </div>
 
@@ -48,9 +56,12 @@ export function ProfileAccountDelete() {
           {t("profile.delete_account.header")}
         </DialogHeader>
 
-        <DialogInfo variant="danger">{t("profile.delete_account.info")}</DialogInfo>
+        <div data-gap="3" data-stack="y">
+          <DialogInfo>{t("profile.delete_account.info")}</DialogInfo>
+          <DialogStatus variant="irreversible" />
+        </div>
 
-        <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
+        <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           <div data-cross="start" data-gap="1-5" data-stack="y">
             <label className="c-label" htmlFor="challenge">
               {t("profile.delete_account.challenge")}

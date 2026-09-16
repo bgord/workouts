@@ -268,7 +268,7 @@
   "profile.delete_account.cta_primary": "Usuń konto",
   "profile.delete_account.error": "Nie udało się usunąć konta",
   "profile.delete_account.header": "Usuwanie konta",
-  "profile.delete_account.info": "Tej operacji nie można cofnąć",
+  "profile.delete_account.info": "Usunięcie konta kasuje wszystkie plany, treningi i pomiary.",
   "profile.export_workouts.cta": "Pobierz CSV",
   "profile.export_workouts.header": "Eksport treningów",
   "profile.export_workouts.hint": "Każda zalogowana seria z ukończonych treningów",
