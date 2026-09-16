@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ButtonCancel } from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) {
@@ -50,33 +50,52 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
 
   return (
     <form data-gap="2" data-grow="1" data-stack="y" onSubmit={mutation.handleSubmit} {...update.props.target}>
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("exercise.update.name.label")}
           className="c-input"
-          data-md-width="100%"
+          data-grow="1"
           data-variant="transparent"
+          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-          <button
-            className="c-button"
-            data-md-grow="1"
-            data-variant="secondary"
-            disabled={name.unchanged || mutation.isLoading}
-            type="submit"
-          >
-            {t("app.save")}
-          </button>
+        <button
+          aria-label={t("app.save")}
+          className="c-button"
+          data-color="positive-400"
+          data-hover-color="positive-200"
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          disabled={name.unchanged || mutation.isLoading}
+          title={t("app.save")}
+          type="submit"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <Check data-size="sm" />
+        </button>
 
-          <ButtonCancel data-md-grow="1" onClick={bg.exec([name.clear, mutation.reset, update.disable])} />
-        </div>
+        <button
+          aria-label={t("app.cancel")}
+          className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          onClick={bg.exec([name.clear, mutation.reset, update.disable])}
+          title={t("app.cancel")}
+          type="button"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <X data-size="sm" />
+        </button>
       </div>
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs">
           {t("exercise.update.error")}
         </output>
       )}

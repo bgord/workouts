@@ -1,14 +1,18 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import { ButtonCancel } from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionRename(props: { plan: Plan; section: PlanSectionWithExercises }) {
+export function PlanSectionRename(props: {
+  plan: Plan;
+  section: PlanSectionWithExercises;
+  toggle: bg.UseToggleReturnType;
+}) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const rename = bg.useToggle({ name: `plan-section-rename-${props.section.id}` });
+  const rename = props.toggle;
 
   const planSectionName = bg.useTextField({
     ...Form.planSectionName.field,
@@ -49,35 +53,52 @@ export function PlanSectionRename(props: { plan: Plan; section: PlanSectionWithE
 
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...rename.props.target}>
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("plan.section.rename.label")}
           className="c-input"
-          data-md-width="100%"
+          data-grow="1"
+          data-variant="transparent"
+          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.planSectionName.pattern)}
           {...planSectionName.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x">
-          <button
-            className="c-button"
-            data-md-grow="1"
-            data-variant="secondary"
-            disabled={planSectionName.unchanged || mutation.isLoading}
-            type="submit"
-          >
-            {t("app.save")}
-          </button>
+        <button
+          aria-label={t("app.save")}
+          className="c-button"
+          data-color="positive-400"
+          data-hover-color="positive-200"
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          disabled={planSectionName.unchanged || mutation.isLoading}
+          title={t("app.save")}
+          type="submit"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <Check data-size="sm" />
+        </button>
 
-          <ButtonCancel
-            data-md-grow="1"
-            onClick={bg.exec([planSectionName.clear, mutation.reset, rename.disable])}
-          />
-        </div>
+        <button
+          aria-label={t("app.cancel")}
+          className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          onClick={bg.exec([planSectionName.clear, mutation.reset, rename.disable])}
+          title={t("app.cancel")}
+          type="button"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <X data-size="sm" />
+        </button>
       </div>
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs">
           {t("plan.section.rename.error")}
         </output>
       )}

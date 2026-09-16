@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { Check, Plus, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHint, ButtonCancel } from "../components";
+import { ActionHint } from "../components";
 import { planRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
@@ -78,7 +78,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
 
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...create.props.target}>
-      <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <div
           data-bc="neutral-700"
           data-br="sm"
@@ -105,27 +105,43 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           {...planSectionName.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-stack="x" data-wrap="nowrap">
+        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
           <button
+            aria-label={t("app.save")}
             className="c-button"
-            data-md-grow="1"
-            data-variant="primary"
+            data-color="positive-400"
+            data-hover-color="positive-200"
+            data-px="0"
+            data-shrink="0"
+            data-variant="ghost"
             disabled={planSectionName.empty || mutation.isLoading}
+            title={t("app.save")}
             type="submit"
+            {...bg.Rhythm().times(3).style.width}
           >
-            <Plus data-size="sm" />
-            {t("plan.section.create.submit.cta")}
+            <Check data-size="sm" />
           </button>
 
-          <ButtonCancel
-            data-md-grow="1"
+          <button
+            aria-label={t("app.cancel")}
+            className="c-button"
+            data-color="neutral-400"
+            data-hover-color="neutral-0"
+            data-px="0"
+            data-shrink="0"
+            data-variant="ghost"
             onClick={bg.exec([planSectionName.clear, mutation.reset, create.disable])}
-          />
+            title={t("app.cancel")}
+            type="button"
+            {...bg.Rhythm().times(3).style.width}
+          >
+            <X data-size="sm" />
+          </button>
         </div>
       </div>
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs">
           {t("plan.section.create.error")}
         </output>
       )}

@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ButtonCancel } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRename(props: Plan) {
@@ -60,7 +60,7 @@ export function PlanRename(props: Plan) {
       {...bg.Rhythm().times(0).style.minWidth}
       {...rename.props.target}
     >
-      <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("plan.rename.label")}
           className="c-input"
@@ -71,22 +71,41 @@ export function PlanRename(props: Plan) {
           {...planName.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-shrink="0" data-stack="x">
-          <button
-            className="c-button"
-            data-variant="secondary"
-            disabled={planName.unchanged || mutation.isLoading}
-            type="submit"
-          >
-            {t("app.save")}
-          </button>
+        <button
+          aria-label={t("app.save")}
+          className="c-button"
+          data-color="positive-400"
+          data-hover-color="positive-200"
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          disabled={planName.unchanged || mutation.isLoading}
+          title={t("app.save")}
+          type="submit"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <Check data-size="sm" />
+        </button>
 
-          <ButtonCancel onClick={bg.exec([planName.clear, mutation.reset, rename.disable])} />
-        </div>
+        <button
+          aria-label={t("app.cancel")}
+          className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          onClick={bg.exec([planName.clear, mutation.reset, rename.disable])}
+          title={t("app.cancel")}
+          type="button"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <X data-size="sm" />
+        </button>
       </div>
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs">
           {t("plan.rename.error")}
         </output>
       )}

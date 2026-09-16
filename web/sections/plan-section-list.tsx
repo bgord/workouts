@@ -59,6 +59,7 @@ function PlanSectionItem(props: {
   const pluralize = bg.usePluralize();
   const { plan, section, actions, index, last } = props;
   const open = usePersistedToggle({ name: `plan-section-${section.id}` });
+  const rename = bg.useToggle({ name: `plan-section-rename-${section.id}` });
 
   return (
     <li
@@ -95,7 +96,7 @@ function PlanSectionItem(props: {
         </button>
 
         <div data-grow="1" data-transform="truncate">
-          {actions.sectionRename.available && <PlanSectionRename plan={plan} section={section} />}
+          {actions.sectionRename.available && <PlanSectionRename plan={plan} section={section} toggle={rename} />}
 
           {!actions.sectionRename.available && (
             <div className="c-card-title" data-transform="truncate" title={section.name}>
@@ -104,21 +105,23 @@ function PlanSectionItem(props: {
           )}
         </div>
 
-        <div data-color="neutral-500" data-fs="xs" data-shrink="0" data-transform="font-variant-numeric">
-          {section.exerciseInstructions.length === 0
-            ? t("plan.section.exercise.list.empty")
-            : t("plan.section.exercise.count", {
-                count: section.exerciseInstructions.length,
-                noun: pluralize({
-                  value: section.exerciseInstructions.length,
-                  singular: t("plan.section.exercise.noun.singular"),
-                  plural: t("plan.section.exercise.noun.plural"),
-                  genitive: t("plan.section.exercise.noun.genitive"),
-                }),
-              })}
-        </div>
+        {rename.off && (
+          <div data-color="neutral-500" data-fs="xs" data-shrink="0" data-transform="font-variant-numeric">
+            {section.exerciseInstructions.length === 0
+              ? t("plan.section.exercise.list.empty")
+              : t("plan.section.exercise.count", {
+                  count: section.exerciseInstructions.length,
+                  noun: pluralize({
+                    value: section.exerciseInstructions.length,
+                    singular: t("plan.section.exercise.noun.singular"),
+                    plural: t("plan.section.exercise.noun.plural"),
+                    genitive: t("plan.section.exercise.noun.genitive"),
+                  }),
+                })}
+          </div>
+        )}
 
-        {actions.sectionRemove.available && <PlanSectionRemove plan={plan} section={section} />}
+        {actions.sectionRemove.available && rename.off && <PlanSectionRemove plan={plan} section={section} />}
       </div>
 
       {open.on && (

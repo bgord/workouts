@@ -1,8 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
-import { ButtonClear } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryAdd() {
@@ -27,7 +26,7 @@ export function ExerciseCategoryAdd() {
 
   return (
     <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
-      <div data-cross="center" data-gap="2" data-md-gap="1" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <label className="c-visually-hidden" {...name.label.props}>
           {t("exercise.category.add.name.label")}
         </label>
@@ -43,27 +42,41 @@ export function ExerciseCategoryAdd() {
         />
 
         <button
+          aria-label={t("exercise.category.add.submit.cta")}
           className="c-button"
-          data-md-px="2"
+          data-color="positive-400"
+          data-hover-color="positive-200"
+          data-px="0"
           data-shrink="0"
-          data-variant="primary"
+          data-variant="ghost"
           disabled={name.unchanged || mutation.isLoading}
+          title={t("exercise.category.add.submit.cta")}
           type="submit"
+          {...bg.Rhythm().times(3).style.width}
         >
-          <Plus data-size="sm" />
-          {t("exercise.category.add.submit.cta")}
+          <Check data-size="sm" />
         </button>
 
-        <ButtonClear
-          data-md-px="2"
+        <button
+          aria-label={t("app.clear")}
+          className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
+          data-px="0"
           data-shrink="0"
+          data-variant="ghost"
           disabled={name.unchanged}
           onClick={bg.exec([name.clear, mutation.reset])}
-        />
+          title={t("app.clear")}
+          type="button"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <X data-size="sm" />
+        </button>
       </div>
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs">
           {t("exercise.category.add.error")}
         </output>
       )}

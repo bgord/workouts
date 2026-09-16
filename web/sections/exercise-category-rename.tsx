@@ -1,9 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Pencil } from "lucide-react";
+import { Check, Pencil, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
-import { ButtonCancel } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.UseToggleReturnType }) {
@@ -71,20 +70,40 @@ export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.Us
         />
 
         <button
+          aria-label={t("app.save")}
           className="c-button"
+          data-color="positive-400"
+          data-hover-color="positive-200"
+          data-px="0"
           data-shrink="0"
-          data-variant="secondary"
+          data-variant="ghost"
           disabled={name.unchanged || mutation.isLoading}
+          title={t("app.save")}
           type="submit"
+          {...bg.Rhythm().times(3).style.width}
         >
-          {t("app.save")}
+          <Check data-size="sm" />
         </button>
 
-        <ButtonCancel data-shrink="0" onClick={bg.exec([name.clear, mutation.reset, rename.disable])} />
+        <button
+          aria-label={t("app.cancel")}
+          className="c-button"
+          data-color="neutral-400"
+          data-hover-color="neutral-0"
+          data-px="0"
+          data-shrink="0"
+          data-variant="ghost"
+          onClick={bg.exec([name.clear, mutation.reset, rename.disable])}
+          title={t("app.cancel")}
+          type="button"
+          {...bg.Rhythm().times(3).style.width}
+        >
+          <X data-size="sm" />
+        </button>
       </div>
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs">
           {t("exercise.category.rename.error")}
         </output>
       )}
