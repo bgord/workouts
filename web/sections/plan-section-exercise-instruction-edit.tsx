@@ -193,7 +193,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           )}
 
           {actions.update.available && (
-            <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+            <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }}>
               <Stepper
                 disabled={!actions.update.enabled}
                 field={sets}
