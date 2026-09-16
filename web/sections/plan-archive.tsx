@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Archive } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanArchive(props: Plan) {
@@ -47,7 +47,10 @@ export function PlanArchive(props: Plan) {
           {t("plan.archive.header")}
         </DialogHeader>
 
-        <DialogInfo variant="neutral">{t("plan.archive.info", { name: props.name })}</DialogInfo>
+        <div data-gap="3" data-stack="y">
+          <DialogInfo>{t("plan.archive.info", { name: props.name })}</DialogInfo>
+          <DialogStatus variant="restorable" />
+        </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("plan.archive.error")}</DialogError>}
