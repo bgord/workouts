@@ -6,7 +6,7 @@ export function Main(props: React.JSX.IntrinsicElements["main"]) {
       data-md-m="2"
       data-md-mb="8"
       data-md-mt="0"
-      data-md-pt="4"
+      data-md-pt="2"
       data-md-px="0"
       data-mx="auto"
       data-pb="16"

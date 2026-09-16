@@ -18,14 +18,16 @@ export function Measurements() {
 
   return (
     <Main>
-      <div data-cross="center" data-stack="x">
+      <div data-cross="center" data-gap="1" data-stack="x">
         <Header data-grow="1">{t("measurements.body_weight.header")}</Header>
 
         <button
           className="c-button"
+          data-px="0"
           data-variant="ghost"
           onClick={bodyWeightImport.toggle}
           type="button"
+          {...bg.Rhythm().times(3).style.width}
           {...bodyWeightImport.props.controller}
         >
           <Upload data-size="sm" />
@@ -34,11 +36,13 @@ export function Measurements() {
         {measurements.length > 0 && (
           <a
             className="c-button"
+            data-px="0"
             data-variant="ghost"
             download
             href="/api/measurements/body-weight/export"
             rel="noopener"
             target="_blank"
+            {...bg.Rhythm().times(3).style.width}
           >
             <Download data-size="sm" />
           </a>
