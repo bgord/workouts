@@ -303,7 +303,7 @@
   "workout.discard.cta": "Discard",
   "workout.discard.error": "Could not discard the workout",
   "workout.discard.header": "Discard workout",
-  "workout.discard.info": "Discarding {{name}} permanently removes it along with every set logged in it.",
+  "workout.discard.info": "Discarding {{name}} removes it along with every set logged in it.",
   "workout.discard.title": "Discard the {{name}} workout",
   "workout.exercise.add.blocked.limit": "Remove an exercise to add a new one",
   "workout.exercise.add.cta": "Add exercise",
