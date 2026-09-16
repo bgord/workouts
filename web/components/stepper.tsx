@@ -17,6 +17,7 @@ export function Stepper(props: {
   width?: number;
   disabled?: boolean;
   variant?: "default" | "compact" | "fill";
+  children?: React.ReactNode;
 }) {
   const variant = props.variant ?? "default";
   const value = props.field.value ?? props.min;
@@ -103,6 +104,8 @@ export function Stepper(props: {
       >
         <Plus data-size="sm" />
       </button>
+
+      {props.children}
     </div>
   );
 }
