@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryDelete(props: ExerciseCategory) {
@@ -41,7 +41,10 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
           {t("exercise.category.delete.header")}
         </DialogHeader>
 
-        <DialogInfo variant="danger">{t("exercise.category.delete.info", { name: props.name })}</DialogInfo>
+        <div data-gap="3" data-stack="y">
+          <DialogInfo>{t("exercise.category.delete.info", { name: props.name })}</DialogInfo>
+          <DialogStatus variant="irreversible" />
+        </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("exercise.category.delete.error")}</DialogError>}

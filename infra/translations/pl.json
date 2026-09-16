@@ -106,7 +106,7 @@
   "exercise.category.delete.cta": "Usuń",
   "exercise.category.delete.error": "Nie udało się usunąć kategorii",
   "exercise.category.delete.header": "Usuń kategorię",
-  "exercise.category.delete.info": "Usunięcie {{name}} odłączy ją od wszystkich ćwiczeń. Tej operacji nie można cofnąć.",
+  "exercise.category.delete.info": "Usunięcie {{name}} odłączy ją od wszystkich ćwiczeń.",
   "exercise.category.delete.title": "Usuń {{name}}",
   "exercise.category.list.empty": "Brak kategorii",
   "exercise.category.list.empty.hint": "Dodaj kategorię powyżej, aby pogrupować ćwiczenia",
