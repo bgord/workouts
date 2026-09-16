@@ -158,6 +158,7 @@ function NavigationShell() {
 function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
   return (
     <button
+      data-color="neutral-300"
       data-cursor="pointer"
       data-fs="sm"
       data-fw="medium"
