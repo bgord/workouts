@@ -51,7 +51,6 @@ export function WorkoutSetLog(props: {
       aria-busy={mutation.isLoading}
       data-cross="center"
       data-gap="2-5"
-      data-mb="5"
       data-md-gap="1"
       data-mt="1"
       data-pt="2"

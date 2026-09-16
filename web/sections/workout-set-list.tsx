@@ -6,11 +6,10 @@ export function WorkoutSetList(props: { workout: Workout; exercise: WorkoutExerc
   if (props.exercise.loggedSets.length === 0) return null;
 
   return (
-    <ul data-bct="alpha-subtle" data-bst="solid" data-bwt="hairline" data-gap="0" data-stack="y">
-      {props.exercise.loggedSets.map((loggedSet, index) => (
+    <ul data-gap="0" data-stack="y">
+      {props.exercise.loggedSets.map((loggedSet) => (
         <WorkoutSetRow
           exercise={props.exercise}
-          index={index}
           key={loggedSet.id}
           loggedSet={loggedSet}
           workout={props.workout}

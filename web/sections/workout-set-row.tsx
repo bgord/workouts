@@ -11,15 +11,14 @@ export function WorkoutSetRow(props: {
   workout: Workout;
   exercise: WorkoutExercise;
   loggedSet: LoggedSet;
-  index: number;
 }) {
   const edit = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
     <li
-      data-bct={props.index > 0 ? "alpha-subtle" : undefined}
-      data-bst={props.index > 0 ? "solid" : undefined}
-      data-bwt={props.index > 0 ? "hairline" : undefined}
+      data-bct="alpha-subtle"
+      data-bst="solid"
+      data-bwt="hairline"
       data-gap="1"
       data-py="1-5"
       data-stack="y"

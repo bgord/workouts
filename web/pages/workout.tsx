@@ -84,7 +84,6 @@ export function Workout() {
           <div
             data-cross="center"
             data-gap="2"
-            data-md-mt={primary ? "1" : undefined}
             data-md-pl={primary ? "4" : undefined}
             data-md-width={primary ? "100%" : undefined}
             data-shrink="0"
@@ -128,7 +127,7 @@ export function Workout() {
         </div>
       </div>
 
-      <div data-mt="3" data-stack="y">
+      <div data-stack="y">
         {workout.data.exercises.length === 0 && !workout.actions.exerciseAdd.available && (
           <div
             className="c-card"

@@ -142,7 +142,6 @@ export function WorkoutExerciseRow(props: {
                 data-gap="1"
                 data-hover-color="neutral-0"
                 data-px={props.exercise.target ? undefined : "2"}
-                data-py={props.exercise.target ? undefined : "0-5"}
                 data-shrink="0"
                 data-stack="x"
                 data-transform="font-variant-numeric"
