@@ -51,7 +51,7 @@ export function WorkoutHistory() {
   }
 
   return (
-    <div data-gap="5" data-stack="y">
+    <div data-gap="4" data-stack="y">
       <div
         data-cross="center"
         data-gap="2"
@@ -87,7 +87,7 @@ export function WorkoutHistory() {
 
         <ul
           data-cross="center"
-          data-gap="1-5"
+          data-gap="2"
           data-stack="x"
           data-wrap="wrap"
           {...bg.Rhythm(36).times(1).style.height}

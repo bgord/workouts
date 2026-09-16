@@ -123,7 +123,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         </form>
       )}
 
-      <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
+      <ul data-gap="2" data-stack="x" data-wrap="wrap">
         {assigned.map((category) => (
           <li className="c-badge" data-cross="center" data-gap="1" data-variant="outline" key={category.id}>
             {category.name}

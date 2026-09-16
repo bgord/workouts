@@ -139,7 +139,7 @@ export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
             {t("workout.create.when.label")}
           </label>
 
-          <div data-gap="1-5" data-stack="x" data-wrap="wrap">
+          <div data-gap="2" data-stack="x" data-wrap="wrap">
             {quick.map((date, offset) => {
               const selected = custom.off && scheduledFor.value === date.toString();
 

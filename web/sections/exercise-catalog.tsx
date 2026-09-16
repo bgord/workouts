@@ -51,7 +51,7 @@ export function ExerciseCatalog() {
   const pristine = ExerciseCatalogFiltersForm.Form.isDefault(search);
 
   return (
-    <div data-gap="5" data-stack="y">
+    <div data-gap="4" data-stack="y">
       <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
         <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
@@ -114,7 +114,7 @@ export function ExerciseCatalog() {
         </button>
       </div>
 
-      <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
+      <ul data-gap="2" data-stack="x" data-wrap="wrap">
         {categories.map((category) => {
           const selected = search.category === category.id;
 

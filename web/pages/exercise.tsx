@@ -114,7 +114,7 @@ export function Exercise() {
                 {t("exercise.categories.header")}
               </div>
 
-              <ul data-gap="1-5" data-stack="x" data-wrap="wrap">
+              <ul data-gap="2" data-stack="x" data-wrap="wrap">
                 {exercise.data.categories.map((category) => (
                   <li key={category.id}>
                     <Link
