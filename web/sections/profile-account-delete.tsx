@@ -19,7 +19,7 @@ export function ProfileAccountDelete() {
   });
 
   return (
-    <section className="c-card" data-bc="danger-600" data-gap="5" data-md-p="3" data-variant="flat">
+    <section className="c-card" data-bc="danger-600" data-gap="4" data-p="4" data-variant="flat">
       <div data-gap="2" data-main="between" data-md-stack="y" data-stack="x">
         <div data-cross="center" data-gap="3" data-stack="x">
           <UserX data-color="danger-400" data-size="sm" />
@@ -50,8 +50,8 @@ export function ProfileAccountDelete() {
 
         <DialogInfo variant="danger">{t("profile.delete_account.info")}</DialogInfo>
 
-        <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          <div data-cross="start" data-gap="3" data-stack="y">
+        <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
+          <div data-cross="start" data-gap="1-5" data-stack="y">
             <label className="c-label" htmlFor="challenge">
               {t("profile.delete_account.challenge")}
             </label>

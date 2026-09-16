@@ -5,7 +5,7 @@ export function ProfileWorkoutsExport() {
   const t = useTranslations();
 
   return (
-    <section className="c-card" data-gap="5" data-variant="flat">
+    <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <Download data-color="neutral-400" data-size="sm" />
         <div className="c-card-title">{t("profile.export_workouts.header")}</div>

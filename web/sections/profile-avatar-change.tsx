@@ -30,13 +30,13 @@ export function ProfileAvatarChange() {
   });
 
   return (
-    <section className="c-card" data-gap="5" data-variant="flat">
+    <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <CircleUser data-color="neutral-400" data-size="sm" />
         <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 
-      <div data-cross="start" data-gap="5" data-md-stack="y" data-stack="x">
+      <div data-cross="start" data-gap="4" data-md-stack="y" data-stack="x">
         <ProfileAvatarDelete />
 
         <form
