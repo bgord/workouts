@@ -77,7 +77,6 @@ export function Plan() {
           <div
             data-cross="center"
             data-gap="2"
-            data-md-mt="1"
             data-md-pl="4"
             data-md-width="100%"
             data-shrink="0"

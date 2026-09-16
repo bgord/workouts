@@ -65,8 +65,8 @@ export function PlanSectionExerciseInstructionAdd(props: {
         data-bwt="hairline"
         data-cross="center"
         data-gap="3"
-        data-md-ml="0"
-        data-ml="3"
+        data-md-ml="3"
+        data-ml="6"
         data-stack="x"
         data-wrap="nowrap"
       >

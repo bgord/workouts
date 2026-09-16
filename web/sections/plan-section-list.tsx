@@ -12,7 +12,7 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
   const t = bg.useTranslations();
 
   return (
-    <div data-mt="3" data-stack="y">
+    <div data-stack="y">
       <ul data-stack="y">
         {props.sections.map((section, index) => (
           <PlanSectionItem
@@ -70,7 +70,13 @@ function PlanSectionItem(props: {
       data-pt={index === 0 ? undefined : "4"}
       data-stack="y"
     >
-      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+      <div
+        data-cross="center"
+        data-gap="2"
+        data-stack="x"
+        data-wrap="nowrap"
+        {...bg.Rhythm().times(3).style.minHeight}
+      >
         <button
           aria-label={open.on ? t("plan.section.collapse") : t("plan.section.expand")}
           data-color="neutral-400"
