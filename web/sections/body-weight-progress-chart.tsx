@@ -6,16 +6,18 @@ import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
 const HEIGHT = 200;
-const PADDING = { top: 12, right: 12, bottom: 26, left: 66 };
+const PADDING = { top: 12, right: 0, bottom: 26 };
+const LABEL_FONT_SIZE = 11;
+const LABEL_CHAR_WIDTH = LABEL_FONT_SIZE * 0.6;
 
-const PLOT = {
+const plot = (left: number) => ({
   top: PADDING.top,
   right: WIDTH - PADDING.right,
   bottom: HEIGHT - PADDING.bottom,
-  left: PADDING.left,
-  width: WIDTH - PADDING.left - PADDING.right,
+  left,
+  width: WIDTH - left - PADDING.right,
   height: HEIGHT - PADDING.top - PADDING.bottom,
-};
+});
 
 const MINIMAL_POINTS = 2;
 const GRIDLINES_LIMIT = 5;
@@ -41,13 +43,19 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
   const ceiling = Math.ceil(Math.max(...kilograms)) + SCALE_MARGIN;
   const step = Math.ceil((ceiling - floor) / GRIDLINES_LIMIT);
 
-  const toY = (weight: number) => PLOT.bottom - ((weight - floor) / (ceiling - floor)) * PLOT.height;
-
-  const gridlines = Array.from({ length: Math.floor((ceiling - floor) / step) + 1 }, (_, index) => {
+  const labels = Array.from({ length: Math.floor((ceiling - floor) / step) + 1 }, (_, index) => {
     const weight = floor + index * step;
 
-    return { weight, y: toY(weight) };
+    return { weight, text: t("measurements.body_weight.value", { weight }) };
   });
+
+  const PLOT = plot(
+    Math.max(...labels.map((label) => label.text.length)) * LABEL_CHAR_WIDTH + GRIDLINE_LABEL_GAP,
+  );
+
+  const toY = (weight: number) => PLOT.bottom - ((weight - floor) / (ceiling - floor)) * PLOT.height;
+
+  const gridlines = labels.map((label) => ({ ...label, y: toY(label.weight) }));
 
   const points = measurements.map((measurement, index) => ({
     measurement,
@@ -76,16 +84,10 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
           ))}
         </g>
 
-        <g data-color="neutral-500" fill="currentColor" fontSize="11">
+        <g data-color="neutral-500" fill="currentColor" fontSize={LABEL_FONT_SIZE}>
           {gridlines.map((gridline) => (
-            <text
-              dominantBaseline="middle"
-              key={gridline.weight}
-              textAnchor="end"
-              x={PLOT.left - GRIDLINE_LABEL_GAP}
-              y={gridline.y}
-            >
-              {t("measurements.body_weight.value", { weight: gridline.weight })}
+            <text dominantBaseline="middle" key={gridline.weight} x={0} y={gridline.y}>
+              {gridline.text}
             </text>
           ))}
 

@@ -8,16 +8,18 @@ import { WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
 const HEIGHT = 200;
-const PADDING = { top: 12, right: 12, bottom: 26, left: 66 };
+const PADDING = { top: 12, right: 0, bottom: 26 };
+const LABEL_FONT_SIZE = 11;
+const LABEL_CHAR_WIDTH = LABEL_FONT_SIZE * 0.6;
 
-const PLOT = {
+const plot = (left: number) => ({
   top: PADDING.top,
   right: WIDTH - PADDING.right,
   bottom: HEIGHT - PADDING.bottom,
-  left: PADDING.left,
-  width: WIDTH - PADDING.left - PADDING.right,
+  left,
+  width: WIDTH - left - PADDING.right,
   height: HEIGHT - PADDING.top - PADDING.bottom,
-};
+});
 
 const MINIMAL_POINTS = 2;
 const SCALE_MARGIN = 1;
@@ -37,13 +39,19 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
   const ceiling = Math.ceil(Math.max(...kilograms)) + SCALE_MARGIN;
   const step = Math.ceil((ceiling - floor) / GRIDLINES_LIMIT);
 
-  const toY = (estimate: number) => PLOT.bottom - ((estimate - floor) / (ceiling - floor)) * PLOT.height;
-
-  const gridlines = Array.from({ length: Math.floor((ceiling - floor) / step) + 1 }, (_, index) => {
+  const labels = Array.from({ length: Math.floor((ceiling - floor) / step) + 1 }, (_, index) => {
     const estimate = floor + index * step;
 
-    return { estimate, y: toY(estimate) };
+    return { estimate, text: t("statistics.exercise.one_rep_max_estimate.value", { load: estimate }) };
   });
+
+  const PLOT = plot(
+    Math.max(...labels.map((label) => label.text.length)) * LABEL_CHAR_WIDTH + GRIDLINE_LABEL_GAP,
+  );
+
+  const toY = (estimate: number) => PLOT.bottom - ((estimate - floor) / (ceiling - floor)) * PLOT.height;
+
+  const gridlines = labels.map((label) => ({ ...label, y: toY(label.estimate) }));
 
   const points = props.performances.map((performance, index) => ({
     performance,
@@ -84,16 +92,10 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
           ))}
         </g>
 
-        <g data-color="neutral-500" fill="currentColor" fontSize="11">
+        <g data-color="neutral-500" fill="currentColor" fontSize={LABEL_FONT_SIZE}>
           {gridlines.map((gridline) => (
-            <text
-              dominantBaseline="middle"
-              key={gridline.estimate}
-              textAnchor="end"
-              x={PLOT.left - GRIDLINE_LABEL_GAP}
-              y={gridline.y}
-            >
-              {t("statistics.exercise.one_rep_max_estimate.value", { load: gridline.estimate })}
+            <text dominantBaseline="middle" key={gridline.estimate} x={0} y={gridline.y}>
+              {gridline.text}
             </text>
           ))}
 
