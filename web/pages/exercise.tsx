@@ -46,7 +46,7 @@ export function Exercise() {
   return (
     <Main>
       <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
+        <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
             className="c-button"

@@ -50,7 +50,7 @@ export function Workout() {
   return (
     <Main>
       <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="1" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+        <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
             className="c-button"
@@ -85,6 +85,7 @@ export function Workout() {
             data-cross="center"
             data-gap="2"
             data-md-mt={primary ? "1" : undefined}
+            data-md-pl={primary ? "4" : undefined}
             data-md-width={primary ? "100%" : undefined}
             data-shrink="0"
             data-stack="x"
@@ -108,7 +109,7 @@ export function Workout() {
           </div>
         </div>
 
-        <div data-gap="3" data-md-pl="0" data-pl="12" data-stack="y">
+        <div data-gap="3" data-md-pl="4" data-pl="12" data-stack="y">
           {workout.actions.reschedule.available ? (
             <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
           ) : (

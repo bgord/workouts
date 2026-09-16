@@ -40,7 +40,7 @@ export function Plan() {
   return (
     <Main>
       <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="1" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+        <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
             className="c-button"
@@ -78,6 +78,7 @@ export function Plan() {
             data-cross="center"
             data-gap="2"
             data-md-mt="1"
+            data-md-pl="4"
             data-md-width="100%"
             data-shrink="0"
             data-stack="x"
@@ -99,7 +100,7 @@ export function Plan() {
           </div>
         </div>
 
-        <div data-gap="3" data-md-pl="0" data-pl="12" data-stack="y">
+        <div data-gap="3" data-md-pl="4" data-pl="12" data-stack="y">
           <div data-color="neutral-500" data-fs="xs">
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),

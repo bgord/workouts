@@ -3,9 +3,12 @@ import { useRouter } from "@tanstack/react-router";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ActionHint, ButtonCancel } from "../components";
+import { Check, X } from "lucide-react";
+import { ActionHint } from "../components";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
+
+const date = { flexShrink: 0, minWidth: 0, width: "auto" };
 
 export function WorkoutReschedule(props: Workout & { action: ActionState }) {
   const t = bg.useTranslations();
@@ -53,18 +56,20 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
 
   return (
     <form
+      aria-busy={mutation.isLoading}
       data-cross="center"
-      data-gap="2"
-      data-md-wrap="wrap"
+      data-gap="1"
       data-stack="x"
+      data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
       {...reschedule.props.target}
     >
       <input
         aria-label={t("workout.reschedule.label")}
         className="c-input"
-        data-fs="sm"
+        data-variant="transparent"
         disabled={!props.action.enabled}
+        style={date}
         type="date"
         {...scheduledFor.input.props}
         max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
@@ -72,20 +77,41 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
       />
 
       <button
+        aria-label={t("app.save")}
         className="c-button"
-        data-variant="secondary"
+        data-color="positive-400"
+        data-hover-color="positive-200"
+        data-px="0"
+        data-shrink="0"
+        data-variant="ghost"
         disabled={scheduledFor.unchanged || mutation.isLoading}
+        title={t("app.save")}
         type="submit"
+        {...bg.Rhythm().times(3).style.width}
       >
-        {t("app.save")}
+        <Check data-size="sm" />
       </button>
 
-      <ButtonCancel onClick={bg.exec([scheduledFor.clear, mutation.reset, reschedule.disable])} />
+      <button
+        aria-label={t("app.cancel")}
+        className="c-button"
+        data-color="neutral-400"
+        data-hover-color="neutral-0"
+        data-px="0"
+        data-shrink="0"
+        data-variant="ghost"
+        onClick={bg.exec([scheduledFor.clear, mutation.reset, reschedule.disable])}
+        title={t("app.cancel")}
+        type="button"
+        {...bg.Rhythm().times(3).style.width}
+      >
+        <X data-size="sm" />
+      </button>
 
-      <ActionHint action={props.action} />
+      <ActionHint action={props.action} data-ml="2" />
 
       {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
+        <output data-color="danger-400" data-fs="xs" data-width="100%">
           {t("workout.reschedule.error")}
         </output>
       )}
