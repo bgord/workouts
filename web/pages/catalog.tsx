@@ -27,7 +27,7 @@ export function Catalog() {
               <button
                 className="c-button"
                 data-md-grow="1"
-                data-variant="secondary"
+                data-variant="ghost"
                 disabled={!exerciseCategories.actions.add.enabled}
                 onClick={categoryManage.enable}
                 type="button"
