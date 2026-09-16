@@ -7,11 +7,7 @@ import { RirBadge } from "../components/rir-badge";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
-export function WorkoutSetRow(props: {
-  workout: Workout;
-  exercise: WorkoutExercise;
-  loggedSet: LoggedSet;
-}) {
+export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExercise; loggedSet: LoggedSet }) {
   const edit = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (

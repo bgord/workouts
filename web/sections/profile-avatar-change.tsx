@@ -1,15 +1,16 @@
-import { exec, useFile, useMutation, useTranslations } from "@bgord/ui";
+import { exec, Rhythm, useFile, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleUser, ImageUp } from "lucide-react";
-import { ButtonClear } from "../components";
+import { Check, CircleUser, FileImage, ImageUp, X } from "lucide-react";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
+const label = { minWidth: 0 };
 
 export function ProfileAvatarChange() {
   const router = useRouter();
   const t = useTranslations();
   const avatar = useFile("avatar", { mimeTypes, maxSizeBytes: 10_000_000 });
+  const change = useToggle({ name: "profile-avatar-change" });
 
   const mutation = useMutation({
     perform: () => {
@@ -26,6 +27,7 @@ export function ProfileAvatarChange() {
     onSuccess: async () => {
       await router.invalidate({ filter: () => true, sync: true });
       avatar.actions.clearFile();
+      change.disable();
     },
   });
 
@@ -36,72 +38,116 @@ export function ProfileAvatarChange() {
         <div className="c-card-title">{t("profile.avatar.header")}</div>
       </div>
 
-      <div data-cross="start" data-gap="4" data-md-stack="y" data-stack="x">
+      <div
+        data-cross="start"
+        data-gap="3"
+        data-md-self={change.on ? "stretch" : undefined}
+        data-self="start"
+        data-stack="y"
+      >
         <ProfileAvatarDelete />
 
-        <form
-          data-gap="2"
-          data-md-width="100%"
-          data-stack="y"
-          encType="multipart/form-data"
-          onSubmit={mutation.handleSubmit}
-        >
-          <div data-gap="2" data-stack="x">
-            <label
-              className="c-button"
-              data-cross="center"
-              data-disp="flex"
-              data-main="center"
-              data-md-grow="1"
-              data-variant="ghost"
-              tabIndex={0}
-              {...avatar.label.props}
-            >
-              <ImageUp data-size="sm" />
-              <span>{t("profile.avatar.select_file.cta")}</span>
-              <input
-                className="c-visually-hidden"
-                disabled={avatar.isSelected}
-                onChange={avatar.actions.selectFile}
-                required
-                type="file"
-                {...avatar.input.props}
-              />
-            </label>
+        {change.off && (
+          <button
+            className="c-button"
+            data-fs="xs"
+            data-variant="ghost"
+            onClick={change.enable}
+            type="button"
+            {...change.props.controller}
+          >
+            <ImageUp data-size="sm" />
+            {t("profile.avatar.change.cta")}
+          </button>
+        )}
 
-            <button
-              className="c-button"
-              data-md-grow="1"
-              data-variant="secondary"
-              disabled={!avatar.isSelected || mutation.isLoading}
-              type="submit"
-            >
-              {mutation.isLoading ? t("profile.avatar.upload.cta.loading") : t("profile.avatar.upload.cta")}
-            </button>
+        {change.on && (
+          <form
+            data-gap="2"
+            data-md-width="100%"
+            data-stack="y"
+            encType="multipart/form-data"
+            onSubmit={mutation.handleSubmit}
+            {...change.props.target}
+          >
+            <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
+              <label
+                className="c-button"
+                data-cross="center"
+                data-disp="flex"
+                data-gap="2"
+                data-main="center"
+                data-md-grow="1"
+                data-variant="secondary"
+                data-wrap="nowrap"
+                style={label}
+                tabIndex={0}
+                {...avatar.label.props}
+              >
+                {avatar.isSelected ? (
+                  <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />
+                ) : (
+                  <ImageUp data-shrink="0" data-size="sm" />
+                )}
 
-            <ButtonClear
-              data-md-grow="1"
-              disabled={!avatar.isSelected}
-              onClick={exec([avatar.actions.clearFile, mutation.reset])}
-            />
-          </div>
+                <span data-transform="truncate">
+                  {avatar.isSelected ? avatar.data.name : t("profile.avatar.select_file.cta")}
+                </span>
 
-          <div data-color="neutral-500" data-fs="xs">
-            {t("profile.avatar.hint")}
-          </div>
+                <input
+                  className="c-visually-hidden"
+                  disabled={avatar.isSelected}
+                  onChange={avatar.actions.selectFile}
+                  required
+                  type="file"
+                  {...avatar.input.props}
+                />
+              </label>
 
-          {avatar.isSelected && (
-            <output data-animation="grow-fade-in" data-color="neutral-300" data-fs="xs">
-              {t("profile.avatar.selected", { name: avatar.data.name })}
-            </output>
-          )}
+              <button
+                aria-label={t("app.save")}
+                className="c-button"
+                data-color="positive-400"
+                data-hover-color="positive-200"
+                data-px="0"
+                data-shrink="0"
+                data-variant="ghost"
+                disabled={!avatar.isSelected || mutation.isLoading}
+                title={t("app.save")}
+                type="submit"
+                {...Rhythm().times(3).style.width}
+              >
+                <Check data-size="sm" />
+              </button>
 
-          {mutation.isError && (
-            <output data-animation="grow-fade-in" data-color="danger-400" data-fs="xs">
-              {t("profile.avatar.upload.error")}
-            </output>
-          )}
-        </form>
+              <button
+                aria-label={t("app.cancel")}
+                className="c-button"
+                data-color="neutral-400"
+                data-hover-color="neutral-0"
+                data-px="0"
+                data-shrink="0"
+                data-variant="ghost"
+                onClick={exec([avatar.actions.clearFile, mutation.reset, change.disable])}
+                title={t("app.cancel")}
+                type="button"
+                {...Rhythm().times(3).style.width}
+              >
+                <X data-size="sm" />
+              </button>
+            </div>
+
+            <div data-color="neutral-500" data-fs="xs">
+              {t("profile.avatar.hint")}
+            </div>
+
+            {mutation.isError && (
+              <output data-color="danger-400" data-fs="xs">
+                {t("profile.avatar.upload.error")}
+              </output>
+            )}
+          </form>
+        )}
       </div>
     </section>
   );

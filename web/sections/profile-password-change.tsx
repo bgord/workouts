@@ -1,5 +1,5 @@
 import { useMutation, useTranslations } from "@bgord/ui";
-import { CircleAlert, CircleCheck, KeyRound } from "lucide-react";
+import { CircleAlert, CircleCheck, KeyRound, Send } from "lucide-react";
 import { rootRoute } from "../router";
 
 export function ProfilePasswordChange() {
@@ -29,13 +29,21 @@ export function ProfilePasswordChange() {
         {t("auth.change_password.desc")}
       </div>
 
-      <form aria-busy={mutation.isLoading} data-gap="3" data-stack="x" onSubmit={mutation.handleSubmit}>
+      <form
+        aria-busy={mutation.isLoading}
+        data-cross="center"
+        data-gap="3"
+        data-stack="x"
+        data-wrap="wrap"
+        onSubmit={mutation.handleSubmit}
+      >
         <button
           className="c-button"
-          data-variant="secondary"
+          data-variant="ghost"
           disabled={mutation.isLoading || mutation.isDone}
           type="submit"
         >
+          <Send data-size="sm" />
           {mutation.isLoading ? t("auth.change_password.sending") : t("auth.change_password.send_cta")}
         </button>
 

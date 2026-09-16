@@ -18,12 +18,13 @@ export function ProfileWorkoutsExport() {
       <a
         className="c-button"
         data-self="start"
-        data-variant="secondary"
+        data-variant="ghost"
         download
         href="/api/workouts/export"
         rel="noopener"
         target="_blank"
       >
+        <Download data-size="sm" />
         {t("profile.export_workouts.cta")}
       </a>
     </section>
