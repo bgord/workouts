@@ -27,12 +27,14 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
         className="c-button"
         data-color="neutral-400"
         data-hover-color="danger-400"
+        data-px="0"
         data-self="start"
         data-variant="ghost"
         disabled={!props.action.enabled}
         onClick={dialog.enable}
         title={t("exercise.delete.title", { name: props.exercise.name })}
         type="button"
+        {...bg.Rhythm().times(3).style.width}
         {...dialog.props.controller}
       >
         <Trash2 data-size="sm" />

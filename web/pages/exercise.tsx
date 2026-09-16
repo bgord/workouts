@@ -16,6 +16,7 @@ import {
   ExerciseStats,
 } from "../sections";
 
+const title = { flexBasis: 0, minWidth: 0, ...bg.Rhythm().times(3).minHeight };
 const image = { flexBasis: 320, minWidth: 0 };
 
 export function Exercise() {
@@ -44,8 +45,8 @@ export function Exercise() {
 
   return (
     <Main>
-      <div data-gap="0-5" data-stack="y">
-        <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+      <div data-gap="3" data-stack="y">
+        <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
           <Link
             aria-label={t("app.back")}
             className="c-button"
@@ -60,15 +61,7 @@ export function Exercise() {
             <ChevronLeft data-size="md" />
           </Link>
 
-          <div
-            data-cross="center"
-            data-gap="2"
-            data-grow="1"
-            data-stack="x"
-            data-wrap="nowrap"
-            {...bg.Rhythm().times(0).style.minWidth}
-            {...bg.Rhythm().times(3).style.minHeight}
-          >
+          <div data-cross="center" data-gap="2" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
             {exercise.actions.update.enabled ? (
               <ExerciseNameUpdate exercise={exercise.data} />
             ) : (
@@ -86,12 +79,20 @@ export function Exercise() {
           </div>
 
           {exercise.actions.delete.available && (
-            <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
+            <div data-cross="center" data-gap="2" data-shrink="0" data-stack="x" data-wrap="nowrap">
+              <div data-md-disp="none">
+                <ActionHint action={exercise.actions.delete} />
+              </div>
+
+              <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
+            </div>
           )}
         </div>
 
-        {exercise.actions.delete.available && (
-          <ActionHint action={exercise.actions.delete} data-md-ml="0" data-md-mt="3" data-ml="auto" />
+        {exercise.actions.delete.hints.length > 0 && (
+          <div data-disp="none" data-md-disp="block">
+            <ActionHint action={exercise.actions.delete} />
+          </div>
         )}
       </div>
 
