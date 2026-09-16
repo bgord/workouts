@@ -190,7 +190,7 @@ export function ExerciseCatalog() {
         </div>
       )}
 
-      <ul data-gap="3" data-main="between" data-md-main="center" data-stack="x" data-wrap="wrap">
+      <ul data-gap="6" data-md-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">
         {matching.map((exercise) => (
           <ExerciseCard key={exercise.id} {...exercise} />
         ))}

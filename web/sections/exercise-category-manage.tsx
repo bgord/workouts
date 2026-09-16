@@ -55,8 +55,7 @@ function ExerciseCategoryRow(props: ExerciseCategory) {
       data-gap="3"
       data-hover-bg={rename.off ? "alpha-subtle" : undefined}
       data-main="between"
-      data-md-px={rename.off ? "0-5" : "0"}
-      data-px={rename.off ? "2" : "0"}
+      data-px={rename.off ? "3" : "0"}
       data-py="1-5"
       data-stack="x"
       data-wrap="nowrap"

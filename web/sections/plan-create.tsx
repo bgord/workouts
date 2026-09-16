@@ -38,7 +38,7 @@ export function PlanCreate(props: { toggle: bg.UseToggleReturnType }) {
       </DialogHeader>
 
       <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
-        <div data-gap="1" data-stack="y">
+        <div data-gap="1-5" data-stack="y">
           <label className="c-label" {...name.label.props}>
             {t("plan.create.name.label")}
           </label>

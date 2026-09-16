@@ -49,83 +49,85 @@ export function ExerciseAdd(props: { toggle: bg.UseToggleReturnType }) {
         encType="multipart/form-data"
         onSubmit={mutation.handleSubmit}
       >
-        <label
-          data-bc="neutral-700"
-          data-br="md"
-          data-bs={image.isSelected ? "solid" : "dashed"}
-          data-bw="hairline"
-          data-color="neutral-400"
-          data-cross="center"
-          data-cursor="pointer"
-          data-fs="xs"
-          data-gap="1-5"
-          data-hover-bc="brand-500"
-          data-main="center"
-          data-overflow="hidden"
-          data-p={image.isSelected ? "0" : "4"}
-          data-stack="y"
-          data-transform="center"
-          style={dropzone}
-          {...image.label.props}
-        >
-          {image.isSelected ? (
-            <img
-              alt=""
-              data-bg="neutral-0"
-              data-height="100%"
-              data-object-fit="contain"
-              data-width="100%"
-              src={image.preview}
+        <div data-gap="2" data-stack="y">
+          <label
+            data-bc="neutral-700"
+            data-br="md"
+            data-bs={image.isSelected ? "solid" : "dashed"}
+            data-bw="hairline"
+            data-color="neutral-400"
+            data-cross="center"
+            data-cursor="pointer"
+            data-fs="xs"
+            data-gap="1-5"
+            data-hover-bc="brand-500"
+            data-main="center"
+            data-overflow="hidden"
+            data-p={image.isSelected ? "0" : "4"}
+            data-stack="y"
+            data-transform="center"
+            style={dropzone}
+            {...image.label.props}
+          >
+            {image.isSelected ? (
+              <img
+                alt=""
+                data-bg="neutral-0"
+                data-height="100%"
+                data-object-fit="contain"
+                data-width="100%"
+                src={image.preview}
+              />
+            ) : (
+              <>
+                <ImageUp data-color="neutral-500" data-size="md" />
+                <span data-color="neutral-300">{t("exercise.add.image.cta")}</span>
+              </>
+            )}
+
+            <input
+              className="c-visually-hidden"
+              disabled={image.isSelected}
+              onChange={image.actions.selectFile}
+              required
+              type="file"
+              {...image.input.props}
             />
-          ) : (
-            <>
-              <ImageUp data-color="neutral-500" data-size="md" />
-              <span data-color="neutral-300">{t("exercise.add.image.cta")}</span>
-            </>
-          )}
+          </label>
 
-          <input
-            className="c-visually-hidden"
-            disabled={image.isSelected}
-            onChange={image.actions.selectFile}
-            required
-            type="file"
-            {...image.input.props}
-          />
-        </label>
+          <output
+            data-color="neutral-500"
+            data-cross="center"
+            data-fs="xs"
+            data-gap="2"
+            data-stack="x"
+            data-wrap="nowrap"
+          >
+            {image.isSelected ? (
+              <>
+                <span data-transform="truncate">
+                  {t("exercise.add.image.selected", { name: image.data.name })}
+                </span>
 
-        <output
-          data-color="neutral-500"
-          data-cross="center"
-          data-fs="xs"
-          data-gap="2"
-          data-stack="x"
-          data-wrap="nowrap"
-        >
-          {image.isSelected ? (
-            <>
-              <span data-transform="truncate">
-                {t("exercise.add.image.selected", { name: image.data.name })}
-              </span>
+                <button
+                  className="c-link"
+                  data-color="neutral-400"
+                  data-fs="xs"
+                  data-shrink="0"
+                  onClick={image.actions.clearFile}
+                  type="button"
+                >
+                  {t("exercise.add.image.replace")}
+                </button>
+              </>
+            ) : (
+              t("exercise.add.image.hint")
+            )}
+          </output>
+        </div>
 
-              <button
-                className="c-link"
-                data-color="neutral-400"
-                data-fs="xs"
-                data-shrink="0"
-                onClick={image.actions.clearFile}
-                type="button"
-              >
-                {t("exercise.add.image.replace")}
-              </button>
-            </>
-          ) : (
-            t("exercise.add.image.hint")
-          )}
-        </output>
-
-        <div data-gap="1" data-stack="y">
-          <label className="c-label" data-variant="inline" {...name.label.props}>
+        <div data-gap="1-5" data-stack="y">
+          <label className="c-label" {...name.label.props}>
             {t("exercise.add.name.label")}
           </label>
 
@@ -139,8 +141,8 @@ export function ExerciseAdd(props: { toggle: bg.UseToggleReturnType }) {
           />
         </div>
 
-        <div data-gap="1" data-stack="y">
-          <label className="c-label" data-variant="inline" {...description.label.props}>
+        <div data-gap="1-5" data-stack="y">
+          <label className="c-label" {...description.label.props}>
             {t("exercise.add.description.label")}
           </label>
 
