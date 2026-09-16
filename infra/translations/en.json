@@ -194,6 +194,7 @@
   "plan.finalize.blocked.no_sections": "Add a section first",
   "plan.finalize.cta": "Finalize",
   "plan.finalize.error": "Could not finalize the plan",
+  "plan.list.active.header": "Active",
   "plan.list.archived.header": "Archived",
   "plan.list.empty": "No plans created yet",
   "plan.list.empty.active": "No active plan",

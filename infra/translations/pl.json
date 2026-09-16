@@ -194,6 +194,7 @@
   "plan.finalize.blocked.no_sections": "Najpierw dodaj sekcję",
   "plan.finalize.cta": "Zatwierdź",
   "plan.finalize.error": "Nie udało się zatwierdzić planu",
+  "plan.list.active.header": "Aktywny",
   "plan.list.archived.header": "Zarchiwizowane",
   "plan.list.empty.hint": "Utwórz plan, aby zaplanować treningi",
   "plan.list.empty": "Nie utworzono jeszcze żadnego planu",

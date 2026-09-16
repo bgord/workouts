@@ -36,34 +36,40 @@ export function Plans() {
 
       {plans.actions.create.enabled && <PlanCreate toggle={planCreate} />}
 
-      {empty && (
-        <div
-          className="c-card"
-          data-cross="center"
-          data-gap="1"
-          data-py="8"
-          data-stack="y"
-          data-variant="flat"
-        >
-          <ClipboardList data-color="neutral-600" data-size="md" />
-
-          <div data-color="neutral-300" data-fs="sm" data-mt="2">
-            {t(fresh ? "plan.list.empty" : "plan.list.empty.active")}
-          </div>
-
-          <div data-color="neutral-500" data-fs="xs">
-            {t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}
-          </div>
+      <div data-gap="2" data-stack="y">
+        <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
+          {t("plan.list.active.header")}
         </div>
-      )}
 
-      {plans.data.active.length > 0 && (
-        <ul data-gap="2" data-stack="y">
-          {plans.data.active.map((plan) => (
-            <PlanCard key={plan.id} {...plan} />
-          ))}
-        </ul>
-      )}
+        {empty && (
+          <div
+            className="c-card"
+            data-cross="center"
+            data-gap="1"
+            data-py="8"
+            data-stack="y"
+            data-variant="flat"
+          >
+            <ClipboardList data-color="neutral-600" data-size="md" />
+
+            <div data-color="neutral-300" data-fs="sm" data-mt="2">
+              {t(fresh ? "plan.list.empty" : "plan.list.empty.active")}
+            </div>
+
+            <div data-color="neutral-500" data-fs="xs">
+              {t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}
+            </div>
+          </div>
+        )}
+
+        {plans.data.active.length > 0 && (
+          <ul data-gap="2" data-stack="y">
+            {plans.data.active.map((plan) => (
+              <PlanCard key={plan.id} {...plan} />
+            ))}
+          </ul>
+        )}
+      </div>
 
       {plans.data.archived.length > 0 && (
         <div data-gap="2" data-stack="y">
