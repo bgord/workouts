@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { CircleAlert, Info } from "lucide-react";
+import { CircleAlert, RotateCcw } from "lucide-react";
 import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
 
@@ -33,20 +33,29 @@ export function DialogHeader(props: { disabled?: boolean; onClose: () => void; c
   );
 }
 
-export function DialogInfo(props: { variant: "danger" | "neutral"; children: React.ReactNode }) {
+export function DialogInfo(props: { children: React.ReactNode }) {
+  return (
+    <p data-color="neutral-300" data-fs="sm" data-lh="loose">
+      {props.children}
+    </p>
+  );
+}
+
+export function DialogStatus(props: { variant: "irreversible" | "restorable" }) {
+  const t = bg.useTranslations();
+
   return (
     <div
-      data-color={props.variant === "danger" ? "danger-400" : "neutral-300"}
+      data-color={props.variant === "irreversible" ? "danger-400" : "positive-400"}
       data-cross="center"
       data-fs="sm"
-      data-gap="3"
-      data-lh="loose"
+      data-gap="2"
       data-stack="x"
       data-wrap="nowrap"
     >
-      {props.variant === "danger" && <CircleAlert data-shrink="0" data-size="md" />}
-      {props.variant === "neutral" && <Info data-shrink="0" data-size="md" />}
-      <span>{props.children}</span>
+      {props.variant === "irreversible" && <CircleAlert data-shrink="0" data-size="sm" />}
+      {props.variant === "restorable" && <RotateCcw data-shrink="0" data-size="sm" />}
+      {t(`app.dialog.${props.variant}`)}
     </div>
   );
 }

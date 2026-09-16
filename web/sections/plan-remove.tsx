@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRemove(props: Plan) {
@@ -46,7 +46,10 @@ export function PlanRemove(props: Plan) {
           {t("plan.remove.header")}
         </DialogHeader>
 
-        <DialogInfo variant="danger">{t("plan.remove.info", { name: props.name })}</DialogInfo>
+        <div data-gap="3" data-stack="y">
+          <DialogInfo>{t("plan.remove.info", { name: props.name })}</DialogInfo>
+          <DialogStatus variant="irreversible" />
+        </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("plan.remove.error")}</DialogError>}
