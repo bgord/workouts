@@ -1,6 +1,6 @@
 import { Autocomplete, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { CircleAlert, UserX } from "lucide-react";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, SectionHeading } from "../components";
 
 export function ProfileAccountDelete() {
   const t = useTranslations();
@@ -19,11 +19,11 @@ export function ProfileAccountDelete() {
   });
 
   return (
-    <section className="c-card" data-bc="danger-600" data-gap="4" data-p="4" data-variant="flat">
+    <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-gap="2" data-main="between" data-md-stack="y" data-stack="x">
         <div data-cross="center" data-gap="3" data-stack="x">
           <UserX data-color="danger-400" data-size="sm" />
-          <div className="c-card-title">{t("profile.delete_account.header")}</div>
+          <SectionHeading>{t("profile.delete_account.header")}</SectionHeading>
         </div>
 
         <div data-color="danger-400" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">

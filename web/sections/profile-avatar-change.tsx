@@ -1,6 +1,7 @@
 import { exec, Rhythm, useFile, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, CircleUser, FileImage, ImageUp, X } from "lucide-react";
+import { SectionHeading } from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -35,7 +36,7 @@ export function ProfileAvatarChange() {
     <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <CircleUser data-color="neutral-400" data-size="sm" />
-        <div className="c-card-title">{t("profile.avatar.header")}</div>
+        <SectionHeading>{t("profile.avatar.header")}</SectionHeading>
       </div>
 
       <div

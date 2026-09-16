@@ -1,5 +1,6 @@
 import { useTranslations } from "@bgord/ui";
 import { Download } from "lucide-react";
+import { SectionHeading } from "../components";
 
 export function ProfileWorkoutsExport() {
   const t = useTranslations();
@@ -8,7 +9,7 @@ export function ProfileWorkoutsExport() {
     <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <Download data-color="neutral-400" data-size="sm" />
-        <div className="c-card-title">{t("profile.export_workouts.header")}</div>
+        <SectionHeading>{t("profile.export_workouts.header")}</SectionHeading>
       </div>
 
       <div data-color="neutral-500" data-fs="sm">

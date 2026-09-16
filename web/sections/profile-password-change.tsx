@@ -1,5 +1,6 @@
 import { useMutation, useTranslations } from "@bgord/ui";
 import { CircleAlert, CircleCheck, KeyRound, Send } from "lucide-react";
+import { SectionHeading } from "../components";
 import { rootRoute } from "../router";
 
 export function ProfilePasswordChange() {
@@ -22,7 +23,7 @@ export function ProfilePasswordChange() {
     <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <KeyRound data-color="neutral-400" data-size="sm" />
-        <div className="c-card-title">{t("auth.change_password.header")}</div>
+        <SectionHeading>{t("auth.change_password.header")}</SectionHeading>
       </div>
 
       <div data-color="neutral-500" data-fs="sm">

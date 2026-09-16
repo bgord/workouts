@@ -1,6 +1,6 @@
 import { useTranslations } from "@bgord/ui";
 import { Languages } from "lucide-react";
-import { LanguageSelector } from "../components";
+import { LanguageSelector, SectionHeading } from "../components";
 
 export function ProfileLanguageSelector() {
   const t = useTranslations();
@@ -9,7 +9,7 @@ export function ProfileLanguageSelector() {
     <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <Languages data-color="neutral-400" data-size="sm" />
-        <div className="c-card-title">{t("profile.change_language.header")}</div>
+        <SectionHeading>{t("profile.change_language.header")}</SectionHeading>
       </div>
 
       <LanguageSelector />
