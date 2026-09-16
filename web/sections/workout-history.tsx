@@ -76,6 +76,7 @@ export function WorkoutHistory() {
               to: "/workouts",
             });
           }}
+          style={{ background: "transparent" }}
           value={filter.value}
         >
           {Object.values(WorkoutListFilterOptions).map((option) => (
