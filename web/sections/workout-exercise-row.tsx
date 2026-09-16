@@ -152,7 +152,7 @@ export function WorkoutExerciseRow(props: {
                 type="button"
                 {...target.props.controller}
               >
-                <Target data-color="brand-400" data-size="xs" />
+                <Target data-color="neutral-500" data-size="xs" />
 
                 {props.exercise.target ? (
                   <>
@@ -180,7 +180,7 @@ export function WorkoutExerciseRow(props: {
                   data-transform="font-variant-numeric"
                   data-wrap="nowrap"
                 >
-                  <Target data-color="brand-400" data-size="xs" />
+                  <Target data-color="neutral-500" data-size="xs" />
                   <SetsRepsLoad
                     load={props.exercise.target.load}
                     reps={props.exercise.target.reps}
