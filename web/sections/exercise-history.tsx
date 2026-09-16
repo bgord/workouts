@@ -45,8 +45,8 @@ function ExerciseHistoryRow(props: {
       data-bst={props.index === 0 ? undefined : "solid"}
       data-bwt={props.index === 0 ? undefined : "hairline"}
       data-gap="2"
-      data-pb={props.last ? undefined : "4"}
-      data-pt={props.index === 0 ? undefined : "4"}
+      data-pb={props.last ? undefined : "3"}
+      data-pt={props.index === 0 ? undefined : "3"}
       data-stack="y"
     >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">

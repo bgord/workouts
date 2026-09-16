@@ -49,85 +49,41 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
         {month.value && <ButtonClear onClick={month.clear} />}
       </div>
 
-      <table data-mt="2">
-        <thead>
-          <tr data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-            <th
-              data-color="neutral-600"
-              data-fs="xs"
-              data-fw="regular"
-              data-md-pr="1"
-              data-pl="0"
-              data-pr="1-5"
-              data-py="1"
-            >
-              {t("measurements.body_weight.history.date")}
-            </th>
-            <th
-              data-color="neutral-600"
-              data-fs="xs"
-              data-fw="regular"
-              data-md-px="1"
-              data-px="1-5"
-              data-py="1"
-            >
-              <div data-main="end" data-stack="x">
-                {t("measurements.body_weight.history.weight")}
-              </div>
-            </th>
-            <th
-              data-color="neutral-600"
-              data-fs="xs"
-              data-fw="regular"
-              data-md-px="1"
-              data-px="1-5"
-              data-py="1"
-            >
-              <div data-main="end" data-stack="x">
-                {t("measurements.body_weight.history.delta")}
-              </div>
-            </th>
-            <th data-md-pl="1" data-pl="1-5" data-pr="0" data-py="1" />
-          </tr>
-        </thead>
-
-        <tbody>
-          {visible.map((measurement) => (
-            <BodyWeightMeasurementRow
-              goal={reference?.goal}
-              key={measurement.id}
-              measurement={measurement}
-              previous={previous(measurement)}
-            />
-          ))}
-        </tbody>
-      </table>
+      <ul data-stack="y">
+        {visible.map((measurement, index) => (
+          <BodyWeightMeasurementRow
+            first={index === 0}
+            goal={reference?.goal}
+            key={measurement.id}
+            measurement={measurement}
+            previous={previous(measurement)}
+          />
+        ))}
+      </ul>
 
       {(hidden > 0 || all.on) && (
-        <div data-mt="2">
-          <button
-            className="c-link"
-            data-color="neutral-400"
-            data-cross="center"
-            data-fs="xs"
-            data-gap="1"
-            data-stack="x"
-            onClick={all.toggle}
-            type="button"
-          >
-            {all.on ? (
-              <>
-                {t("measurements.body_weight.history.less")}
-                <ChevronUp data-size="xs" />
-              </>
-            ) : (
-              <>
-                {t("measurements.body_weight.history.more", { count: hidden })}
-                <ChevronDown data-size="xs" />
-              </>
-            )}
-          </button>
-        </div>
+        <button
+          className="c-link"
+          data-color="neutral-400"
+          data-cross="center"
+          data-fs="xs"
+          data-gap="1"
+          data-stack="x"
+          onClick={all.toggle}
+          type="button"
+        >
+          {all.on ? (
+            <>
+              {t("measurements.body_weight.history.less")}
+              <ChevronUp data-size="xs" />
+            </>
+          ) : (
+            <>
+              {t("measurements.body_weight.history.more", { count: hidden })}
+              <ChevronDown data-size="xs" />
+            </>
+          )}
+        </button>
       )}
     </div>
   );

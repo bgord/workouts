@@ -27,13 +27,14 @@ export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeas
     >
       <button
         className="c-button"
-        data-color="neutral-400"
+        data-color="neutral-500"
         data-hover-color="danger-400"
-        data-md-px="1"
+        data-px="0"
         data-variant="ghost"
         disabled={mutation.isLoading}
         title={t("measurements.body_weight.remove.title")}
         type="submit"
+        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
       </button>
