@@ -80,7 +80,6 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
           <Select
             aria-label={t("exercise.category.assign.label")}
             disabled={!props.exercise.actions.categoryAssign.enabled}
-            style={{ background: "transparent" }}
             {...exerciseCategoryId.input.props}
           >
             {assignable.map((category) => (
