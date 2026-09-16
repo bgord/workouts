@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Download } from "lucide-react";
-import { ButtonClear } from "../components";
+import { Download, FileSpreadsheet, FileUp, Upload, X } from "lucide-react";
+import { Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
 import { measurementsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
@@ -32,84 +32,125 @@ export function BodyWeightMeasurementImport(props: { toggle: bg.UseToggleReturnT
     },
   });
 
+  const close = bg.exec([file.actions.clearFile, mutation.reset, props.toggle.disable]);
+
   return (
-    <form
-      className="c-card"
-      data-gap="4"
-      data-md-p="2-5"
-      data-stack="y"
-      encType="multipart/form-data"
-      onSubmit={mutation.handleSubmit}
-      {...props.toggle.props.target}
-    >
-      <div data-cross="center" data-gap="3" data-md-stack="y" data-stack="x">
-        <label
-          className="c-button"
-          data-cross="center"
-          data-disp="flex"
-          data-main="center"
-          data-md-width="100%"
-          data-variant="secondary"
-          {...file.label.props}
-        >
-          <span>{t("measurements.body_weight.import.select.cta")}</span>
-          <input
-            className="c-visually-hidden"
-            disabled={file.isSelected}
-            onChange={file.actions.selectFile}
-            required
-            type="file"
-            {...file.input.props}
-          />
-        </label>
+    <Dialog {...props.toggle}>
+      <DialogHeader disabled={mutation.isLoading} onClose={close}>
+        {t("measurements.body_weight.import.header")}
+      </DialogHeader>
 
-        {file.isSelected && (
-          <output data-color="neutral-300" data-fs="xs" data-md-width="100%">
-            {t("measurements.body_weight.import.selected", { name: file.data.name })}
-          </output>
-        )}
+      <form
+        aria-busy={mutation.isLoading}
+        data-gap="6"
+        data-stack="y"
+        encType="multipart/form-data"
+        onSubmit={mutation.handleSubmit}
+      >
+        <div data-gap="3" data-stack="y">
+          {file.isSelected ? (
+            <div
+              data-bc="neutral-700"
+              data-br="sm"
+              data-bs="solid"
+              data-bw="hairline"
+              data-color="neutral-100"
+              data-cross="center"
+              data-fs="sm"
+              data-gap="1-5"
+              data-px="3"
+              data-py="5"
+              data-stack="y"
+            >
+              <FileSpreadsheet data-color="neutral-400" data-size="md" />
 
-        <div data-cross="center" data-gap="1" data-md-width="100%" data-ml="auto" data-stack="x">
+              <span data-maxw="100%" data-transform="truncate">
+                {file.data.name}
+              </span>
+
+              <button
+                data-color="neutral-400"
+                data-cross="center"
+                data-cursor="pointer"
+                data-fs="xs"
+                data-gap="1"
+                data-hover-color="neutral-0"
+                data-stack="x"
+                onClick={bg.exec([file.actions.clearFile, mutation.reset])}
+                type="button"
+              >
+                <X data-size="xs" />
+                {t("app.clear")}
+              </button>
+            </div>
+          ) : (
+            <label
+              data-bc="neutral-700"
+              data-br="sm"
+              data-bs="dashed"
+              data-bw="hairline"
+              data-color="neutral-300"
+              data-cross="center"
+              data-cursor="pointer"
+              data-fs="sm"
+              data-gap="1-5"
+              data-hover-bc="neutral-500"
+              data-px="3"
+              data-py="5"
+              data-stack="y"
+              tabIndex={0}
+              {...file.label.props}
+            >
+              <FileUp data-color="neutral-400" data-size="md" />
+
+              {t("measurements.body_weight.import.select.cta")}
+
+              <span data-color="neutral-500" data-fs="xs">
+                {t("measurements.body_weight.import.hint")}
+              </span>
+
+              <input
+                className="c-visually-hidden"
+                onChange={file.actions.selectFile}
+                required
+                type="file"
+                {...file.input.props}
+              />
+            </label>
+          )}
+
+          <a
+            className="c-link"
+            data-color="neutral-400"
+            data-cross="center"
+            data-fs="xs"
+            data-gap="1-5"
+            data-self="start"
+            data-stack="x"
+            download
+            href="/public/body-weight-measurements-template.csv"
+            rel="noopener"
+            target="_blank"
+          >
+            <Download data-size="xs" />
+            {t("measurements.body_weight.import.template.cta")}
+          </a>
+        </div>
+
+        {mutation.isError && <DialogError>{t("measurements.body_weight.import.error")}</DialogError>}
+
+        <DialogFooter disabled={mutation.isLoading} onCancel={close}>
           <button
             className="c-button"
-            data-md-grow="1"
-            data-variant="secondary"
+            data-variant="primary"
             disabled={!file.isSelected || mutation.isLoading}
             type="submit"
           >
+            <Upload data-size="sm" />
             {t("measurements.body_weight.import.cta")}
           </button>
-
-          <ButtonClear
-            data-md-grow="1"
-            disabled={!file.isSelected}
-            onClick={bg.exec([file.actions.clearFile, mutation.reset])}
-          />
-        </div>
-      </div>
-
-      <a
-        className="c-link"
-        data-color="neutral-300"
-        data-fs="xs"
-        data-gap="2"
-        data-ml="1"
-        data-self="start"
-        data-stack="x"
-        download
-        href="/public/body-weight-measurements-template.csv"
-        rel="noopener"
-        target="_blank"
-      >
-        <Download data-size="sm" />
-        {t("measurements.body_weight.import.template.cta")}
-      </a>
-
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("measurements.body_weight.import.error")}
-        </output>
-      )}
-    </form>
+        </DialogFooter>
+      </form>
+    </Dialog>
   );
 }

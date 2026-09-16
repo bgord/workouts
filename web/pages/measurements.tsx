@@ -25,7 +25,7 @@ export function Measurements() {
           className="c-button"
           data-px="0"
           data-variant="ghost"
-          onClick={bodyWeightImport.toggle}
+          onClick={bodyWeightImport.enable}
           type="button"
           {...bg.Rhythm().times(3).style.width}
           {...bodyWeightImport.props.controller}
@@ -49,7 +49,7 @@ export function Measurements() {
         )}
       </div>
 
-      {bodyWeightImport.on && <BodyWeightMeasurementImport toggle={bodyWeightImport} />}
+      <BodyWeightMeasurementImport toggle={bodyWeightImport} />
 
       <BodyWeightMeasure />
 
