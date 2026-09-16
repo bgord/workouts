@@ -55,6 +55,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
           aria-label={t("exercise.update.name.label")}
           className="c-input"
           data-md-width="100%"
+          data-variant="transparent"
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />

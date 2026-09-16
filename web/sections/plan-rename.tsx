@@ -65,6 +65,7 @@ export function PlanRename(props: Plan) {
           aria-label={t("plan.rename.label")}
           className="c-input"
           data-grow="1"
+          data-variant="transparent"
           {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.name.pattern)}
           {...planName.input.props}

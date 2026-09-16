@@ -120,7 +120,7 @@
   "exercise.sets_reps": "{{sets}}×{{reps}}",
   "exercise.reps_load": "{{reps}}×{{load}} kg",
   "exercise.sets_reps_load": "{{sets}}×{{reps}} {{load}} kg",
-  "exercise.delete.blocked.in_use": "Remove the exercise from every plan first",
+  "exercise.delete.blocked.in_use": "Remove the exercise from plans",
   "exercise.delete.cta": "Delete",
   "exercise.delete.error": "Could not delete the exercise",
   "exercise.delete.header": "Delete exercise",

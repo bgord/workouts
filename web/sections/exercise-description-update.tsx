@@ -53,6 +53,7 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
       <textarea
         aria-label={t("exercise.update.description.label")}
         className="c-textarea"
+        data-variant="transparent"
         rows={3}
         {...bg.Form.textarea(Form.description.pattern)}
         {...description.input.props}
