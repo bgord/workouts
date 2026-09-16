@@ -48,7 +48,7 @@ export function TileValue(props: React.JSX.IntrinsicElements["div"]) {
       data-color="neutral-0"
       data-cross="center"
       data-fs="xl"
-      data-fw="bold"
+      data-fw="semibold"
       data-gap="2"
       data-lh="tight"
       data-stack="x"

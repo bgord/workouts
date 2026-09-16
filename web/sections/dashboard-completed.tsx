@@ -35,7 +35,7 @@ export function DashboardCompleted() {
             <div
               data-color="neutral-0"
               data-fs="2xl"
-              data-fw="bold"
+              data-fw="semibold"
               data-lh="none"
               data-ls="tight"
               data-md-fs="xl"
