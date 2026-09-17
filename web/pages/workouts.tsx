@@ -14,6 +14,8 @@ export function Workouts() {
         <Sections.WorkoutCreate />
       </div>
 
+      <Sections.WorkoutsEmpty />
+
       <Sections.WorkoutHistory />
     </ui.Main>
   );

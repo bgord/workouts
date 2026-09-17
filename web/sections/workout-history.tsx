@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { CalendarOff, SearchX, X } from "lucide-react";
+import { SearchX, X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
 import * as ui from "../components";
@@ -29,19 +29,7 @@ export function WorkoutHistory() {
     },
   });
 
-  if (workouts.data.length === 0) {
-    return (
-      <ui.EmptyState>
-        <ui.EmptyStateIcon icon={CalendarOff} />
-
-        <ui.EmptyStateMessage>{t("workout.list.empty")}</ui.EmptyStateMessage>
-
-        <ui.Meta>{t("workout.list.empty.hint")}</ui.Meta>
-
-        <ui.EmptyStateLink to="/plans">{t("workout.list.empty.cta")}</ui.EmptyStateLink>
-      </ui.EmptyState>
-    );
-  }
+  if (workouts.data.length === 0) return null;
 
   return (
     <div data-stack="y" {...ui.Gap.block}>
