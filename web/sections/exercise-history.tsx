@@ -1,9 +1,9 @@
 import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronRight, EqualApproximately, Sigma, Trophy } from "lucide-react";
+import { EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
-import { HairlineRow, Meta } from "../components";
+import { ChevronToggle, HairlineRow, Meta } from "../components";
 import { DeltaKg } from "../components/delta-kg";
 import { RepsLoad } from "../components/reps-load";
 import { RirBadge } from "../components/rir-badge";
@@ -49,22 +49,7 @@ function ExerciseHistoryRow(props: {
       first={props.index === 0}
     >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
-        <button
-          aria-label={open.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")}
-          data-color="neutral-400"
-          data-cursor="pointer"
-          data-hover-color="neutral-0"
-          data-md-p="1"
-          data-p="2-5"
-          data-shrink="0"
-          data-stack="x"
-          onClick={open.toggle}
-          title={open.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")}
-          type="button"
-          {...open.props.controller}
-        >
-          {open.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
-        </button>
+        <ChevronToggle {...open} />
 
         <Link
           data-color="neutral-100"

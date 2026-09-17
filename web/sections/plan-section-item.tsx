@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronRight } from "lucide-react";
 import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
-import { HairlineRow, Meta } from "../components";
+import { ChevronToggle, HairlineRow, Meta } from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -37,22 +36,7 @@ export function PlanSectionItem(props: {
         data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
       >
-        <button
-          aria-label={planSectionVisibility.on ? t("plan.section.collapse") : t("plan.section.expand")}
-          data-color="neutral-400"
-          data-cursor="pointer"
-          data-hover-color="neutral-0"
-          data-md-p="1"
-          data-p="2-5"
-          data-shrink="0"
-          data-stack="x"
-          onClick={planSectionVisibility.toggle}
-          title={planSectionVisibility.on ? t("plan.section.collapse") : t("plan.section.expand")}
-          type="button"
-          {...planSectionVisibility.props.controller}
-        >
-          {planSectionVisibility.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
-        </button>
+        <ChevronToggle {...planSectionVisibility} />
         <div data-grow="1" data-transform="truncate">
           {actions.sectionRename.available && (
             <PlanSectionRename plan={plan} section={section} {...planSectionRename} />

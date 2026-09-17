@@ -84,7 +84,7 @@ export function Plan() {
         </div>
 
         <div data-gap="3" data-md-pl="4" data-pl="12" data-stack="y">
-          <Meta>
+          <Meta truncate>
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
             })}

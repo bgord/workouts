@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronRight, Pencil, Target } from "lucide-react";
+import { Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { Chip, HairlineRow, Meta } from "../components";
+import { ChevronToggle, Chip, HairlineRow, Meta } from "../components";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 import { SetDots } from "../components/set-dots";
 import { SetsReps } from "../components/sets-reps";
@@ -65,26 +65,7 @@ export function WorkoutExerciseRow(props: {
     >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
         {expandable ? (
-          <button
-            aria-label={
-              workoutExerciseVisibility.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")
-            }
-            data-color="neutral-400"
-            data-cursor="pointer"
-            data-hover-color="neutral-0"
-            data-md-p="1"
-            data-p="2-5"
-            data-shrink="0"
-            data-stack="x"
-            onClick={workoutExerciseVisibility.toggle}
-            title={
-              workoutExerciseVisibility.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")
-            }
-            type="button"
-            {...workoutExerciseVisibility.props.controller}
-          >
-            {workoutExerciseVisibility.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
-          </button>
+          <ChevronToggle {...workoutExerciseVisibility} />
         ) : (
           <div
             aria-hidden
