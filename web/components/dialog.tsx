@@ -7,6 +7,10 @@ import { Spacing } from "./spacing";
 export function Dialog(props: bg.DialogPropsType) {
   return (
     <bg.Dialog
+      data-gap="8"
+      data-md-mt="4"
+      data-md-p="3"
+      data-mt="12"
       data-overflow="auto"
       data-wrap="nowrap"
       style={{
@@ -14,7 +18,6 @@ export function Dialog(props: bg.DialogPropsType) {
         maxHeight: "calc(100% - 4rem)",
         maxWidth: "calc(100% - 2rem)",
       }}
-      {...Spacing.dialog}
       {...props}
     />
   );

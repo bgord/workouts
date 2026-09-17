@@ -17,10 +17,11 @@ const card = {
   "data-gap": "1",
   "data-md-cross": "baseline",
   "data-md-main": "between",
+  "data-md-py": "3",
   "data-md-stack": "x",
   "data-md-wrap": "wrap",
+  "data-p": "4",
   "data-stack": "y",
-  ...Spacing.tile,
 } as const;
 
 export function Tile(props: React.JSX.IntrinsicElements["li"]) {

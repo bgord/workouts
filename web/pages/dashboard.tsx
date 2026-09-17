@@ -48,7 +48,7 @@ export function Dashboard() {
         </ui.EmptyState>
       )}
 
-      <div data-md-stack="y" data-stack="x" {...ui.Spacing.columns}>
+      <div data-gap="3" data-md-gap="6" data-md-stack="y" data-stack="x">
         {upcoming && (
           <div data-grow="1" data-stack="y" style={tile} {...ui.Spacing.cluster}>
             <ui.Eyebrow>

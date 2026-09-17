@@ -86,12 +86,12 @@ function NavigationMobileDrawer() {
       data-left="0"
       data-main="between"
       data-position="fixed"
+      data-py="4"
       data-right="0"
       data-stack="x"
       data-wrap="nowrap"
       data-z="3"
       {...ui.Spacing.gutter}
-      {...ui.Spacing.navigation}
     >
       <ui.Logo />
 

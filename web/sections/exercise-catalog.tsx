@@ -150,7 +150,7 @@ export function ExerciseCatalog() {
         </ui.EmptyState>
       )}
 
-      <ul data-md-main="center" data-stack="x" data-wrap="wrap" {...ui.Spacing.grid}>
+      <ul data-gap="6" data-md-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">
         {matching.map((exercise) => (
           <ui.ExerciseCard key={exercise.id} {...exercise} />
         ))}
