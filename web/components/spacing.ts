@@ -10,7 +10,7 @@ export const Spacing = {
     "data-pt": "6",
     "data-px": "3",
   },
-  navigation: { "data-px": "2", "data-py": "4" },
+  navigation: { "data-px": "2", "data-py": "4", "data-md-px": "4" },
   columns: { "data-gap": "3", "data-md-gap": "6" },
   labelled: { "data-gap": "2" },
   cards: { "data-gap": "2" },

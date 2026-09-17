@@ -1,19 +1,5 @@
+import { Spacing } from "./spacing";
+
 export function Main(props: React.JSX.IntrinsicElements["main"]) {
-  return (
-    <main
-      data-gap="6"
-      data-maxw="md"
-      data-md-m="2"
-      data-md-mb="8"
-      data-md-mt="0"
-      data-md-pt="2"
-      data-md-px="0"
-      data-mx="auto"
-      data-pb="16"
-      data-pt="6"
-      data-px="3"
-      data-stack="y"
-      {...props}
-    />
-  );
+  return <main data-maxw="md" data-mx="auto" data-stack="y" {...Spacing.page} {...props} />;
 }

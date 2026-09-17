@@ -85,12 +85,12 @@ function NavigationMobileDrawer() {
       data-bwt="hairline"
       data-left="0"
       data-main="between"
-      data-p="4"
       data-position="fixed"
       data-right="0"
       data-stack="x"
       data-wrap="nowrap"
       data-z="3"
+      {...ui.Spacing.navigation}
     >
       <ui.Logo />
 

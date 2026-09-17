@@ -1,5 +1,6 @@
 import { createLink } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
+import { Spacing } from "./spacing";
 
 type RowVariant = "default" | "muted";
 
@@ -16,9 +17,9 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
         data-gap="3"
         data-hover-bc="brand-500"
         data-opacity={opacity[variant]}
-        data-p="4"
         data-stack="x"
         data-wrap="nowrap"
+        {...Spacing.surface}
         {...rest}
       />
     </li>
