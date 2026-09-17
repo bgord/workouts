@@ -33,6 +33,7 @@ export * from "./row";
 export * from "./row-index";
 export * from "./section-heading";
 export * from "./select";
+export * from "./separator";
 export * from "./set-dots";
 export * from "./sets-reps";
 export * from "./sets-reps-load";

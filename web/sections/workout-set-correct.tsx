@@ -5,7 +5,7 @@ import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, IconButton, Output, RirSubmit, Stepper } from "../components";
+import { ActionHint, IconButton, Output, RirSubmit, Separator, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -94,9 +94,7 @@ export function WorkoutSetCorrect(
         width={40}
       />
 
-      <span data-color="neutral-500" data-fs="sm" data-md-disp="none">
-        ×
-      </span>
+      <Separator data-md-disp="none">×</Separator>
 
       <Stepper
         disabled={mutation.isLoading}

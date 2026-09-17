@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, Output, RirSubmit, Stepper } from "../components";
+import { ActionHint, Output, RirSubmit, Separator, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -85,9 +85,7 @@ export function WorkoutSetLog(props: {
           width={40}
         />
 
-        <span data-color="neutral-500" data-fs="sm">
-          ×
-        </span>
+        <Separator>×</Separator>
 
         <Stepper
           disabled={busy}

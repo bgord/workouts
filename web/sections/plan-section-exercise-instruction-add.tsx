@@ -14,6 +14,7 @@ import {
   ExercisePicker,
   HairlineBlock,
   RowIndex,
+  Separator,
   Stepper,
 } from "../components";
 import { planRoute } from "../router";
@@ -204,9 +205,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
               variant="fill"
             />
 
-            <span data-color="neutral-500" data-fs="sm">
-              ×
-            </span>
+            <Separator>×</Separator>
 
             <Stepper
               field={repsMin}
@@ -217,9 +216,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
               variant="fill"
             />
 
-            <span data-color="neutral-500" data-fs="sm">
-              –
-            </span>
+            <Separator>–</Separator>
 
             <Stepper
               field={repsMax}

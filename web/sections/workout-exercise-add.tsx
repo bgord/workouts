@@ -13,6 +13,7 @@ import {
   DialogHeader,
   ExercisePicker,
   HairlineBlock,
+  Separator,
   Stepper,
 } from "../components";
 import { workoutRoute } from "../router";
@@ -142,9 +143,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
               variant="fill"
             />
 
-            <span data-color="neutral-500" data-fs="sm">
-              ×
-            </span>
+            <Separator>×</Separator>
 
             <Stepper
               field={repsMin}
@@ -155,9 +154,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
               variant="fill"
             />
 
-            <span data-color="neutral-500" data-fs="sm">
-              –
-            </span>
+            <Separator>–</Separator>
 
             <Stepper
               field={repsMax}

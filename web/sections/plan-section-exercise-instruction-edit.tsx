@@ -15,6 +15,7 @@ import {
   ExerciseImageSize,
   ExercisePicker,
   IconButton,
+  Separator,
   Stepper,
 } from "../components";
 import { planRoute } from "../router";
@@ -211,9 +212,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 variant="fill"
               />
 
-              <span data-color="neutral-500" data-fs="sm">
-                ×
-              </span>
+              <Separator>×</Separator>
 
               <Stepper
                 disabled={!actions.update.enabled}
@@ -225,9 +224,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 variant="fill"
               />
 
-              <span data-color="neutral-500" data-fs="sm">
-                –
-              </span>
+              <Separator>–</Separator>
 
               <Stepper
                 disabled={!actions.update.enabled}
