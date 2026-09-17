@@ -1,10 +1,10 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { CalendarOff } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 import { dashboardRoute } from "../router";
 import { DashboardBodyWeightStats } from "../sections/dashboard-body-weight-stats";
+import { DashboardEmpty } from "../sections/dashboard-empty";
 import { DashboardWorkoutStats } from "../sections/dashboard-workouts-stats";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -16,7 +16,6 @@ export function Dashboard() {
   const navigate = dashboardRoute.useNavigate();
 
   const upcoming = dashboard.inProgress ?? dashboard.nextUp;
-  const empty = !(upcoming || dashboard.lastCompleted);
 
   bg.useShortcuts({
     [ShortcutDefinitions.OpenUpcomingWorkout.trigger]: () => {
@@ -34,19 +33,7 @@ export function Dashboard() {
     <ui.Main>
       <ui.Header>{t("dashboard.header")}</ui.Header>
 
-      {empty && (
-        <ui.EmptyState>
-          <ui.EmptyStateIcon icon={CalendarOff} />
-
-          <ui.EmptyStateMessage>{t("dashboard.empty")}</ui.EmptyStateMessage>
-
-          <ui.Meta>{t("dashboard.empty.hint")}</ui.Meta>
-
-          <ui.EmptyStateLink search={WorkoutHistoryFilters.default} to="/workouts">
-            {t("dashboard.empty.cta")}
-          </ui.EmptyStateLink>
-        </ui.EmptyState>
-      )}
+      <DashboardEmpty />
 
       <div data-md-stack="y" data-stack="x" {...ui.Gap.related}>
         {upcoming && (
@@ -73,7 +60,6 @@ export function Dashboard() {
       </div>
 
       <DashboardWorkoutStats />
-
       <DashboardBodyWeightStats />
     </ui.Main>
   );
