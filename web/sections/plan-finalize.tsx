@@ -1,21 +1,20 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check } from "lucide-react";
-import type { ActionState } from "../../modules/action-state";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
-export function PlanFinalize(props: Plan & { action: ActionState }) {
+export function PlanFinalize() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/plans/${props.id}/finalize`, {
+      fetch(`/api/plans/${plan?.data.id}/finalize`, {
         method: "POST",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: plan ? bg.WeakETag.fromRevision(plan.data.revision) : undefined,
       }),
     onSuccess: () =>
       router.invalidate({
@@ -23,6 +22,8 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
         sync: true,
       }),
   });
+
+  if (!plan?.actions.finalize.available) return null;
 
   return (
     <form
@@ -35,7 +36,7 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
       <button
         className="c-button"
         data-variant="primary"
-        disabled={!props.action.enabled || mutation.isLoading}
+        disabled={!plan.actions.finalize.enabled || mutation.isLoading}
         type="submit"
       >
         <Check data-size="sm" />

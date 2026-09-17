@@ -52,15 +52,13 @@ export function Plan() {
             data-wrap="nowrap"
             {...ui.Gap.cluster}
           >
-            {plan.actions.finalize.available && (
-              <PlanFinalize action={plan.actions.finalize} {...plan.data} />
-            )}
+            <PlanFinalize />
 
             {plan.actions.editingEnable.available && <PlanEditingEnable {...plan.data} />}
 
             {plan.actions.restore.available && <PlanRestore {...plan.data} />}
 
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" data-ml="auto">
+            <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
               {plan.actions.archive.available && <PlanArchive {...plan.data} />}
 
               {plan.actions.remove.available && <PlanRemove {...plan.data} />}
