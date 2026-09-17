@@ -4,7 +4,7 @@ import { ChevronDown, ChevronRight, Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { Meta } from "../components";
+import { Chip, Meta } from "../components";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 import { SetDots } from "../components/set-dots";
 import { SetsReps } from "../components/sets-reps";
@@ -213,9 +213,9 @@ export function WorkoutExerciseRow(props: {
         </div>
 
         {skipped && (
-          <div className="c-badge" data-color="neutral-400" data-shrink="0" data-variant="outline">
+          <Chip data-shrink="0" muted>
             {t("workout.exercise.skipped")}
-          </div>
+          </Chip>
         )}
 
         {!(mobile || skipped) &&

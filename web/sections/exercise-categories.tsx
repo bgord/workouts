@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { Eyebrow, IconButton, Output, Select } from "../components";
+import { Chip, Eyebrow, IconButton, Output, Select } from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -110,12 +110,14 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
 
       <ul data-gap="2" data-stack="x" data-wrap="wrap">
         {assigned.map((category) => (
-          <li className="c-badge" data-cross="center" data-gap="1" data-variant="outline" key={category.id}>
-            {category.name}
+          <li key={category.id}>
+            <Chip>
+              {category.name}
 
-            {props.exercise.actions.categoryUnassign.available && (
-              <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
-            )}
+              {props.exercise.actions.categoryUnassign.available && (
+                <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
+              )}
+            </Chip>
           </li>
         ))}
 

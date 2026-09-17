@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { CalendarOff, SearchX } from "lucide-react";
+import { CalendarOff, SearchX, X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
-import { ButtonClear, Meta, Select, WorkoutCard } from "../components";
+import { ChipButton, IconButton, Meta, Select, WorkoutCard } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -92,11 +92,7 @@ export function WorkoutHistory() {
         >
           {workouts.sections.map((section) => (
             <li key={section.id}>
-              <button
-                aria-pressed={search.section === section.id}
-                className="c-badge"
-                data-cursor="pointer"
-                data-variant={search.section === section.id ? "primary" : "outline"}
+              <ChipButton
                 onClick={() =>
                   navigate({
                     search: {
@@ -106,22 +102,26 @@ export function WorkoutHistory() {
                     to: "/workouts",
                   })
                 }
-                type="button"
+                pressed={search.section === section.id}
               >
                 {section.name}
-              </button>
+              </ChipButton>
             </li>
           ))}
         </ul>
 
-        <div data-color="neutral-500" data-fs="sm" data-grow="1" data-transform="font-variant-numeric">
+        <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
           {t("workout.list.count", { matching: matching.length, total: workouts.data.length })}
         </div>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
-          <ButtonClear
+          <IconButton
+            aria-label={t("app.clear")}
             onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
-          />
+            title={t("app.clear")}
+          >
+            <X data-size="sm" />
+          </IconButton>
         )}
       </div>
 

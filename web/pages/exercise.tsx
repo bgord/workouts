@@ -5,6 +5,7 @@ import { ChevronLeft, Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import {
   ActionHint,
+  ChipLink,
   ExerciseImage,
   ExerciseImageSize,
   Eyebrow,
@@ -123,14 +124,9 @@ export function Exercise() {
               <ul data-gap="2" data-stack="x" data-wrap="wrap">
                 {exercise.data.categories.map((category) => (
                   <li key={category.id}>
-                    <Link
-                      className="c-badge"
-                      data-variant="outline"
-                      search={{ category: category.id, name: Form.default.name }}
-                      to="/catalog"
-                    >
+                    <ChipLink search={{ category: category.id, name: Form.default.name }} to="/catalog">
                       {category.name}
-                    </Link>
+                    </ChipLink>
                   </li>
                 ))}
               </ul>

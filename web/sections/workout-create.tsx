@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CalendarDays, CalendarPlus, Circle, CircleCheck } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { Dialog, DialogError, DialogFooter, DialogHeader, Meta } from "../components";
+import { ChipButton, Dialog, DialogError, DialogFooter, DialogHeader, Meta } from "../components";
 import { workoutsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
@@ -141,33 +141,27 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
               const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
 
               return (
-                <button
-                  className="c-badge"
-                  data-cursor="pointer"
-                  data-variant={selected ? "primary" : "outline"}
+                <ChipButton
                   key={date.toString()}
                   onClick={() => {
                     workoutCreateCustomDate.disable();
                     scheduledFor.set(date.toString());
                   }}
-                  type="button"
+                  pressed={selected}
                 >
                   {label(date, offset)}
-                </button>
+                </ChipButton>
               );
             })}
 
-            <button
-              className="c-badge"
-              data-cursor="pointer"
-              data-variant={workoutCreateCustomDate.on ? "primary" : "outline"}
+            <ChipButton
               onClick={workoutCreateCustomDate.enable}
-              type="button"
+              pressed={workoutCreateCustomDate.on}
               {...workoutCreateCustomDate.props.controller}
             >
               <CalendarDays data-size="xs" />
               {t("workout.create.when.custom")}
-            </button>
+            </ChipButton>
           </div>
 
           {workoutCreateCustomDate.on && (

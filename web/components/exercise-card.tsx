@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
+import { Chip } from "./chip";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 
 const VISIBLE_CATEGORIES = 2;
@@ -31,19 +32,16 @@ export function ExerciseCard(props: ExerciseWithCategories) {
 
         <ul data-gap="1" data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap">
           {visible.map((category) => (
-            <li className="c-badge" data-transform="truncate" data-variant="outline" key={category.id}>
-              {category.name}
+            <li key={category.id}>
+              <Chip data-transform="truncate">{category.name}</Chip>
             </li>
           ))}
 
           {rest > 0 && (
-            <li
-              className="c-badge"
-              data-color="neutral-400"
-              data-variant="outline"
-              title={props.categories.map((category) => category.name).join(", ")}
-            >
-              +{rest}
+            <li>
+              <Chip muted title={props.categories.map((category) => category.name).join(", ")}>
+                +{rest}
+              </Chip>
             </li>
           )}
         </ul>

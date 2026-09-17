@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseCard, IconButton, Meta, TextLink } from "../components";
+import { ChipButton, ExerciseCard, IconButton, Meta, TextLink } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -112,21 +112,17 @@ export function ExerciseCatalog() {
 
           return (
             <li key={category.id}>
-              <button
-                aria-pressed={selected}
-                className="c-badge"
-                data-cursor="pointer"
-                data-variant={selected ? "primary" : "outline"}
+              <ChipButton
                 onClick={() =>
                   navigate({
                     search: { category: selected ? undefined : category.id, name: search.name },
                     to: "/catalog",
                   })
                 }
-                type="button"
+                pressed={selected}
               >
                 {category.name}
-              </button>
+              </ChipButton>
             </li>
           );
         })}
