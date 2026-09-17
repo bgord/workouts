@@ -38,9 +38,7 @@ export function Workout() {
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
             </ui.Header>
 
-            <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
-              <ui.WorkoutStatusBadge status={workout.data.status} />
-            </div>
+            <ui.WorkoutStatusBadge status={workout.data.status} />
           </div>
 
           <div
@@ -88,19 +86,7 @@ export function Workout() {
           ))}
         </ul>
 
-        {workout.actions.exerciseAdd.available && (
-          <div data-stack="y" {...ui.Gap.cluster}>
-            <WorkoutExerciseAdd
-              action={workout.actions.exerciseAdd}
-              first={workout.data.exercises.length === 0}
-              {...workout.data}
-            />
-
-            {workout.data.exercises.length === 0 && (
-              <ui.Meta>{t("workout.exercise.list.empty.hint")}</ui.Meta>
-            )}
-          </div>
-        )}
+        <WorkoutExerciseAdd />
       </div>
     </ui.Main>
   );

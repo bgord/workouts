@@ -2,19 +2,17 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
-import type { ActionState } from "../../modules/action-state";
-import type { Workout } from "../../modules/workouts/value-objects/workout";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
 
-export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first: boolean }) {
+export function WorkoutExerciseAdd() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { exercises } = workoutRoute.useLoaderData();
+  const { workout, exercises } = workoutRoute.useLoaderData();
 
-  const workoutExerciseAdd = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
+  const workoutExerciseAdd = bg.useToggle({ name: `workout-exercise-add-${workout.data.id}` });
 
   const exerciseId = bg.useTextField(Form.exerciseId.field);
   const query = bg.useTextField(Form.query.field);
@@ -24,10 +22,10 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.id}/exercise`, {
+      fetch(`/api/workouts/${workout.data.id}/exercise`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.revision) },
+        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(workout.data.revision) },
         body: JSON.stringify({
           exerciseId: exerciseId.value,
           sets: sets.value,
@@ -53,13 +51,17 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
     mutation.reset,
   ]);
 
+  if (!workout.actions.exerciseAdd.available) return null;
+
+  const first = workout.data.exercises.length === 0;
+
   return (
-    <>
+    <div data-stack="y" {...ui.Gap.cluster}>
       <ui.HairlineBlock
         data-cross="center"
         data-stack="x"
         data-wrap="nowrap"
-        first={props.first}
+        first={first}
         last
         {...ui.Spacing.row}
       >
@@ -73,7 +75,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           data-hover-color="neutral-0"
           data-stack="x"
           data-wrap="nowrap"
-          disabled={!props.action.enabled}
+          disabled={!workout.actions.exerciseAdd.enabled}
           onClick={workoutExerciseAdd.enable}
           type="button"
           {...ui.Gap.related}
@@ -97,7 +99,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           {t("workout.exercise.add.cta")}
         </button>
 
-        <ui.ActionHint {...props.action} data-shrink="0" />
+        <ui.ActionHint {...workout.actions.exerciseAdd} data-shrink="0" />
       </ui.HairlineBlock>
 
       <ui.Dialog {...workoutExerciseAdd}>
@@ -187,6 +189,8 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           </ui.DialogFooter>
         </form>
       </ui.Dialog>
-    </>
+
+      {first && <ui.Meta>{t("workout.exercise.list.empty.hint")}</ui.Meta>}
+    </div>
   );
 }
