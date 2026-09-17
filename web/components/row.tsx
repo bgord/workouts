@@ -33,10 +33,6 @@ export function RowTitle(props: React.JSX.IntrinsicElements["div"]) {
   return <div className="c-card-title" data-transform="truncate" {...props} />;
 }
 
-export function RowMeta(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-color="neutral-500" data-fs="xs" data-transform="truncate" {...props} />;
-}
-
 export function RowChevron() {
   return <ChevronRight data-color="neutral-500" data-size="sm" />;
 }

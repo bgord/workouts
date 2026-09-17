@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
+import { Meta } from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -66,7 +67,7 @@ export function PlanSectionItem(props: {
           )}
         </div>
         {planSectionRename.off && (
-          <div data-color="neutral-500" data-fs="xs" data-shrink="0" data-transform="font-variant-numeric">
+          <Meta data-shrink="0">
             {section.exerciseInstructions.length === 0
               ? t("plan.section.exercise.list.empty")
               : t("plan.section.exercise.count", {
@@ -78,7 +79,7 @@ export function PlanSectionItem(props: {
                     genitive: t("plan.section.exercise.noun.genitive"),
                   }),
                 })}
-          </div>
+          </Meta>
         )}
         {actions.sectionRemove.available && planSectionRename.off && (
           <PlanSectionRemove plan={plan} section={section} />

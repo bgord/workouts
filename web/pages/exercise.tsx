@@ -3,7 +3,15 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
-import { ActionHint, ExerciseImage, ExerciseImageSize, Eyebrow, Main, SectionHeading } from "../components";
+import {
+  ActionHint,
+  ExerciseImage,
+  ExerciseImageSize,
+  Eyebrow,
+  Main,
+  Meta,
+  SectionHeading,
+} from "../components";
 import { exerciseRoute } from "../router";
 import {
   ExerciseCategories,
@@ -160,9 +168,7 @@ export function Exercise() {
             {t("statistics.exercise.history.empty")}
           </div>
 
-          <div data-color="neutral-500" data-fs="xs">
-            {t("statistics.exercise.history.empty.hint")}
-          </div>
+          <Meta>{t("statistics.exercise.history.empty.hint")}</Meta>
         </div>
       )}
 

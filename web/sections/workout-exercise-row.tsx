@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight, Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
+import { Meta } from "../components";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 import { SetDots } from "../components/set-dots";
 import { SetsReps } from "../components/sets-reps";
@@ -196,14 +197,9 @@ export function WorkoutExerciseRow(props: {
               )
             )}
 
-            <div
-              data-color="neutral-500"
-              data-fs="xs"
-              data-md-disp={props.exercise.target ? "none" : undefined}
-              data-transform="font-variant-numeric"
-            >
+            <Meta data-md-disp={props.exercise.target ? "none" : undefined}>
               <SetsReps {...props.exercise.prescription} />
-            </div>
+            </Meta>
 
             {mobile &&
               !skipped &&

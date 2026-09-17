@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { ClipboardList, Plus } from "lucide-react";
-import { ActionHint, Eyebrow, Header, Main, PlanCard } from "../components";
+import { ActionHint, Eyebrow, Header, Main, Meta, PlanCard } from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
@@ -55,9 +55,7 @@ export function Plans() {
               {t(fresh ? "plan.list.empty" : "plan.list.empty.active")}
             </div>
 
-            <div data-color="neutral-500" data-fs="xs">
-              {t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}
-            </div>
+            <Meta>{t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}</Meta>
           </div>
         )}
 

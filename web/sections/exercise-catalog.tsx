@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseCard, IconButton } from "../components";
+import { ExerciseCard, IconButton, Meta } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -176,9 +176,7 @@ export function ExerciseCatalog() {
             {t("exercise.catalog.no_matches")}
           </div>
 
-          <div data-color="neutral-500" data-fs="xs">
-            {t("exercise.catalog.no_matches.hint")}
-          </div>
+          <Meta>{t("exercise.catalog.no_matches.hint")}</Meta>
         </div>
       )}
 

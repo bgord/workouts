@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Dialog, DialogHeader } from "../components";
+import { Dialog, DialogHeader, Meta } from "../components";
 import { catalogRoute } from "../router";
 import { ExerciseCategoryAdd } from "./exercise-category-add";
 import { ExerciseCategoryRow } from "./exercise-category-row";
@@ -26,9 +26,7 @@ export function ExerciseCategoryManage(props: bg.UseToggleReturnType) {
             {t("exercise.category.list.empty")}
           </div>
 
-          <div data-color="neutral-500" data-fs="xs">
-            {t("exercise.category.list.empty.hint")}
-          </div>
+          <Meta>{t("exercise.category.list.empty.hint")}</Meta>
         </div>
       )}
 

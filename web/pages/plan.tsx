@@ -4,7 +4,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
-import { ActionHint, Main, PlanStatusBadge } from "../components";
+import { ActionHint, Main, Meta, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanDescription } from "../sections/plan-description";
@@ -100,11 +100,11 @@ export function Plan() {
         </div>
 
         <div data-gap="3" data-md-pl="4" data-pl="12" data-stack="y">
-          <div data-color="neutral-500" data-fs="xs">
+          <Meta>
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
             })}
-          </div>
+          </Meta>
 
           <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
 

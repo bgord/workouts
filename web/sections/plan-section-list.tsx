@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
+import { Meta } from "../components";
 import { PlanSectionCreate } from "./plan-section-create";
 import { PlanSectionItem } from "./plan-section-item";
 
@@ -32,11 +33,7 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
         >
           <PlanSectionCreate action={props.actions.sectionCreate} {...props} />
 
-          {props.sections.length === 0 && (
-            <div data-color="neutral-500" data-fs="xs">
-              {t("plan.section.list.empty.hint")}
-            </div>
-          )}
+          {props.sections.length === 0 && <Meta>{t("plan.section.list.empty.hint")}</Meta>}
         </div>
       )}
     </div>

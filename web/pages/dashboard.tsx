@@ -3,7 +3,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { CalendarOff } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import { Eyebrow, EyebrowLink, Header, Main, WorkoutCard } from "../components";
+import { Eyebrow, EyebrowLink, Header, Main, Meta, WorkoutCard } from "../components";
 import { dashboardRoute } from "../router";
 import { BodyWeightStats } from "../sections/body-weight-stats";
 import { DashboardCompleted } from "../sections/dashboard-completed";
@@ -50,9 +50,7 @@ export function Dashboard() {
             {t("dashboard.empty")}
           </div>
 
-          <div data-color="neutral-500" data-fs="xs">
-            {t("dashboard.empty.hint")}
-          </div>
+          <Meta>{t("dashboard.empty.hint")}</Meta>
 
           <Link
             className="c-link"

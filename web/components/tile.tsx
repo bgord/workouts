@@ -1,5 +1,6 @@
 import { Rhythm } from "@bgord/ui";
 import { createLink } from "@tanstack/react-router";
+import { Meta } from "./meta";
 
 const TILE_WIDTH = 168;
 
@@ -62,5 +63,5 @@ export function TileValue(props: React.JSX.IntrinsicElements["div"]) {
 }
 
 export function TileContext(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-color="neutral-500" data-fs="xs" data-md-ml="auto" {...props} />;
+  return <Meta data-md-ml="auto" {...props} />;
 }

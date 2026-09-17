@@ -1,7 +1,8 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { DateFormat } from "../services/date-format";
-import { RowBody, RowChevron, RowLink, RowMeta, RowTitle } from "./row";
+import { Meta } from "./meta";
+import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
 export function WorkoutCard(props: WorkoutSummary) {
@@ -20,7 +21,7 @@ export function WorkoutCard(props: WorkoutSummary) {
       <RowBody>
         <RowTitle>{t("workout.title", { plan: props.planName, section: props.planSectionName })}</RowTitle>
 
-        <RowMeta>{scheduledFor}</RowMeta>
+        <Meta truncate>{scheduledFor}</Meta>
       </RowBody>
 
       <WorkoutStatusBadge status={props.status} />

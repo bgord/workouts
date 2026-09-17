@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CalendarDays, CalendarPlus, Circle, CircleCheck } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, Meta } from "../components";
 import { workoutsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
@@ -113,21 +113,16 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                           {option.name}
                         </div>
 
-                        <div data-color="neutral-500" data-fs="xs" data-transform="truncate">
+                        <Meta truncate>
                           {option.exerciseInstructions
                             .map((instruction) => instruction.exercise.name)
                             .join(" · ")}
-                        </div>
+                        </Meta>
                       </div>
 
-                      <div
-                        data-color="neutral-500"
-                        data-fs="xs"
-                        data-shrink="0"
-                        data-transform="font-variant-numeric"
-                      >
+                      <Meta data-shrink="0">
                         {t("workout.create.section.exercises", { count: option.exerciseInstructions.length })}
-                      </div>
+                      </Meta>
                     </label>
                   </li>
                 );

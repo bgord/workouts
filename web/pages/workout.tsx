@@ -4,7 +4,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Dumbbell } from "lucide-react";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { ActionHint, Main, WorkoutStatusBadge } from "../components";
+import { ActionHint, Main, Meta, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCopy } from "../sections/workout-copy";
@@ -112,9 +112,9 @@ export function Workout() {
           {workout.actions.reschedule.available ? (
             <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
           ) : (
-            <div data-color="neutral-500" data-fs="xs">
+            <Meta>
               {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
-            </div>
+            </Meta>
           )}
 
           {workout.actions.noteSet.available && (
@@ -165,11 +165,7 @@ export function Workout() {
               {...workout.data}
             />
 
-            {workout.data.exercises.length === 0 && (
-              <div data-color="neutral-500" data-fs="xs">
-                {t("workout.exercise.list.empty.hint")}
-              </div>
-            )}
+            {workout.data.exercises.length === 0 && <Meta>{t("workout.exercise.list.empty.hint")}</Meta>}
           </div>
         )}
       </div>

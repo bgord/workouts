@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronDown, ChevronRight, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import { Meta } from "../components";
 import { DeltaKg } from "../components/delta-kg";
 import { RepsLoad } from "../components/reps-load";
 import { RirBadge } from "../components/rir-badge";
@@ -166,12 +167,12 @@ function ExerciseHistoryRow(props: {
 
               <div data-grow="1">{set.rir !== undefined && <RirBadge rir={set.rir} />}</div>
 
-              <div data-color="neutral-500" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
+              <Meta data-cross="center" data-gap="1" data-stack="x">
                 <EqualApproximately data-color="neutral-600" data-size="xs" />
                 {t("statistics.exercise.one_rep_max_estimate.value", {
                   load: WeightFormat.kilograms(set.estimate),
                 })}
-              </div>
+              </Meta>
             </li>
           ))}
         </ul>

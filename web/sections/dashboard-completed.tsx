@@ -1,8 +1,6 @@
 import { useTranslations } from "@bgord/ui";
-import { Eyebrow } from "../components";
+import { Eyebrow, Meta } from "../components";
 import { dashboardRoute } from "../router";
-
-const column = { flexBasis: 0 };
 
 export function DashboardCompleted() {
   const t = useTranslations();
@@ -29,7 +27,7 @@ export function DashboardCompleted() {
             data-grow="1"
             data-stack="y"
             key={tile.label}
-            style={column}
+            style={{ flexBasis: 0 }}
           >
             <div
               data-color="neutral-0"
@@ -41,9 +39,7 @@ export function DashboardCompleted() {
               {tile.value}
             </div>
 
-            <div data-color="neutral-500" data-fs="xs">
-              {t(tile.label)}
-            </div>
+            <Meta>{t(tile.label)}</Meta>
           </li>
         ))}
       </ul>

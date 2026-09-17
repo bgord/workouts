@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { CalendarOff, SearchX } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
-import { ButtonClear, Select, WorkoutCard } from "../components";
+import { ButtonClear, Meta, Select, WorkoutCard } from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -39,9 +39,7 @@ export function WorkoutHistory() {
           {t("workout.list.empty")}
         </div>
 
-        <div data-color="neutral-500" data-fs="xs">
-          {t("workout.list.empty.hint")}
-        </div>
+        <Meta>{t("workout.list.empty.hint")}</Meta>
 
         <Link className="c-link" data-fs="sm" data-mt="2" to="/plans">
           {t("workout.list.empty.cta")}
@@ -142,9 +140,7 @@ export function WorkoutHistory() {
             {t("workout.list.no_matches")}
           </div>
 
-          <div data-color="neutral-500" data-fs="xs">
-            {t("workout.list.no_matches.hint")}
-          </div>
+          <Meta>{t("workout.list.no_matches.hint")}</Meta>
         </div>
       )}
 

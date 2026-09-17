@@ -2,8 +2,9 @@ import { useLanguage, useTranslations } from "@bgord/ui";
 import { Layers } from "lucide-react";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
 import { DateFormat } from "../services/date-format";
+import { Meta } from "./meta";
 import { PlanStatusBadge } from "./plan-status-badge";
-import { RowBody, RowChevron, RowLink, RowMeta, RowTitle } from "./row";
+import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
 
 export function PlanCard(props: PlanSummary) {
   const t = useTranslations();
@@ -14,20 +15,20 @@ export function PlanCard(props: PlanSummary) {
       <RowBody>
         <RowTitle>{props.name}</RowTitle>
 
-        {props.description && <RowMeta data-color="neutral-300">{props.description}</RowMeta>}
+        {props.description && (
+          <Meta data-color="neutral-300" truncate>
+            {props.description}
+          </Meta>
+        )}
 
-        <RowMeta data-cross="center" data-gap="3" data-stack="x">
+        <Meta data-cross="center" data-gap="3" data-stack="x" truncate>
           <div data-cross="center" data-gap="1" data-stack="x" title={t("plan.sections")}>
             <Layers data-size="xs" />
-            <span data-transform="font-variant-numeric">{props.sections}</span>
+            {props.sections}
           </div>
 
-          <div data-transform="truncate">
-            {t("plan.updated_at", {
-              date: DateFormat.day(language, DateFormat.zoned(props.updatedAt)),
-            })}
-          </div>
-        </RowMeta>
+          {t("plan.updated_at", { date: DateFormat.day(language, DateFormat.zoned(props.updatedAt)) })}
+        </Meta>
       </RowBody>
 
       <PlanStatusBadge status={props.status} />
