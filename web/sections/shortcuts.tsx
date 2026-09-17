@@ -3,8 +3,9 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { CircleHelp, Keyboard } from "lucide-react";
 import { Form as ExerciseCatalogFilters } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import { ButtonClose, Kbd } from "../components";
+import { ButtonClose } from "../components";
 import * as ShortcutDefinitions from "../services/shortcuts";
+import { ShortcutGroup } from "./shortcut-group";
 
 export function Shortcuts() {
   const { width } = bg.useWindowDimensions();
@@ -104,30 +105,6 @@ export function Shortcuts() {
 
         <ShortcutGroup header={t("app.shortcuts.global")} shortcuts={ShortcutDefinitions.GlobalGroup} />
       </div>
-    </div>
-  );
-}
-
-function ShortcutGroup(props: { header: string; shortcuts: Array<ShortcutDefinitions.ShortcutType> }) {
-  const t = bg.useTranslations();
-
-  return (
-    <div data-gap="2" data-stack="y">
-      <div data-color="neutral-400" data-fs="xs" data-ls="wide">
-        {props.header}
-      </div>
-
-      <ul data-gap="2" data-stack="y">
-        {props.shortcuts.map((shortcut) => (
-          <li data-cross="center" data-gap="3" data-main="between" data-stack="x" key={shortcut.keys}>
-            <span data-color="neutral-200" data-fs="sm">
-              {t(shortcut.label)}
-            </span>
-
-            <Kbd keys={shortcut.keys} />
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
