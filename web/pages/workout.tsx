@@ -14,9 +14,6 @@ import { WorkoutReschedule } from "../sections/workout-reschedule";
 import { WorkoutStart } from "../sections/workout-start";
 import { DateFormat } from "../services/date-format";
 
-const title = { flexBasis: 0, minWidth: 0 };
-const secondary = { marginLeft: "auto" };
-
 export function Workout() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
@@ -41,7 +38,14 @@ export function Workout() {
         <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
           <ui.ButtonBack search={search} to="/workouts" />
 
-          <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
+          <div
+            data-cross="center"
+            data-gap="3"
+            data-grow="1"
+            data-stack="x"
+            data-wrap="nowrap"
+            style={{ flexBasis: 0, minWidth: 0 }}
+          >
             <ui.Header>
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
             </ui.Header>
@@ -68,7 +72,7 @@ export function Workout() {
               <WorkoutComplete action={workout.actions.complete} {...workout.data} />
             )}
 
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" style={secondary}>
+            <div data-cross="center" data-stack="x" data-wrap="nowrap" data-ml="auto">
               {workout.data.completedAt && (
                 <WorkoutCopy {...workout.data} completedAt={workout.data.completedAt} />
               )}

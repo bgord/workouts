@@ -105,9 +105,9 @@ export function WorkoutHistory() {
           ))}
         </ul>
 
-        <div data-color="neutral-500" data-fs="sm" data-transform="font-variant-numeric">
+        <ui.Meta>
           {t("workout.list.count", { matching: matching.length, total: workouts.data.length })}
-        </div>
+        </ui.Meta>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
           <ui.IconButton

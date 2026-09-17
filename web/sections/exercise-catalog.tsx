@@ -6,8 +6,6 @@ import * as ui from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
-const count = bg.Rhythm(64).times(1).minWidth;
-
 export function ExerciseCatalog() {
   const t = bg.useTranslations();
   const { exercises, exerciseCategories } = catalogRoute.useLoaderData();
@@ -79,17 +77,13 @@ export function ExerciseCatalog() {
           />
         </div>
 
-        <div
-          data-color="neutral-500"
-          data-fs="sm"
-          data-main="end"
+        <ui.Eyebrow
           data-shrink="0"
-          data-stack="x"
           data-transform="font-variant-numeric"
-          style={count}
+          {...bg.Rhythm(64).times(1).style.minWidth}
         >
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
-        </div>
+        </ui.Eyebrow>
 
         <ui.IconButton
           aria-label={t("app.clear")}
