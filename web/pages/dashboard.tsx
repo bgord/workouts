@@ -1,66 +1,22 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
-import { dashboardRoute } from "../router";
-import { DashboardBodyWeightStats } from "../sections/dashboard-body-weight-stats";
-import { DashboardEmpty } from "../sections/dashboard-empty";
-import { DashboardWorkoutStats } from "../sections/dashboard-workouts-stats";
-import * as ShortcutDefinitions from "../services/shortcuts";
-
-const tile = { flexBasis: 0, minWidth: 0 };
+import * as Sections from "../sections";
 
 export function Dashboard() {
   const t = bg.useTranslations();
-  const { dashboard } = dashboardRoute.useLoaderData();
-  const navigate = dashboardRoute.useNavigate();
-
-  const upcoming = dashboard.inProgress ?? dashboard.nextUp;
-
-  bg.useShortcuts({
-    [ShortcutDefinitions.OpenUpcomingWorkout.trigger]: () => {
-      if (upcoming) {
-        navigate({
-          params: { workoutId: upcoming.id },
-          search: WorkoutHistoryFilters.default,
-          to: "/workouts/$workoutId",
-        });
-      }
-    },
-  });
 
   return (
     <ui.Main>
       <ui.Header>{t("dashboard.header")}</ui.Header>
 
-      <DashboardEmpty />
+      <Sections.DashboardEmpty />
 
-      <div data-md-stack="y" data-stack="x" {...ui.Gap.related}>
-        {upcoming && (
-          <div data-grow="1" data-stack="y" style={tile} {...ui.Gap.cluster}>
-            <ui.Eyebrow>
-              {t(dashboard.inProgress ? "dashboard.in_progress.header" : "dashboard.next_up.header")}
-            </ui.Eyebrow>
+      <Sections.DashboardWorkoutsFastCall />
 
-            <ul>
-              <ui.WorkoutCard {...upcoming} />
-            </ul>
-          </div>
-        )}
+      <Sections.DashboardWorkoutStats />
 
-        {dashboard.lastCompleted && (
-          <div data-grow="1" data-stack="y" style={tile} {...ui.Gap.cluster}>
-            <ui.Eyebrow>{t("dashboard.last_completed.header")}</ui.Eyebrow>
-
-            <ul>
-              <ui.WorkoutCard {...dashboard.lastCompleted} />
-            </ul>
-          </div>
-        )}
-      </div>
-
-      <DashboardWorkoutStats />
-      <DashboardBodyWeightStats />
+      <Sections.DashboardBodyWeightStats />
     </ui.Main>
   );
 }

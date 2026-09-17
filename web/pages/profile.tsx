@@ -2,13 +2,7 @@
 import { useTranslations } from "@bgord/ui";
 import * as ui from "../components";
 import { rootRoute } from "../router";
-import {
-  ProfileAccountDelete,
-  ProfileAvatarChange,
-  ProfileLanguageSelector,
-  ProfilePasswordChange,
-  ProfileWorkoutsExport,
-} from "../sections";
+import * as Sections from "../sections";
 
 export function Profile() {
   const t = useTranslations();
@@ -19,20 +13,18 @@ export function Profile() {
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("profile.header")}</ui.Header>
 
-        <div data-color="neutral-500" data-fs="sm" data-transform="truncate">
-          {session.user.email}
-        </div>
+        <ui.Meta>{session.user.email}</ui.Meta>
       </div>
 
-      <ProfileAvatarChange />
+      <Sections.ProfileAvatarChange />
 
-      <ProfileLanguageSelector />
+      <Sections.ProfileLanguageSelector />
 
-      <ProfilePasswordChange />
+      <Sections.ProfilePasswordChange />
 
-      <ProfileWorkoutsExport />
+      <Sections.ProfileWorkoutsExport />
 
-      <ProfileAccountDelete />
+      <Sections.ProfileAccountDelete />
     </ui.Main>
   );
 }

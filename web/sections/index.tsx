@@ -60,3 +60,7 @@ export * from "./workout-set-log";
 export * from "./workout-set-remove";
 export * from "./workout-set-row";
 export * from "./workout-start";
+export * from "./dashboard-body-weight-stats";
+export * from "./dashboard-empty";
+export * from "./dashboard-workouts-fast-call";
+export * from "./dashboard-workouts-stats";
