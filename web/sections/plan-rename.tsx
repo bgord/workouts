@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { IconButton, Output } from "../components";
+import { Header, IconButton, Output } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRename(props: Plan) {
@@ -34,22 +34,23 @@ export function PlanRename(props: Plan) {
 
   if (planRename.off) {
     return (
-      <button
-        data-color="neutral-0"
-        data-cursor="pointer"
-        data-fs="2xl"
-        data-maxw="100%"
-        data-md-fs="xl"
-        data-transform="truncate"
-        onClick={planRename.enable}
-        title={t("plan.rename.cta")}
-        type="button"
-        {...planRename.props.controller}
-      >
-        <h1 data-fs="2xl" data-fw="black" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
+      <Header data-maxw="100%">
+        <button
+          data-color="neutral-0"
+          data-cursor="pointer"
+          data-fs="2xl"
+          data-fw="black"
+          data-maxw="100%"
+          data-md-fs="xl"
+          data-transform="truncate"
+          onClick={planRename.enable}
+          title={t("plan.rename.cta")}
+          type="button"
+          {...planRename.props.controller}
+        >
           {props.name}
-        </h1>
-      </button>
+        </button>
+      </Header>
     );
   }
 

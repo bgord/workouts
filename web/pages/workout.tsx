@@ -2,8 +2,7 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import { Dumbbell } from "lucide-react";
-import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { ActionHint, ButtonBack, LinkBack, Main, Meta, WorkoutStatusBadge } from "../components";
+import { ActionHint, ButtonBack, Header, LinkBack, Main, Meta, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCopy } from "../sections/workout-copy";
@@ -43,15 +42,9 @@ export function Workout() {
           <ButtonBack search={search} to="/workouts" />
 
           <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
-            <h1
-              data-color={workout.data.status === WorkoutStatusEnum.discarded ? "neutral-300" : "neutral-0"}
-              data-fs="2xl"
-              data-fw="black"
-              data-md-fs="xl"
-              data-transform="truncate"
-            >
+            <Header>
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
-            </h1>
+            </Header>
 
             <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
               <WorkoutStatusBadge status={workout.data.status} />

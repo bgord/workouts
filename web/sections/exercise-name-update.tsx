@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { IconButton, Output } from "../components";
+import { Header, IconButton, Output } from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) {
@@ -30,7 +30,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
 
   if (exerciseNameUpdate.off) {
     return (
-      <h1 data-fs="2xl" data-grow="1" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
+      <Header data-grow="1" data-maxw="100%">
         <button
           data-color="neutral-0"
           data-cursor="pointer"
@@ -46,7 +46,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
         >
           {props.exercise.name}
         </button>
-      </h1>
+      </Header>
     );
   }
 

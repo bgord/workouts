@@ -9,6 +9,7 @@ import {
   ExerciseImage,
   ExerciseImageSize,
   Eyebrow,
+  Header,
   LinkBack,
   Main,
   Meta,
@@ -53,16 +54,7 @@ export function Exercise() {
             {exercise.actions.update.enabled ? (
               <ExerciseNameUpdate exercise={exercise.data} />
             ) : (
-              <h1
-                data-color="neutral-0"
-                data-fs="2xl"
-                data-fw="black"
-                data-grow="1"
-                data-md-fs="xl"
-                data-transform="truncate"
-              >
-                {exercise.data.name}
-              </h1>
+              <Header data-grow="1">{exercise.data.name}</Header>
             )}
           </div>
 

@@ -1,8 +1,7 @@
 // fallow-ignore-file unused-export
 
 import * as bg from "@bgord/ui";
-import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
-import { ActionHint, ButtonBack, LinkBack, Main, Meta, PlanStatusBadge } from "../components";
+import { ActionHint, ButtonBack, Header, LinkBack, Main, Meta, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanDescription } from "../sections/plan-description";
@@ -41,17 +40,7 @@ export function Plan() {
           <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
             {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
-            {!plan.actions.rename.available && (
-              <h1
-                data-color={plan.data.status === PlanStatusEnum.archived ? "neutral-300" : "neutral-0"}
-                data-fs="2xl"
-                data-fw="black"
-                data-md-fs="xl"
-                data-transform="truncate"
-              >
-                {plan.data.name}
-              </h1>
-            )}
+            {!plan.actions.rename.available && <Header>{plan.data.name}</Header>}
 
             <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
               <PlanStatusBadge status={plan.data.status} />
