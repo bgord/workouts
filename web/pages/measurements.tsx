@@ -1,13 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import {
-  BodyWeightMeasure,
-  BodyWeightMeasurementExport,
-  BodyWeightMeasurementHistory,
-  BodyWeightMeasurementImport,
-  BodyWeightMeasurementsEmpty,
-} from "../sections";
+import * as Sections from "../sections";
 
 export function Measurements() {
   const t = bg.useTranslations();
@@ -18,17 +12,17 @@ export function Measurements() {
         <ui.Header data-grow="1">{t("measurements.body_weight.header")}</ui.Header>
 
         <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
-          <BodyWeightMeasurementImport />
+          <Sections.BodyWeightMeasurementImport />
 
-          <BodyWeightMeasurementExport />
+          <Sections.BodyWeightMeasurementExport />
         </div>
       </div>
 
-      <BodyWeightMeasure />
+      <Sections.BodyWeightMeasure />
 
-      <BodyWeightMeasurementsEmpty />
+      <Sections.BodyWeightMeasurementsEmpty />
 
-      <BodyWeightMeasurementHistory />
+      <Sections.BodyWeightMeasurementHistory />
     </ui.Main>
   );
 }

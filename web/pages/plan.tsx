@@ -7,29 +7,19 @@ import { PlanArchive } from "../sections/plan-archive";
 import { PlanDescription } from "../sections/plan-description";
 import { PlanEditingEnable } from "../sections/plan-editing-enable";
 import { PlanFinalize } from "../sections/plan-finalize";
+import { PlanNotFound } from "../sections/plan-not-found";
 import { PlanRemove } from "../sections/plan-remove";
 import { PlanRename } from "../sections/plan-rename";
 import { PlanRestore } from "../sections/plan-restore";
 import { PlanSectionList } from "../sections/plan-section-list";
 import { DateFormat } from "../services/date-format";
 
-const title = { flexBasis: 0, minWidth: 0 };
-const secondary = { marginLeft: "auto" };
-
 export function Plan() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const { plan } = planRoute.useLoaderData();
 
-  if (!plan?.data) {
-    return (
-      <ui.Main>
-        <ui.LinkBack to="/plans" />
-
-        <div data-color="neutral-400">{t("plan.not_found")}</div>
-      </ui.Main>
-    );
-  }
+  if (!plan?.data) return <PlanNotFound />;
 
   return (
     <ui.Main>
@@ -42,7 +32,7 @@ export function Plan() {
             data-grow="1"
             data-stack="x"
             data-wrap="nowrap"
-            style={title}
+            style={{ flexBasis: 0, minWidth: 0 }}
             {...ui.Gap.related}
           >
             {plan.actions.rename.available && <PlanRename {...plan.data} />}
@@ -70,7 +60,7 @@ export function Plan() {
 
             {plan.actions.restore.available && <PlanRestore {...plan.data} />}
 
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" style={secondary}>
+            <div data-cross="center" data-stack="x" data-wrap="nowrap" data-ml="auto">
               {plan.actions.archive.available && <PlanArchive {...plan.data} />}
 
               {plan.actions.remove.available && <PlanRemove {...plan.data} />}

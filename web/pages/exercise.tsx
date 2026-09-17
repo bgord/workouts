@@ -11,6 +11,7 @@ import {
   ExerciseHistory,
   ExerciseImageChange,
   ExerciseNameUpdate,
+  ExerciseNotFound,
   ExerciseProgressChart,
   ExerciseStats,
 } from "../sections";
@@ -22,15 +23,7 @@ export function Exercise() {
   const t = bg.useTranslations();
   const { exercise, performances } = exerciseRoute.useLoaderData();
 
-  if (!exercise) {
-    return (
-      <ui.Main>
-        <ui.LinkBack search={Form.default} to="/catalog" />
-
-        <div data-color="neutral-400">{t("exercise.not_found")}</div>
-      </ui.Main>
-    );
-  }
+  if (!exercise) return <ExerciseNotFound />;
 
   return (
     <ui.Main>
