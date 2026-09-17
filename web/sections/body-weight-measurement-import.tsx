@@ -6,10 +6,11 @@ import { measurementsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
 
-export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
+export function BodyWeightMeasurementImport() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { toggle } = bg.extractUseToggle(props);
+
+  const bodyWeightMeasurementImport = bg.useToggle({ name: "body-weight-measurement-import" });
 
   const file = bg.useFile("body-weight-measurement-import-file", { mimeTypes, maxSizeBytes: 1_000_000 });
 
@@ -26,124 +27,133 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
       });
     },
     onSuccess: async () => {
-      toggle.disable();
+      bodyWeightMeasurementImport.disable();
       file.actions.clearFile();
 
       await router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true });
     },
   });
 
-  const close = bg.exec([file.actions.clearFile, mutation.reset, toggle.disable]);
+  const close = bg.exec([file.actions.clearFile, mutation.reset, bodyWeightMeasurementImport.disable]);
 
   return (
-    <ui.Dialog {...toggle}>
-      <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
-        {t("measurements.body_weight.import.header")}
-      </ui.DialogHeader>
-
-      <form
-        aria-busy={mutation.isLoading}
-        data-stack="y"
-        encType="multipart/form-data"
-        onSubmit={mutation.handleSubmit}
-        {...ui.Gap.section}
+    <>
+      <ui.IconButton
+        onClick={bodyWeightMeasurementImport.enable}
+        {...bodyWeightMeasurementImport.props.controller}
       >
-        <div data-stack="y" {...ui.Gap.related}>
-          {file.isSelected ? (
-            <div
-              data-bc="neutral-700"
-              data-br="sm"
-              data-bs="solid"
-              data-bw="hairline"
-              data-color="neutral-100"
-              data-cross="center"
-              data-fs="sm"
-              data-stack="y"
-              {...ui.Spacing.surface}
-              {...ui.Gap.cluster}
-            >
-              <FileSpreadsheet data-color="neutral-400" data-size="md" />
+        <Upload data-size="sm" />
+      </ui.IconButton>
 
-              <span data-maxw="100%" data-transform="truncate">
-                {file.data.name}
-              </span>
+      <ui.Dialog {...bodyWeightMeasurementImport}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
+          {t("measurements.body_weight.import.header")}
+        </ui.DialogHeader>
 
-              <button
-                data-color="neutral-400"
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          encType="multipart/form-data"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Gap.section}
+        >
+          <div data-stack="y" {...ui.Gap.related}>
+            {file.isSelected ? (
+              <div
+                data-bc="neutral-700"
+                data-br="sm"
+                data-bs="solid"
+                data-bw="hairline"
+                data-color="neutral-100"
+                data-cross="center"
+                data-fs="sm"
+                data-stack="y"
+                {...ui.Spacing.surface}
+                {...ui.Gap.cluster}
+              >
+                <FileSpreadsheet data-color="neutral-400" data-size="md" />
+
+                <span data-maxw="100%" data-transform="truncate">
+                  {file.data.name}
+                </span>
+
+                <button
+                  data-color="neutral-400"
+                  data-cross="center"
+                  data-cursor="pointer"
+                  data-fs="xs"
+                  data-hover-color="neutral-0"
+                  data-stack="x"
+                  onClick={bg.exec([file.actions.clearFile, mutation.reset])}
+                  type="button"
+                  {...ui.Gap.inline}
+                >
+                  <X data-size="xs" />
+                  {t("app.clear")}
+                </button>
+              </div>
+            ) : (
+              <label
+                data-bc="neutral-700"
+                data-br="sm"
+                data-bs="dashed"
+                data-bw="hairline"
+                data-color="neutral-300"
                 data-cross="center"
                 data-cursor="pointer"
-                data-fs="xs"
-                data-hover-color="neutral-0"
-                data-stack="x"
-                onClick={bg.exec([file.actions.clearFile, mutation.reset])}
-                type="button"
-                {...ui.Gap.inline}
+                data-fs="sm"
+                data-hover-bc="neutral-500"
+                data-stack="y"
+                tabIndex={0}
+                {...ui.Spacing.surface}
+                {...ui.Gap.cluster}
+                {...file.label.props}
               >
-                <X data-size="xs" />
-                {t("app.clear")}
-              </button>
-            </div>
-          ) : (
-            <label
-              data-bc="neutral-700"
-              data-br="sm"
-              data-bs="dashed"
-              data-bw="hairline"
-              data-color="neutral-300"
-              data-cross="center"
-              data-cursor="pointer"
-              data-fs="sm"
-              data-hover-bc="neutral-500"
-              data-stack="y"
-              tabIndex={0}
-              {...ui.Spacing.surface}
-              {...ui.Gap.cluster}
-              {...file.label.props}
+                <FileUp data-color="neutral-400" data-size="md" />
+
+                {t("measurements.body_weight.import.select.cta")}
+
+                <span data-color="neutral-500" data-fs="xs">
+                  {t("measurements.body_weight.import.hint")}
+                </span>
+
+                <input
+                  className="c-visually-hidden"
+                  onChange={file.actions.selectFile}
+                  required
+                  type="file"
+                  {...file.input.props}
+                />
+              </label>
+            )}
+
+            <ui.TextLinkAnchor
+              data-self="start"
+              download
+              href="/public/body-weight-measurements-template.csv"
+              rel="noopener"
+              target="_blank"
             >
-              <FileUp data-color="neutral-400" data-size="md" />
+              <Download data-size="xs" />
+              {t("measurements.body_weight.import.template.cta")}
+            </ui.TextLinkAnchor>
+          </div>
 
-              {t("measurements.body_weight.import.select.cta")}
+          {mutation.isError && <ui.DialogError>{t("measurements.body_weight.import.error")}</ui.DialogError>}
 
-              <span data-color="neutral-500" data-fs="xs">
-                {t("measurements.body_weight.import.hint")}
-              </span>
-
-              <input
-                className="c-visually-hidden"
-                onChange={file.actions.selectFile}
-                required
-                type="file"
-                {...file.input.props}
-              />
-            </label>
-          )}
-
-          <ui.TextLinkAnchor
-            data-self="start"
-            download
-            href="/public/body-weight-measurements-template.csv"
-            rel="noopener"
-            target="_blank"
-          >
-            <Download data-size="xs" />
-            {t("measurements.body_weight.import.template.cta")}
-          </ui.TextLinkAnchor>
-        </div>
-
-        {mutation.isError && <ui.DialogError>{t("measurements.body_weight.import.error")}</ui.DialogError>}
-
-        <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
-          <button
-            className="c-button"
-            data-variant="primary"
-            disabled={!file.isSelected || mutation.isLoading}
-            type="submit"
-          >
-            <Upload data-size="sm" />
-            {t("measurements.body_weight.import.cta")}
-          </button>
-        </ui.DialogFooter>
-      </form>
-    </ui.Dialog>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
+            <button
+              className="c-button"
+              data-variant="primary"
+              disabled={!file.isSelected || mutation.isLoading}
+              type="submit"
+            >
+              <Upload data-size="sm" />
+              {t("measurements.body_weight.import.cta")}
+            </button>
+          </ui.DialogFooter>
+        </form>
+      </ui.Dialog>
+    </>
   );
 }
