@@ -4,7 +4,7 @@ import { Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { ChevronToggle, Chip, HairlineRow, Meta } from "../components";
+import { ChevronToggle, Chip, HairlineRow, Meta, RowIndex } from "../components";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 import { SetDots } from "../components/set-dots";
 import { SetsReps } from "../components/sets-reps";
@@ -67,20 +67,11 @@ export function WorkoutExerciseRow(props: {
         {expandable ? (
           <ChevronToggle {...workoutExerciseVisibility} />
         ) : (
-          <div
-            aria-hidden
-            data-color="neutral-600"
-            data-fs="xs"
-            data-md-p="1"
-            data-p="2-5"
-            data-shrink="0"
-            data-stack="x"
-            data-transform="font-variant-numeric"
-          >
+          <RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
             <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
               {props.workout.status === WorkoutStatusEnum.draft && props.index + 1}
             </span>
-          </div>
+          </RowIndex>
         )}
 
         <button

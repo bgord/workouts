@@ -5,7 +5,7 @@ import type {
   PlanGetResponse,
   PlanSection,
 } from "../../modules/plans/queries/get-plan";
-import { ExerciseImage, ExerciseImageSize, HairlineRow } from "../components";
+import { ExerciseImage, ExerciseImageSize, HairlineRow, RowIndex } from "../components";
 import { SetsReps } from "../components/sets-reps";
 import { PlanSectionExerciseInstructionEdit } from "./plan-section-exercise-instruction-edit";
 import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
@@ -33,9 +33,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-wrap="nowrap"
       tone="subtle"
     >
-      <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
-        {props.position}
-      </div>
+      <RowIndex>{props.position}</RowIndex>
 
       <Link
         aria-hidden

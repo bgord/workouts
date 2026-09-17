@@ -13,6 +13,7 @@ import {
   DialogHeader,
   ExercisePicker,
   HairlineBlock,
+  RowIndex,
   Stepper,
 } from "../components";
 import { planRoute } from "../router";
@@ -89,9 +90,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           type="button"
           {...planSectionExerciseInstructionAdd.props.controller}
         >
-          <div aria-hidden data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
-            {props.section.exerciseInstructions.length + 1}
-          </div>
+          <RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</RowIndex>
 
           <div
             data-bc="neutral-700"
@@ -145,9 +144,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           type="button"
           {...planSectionExerciseInstructionAdd.props.controller}
         >
-          <div aria-hidden data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
-            {props.section.exerciseInstructions.length + 1}
-          </div>
+          <RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</RowIndex>
 
           <div
             data-bc="neutral-700"

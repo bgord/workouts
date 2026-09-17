@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
-import { ChevronToggle, HairlineRow, Meta } from "../components";
+import { ChevronToggle, HairlineRow, Meta, RowIndex } from "../components";
 import { DeltaKg } from "../components/delta-kg";
 import { RepsLoad } from "../components/reps-load";
 import { RirBadge } from "../components/rir-badge";
@@ -133,15 +133,14 @@ function ExerciseHistoryRow(props: {
             <HairlineRow
               data-cross="center"
               data-gap="3"
+              data-md-ml="2"
               data-py="1-5"
               data-stack="x"
               first={position === 0}
               key={set.setNumber}
               tone="subtle"
             >
-              <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
-                {set.setNumber}
-              </div>
+              <RowIndex>{set.setNumber}</RowIndex>
 
               <div data-color="neutral-100" data-fs="sm" data-fw="medium">
                 <RepsLoad load={set.load} reps={set.reps} />
