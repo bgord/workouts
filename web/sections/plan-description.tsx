@@ -42,7 +42,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
   }
 
   return (
-    <div data-gap="2" data-stack="y">
+    <div data-stack="y" {...ui.Spacing.cluster}>
       {planDescriptionUpdate.off && (
         <button
           className="c-prose"
@@ -65,9 +65,9 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
 
       {planDescriptionUpdate.on && (
         <form
-          data-gap="2"
           data-stack="y"
           onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.cluster}
           {...planDescriptionUpdate.props.target}
         >
           <textarea
@@ -81,7 +81,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
             {...description.input.props}
           />
 
-          <div data-cross="center" data-gap="1" data-stack="x">
+          <div data-cross="center" data-stack="x" {...ui.Spacing.inline}>
             <button
               className="c-button"
               data-variant="secondary"

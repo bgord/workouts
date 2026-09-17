@@ -34,17 +34,17 @@ export function Workout() {
 
   return (
     <ui.Main>
-      <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+      <div data-stack="y" {...ui.Spacing.related}>
+        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
           <ui.ButtonBack search={search} to="/workouts" />
 
           <div
             data-cross="center"
-            data-gap="3"
             data-grow="1"
             data-stack="x"
             data-wrap="nowrap"
             style={{ flexBasis: 0, minWidth: 0 }}
+            {...ui.Spacing.related}
           >
             <ui.Header>
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
@@ -57,12 +57,11 @@ export function Workout() {
 
           <div
             data-cross="center"
-            data-gap="2"
-            data-md-pl={primary ? "4" : undefined}
             data-md-width={primary ? "100%" : undefined}
             data-shrink="0"
             data-stack="x"
             data-wrap="nowrap"
+            {...ui.Spacing.cluster}
           >
             {workout.actions.start.available && (
               <WorkoutStart action={workout.actions.start} {...workout.data} />
@@ -82,7 +81,7 @@ export function Workout() {
           </div>
         </div>
 
-        <div data-gap="3" data-md-pl="4" data-pl="12" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.inset} {...ui.Spacing.related}>
           {workout.actions.reschedule.available ? (
             <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
           ) : (
@@ -123,7 +122,7 @@ export function Workout() {
         </ul>
 
         {workout.actions.exerciseAdd.available && (
-          <div data-gap="2" data-stack="y">
+          <div data-stack="y" {...ui.Spacing.cluster}>
             <WorkoutExerciseAdd
               action={workout.actions.exerciseAdd}
               first={workout.data.exercises.length === 0}

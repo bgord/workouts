@@ -5,6 +5,7 @@ import { DateFormat } from "../services/date-format";
 import { Meta } from "./meta";
 import { PlanStatusBadge } from "./plan-status-badge";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
+import { Spacing } from "./spacing";
 
 export function PlanCard(props: PlanSummary) {
   const t = useTranslations();
@@ -21,8 +22,8 @@ export function PlanCard(props: PlanSummary) {
           </Meta>
         )}
 
-        <Meta data-cross="center" data-gap="3" data-stack="x" truncate>
-          <div data-cross="center" data-gap="1" data-stack="x" title={t("plan.sections")}>
+        <Meta data-cross="center" data-stack="x" truncate {...Spacing.related}>
+          <div data-cross="center" data-stack="x" title={t("plan.sections")} {...Spacing.inline}>
             <Layers data-size="xs" />
             {props.sections}
           </div>

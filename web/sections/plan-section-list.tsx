@@ -23,12 +23,7 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
       </ul>
 
       {props.actions.sectionCreate.available && (
-        <ui.HairlineBlock
-          data-gap="2"
-          data-pt={props.sections.length === 0 ? undefined : "4"}
-          data-stack="y"
-          first={props.sections.length === 0}
-        >
+        <ui.HairlineBlock data-stack="y" first={props.sections.length === 0} last {...ui.Spacing.row}>
           <PlanSectionCreate action={props.actions.sectionCreate} {...props} />
 
           {props.sections.length === 0 && <ui.Meta>{t("plan.section.list.empty.hint")}</ui.Meta>}

@@ -60,13 +60,12 @@ export function WorkoutExerciseTargetSet(
     <form
       aria-busy={mutation.isLoading}
       data-cross="center"
-      data-gap="2-5"
-      data-md-gap="2"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.related}
       {...toggle.props.target}
     >
-      <div data-cross="center" data-gap="2" data-md-gap="1" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
         <ui.Stepper
           disabled={mutation.isLoading}
           field={sets}
@@ -106,7 +105,7 @@ export function WorkoutExerciseTargetSet(
         />
       </div>
 
-      <div data-cross="center" data-gap="1" data-ml="auto" data-shrink="0" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-ml="auto" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
         <ui.IconButton
           aria-label={t("app.save")}
           disabled={

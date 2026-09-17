@@ -41,14 +41,14 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
   const assignActionAvailable = props.exercise.actions.categoryAssign.available && assignable.length > 0;
 
   return (
-    <div data-gap="3" data-stack="y">
+    <div data-stack="y" {...ui.Spacing.cluster}>
       <div
         data-cross="center"
-        data-gap="3"
         data-main="between"
         data-stack="x"
         data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
+        {...ui.Spacing.related}
       >
         <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
@@ -70,10 +70,10 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
       {assignActionAvailable && assignment.on && (
         <form
           data-cross="center"
-          data-gap="1"
           data-stack="x"
           data-wrap="nowrap"
           onSubmit={assign.handleSubmit}
+          {...ui.Spacing.inline}
           {...assignment.props.target}
         >
           <ui.Select
@@ -108,7 +108,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         </form>
       )}
 
-      <ul data-gap="2" data-stack="x" data-wrap="wrap">
+      <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.cluster}>
         {assigned.map((category) => (
           <li key={category.id}>
             <ui.Chip>

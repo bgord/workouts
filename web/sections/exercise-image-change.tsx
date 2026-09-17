@@ -37,7 +37,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
   });
 
   return (
-    <div data-gap="3" data-stack="y">
+    <div data-stack="y" {...ui.Spacing.related}>
       <button
         data-cursor="pointer"
         data-disp="flex"
@@ -65,24 +65,24 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
 
       {exerciseImageChange.on && (
         <form
-          data-gap="2"
           data-stack="y"
           encType="multipart/form-data"
           onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.cluster}
           {...exerciseImageChange.props.target}
         >
-          <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
+          <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
             <label
               className="c-button"
               data-cross="center"
               data-disp="flex"
-              data-gap="2"
               data-grow="1"
               data-main="center"
               data-variant="secondary"
               data-wrap="nowrap"
               style={label}
               tabIndex={0}
+              {...ui.Spacing.cluster}
               {...image.label.props}
             >
               {image.isSelected ? (

@@ -40,7 +40,7 @@ export function WorkoutExerciseRow(props: {
   const mobile = width !== undefined && width <= 768;
 
   const actions = (
-    <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
+    <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
       {props.exercise.actions.remove.available && (
         <WorkoutExerciseRemove
           action={props.exercise.actions.remove}
@@ -52,14 +52,8 @@ export function WorkoutExerciseRow(props: {
   );
 
   return (
-    <ui.HairlineRow
-      data-gap="2"
-      data-pb={props.last ? undefined : "4"}
-      data-pt={props.index === 0 ? undefined : "4"}
-      data-stack="y"
-      first={props.index === 0}
-    >
-      <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
+    <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
         {expandable ? (
           <ui.ChevronToggle {...workoutExerciseVisibility} />
         ) : (
@@ -86,7 +80,7 @@ export function WorkoutExerciseRow(props: {
           <ui.ExerciseImage size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm} {...exercise} />
         </button>
 
-        <div data-gap="1" data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }}>
+        <div data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }} {...ui.Spacing.inline}>
           <Link
             data-color="neutral-100"
             data-fs="sm"
@@ -100,7 +94,7 @@ export function WorkoutExerciseRow(props: {
             {props.exercise.exerciseName}
           </Link>
 
-          <div data-cross="baseline" data-gap="2" data-stack="x" data-wrap="nowrap">
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
             {props.exercise.actions.targetSet.available ? (
               <button
                 data-bc={props.exercise.target ? undefined : "neutral-700"}
@@ -112,7 +106,6 @@ export function WorkoutExerciseRow(props: {
                 data-cursor="pointer"
                 data-fs={props.exercise.target ? "sm" : "xs"}
                 data-fw={props.exercise.target ? "medium" : undefined}
-                data-gap="1"
                 data-hover-color="neutral-0"
                 data-px={props.exercise.target ? undefined : "2"}
                 data-shrink="0"
@@ -123,6 +116,7 @@ export function WorkoutExerciseRow(props: {
                 onClick={workoutExerciseTarget.toggle}
                 title={t("workout.target.cta")}
                 type="button"
+                {...ui.Spacing.inline}
                 {...workoutExerciseTarget.props.controller}
               >
                 <Target data-color="neutral-500" data-size="xs" />
@@ -147,11 +141,11 @@ export function WorkoutExerciseRow(props: {
                   data-cross="center"
                   data-fs="sm"
                   data-fw="medium"
-                  data-gap="1"
                   data-shrink="0"
                   data-stack="x"
                   data-transform="font-variant-numeric"
                   data-wrap="nowrap"
+                  {...ui.Spacing.inline}
                 >
                   <Target data-color="neutral-500" data-size="xs" />
                   <ui.SetsRepsLoad
@@ -198,8 +192,7 @@ export function WorkoutExerciseRow(props: {
           className="c-prose"
           data-color="neutral-300"
           data-fs="sm"
-          data-md-pl="0"
-          data-pl="12"
+          {...ui.Spacing.inset}
           {...workoutExerciseDescription.props.target}
         >
           {props.exercise.exerciseDescription}
@@ -207,7 +200,7 @@ export function WorkoutExerciseRow(props: {
       )}
 
       {workoutExerciseTarget.on && props.exercise.actions.targetSet.available && (
-        <div data-md-pl="8" data-pl="12">
+        <div {...ui.Spacing.inset}>
           <WorkoutExerciseTargetSet
             action={props.exercise.actions.targetSet}
             exercise={props.exercise}
@@ -218,13 +211,7 @@ export function WorkoutExerciseRow(props: {
       )}
 
       {expandable && workoutExerciseVisibility.on && (
-        <div
-          data-gap="0"
-          data-md-pl="0"
-          data-pl="12"
-          data-stack="y"
-          {...workoutExerciseVisibility.props.target}
-        >
+        <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
           {props.exercise.actions.setLog.available && (

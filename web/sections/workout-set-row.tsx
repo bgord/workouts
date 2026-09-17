@@ -9,8 +9,8 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
   const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
-    <ui.HairlineRow data-gap="1" data-py="1-5" data-stack="y" tone="subtle">
-      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
+    <ui.HairlineRow data-stack="y" tone="subtle" {...ui.Spacing.rowCompact} {...ui.Spacing.inline}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
         <ui.RowIndex data-md-disp={workoutSetCorrect.on ? "none" : undefined}>
           {props.loggedSet.setNumber}
         </ui.RowIndex>
@@ -29,11 +29,11 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
 
         <div
           data-cross="center"
-          data-gap="1"
           data-grow={workoutSetCorrect.on ? "1" : undefined}
           data-shrink="0"
           data-stack="x"
           data-wrap="nowrap"
+          {...ui.Spacing.inline}
         >
           {props.loggedSet.actions.correct.available && (
             <WorkoutSetCorrect

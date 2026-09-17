@@ -38,14 +38,8 @@ function ExerciseHistoryRow(props: {
   const open = usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
   return (
-    <ui.HairlineRow
-      data-gap="2"
-      data-pb={props.last ? undefined : "3"}
-      data-pt={props.index === 0 ? undefined : "3"}
-      data-stack="y"
-      first={props.index === 0}
-    >
-      <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
+    <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
         <ui.ChevronToggle {...open} />
 
         <Link
@@ -53,7 +47,6 @@ function ExerciseHistoryRow(props: {
           data-cross="center"
           data-fs="sm"
           data-fw="medium"
-          data-gap="1-5"
           data-hover-color="brand-300"
           data-stack="x"
           data-transform="font-variant-numeric"
@@ -61,6 +54,7 @@ function ExerciseHistoryRow(props: {
           params={{ workoutId: props.performance.workoutId }}
           search={WorkoutHistoryFilters.default}
           to="/workouts/$workoutId"
+          {...ui.Spacing.inline}
         >
           {props.performance.scheduledFor}
 
@@ -75,16 +69,16 @@ function ExerciseHistoryRow(props: {
 
         <div
           data-cross="baseline"
-          data-gap="4"
           data-md-cross="end"
-          data-md-gap="0-5"
+          data-md-gap="1"
           data-md-stack="y"
           data-ml="auto"
           data-shrink="0"
           data-stack="x"
           data-wrap="nowrap"
+          {...ui.Spacing.block}
         >
-          <div data-cross="baseline" data-gap="1-5" data-stack="x" data-wrap="nowrap">
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
             <EqualApproximately data-color="neutral-600" data-self="center" data-size="xs" />
 
             <span
@@ -103,7 +97,7 @@ function ExerciseHistoryRow(props: {
             </span>
           </div>
 
-          <div data-cross="baseline" data-gap="1-5" data-stack="x" data-wrap="nowrap">
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
             <Sigma data-color="neutral-600" data-self="center" data-size="xs" />
 
             <span
@@ -125,17 +119,14 @@ function ExerciseHistoryRow(props: {
       </div>
 
       {open.on && (
-        <ul data-md-pl="0" data-pl="12" data-stack="y" {...open.props.target}>
-          {props.performance.sets.map((set, position) => (
+        <ul data-stack="y" {...ui.Spacing.inset} {...open.props.target}>
+          {props.performance.sets.map((set) => (
             <ui.HairlineRow
               data-cross="center"
-              data-gap="3"
-              data-md-ml="2"
-              data-py="1-5"
               data-stack="x"
-              first={position === 0}
               key={set.setNumber}
               tone="subtle"
+              {...ui.Spacing.rowCompact}
             >
               <ui.RowIndex>{set.setNumber}</ui.RowIndex>
 
@@ -145,7 +136,7 @@ function ExerciseHistoryRow(props: {
 
               <div data-grow="1">{set.rir !== undefined && <ui.RirBadge rir={set.rir} />}</div>
 
-              <ui.Meta data-cross="center" data-gap="1" data-stack="x">
+              <ui.Meta data-cross="center" data-stack="x" {...ui.Spacing.inline}>
                 <EqualApproximately data-color="neutral-600" data-size="xs" />
                 {t("statistics.exercise.one_rep_max_estimate.value", {
                   load: WeightFormat.kilograms(set.estimate),

@@ -33,11 +33,11 @@ export function Plan() {
 
   return (
     <ui.Main>
-      <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
+      <div data-stack="y" {...ui.Spacing.related}>
+        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
           <ui.ButtonBack to="/plans" />
 
-          <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
+          <div data-cross="center" data-grow="1" data-stack="x" data-wrap="nowrap" style={title} {...ui.Spacing.related}>
             {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
             {!plan.actions.rename.available && <ui.Header>{plan.data.name}</ui.Header>}
@@ -49,12 +49,11 @@ export function Plan() {
 
           <div
             data-cross="center"
-            data-gap="2"
-            data-md-pl="4"
             data-md-width="100%"
             data-shrink="0"
             data-stack="x"
             data-wrap="nowrap"
+            {...ui.Spacing.cluster}
           >
             {plan.actions.finalize.available && (
               <PlanFinalize action={plan.actions.finalize} {...plan.data} />
@@ -72,7 +71,7 @@ export function Plan() {
           </div>
         </div>
 
-        <div data-gap="3" data-md-pl="4" data-pl="12" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.inset} {...ui.Spacing.related}>
           <ui.Meta truncate>
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),

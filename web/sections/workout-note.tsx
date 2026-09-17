@@ -29,7 +29,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
   });
 
   return (
-    <div data-gap="2" data-stack="y">
+    <div data-stack="y" {...ui.Spacing.cluster}>
       {workoutNoteUpdate.off && (
         <button
           className="c-prose"
@@ -52,9 +52,9 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
 
       {workoutNoteUpdate.on && (
         <form
-          data-gap="2"
           data-stack="y"
           onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.cluster}
           {...workoutNoteUpdate.props.target}
         >
           <textarea
@@ -68,7 +68,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
             {...note.input.props}
           />
 
-          <div data-cross="center" data-gap="1" data-stack="x">
+          <div data-cross="center" data-stack="x" {...ui.Spacing.inline}>
             <button
               className="c-button"
               data-variant="secondary"

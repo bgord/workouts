@@ -50,12 +50,9 @@ export function WorkoutSetLog(props: {
     <form
       aria-busy={mutation.isLoading}
       data-cross="center"
-      data-gap="2-5"
-      data-md-gap="1"
-      data-mt="1"
-      data-pt="2"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.rowCompact}
     >
       <div
         aria-hidden
@@ -67,14 +64,7 @@ export function WorkoutSetLog(props: {
         {props.exercise.loggedSets.length + 1}
       </div>
 
-      <div
-        data-cross="center"
-        data-gap="2"
-        data-md-gap="1"
-        data-md-grow="1"
-        data-stack="x"
-        data-wrap="nowrap"
-      >
+      <div data-cross="center" data-md-grow="1" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
         <ui.Stepper
           disabled={busy}
           field={reps}

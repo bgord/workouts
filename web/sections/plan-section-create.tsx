@@ -37,14 +37,13 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
 
   if (planSectionCreate.off) {
     return (
-      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
         <button
           data-color="neutral-400"
           data-cross="center"
           data-cursor="pointer"
           data-fs="sm"
           data-fw="medium"
-          data-gap="3"
           data-grow="1"
           data-hover-color="neutral-0"
           data-stack="x"
@@ -52,6 +51,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           disabled={!props.action.enabled}
           onClick={planSectionCreate.enable}
           type="button"
+          {...ui.Spacing.related}
           {...planSectionCreate.props.controller}
         >
           <div
@@ -78,8 +78,8 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...planSectionCreate.props.target}>
-      <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
+    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.cluster} {...planSectionCreate.props.target}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
         <div
           data-bc="neutral-700"
           data-br="sm"
@@ -106,7 +106,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           {...planSectionName.input.props}
         />
 
-        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
+        <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
           <ui.IconButton
             aria-label={t("app.save")}
             disabled={planSectionName.empty || mutation.isLoading}

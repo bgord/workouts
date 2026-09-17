@@ -48,12 +48,12 @@ export function PlanArchive(props: Plan) {
           {t("plan.archive.header")}
         </ui.DialogHeader>
 
-        <div data-gap="3" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.related}>
           <ui.DialogInfo>{t("plan.archive.info", { name: props.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="restorable" />
         </div>
 
-        <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
+        <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.stack}>
           {mutation.isError && <ui.DialogError>{t("plan.archive.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={planArchive.disable}>

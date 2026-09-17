@@ -55,12 +55,10 @@ export function PlanSectionExerciseInstructionAdd(props: {
     return (
       <ui.HairlineBlock
         data-cross="center"
-        data-gap="3"
-        data-md-ml="3"
-        data-ml="6"
         data-stack="x"
         data-wrap="nowrap"
         tone="subtle"
+        {...ui.Spacing.rowCompact}
       >
         <button
           data-color="neutral-400"
@@ -68,15 +66,14 @@ export function PlanSectionExerciseInstructionAdd(props: {
           data-cursor="pointer"
           data-fs="sm"
           data-fw="medium"
-          data-gap="3"
           data-grow="1"
           data-hover-color="neutral-0"
-          data-py="2"
           data-stack="x"
           data-wrap="nowrap"
           disabled={!props.action.enabled}
           onClick={planSectionExerciseInstructionAdd.enable}
           type="button"
+          {...ui.Spacing.related}
           {...planSectionExerciseInstructionAdd.props.controller}
         >
           <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
@@ -115,22 +112,27 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   return (
     <>
-      <ui.HairlineBlock data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap" tone="subtle">
+      <ui.HairlineBlock
+        data-cross="center"
+        data-stack="x"
+        data-wrap="nowrap"
+        tone="subtle"
+        {...ui.Spacing.rowCompact}
+      >
         <button
           data-color="neutral-400"
           data-cross="center"
           data-cursor="pointer"
           data-fs="sm"
           data-fw="medium"
-          data-gap="3"
           data-grow="1"
           data-hover-color="neutral-0"
-          data-py="2"
           data-stack="x"
           data-wrap="nowrap"
           disabled={!props.action.enabled}
           onClick={planSectionExerciseInstructionAdd.enable}
           type="button"
+          {...ui.Spacing.related}
           {...planSectionExerciseInstructionAdd.props.controller}
         >
           <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
@@ -169,8 +171,8 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
         <form
           aria-busy={mutation.isLoading}
-          data-gap="6"
           data-stack="y"
+          {...ui.Spacing.section}
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
@@ -183,7 +185,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
             value={exerciseId.value}
           />
 
-          <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }}>
+          <div data-cross="center" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }} {...ui.Spacing.cluster}>
             <ui.Stepper
               field={sets}
               label={t("plan.section.exercise.add.sets.label")}

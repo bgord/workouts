@@ -65,8 +65,8 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
   const line = points.map((point) => `${point.x},${point.y}`).join(" ");
 
   return (
-    <div data-gap="3" data-stack="y" data-variant="flat">
-      <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
+    <div data-stack="y" data-variant="flat" {...ui.Spacing.related}>
+      <div data-cross="center" data-main="between" data-stack="x" {...ui.Spacing.related}>
         <ui.SectionHeading>{t("statistics.exercise.progress")}</ui.SectionHeading>
 
         <ui.Eyebrow data-cross="center" data-stack="x">

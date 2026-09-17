@@ -22,16 +22,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   const controls = editable || actions.remove.available;
 
   return (
-    <ui.HairlineRow
-      data-cross="center"
-      data-gap="3"
-      data-md-ml="3"
-      data-ml="6"
-      data-py="2"
-      data-stack="x"
-      data-wrap="nowrap"
-      tone="subtle"
-    >
+    <ui.HairlineRow data-cross="center" data-stack="x" data-wrap="nowrap" tone="subtle" {...ui.Spacing.rowCompact}>
       <ui.RowIndex>{props.position}</ui.RowIndex>
 
       <Link
@@ -44,7 +35,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         <ui.ExerciseImage size={ui.ExerciseImageSize.sm} {...exerciseInstruction.exercise} />
       </Link>
 
-      <div data-gap="1" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
+      <div data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth} {...ui.Spacing.inline}>
         <Link
           data-color="neutral-100"
           data-fs="sm"
@@ -72,7 +63,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {controls && (
-        <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
+        <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
           {editable && (
             <PlanSectionExerciseInstructionEdit
               exerciseInstruction={exerciseInstruction}

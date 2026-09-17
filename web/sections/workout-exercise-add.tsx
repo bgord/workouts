@@ -58,11 +58,12 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
     <>
       <ui.HairlineBlock
         data-cross="center"
-        data-gap="3"
-        data-pt={props.first ? undefined : "4"}
         data-stack="x"
         data-wrap="nowrap"
         first={props.first}
+        last
+        {...ui.Spacing.row}
+        {...ui.Spacing.related}
       >
         <button
           data-color="neutral-400"
@@ -70,7 +71,6 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           data-cursor="pointer"
           data-fs="sm"
           data-fw="medium"
-          data-gap="3"
           data-grow="1"
           data-hover-color="neutral-0"
           data-stack="x"
@@ -78,6 +78,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           disabled={!props.action.enabled}
           onClick={workoutExerciseAdd.enable}
           type="button"
+          {...ui.Spacing.related}
           {...workoutExerciseAdd.props.controller}
         >
           <div
@@ -108,11 +109,11 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
 
         <form
           aria-busy={mutation.isLoading}
-          data-gap="6"
           data-stack="y"
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
+          {...ui.Spacing.section}
         >
           <ui.ExercisePicker
             exercises={exercises.data}
@@ -122,7 +123,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
             value={exerciseId.value}
           />
 
-          <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }}>
+          <div data-cross="center" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }} {...ui.Spacing.cluster}>
             <ui.Stepper
               field={sets}
               label={t("workout.exercise.add.sets.label")}

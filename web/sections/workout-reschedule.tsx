@@ -59,10 +59,10 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
     <form
       aria-busy={mutation.isLoading}
       data-cross="center"
-      data-gap="1"
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.inline}
       {...workoutReschedule.props.target}
     >
       <input

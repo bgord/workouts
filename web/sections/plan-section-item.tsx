@@ -22,19 +22,13 @@ export function PlanSectionItem(props: {
   const planSectionRename = bg.useToggle({ name: `plan-section-rename-${section.id}` });
 
   return (
-    <ui.HairlineRow
-      data-gap="2"
-      data-pb={last ? undefined : "4"}
-      data-pt={index === 0 ? undefined : "4"}
-      data-stack="y"
-      first={index === 0}
-    >
+    <ui.HairlineRow data-stack="y" first={index === 0} last={last} {...ui.Spacing.row}>
       <div
         data-cross="center"
-        data-gap="2"
         data-stack="x"
         data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
+        {...ui.Spacing.related}
       >
         <ui.ChevronToggle {...planSectionVisibility} />
         <div data-grow="1" data-transform="truncate">
@@ -69,7 +63,7 @@ export function PlanSectionItem(props: {
       </div>
 
       {planSectionVisibility.on && (
-        <div data-gap="0" data-stack="y" {...planSectionVisibility.props.target}>
+        <div data-stack="y" {...ui.Spacing.inset} {...planSectionVisibility.props.target}>
           <PlanSectionExerciseInstructionList plan={plan} section={section} />
 
           {section.actions.exerciseInstructionAdd.available && (

@@ -51,9 +51,9 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
 
   return (
     <form
-      data-gap="2"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.cluster}
       {...exerciseDescriptionUpdate.props.target}
     >
       <textarea
@@ -65,7 +65,7 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
         {...description.input.props}
       />
 
-      <div data-cross="center" data-gap="1" data-stack="x">
+      <div data-cross="center" data-stack="x" {...ui.Spacing.inline}>
         <button
           className="c-button"
           data-variant="secondary"

@@ -33,13 +33,13 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
   });
 
   return (
-    <ui.Dialog data-md-mt="12" {...toggle}>
+    <ui.Dialog {...toggle}>
       <ui.DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
         {t("plan.create.cta")}
       </ui.DialogHeader>
 
-      <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
-        <div data-gap="1-5" data-stack="y">
+      <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.section}>
+        <div data-stack="y" {...ui.Spacing.field}>
           <label className="c-label" {...name.label.props}>
             {t("plan.create.name.label")}
           </label>

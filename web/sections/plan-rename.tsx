@@ -56,14 +56,14 @@ export function PlanRename(props: Plan) {
 
   return (
     <form
-      data-gap="2"
       data-grow="1"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...bg.Rhythm().times(0).style.minWidth}
+      {...ui.Spacing.cluster}
       {...planRename.props.target}
     >
-      <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
         <input
           aria-label={t("plan.rename.label")}
           className="c-input"

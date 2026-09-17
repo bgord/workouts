@@ -34,11 +34,11 @@ export function Exercise() {
 
   return (
     <ui.Main>
-      <div data-gap="3" data-stack="y">
-        <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
+      <div data-stack="y" {...ui.Spacing.related}>
+        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
           <ui.ButtonBack search={Form.default} to="/catalog" />
 
-          <div data-cross="center" data-gap="2" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
+          <div data-cross="center" data-grow="1" data-stack="x" data-wrap="nowrap" style={title} {...ui.Spacing.related}>
             {exercise.actions.update.enabled ? (
               <ExerciseNameUpdate exercise={exercise.data} />
             ) : (
@@ -47,7 +47,7 @@ export function Exercise() {
           </div>
 
           {exercise.actions.delete.available && (
-            <div data-cross="center" data-gap="2" data-shrink="0" data-stack="x" data-wrap="nowrap">
+            <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
               <div data-md-disp="none">
                 <ui.ActionHint {...exercise.actions.delete} />
               </div>
@@ -64,7 +64,7 @@ export function Exercise() {
         )}
       </div>
 
-      <div data-cross="start" data-gap="6" data-md-px="0" data-px="4" data-stack="x" data-wrap="wrap">
+      <div data-cross="start" data-md-px="0" data-px="4" data-stack="x" data-wrap="wrap" {...ui.Spacing.section}>
         <div data-md-grow="1" style={image}>
           {exercise.actions.imageChange.enabled ? (
             <ExerciseImageChange exercise={exercise.data} />
@@ -73,14 +73,14 @@ export function Exercise() {
           )}
         </div>
 
-        <div data-gap="4" data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width}>
+        <div data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width} {...ui.Spacing.block}>
           {exercise.actions.categoryAssign.available ? (
             <ExerciseCategories exercise={exercise} />
           ) : (
-            <div data-gap="2" data-stack="y">
+            <div data-stack="y" {...ui.Spacing.cluster}>
               <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
-              <ul data-gap="2" data-stack="x" data-wrap="wrap">
+              <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.cluster}>
                 {exercise.data.categories.map((category) => (
                   <li key={category.id}>
                     <ui.ChipLink search={{ category: category.id, name: Form.default.name }} to="/catalog">
@@ -92,7 +92,7 @@ export function Exercise() {
             </div>
           )}
 
-          <div data-gap="2" data-stack="y">
+          <div data-stack="y" {...ui.Spacing.cluster}>
             <ui.Eyebrow>{t("exercise.add.description.label")}</ui.Eyebrow>
 
             {exercise.actions.update.enabled ? (
@@ -117,12 +117,12 @@ export function Exercise() {
       )}
 
       {performances.length > 0 && (
-        <div data-gap="6" data-md-px="0" data-px="4" data-stack="y">
+        <div data-md-px="0" data-px="4" data-stack="y" {...ui.Spacing.section}>
           <ExerciseStats performances={performances} />
 
           <ExerciseProgressChart performances={performances} />
 
-          <div data-gap="3" data-stack="y">
+          <div data-stack="y" {...ui.Spacing.related}>
             <ui.SectionHeading>{t("statistics.exercise.history")}</ui.SectionHeading>
 
             <ExerciseHistory performances={performances} />

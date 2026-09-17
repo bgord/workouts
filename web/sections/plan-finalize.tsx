@@ -25,7 +25,7 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
   });
 
   return (
-    <form data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap" onSubmit={mutation.handleSubmit}>
+    <form data-cross="center" data-stack="x" data-wrap="nowrap" onSubmit={mutation.handleSubmit} {...ui.Spacing.related}>
       <button
         className="c-button"
         data-variant="primary"

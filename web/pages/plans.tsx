@@ -16,7 +16,7 @@ export function Plans() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-gap="3" data-stack="x">
+      <div data-cross="center" data-stack="x" {...ui.Spacing.related}>
         <ui.Header data-grow="1">{t("plan.list.header")}</ui.Header>
 
         <ui.ActionHint {...plans.actions.create} data-md-width="100%" />
@@ -37,7 +37,7 @@ export function Plans() {
 
       {plans.actions.create.enabled && <PlanCreate {...planCreate} />}
 
-      <div data-gap="2" data-stack="y">
+      <div data-stack="y" {...ui.Spacing.cluster}>
         <ui.Eyebrow>{t("plan.list.active.header")}</ui.Eyebrow>
 
         {empty && (
@@ -53,7 +53,7 @@ export function Plans() {
         )}
 
         {plans.data.active.length > 0 && (
-          <ul data-gap="2" data-stack="y">
+          <ul data-stack="y" {...ui.Spacing.cluster}>
             {plans.data.active.map((plan) => (
               <ui.PlanCard key={plan.id} {...plan} />
             ))}
@@ -62,12 +62,10 @@ export function Plans() {
       </div>
 
       {plans.data.archived.length > 0 && (
-        <div data-gap="2" data-stack="y">
-          <div data-cross="center" data-gap="2" data-stack="x">
-            <ui.Eyebrow data-grow="1">{t("plan.list.archived.header")}</ui.Eyebrow>
-          </div>
+        <div data-stack="y" {...ui.Spacing.cluster}>
+          <ui.Eyebrow>{t("plan.list.archived.header")}</ui.Eyebrow>
 
-          <ul data-gap="2" data-opacity="high" data-stack="y">
+          <ul data-opacity="high" data-stack="y" {...ui.Spacing.cluster}>
             {plans.data.archived.map((plan) => (
               <ui.PlanCard key={plan.id} {...plan} />
             ))}

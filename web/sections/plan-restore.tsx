@@ -24,7 +24,7 @@ export function PlanRestore(props: Plan) {
   });
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit}>
+    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.cluster}>
       <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
         <ArchiveRestore data-size="sm" />
         {t("plan.restore.cta")}
