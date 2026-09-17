@@ -1,16 +1,16 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, FileImage, ImageUp, X } from "lucide-react";
-import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
 const label = { minWidth: 0 };
 
-export function ExerciseImageChange(props: { exercise: ExerciseWithCategories }) {
+export function ExerciseImageChange() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { exercise } = exerciseRoute.useLoaderData();
 
   const exerciseImageChange = bg.useToggle({ name: "exercise-image-change" });
 
@@ -22,7 +22,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
 
       if (image.data) form.append("file", image.data);
 
-      return fetch(`/api/exercises/${props.exercise.id}/image`, {
+      return fetch(`/api/exercises/${exercise.data.id}/image`, {
         method: "PATCH",
         body: form,
         credentials: "include",
@@ -36,6 +36,10 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
     },
   });
 
+  if (!exercise.actions.imageChange.enabled) {
+    return <ui.ExerciseImage size={ui.ExerciseImageSize.lg} {...exercise.data} />;
+  }
+
   return (
     <div data-stack="y" {...ui.Gap.related}>
       <button
@@ -46,7 +50,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
         type="button"
         {...exerciseImageChange.props.controller}
       >
-        <ui.ExerciseImage size={ui.ExerciseImageSize.lg} {...props.exercise} />
+        <ui.ExerciseImage size={ui.ExerciseImageSize.lg} {...exercise.data} />
       </button>
 
       {exerciseImageChange.off && (

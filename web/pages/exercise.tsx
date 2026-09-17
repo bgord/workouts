@@ -39,11 +39,7 @@ export function Exercise() {
 
       <div data-cross="start" data-stack="x" data-wrap="wrap" {...ui.Gap.section}>
         <div data-md-grow="1" style={{ flexBasis: 320, minWidth: 0 }}>
-          {exercise.actions.imageChange.enabled ? (
-            <ExerciseImageChange exercise={exercise.data} />
-          ) : (
-            <ui.ExerciseImage size={ui.ExerciseImageSize.lg} {...exercise.data} />
-          )}
+          <ExerciseImageChange />
         </div>
 
         <div data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width} {...ui.Gap.block}>
