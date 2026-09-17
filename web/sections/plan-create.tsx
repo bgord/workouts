@@ -5,11 +5,13 @@ import { Form } from "../../app/services/plan-create-form";
 import * as ui from "../components";
 import { plansRoute } from "../router";
 
-export function PlanCreate(props: bg.UseToggleReturnType) {
+export function PlanCreate() {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = plansRoute.useNavigate();
-  const { toggle } = bg.extractUseToggle(props);
+  const { plans } = plansRoute.useLoaderData();
+
+  const planCreate = bg.useToggle({ name: "plan-create" });
 
   const name = bg.useTextField(Form.name.field);
 
@@ -23,7 +25,7 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
     onSuccess: async (response, context) => {
       const { id } = await response.json();
 
-      toggle.disable();
+      planCreate.disable();
       bg.Fields.clearAll([name]);
       context.form?.reset();
 
@@ -33,46 +35,63 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
   });
 
   return (
-    <ui.Dialog {...toggle}>
-      <ui.DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
-        {t("plan.create.cta")}
-      </ui.DialogHeader>
+    <>
+      <ui.ActionHint {...plans.actions.create} data-md-width="100%" />
 
-      <form
-        aria-busy={mutation.isLoading}
-        data-stack="y"
-        onSubmit={mutation.handleSubmit}
-        {...ui.Gap.section}
+      <button
+        className="c-button"
+        data-md-width="100%"
+        data-variant="primary"
+        disabled={!plans.actions.create.enabled}
+        onClick={planCreate.enable}
+        type="button"
+        {...planCreate.props.controller}
       >
-        <div data-stack="y" {...ui.Gap.field}>
-          <label className="c-label" {...name.label.props}>
-            {t("plan.create.name.label")}
-          </label>
+        <Plus data-size="sm" />
+        {t("plan.create.cta")}
+      </button>
 
-          <input
-            className="c-input"
-            data-variant="transparent"
-            data-width="100%"
-            placeholder={t("plan.create.name.placeholder")}
-            {...bg.Form.input(Form.name.pattern)}
-            {...name.input.props}
-          />
-        </div>
+      <ui.Dialog {...planCreate}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={planCreate.disable}>
+          {t("plan.create.cta")}
+        </ui.DialogHeader>
 
-        {mutation.isError && <ui.DialogError>{t("plan.create.error")}</ui.DialogError>}
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Gap.section}
+        >
+          <div data-stack="y" {...ui.Gap.field}>
+            <label className="c-label" {...name.label.props}>
+              {t("plan.create.name.label")}
+            </label>
 
-        <ui.DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
-          <button
-            className="c-button"
-            data-variant="primary"
-            disabled={name.unchanged || mutation.isLoading}
-            type="submit"
-          >
-            <Plus data-size="sm" />
-            {t("plan.create.submit.cta")}
-          </button>
-        </ui.DialogFooter>
-      </form>
-    </ui.Dialog>
+            <input
+              className="c-input"
+              data-variant="transparent"
+              data-width="100%"
+              placeholder={t("plan.create.name.placeholder")}
+              {...bg.Form.input(Form.name.pattern)}
+              {...name.input.props}
+            />
+          </div>
+
+          {mutation.isError && <ui.DialogError>{t("plan.create.error")}</ui.DialogError>}
+
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={planCreate.disable}>
+            <button
+              className="c-button"
+              data-variant="primary"
+              disabled={name.unchanged || mutation.isLoading}
+              type="submit"
+            >
+              <Plus data-size="sm" />
+              {t("plan.create.submit.cta")}
+            </button>
+          </ui.DialogFooter>
+        </form>
+      </ui.Dialog>
+    </>
   );
 }
