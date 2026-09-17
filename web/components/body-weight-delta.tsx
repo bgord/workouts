@@ -8,14 +8,18 @@ const color = (positive: boolean, goal: BodyWeightGoalOptions | undefined) => {
   return positive ? "positive-400" : "danger-400";
 };
 
-export function BodyWeightDelta(props: {
-  current: number;
-  previous: number | undefined;
-  goal: BodyWeightGoalOptions | undefined;
-}) {
-  if (props.previous === undefined) return null;
+export function BodyWeightDelta(
+  props: {
+    current: number;
+    previous: number | undefined;
+    goal: BodyWeightGoalOptions | undefined;
+  } & React.JSX.IntrinsicElements["span"],
+) {
+  const { previous, current, goal, ...rest } = props;
 
-  const difference = props.current - props.previous;
+  if (previous === undefined) return null;
+
+  const difference = current - previous;
 
   if (difference === 0) return null;
 
@@ -23,12 +27,13 @@ export function BodyWeightDelta(props: {
 
   return (
     <span
-      data-color={color(positive, props.goal)}
+      data-color={color(positive, goal)}
       data-cross="center"
       data-gap="1"
       data-stack="x"
       data-transform="nowrap"
       data-wrap="nowrap"
+      {...rest}
     >
       <Triangle
         data-mt={positive ? "0" : "0-5"}

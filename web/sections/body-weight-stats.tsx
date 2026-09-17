@@ -44,9 +44,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
             weight: WeightFormat.kilograms(latest.weight, BodyWeightDecimals),
           })}
 
-          <span data-fs="xs">
-            <ui.BodyWeightDelta current={latest.weight} goal={goal} previous={previous?.weight} />
-          </span>
+          <ui.BodyWeightDelta current={latest.weight} data-fs="xs" goal={goal} previous={previous?.weight} />
         </ui.TileValue>
 
         <ui.TileContext>
@@ -66,9 +64,12 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           })}
 
           {previousWindow.length > 0 && (
-            <span data-fs="xs">
-              <ui.BodyWeightDelta current={average(window)} goal={goal} previous={average(previousWindow)} />
-            </span>
+            <ui.BodyWeightDelta
+              current={average(window)}
+              data-fs="xs"
+              goal={goal}
+              previous={average(previousWindow)}
+            />
           )}
         </ui.TileValue>
 
