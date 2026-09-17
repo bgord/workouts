@@ -2,24 +2,24 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
-export function PlanRename(props: Plan) {
+export function PlanName() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
 
   const planRename = bg.useToggle({ name: "plan-rename" });
 
-  const planName = bg.useTextField({ ...Form.name.field, defaultValue: props.name });
+  const planName = bg.useTextField({ ...Form.name.field, defaultValue: plan.data.name });
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/plans/${props.id}/rename`, {
+      fetch(`/api/plans/${plan.data.id}/rename`, {
         method: "POST",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
         body: JSON.stringify({ planName: planName.value }),
       }),
     onSuccess: async () => {
@@ -31,6 +31,8 @@ export function PlanRename(props: Plan) {
       });
     },
   });
+
+  if (!plan.actions.rename.available) return <ui.Header>{plan.data.name}</ui.Header>;
 
   if (planRename.off) {
     return (
@@ -48,7 +50,7 @@ export function PlanRename(props: Plan) {
           type="button"
           {...planRename.props.controller}
         >
-          {props.name}
+          {plan.data.name}
         </button>
       </ui.Header>
     );

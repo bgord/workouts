@@ -3,14 +3,7 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { planRoute } from "../router";
-import { PlanArchive } from "../sections/plan-archive";
-import { PlanDescription } from "../sections/plan-description";
-import { PlanEditingEnable } from "../sections/plan-editing-enable";
-import { PlanFinalize } from "../sections/plan-finalize";
-import { PlanRemove } from "../sections/plan-remove";
-import { PlanRename } from "../sections/plan-rename";
-import { PlanRestore } from "../sections/plan-restore";
-import { PlanSectionList } from "../sections/plan-section-list";
+import * as Sections from "../sections";
 import { DateFormat } from "../services/date-format";
 
 export function Plan() {
@@ -32,9 +25,7 @@ export function Plan() {
             style={{ flexBasis: 0, minWidth: 0 }}
             {...ui.Gap.related}
           >
-            {plan.actions.rename.available && <PlanRename {...plan.data} />}
-
-            {!plan.actions.rename.available && <ui.Header>{plan.data.name}</ui.Header>}
+            <Sections.PlanName />
 
             <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
               <ui.PlanStatusBadge status={plan.data.status} />
@@ -49,16 +40,16 @@ export function Plan() {
             data-wrap="nowrap"
             {...ui.Gap.cluster}
           >
-            <PlanFinalize />
+            <Sections.PlanFinalize />
 
-            <PlanEditingEnable />
+            <Sections.PlanEditingEnable />
 
-            <PlanRestore />
+            <Sections.PlanRestore />
 
             <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
-              <PlanArchive />
+              <Sections.PlanArchive />
 
-              <PlanRemove />
+              <Sections.PlanRemove />
             </div>
           </div>
         </div>
@@ -70,13 +61,13 @@ export function Plan() {
             })}
           </ui.Meta>
 
-          <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
+          <Sections.PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
 
           {plan.actions.finalize.available && <ui.ActionHint {...plan.actions.finalize} />}
         </div>
       </div>
 
-      <PlanSectionList {...plan.data} actions={plan.actions} />
+      <Sections.PlanSectionList {...plan.data} actions={plan.actions} />
     </ui.Main>
   );
 }
