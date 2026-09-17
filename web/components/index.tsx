@@ -6,6 +6,7 @@ export * from "./button-back";
 export * from "./button-cancel";
 export * from "./button-clear";
 export * from "./button-close";
+export * from "./chevron-toggle";
 export * from "./chip";
 export * from "./delta-kg";
 export * from "./dialog";
