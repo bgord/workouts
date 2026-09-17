@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
-import { Meta } from "../components";
+import { HairlineBlock, Meta } from "../components";
 import { PlanSectionCreate } from "./plan-section-create";
 import { PlanSectionItem } from "./plan-section-item";
 
@@ -23,18 +23,16 @@ export function PlanSectionList(props: PlanGetResponse["data"] & { actions: Plan
       </ul>
 
       {props.actions.sectionCreate.available && (
-        <div
-          data-bct={props.sections.length === 0 ? undefined : "alpha-soft"}
-          data-bst={props.sections.length === 0 ? undefined : "solid"}
-          data-bwt={props.sections.length === 0 ? undefined : "hairline"}
+        <HairlineBlock
           data-gap="2"
           data-pt={props.sections.length === 0 ? undefined : "4"}
           data-stack="y"
+          first={props.sections.length === 0}
         >
           <PlanSectionCreate action={props.actions.sectionCreate} {...props} />
 
           {props.sections.length === 0 && <Meta>{t("plan.section.list.empty.hint")}</Meta>}
-        </div>
+        </HairlineBlock>
       )}
     </div>
   );

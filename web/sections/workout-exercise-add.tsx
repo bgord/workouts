@@ -12,6 +12,7 @@ import {
   DialogFooter,
   DialogHeader,
   ExercisePicker,
+  HairlineBlock,
   Stepper,
 } from "../components";
 import { workoutRoute } from "../router";
@@ -65,15 +66,13 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
 
   return (
     <>
-      <div
-        data-bct={props.first ? undefined : "alpha-soft"}
-        data-bst={props.first ? undefined : "solid"}
-        data-bwt={props.first ? undefined : "hairline"}
+      <HairlineBlock
         data-cross="center"
         data-gap="3"
         data-pt={props.first ? undefined : "4"}
         data-stack="x"
         data-wrap="nowrap"
+        first={props.first}
       >
         <button
           data-color="neutral-400"
@@ -110,7 +109,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
         </button>
 
         <ActionHint {...props.action} data-shrink="0" />
-      </div>
+      </HairlineBlock>
 
       <Dialog {...workoutExerciseAdd}>
         <DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutExerciseAdd.disable])}>

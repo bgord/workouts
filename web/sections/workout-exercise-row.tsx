@@ -4,7 +4,7 @@ import { ChevronDown, ChevronRight, Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { Chip, Meta } from "../components";
+import { Chip, HairlineRow, Meta } from "../components";
 import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
 import { SetDots } from "../components/set-dots";
 import { SetsReps } from "../components/sets-reps";
@@ -56,14 +56,12 @@ export function WorkoutExerciseRow(props: {
   );
 
   return (
-    <li
-      data-bct={props.index === 0 ? undefined : "alpha-soft"}
-      data-bst={props.index === 0 ? undefined : "solid"}
-      data-bwt={props.index === 0 ? undefined : "hairline"}
+    <HairlineRow
       data-gap="2"
       data-pb={props.last ? undefined : "4"}
       data-pt={props.index === 0 ? undefined : "4"}
       data-stack="y"
+      first={props.index === 0}
     >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
         {expandable ? (
@@ -270,6 +268,6 @@ export function WorkoutExerciseRow(props: {
           )}
         </div>
       )}
-    </li>
+    </HairlineRow>
   );
 }

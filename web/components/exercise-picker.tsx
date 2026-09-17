@@ -3,6 +3,7 @@ import { Check, Search } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
+import { HairlineRow } from "./hairline";
 
 export function ExercisePicker(props: {
   exercises: ReadonlyArray<ExerciseWithCategories>;
@@ -56,12 +57,7 @@ export function ExercisePicker(props: {
         )}
 
         {matching.map((exercise, index) => (
-          <li
-            data-bct={index === 0 ? undefined : "alpha-subtle"}
-            data-bst={index === 0 ? undefined : "solid"}
-            data-bwt={index === 0 ? undefined : "hairline"}
-            key={exercise.id}
-          >
+          <HairlineRow first={index === 0} key={exercise.id} tone="subtle">
             <label
               data-bg={props.value === exercise.id ? "alpha-subtle" : undefined}
               data-color={props.value === exercise.id ? "neutral-0" : "neutral-200"}
@@ -105,7 +101,7 @@ export function ExercisePicker(props: {
 
               {props.value === exercise.id && <Check data-color="brand-400" data-shrink="0" data-size="sm" />}
             </label>
-          </li>
+          </HairlineRow>
         ))}
       </ul>
     </div>

@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronDown, ChevronRight, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
-import { Meta } from "../components";
+import { HairlineRow, Meta } from "../components";
 import { DeltaKg } from "../components/delta-kg";
 import { RepsLoad } from "../components/reps-load";
 import { RirBadge } from "../components/rir-badge";
@@ -41,14 +41,12 @@ function ExerciseHistoryRow(props: {
   const open = usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
   return (
-    <li
-      data-bct={props.index === 0 ? undefined : "alpha-soft"}
-      data-bst={props.index === 0 ? undefined : "solid"}
-      data-bwt={props.index === 0 ? undefined : "hairline"}
+    <HairlineRow
       data-gap="2"
       data-pb={props.last ? undefined : "3"}
       data-pt={props.index === 0 ? undefined : "3"}
       data-stack="y"
+      first={props.index === 0}
     >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
         <button
@@ -147,15 +145,14 @@ function ExerciseHistoryRow(props: {
       {open.on && (
         <ul data-md-pl="0" data-pl="12" data-stack="y" {...open.props.target}>
           {props.performance.sets.map((set, position) => (
-            <li
-              data-bct="alpha-subtle"
-              data-bst={position > 0 ? "solid" : "none"}
-              data-bwt="hairline"
+            <HairlineRow
               data-cross="center"
               data-gap="3"
               data-py="1-5"
               data-stack="x"
+              first={position === 0}
               key={set.setNumber}
+              tone="subtle"
             >
               <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
                 {set.setNumber}
@@ -173,10 +170,10 @@ function ExerciseHistoryRow(props: {
                   load: WeightFormat.kilograms(set.estimate),
                 })}
               </Meta>
-            </li>
+            </HairlineRow>
           ))}
         </ul>
       )}
-    </li>
+    </HairlineRow>
   );
 }

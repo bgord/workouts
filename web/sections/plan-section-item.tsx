@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
-import { Meta } from "../components";
+import { HairlineRow, Meta } from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -23,14 +23,12 @@ export function PlanSectionItem(props: {
   const planSectionRename = bg.useToggle({ name: `plan-section-rename-${section.id}` });
 
   return (
-    <li
-      data-bct={index === 0 ? undefined : "alpha-soft"}
-      data-bst={index === 0 ? undefined : "solid"}
-      data-bwt={index === 0 ? undefined : "hairline"}
+    <HairlineRow
       data-gap="2"
       data-pb={last ? undefined : "4"}
       data-pt={index === 0 ? undefined : "4"}
       data-stack="y"
+      first={index === 0}
     >
       <div
         data-cross="center"
@@ -99,6 +97,6 @@ export function PlanSectionItem(props: {
           )}
         </div>
       )}
-    </li>
+    </HairlineRow>
   );
 }

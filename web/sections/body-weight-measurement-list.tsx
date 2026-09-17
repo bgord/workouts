@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { X, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import { IconButton, Select, TextLink } from "../components";
 import { DateFormat } from "../services/date-format";

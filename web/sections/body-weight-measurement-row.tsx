@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Flag } from "lucide-react";
 import type { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { BodyWeightDelta, IconButton } from "../components";
+import { BodyWeightDelta, HairlineRow, IconButton } from "../components";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
@@ -29,10 +29,7 @@ export function BodyWeightMeasurementRow(props: {
   const open = bodyWeightMeasurementCorrect.on || bodyWeightReference.on;
 
   return (
-    <li
-      data-bct="alpha-soft"
-      data-bst="solid"
-      data-bwt="hairline"
+    <HairlineRow
       data-cross="center"
       data-gap="3"
       data-md-gap="2"
@@ -110,6 +107,6 @@ export function BodyWeightMeasurementRow(props: {
           </div>
         </>
       )}
-    </li>
+    </HairlineRow>
   );
 }

@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHint } from "../components";
+import { ActionHint, HairlineRow } from "../components";
 import { RepsLoad } from "../components/reps-load";
 import { RirBadge } from "../components/rir-badge";
 import { WorkoutSetCorrect } from "./workout-set-correct";
@@ -11,14 +11,7 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
   const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
-    <li
-      data-bct="alpha-subtle"
-      data-bst="solid"
-      data-bwt="hairline"
-      data-gap="1"
-      data-py="1-5"
-      data-stack="y"
-    >
+    <HairlineRow data-gap="1" data-py="1-5" data-stack="y" tone="subtle">
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <div
           data-color="neutral-600"
@@ -73,6 +66,6 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
       {workoutSetCorrect.off && props.loggedSet.actions.remove.available && (
         <ActionHint {...props.loggedSet.actions.remove} data-pl="5" />
       )}
-    </li>
+    </HairlineRow>
   );
 }

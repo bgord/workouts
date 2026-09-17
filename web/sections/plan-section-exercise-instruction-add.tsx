@@ -12,6 +12,7 @@ import {
   DialogFooter,
   DialogHeader,
   ExercisePicker,
+  HairlineBlock,
   Stepper,
 } from "../components";
 import { planRoute } from "../router";
@@ -62,16 +63,14 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   if (planSectionExerciseInstructionAdd.off) {
     return (
-      <div
-        data-bct="alpha-subtle"
-        data-bst="solid"
-        data-bwt="hairline"
+      <HairlineBlock
         data-cross="center"
         data-gap="3"
         data-md-ml="3"
         data-ml="6"
         data-stack="x"
         data-wrap="nowrap"
+        tone="subtle"
       >
         <button
           data-color="neutral-400"
@@ -113,7 +112,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
         </button>
 
         <ActionHint {...props.action} data-shrink="0" />
-      </div>
+      </HairlineBlock>
     );
   }
 
@@ -128,15 +127,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   return (
     <>
-      <div
-        data-bct="alpha-subtle"
-        data-bst="solid"
-        data-bwt="hairline"
-        data-cross="center"
-        data-gap="3"
-        data-stack="x"
-        data-wrap="nowrap"
-      >
+      <HairlineBlock data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap" tone="subtle">
         <button
           data-color="neutral-400"
           data-cross="center"
@@ -177,7 +168,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
         </button>
 
         <ActionHint {...props.action} data-shrink="0" />
-      </div>
+      </HairlineBlock>
 
       <Dialog {...planSectionExerciseInstructionAdd}>
         <DialogHeader

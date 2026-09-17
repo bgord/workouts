@@ -5,7 +5,7 @@ import type {
   PlanGetResponse,
   PlanSection,
 } from "../../modules/plans/queries/get-plan";
-import { ExerciseImage, ExerciseImageSize } from "../components";
+import { ExerciseImage, ExerciseImageSize, HairlineRow } from "../components";
 import { SetsReps } from "../components/sets-reps";
 import { PlanSectionExerciseInstructionEdit } from "./plan-section-exercise-instruction-edit";
 import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
@@ -23,10 +23,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   const controls = editable || actions.remove.available;
 
   return (
-    <li
-      data-bct="alpha-subtle"
-      data-bst="solid"
-      data-bwt="hairline"
+    <HairlineRow
       data-cross="center"
       data-gap="3"
       data-md-ml="3"
@@ -34,6 +31,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-py="2"
       data-stack="x"
       data-wrap="nowrap"
+      tone="subtle"
     >
       <div data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
         {props.position}
@@ -95,6 +93,6 @@ export function PlanSectionExerciseInstructionRow(props: {
           )}
         </div>
       )}
-    </li>
+    </HairlineRow>
   );
 }
