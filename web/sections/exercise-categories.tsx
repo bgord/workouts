@@ -1,19 +1,19 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
-import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
+import { Form } from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
-export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
+export function ExerciseCategories() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { exerciseCategories } = exerciseRoute.useLoaderData();
+  const { exercise, exerciseCategories } = exerciseRoute.useLoaderData();
 
   const assignment = bg.useToggle({ name: "exercise-category-assign" });
 
-  const assigned = props.exercise.data.categories;
+  const assigned = exercise.data.categories;
   const assignable = exerciseCategories.data.filter(
     (category) => !assigned.some((current) => current.id === category.id),
   );
@@ -31,14 +31,32 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({
-          exerciseId: props.exercise.data.id,
+          exerciseId: exercise.data.id,
           exerciseCategoryId: exerciseCategoryId.value,
         }),
       }),
     onSuccess: bg.exec([refresh, assignment.disable]),
   });
 
-  const assignActionAvailable = props.exercise.actions.categoryAssign.available && assignable.length > 0;
+  if (!exercise.actions.categoryAssign.available) {
+    return (
+      <div data-stack="y" {...ui.Gap.cluster}>
+        <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
+
+        <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+          {assigned.map((category) => (
+            <li key={category.id}>
+              <ui.ChipLink search={{ category: category.id, name: Form.default.name }} to="/catalog">
+                {category.name}
+              </ui.ChipLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  const assignActionAvailable = assignable.length > 0;
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
@@ -56,7 +74,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
           <button
             className="c-button"
             data-variant="ghost"
-            disabled={!props.exercise.actions.categoryAssign.enabled}
+            disabled={!exercise.actions.categoryAssign.enabled}
             onClick={assignment.enable}
             type="button"
             {...assignment.props.controller}
@@ -78,7 +96,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         >
           <ui.Select
             aria-label={t("exercise.category.assign.label")}
-            disabled={!props.exercise.actions.categoryAssign.enabled}
+            disabled={!exercise.actions.categoryAssign.enabled}
             {...exerciseCategoryId.input.props}
           >
             {assignable.map((category) => (
@@ -90,7 +108,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
 
           <ui.IconButton
             aria-label={t("exercise.category.assign.cta")}
-            disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
+            disabled={!exercise.actions.categoryAssign.enabled || assign.isLoading}
             title={t("exercise.category.assign.cta")}
             tone="positive"
             type="submit"
@@ -114,8 +132,8 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
             <ui.Chip>
               {category.name}
 
-              {props.exercise.actions.categoryUnassign.available && (
-                <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
+              {exercise.actions.categoryUnassign.available && (
+                <ExerciseCategoryUnassign category={category} exerciseId={exercise.data.id} />
               )}
             </ui.Chip>
           </li>

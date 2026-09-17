@@ -33,23 +33,7 @@ export function Exercise() {
         </div>
 
         <div data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width} {...ui.Gap.block}>
-          {exercise.actions.categoryAssign.available ? (
-            <Sections.ExerciseCategories exercise={exercise} />
-          ) : (
-            <div data-stack="y" {...ui.Gap.cluster}>
-              <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
-
-              <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
-                {exercise.data.categories.map((category) => (
-                  <li key={category.id}>
-                    <ui.ChipLink search={{ category: category.id, name: Form.default.name }} to="/catalog">
-                      {category.name}
-                    </ui.ChipLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <Sections.ExerciseCategories />
 
           <Sections.ExerciseDescription />
         </div>
