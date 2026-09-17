@@ -1,10 +1,8 @@
 // fallow-ignore-file unused-export
 
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
-import { ActionHint, Main, Meta, PlanStatusBadge } from "../components";
+import { ActionHint, ButtonBack, LinkBack, Main, Meta, PlanStatusBadge } from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanDescription } from "../sections/plan-description";
@@ -27,10 +25,7 @@ export function Plan() {
   if (!plan?.data) {
     return (
       <Main>
-        <Link className="c-link" data-cross="center" data-gap="1" data-stack="x" to="/plans">
-          <ChevronLeft data-size="sm" />
-          {t("app.back")}
-        </Link>
+        <LinkBack to="/plans" />
 
         <div data-color="neutral-400">{t("plan.not_found")}</div>
       </Main>
@@ -41,18 +36,7 @@ export function Plan() {
     <Main>
       <div data-gap="3" data-stack="y">
         <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
-          <Link
-            aria-label={t("app.back")}
-            className="c-button"
-            data-interaction="subtle-scale"
-            data-self="start"
-            data-shrink="0"
-            data-variant="icon"
-            title={t("app.back")}
-            to="/plans"
-          >
-            <ChevronLeft data-size="md" />
-          </Link>
+          <ButtonBack to="/plans" />
 
           <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
             {plan.actions.rename.available && <PlanRename {...plan.data} />}

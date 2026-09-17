@@ -1,10 +1,9 @@
 // fallow-ignore-file unused-export
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
-import { ChevronLeft, Dumbbell } from "lucide-react";
+import { Dumbbell } from "lucide-react";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { ActionHint, Main, Meta, WorkoutStatusBadge } from "../components";
+import { ActionHint, ButtonBack, LinkBack, Main, Meta, WorkoutStatusBadge } from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCopy } from "../sections/workout-copy";
@@ -28,17 +27,7 @@ export function Workout() {
   if (!workout) {
     return (
       <Main>
-        <Link
-          className="c-link"
-          data-cross="center"
-          data-gap="1"
-          data-stack="x"
-          search={search}
-          to="/workouts"
-        >
-          <ChevronLeft data-size="sm" />
-          {t("app.back")}
-        </Link>
+        <LinkBack search={search} to="/workouts" />
 
         <div data-color="neutral-400">{t("workout.not_found")}</div>
       </Main>
@@ -51,19 +40,7 @@ export function Workout() {
     <Main>
       <div data-gap="3" data-stack="y">
         <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
-          <Link
-            aria-label={t("app.back")}
-            className="c-button"
-            data-interaction="subtle-scale"
-            data-self="start"
-            data-shrink="0"
-            data-variant="icon"
-            search={search}
-            title={t("app.back")}
-            to="/workouts"
-          >
-            <ChevronLeft data-size="md" />
-          </Link>
+          <ButtonBack search={search} to="/workouts" />
 
           <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
             <h1

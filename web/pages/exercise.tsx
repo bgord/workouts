@@ -1,14 +1,15 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
-import { ChevronLeft, Dumbbell } from "lucide-react";
+import { Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import {
   ActionHint,
+  ButtonBack,
   ChipLink,
   ExerciseImage,
   ExerciseImageSize,
   Eyebrow,
+  LinkBack,
   Main,
   Meta,
   SectionHeading,
@@ -35,17 +36,7 @@ export function Exercise() {
   if (!exercise) {
     return (
       <Main>
-        <Link
-          className="c-link"
-          data-cross="center"
-          data-gap="1"
-          data-stack="x"
-          search={Form.default}
-          to="/catalog"
-        >
-          <ChevronLeft data-size="sm" />
-          {t("app.back")}
-        </Link>
+        <LinkBack search={Form.default} to="/catalog" />
 
         <div data-color="neutral-400">{t("exercise.not_found")}</div>
       </Main>
@@ -56,19 +47,7 @@ export function Exercise() {
     <Main>
       <div data-gap="3" data-stack="y">
         <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
-          <Link
-            aria-label={t("app.back")}
-            className="c-button"
-            data-interaction="subtle-scale"
-            data-self="start"
-            data-shrink="0"
-            data-variant="icon"
-            search={Form.default}
-            title={t("app.back")}
-            to="/catalog"
-          >
-            <ChevronLeft data-size="md" />
-          </Link>
+          <ButtonBack search={Form.default} to="/catalog" />
 
           <div data-cross="center" data-gap="2" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
             {exercise.actions.update.enabled ? (

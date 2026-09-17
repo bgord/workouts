@@ -29,4 +29,6 @@ function EyebrowAnchor(props: React.JSX.IntrinsicElements["a"]) {
 
 const EyebrowAnchorLink = createLink(EyebrowAnchor);
 
-export const EyebrowLink: LinkComponent<typeof EyebrowAnchor> = (props) => <EyebrowAnchorLink {...props} />;
+export const EyebrowLink: LinkComponent<typeof EyebrowAnchor> = (props) => (
+  <EyebrowAnchorLink activeProps={{}} {...props} />
+);

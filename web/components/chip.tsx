@@ -38,4 +38,6 @@ function ChipAnchor(props: React.JSX.IntrinsicElements["a"]) {
 
 const ChipAnchorLink = createLink(ChipAnchor);
 
-export const ChipLink: LinkComponent<typeof ChipAnchor> = (props) => <ChipAnchorLink {...props} />;
+export const ChipLink: LinkComponent<typeof ChipAnchor> = (props) => (
+  <ChipAnchorLink activeProps={{}} {...props} />
+);
