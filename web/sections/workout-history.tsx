@@ -1,10 +1,11 @@
 import * as bg from "@bgord/ui";
-import { SearchX, X } from "lucide-react";
+import { X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
 import * as ui from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
+import { WorkoutHistoryEmpty } from "./workout-history-empty";
 
 export function WorkoutHistory() {
   const t = bg.useTranslations();
@@ -108,15 +109,7 @@ export function WorkoutHistory() {
         )}
       </div>
 
-      {matching.length === 0 && (
-        <ui.EmptyState>
-          <ui.EmptyStateIcon icon={SearchX} />
-
-          <ui.EmptyStateMessage>{t("workout.list.no_matches")}</ui.EmptyStateMessage>
-
-          <ui.Meta>{t("workout.list.no_matches.hint")}</ui.Meta>
-        </ui.EmptyState>
-      )}
+      <WorkoutHistoryEmpty matching={matching} />
 
       <ul data-stack="y" {...ui.Gap.cluster}>
         {matching.map((workout) => (
