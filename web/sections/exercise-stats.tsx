@@ -1,16 +1,17 @@
 import { useTranslations } from "@bgord/ui";
 import { CalendarCheck, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import * as ui from "../components";
+import { exerciseRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function ExerciseStats(props: { performances: Array<ExercisePerformance> }) {
+export function ExerciseStats() {
   const t = useTranslations();
+  const { performances } = exerciseRoute.useLoaderData();
 
-  const best = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
-  const heaviest = props.performances.toSorted((a, b) => b.volume - a.volume)[0];
-  const latest = props.performances.at(-1);
+  const best = performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
+  const heaviest = performances.toSorted((a, b) => b.volume - a.volume)[0];
+  const latest = performances.at(-1);
 
   if (!(best && heaviest && latest)) return null;
 
@@ -66,7 +67,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
           {t("statistics.exercise.sessions")}
         </ui.TileHeader>
 
-        <ui.TileValue>{props.performances.length}</ui.TileValue>
+        <ui.TileValue>{performances.length}</ui.TileValue>
 
         <ui.TileContext>{latest.scheduledFor}</ui.TileContext>
       </ui.Tile>

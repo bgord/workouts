@@ -3,8 +3,8 @@ import { useTranslations } from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import * as ui from "../components";
+import { exerciseRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
@@ -29,12 +29,13 @@ const GRIDLINE_LABEL_GAP = 8;
 const DATE_LABEL_BASELINE = HEIGHT - 6;
 const AREA_OPACITY = 0.08;
 
-export function ExerciseProgressChart(props: { performances: Array<ExercisePerformance> }) {
+export function ExerciseProgressChart() {
   const t = useTranslations();
+  const { performances } = exerciseRoute.useLoaderData();
 
-  if (props.performances.length < MINIMAL_POINTS) return null;
+  if (performances.length < MINIMAL_POINTS) return null;
 
-  const kilograms = props.performances.map((performance) => WeightFormat.kilograms(performance.bestEstimate));
+  const kilograms = performances.map((performance) => WeightFormat.kilograms(performance.bestEstimate));
 
   const floor = Math.max(Math.floor(Math.min(...kilograms)) - SCALE_MARGIN, 0);
   const ceiling = Math.ceil(Math.max(...kilograms)) + SCALE_MARGIN;
@@ -54,9 +55,9 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
 
   const gridlines = labels.map((label) => ({ ...label, y: toY(label.estimate) }));
 
-  const points = props.performances.map((performance, index) => ({
+  const points = performances.map((performance, index) => ({
     performance,
-    x: PLOT.left + (index * PLOT.width) / (props.performances.length - 1),
+    x: PLOT.left + (index * PLOT.width) / (performances.length - 1),
     y: toY(kilograms[index]!),
   }));
 

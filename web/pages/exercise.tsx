@@ -6,8 +6,7 @@ import { exerciseRoute } from "../router";
 import * as Sections from "../sections";
 
 export function Exercise() {
-  const t = bg.useTranslations();
-  const { exercise, performances } = exerciseRoute.useLoaderData();
+  const { exercise } = exerciseRoute.useLoaderData();
 
   return (
     <ui.Main>
@@ -41,19 +40,7 @@ export function Exercise() {
 
       <Sections.ExercisePerformancesEmpty />
 
-      {performances.length > 0 && (
-        <div data-stack="y" {...ui.Gap.section}>
-          <Sections.ExerciseStats performances={performances} />
-
-          <Sections.ExerciseProgressChart performances={performances} />
-
-          <div data-stack="y" {...ui.Gap.related}>
-            <ui.SectionHeading>{t("statistics.exercise.history")}</ui.SectionHeading>
-
-            <Sections.ExerciseHistory performances={performances} />
-          </div>
-        </div>
-      )}
+      <Sections.ExercisePerformanceHistory />
     </ui.Main>
   );
 }

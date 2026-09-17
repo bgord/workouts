@@ -5,11 +5,14 @@ import { Form as WorkoutHistoryFilters } from "../../app/services/workout-histor
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
+import { exerciseRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function ExerciseHistory(props: { performances: Array<ExercisePerformance> }) {
-  const performances = props.performances.toReversed();
-  const record = props.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
+export function ExerciseHistory() {
+  const data = exerciseRoute.useLoaderData();
+
+  const performances = data.performances.toReversed();
+  const record = data.performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
 
   return (
     <ul data-stack="y">

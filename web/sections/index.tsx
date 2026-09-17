@@ -28,6 +28,7 @@ export * from "./exercise-history";
 export * from "./exercise-image-change";
 export * from "./exercise-name";
 export * from "./exercise-not-found";
+export * from "./exercise-performance-history";
 export * from "./exercise-performances-empty";
 export * from "./exercise-progress-chart";
 export * from "./exercise-stats";
