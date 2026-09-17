@@ -23,7 +23,7 @@ export * from "./exercise-category-manage";
 export * from "./exercise-category-rename";
 export * from "./exercise-category-unassign";
 export * from "./exercise-delete";
-export * from "./exercise-description-update";
+export * from "./exercise-description";
 export * from "./exercise-history";
 export * from "./exercise-image-change";
 export * from "./exercise-name";
