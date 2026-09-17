@@ -5,17 +5,18 @@ import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-
 import * as ui from "../components";
 import { workoutsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
+import * as ShortcutDefinitions from "../services/shortcuts";
 
 const QUICK_DAYS = 3;
 
-export function WorkoutCreate(props: bg.UseToggleReturnType) {
+export function WorkoutCreate() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const router = useRouter();
   const navigate = workoutsRoute.useNavigate();
   const { plan, workouts } = workoutsRoute.useLoaderData();
-  const { toggle } = bg.extractUseToggle(props);
 
+  const workoutCreate = bg.useToggle({ name: "workout-create" });
   const workoutCreateCustomDate = bg.useToggle({ name: "workout-create-custom-date" });
 
   const today = Temporal.Now.plainDateISO();
@@ -39,7 +40,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
     onSuccess: async (response) => {
       const { id } = await response.json();
 
-      toggle.disable();
+      workoutCreate.disable();
       scheduledFor.clear();
       workoutCreateCustomDate.disable();
 
@@ -58,145 +59,170 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
     return DateFormat.weekdayWithDay(language, date);
   };
 
+  bg.useShortcuts({
+    [ShortcutDefinitions.ScheduleWorkout.trigger]: () => {
+      if (workouts.actions.create.enabled) workoutCreate.enable();
+    },
+  });
+
   return (
-    <ui.Dialog {...toggle}>
-      <ui.DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
-        {t("workout.create.toggle.cta")}
-        {plan && (
-          <span data-color="neutral-500" data-fw="regular" data-ml="2">
-            · {plan.name}
-          </span>
-        )}
-      </ui.DialogHeader>
+    <>
+      <ui.ActionHint {...workouts.actions.create} data-md-width="100%" />
 
-      <form
-        aria-busy={mutation.isLoading}
-        data-stack="y"
-        onSubmit={mutation.handleSubmit}
-        {...ui.Gap.section}
+      <button
+        className="c-button"
+        data-md-width="100%"
+        data-variant="primary"
+        disabled={!workouts.actions.create.enabled}
+        onClick={workoutCreate.enable}
+        type="button"
+        {...workoutCreate.props.controller}
       >
-        {plan && (
-          <div data-stack="y" {...ui.Gap.field}>
-            <div className="c-label">{t("workout.create.section.label")}</div>
+        <CalendarPlus data-size="sm" />
+        {t("workout.create.toggle.cta")}
+      </button>
 
-            <ul data-stack="y" {...ui.Gap.cluster}>
-              {plan.sections.map((option) => {
-                const selected = option.id === planSectionId.value;
+      <ui.Dialog {...workoutCreate}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutCreate.disable}>
+          {t("workout.create.toggle.cta")}
+          {plan && (
+            <span data-color="neutral-500" data-fw="regular" data-ml="2">
+              · {plan.name}
+            </span>
+          )}
+        </ui.DialogHeader>
 
-                return (
-                  <li key={option.id}>
-                    <label
-                      data-bc={selected ? "brand-500" : "neutral-800"}
-                      data-br="md"
-                      data-bs="solid"
-                      data-bw="hairline"
-                      data-cross="center"
-                      data-cursor="pointer"
-                      data-hover-bc={selected ? "brand-500" : "neutral-600"}
-                      data-stack="x"
-                      data-wrap="nowrap"
-                      {...ui.Spacing.surfaceCompact}
-                      {...ui.Gap.related}
-                    >
-                      <input
-                        checked={selected}
-                        className="c-visually-hidden"
-                        name={planSectionId.input.props.name}
-                        onChange={planSectionId.input.props.onChange}
-                        type="radio"
-                        value={option.id}
-                      />
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Gap.section}
+        >
+          {plan && (
+            <div data-stack="y" {...ui.Gap.field}>
+              <div className="c-label">{t("workout.create.section.label")}</div>
 
-                      {selected ? (
-                        <CircleCheck data-color="brand-400" data-shrink="0" data-size="sm" />
-                      ) : (
-                        <Circle data-color="neutral-600" data-shrink="0" data-size="sm" />
-                      )}
+              <ul data-stack="y" {...ui.Gap.cluster}>
+                {plan.sections.map((option) => {
+                  const selected = option.id === planSectionId.value;
 
-                      <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Gap.inline}>
-                        <div data-color="neutral-100" data-fs="sm" data-fw="medium">
-                          {option.name}
+                  return (
+                    <li key={option.id}>
+                      <label
+                        data-bc={selected ? "brand-500" : "neutral-800"}
+                        data-br="md"
+                        data-bs="solid"
+                        data-bw="hairline"
+                        data-cross="center"
+                        data-cursor="pointer"
+                        data-hover-bc={selected ? "brand-500" : "neutral-600"}
+                        data-stack="x"
+                        data-wrap="nowrap"
+                        {...ui.Spacing.surfaceCompact}
+                        {...ui.Gap.related}
+                      >
+                        <input
+                          checked={selected}
+                          className="c-visually-hidden"
+                          name={planSectionId.input.props.name}
+                          onChange={planSectionId.input.props.onChange}
+                          type="radio"
+                          value={option.id}
+                        />
+
+                        {selected ? (
+                          <CircleCheck data-color="brand-400" data-shrink="0" data-size="sm" />
+                        ) : (
+                          <Circle data-color="neutral-600" data-shrink="0" data-size="sm" />
+                        )}
+
+                        <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Gap.inline}>
+                          <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+                            {option.name}
+                          </div>
+
+                          <ui.Meta truncate>
+                            {option.exerciseInstructions
+                              .map((instruction) => instruction.exercise.name)
+                              .join(" · ")}
+                          </ui.Meta>
                         </div>
 
-                        <ui.Meta truncate>
-                          {option.exerciseInstructions
-                            .map((instruction) => instruction.exercise.name)
-                            .join(" · ")}
+                        <ui.Meta data-shrink="0">
+                          {t("workout.create.section.exercises", {
+                            count: option.exerciseInstructions.length,
+                          })}
                         </ui.Meta>
-                      </div>
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
 
-                      <ui.Meta data-shrink="0">
-                        {t("workout.create.section.exercises", { count: option.exerciseInstructions.length })}
-                      </ui.Meta>
-                    </label>
-                  </li>
+          <div data-stack="y" {...ui.Gap.field}>
+            <label className="c-label" {...scheduledFor.label.props}>
+              {t("workout.create.when.label")}
+            </label>
+
+            <div data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+              {quick.map((date, offset) => {
+                const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
+
+                return (
+                  <ui.ChipButton
+                    key={date.toString()}
+                    onClick={() => {
+                      workoutCreateCustomDate.disable();
+                      scheduledFor.set(date.toString());
+                    }}
+                    pressed={selected}
+                  >
+                    {label(date, offset)}
+                  </ui.ChipButton>
                 );
               })}
-            </ul>
+
+              <ui.ChipButton
+                onClick={workoutCreateCustomDate.enable}
+                pressed={workoutCreateCustomDate.on}
+                {...workoutCreateCustomDate.props.controller}
+              >
+                <CalendarDays data-size="xs" />
+                {t("workout.create.when.custom")}
+              </ui.ChipButton>
+            </div>
+
+            {workoutCreateCustomDate.on && (
+              <input
+                className="c-input"
+                data-variant="transparent"
+                data-width="100%"
+                type="date"
+                {...scheduledFor.input.props}
+                {...workoutCreateCustomDate.props.target}
+                max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+                min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+              />
+            )}
           </div>
-        )}
 
-        <div data-stack="y" {...ui.Gap.field}>
-          <label className="c-label" {...scheduledFor.label.props}>
-            {t("workout.create.when.label")}
-          </label>
+          {mutation.isError && <ui.DialogError>{t("workout.create.error")}</ui.DialogError>}
 
-          <div data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
-            {quick.map((date, offset) => {
-              const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
-
-              return (
-                <ui.ChipButton
-                  key={date.toString()}
-                  onClick={() => {
-                    workoutCreateCustomDate.disable();
-                    scheduledFor.set(date.toString());
-                  }}
-                  pressed={selected}
-                >
-                  {label(date, offset)}
-                </ui.ChipButton>
-              );
-            })}
-
-            <ui.ChipButton
-              onClick={workoutCreateCustomDate.enable}
-              pressed={workoutCreateCustomDate.on}
-              {...workoutCreateCustomDate.props.controller}
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutCreate.disable}>
+            <button
+              className="c-button"
+              data-variant="primary"
+              disabled={!workouts.actions.create.enabled || scheduledFor.empty || mutation.isLoading}
+              type="submit"
             >
-              <CalendarDays data-size="xs" />
-              {t("workout.create.when.custom")}
-            </ui.ChipButton>
-          </div>
-
-          {workoutCreateCustomDate.on && (
-            <input
-              className="c-input"
-              data-variant="transparent"
-              data-width="100%"
-              type="date"
-              {...scheduledFor.input.props}
-              {...workoutCreateCustomDate.props.target}
-              max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-              min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-            />
-          )}
-        </div>
-
-        {mutation.isError && <ui.DialogError>{t("workout.create.error")}</ui.DialogError>}
-
-        <ui.DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
-          <button
-            className="c-button"
-            data-variant="primary"
-            disabled={!workouts.actions.create.enabled || scheduledFor.empty || mutation.isLoading}
-            type="submit"
-          >
-            <CalendarPlus data-size="sm" />
-            {t("workout.create.cta")}
-          </button>
-        </ui.DialogFooter>
-      </form>
-    </ui.Dialog>
+              <CalendarPlus data-size="sm" />
+              {t("workout.create.cta")}
+            </button>
+          </ui.DialogFooter>
+        </form>
+      </ui.Dialog>
+    </>
   );
 }
