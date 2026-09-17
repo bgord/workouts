@@ -1,20 +1,20 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Pencil } from "lucide-react";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
-export function PlanEditingEnable(props: Plan) {
+export function PlanEditingEnable() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/plans/${props.id}/editing/enable`, {
+      fetch(`/api/plans/${plan.data.id}/editing/enable`, {
         method: "POST",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
       }),
     onSuccess: () =>
       router.invalidate({
@@ -22,6 +22,8 @@ export function PlanEditingEnable(props: Plan) {
         sync: true,
       }),
   });
+
+  if (!plan.actions.editingEnable.available) return null;
 
   return (
     <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>

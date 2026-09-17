@@ -11,10 +11,10 @@ export function PlanFinalize() {
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/plans/${plan?.data.id}/finalize`, {
+      fetch(`/api/plans/${plan.data.id}/finalize`, {
         method: "POST",
         credentials: "include",
-        headers: plan ? bg.WeakETag.fromRevision(plan.data.revision) : undefined,
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
       }),
     onSuccess: () =>
       router.invalidate({
@@ -23,7 +23,7 @@ export function PlanFinalize() {
       }),
   });
 
-  if (!plan?.actions.finalize.available) return null;
+  if (!plan.actions.finalize.available) return null;
 
   return (
     <form

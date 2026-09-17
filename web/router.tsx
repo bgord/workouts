@@ -4,6 +4,7 @@ import {
   createRootRouteWithContext,
   createRoute,
   lazyRouteComponent,
+  notFound,
   Router,
   redirect,
 } from "@tanstack/react-router";
@@ -116,10 +117,14 @@ export const planRoute = createRoute({
   path: "/plans/$planId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/plan"), "Plan"),
-  loader: async ({ context, params }) => ({
-    plan: await Plans.get(context.request, params),
-    exercises: await Exercises.list(context.request),
-  }),
+  notFoundComponent: lazyRouteComponent(() => import("./sections/plan-not-found"), "PlanNotFound"),
+  loader: async ({ context, params }) => {
+    const plan = await Plans.get(context.request, params);
+
+    if (!plan) throw notFound();
+
+    return { plan, exercises: await Exercises.list(context.request) };
+  },
 });
 
 export const workoutRoute = createRoute({

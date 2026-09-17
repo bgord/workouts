@@ -7,7 +7,6 @@ import { PlanArchive } from "../sections/plan-archive";
 import { PlanDescription } from "../sections/plan-description";
 import { PlanEditingEnable } from "../sections/plan-editing-enable";
 import { PlanFinalize } from "../sections/plan-finalize";
-import { PlanNotFound } from "../sections/plan-not-found";
 import { PlanRemove } from "../sections/plan-remove";
 import { PlanRename } from "../sections/plan-rename";
 import { PlanRestore } from "../sections/plan-restore";
@@ -18,8 +17,6 @@ export function Plan() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const { plan } = planRoute.useLoaderData();
-
-  if (!plan?.data) return <PlanNotFound />;
 
   return (
     <ui.Main>
@@ -54,7 +51,7 @@ export function Plan() {
           >
             <PlanFinalize />
 
-            {plan.actions.editingEnable.available && <PlanEditingEnable {...plan.data} />}
+            <PlanEditingEnable />
 
             {plan.actions.restore.available && <PlanRestore {...plan.data} />}
 
@@ -79,7 +76,7 @@ export function Plan() {
         </div>
       </div>
 
-      <PlanSectionList {...plan?.data} actions={plan.actions} />
+      <PlanSectionList {...plan.data} actions={plan.actions} />
     </ui.Main>
   );
 }
