@@ -27,15 +27,7 @@ export function Exercise() {
 
           <ExerciseName />
 
-          {exercise.actions.delete.available && (
-            <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
-              <div data-md-disp="none">
-                <ui.ActionHint {...exercise.actions.delete} />
-              </div>
-
-              <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
-            </div>
-          )}
+          <ExerciseDelete />
         </div>
 
         {exercise.actions.delete.hints.length > 0 && (

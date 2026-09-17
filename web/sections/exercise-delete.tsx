@@ -1,20 +1,19 @@
 import * as bg from "@bgord/ui";
 import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
-import type { ActionState } from "../../modules/action-state";
-import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
-export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action: ActionState }) {
+export function ExerciseDelete() {
   const t = bg.useTranslations();
   const navigate = exerciseRoute.useNavigate();
+  const { exercise } = exerciseRoute.useLoaderData();
 
   const exerciseDelete = bg.useToggle({ name: "exercise-delete" });
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/exercises/${props.exercise.id}`, { method: "DELETE", credentials: "include" }),
+      fetch(`/api/exercises/${exercise.data.id}`, { method: "DELETE", credentials: "include" }),
     onSuccess: async () => {
       exerciseDelete.disable();
 
@@ -22,13 +21,19 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
     },
   });
 
+  if (!exercise.actions.delete.available) return null;
+
   return (
-    <>
+    <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+      <div data-md-disp="none">
+        <ui.ActionHint {...exercise.actions.delete} />
+      </div>
+
       <ui.IconButton
         data-self="start"
-        disabled={!props.action.enabled}
+        disabled={!exercise.actions.delete.enabled}
         onClick={exerciseDelete.enable}
-        title={t("exercise.delete.title", { name: props.exercise.name })}
+        title={t("exercise.delete.title", { name: exercise.data.name })}
         tone="danger"
         {...exerciseDelete.props.controller}
       >
@@ -41,7 +46,7 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
         </ui.DialogHeader>
 
         <div data-stack="y" {...ui.Gap.related}>
-          <ui.DialogInfo>{t("exercise.delete.info", { name: props.exercise.name })}</ui.DialogInfo>
+          <ui.DialogInfo>{t("exercise.delete.info", { name: exercise.data.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
 
@@ -65,6 +70,6 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
           </ui.DialogFooter>
         </form>
       </ui.Dialog>
-    </>
+    </div>
   );
 }
