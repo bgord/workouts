@@ -1,10 +1,11 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Download, Scale } from "lucide-react";
+import { Scale } from "lucide-react";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
+  BodyWeightMeasurementExport,
   BodyWeightMeasurementImport,
   BodyWeightMeasurementList,
   BodyWeightProgressChart,
@@ -23,22 +24,7 @@ export function Measurements() {
         <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
           <BodyWeightMeasurementImport />
 
-          {measurements.length > 0 && (
-            <a
-              className="c-button"
-              data-color="neutral-400"
-              data-hover-color="neutral-0"
-              data-px="0"
-              data-variant="ghost"
-              download
-              href="/api/measurements/body-weight/export"
-              rel="noopener"
-              target="_blank"
-              {...bg.Rhythm().times(3).style.width}
-            >
-              <Download data-size="sm" />
-            </a>
-          )}
+          <BodyWeightMeasurementExport />
         </div>
       </div>
 
