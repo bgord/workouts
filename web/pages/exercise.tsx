@@ -10,8 +10,7 @@ import {
   ExerciseDescriptionUpdate,
   ExerciseHistory,
   ExerciseImageChange,
-  ExerciseNameUpdate,
-  ExerciseNotFound,
+  ExerciseName,
   ExerciseProgressChart,
   ExerciseStats,
 } from "../sections";
@@ -20,28 +19,13 @@ export function Exercise() {
   const t = bg.useTranslations();
   const { exercise, performances } = exerciseRoute.useLoaderData();
 
-  if (!exercise) return <ExerciseNotFound />;
-
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
         <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
           <ui.ButtonBack search={Form.default} to="/catalog" />
 
-          <div
-            data-cross="center"
-            data-grow="1"
-            data-stack="x"
-            data-wrap="nowrap"
-            style={{ flexBasis: 0, minWidth: 0, ...bg.Rhythm().times(3).minHeight }}
-            {...ui.Gap.related}
-          >
-            {exercise.actions.update.enabled ? (
-              <ExerciseNameUpdate exercise={exercise.data} />
-            ) : (
-              <ui.Header data-grow="1">{exercise.data.name}</ui.Header>
-            )}
-          </div>
+          <ExerciseName />
 
           {exercise.actions.delete.available && (
             <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>

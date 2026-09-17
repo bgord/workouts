@@ -2,24 +2,24 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
-import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
-export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) {
+export function ExerciseName() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { exercise } = exerciseRoute.useLoaderData();
 
   const exerciseNameUpdate = bg.useToggle({ name: "exercise-name-update" });
 
-  const name = bg.useTextField({ ...Form.name.field, defaultValue: props.exercise.name });
+  const name = bg.useTextField({ ...Form.name.field, defaultValue: exercise.data.name });
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/exercises/${props.exercise.id}`, {
+      fetch(`/api/exercises/${exercise.data.id}`, {
         method: "PATCH",
         credentials: "include",
-        body: JSON.stringify({ name: name.value, description: props.exercise.description }),
+        body: JSON.stringify({ name: name.value, description: exercise.data.description }),
       }),
     onSuccess: async () => {
       exerciseNameUpdate.disable();
@@ -27,6 +27,8 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
     },
   });
+
+  if (!exercise.actions.update.enabled) return <ui.Header data-grow="1">{exercise.data.name}</ui.Header>;
 
   if (exerciseNameUpdate.off) {
     return (
@@ -44,7 +46,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
           type="button"
           {...exerciseNameUpdate.props.controller}
         >
-          {props.exercise.name}
+          {exercise.data.name}
         </button>
       </ui.Header>
     );

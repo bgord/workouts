@@ -99,11 +99,18 @@ export const exerciseRoute = createRoute({
   path: "/catalog/exercise/$exerciseId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/exercise"), "Exercise"),
-  loader: async ({ context, params }) => ({
-    exercise: await Exercises.get(context.request, params),
-    exerciseCategories: await Exercises.listCategories(context.request),
-    performances: await Statistics.getExercisePerformances(context.request, params),
-  }),
+  notFoundComponent: lazyRouteComponent(() => import("./sections/exercise-not-found"), "ExerciseNotFound"),
+  loader: async ({ context, params }) => {
+    const exercise = await Exercises.get(context.request, params);
+
+    if (!exercise) throw notFound();
+
+    return {
+      exercise,
+      exerciseCategories: await Exercises.listCategories(context.request),
+      performances: await Statistics.getExercisePerformances(context.request, params),
+    };
+  },
 });
 
 export const plansRoute = createRoute({

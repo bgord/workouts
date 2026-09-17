@@ -26,7 +26,7 @@ export * from "./exercise-delete";
 export * from "./exercise-description-update";
 export * from "./exercise-history";
 export * from "./exercise-image-change";
-export * from "./exercise-name-update";
+export * from "./exercise-name";
 export * from "./exercise-not-found";
 export * from "./exercise-progress-chart";
 export * from "./exercise-stats";
