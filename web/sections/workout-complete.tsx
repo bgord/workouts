@@ -1,24 +1,25 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check } from "lucide-react";
-import type { ActionState } from "../../modules/action-state";
-import type { Workout } from "../../modules/workouts/value-objects/workout";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutComplete(props: Workout & { action: ActionState }) {
+export function WorkoutComplete() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.id}/complete`, {
+      fetch(`/api/workouts/${workout.data.id}/complete`, {
         method: "PATCH",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });
+
+  if (!workout.actions.complete.available) return null;
 
   return (
     <form
@@ -31,7 +32,7 @@ export function WorkoutComplete(props: Workout & { action: ActionState }) {
       <button
         className="c-button"
         data-variant="primary"
-        disabled={!props.action.enabled || mutation.isLoading}
+        disabled={!workout.actions.complete.enabled || mutation.isLoading}
         type="submit"
       >
         <Check data-size="sm" />

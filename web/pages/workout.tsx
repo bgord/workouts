@@ -55,9 +55,7 @@ export function Workout() {
           >
             <WorkoutStart />
 
-            {workout.actions.complete.available && (
-              <WorkoutComplete action={workout.actions.complete} {...workout.data} />
-            )}
+            <WorkoutComplete />
 
             <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
               {workout.data.completedAt && (
