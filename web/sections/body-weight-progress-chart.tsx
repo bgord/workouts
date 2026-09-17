@@ -1,7 +1,7 @@
 // cSpell:ignore GRIDLINE GRIDLINES
 import { useLanguage, useTranslations } from "@bgord/ui";
-import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
+import { measurementsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -28,13 +28,14 @@ const DATE_LABEL_BASELINE = HEIGHT - 6;
 const AREA_OPACITY = 0.08;
 const POINT_HIT_RADIUS = 8;
 
-export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<BodyWeightMeasurement> }) {
+export function BodyWeightProgressChart() {
   const t = useTranslations();
   const language = useLanguage();
+  const data = measurementsRoute.useLoaderData();
 
-  if (props.measurements.length < MINIMAL_POINTS) return null;
+  if (data.measurements.length < MINIMAL_POINTS) return null;
 
-  const measurements = props.measurements.toReversed();
+  const measurements = data.measurements.toReversed();
 
   const kilograms = measurements.map((measurement) =>
     WeightFormat.kilograms(measurement.weight, BodyWeightDecimals),

@@ -2,30 +2,30 @@ import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
+import { measurementsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
 const VISIBLE = 15;
 
-export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<BodyWeightMeasurement> }) {
+export function BodyWeightMeasurementList() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const { measurements } = measurementsRoute.useLoaderData();
 
   const all = bg.useToggle({ name: "body-weight-measurement-list-all" });
   const month = bg.useTextField({ name: "month", defaultValue: "" });
 
-  const months = [...new Set(props.measurements.map((measurement) => measurement.measuredOn.slice(0, 7)))];
+  const months = [...new Set(measurements.map((measurement) => measurement.measuredOn.slice(0, 7)))];
 
-  const filtered = props.measurements.filter((measurement) =>
-    measurement.measuredOn.startsWith(month.value ?? ""),
-  );
+  const filtered = measurements.filter((measurement) => measurement.measuredOn.startsWith(month.value ?? ""));
   const visible = month.value || all.on ? filtered : filtered.slice(0, VISIBLE);
   const hidden = filtered.length - visible.length;
 
-  const reference = props.measurements.find((measurement) => measurement.reference);
+  const reference = measurements.find((measurement) => measurement.reference);
 
   const previous = (measurement: BodyWeightMeasurement) =>
-    props.measurements[props.measurements.indexOf(measurement) + 1];
+    measurements[measurements.indexOf(measurement) + 1];
 
   return (
     <div data-stack="y" {...ui.Gap.block}>
@@ -40,7 +40,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
             {months.map((value) => (
               <option key={value} value={value}>
                 {DateFormat.month(language, Temporal.PlainDate.from(`${value}-01`))} (
-                {props.measurements.filter((measurement) => measurement.measuredOn.startsWith(value)).length})
+                {measurements.filter((measurement) => measurement.measuredOn.startsWith(value)).length})
               </option>
             ))}
           </ui.Select>

@@ -1,20 +1,16 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
   BodyWeightMeasurementExport,
+  BodyWeightMeasurementHistory,
   BodyWeightMeasurementImport,
-  BodyWeightMeasurementList,
   BodyWeightMeasurementsEmpty,
-  BodyWeightProgressChart,
-  BodyWeightStats,
 } from "../sections";
 
 export function Measurements() {
   const t = bg.useTranslations();
-  const { measurements } = measurementsRoute.useLoaderData();
 
   return (
     <ui.Main>
@@ -32,19 +28,7 @@ export function Measurements() {
 
       <BodyWeightMeasurementsEmpty />
 
-      {measurements.length > 0 && (
-        <div data-stack="y" {...ui.Gap.section}>
-          <BodyWeightStats measurements={measurements} />
-
-          <BodyWeightProgressChart measurements={measurements} />
-
-          <div data-stack="y" {...ui.Gap.related}>
-            <ui.SectionHeading>{t("measurements.body_weight.history")}</ui.SectionHeading>
-
-            <BodyWeightMeasurementList measurements={measurements} />
-          </div>
-        </div>
-      )}
+      <BodyWeightMeasurementHistory />
     </ui.Main>
   );
 }
