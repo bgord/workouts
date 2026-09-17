@@ -15,7 +15,7 @@ export const Spacing = {
   // Nested content under a row header: Workout/Plan detail meta, WorkoutExerciseRow description,
   // target and set list, PlanSectionItem instructions, ExerciseHistory sets
   inset: { "data-md-pl": "0", "data-pl": "12" },
-  // Cards and panels: profile cards, RowLink, DashboardCompleted list, dropzones
+  // Cards and panels: profile cards, RowLink, DashboardCompleted list, drop zones
   // (ExerciseAdd, BodyWeightMeasurementImport), ExercisePicker empty option
   surface: { "data-p": "4" },
   // Dense cards: ExerciseCard, WorkoutCreate section option, OnlineStatusBar

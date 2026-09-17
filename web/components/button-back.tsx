@@ -5,6 +5,7 @@ import { Gap } from "./gap";
 
 function ButtonBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
   const t = useTranslations();
+  const { href, ...rest } = props;
 
   return (
     <a
@@ -14,8 +15,9 @@ function ButtonBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
       data-self="start"
       data-shrink="0"
       data-variant="icon"
+      href={href}
       title={t("app.back")}
-      {...props}
+      {...rest}
     >
       <ChevronLeft data-size="md" />
     </a>

@@ -1,8 +1,6 @@
 const tones = { soft: "alpha-soft", subtle: "alpha-subtle" } as const;
 
-export type HairlineTone = keyof typeof tones;
-
-type HairlineProps = { tone?: HairlineTone; first?: boolean; last?: boolean };
+type HairlineProps = { tone?: keyof typeof tones; first?: boolean; last?: boolean };
 
 function hairline(props: HairlineProps) {
   const { tone = "soft", first } = props;
