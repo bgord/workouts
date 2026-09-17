@@ -60,7 +60,7 @@ export function Workout() {
             <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
               <WorkoutCopy />
 
-              {workout.actions.discard.available && <WorkoutDiscard {...workout.data} />}
+              <WorkoutDiscard />
             </div>
           </div>
         </div>

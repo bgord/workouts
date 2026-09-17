@@ -2,23 +2,23 @@ import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
-import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import * as ui from "../components";
-import { dashboardRoute } from "../router";
+import { dashboardRoute, workoutRoute } from "../router";
 
-export function WorkoutDiscard(props: WorkoutSummary) {
+export function WorkoutDiscard() {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = useNavigate();
+  const { workout } = workoutRoute.useLoaderData();
 
   const workoutDiscard = bg.useToggle({ name: "workout-discard" });
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/workouts/${props.id}`, {
+      fetch(`/api/workouts/${workout.data.id}`, {
         method: "DELETE",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
       }),
     onSuccess: async () => {
       workoutDiscard.disable();
@@ -26,6 +26,8 @@ export function WorkoutDiscard(props: WorkoutSummary) {
       await router.invalidate({ filter: (route) => route.id === dashboardRoute.id, sync: true });
     },
   });
+
+  if (!workout.actions.discard.available) return null;
 
   return (
     <>
@@ -37,7 +39,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         data-variant="ghost"
         onClick={workoutDiscard.enable}
         title={t("workout.discard.title", {
-          name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
+          name: t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName }),
         })}
         type="button"
         {...workoutDiscard.props.controller}
@@ -53,7 +55,10 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>
             {t("workout.discard.info", {
-              name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
+              name: t("workout.title", {
+                plan: workout.data.planName,
+                section: workout.data.planSectionName,
+              }),
             })}
           </ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
