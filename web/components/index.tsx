@@ -5,6 +5,7 @@ export * from "./body-weight-goal-icon";
 export * from "./button-cancel";
 export * from "./button-clear";
 export * from "./button-close";
+export * from "./chip";
 export * from "./delta-kg";
 export * from "./dialog";
 export * from "./exercise-card";
