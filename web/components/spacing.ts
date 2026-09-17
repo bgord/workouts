@@ -1,0 +1,21 @@
+export const Spacing = {
+  page: {
+    "data-gap": "6",
+    "data-md-m": "2",
+    "data-md-mb": "8",
+    "data-md-mt": "0",
+    "data-md-pt": "2",
+    "data-md-px": "0",
+    "data-pb": "16",
+    "data-pt": "6",
+    "data-px": "3",
+  },
+  navigation: { "data-px": "2", "data-py": "4" },
+  columns: { "data-gap": "3", "data-md-gap": "6" },
+  labelled: { "data-gap": "2" },
+  cards: { "data-gap": "2" },
+  tiles: { "data-gap": "3" },
+  surface: { "data-p": "4" },
+  tile: { "data-md-py": "3", "data-p": "4" },
+  stat: { "data-gap": "1" },
+} as const;

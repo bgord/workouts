@@ -38,6 +38,7 @@ export * from "./separator";
 export * from "./set-dots";
 export * from "./sets-reps";
 export * from "./sets-reps-load";
+export * from "./spacing";
 export * from "./stepper";
 export * from "./text-link";
 export * from "./tile";
