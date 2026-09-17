@@ -27,9 +27,7 @@ export function Plan() {
           >
             <Sections.PlanName />
 
-            <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
-              <ui.PlanStatusBadge status={plan.data.status} />
-            </div>
+            <ui.PlanStatusBadge status={plan.data.status} />
           </div>
 
           <div

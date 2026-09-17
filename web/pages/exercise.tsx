@@ -16,9 +16,6 @@ import {
   ExerciseStats,
 } from "../sections";
 
-const title = { flexBasis: 0, minWidth: 0, ...bg.Rhythm().times(3).minHeight };
-const image = { flexBasis: 320, minWidth: 0 };
-
 export function Exercise() {
   const t = bg.useTranslations();
   const { exercise, performances } = exerciseRoute.useLoaderData();
@@ -36,7 +33,7 @@ export function Exercise() {
             data-grow="1"
             data-stack="x"
             data-wrap="nowrap"
-            style={title}
+            style={{ flexBasis: 0, minWidth: 0, ...bg.Rhythm().times(3).minHeight }}
             {...ui.Gap.related}
           >
             {exercise.actions.update.enabled ? (
@@ -65,7 +62,7 @@ export function Exercise() {
       </div>
 
       <div data-cross="start" data-stack="x" data-wrap="wrap" {...ui.Gap.section}>
-        <div data-md-grow="1" style={image}>
+        <div data-md-grow="1" style={{ flexBasis: 320, minWidth: 0 }}>
           {exercise.actions.imageChange.enabled ? (
             <ExerciseImageChange exercise={exercise.data} />
           ) : (
