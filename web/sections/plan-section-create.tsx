@@ -78,7 +78,12 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   }
 
   return (
-    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.cluster} {...planSectionCreate.props.target}>
+    <form
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.cluster}
+      {...planSectionCreate.props.target}
+    >
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
         <div
           data-bc="neutral-700"

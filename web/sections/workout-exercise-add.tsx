@@ -123,7 +123,13 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
             value={exerciseId.value}
           />
 
-          <div data-cross="center" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }} {...ui.Spacing.cluster}>
+          <div
+            data-cross="center"
+            data-stack="x"
+            data-wrap="nowrap"
+            style={{ maxWidth: 336 }}
+            {...ui.Spacing.cluster}
+          >
             <ui.Stepper
               field={sets}
               label={t("workout.exercise.add.sets.label")}

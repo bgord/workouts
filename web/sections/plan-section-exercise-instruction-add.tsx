@@ -185,7 +185,13 @@ export function PlanSectionExerciseInstructionAdd(props: {
             value={exerciseId.value}
           />
 
-          <div data-cross="center" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }} {...ui.Spacing.cluster}>
+          <div
+            data-cross="center"
+            data-stack="x"
+            data-wrap="nowrap"
+            style={{ maxWidth: 336 }}
+            {...ui.Spacing.cluster}
+          >
             <ui.Stepper
               field={sets}
               label={t("plan.section.exercise.add.sets.label")}

@@ -6,12 +6,18 @@ export function ShortcutGroup(props: { header: string; shortcuts: Array<Shortcut
   const t = bg.useTranslations();
 
   return (
-    <div data-gap="2" data-stack="y">
+    <div data-stack="y" {...ui.Spacing.cluster}>
       <ui.Eyebrow>{props.header}</ui.Eyebrow>
 
-      <ul data-gap="2" data-stack="y">
+      <ul data-stack="y" {...ui.Spacing.cluster}>
         {props.shortcuts.map((shortcut) => (
-          <li data-cross="center" data-gap="3" data-main="between" data-stack="x" key={shortcut.keys}>
+          <li
+            data-cross="center"
+            data-main="between"
+            data-stack="x"
+            key={shortcut.keys}
+            {...ui.Spacing.related}
+          >
             <span data-color="neutral-200" data-fs="sm">
               {t(shortcut.label)}
             </span>

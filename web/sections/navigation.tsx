@@ -32,13 +32,13 @@ function NavigationDesktop() {
     >
       <div
         data-cross="center"
-        data-gap="6"
         data-height="100%"
         data-maxw="md"
         data-mx="auto"
-        data-px="3"
         data-stack="x"
         data-width="100%"
+        {...ui.Spacing.gutter}
+        {...ui.Spacing.section}
       >
         <ui.Logo />
 
@@ -90,6 +90,7 @@ function NavigationMobileDrawer() {
       data-stack="x"
       data-wrap="nowrap"
       data-z="3"
+      {...ui.Spacing.gutter}
       {...ui.Spacing.navigation}
     >
       <ui.Logo />

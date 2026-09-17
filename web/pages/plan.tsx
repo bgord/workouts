@@ -34,10 +34,23 @@ export function Plan() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Spacing.related}>
-        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
+        <div
+          data-cross="center"
+          data-md-wrap="wrap"
+          data-stack="x"
+          data-wrap="nowrap"
+          {...ui.Spacing.related}
+        >
           <ui.ButtonBack to="/plans" />
 
-          <div data-cross="center" data-grow="1" data-stack="x" data-wrap="nowrap" style={title} {...ui.Spacing.related}>
+          <div
+            data-cross="center"
+            data-grow="1"
+            data-stack="x"
+            data-wrap="nowrap"
+            style={title}
+            {...ui.Spacing.related}
+          >
             {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
             {!plan.actions.rename.available && <ui.Header>{plan.data.name}</ui.Header>}

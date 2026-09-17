@@ -35,7 +35,13 @@ export function Workout() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Spacing.related}>
-        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
+        <div
+          data-cross="center"
+          data-md-wrap="wrap"
+          data-stack="x"
+          data-wrap="nowrap"
+          {...ui.Spacing.related}
+        >
           <ui.ButtonBack search={search} to="/workouts" />
 
           <div

@@ -20,8 +20,8 @@ export function ProfilePasswordChange() {
   });
 
   return (
-    <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
-      <div data-cross="center" data-gap="3" data-stack="x">
+    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" {...ui.Spacing.cluster}>
         <KeyRound data-color="neutral-400" data-size="sm" />
         <ui.SectionHeading>{t("auth.change_password.header")}</ui.SectionHeading>
       </div>
@@ -33,10 +33,10 @@ export function ProfilePasswordChange() {
       <form
         aria-busy={mutation.isLoading}
         data-cross="center"
-        data-gap="3"
         data-stack="x"
         data-wrap="wrap"
         onSubmit={mutation.handleSubmit}
+        {...ui.Spacing.related}
       >
         <button
           className="c-button"
@@ -49,14 +49,14 @@ export function ProfilePasswordChange() {
         </button>
 
         {mutation.isDone && (
-          <ui.Output data-cross="center" data-gap="2" data-stack="x" tone="positive">
+          <ui.Output data-cross="center" data-stack="x" tone="positive" {...ui.Spacing.cluster}>
             <CircleCheck data-size="sm" />
             {t("auth.change_password.sent")}
           </ui.Output>
         )}
 
         {mutation.isError && (
-          <ui.Output data-cross="center" data-gap="2" data-stack="x">
+          <ui.Output data-cross="center" data-stack="x" {...ui.Spacing.cluster}>
             <CircleAlert data-size="sm" />
             {t("auth.change_password.error")}
           </ui.Output>

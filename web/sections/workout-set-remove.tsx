@@ -72,7 +72,12 @@ export function WorkoutSetRemove(props: {
           <ui.DialogStatus variant="irreversible" />
         </div>
 
-        <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.stack}>
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.stack}
+        >
           {mutation.isError && <ui.DialogError>{t("workout.set.remove.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutSetRemove.disable}>

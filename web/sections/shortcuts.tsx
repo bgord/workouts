@@ -56,19 +56,19 @@ export function Shortcuts() {
       data-inset="0"
       data-main="center"
       data-position="fixed"
-      data-px="3"
       data-stack="x"
       data-z="3"
       style={{ backgroundColor: "var(--backdrop-medium)" }}
+      {...ui.Spacing.gutter}
       {...shortcuts.props.target}
     >
       <div
         className="c-card"
-        data-gap="4"
         data-maxw="md"
         data-stack="y"
         data-variant="overlay"
         data-width="100%"
+        {...ui.Spacing.block}
       >
         <div data-cross="center" data-main="between" data-stack="x">
           <div
@@ -76,8 +76,8 @@ export function Shortcuts() {
             data-cross="center"
             data-fs="lg"
             data-fw="bold"
-            data-gap="2"
             data-stack="x"
+            {...ui.Spacing.cluster}
           >
             <Keyboard data-size="sm" />
 

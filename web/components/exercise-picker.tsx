@@ -4,6 +4,7 @@ import type { ExerciseWithCategories } from "../../modules/exercises/value-objec
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 import { HairlineRow } from "./hairline";
+import { Spacing } from "./spacing";
 
 export function ExercisePicker(props: {
   exercises: ReadonlyArray<ExerciseWithCategories>;
@@ -20,8 +21,8 @@ export function ExercisePicker(props: {
   );
 
   return (
-    <div data-gap="2" data-stack="y" data-wrap="nowrap" style={{ minHeight: 0 }}>
-      <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
+    <div data-stack="y" data-wrap="nowrap" style={{ minHeight: 0 }} {...Spacing.cluster}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...Spacing.inline}>
         <div data-cross="center" data-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
@@ -51,7 +52,7 @@ export function ExercisePicker(props: {
         style={{ minHeight: 0, maxHeight: "40vh" }}
       >
         {matching.length === 0 && (
-          <li data-color="neutral-500" data-fs="sm" data-main="center" data-py="4" data-stack="x">
+          <li data-color="neutral-500" data-fs="sm" data-main="center" data-stack="x" {...Spacing.surface}>
             {t("exercise.picker.empty")}
           </li>
         )}
@@ -64,13 +65,12 @@ export function ExercisePicker(props: {
               data-cross="center"
               data-cursor="pointer"
               data-fs="sm"
-              data-gap="3"
               data-hover-bg="alpha-subtle"
               data-position="relative"
               data-px="3"
-              data-py="2"
               data-stack="x"
               data-wrap="nowrap"
+              {...Spacing.rowCompact}
             >
               <input
                 checked={props.value === exercise.id}

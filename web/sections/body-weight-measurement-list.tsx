@@ -28,8 +28,8 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
     props.measurements[props.measurements.indexOf(measurement) + 1];
 
   return (
-    <div data-gap="4" data-stack="y">
-      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+    <div data-stack="y" {...ui.Spacing.block}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
         <div data-md-grow="1">
           <ui.Select
             aria-label={t("measurements.body_weight.history.month.label")}

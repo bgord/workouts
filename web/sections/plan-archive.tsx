@@ -53,7 +53,12 @@ export function PlanArchive(props: Plan) {
           <ui.DialogStatus variant="restorable" />
         </div>
 
-        <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.stack}>
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.stack}
+        >
           {mutation.isError && <ui.DialogError>{t("plan.archive.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={planArchive.disable}>

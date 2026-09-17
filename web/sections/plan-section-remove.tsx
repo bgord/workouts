@@ -46,7 +46,12 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
           <ui.DialogStatus variant="irreversible" />
         </div>
 
-        <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.stack}>
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.stack}
+        >
           {mutation.isError && <ui.DialogError>{t("plan.section.remove.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={planSectionRemove.disable}>

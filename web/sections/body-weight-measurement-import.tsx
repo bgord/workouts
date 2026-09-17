@@ -43,12 +43,12 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
 
       <form
         aria-busy={mutation.isLoading}
-        data-gap="6"
         data-stack="y"
         encType="multipart/form-data"
         onSubmit={mutation.handleSubmit}
+        {...ui.Spacing.section}
       >
-        <div data-gap="3" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.related}>
           {file.isSelected ? (
             <div
               data-bc="neutral-700"
@@ -73,11 +73,11 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
                 data-cross="center"
                 data-cursor="pointer"
                 data-fs="xs"
-                data-gap="1"
                 data-hover-color="neutral-0"
                 data-stack="x"
                 onClick={bg.exec([file.actions.clearFile, mutation.reset])}
                 type="button"
+                {...ui.Spacing.inline}
               >
                 <X data-size="xs" />
                 {t("app.clear")}

@@ -19,32 +19,34 @@ export function Measurements() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-gap="1" data-stack="x">
+      <div data-cross="center" data-stack="x" {...ui.Spacing.related}>
         <ui.Header data-grow="1">{t("measurements.body_weight.header")}</ui.Header>
 
-        <ui.IconButton
-          onClick={bodyWeightMeasurementImport.enable}
-          {...bodyWeightMeasurementImport.props.controller}
-        >
-          <Upload data-size="sm" />
-        </ui.IconButton>
-
-        {measurements.length > 0 && (
-          <a
-            className="c-button"
-            data-color="neutral-400"
-            data-hover-color="neutral-0"
-            data-px="0"
-            data-variant="ghost"
-            download
-            href="/api/measurements/body-weight/export"
-            rel="noopener"
-            target="_blank"
-            {...bg.Rhythm().times(3).style.width}
+        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+          <ui.IconButton
+            onClick={bodyWeightMeasurementImport.enable}
+            {...bodyWeightMeasurementImport.props.controller}
           >
-            <Download data-size="sm" />
-          </a>
-        )}
+            <Upload data-size="sm" />
+          </ui.IconButton>
+
+          {measurements.length > 0 && (
+            <a
+              className="c-button"
+              data-color="neutral-400"
+              data-hover-color="neutral-0"
+              data-px="0"
+              data-variant="ghost"
+              download
+              href="/api/measurements/body-weight/export"
+              rel="noopener"
+              target="_blank"
+              {...bg.Rhythm().times(3).style.width}
+            >
+              <Download data-size="sm" />
+            </a>
+          )}
+        </div>
       </div>
 
       <BodyWeightMeasurementImport {...bodyWeightMeasurementImport} />
@@ -62,12 +64,12 @@ export function Measurements() {
       )}
 
       {measurements.length > 0 && (
-        <div data-gap="6" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.section}>
           <BodyWeightStats measurements={measurements} />
 
           <BodyWeightProgressChart measurements={measurements} />
 
-          <div data-gap="3" data-stack="y">
+          <div data-stack="y" {...ui.Spacing.related}>
             <ui.SectionHeading>{t("measurements.body_weight.history")}</ui.SectionHeading>
 
             <BodyWeightMeasurementList measurements={measurements} />

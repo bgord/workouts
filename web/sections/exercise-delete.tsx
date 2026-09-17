@@ -45,7 +45,12 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
           <ui.DialogStatus variant="irreversible" />
         </div>
 
-        <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.stack}>
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.stack}
+        >
           {mutation.isError && <ui.DialogError>{t("exercise.delete.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={exerciseDelete.disable}>

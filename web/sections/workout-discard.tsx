@@ -59,7 +59,12 @@ export function WorkoutDiscard(props: WorkoutSummary) {
           <ui.DialogStatus variant="irreversible" />
         </div>
 
-        <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.stack}>
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Spacing.stack}
+        >
           {mutation.isError && <ui.DialogError>{t("workout.discard.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutDiscard.disable}>

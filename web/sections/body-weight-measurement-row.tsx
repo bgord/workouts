@@ -31,12 +31,11 @@ export function BodyWeightMeasurementRow(props: {
   return (
     <ui.HairlineRow
       data-cross="center"
-      data-gap="3"
       data-md-gap="2"
-      data-py="1"
       data-stack="x"
       data-wrap="nowrap"
       style={props.first ? first : undefined}
+      {...ui.Spacing.rowCompact}
     >
       {open && (
         <>
@@ -51,7 +50,6 @@ export function BodyWeightMeasurementRow(props: {
             data-color="neutral-300"
             data-cursor="pointer"
             data-fs="sm"
-            data-gap="2"
             data-grow="1"
             data-md-fs="xs"
             data-stack="x"
@@ -59,6 +57,7 @@ export function BodyWeightMeasurementRow(props: {
             onClick={bodyWeightMeasurementCorrect.enable}
             style={date}
             type="button"
+            {...ui.Spacing.cluster}
           >
             <span data-shrink="0" data-transform="font-variant-numeric" style={day}>
               {DateFormat.day(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
@@ -93,7 +92,7 @@ export function BodyWeightMeasurementRow(props: {
             />
           </div>
 
-          <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
+          <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
             <ui.IconButton
               onClick={bodyWeightReference.enable}
               title={t("measurements.body_weight.reference.title")}

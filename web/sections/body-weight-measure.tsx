@@ -49,10 +49,10 @@ export function BodyWeightMeasure() {
     <form
       aria-busy={mutation.isLoading}
       data-cross="center"
-      data-gap="1"
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.inline}
     >
       <label className="c-visually-hidden" {...measuredOn.label.props}>
         {t("measurements.body_weight.measure.date.label")}

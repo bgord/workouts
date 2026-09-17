@@ -46,11 +46,11 @@ export function BodyWeightMeasurementCorrect(
     <form
       aria-busy={mutation.isLoading}
       data-cross="center"
-      data-gap="1"
       data-grow="1"
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.inline}
       {...toggle.props.target}
     >
       <input

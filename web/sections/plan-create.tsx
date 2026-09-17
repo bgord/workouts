@@ -38,7 +38,12 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
         {t("plan.create.cta")}
       </ui.DialogHeader>
 
-      <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.section}>
+      <form
+        aria-busy={mutation.isLoading}
+        data-stack="y"
+        onSubmit={mutation.handleSubmit}
+        {...ui.Spacing.section}
+      >
         <div data-stack="y" {...ui.Spacing.field}>
           <label className="c-label" {...name.label.props}>
             {t("plan.create.name.label")}

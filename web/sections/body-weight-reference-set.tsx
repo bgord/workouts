@@ -40,11 +40,11 @@ export function BodyWeightReferenceSet(
   return (
     <form
       data-cross="center"
-      data-gap="2"
       data-grow="1"
       data-stack="x"
       data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.cluster}
       {...toggle.props.target}
     >
       <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
@@ -61,7 +61,6 @@ export function BodyWeightReferenceSet(
             data-color={option === goal.value ? "brand-400" : "neutral-300"}
             data-cross="center"
             data-fs="xs"
-            data-gap="1"
             data-hover-color="brand-300"
             data-px="2"
             data-stack="x"
@@ -69,6 +68,7 @@ export function BodyWeightReferenceSet(
             key={option}
             onClick={() => goal.set(option)}
             type="button"
+            {...ui.Spacing.inline}
           >
             <ui.BodyWeightGoalIcon goal={option} size="xs" />
             {t(`measurements.body_weight.goal.${option}`)}

@@ -22,7 +22,13 @@ export function PlanSectionExerciseInstructionRow(props: {
   const controls = editable || actions.remove.available;
 
   return (
-    <ui.HairlineRow data-cross="center" data-stack="x" data-wrap="nowrap" tone="subtle" {...ui.Spacing.rowCompact}>
+    <ui.HairlineRow
+      data-cross="center"
+      data-stack="x"
+      data-wrap="nowrap"
+      tone="subtle"
+      {...ui.Spacing.rowCompact}
+    >
       <ui.RowIndex>{props.position}</ui.RowIndex>
 
       <Link

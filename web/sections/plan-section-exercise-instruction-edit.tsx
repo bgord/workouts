@@ -140,16 +140,15 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-cross="center"
               data-cursor={actions.exerciseChange.enabled ? "pointer" : undefined}
               data-fs="sm"
-              data-gap="3"
               data-hover-bc={actions.exerciseChange.enabled ? "brand-500" : undefined}
               data-px="3"
-              data-py="2"
               data-stack="x"
               data-transform="truncate"
               data-wrap="nowrap"
               disabled={!(actions.exerciseChange.available && actions.exerciseChange.enabled)}
               onClick={planSectionExerciseInstructionPick.enable}
               title={t("plan.section.exercise.edit.change")}
+              {...ui.Spacing.rowCompact}
               type="button"
               {...planSectionExerciseInstructionPick.props.controller}
             >
@@ -189,7 +188,13 @@ export function PlanSectionExerciseInstructionEdit(props: {
           )}
 
           {actions.update.available && (
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }} {...ui.Spacing.cluster}>
+            <div
+              data-cross="center"
+              data-stack="x"
+              data-wrap="nowrap"
+              style={{ maxWidth: 336 }}
+              {...ui.Spacing.cluster}
+            >
               <ui.Stepper
                 disabled={!actions.update.enabled}
                 field={sets}

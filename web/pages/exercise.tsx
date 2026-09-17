@@ -38,7 +38,14 @@ export function Exercise() {
         <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
           <ui.ButtonBack search={Form.default} to="/catalog" />
 
-          <div data-cross="center" data-grow="1" data-stack="x" data-wrap="nowrap" style={title} {...ui.Spacing.related}>
+          <div
+            data-cross="center"
+            data-grow="1"
+            data-stack="x"
+            data-wrap="nowrap"
+            style={title}
+            {...ui.Spacing.related}
+          >
             {exercise.actions.update.enabled ? (
               <ExerciseNameUpdate exercise={exercise.data} />
             ) : (
@@ -47,7 +54,13 @@ export function Exercise() {
           </div>
 
           {exercise.actions.delete.available && (
-            <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
+            <div
+              data-cross="center"
+              data-shrink="0"
+              data-stack="x"
+              data-wrap="nowrap"
+              {...ui.Spacing.cluster}
+            >
               <div data-md-disp="none">
                 <ui.ActionHint {...exercise.actions.delete} />
               </div>
@@ -64,7 +77,7 @@ export function Exercise() {
         )}
       </div>
 
-      <div data-cross="start" data-md-px="0" data-px="4" data-stack="x" data-wrap="wrap" {...ui.Spacing.section}>
+      <div data-cross="start" data-stack="x" data-wrap="wrap" {...ui.Spacing.section}>
         <div data-md-grow="1" style={image}>
           {exercise.actions.imageChange.enabled ? (
             <ExerciseImageChange exercise={exercise.data} />
@@ -107,7 +120,7 @@ export function Exercise() {
       </div>
 
       {performances.length === 0 && (
-        <ui.EmptyState data-md-mx="0" data-mx="4">
+        <ui.EmptyState>
           <ui.EmptyStateIcon icon={Dumbbell} />
 
           <ui.EmptyStateMessage>{t("statistics.exercise.history.empty")}</ui.EmptyStateMessage>
@@ -117,7 +130,7 @@ export function Exercise() {
       )}
 
       {performances.length > 0 && (
-        <div data-md-px="0" data-px="4" data-stack="y" {...ui.Spacing.section}>
+        <div data-stack="y" {...ui.Spacing.section}>
           <ExerciseStats performances={performances} />
 
           <ExerciseProgressChart performances={performances} />

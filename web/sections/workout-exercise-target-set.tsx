@@ -105,7 +105,14 @@ export function WorkoutExerciseTargetSet(
         />
       </div>
 
-      <div data-cross="center" data-ml="auto" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+      <div
+        data-cross="center"
+        data-ml="auto"
+        data-shrink="0"
+        data-stack="x"
+        data-wrap="nowrap"
+        {...ui.Spacing.inline}
+      >
         <ui.IconButton
           aria-label={t("app.save")}
           disabled={
