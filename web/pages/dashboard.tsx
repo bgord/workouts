@@ -48,24 +48,24 @@ export function Dashboard() {
         </ui.EmptyState>
       )}
 
-      <div data-gap="3" data-md-gap="6" data-md-stack="y" data-stack="x">
+      <div data-md-stack="y" data-stack="x" {...ui.Spacing.columns}>
         {upcoming && (
-          <div data-gap="2" data-grow="1" data-stack="y" style={tile}>
+          <div data-grow="1" data-stack="y" style={tile} {...ui.Spacing.labelled}>
             <ui.Eyebrow>
               {t(dashboard.inProgress ? "dashboard.in_progress.header" : "dashboard.next_up.header")}
             </ui.Eyebrow>
 
-            <ul data-gap="2" data-stack="y">
+            <ul>
               <ui.WorkoutCard {...upcoming} />
             </ul>
           </div>
         )}
 
         {dashboard.lastCompleted && (
-          <div data-gap="2" data-grow="1" data-stack="y" style={tile}>
+          <div data-grow="1" data-stack="y" style={tile} {...ui.Spacing.labelled}>
             <ui.Eyebrow>{t("dashboard.last_completed.header")}</ui.Eyebrow>
 
-            <ul data-gap="2" data-stack="y">
+            <ul>
               <ui.WorkoutCard {...dashboard.lastCompleted} />
             </ul>
           </div>
@@ -75,7 +75,7 @@ export function Dashboard() {
       <DashboardCompleted />
 
       {measurements.length > 0 && (
-        <div data-gap="2" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.labelled}>
           <ui.EyebrowLink to="/measurements">{t("measurements.body_weight.header")}</ui.EyebrowLink>
 
           <BodyWeightStats measurements={measurements} />

@@ -72,7 +72,7 @@ export function Workout() {
               <WorkoutComplete action={workout.actions.complete} {...workout.data} />
             )}
 
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" data-ml="auto">
+            <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
               {workout.data.completedAt && (
                 <WorkoutCopy {...workout.data} completedAt={workout.data.completedAt} />
               )}

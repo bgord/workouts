@@ -13,21 +13,21 @@ export function DashboardCompleted() {
   ] as const;
 
   return (
-    <section data-gap="2" data-stack="y">
+    <section data-stack="y" {...ui.Spacing.labelled}>
       <ui.Eyebrow>{t("dashboard.completed.header")}</ui.Eyebrow>
 
-      <ul className="c-card" data-p="4" data-stack="x" data-variant="sunken">
+      <ul className="c-card" data-stack="x" data-variant="sunken" {...ui.Spacing.surface}>
         {tiles.map((tile, index) => (
           <li
             data-bcl="alpha-subtle"
             data-bsl="solid"
             data-bwl={index === 0 ? "none" : "hairline"}
             data-cross="center"
-            data-gap="1"
             data-grow="1"
             data-stack="y"
             key={tile.label}
             style={{ flexBasis: 0 }}
+            {...ui.Spacing.stat}
           >
             <ui.TileValue>{tile.value}</ui.TileValue>
 
