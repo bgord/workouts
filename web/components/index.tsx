@@ -10,6 +10,7 @@ export * from "./chevron-toggle";
 export * from "./chip";
 export * from "./delta-kg";
 export * from "./dialog";
+export * from "./empty-state";
 export * from "./exercise-card";
 export * from "./exercise-image";
 export * from "./exercise-picker";
