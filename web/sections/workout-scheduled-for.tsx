@@ -1,8 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
-import type { ActionState } from "../../modules/action-state";
-import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
@@ -10,24 +8,25 @@ import { DateFormat } from "../services/date-format";
 
 const date = { flexShrink: 0, minWidth: 0, width: "auto" };
 
-export function WorkoutReschedule(props: Workout & { action: ActionState }) {
+export function WorkoutScheduledFor() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
 
-  const workoutReschedule = bg.useToggle({ name: `workout-reschedule-${props.id}` });
+  const workoutReschedule = bg.useToggle({ name: `workout-reschedule-${workout.data.id}` });
 
   const scheduledFor = bg.useDateField({
-    name: `workout-scheduled-for-${props.id}`,
-    defaultValue: props.scheduledFor,
+    name: `workout-scheduled-for-${workout.data.id}`,
+    defaultValue: workout.data.scheduledFor,
   });
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.id}/scheduled-for`, {
+      fetch(`/api/workouts/${workout.data.id}/scheduled-for`, {
         method: "PATCH",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.revision) },
+        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(workout.data.revision) },
         body: JSON.stringify({ scheduledFor: scheduledFor.value }),
       }),
     onSuccess: async () => {
@@ -36,6 +35,14 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
     },
   });
+
+  if (!workout.actions.reschedule.available) {
+    return (
+      <ui.Meta>
+        {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
+      </ui.Meta>
+    );
+  }
 
   if (workoutReschedule.off) {
     return (
@@ -50,7 +57,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         type="button"
         {...workoutReschedule.props.controller}
       >
-        {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor))}
+        {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
       </button>
     );
   }
@@ -69,7 +76,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         aria-label={t("workout.reschedule.label")}
         className="c-input"
         data-variant="transparent"
-        disabled={!props.action.enabled}
+        disabled={!workout.actions.reschedule.enabled}
         style={date}
         type="date"
         {...scheduledFor.input.props}
@@ -95,7 +102,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         <X data-size="sm" />
       </ui.IconButton>
 
-      <ui.ActionHint {...props.action} data-ml="2" />
+      <ui.ActionHint {...workout.actions.reschedule} data-ml="2" />
 
       {mutation.isError && <ui.Output data-width="100%">{t("workout.reschedule.error")}</ui.Output>}
     </form>

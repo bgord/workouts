@@ -10,13 +10,11 @@ import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutNote } from "../sections/workout-note";
-import { WorkoutReschedule } from "../sections/workout-reschedule";
+import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
 import { WorkoutStart } from "../sections/workout-start";
-import { DateFormat } from "../services/date-format";
 
 export function Workout() {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const { workout } = workoutRoute.useLoaderData();
   const search = workoutRoute.useSearch();
 
@@ -66,13 +64,7 @@ export function Workout() {
         </div>
 
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
-          {workout.actions.reschedule.available ? (
-            <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
-          ) : (
-            <ui.Meta>
-              {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
-            </ui.Meta>
-          )}
+          <WorkoutScheduledFor />
 
           {workout.actions.noteSet.available && (
             <WorkoutNote action={workout.actions.noteSet} {...workout.data} />

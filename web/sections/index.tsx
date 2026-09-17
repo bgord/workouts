@@ -72,6 +72,7 @@ export * from "./workout-history";
 export * from "./workout-history-empty";
 export * from "./workout-history-filters";
 export * from "./workout-not-found";
+export * from "./workout-scheduled-for";
 export * from "./workout-set-correct";
 export * from "./workout-set-list";
 export * from "./workout-set-log";
