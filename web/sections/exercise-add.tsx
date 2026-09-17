@@ -7,10 +7,12 @@ import { catalogRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
 
-export function ExerciseAdd(props: bg.UseToggleReturnType) {
+export function ExerciseAdd() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { toggle } = bg.extractUseToggle(props);
+  const { exercises } = catalogRoute.useLoaderData();
+
+  const exerciseAdd = bg.useToggle({ name: "exercise-add" });
 
   const name = bg.useTextField(Form.name.field);
   const description = bg.useTextField(Form.description.field);
@@ -27,7 +29,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });
     },
     onSuccess: async (_, context) => {
-      toggle.disable();
+      exerciseAdd.disable();
       await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
       bg.Fields.clearAll([name, description]);
       image.actions.clearFile();
@@ -35,139 +37,158 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
     },
   });
 
-  return (
-    <ui.Dialog {...toggle}>
-      <ui.DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
-        {t("exercise.add.cta")}
-      </ui.DialogHeader>
+  if (!exercises.actions.add.available) return null;
 
-      <form
-        aria-busy={mutation.isLoading}
-        data-stack="y"
-        encType="multipart/form-data"
-        onSubmit={mutation.handleSubmit}
-        {...ui.Gap.section}
+  return (
+    <>
+      <ui.ActionHint {...exercises.actions.add} />
+
+      <button
+        className="c-button"
+        data-md-grow="1"
+        data-variant="primary"
+        disabled={!exercises.actions.add.enabled}
+        onClick={exerciseAdd.enable}
+        type="button"
+        {...exerciseAdd.props.controller}
       >
-        <div data-stack="y" {...ui.Gap.field}>
-          <label
-            data-bc="neutral-700"
-            data-br="md"
-            data-bs={image.isSelected ? "solid" : "dashed"}
-            data-bw="hairline"
-            data-color="neutral-400"
-            data-cross="center"
-            data-cursor="pointer"
-            data-fs="xs"
-            data-hover-bc="brand-500"
-            data-main="center"
-            data-overflow="hidden"
-            data-stack="y"
-            data-transform="center"
-            {...bg.Rhythm(144).times(1).style.height}
-            {...ui.Spacing.surface}
-            {...ui.Gap.cluster}
-            {...(image.isSelected ? { "data-p": "0" as const } : {})}
-            {...image.label.props}
-          >
-            {image.isSelected ? (
-              <img
-                alt=""
-                data-bg="neutral-0"
-                data-height="100%"
-                data-object-fit="contain"
-                data-width="100%"
-                src={image.preview}
+        <Plus data-size="sm" />
+        {t("exercise.add.cta")}
+      </button>
+
+      <ui.Dialog {...exerciseAdd}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={exerciseAdd.disable}>
+          {t("exercise.add.cta")}
+        </ui.DialogHeader>
+
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          encType="multipart/form-data"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Gap.section}
+        >
+          <div data-stack="y" {...ui.Gap.field}>
+            <label
+              data-bc="neutral-700"
+              data-br="md"
+              data-bs={image.isSelected ? "solid" : "dashed"}
+              data-bw="hairline"
+              data-color="neutral-400"
+              data-cross="center"
+              data-cursor="pointer"
+              data-fs="xs"
+              data-hover-bc="brand-500"
+              data-main="center"
+              data-overflow="hidden"
+              data-stack="y"
+              data-transform="center"
+              {...bg.Rhythm(144).times(1).style.height}
+              {...ui.Spacing.surface}
+              {...ui.Gap.cluster}
+              {...(image.isSelected ? { "data-p": "0" as const } : {})}
+              {...image.label.props}
+            >
+              {image.isSelected ? (
+                <img
+                  alt=""
+                  data-bg="neutral-0"
+                  data-height="100%"
+                  data-object-fit="contain"
+                  data-width="100%"
+                  src={image.preview}
+                />
+              ) : (
+                <>
+                  <ImageUp data-color="neutral-500" data-size="md" />
+                  <span data-color="neutral-300">{t("exercise.add.image.cta")}</span>
+                </>
+              )}
+
+              <input
+                className="c-visually-hidden"
+                disabled={image.isSelected}
+                onChange={image.actions.selectFile}
+                required
+                type="file"
+                {...image.input.props}
               />
-            ) : (
-              <>
-                <ImageUp data-color="neutral-500" data-size="md" />
-                <span data-color="neutral-300">{t("exercise.add.image.cta")}</span>
-              </>
-            )}
+            </label>
+
+            <output
+              data-color="neutral-500"
+              data-cross="center"
+              data-fs="xs"
+              data-stack="x"
+              data-wrap="nowrap"
+              {...ui.Gap.cluster}
+            >
+              {image.isSelected ? (
+                <>
+                  <span data-transform="truncate">
+                    {t("exercise.add.image.selected", { name: image.data.name })}
+                  </span>
+
+                  <ui.TextLink data-shrink="0" onClick={image.actions.clearFile}>
+                    {t("exercise.add.image.replace")}
+                  </ui.TextLink>
+                </>
+              ) : (
+                t("exercise.add.image.hint")
+              )}
+            </output>
+          </div>
+
+          <div data-stack="y" {...ui.Gap.field}>
+            <label className="c-label" {...name.label.props}>
+              {t("exercise.add.name.label")}
+            </label>
 
             <input
-              className="c-visually-hidden"
-              disabled={image.isSelected}
-              onChange={image.actions.selectFile}
-              required
-              type="file"
-              {...image.input.props}
+              className="c-input"
+              data-variant="transparent"
+              data-width="100%"
+              placeholder={t("exercise.add.name.placeholder")}
+              {...bg.Form.input(Form.name.pattern)}
+              {...name.input.props}
             />
-          </label>
+          </div>
 
-          <output
-            data-color="neutral-500"
-            data-cross="center"
-            data-fs="xs"
-            data-stack="x"
-            data-wrap="nowrap"
-            {...ui.Gap.cluster}
-          >
-            {image.isSelected ? (
-              <>
-                <span data-transform="truncate">
-                  {t("exercise.add.image.selected", { name: image.data.name })}
-                </span>
+          <div data-stack="y" {...ui.Gap.field}>
+            <label className="c-label" {...description.label.props}>
+              {t("exercise.add.description.label")}
+            </label>
 
-                <ui.TextLink data-shrink="0" onClick={image.actions.clearFile}>
-                  {t("exercise.add.image.replace")}
-                </ui.TextLink>
-              </>
-            ) : (
-              t("exercise.add.image.hint")
-            )}
-          </output>
-        </div>
+            <textarea
+              className="c-textarea"
+              data-variant="transparent"
+              placeholder={t("exercise.add.description.placeholder")}
+              rows={3}
+              {...bg.Form.textarea(Form.description.pattern)}
+              {...description.input.props}
+            />
+          </div>
 
-        <div data-stack="y" {...ui.Gap.field}>
-          <label className="c-label" {...name.label.props}>
-            {t("exercise.add.name.label")}
-          </label>
+          {mutation.isError && <ui.DialogError>{t("exercise.add.error")}</ui.DialogError>}
 
-          <input
-            className="c-input"
-            data-variant="transparent"
-            data-width="100%"
-            placeholder={t("exercise.add.name.placeholder")}
-            {...bg.Form.input(Form.name.pattern)}
-            {...name.input.props}
-          />
-        </div>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={exerciseAdd.disable}>
+            <ui.ButtonClear
+              disabled={name.unchanged && description.unchanged && !image.isSelected}
+              onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
+            />
 
-        <div data-stack="y" {...ui.Gap.field}>
-          <label className="c-label" {...description.label.props}>
-            {t("exercise.add.description.label")}
-          </label>
-
-          <textarea
-            className="c-textarea"
-            data-variant="transparent"
-            placeholder={t("exercise.add.description.placeholder")}
-            rows={3}
-            {...bg.Form.textarea(Form.description.pattern)}
-            {...description.input.props}
-          />
-        </div>
-
-        {mutation.isError && <ui.DialogError>{t("exercise.add.error")}</ui.DialogError>}
-
-        <ui.DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
-          <ui.ButtonClear
-            disabled={name.unchanged && description.unchanged && !image.isSelected}
-            onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
-          />
-
-          <button
-            className="c-button"
-            data-variant="primary"
-            disabled={!image.isSelected || mutation.isLoading}
-            type="submit"
-          >
-            <Plus data-size="sm" />
-            {t("exercise.add.submit.cta")}
-          </button>
-        </ui.DialogFooter>
-      </form>
-    </ui.Dialog>
+            <button
+              className="c-button"
+              data-variant="primary"
+              disabled={!image.isSelected || mutation.isLoading}
+              type="submit"
+            >
+              <Plus data-size="sm" />
+              {t("exercise.add.submit.cta")}
+            </button>
+          </ui.DialogFooter>
+        </form>
+      </ui.Dialog>
+    </>
   );
 }

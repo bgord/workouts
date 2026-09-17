@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 
 import * as bg from "@bgord/ui";
-import { Plus, Tags } from "lucide-react";
+import { Tags } from "lucide-react";
 import * as ui from "../components";
 import { catalogRoute } from "../router";
 import { ExerciseAdd } from "../sections/exercise-add";
@@ -10,10 +10,9 @@ import { ExerciseCategoryManage } from "../sections/exercise-category-manage";
 
 export function Catalog() {
   const t = bg.useTranslations();
-  const { exercises, exerciseCategories } = catalogRoute.useLoaderData();
+  const { exerciseCategories } = catalogRoute.useLoaderData();
 
   const exerciseCategoryManage = bg.useToggle({ name: "exercise-category-manage" });
-  const exerciseAdd = bg.useToggle({ name: "exercise-add" });
 
   return (
     <ui.Main>
@@ -40,30 +39,11 @@ export function Catalog() {
             </>
           )}
 
-          {exercises.actions.add.available && (
-            <>
-              <ui.ActionHint {...exercises.actions.add} />
-
-              <button
-                className="c-button"
-                data-md-grow="1"
-                data-variant="primary"
-                disabled={!exercises.actions.add.enabled}
-                onClick={exerciseAdd.enable}
-                type="button"
-                {...exerciseAdd.props.controller}
-              >
-                <Plus data-size="sm" />
-                {t("exercise.add.cta")}
-              </button>
-            </>
-          )}
+          <ExerciseAdd />
         </div>
       </div>
 
       <ExerciseCategoryManage {...exerciseCategoryManage} />
-
-      {exercises.actions.add.enabled && <ExerciseAdd {...exerciseAdd} />}
 
       <ExerciseCatalog />
     </ui.Main>
