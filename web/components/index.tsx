@@ -30,6 +30,7 @@ export * from "./reps-load";
 export * from "./rir-badge";
 export * from "./rir-submit";
 export * from "./row";
+export * from "./row-index";
 export * from "./section-heading";
 export * from "./select";
 export * from "./set-dots";
