@@ -10,6 +10,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exerciseCategories } = exerciseRoute.useLoaderData();
+
   const assignment = bg.useToggle({ name: "exercise-category-assign" });
 
   const assigned = props.exercise.data.categories;

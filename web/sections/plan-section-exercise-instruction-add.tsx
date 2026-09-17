@@ -27,7 +27,10 @@ export function PlanSectionExerciseInstructionAdd(props: {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercises } = planRoute.useLoaderData();
-  const add = bg.useToggle({ name: `plan-section-exercise-instruction-add-${props.section.id}` });
+
+  const planSectionExerciseInstructionAdd = bg.useToggle({
+    name: `plan-section-exercise-instruction-add-${props.section.id}`,
+  });
 
   const exerciseId = bg.useTextField(Form.exerciseId.field);
   const query = bg.useTextField(Form.query.field);
@@ -48,7 +51,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
         }),
       }),
     onSuccess: async (_, context) => {
-      add.disable();
+      planSectionExerciseInstructionAdd.disable();
 
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
 
@@ -57,7 +60,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
     },
   });
 
-  if (add.off) {
+  if (planSectionExerciseInstructionAdd.off) {
     return (
       <div
         data-bct="alpha-subtle"
@@ -83,9 +86,9 @@ export function PlanSectionExerciseInstructionAdd(props: {
           data-stack="x"
           data-wrap="nowrap"
           disabled={!props.action.enabled}
-          onClick={add.enable}
+          onClick={planSectionExerciseInstructionAdd.enable}
           type="button"
-          {...add.props.controller}
+          {...planSectionExerciseInstructionAdd.props.controller}
         >
           <div aria-hidden data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
             {props.section.exerciseInstructions.length + 1}
@@ -147,9 +150,9 @@ export function PlanSectionExerciseInstructionAdd(props: {
           data-stack="x"
           data-wrap="nowrap"
           disabled={!props.action.enabled}
-          onClick={add.enable}
+          onClick={planSectionExerciseInstructionAdd.enable}
           type="button"
-          {...add.props.controller}
+          {...planSectionExerciseInstructionAdd.props.controller}
         >
           <div aria-hidden data-color="neutral-600" data-fs="xs" data-transform="font-variant-numeric">
             {props.section.exerciseInstructions.length + 1}
@@ -176,8 +179,11 @@ export function PlanSectionExerciseInstructionAdd(props: {
         <ActionHint {...props.action} data-shrink="0" />
       </div>
 
-      <Dialog {...add}>
-        <DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, add.disable])}>
+      <Dialog {...planSectionExerciseInstructionAdd}>
+        <DialogHeader
+          disabled={mutation.isLoading}
+          onClose={bg.exec([clear, planSectionExerciseInstructionAdd.disable])}
+        >
           {t("plan.section.exercise.add.cta")}
           <span data-color="neutral-500" data-fw="regular" data-ml="2">
             · {props.section.name}
@@ -239,7 +245,10 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
           {mutation.isError && <DialogError>{t("plan.section.exercise.add.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([clear, add.disable])}>
+          <DialogFooter
+            disabled={mutation.isLoading}
+            onCancel={bg.exec([clear, planSectionExerciseInstructionAdd.disable])}
+          >
             <ButtonClear
               disabled={
                 exerciseId.empty && query.empty && sets.unchanged && repsMin.unchanged && repsMax.unchanged

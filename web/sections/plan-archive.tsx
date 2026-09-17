@@ -8,7 +8,8 @@ import { planRoute, plansRoute } from "../router";
 export function PlanArchive(props: Plan) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const dialog = bg.useToggle({ name: "plan-archive" });
+
+  const planArchive = bg.useToggle({ name: "plan-archive" });
 
   const mutation = bg.useMutation({
     perform: async () =>
@@ -18,7 +19,7 @@ export function PlanArchive(props: Plan) {
         headers: bg.WeakETag.fromRevision(props.revision),
       }),
     onSuccess: async () => {
-      dialog.disable();
+      planArchive.disable();
       await router.invalidate({
         filter: (route) => route.id === planRoute.id || route.id === plansRoute.id,
         sync: true,
@@ -34,16 +35,16 @@ export function PlanArchive(props: Plan) {
         data-color="neutral-400"
         data-hover-color="neutral-0"
         data-variant="ghost"
-        onClick={dialog.enable}
+        onClick={planArchive.enable}
         title={t("plan.archive.header")}
         type="button"
-        {...dialog.props.controller}
+        {...planArchive.props.controller}
       >
         <Archive data-size="sm" />
       </button>
 
-      <Dialog {...dialog}>
-        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+      <Dialog {...planArchive}>
+        <DialogHeader disabled={mutation.isLoading} onClose={planArchive.disable}>
           {t("plan.archive.header")}
         </DialogHeader>
 
@@ -55,7 +56,7 @@ export function PlanArchive(props: Plan) {
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("plan.archive.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={planArchive.disable}>
             <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
               {t("plan.archive.cta")}
             </button>

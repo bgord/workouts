@@ -9,13 +9,14 @@ import { exerciseRoute } from "../router";
 export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action: ActionState }) {
   const t = bg.useTranslations();
   const navigate = exerciseRoute.useNavigate();
-  const dialog = bg.useToggle({ name: "exercise-delete" });
+
+  const exerciseDelete = bg.useToggle({ name: "exercise-delete" });
 
   const mutation = bg.useMutation({
     perform: async () =>
       fetch(`/api/exercises/${props.exercise.id}`, { method: "DELETE", credentials: "include" }),
     onSuccess: async () => {
-      dialog.disable();
+      exerciseDelete.disable();
 
       await navigate({ search: Form.default, to: "/catalog" });
     },
@@ -31,17 +32,17 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
         data-self="start"
         data-variant="ghost"
         disabled={!props.action.enabled}
-        onClick={dialog.enable}
+        onClick={exerciseDelete.enable}
         title={t("exercise.delete.title", { name: props.exercise.name })}
         type="button"
         {...bg.Rhythm().times(3).style.width}
-        {...dialog.props.controller}
+        {...exerciseDelete.props.controller}
       >
         <Trash2 data-size="sm" />
       </button>
 
-      <Dialog {...dialog}>
-        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+      <Dialog {...exerciseDelete}>
+        <DialogHeader disabled={mutation.isLoading} onClose={exerciseDelete.disable}>
           {t("exercise.delete.header")}
         </DialogHeader>
 
@@ -53,7 +54,7 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("exercise.delete.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={exerciseDelete.disable}>
             <button
               className="c-button"
               data-variant="destructive"

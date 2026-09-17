@@ -5,10 +5,10 @@ import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import { catalogRoute } from "../router";
 
-export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.UseToggleReturnType }) {
+export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const rename = props.toggle;
+  const { toggle } = bg.extractUseToggle(props);
 
   const name = bg.useTextField({ ...Form.name.field, defaultValue: props.name });
 
@@ -20,13 +20,12 @@ export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.Us
         body: JSON.stringify({ name: name.value }),
       }),
     onSuccess: async () => {
-      rename.disable();
-
+      toggle.disable();
       await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
     },
   });
 
-  if (rename.off) {
+  if (toggle.off) {
     return (
       <button
         data-color="neutral-100"
@@ -39,10 +38,10 @@ export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.Us
         data-main="between"
         data-stack="x"
         data-wrap="nowrap"
-        onClick={rename.enable}
+        onClick={toggle.enable}
         title={t("exercise.category.rename.cta")}
         type="button"
-        {...rename.props.controller}
+        {...toggle.props.controller}
       >
         <span data-transform="truncate">{props.name}</span>
         <Pencil data-color="neutral-500" data-shrink="0" data-size="xs" />
@@ -57,7 +56,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.Us
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...bg.Rhythm().times(0).style.minWidth}
-      {...rename.props.target}
+      {...toggle.props.target}
     >
       <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
@@ -93,7 +92,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & { toggle: bg.Us
           data-px="0"
           data-shrink="0"
           data-variant="ghost"
-          onClick={bg.exec([name.clear, mutation.reset, rename.disable])}
+          onClick={bg.exec([name.clear, mutation.reset, toggle.disable])}
           title={t("app.cancel")}
           type="button"
           {...bg.Rhythm().times(3).style.width}

@@ -9,16 +9,17 @@ import { ActionHint, RirSubmit, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function WorkoutSetCorrect(props: {
-  workout: Workout;
-  exercise: WorkoutExerciseWithSets;
-  loggedSet: LoggedSetType;
-  action: ActionState;
-  toggle: bg.UseToggleReturnType;
-}) {
+export function WorkoutSetCorrect(
+  props: {
+    workout: Workout;
+    exercise: WorkoutExerciseWithSets;
+    loggedSet: LoggedSetType;
+    action: ActionState;
+  } & bg.UseToggleReturnType,
+) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const edit = props.toggle;
+  const { toggle } = bg.extractUseToggle(props);
 
   const reps = bg.useNumberField<number>({
     name: `corrected-reps-${props.loggedSet.id}`,
@@ -48,12 +49,12 @@ export function WorkoutSetCorrect(props: {
         }),
       }),
     onSuccess: async () => {
-      edit.disable();
+      toggle.disable();
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
     },
   });
 
-  if (edit.off) {
+  if (toggle.off) {
     return (
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <button
@@ -64,11 +65,11 @@ export function WorkoutSetCorrect(props: {
           data-shrink="0"
           data-variant="ghost"
           disabled={!props.action.enabled}
-          onClick={edit.enable}
+          onClick={toggle.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
           type="button"
           {...bg.Rhythm().times(3).style.width}
-          {...edit.props.controller}
+          {...toggle.props.controller}
         >
           <Pencil data-size="sm" />
         </button>
@@ -78,7 +79,7 @@ export function WorkoutSetCorrect(props: {
     );
   }
 
-  const cancel = bg.exec([reps.clear, load.clear, mutation.reset, edit.disable]);
+  const cancel = bg.exec([reps.clear, load.clear, mutation.reset, toggle.disable]);
 
   return (
     <form
@@ -89,7 +90,7 @@ export function WorkoutSetCorrect(props: {
       data-md-gap="1"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
-      {...edit.props.target}
+      {...toggle.props.target}
     >
       <Stepper
         disabled={mutation.isLoading}

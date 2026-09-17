@@ -23,7 +23,8 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercises } = workoutRoute.useLoaderData();
-  const add = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
+
+  const workoutExerciseAdd = bg.useToggle({ name: `workout-exercise-add-${props.id}` });
 
   const exerciseId = bg.useTextField(Form.exerciseId.field);
   const query = bg.useTextField(Form.query.field);
@@ -44,7 +45,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
         }),
       }),
     onSuccess: async (_, context) => {
-      add.disable();
+      workoutExerciseAdd.disable();
 
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
 
@@ -86,9 +87,9 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           data-stack="x"
           data-wrap="nowrap"
           disabled={!props.action.enabled}
-          onClick={add.enable}
+          onClick={workoutExerciseAdd.enable}
           type="button"
-          {...add.props.controller}
+          {...workoutExerciseAdd.props.controller}
         >
           <div
             data-bc="neutral-700"
@@ -111,8 +112,8 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
         <ActionHint {...props.action} data-shrink="0" />
       </div>
 
-      <Dialog {...add}>
-        <DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, add.disable])}>
+      <Dialog {...workoutExerciseAdd}>
+        <DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutExerciseAdd.disable])}>
           {t("workout.exercise.add.cta")}
         </DialogHeader>
 
@@ -171,7 +172,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
 
           {mutation.isError && <DialogError>{t("workout.exercise.add.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([clear, add.disable])}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([clear, workoutExerciseAdd.disable])}>
             <ButtonClear
               disabled={
                 exerciseId.empty && query.empty && sets.unchanged && repsMin.unchanged && repsMax.unchanged

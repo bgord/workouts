@@ -11,7 +11,8 @@ const label = { minWidth: 0 };
 export function ExerciseImageChange(props: { exercise: ExerciseWithCategories }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const change = bg.useToggle({ name: "exercise-image-change" });
+
+  const exerciseImageChange = bg.useToggle({ name: "exercise-image-change" });
 
   const image = bg.useFile("exercise-image-change-file", { mimeTypes, maxSizeBytes: 10_000_000 });
 
@@ -28,7 +29,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
       });
     },
     onSuccess: async () => {
-      change.disable();
+      exerciseImageChange.disable();
       image.actions.clearFile();
 
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
@@ -40,21 +41,21 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
       <button
         data-cursor="pointer"
         data-disp="flex"
-        onClick={change.enable}
+        onClick={exerciseImageChange.enable}
         title={t("exercise.image.change.cta")}
         type="button"
-        {...change.props.controller}
+        {...exerciseImageChange.props.controller}
       >
         <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
       </button>
 
-      {change.off && (
+      {exerciseImageChange.off && (
         <button
           className="c-button"
           data-fs="xs"
           data-self="center"
           data-variant="ghost"
-          onClick={change.enable}
+          onClick={exerciseImageChange.enable}
           type="button"
         >
           <ImageUp data-size="sm" />
@@ -62,13 +63,13 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
         </button>
       )}
 
-      {change.on && (
+      {exerciseImageChange.on && (
         <form
           data-gap="2"
           data-stack="y"
           encType="multipart/form-data"
           onSubmit={mutation.handleSubmit}
-          {...change.props.target}
+          {...exerciseImageChange.props.target}
         >
           <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
             <label
@@ -126,7 +127,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
               data-hover-color="neutral-0"
               data-px="0"
               data-variant="ghost"
-              onClick={bg.exec([image.actions.clearFile, mutation.reset, change.disable])}
+              onClick={bg.exec([image.actions.clearFile, mutation.reset, exerciseImageChange.disable])}
               title={t("app.cancel")}
               type="button"
               {...bg.Rhythm().times(3).style.width}

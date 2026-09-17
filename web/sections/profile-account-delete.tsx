@@ -13,7 +13,7 @@ import {
 export function ProfileAccountDelete() {
   const t = useTranslations();
 
-  const dialog = useToggle({ name: "delete-account" });
+  const deleteAccount = useToggle({ name: "delete-account" });
 
   const mutation = useMutation({
     perform: () =>
@@ -44,15 +44,15 @@ export function ProfileAccountDelete() {
         className="c-button"
         data-mr="auto"
         data-variant="destructive"
-        onClick={dialog.enable}
+        onClick={deleteAccount.enable}
         type="button"
-        {...dialog.props.controller}
+        {...deleteAccount.props.controller}
       >
         {t("profile.delete_account.cta_primary")}
       </button>
 
-      <Dialog {...dialog}>
-        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+      <Dialog {...deleteAccount}>
+        <DialogHeader disabled={mutation.isLoading} onClose={deleteAccount.disable}>
           {t("profile.delete_account.header")}
         </DialogHeader>
 
@@ -81,7 +81,7 @@ export function ProfileAccountDelete() {
 
           {mutation.isError && <DialogError>{t("profile.delete_account.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={deleteAccount.disable}>
             <button
               className="c-button"
               data-variant="destructive"

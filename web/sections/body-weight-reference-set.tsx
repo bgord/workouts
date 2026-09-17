@@ -9,13 +9,12 @@ import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 const goals = [BodyWeightGoalOptions.bulk, BodyWeightGoalOptions.cut, BodyWeightGoalOptions.maintain];
 
-export function BodyWeightReferenceSet(props: {
-  measurement: BodyWeightMeasurement;
-  toggle: bg.UseToggleReturnType;
-}) {
+export function BodyWeightReferenceSet(
+  props: { measurement: BodyWeightMeasurement } & bg.UseToggleReturnType,
+) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const picker = props.toggle;
+  const { toggle } = bg.extractUseToggle(props);
 
   const goal = bg.useTextField<BodyWeightGoalOptions>({
     name: `reference-goal-${props.measurement.id}`,
@@ -31,12 +30,12 @@ export function BodyWeightReferenceSet(props: {
         body: JSON.stringify({ goal: goal.value }),
       }),
     onSuccess: async () => {
-      picker.disable();
+      toggle.disable();
       await router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true });
     },
   });
 
-  if (picker.off) return null;
+  if (toggle.off) return null;
 
   return (
     <form
@@ -46,7 +45,7 @@ export function BodyWeightReferenceSet(props: {
       data-stack="x"
       data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
-      {...picker.props.target}
+      {...toggle.props.target}
     >
       <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
         {t("measurements.body_weight.value", {
@@ -101,7 +100,7 @@ export function BodyWeightReferenceSet(props: {
         data-px="0"
         data-shrink="0"
         data-variant="ghost"
-        onClick={bg.exec([goal.clear, mutation.reset, picker.disable])}
+        onClick={bg.exec([goal.clear, mutation.reset, toggle.disable])}
         title={t("app.cancel")}
         type="button"
         {...bg.Rhythm().times(3).style.width}

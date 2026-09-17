@@ -12,7 +12,8 @@ const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).hei
 export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const create = bg.useToggle({ name: "plan-section-create" });
+
+  const planSectionCreate = bg.useToggle({ name: "plan-section-create" });
 
   const planSectionName = bg.useTextField(Form.planSectionName.field);
 
@@ -25,7 +26,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
         body: JSON.stringify({ planSectionName: planSectionName.value }),
       }),
     onSuccess: async (_, context) => {
-      create.disable();
+      planSectionCreate.disable();
 
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
 
@@ -34,7 +35,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
     },
   });
 
-  if (create.off) {
+  if (planSectionCreate.off) {
     return (
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <button
@@ -49,9 +50,9 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           data-stack="x"
           data-wrap="nowrap"
           disabled={!props.action.enabled}
-          onClick={create.enable}
+          onClick={planSectionCreate.enable}
           type="button"
-          {...create.props.controller}
+          {...planSectionCreate.props.controller}
         >
           <div
             data-bc="neutral-700"
@@ -77,7 +78,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...create.props.target}>
+    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...planSectionCreate.props.target}>
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
         <div
           data-bc="neutral-700"
@@ -130,7 +131,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
             data-px="0"
             data-shrink="0"
             data-variant="ghost"
-            onClick={bg.exec([planSectionName.clear, mutation.reset, create.disable])}
+            onClick={bg.exec([planSectionName.clear, mutation.reset, planSectionCreate.disable])}
             title={t("app.cancel")}
             type="button"
             {...bg.Rhythm().times(3).style.width}

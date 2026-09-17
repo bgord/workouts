@@ -16,12 +16,14 @@ export function WorkoutSetRemove(props: {
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const dialog = bg.useToggle({ name: `workout-set-remove-${props.loggedSet.id}` });
+
+  const workoutSetRemove = bg.useToggle({ name: `workout-set-remove-${props.loggedSet.id}` });
+
   const guarded = props.workout.status === WorkoutStatusEnum.completed;
 
   const confirm = (event: React.FormEvent) => {
     event.preventDefault();
-    dialog.enable();
+    workoutSetRemove.enable();
   };
 
   const mutation = bg.useMutation({
@@ -55,14 +57,14 @@ export function WorkoutSetRemove(props: {
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           type="submit"
           {...bg.Rhythm().times(3).style.width}
-          {...dialog.props.controller}
+          {...workoutSetRemove.props.controller}
         >
           <X data-size="sm" />
         </button>
       </form>
 
-      <Dialog {...dialog}>
-        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+      <Dialog {...workoutSetRemove}>
+        <DialogHeader disabled={mutation.isLoading} onClose={workoutSetRemove.disable}>
           {t("workout.set.remove.header")}
         </DialogHeader>
 
@@ -79,7 +81,7 @@ export function WorkoutSetRemove(props: {
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("workout.set.remove.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={workoutSetRemove.disable}>
             <button
               className="c-button"
               data-variant="destructive"

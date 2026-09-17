@@ -14,7 +14,8 @@ import {
 export function Measurements() {
   const t = bg.useTranslations();
   const { measurements } = measurementsRoute.useLoaderData();
-  const bodyWeightImport = bg.useToggle({ name: "body-weight-measurement-import" });
+
+  const bodyWeightMeasurementImport = bg.useToggle({ name: "body-weight-measurement-import" });
 
   return (
     <Main>
@@ -25,10 +26,10 @@ export function Measurements() {
           className="c-button"
           data-px="0"
           data-variant="ghost"
-          onClick={bodyWeightImport.enable}
+          onClick={bodyWeightMeasurementImport.enable}
           type="button"
           {...bg.Rhythm().times(3).style.width}
-          {...bodyWeightImport.props.controller}
+          {...bodyWeightMeasurementImport.props.controller}
         >
           <Upload data-size="sm" />
         </button>
@@ -49,7 +50,7 @@ export function Measurements() {
         )}
       </div>
 
-      <BodyWeightMeasurementImport toggle={bodyWeightImport} />
+      <BodyWeightMeasurementImport {...bodyWeightMeasurementImport} />
 
       <BodyWeightMeasure />
 

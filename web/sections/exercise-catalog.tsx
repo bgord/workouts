@@ -14,14 +14,14 @@ export function ExerciseCatalog() {
   const navigate = catalogRoute.useNavigate();
   const search = catalogRoute.useSearch();
 
+  const categoryList = bg.useToggle({ name: "exercise-catalog-categories" });
+
   const nameInput = useRef<HTMLInputElement>(null);
 
   const name = bg.useTextField({
     name: ExerciseCatalogFiltersForm.Form.name.field.name,
     defaultValue: search.name ?? "",
   });
-
-  const categoryList = bg.useToggle({ name: "exercise-catalog-categories" });
 
   const categories = categoryList.on ? exerciseCategories.data : exerciseCategories.data.slice(0, 5);
 

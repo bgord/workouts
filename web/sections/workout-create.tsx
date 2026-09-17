@@ -8,16 +8,18 @@ import { DateFormat } from "../services/date-format";
 
 const QUICK_DAYS = 3;
 
-export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
+export function WorkoutCreate(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const router = useRouter();
   const navigate = workoutsRoute.useNavigate();
   const { plan, workouts } = workoutsRoute.useLoaderData();
+  const { toggle } = bg.extractUseToggle(props);
+
+  const workoutCreateCustomDate = bg.useToggle({ name: "workout-create-custom-date" });
 
   const today = Temporal.Now.plainDateISO();
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today.toString() });
-  const custom = bg.useToggle({ name: "workout-create-custom-date" });
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
 
   const quick = Array.from({ length: QUICK_DAYS }, (_, offset) => today.add({ days: offset }));
@@ -37,9 +39,9 @@ export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
     onSuccess: async (response) => {
       const { id } = await response.json();
 
-      props.toggle.disable();
+      toggle.disable();
       scheduledFor.clear();
-      custom.disable();
+      workoutCreateCustomDate.disable();
 
       await navigate({
         params: { workoutId: id },
@@ -57,8 +59,8 @@ export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
   };
 
   return (
-    <Dialog {...props.toggle}>
-      <DialogHeader disabled={mutation.isLoading} onClose={props.toggle.disable}>
+    <Dialog {...toggle}>
+      <DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
         {t("workout.create.toggle.cta")}
         {plan && (
           <span data-color="neutral-500" data-fw="regular" data-ml="2">
@@ -141,7 +143,7 @@ export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
 
           <div data-gap="2" data-stack="x" data-wrap="wrap">
             {quick.map((date, offset) => {
-              const selected = custom.off && scheduledFor.value === date.toString();
+              const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
 
               return (
                 <button
@@ -150,7 +152,7 @@ export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
                   data-variant={selected ? "primary" : "outline"}
                   key={date.toString()}
                   onClick={() => {
-                    custom.disable();
+                    workoutCreateCustomDate.disable();
                     scheduledFor.set(date.toString());
                   }}
                   type="button"
@@ -163,24 +165,24 @@ export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
             <button
               className="c-badge"
               data-cursor="pointer"
-              data-variant={custom.on ? "primary" : "outline"}
-              onClick={custom.enable}
+              data-variant={workoutCreateCustomDate.on ? "primary" : "outline"}
+              onClick={workoutCreateCustomDate.enable}
               type="button"
-              {...custom.props.controller}
+              {...workoutCreateCustomDate.props.controller}
             >
               <CalendarDays data-size="xs" />
               {t("workout.create.when.custom")}
             </button>
           </div>
 
-          {custom.on && (
+          {workoutCreateCustomDate.on && (
             <input
               className="c-input"
               data-variant="transparent"
               data-width="100%"
               type="date"
               {...scheduledFor.input.props}
-              {...custom.props.target}
+              {...workoutCreateCustomDate.props.target}
               max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
               min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
             />
@@ -189,7 +191,7 @@ export function WorkoutCreate(props: { toggle: bg.UseToggleReturnType }) {
 
         {mutation.isError && <DialogError>{t("workout.create.error")}</DialogError>}
 
-        <DialogFooter disabled={mutation.isLoading} onCancel={props.toggle.disable}>
+        <DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
           <button
             className="c-button"
             data-variant="primary"

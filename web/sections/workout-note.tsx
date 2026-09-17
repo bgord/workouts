@@ -9,7 +9,8 @@ import { workoutRoute } from "../router";
 export function WorkoutNote(props: Workout & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const update = bg.useToggle({ name: `workout-note-update-${props.id}` });
+
+  const workoutNoteUpdate = bg.useToggle({ name: `workout-note-update-${props.id}` });
 
   const note = bg.useTextField({ ...Form.note.field, defaultValue: props.note ?? "" });
 
@@ -22,14 +23,14 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
         body: JSON.stringify({ note: note.value?.trim() || null }),
       }),
     onSuccess: async () => {
-      update.disable();
+      workoutNoteUpdate.disable();
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
     },
   });
 
   return (
     <div data-gap="2" data-stack="y">
-      {update.off && (
+      {workoutNoteUpdate.off && (
         <button
           className="c-prose"
           data-color={props.note ? "neutral-200" : "neutral-500"}
@@ -38,19 +39,24 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
           data-self="start"
           data-ta="start"
           disabled={!props.action.enabled}
-          onClick={update.enable}
+          onClick={workoutNoteUpdate.enable}
           title={t("workout.note.label")}
           type="button"
-          {...update.props.controller}
+          {...workoutNoteUpdate.props.controller}
         >
           {props.note ?? t("workout.note.placeholder")}
         </button>
       )}
 
-      {update.off && <ActionHint {...props.action} />}
+      {workoutNoteUpdate.off && <ActionHint {...props.action} />}
 
-      {update.on && (
-        <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...update.props.target}>
+      {workoutNoteUpdate.on && (
+        <form
+          data-gap="2"
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...workoutNoteUpdate.props.target}
+        >
           <textarea
             aria-label={t("workout.note.label")}
             className="c-textarea"
@@ -72,7 +78,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
               {t("app.save")}
             </button>
 
-            <ButtonCancel onClick={bg.exec([note.clear, mutation.reset, update.disable])} />
+            <ButtonCancel onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])} />
 
             {mutation.isError && (
               <output data-color="danger-400" data-fs="sm">

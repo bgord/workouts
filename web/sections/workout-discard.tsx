@@ -10,7 +10,8 @@ export function WorkoutDiscard(props: WorkoutSummary) {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = useNavigate();
-  const dialog = bg.useToggle({ name: "workout-discard" });
+
+  const workoutDiscard = bg.useToggle({ name: "workout-discard" });
 
   const mutation = bg.useMutation({
     perform: async () =>
@@ -20,7 +21,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         headers: bg.WeakETag.fromRevision(props.revision),
       }),
     onSuccess: async () => {
-      dialog.disable();
+      workoutDiscard.disable();
       await navigate({ search: Form.default, to: "/workouts" });
       await router.invalidate({ filter: (route) => route.id === dashboardRoute.id, sync: true });
     },
@@ -34,18 +35,18 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         data-color="neutral-400"
         data-hover-color="danger-400"
         data-variant="ghost"
-        onClick={dialog.enable}
+        onClick={workoutDiscard.enable}
         title={t("workout.discard.title", {
           name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
         })}
         type="button"
-        {...dialog.props.controller}
+        {...workoutDiscard.props.controller}
       >
         <Trash2 data-size="sm" />
       </button>
 
-      <Dialog {...dialog}>
-        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+      <Dialog {...workoutDiscard}>
+        <DialogHeader disabled={mutation.isLoading} onClose={workoutDiscard.disable}>
           {t("workout.discard.header")}
         </DialogHeader>
 
@@ -61,7 +62,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("workout.discard.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={workoutDiscard.disable}>
             <button
               className="c-button"
               data-variant="destructive"

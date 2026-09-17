@@ -8,7 +8,8 @@ import { exerciseRoute } from "../router";
 export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const update = bg.useToggle({ name: "exercise-name-update" });
+
+  const exerciseNameUpdate = bg.useToggle({ name: "exercise-name-update" });
 
   const name = bg.useTextField({ ...Form.name.field, defaultValue: props.exercise.name });
 
@@ -20,13 +21,13 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
         body: JSON.stringify({ name: name.value, description: props.exercise.description }),
       }),
     onSuccess: async () => {
-      update.disable();
+      exerciseNameUpdate.disable();
 
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
     },
   });
 
-  if (update.off) {
+  if (exerciseNameUpdate.off) {
     return (
       <h1 data-fs="2xl" data-grow="1" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
         <button
@@ -37,10 +38,10 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
           data-maxw="100%"
           data-md-fs="xl"
           data-transform="truncate"
-          onClick={update.enable}
+          onClick={exerciseNameUpdate.enable}
           title={t("exercise.update.name.cta")}
           type="button"
-          {...update.props.controller}
+          {...exerciseNameUpdate.props.controller}
         >
           {props.exercise.name}
         </button>
@@ -49,7 +50,13 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
   }
 
   return (
-    <form data-gap="2" data-grow="1" data-stack="y" onSubmit={mutation.handleSubmit} {...update.props.target}>
+    <form
+      data-gap="2"
+      data-grow="1"
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...exerciseNameUpdate.props.target}
+    >
       <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("exercise.update.name.label")}
@@ -85,7 +92,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
           data-px="0"
           data-shrink="0"
           data-variant="ghost"
-          onClick={bg.exec([name.clear, mutation.reset, update.disable])}
+          onClick={bg.exec([name.clear, mutation.reset, exerciseNameUpdate.disable])}
           title={t("app.cancel")}
           type="button"
           {...bg.Rhythm().times(3).style.width}

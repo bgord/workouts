@@ -8,7 +8,8 @@ export function ProfileAvatarDelete() {
   const t = useTranslations();
   const router = useRouter();
   const { avatarEtag } = rootRoute.useLoaderData();
-  const overlay = useToggle({ name: "profile-avatar-delete" });
+
+  const profileAvatarDelete = useToggle({ name: "profile-avatar-delete" });
 
   const enabled = avatarEtag !== null;
 
@@ -19,14 +20,14 @@ export function ProfileAvatarDelete() {
 
   return (
     <div data-position="relative" data-self="start">
-      <button data-cursor="pointer" data-disp="block" onClick={overlay.toggle} type="button">
+      <button data-cursor="pointer" data-disp="block" onClick={profileAvatarDelete.toggle} type="button">
         <Avatar size={AvatarSize.lg} />
       </button>
 
-      {overlay.on && enabled && (
+      {profileAvatarDelete.on && enabled && (
         <div data-bg="neutral-900" data-br="md" data-inset="0" data-opacity="high" data-position="absolute" />
       )}
-      {overlay.on && enabled && (
+      {profileAvatarDelete.on && enabled && (
         <button
           className="c-button"
           data-color="neutral-200"

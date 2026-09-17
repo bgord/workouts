@@ -14,9 +14,6 @@ import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-const body = { flexBasis: 0, minWidth: 0 };
-const spacer = { ...bg.Rhythm(16).times(1).width, textAlign: "center" as const };
-
 export function WorkoutExerciseRow(props: {
   workout: Workout;
   exercise: WorkoutExercise;
@@ -25,22 +22,25 @@ export function WorkoutExerciseRow(props: {
 }) {
   const t = bg.useTranslations();
 
+  const workoutExerciseVisibility = usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
+  const workoutExerciseTarget = bg.useToggle({ name: `workout-exercise-target-${props.exercise.id}` });
+  const workoutExerciseDescription = bg.useToggle({
+    name: `workout-exercise-description-${props.exercise.id}`,
+  });
+
   const exercise = {
     id: props.exercise.exerciseId,
     name: props.exercise.exerciseName,
     imageEtag: props.exercise.exerciseImageEtag,
   };
 
-  const completed = props.workout.status === WorkoutStatusEnum.completed;
-  const skipped = completed && props.exercise.loggedSets.length === 0;
+  const skipped =
+    props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
 
   const expandable = props.exercise.loggedSets.length > 0 || props.exercise.actions.setLog.available;
 
   const { width } = bg.useWindowDimensions();
   const mobile = width !== undefined && width <= 768;
-  const open = usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
-  const target = bg.useToggle({ name: `workout-exercise-target-${props.exercise.id}` });
-  const description = bg.useToggle({ name: `workout-exercise-description-${props.exercise.id}` });
 
   const actions = (
     <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
@@ -67,7 +67,9 @@ export function WorkoutExerciseRow(props: {
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
         {expandable ? (
           <button
-            aria-label={open.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")}
+            aria-label={
+              workoutExerciseVisibility.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")
+            }
             data-color="neutral-400"
             data-cursor="pointer"
             data-hover-color="neutral-0"
@@ -75,12 +77,14 @@ export function WorkoutExerciseRow(props: {
             data-p="2-5"
             data-shrink="0"
             data-stack="x"
-            onClick={open.toggle}
-            title={open.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")}
+            onClick={workoutExerciseVisibility.toggle}
+            title={
+              workoutExerciseVisibility.on ? t("workout.exercise.collapse") : t("workout.exercise.expand")
+            }
             type="button"
-            {...open.props.controller}
+            {...workoutExerciseVisibility.props.controller}
           >
-            {open.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
+            {workoutExerciseVisibility.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
           </button>
         ) : (
           <div
@@ -93,7 +97,9 @@ export function WorkoutExerciseRow(props: {
             data-stack="x"
             data-transform="font-variant-numeric"
           >
-            <span style={spacer}>{props.workout.status === WorkoutStatusEnum.draft && props.index + 1}</span>
+            <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
+              {props.workout.status === WorkoutStatusEnum.draft && props.index + 1}
+            </span>
           </div>
         )}
 
@@ -105,15 +111,15 @@ export function WorkoutExerciseRow(props: {
           data-p="0"
           data-shrink="0"
           data-stack="x"
-          onClick={description.toggle}
+          onClick={workoutExerciseDescription.toggle}
           title={t("workout.exercise.description.toggle")}
           type="button"
-          {...description.props.controller}
+          {...workoutExerciseDescription.props.controller}
         >
           <ExerciseImage size={mobile ? ExerciseImageSize.xs : ExerciseImageSize.sm} {...exercise} />
         </button>
 
-        <div data-gap="1" data-grow="1" data-stack="y" style={body}>
+        <div data-gap="1" data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }}>
           <Link
             data-color="neutral-100"
             data-fs="sm"
@@ -147,10 +153,10 @@ export function WorkoutExerciseRow(props: {
                 data-transform="font-variant-numeric"
                 data-wrap="nowrap"
                 disabled={!props.exercise.actions.targetSet.enabled}
-                onClick={target.toggle}
+                onClick={workoutExerciseTarget.toggle}
                 title={t("workout.target.cta")}
                 type="button"
-                {...target.props.controller}
+                {...workoutExerciseTarget.props.controller}
               >
                 <Target data-color="neutral-500" data-size="xs" />
 
@@ -225,32 +231,38 @@ export function WorkoutExerciseRow(props: {
         {actions}
       </div>
 
-      {description.on && (
+      {workoutExerciseDescription.on && (
         <div
           className="c-prose"
           data-color="neutral-300"
           data-fs="sm"
           data-md-pl="0"
           data-pl="12"
-          {...description.props.target}
+          {...workoutExerciseDescription.props.target}
         >
           {props.exercise.exerciseDescription}
         </div>
       )}
 
-      {target.on && props.exercise.actions.targetSet.available && (
+      {workoutExerciseTarget.on && props.exercise.actions.targetSet.available && (
         <div data-md-pl="8" data-pl="12">
           <WorkoutExerciseTargetSet
             action={props.exercise.actions.targetSet}
             exercise={props.exercise}
-            toggle={target}
             workout={props.workout}
+            {...workoutExerciseTarget}
           />
         </div>
       )}
 
-      {expandable && open.on && (
-        <div data-gap="0" data-md-pl="0" data-pl="12" data-stack="y" {...open.props.target}>
+      {expandable && workoutExerciseVisibility.on && (
+        <div
+          data-gap="0"
+          data-md-pl="0"
+          data-pl="12"
+          data-stack="y"
+          {...workoutExerciseVisibility.props.target}
+        >
           <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
           {props.exercise.actions.setLog.available && (

@@ -5,14 +5,12 @@ import { Form } from "../../app/services/plan-section-create-form";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
 import { planRoute } from "../router";
 
-export function PlanSectionRename(props: {
-  plan: Plan;
-  section: PlanSectionWithExercises;
-  toggle: bg.UseToggleReturnType;
-}) {
+export function PlanSectionRename(
+  props: { plan: Plan; section: PlanSectionWithExercises } & bg.UseToggleReturnType,
+) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const rename = props.toggle;
+  const { toggle } = bg.extractUseToggle(props);
 
   const planSectionName = bg.useTextField({
     ...Form.planSectionName.field,
@@ -28,23 +26,23 @@ export function PlanSectionRename(props: {
         body: JSON.stringify({ planSectionName: planSectionName.value }),
       }),
     onSuccess: async () => {
-      rename.disable();
+      toggle.disable();
 
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
     },
   });
 
-  if (rename.off) {
+  if (toggle.off) {
     return (
       <button
         className="c-card-title"
         data-cursor="pointer"
         data-hover-color="brand-300"
         data-transform="truncate"
-        onClick={rename.enable}
+        onClick={toggle.enable}
         title={t("plan.section.rename.cta")}
         type="button"
-        {...rename.props.controller}
+        {...toggle.props.controller}
       >
         {props.section.name}
       </button>
@@ -52,7 +50,7 @@ export function PlanSectionRename(props: {
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...rename.props.target}>
+    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...toggle.props.target}>
       <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
           aria-label={t("plan.section.rename.label")}
@@ -88,7 +86,7 @@ export function PlanSectionRename(props: {
           data-px="0"
           data-shrink="0"
           data-variant="ghost"
-          onClick={bg.exec([planSectionName.clear, mutation.reset, rename.disable])}
+          onClick={bg.exec([planSectionName.clear, mutation.reset, toggle.disable])}
           title={t("app.cancel")}
           type="button"
           {...bg.Rhythm().times(3).style.width}

@@ -9,13 +9,12 @@ import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 const date = { flexShrink: 0, minWidth: 0, width: "auto" };
 const submit = { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm(34).times(1).height };
 
-export function BodyWeightMeasurementCorrect(props: {
-  measurement: BodyWeightMeasurement;
-  toggle: bg.UseToggleReturnType;
-}) {
+export function BodyWeightMeasurementCorrect(
+  props: { measurement: BodyWeightMeasurement } & bg.UseToggleReturnType,
+) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const edit = props.toggle;
+  const { toggle } = bg.extractUseToggle(props);
 
   const measuredOn = bg.useDateField({
     name: `corrected-measured-on-${props.measurement.id}`,
@@ -36,12 +35,12 @@ export function BodyWeightMeasurementCorrect(props: {
         body: JSON.stringify({ measuredOn: measuredOn.value, weight: WeightFormat.grams(weight.value ?? 0) }),
       }),
     onSuccess: async () => {
-      edit.disable();
+      toggle.disable();
       await router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true });
     },
   });
 
-  if (edit.off) return null;
+  if (toggle.off) return null;
 
   return (
     <form
@@ -52,7 +51,7 @@ export function BodyWeightMeasurementCorrect(props: {
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
-      {...edit.props.target}
+      {...toggle.props.target}
     >
       <input
         aria-label={t("measurements.body_weight.measure.date.label")}
@@ -109,7 +108,7 @@ export function BodyWeightMeasurementCorrect(props: {
         data-px="0"
         data-shrink="0"
         data-variant="ghost"
-        onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset, edit.disable])}
+        onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset, toggle.disable])}
         title={t("app.cancel")}
         type="button"
         {...bg.Rhythm().times(3).style.width}

@@ -7,15 +7,16 @@ import { ActionHint, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function WorkoutExerciseTargetSet(props: {
-  workout: Workout;
-  exercise: WorkoutExerciseWithSets;
-  action: ActionState;
-  toggle: bg.UseToggleReturnType;
-}) {
+export function WorkoutExerciseTargetSet(
+  props: {
+    workout: Workout;
+    exercise: WorkoutExerciseWithSets;
+    action: ActionState;
+  } & bg.UseToggleReturnType,
+) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const edit = props.toggle;
+  const { toggle } = bg.extractUseToggle(props);
 
   const sets = bg.useNumberField<number>({
     name: `sets-${props.exercise.id}`,
@@ -47,12 +48,12 @@ export function WorkoutExerciseTargetSet(props: {
         }),
       }),
     onSuccess: async () => {
-      edit.disable();
+      toggle.disable();
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
     },
   });
 
-  const cancel = bg.exec([sets.clear, reps.clear, load.clear, mutation.reset, edit.disable]);
+  const cancel = bg.exec([sets.clear, reps.clear, load.clear, mutation.reset, toggle.disable]);
   const unchanged = props.exercise.target && sets.unchanged && reps.unchanged && load.unchanged;
 
   return (
@@ -63,7 +64,7 @@ export function WorkoutExerciseTargetSet(props: {
       data-md-gap="2"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
-      {...edit.props.target}
+      {...toggle.props.target}
     >
       <div data-cross="center" data-gap="2" data-md-gap="1" data-stack="x" data-wrap="nowrap">
         <Stepper

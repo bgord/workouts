@@ -10,8 +10,9 @@ const label = { minWidth: 0 };
 export function ProfileAvatarChange() {
   const router = useRouter();
   const t = useTranslations();
+
+  const profileAvatarChange = useToggle({ name: "profile-avatar-change" });
   const avatar = useFile("avatar", { mimeTypes, maxSizeBytes: 10_000_000 });
-  const change = useToggle({ name: "profile-avatar-change" });
 
   const mutation = useMutation({
     perform: () => {
@@ -28,7 +29,7 @@ export function ProfileAvatarChange() {
     onSuccess: async () => {
       await router.invalidate({ filter: () => true, sync: true });
       avatar.actions.clearFile();
-      change.disable();
+      profileAvatarChange.disable();
     },
   });
 
@@ -42,34 +43,34 @@ export function ProfileAvatarChange() {
       <div
         data-cross="start"
         data-gap="3"
-        data-md-self={change.on ? "stretch" : undefined}
+        data-md-self={profileAvatarChange.on ? "stretch" : undefined}
         data-self="start"
         data-stack="y"
       >
         <ProfileAvatarDelete />
 
-        {change.off && (
+        {profileAvatarChange.off && (
           <button
             className="c-button"
             data-fs="xs"
             data-variant="ghost"
-            onClick={change.enable}
+            onClick={profileAvatarChange.enable}
             type="button"
-            {...change.props.controller}
+            {...profileAvatarChange.props.controller}
           >
             <ImageUp data-size="sm" />
             {t("profile.avatar.change.cta")}
           </button>
         )}
 
-        {change.on && (
+        {profileAvatarChange.on && (
           <form
             data-gap="2"
             data-md-width="100%"
             data-stack="y"
             encType="multipart/form-data"
             onSubmit={mutation.handleSubmit}
-            {...change.props.target}
+            {...profileAvatarChange.props.target}
           >
             <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
               <label
@@ -129,7 +130,7 @@ export function ProfileAvatarChange() {
                 data-px="0"
                 data-shrink="0"
                 data-variant="ghost"
-                onClick={exec([avatar.actions.clearFile, mutation.reset, change.disable])}
+                onClick={exec([avatar.actions.clearFile, mutation.reset, profileAvatarChange.disable])}
                 title={t("app.cancel")}
                 type="button"
                 {...Rhythm().times(3).style.width}

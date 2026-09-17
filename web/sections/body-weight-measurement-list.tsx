@@ -10,6 +10,7 @@ const VISIBLE = 15;
 export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<BodyWeightMeasurement> }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+
   const all = bg.useToggle({ name: "body-weight-measurement-list-all" });
   const month = bg.useTextField({ name: "month", defaultValue: "" });
 

@@ -8,6 +8,7 @@ import { PlanCreate } from "../sections/plan-create";
 export function Plans() {
   const t = bg.useTranslations();
   const { plans } = plansRoute.useLoaderData();
+
   const planCreate = bg.useToggle({ name: "plan-create" });
 
   const empty = plans.data.active.length === 0;
@@ -34,7 +35,7 @@ export function Plans() {
         </button>
       </div>
 
-      {plans.actions.create.enabled && <PlanCreate toggle={planCreate} />}
+      {plans.actions.create.enabled && <PlanCreate {...planCreate} />}
 
       <div data-gap="2" data-stack="y">
         <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">

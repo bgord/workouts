@@ -9,7 +9,8 @@ import { planRoute } from "../router";
 export function PlanDescription(props: Plan & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const update = bg.useToggle({ name: `plan-description-update-${props.id}` });
+
+  const planDescriptionUpdate = bg.useToggle({ name: `plan-description-update-${props.id}` });
 
   const description = bg.useTextField({
     ...Form.description.field,
@@ -25,7 +26,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
         body: JSON.stringify({ description: description.value?.trim() || null }),
       }),
     onSuccess: async () => {
-      update.disable();
+      planDescriptionUpdate.disable();
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
     },
   });
@@ -42,7 +43,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
 
   return (
     <div data-gap="2" data-stack="y">
-      {update.off && (
+      {planDescriptionUpdate.off && (
         <button
           className="c-prose"
           data-color={props.description ? "neutral-200" : "neutral-500"}
@@ -51,19 +52,24 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
           data-self="start"
           data-ta="start"
           disabled={!props.action.enabled}
-          onClick={update.enable}
+          onClick={planDescriptionUpdate.enable}
           title={t("plan.description.label")}
           type="button"
-          {...update.props.controller}
+          {...planDescriptionUpdate.props.controller}
         >
           {props.description ?? t("plan.description.placeholder")}
         </button>
       )}
 
-      {update.off && <ActionHint {...props.action} />}
+      {planDescriptionUpdate.off && <ActionHint {...props.action} />}
 
-      {update.on && (
-        <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...update.props.target}>
+      {planDescriptionUpdate.on && (
+        <form
+          data-gap="2"
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...planDescriptionUpdate.props.target}
+        >
           <textarea
             aria-label={t("plan.description.label")}
             className="c-textarea"
@@ -85,7 +91,9 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
               {t("app.save")}
             </button>
 
-            <ButtonCancel onClick={bg.exec([description.clear, mutation.reset, update.disable])} />
+            <ButtonCancel
+              onClick={bg.exec([description.clear, mutation.reset, planDescriptionUpdate.disable])}
+            />
 
             {mutation.isError && (
               <output data-color="danger-400" data-fs="sm">

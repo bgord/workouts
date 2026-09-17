@@ -8,7 +8,7 @@ import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
 export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExercise; loggedSet: LoggedSet }) {
-  const edit = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
+  const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
     <li
@@ -23,19 +23,19 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
         <div
           data-color="neutral-600"
           data-fs="xs"
-          data-md-disp={edit.on ? "none" : undefined}
+          data-md-disp={workoutSetCorrect.on ? "none" : undefined}
           data-transform="font-variant-numeric"
         >
           {props.loggedSet.setNumber}
         </div>
 
-        {edit.off && (
+        {workoutSetCorrect.off && (
           <div data-color="neutral-100" data-fs="sm" data-fw="medium">
             <RepsLoad load={props.loggedSet.load} reps={props.loggedSet.reps} />
           </div>
         )}
 
-        {edit.off && (
+        {workoutSetCorrect.off && (
           <div data-grow="1">
             {props.loggedSet.rir !== undefined && <RirBadge rir={props.loggedSet.rir} />}
           </div>
@@ -44,7 +44,7 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
         <div
           data-cross="center"
           data-gap="1"
-          data-grow={edit.on ? "1" : undefined}
+          data-grow={workoutSetCorrect.on ? "1" : undefined}
           data-shrink="0"
           data-stack="x"
           data-wrap="nowrap"
@@ -54,12 +54,12 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
               action={props.loggedSet.actions.correct}
               exercise={props.exercise}
               loggedSet={props.loggedSet}
-              toggle={edit}
               workout={props.workout}
+              {...workoutSetCorrect}
             />
           )}
 
-          {edit.off && props.loggedSet.actions.remove.available && (
+          {workoutSetCorrect.off && props.loggedSet.actions.remove.available && (
             <WorkoutSetRemove
               action={props.loggedSet.actions.remove}
               exercise={props.exercise}
@@ -70,7 +70,7 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
         </div>
       </div>
 
-      {edit.off && props.loggedSet.actions.remove.available && (
+      {workoutSetCorrect.off && props.loggedSet.actions.remove.available && (
         <ActionHint {...props.loggedSet.actions.remove} data-pl="5" />
       )}
     </li>

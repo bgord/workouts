@@ -7,11 +7,10 @@ import { catalogRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
 
-const dropzone = bg.Rhythm(144).times(1).height;
-
-export function ExerciseAdd(props: { toggle: bg.UseToggleReturnType }) {
+export function ExerciseAdd(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { toggle } = bg.extractUseToggle(props);
 
   const name = bg.useTextField(Form.name.field);
   const description = bg.useTextField(Form.description.field);
@@ -28,7 +27,7 @@ export function ExerciseAdd(props: { toggle: bg.UseToggleReturnType }) {
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });
     },
     onSuccess: async (_, context) => {
-      props.toggle.disable();
+      toggle.disable();
       await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
       bg.Fields.clearAll([name, description]);
       image.actions.clearFile();
@@ -37,8 +36,8 @@ export function ExerciseAdd(props: { toggle: bg.UseToggleReturnType }) {
   });
 
   return (
-    <Dialog {...props.toggle}>
-      <DialogHeader disabled={mutation.isLoading} onClose={props.toggle.disable}>
+    <Dialog {...toggle}>
+      <DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
         {t("exercise.add.cta")}
       </DialogHeader>
 
@@ -66,7 +65,7 @@ export function ExerciseAdd(props: { toggle: bg.UseToggleReturnType }) {
             data-p={image.isSelected ? "0" : "4"}
             data-stack="y"
             data-transform="center"
-            style={dropzone}
+            {...bg.Rhythm(144).times(1).style.height}
             {...image.label.props}
           >
             {image.isSelected ? (
@@ -158,7 +157,7 @@ export function ExerciseAdd(props: { toggle: bg.UseToggleReturnType }) {
 
         {mutation.isError && <DialogError>{t("exercise.add.error")}</DialogError>}
 
-        <DialogFooter disabled={mutation.isLoading} onCancel={props.toggle.disable}>
+        <DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
           <ButtonClear
             disabled={name.unchanged && description.unchanged && !image.isSelected}
             onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}

@@ -14,7 +14,8 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const router = useRouter();
-  const reschedule = bg.useToggle({ name: `workout-reschedule-${props.id}` });
+
+  const workoutReschedule = bg.useToggle({ name: `workout-reschedule-${props.id}` });
 
   const scheduledFor = bg.useDateField({
     name: `workout-scheduled-for-${props.id}`,
@@ -30,13 +31,13 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         body: JSON.stringify({ scheduledFor: scheduledFor.value }),
       }),
     onSuccess: async () => {
-      reschedule.disable();
+      workoutReschedule.disable();
 
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
     },
   });
 
-  if (reschedule.off) {
+  if (workoutReschedule.off) {
     return (
       <button
         data-color="neutral-500"
@@ -44,10 +45,10 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         data-fs="xs"
         data-hover-color="neutral-200"
         data-self="start"
-        onClick={reschedule.enable}
+        onClick={workoutReschedule.enable}
         title={t("workout.reschedule.cta")}
         type="button"
-        {...reschedule.props.controller}
+        {...workoutReschedule.props.controller}
       >
         {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor))}
       </button>
@@ -62,7 +63,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
-      {...reschedule.props.target}
+      {...workoutReschedule.props.target}
     >
       <input
         aria-label={t("workout.reschedule.label")}
@@ -100,7 +101,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         data-px="0"
         data-shrink="0"
         data-variant="ghost"
-        onClick={bg.exec([scheduledFor.clear, mutation.reset, reschedule.disable])}
+        onClick={bg.exec([scheduledFor.clear, mutation.reset, workoutReschedule.disable])}
         title={t("app.cancel")}
         type="button"
         {...bg.Rhythm().times(3).style.width}

@@ -8,7 +8,8 @@ import { exerciseRoute } from "../router";
 export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategories }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const update = bg.useToggle({ name: "exercise-description-update" });
+
+  const exerciseDescriptionUpdate = bg.useToggle({ name: "exercise-description-update" });
 
   const description = bg.useTextField({
     ...Form.description.field,
@@ -23,13 +24,13 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
         body: JSON.stringify({ name: props.exercise.name, description: description.value }),
       }),
     onSuccess: async () => {
-      update.disable();
+      exerciseDescriptionUpdate.disable();
 
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
     },
   });
 
-  if (update.off) {
+  if (exerciseDescriptionUpdate.off) {
     return (
       <button
         className="c-prose"
@@ -38,10 +39,10 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
         data-fs="sm"
         data-self="start"
         data-ta="start"
-        onClick={update.enable}
+        onClick={exerciseDescriptionUpdate.enable}
         title={t("exercise.update.description.cta")}
         type="button"
-        {...update.props.controller}
+        {...exerciseDescriptionUpdate.props.controller}
       >
         {props.exercise.description}
       </button>
@@ -49,7 +50,12 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
   }
 
   return (
-    <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...update.props.target}>
+    <form
+      data-gap="2"
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...exerciseDescriptionUpdate.props.target}
+    >
       <textarea
         aria-label={t("exercise.update.description.label")}
         className="c-textarea"
@@ -69,7 +75,9 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
           {t("app.save")}
         </button>
 
-        <ButtonCancel onClick={bg.exec([description.clear, mutation.reset, update.disable])} />
+        <ButtonCancel
+          onClick={bg.exec([description.clear, mutation.reset, exerciseDescriptionUpdate.disable])}
+        />
       </div>
 
       {mutation.isError && (

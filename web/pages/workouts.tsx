@@ -10,6 +10,7 @@ import * as ShortcutDefinitions from "../services/shortcuts";
 export function Workouts() {
   const t = bg.useTranslations();
   const { workouts } = workoutsRoute.useLoaderData();
+
   const workoutCreate = bg.useToggle({ name: "workout-create" });
 
   bg.useShortcuts({
@@ -39,7 +40,7 @@ export function Workouts() {
         </button>
       </div>
 
-      {workouts.actions.create.enabled && <WorkoutCreate toggle={workoutCreate} />}
+      {workouts.actions.create.enabled && <WorkoutCreate {...workoutCreate} />}
 
       <WorkoutHistory />
     </Main>

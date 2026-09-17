@@ -28,28 +28,29 @@ const WorkoutReport = {
 
 export function WorkoutCopy(props: Workout & { completedAt: NonNullable<Workout["completedAt"]> }) {
   const t = bg.useTranslations();
-  const copied = bg.useToggle({ name: `workout-copy-${props.id}` });
+
+  const workoutCopy = bg.useToggle({ name: `workout-copy-${props.id}` });
 
   return (
     <button
       aria-label={t("workout.copy.cta")}
       className="c-button"
-      data-color={copied.on ? "brand-300" : "neutral-400"}
+      data-color={workoutCopy.on ? "brand-300" : "neutral-400"}
       data-hover-color="brand-300"
       data-variant="ghost"
       onClick={() =>
         bg.Clipboard.copy({
           text: WorkoutReport.create(props),
           onSuccess: () => {
-            copied.enable();
-            setTimeout(copied.disable, 2000);
+            workoutCopy.enable();
+            setTimeout(workoutCopy.disable, 2000);
           },
         })
       }
-      title={copied.on ? t("workout.copy.done") : t("workout.copy.title")}
+      title={workoutCopy.on ? t("workout.copy.done") : t("workout.copy.title")}
       type="button"
     >
-      {copied.on ? <Check data-size="sm" /> : <Copy data-size="sm" />}
+      {workoutCopy.on ? <Check data-size="sm" /> : <Copy data-size="sm" />}
     </button>
   );
 }

@@ -8,7 +8,8 @@ import { planRoute } from "../router";
 export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithExercises }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const dialog = bg.useToggle({ name: `plan-section-remove-${props.section.id}` });
+
+  const planSectionRemove = bg.useToggle({ name: `plan-section-remove-${props.section.id}` });
 
   const mutation = bg.useMutation({
     perform: async () =>
@@ -18,7 +19,7 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
         headers: bg.WeakETag.fromRevision(props.plan.revision),
       }),
     onSuccess: async () => {
-      dialog.disable();
+      planSectionRemove.disable();
 
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
     },
@@ -33,17 +34,17 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
         data-px="0"
         data-shrink="0"
         data-variant="ghost"
-        onClick={dialog.enable}
+        onClick={planSectionRemove.enable}
         title={t("plan.section.remove.title", { name: props.section.name })}
         type="button"
-        {...dialog.props.controller}
+        {...planSectionRemove.props.controller}
         {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
       </button>
 
-      <Dialog {...dialog}>
-        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+      <Dialog {...planSectionRemove}>
+        <DialogHeader disabled={mutation.isLoading} onClose={planSectionRemove.disable}>
           {t("plan.section.remove.header")}
         </DialogHeader>
 
@@ -55,7 +56,7 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("plan.section.remove.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={planSectionRemove.disable}>
             <button
               className="c-button"
               data-variant="destructive"

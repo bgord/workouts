@@ -10,10 +10,11 @@ export function Shortcuts() {
   const { width } = bg.useWindowDimensions();
   const t = bg.useTranslations();
   const navigate = useNavigate();
-  const help = bg.useToggle({ name: "shortcuts" });
+
+  const shortcuts = bg.useToggle({ name: "shortcuts" });
   const pathname = useRouterState({ select: (state) => state.location.pathname });
 
-  bg.useScrollLock(help.on);
+  bg.useScrollLock(shortcuts.on);
 
   bg.useShortcuts({
     [ShortcutDefinitions.GoToDashboard.trigger]: () => navigate({ to: "/" }),
@@ -23,13 +24,13 @@ export function Shortcuts() {
       navigate({ search: ExerciseCatalogFilters.default, to: "/catalog" }),
     [ShortcutDefinitions.GoToPlans.trigger]: () => navigate({ to: "/plans" }),
     [ShortcutDefinitions.GoToMeasurements.trigger]: () => navigate({ to: "/measurements" }),
-    [ShortcutDefinitions.ToggleHelp.trigger]: help.toggle,
-    [ShortcutDefinitions.CloseHelp.trigger]: help.disable,
+    [ShortcutDefinitions.ToggleHelp.trigger]: shortcuts.toggle,
+    [ShortcutDefinitions.CloseHelp.trigger]: shortcuts.disable,
   });
 
   if (!width || width <= 768) return null;
 
-  if (help.off) {
+  if (shortcuts.off) {
     return (
       <button
         className="c-button"
@@ -38,10 +39,10 @@ export function Shortcuts() {
         data-position="fixed"
         data-right="4"
         data-variant="secondary"
-        onClick={help.enable}
+        onClick={shortcuts.enable}
         title={t("app.shortcuts.help")}
         type="button"
-        {...help.props.controller}
+        {...shortcuts.props.controller}
       >
         <CircleHelp data-size="md" />
       </button>
@@ -58,7 +59,7 @@ export function Shortcuts() {
       data-stack="x"
       data-z="3"
       style={{ backgroundColor: "var(--backdrop-medium)" }}
-      {...help.props.target}
+      {...shortcuts.props.target}
     >
       <div
         className="c-card"
@@ -82,7 +83,7 @@ export function Shortcuts() {
             {t("app.shortcuts.header")}
           </div>
 
-          <ButtonClose onClick={help.disable} title={t("app.shortcuts.close")} />
+          <ButtonClose onClick={shortcuts.disable} title={t("app.shortcuts.close")} />
         </div>
 
         {pathname === "/" && (

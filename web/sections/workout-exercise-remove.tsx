@@ -21,12 +21,13 @@ export function WorkoutExerciseRemove(props: {
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const dialog = bg.useToggle({ name: `workout-exercise-remove-${props.exercise.id}` });
+
+  const workoutExerciseRemove = bg.useToggle({ name: `workout-exercise-remove-${props.exercise.id}` });
   const guarded = props.exercise.loggedSets.length > 0;
 
   const confirm = (event: React.FormEvent) => {
     event.preventDefault();
-    dialog.enable();
+    workoutExerciseRemove.enable();
   };
 
   const mutation = bg.useMutation({
@@ -59,7 +60,7 @@ export function WorkoutExerciseRemove(props: {
           title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
           type="submit"
           {...bg.Rhythm().times(3).style.width}
-          {...dialog.props.controller}
+          {...workoutExerciseRemove.props.controller}
         >
           <X data-size="sm" />
         </button>
@@ -67,8 +68,8 @@ export function WorkoutExerciseRemove(props: {
         <ActionHint {...props.action} />
       </form>
 
-      <Dialog {...dialog}>
-        <DialogHeader disabled={mutation.isLoading} onClose={dialog.disable}>
+      <Dialog {...workoutExerciseRemove}>
+        <DialogHeader disabled={mutation.isLoading} onClose={workoutExerciseRemove.disable}>
           {t("workout.exercise.remove.header")}
         </DialogHeader>
 
@@ -80,7 +81,7 @@ export function WorkoutExerciseRemove(props: {
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
           {mutation.isError && <DialogError>{t("workout.exercise.remove.error")}</DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={dialog.disable}>
+          <DialogFooter disabled={mutation.isLoading} onCancel={workoutExerciseRemove.disable}>
             <button
               className="c-button"
               data-variant="destructive"

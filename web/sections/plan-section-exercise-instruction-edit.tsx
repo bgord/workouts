@@ -31,8 +31,12 @@ export function PlanSectionExerciseInstructionEdit(props: {
   const { exerciseInstruction } = props;
   const { actions } = exerciseInstruction;
 
-  const edit = bg.useToggle({ name: `plan-section-exercise-instruction-edit-${exerciseInstruction.id}` });
-  const picking = bg.useToggle({ name: `plan-section-exercise-instruction-pick-${exerciseInstruction.id}` });
+  const planSectionExerciseInstructionEdit = bg.useToggle({
+    name: `plan-section-exercise-instruction-edit-${exerciseInstruction.id}`,
+  });
+  const planSectionExerciseInstructionPick = bg.useToggle({
+    name: `plan-section-exercise-instruction-pick-${exerciseInstruction.id}`,
+  });
 
   const exerciseId = bg.useTextField<string>({
     name: `${Form.exerciseId.field.name}-${exerciseInstruction.id}`,
@@ -88,8 +92,8 @@ export function PlanSectionExerciseInstructionEdit(props: {
       });
     },
     onSuccess: async () => {
-      edit.disable();
-      picking.disable();
+      planSectionExerciseInstructionEdit.disable();
+      planSectionExerciseInstructionPick.disable();
 
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
     },
@@ -103,7 +107,11 @@ export function PlanSectionExerciseInstructionEdit(props: {
     repsMax.clear,
     mutation.reset,
   ]);
-  const close = bg.exec([clear, picking.disable, edit.disable]);
+  const close = bg.exec([
+    clear,
+    planSectionExerciseInstructionPick.disable,
+    planSectionExerciseInstructionEdit.disable,
+  ]);
 
   return (
     <>
@@ -114,16 +122,16 @@ export function PlanSectionExerciseInstructionEdit(props: {
         data-hover-color="neutral-0"
         data-px="0"
         data-variant="ghost"
-        onClick={edit.enable}
+        onClick={planSectionExerciseInstructionEdit.enable}
         title={t("plan.section.exercise.edit.cta")}
         type="button"
-        {...edit.props.controller}
+        {...planSectionExerciseInstructionEdit.props.controller}
         {...bg.Rhythm().times(3).style.width}
       >
         <Pencil data-size="sm" />
       </button>
 
-      <Dialog {...edit}>
+      <Dialog {...planSectionExerciseInstructionEdit}>
         <DialogHeader disabled={mutation.isLoading} onClose={close}>
           {t("plan.section.exercise.edit.cta")}
           <span data-color="neutral-500" data-fw="regular" data-ml="2">
@@ -139,7 +147,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
         >
-          {picking.off && exercise && (
+          {planSectionExerciseInstructionPick.off && exercise && (
             <button
               data-bc="neutral-800"
               data-br="md"
@@ -157,10 +165,10 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-transform="truncate"
               data-wrap="nowrap"
               disabled={!(actions.exerciseChange.available && actions.exerciseChange.enabled)}
-              onClick={picking.enable}
+              onClick={planSectionExerciseInstructionPick.enable}
               title={t("plan.section.exercise.edit.change")}
               type="button"
-              {...picking.props.controller}
+              {...planSectionExerciseInstructionPick.props.controller}
             >
               <span data-shrink="0" data-stack="x">
                 <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
@@ -176,15 +184,20 @@ export function PlanSectionExerciseInstructionEdit(props: {
             </button>
           )}
 
-          {picking.on && (
-            <div data-stack="y" data-wrap="nowrap" style={shrinkable} {...picking.props.target}>
+          {planSectionExerciseInstructionPick.on && (
+            <div
+              data-stack="y"
+              data-wrap="nowrap"
+              style={shrinkable}
+              {...planSectionExerciseInstructionPick.props.target}
+            >
               <ExercisePicker
                 exercises={exercises.data}
                 name={exerciseId.input.props.name}
-                onCancel={bg.exec([query.clear, picking.disable])}
+                onCancel={bg.exec([query.clear, planSectionExerciseInstructionPick.disable])}
                 onChange={(id) => {
                   exerciseId.set(id);
-                  picking.disable();
+                  planSectionExerciseInstructionPick.disable();
                 }}
                 query={query}
                 value={exerciseId.value}
@@ -239,7 +252,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           <DialogFooter disabled={mutation.isLoading} onCancel={close}>
             <ButtonClear
               disabled={exerciseId.unchanged && query.empty && instructionUnchanged}
-              onClick={bg.exec([clear, picking.disable])}
+              onClick={bg.exec([clear, planSectionExerciseInstructionPick.disable])}
             />
 
             <button

@@ -5,10 +5,11 @@ import { Form } from "../../app/services/plan-create-form";
 import { Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
 import { plansRoute } from "../router";
 
-export function PlanCreate(props: { toggle: bg.UseToggleReturnType }) {
+export function PlanCreate(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = plansRoute.useNavigate();
+  const { toggle } = bg.extractUseToggle(props);
 
   const name = bg.useTextField(Form.name.field);
 
@@ -22,7 +23,7 @@ export function PlanCreate(props: { toggle: bg.UseToggleReturnType }) {
     onSuccess: async (response, context) => {
       const { id } = await response.json();
 
-      props.toggle.disable();
+      toggle.disable();
       bg.Fields.clearAll([name]);
       context.form?.reset();
 
@@ -32,8 +33,8 @@ export function PlanCreate(props: { toggle: bg.UseToggleReturnType }) {
   });
 
   return (
-    <Dialog data-md-mt="12" {...props.toggle}>
-      <DialogHeader disabled={mutation.isLoading} onClose={props.toggle.disable}>
+    <Dialog data-md-mt="12" {...toggle}>
+      <DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
         {t("plan.create.cta")}
       </DialogHeader>
 
@@ -55,7 +56,7 @@ export function PlanCreate(props: { toggle: bg.UseToggleReturnType }) {
 
         {mutation.isError && <DialogError>{t("plan.create.error")}</DialogError>}
 
-        <DialogFooter disabled={mutation.isLoading} onCancel={props.toggle.disable}>
+        <DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
           <button
             className="c-button"
             data-variant="primary"

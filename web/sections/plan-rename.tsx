@@ -8,7 +8,8 @@ import { planRoute, plansRoute } from "../router";
 export function PlanRename(props: Plan) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const rename = bg.useToggle({ name: "plan-rename" });
+
+  const planRename = bg.useToggle({ name: "plan-rename" });
 
   const planName = bg.useTextField({ ...Form.name.field, defaultValue: props.name });
 
@@ -21,7 +22,7 @@ export function PlanRename(props: Plan) {
         body: JSON.stringify({ planName: planName.value }),
       }),
     onSuccess: async () => {
-      rename.disable();
+      planRename.disable();
 
       await router.invalidate({
         filter: (route) => route.id === planRoute.id || route.id === plansRoute.id,
@@ -30,7 +31,7 @@ export function PlanRename(props: Plan) {
     },
   });
 
-  if (rename.off) {
+  if (planRename.off) {
     return (
       <button
         data-color="neutral-0"
@@ -39,10 +40,10 @@ export function PlanRename(props: Plan) {
         data-maxw="100%"
         data-md-fs="xl"
         data-transform="truncate"
-        onClick={rename.enable}
+        onClick={planRename.enable}
         title={t("plan.rename.cta")}
         type="button"
-        {...rename.props.controller}
+        {...planRename.props.controller}
       >
         <h1 data-fs="2xl" data-fw="black" data-maxw="100%" data-md-fs="xl" data-transform="truncate">
           {props.name}
@@ -58,7 +59,7 @@ export function PlanRename(props: Plan) {
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...bg.Rhythm().times(0).style.minWidth}
-      {...rename.props.target}
+      {...planRename.props.target}
     >
       <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <input
@@ -95,7 +96,7 @@ export function PlanRename(props: Plan) {
           data-px="0"
           data-shrink="0"
           data-variant="ghost"
-          onClick={bg.exec([planName.clear, mutation.reset, rename.disable])}
+          onClick={bg.exec([planName.clear, mutation.reset, planRename.disable])}
           title={t("app.cancel")}
           type="button"
           {...bg.Rhythm().times(3).style.width}

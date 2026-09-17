@@ -6,9 +6,10 @@ import { measurementsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
 
-export function BodyWeightMeasurementImport(props: { toggle: bg.UseToggleReturnType }) {
+export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { toggle } = bg.extractUseToggle(props);
 
   const file = bg.useFile("body-weight-measurement-import-file", { mimeTypes, maxSizeBytes: 1_000_000 });
 
@@ -25,17 +26,17 @@ export function BodyWeightMeasurementImport(props: { toggle: bg.UseToggleReturnT
       });
     },
     onSuccess: async () => {
-      props.toggle.disable();
+      toggle.disable();
       file.actions.clearFile();
 
       await router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true });
     },
   });
 
-  const close = bg.exec([file.actions.clearFile, mutation.reset, props.toggle.disable]);
+  const close = bg.exec([file.actions.clearFile, mutation.reset, toggle.disable]);
 
   return (
-    <Dialog {...props.toggle}>
+    <Dialog {...toggle}>
       <DialogHeader disabled={mutation.isLoading} onClose={close}>
         {t("measurements.body_weight.import.header")}
       </DialogHeader>

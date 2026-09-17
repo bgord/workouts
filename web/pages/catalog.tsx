@@ -11,7 +11,8 @@ import { ExerciseCategoryManage } from "../sections/exercise-category-manage";
 export function Catalog() {
   const t = bg.useTranslations();
   const { exercises, exerciseCategories } = catalogRoute.useLoaderData();
-  const categoryManage = bg.useToggle({ name: "exercise-category-manage" });
+
+  const exerciseCategoryManage = bg.useToggle({ name: "exercise-category-manage" });
   const exerciseAdd = bg.useToggle({ name: "exercise-add" });
 
   return (
@@ -29,9 +30,9 @@ export function Catalog() {
                 data-md-grow="1"
                 data-variant="ghost"
                 disabled={!exerciseCategories.actions.add.enabled}
-                onClick={categoryManage.enable}
+                onClick={exerciseCategoryManage.enable}
                 type="button"
-                {...categoryManage.props.controller}
+                {...exerciseCategoryManage.props.controller}
               >
                 <Tags data-size="sm" />
                 {t("exercise.category.manage.cta")}
@@ -60,9 +61,9 @@ export function Catalog() {
         </div>
       </div>
 
-      <ExerciseCategoryManage toggle={categoryManage} />
+      <ExerciseCategoryManage {...exerciseCategoryManage} />
 
-      {exercises.actions.add.enabled && <ExerciseAdd toggle={exerciseAdd} />}
+      {exercises.actions.add.enabled && <ExerciseAdd {...exerciseAdd} />}
 
       <ExerciseCatalog />
     </Main>

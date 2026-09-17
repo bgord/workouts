@@ -22,9 +22,11 @@ export function BodyWeightMeasurementRow(props: {
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const edit = bg.useToggle({ name: `correct-${props.measurement.id}` });
-  const reference = bg.useToggle({ name: `reference-${props.measurement.id}` });
-  const open = edit.on || reference.on;
+
+  const bodyWeightMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
+  const bodyWeightReference = bg.useToggle({ name: `reference-${props.measurement.id}` });
+
+  const open = bodyWeightMeasurementCorrect.on || bodyWeightReference.on;
 
   return (
     <li
@@ -41,8 +43,8 @@ export function BodyWeightMeasurementRow(props: {
     >
       {open && (
         <>
-          <BodyWeightMeasurementCorrect measurement={props.measurement} toggle={edit} />
-          <BodyWeightReferenceSet measurement={props.measurement} toggle={reference} />
+          <BodyWeightMeasurementCorrect measurement={props.measurement} {...bodyWeightMeasurementCorrect} />
+          <BodyWeightReferenceSet measurement={props.measurement} {...bodyWeightReference} />
         </>
       )}
 
@@ -57,7 +59,7 @@ export function BodyWeightMeasurementRow(props: {
             data-md-fs="xs"
             data-stack="x"
             data-transform="nowrap"
-            onClick={edit.enable}
+            onClick={bodyWeightMeasurementCorrect.enable}
             style={date}
             type="button"
           >
@@ -78,7 +80,7 @@ export function BodyWeightMeasurementRow(props: {
             data-md-fs="xs"
             data-shrink="0"
             data-transform="nowrap"
-            onClick={edit.enable}
+            onClick={bodyWeightMeasurementCorrect.enable}
             type="button"
           >
             {t("measurements.body_weight.value", {
@@ -101,11 +103,11 @@ export function BodyWeightMeasurementRow(props: {
               data-hover-color="brand-300"
               data-px="0"
               data-variant="ghost"
-              onClick={reference.enable}
+              onClick={bodyWeightReference.enable}
               title={t("measurements.body_weight.reference.title")}
               type="button"
               {...bg.Rhythm().times(3).style.width}
-              {...reference.props.controller}
+              {...bodyWeightReference.props.controller}
             >
               <Flag data-size="sm" fill={props.measurement.reference ? "currentColor" : "none"} />
             </button>
