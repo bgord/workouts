@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { Check, Copy } from "lucide-react";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
+import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
 const WorkoutReport = {
@@ -26,10 +27,15 @@ const WorkoutReport = {
   },
 };
 
-export function WorkoutCopy(props: Workout & { completedAt: NonNullable<Workout["completedAt"]> }) {
+export function WorkoutCopy() {
   const t = bg.useTranslations();
+  const { workout } = workoutRoute.useLoaderData();
 
-  const workoutCopy = bg.useToggle({ name: `workout-copy-${props.id}` });
+  const workoutCopy = bg.useToggle({ name: `workout-copy-${workout.data.id}` });
+
+  const completedAt = workout.data.completedAt;
+
+  if (!completedAt) return null;
 
   return (
     <button
@@ -40,7 +46,7 @@ export function WorkoutCopy(props: Workout & { completedAt: NonNullable<Workout[
       data-variant="ghost"
       onClick={() =>
         bg.Clipboard.copy({
-          text: WorkoutReport.create(props),
+          text: WorkoutReport.create({ ...workout.data, completedAt }),
           onSuccess: () => {
             workoutCopy.enable();
             setTimeout(workoutCopy.disable, 2000);
