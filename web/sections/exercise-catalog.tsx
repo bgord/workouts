@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseCard } from "../components";
+import { ExerciseCard, IconButton } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -91,27 +91,19 @@ export function ExerciseCatalog() {
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
         </div>
 
-        <button
+        <IconButton
           aria-label={t("app.clear")}
-          className="c-button"
-          data-color="neutral-400"
           data-disp={pristine ? "none" : undefined}
-          data-hover-color="neutral-0"
           data-md-disp={pristine ? "flex" : undefined}
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
           disabled={pristine}
           onClick={() => {
             name.clear();
             navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
           }}
           title={t("app.clear")}
-          type="button"
-          {...bg.Rhythm().times(3).style.width}
         >
           <X data-size="sm" />
-        </button>
+        </IconButton>
       </div>
 
       <ul data-gap="2" data-stack="x" data-wrap="wrap">

@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ActionHint } from "../components";
+import { ActionHint, IconButton } from "../components";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
@@ -77,37 +77,23 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         min={Temporal.Now.plainDateISO().subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
       />
 
-      <button
+      <IconButton
         aria-label={t("app.save")}
-        className="c-button"
-        data-color="positive-400"
-        data-hover-color="positive-200"
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
         disabled={scheduledFor.unchanged || mutation.isLoading}
         title={t("app.save")}
+        tone="positive"
         type="submit"
-        {...bg.Rhythm().times(3).style.width}
       >
         <Check data-size="sm" />
-      </button>
+      </IconButton>
 
-      <button
+      <IconButton
         aria-label={t("app.cancel")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="neutral-0"
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
         onClick={bg.exec([scheduledFor.clear, mutation.reset, workoutReschedule.disable])}
         title={t("app.cancel")}
-        type="button"
-        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
-      </button>
+      </IconButton>
 
       <ActionHint {...props.action} data-ml="2" />
 

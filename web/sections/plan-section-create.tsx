@@ -4,7 +4,7 @@ import { Check, Plus, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHint } from "../components";
+import { ActionHint, IconButton } from "../components";
 import { planRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
@@ -107,37 +107,23 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
         />
 
         <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
-          <button
+          <IconButton
             aria-label={t("app.save")}
-            className="c-button"
-            data-color="positive-400"
-            data-hover-color="positive-200"
-            data-px="0"
-            data-shrink="0"
-            data-variant="ghost"
             disabled={planSectionName.empty || mutation.isLoading}
             title={t("app.save")}
+            tone="positive"
             type="submit"
-            {...bg.Rhythm().times(3).style.width}
           >
             <Check data-size="sm" />
-          </button>
+          </IconButton>
 
-          <button
+          <IconButton
             aria-label={t("app.cancel")}
-            className="c-button"
-            data-color="neutral-400"
-            data-hover-color="neutral-0"
-            data-px="0"
-            data-shrink="0"
-            data-variant="ghost"
             onClick={bg.exec([planSectionName.clear, mutation.reset, planSectionCreate.disable])}
             title={t("app.cancel")}
-            type="button"
-            {...bg.Rhythm().times(3).style.width}
           >
             <X data-size="sm" />
-          </button>
+          </IconButton>
         </div>
       </div>
 

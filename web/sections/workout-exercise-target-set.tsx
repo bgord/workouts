@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, Stepper } from "../components";
+import { ActionHint, IconButton, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -111,37 +111,21 @@ export function WorkoutExerciseTargetSet(
       </div>
 
       <div data-cross="center" data-gap="1" data-ml="auto" data-shrink="0" data-stack="x" data-wrap="nowrap">
-        <button
+        <IconButton
           aria-label={t("app.save")}
-          className="c-button"
-          data-color="positive-400"
-          data-hover-color="positive-200"
-          data-px="0"
-          data-variant="ghost"
           disabled={
             !props.action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
           }
           title={t("app.save")}
+          tone="positive"
           type="submit"
-          {...bg.Rhythm().times(3).style.width}
         >
           <Check data-size="sm" />
-        </button>
+        </IconButton>
 
-        <button
-          aria-label={t("app.cancel")}
-          className="c-button"
-          data-color="neutral-400"
-          data-hover-color="neutral-0"
-          data-px="0"
-          data-variant="ghost"
-          onClick={cancel}
-          title={t("app.cancel")}
-          type="button"
-          {...bg.Rhythm().times(3).style.width}
-        >
+        <IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
           <X data-size="sm" />
-        </button>
+        </IconButton>
       </div>
 
       <ActionHint {...props.action} />

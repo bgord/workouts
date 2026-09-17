@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogInfo,
   DialogStatus,
+  IconButton,
 } from "../components";
 import { workoutRoute } from "../router";
 
@@ -49,21 +50,15 @@ export function WorkoutExerciseRemove(props: {
         data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
       >
-        <button
-          className="c-button"
-          data-color="neutral-400"
-          data-hover-color="danger-400"
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
+        <IconButton
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
+          tone="danger"
           type="submit"
-          {...bg.Rhythm().times(3).style.width}
           {...workoutExerciseRemove.props.controller}
         >
           <X data-size="sm" />
-        </button>
+        </IconButton>
 
         <ActionHint {...props.action} />
       </form>

@@ -1,7 +1,7 @@
-import { exec, Rhythm, useFile, useMutation, useToggle, useTranslations } from "@bgord/ui";
+import { exec, useFile, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, CircleUser, FileImage, ImageUp, X } from "lucide-react";
-import { SectionHeading } from "../components";
+import { IconButton, SectionHeading } from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -106,37 +106,23 @@ export function ProfileAvatarChange() {
                 />
               </label>
 
-              <button
+              <IconButton
                 aria-label={t("app.save")}
-                className="c-button"
-                data-color="positive-400"
-                data-hover-color="positive-200"
-                data-px="0"
-                data-shrink="0"
-                data-variant="ghost"
                 disabled={!avatar.isSelected || mutation.isLoading}
                 title={t("app.save")}
+                tone="positive"
                 type="submit"
-                {...Rhythm().times(3).style.width}
               >
                 <Check data-size="sm" />
-              </button>
+              </IconButton>
 
-              <button
+              <IconButton
                 aria-label={t("app.cancel")}
-                className="c-button"
-                data-color="neutral-400"
-                data-hover-color="neutral-0"
-                data-px="0"
-                data-shrink="0"
-                data-variant="ghost"
                 onClick={exec([avatar.actions.clearFile, mutation.reset, profileAvatarChange.disable])}
                 title={t("app.cancel")}
-                type="button"
-                {...Rhythm().times(3).style.width}
               >
                 <X data-size="sm" />
-              </button>
+              </IconButton>
             </div>
 
             <div data-color="neutral-500" data-fs="xs">

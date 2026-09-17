@@ -2,7 +2,15 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
+import {
+  Dialog,
+  DialogError,
+  DialogFooter,
+  DialogHeader,
+  DialogInfo,
+  DialogStatus,
+  IconButton,
+} from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryDelete(props: ExerciseCategory) {
@@ -23,19 +31,14 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
 
   return (
     <>
-      <button
-        className="c-button"
-        data-color="neutral-500"
-        data-hover-color="danger-400"
-        data-shrink="0"
-        data-variant="icon"
+      <IconButton
         onClick={exerciseCategoryDelete.enable}
         title={t("exercise.category.delete.title", { name: props.name })}
-        type="button"
+        tone="danger"
         {...exerciseCategoryDelete.props.controller}
       >
         <Trash2 data-size="sm" />
-      </button>
+      </IconButton>
 
       <Dialog {...exerciseCategoryDelete}>
         <DialogHeader disabled={mutation.isLoading} onClose={exerciseCategoryDelete.disable}>

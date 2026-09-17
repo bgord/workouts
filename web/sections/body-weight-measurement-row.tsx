@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Flag } from "lucide-react";
 import type { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { BodyWeightDelta } from "../components/body-weight-delta";
+import { BodyWeightDelta, IconButton } from "../components";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
@@ -97,20 +97,14 @@ export function BodyWeightMeasurementRow(props: {
           </div>
 
           <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
-            <button
-              className="c-button"
-              data-color={props.measurement.reference ? "brand-400" : "neutral-500"}
-              data-hover-color="brand-300"
-              data-px="0"
-              data-variant="ghost"
+            <IconButton
               onClick={bodyWeightReference.enable}
               title={t("measurements.body_weight.reference.title")}
-              type="button"
-              {...bg.Rhythm().times(3).style.width}
+              tone={props.measurement.reference ? "brand" : "neutral"}
               {...bodyWeightReference.props.controller}
             >
               <Flag data-size="sm" fill={props.measurement.reference ? "currentColor" : "none"} />
-            </button>
+            </IconButton>
 
             <BodyWeightMeasurementRemove measurement={props.measurement} />
           </div>

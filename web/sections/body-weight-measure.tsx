@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
-import { Stepper } from "../components/stepper";
+import { IconButton, Stepper } from "../components";
 import { measurementsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
@@ -16,11 +16,13 @@ export function BodyWeightMeasure() {
   const latest = measurements[0];
 
   const today = Temporal.Now.plainDateISO().toString();
+
   const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
   const weight = bg.useNumberField({
     name: "body-weight",
     defaultValue: latest ? WeightFormat.kilograms(latest.weight, BodyWeightDecimals) : undefined,
   });
+
   bg.useShortcuts({
     [ShortcutDefinitions.LogBodyWeight.trigger]: (event) => {
       event.preventDefault();
@@ -97,24 +99,16 @@ export function BodyWeightMeasure() {
         </button>
       </Stepper>
 
-      <button
+      <IconButton
         aria-label={t("app.clear")}
-        className="c-button"
-        data-color="neutral-400"
         data-disp={pristine ? "none" : undefined}
-        data-hover-color="neutral-0"
         data-md-disp={pristine ? "flex" : undefined}
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
         disabled={pristine}
         onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset])}
         title={t("app.clear")}
-        type="button"
-        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
-      </button>
+      </IconButton>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="xs" data-width="100%">

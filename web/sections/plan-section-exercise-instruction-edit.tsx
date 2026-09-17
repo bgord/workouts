@@ -14,6 +14,7 @@ import {
   ExerciseImage,
   ExerciseImageSize,
   ExercisePicker,
+  IconButton,
   Stepper,
 } from "../components";
 import { planRoute } from "../router";
@@ -115,21 +116,14 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
   return (
     <>
-      <button
+      <IconButton
         aria-label={t("plan.section.exercise.edit.cta")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="neutral-0"
-        data-px="0"
-        data-variant="ghost"
         onClick={planSectionExerciseInstructionEdit.enable}
         title={t("plan.section.exercise.edit.cta")}
-        type="button"
         {...planSectionExerciseInstructionEdit.props.controller}
-        {...bg.Rhythm().times(3).style.width}
       >
         <Pencil data-size="sm" />
-      </button>
+      </IconButton>
 
       <Dialog {...planSectionExerciseInstructionEdit}>
         <DialogHeader disabled={mutation.isLoading} onClose={close}>

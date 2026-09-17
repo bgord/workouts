@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
+import { IconButton } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryAdd() {
@@ -41,38 +42,24 @@ export function ExerciseCategoryAdd() {
           {...name.input.props}
         />
 
-        <button
+        <IconButton
           aria-label={t("exercise.category.add.submit.cta")}
-          className="c-button"
-          data-color="positive-400"
-          data-hover-color="positive-200"
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
           disabled={name.unchanged || mutation.isLoading}
           title={t("exercise.category.add.submit.cta")}
+          tone="positive"
           type="submit"
-          {...bg.Rhythm().times(3).style.width}
         >
           <Check data-size="sm" />
-        </button>
+        </IconButton>
 
-        <button
+        <IconButton
           aria-label={t("app.clear")}
-          className="c-button"
-          data-color="neutral-400"
-          data-hover-color="neutral-0"
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
           disabled={name.unchanged}
           onClick={bg.exec([name.clear, mutation.reset])}
           title={t("app.clear")}
-          type="button"
-          {...bg.Rhythm().times(3).style.width}
         >
           <X data-size="sm" />
-        </button>
+        </IconButton>
       </div>
 
       {mutation.isError && (

@@ -5,7 +5,7 @@ import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, RirSubmit, Stepper } from "../components";
+import { ActionHint, IconButton, RirSubmit, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -57,22 +57,14 @@ export function WorkoutSetCorrect(
   if (toggle.off) {
     return (
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
-        <button
-          className="c-button"
-          data-color="neutral-400"
-          data-hover-color="neutral-0"
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
+        <IconButton
           disabled={!props.action.enabled}
           onClick={toggle.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
-          type="button"
-          {...bg.Rhythm().times(3).style.width}
           {...toggle.props.controller}
         >
           <Pencil data-size="sm" />
-        </button>
+        </IconButton>
 
         <ActionHint {...props.action} />
       </div>
@@ -126,21 +118,9 @@ export function WorkoutSetCorrect(
         variant="dense"
       />
 
-      <button
-        aria-label={t("app.cancel")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="neutral-0"
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
-        onClick={cancel}
-        title={t("app.cancel")}
-        type="button"
-        {...bg.Rhythm().times(3).style.width}
-      >
+      <IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
         <X data-size="sm" />
-      </button>
+      </IconButton>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="xs" data-width="100%">

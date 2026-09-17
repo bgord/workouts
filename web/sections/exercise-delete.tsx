@@ -3,7 +3,15 @@ import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import type { ActionState } from "../../modules/action-state";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
+import {
+  Dialog,
+  DialogError,
+  DialogFooter,
+  DialogHeader,
+  DialogInfo,
+  DialogStatus,
+  IconButton,
+} from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action: ActionState }) {
@@ -24,22 +32,16 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
 
   return (
     <>
-      <button
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="danger-400"
-        data-px="0"
+      <IconButton
         data-self="start"
-        data-variant="ghost"
         disabled={!props.action.enabled}
         onClick={exerciseDelete.enable}
         title={t("exercise.delete.title", { name: props.exercise.name })}
-        type="button"
-        {...bg.Rhythm().times(3).style.width}
+        tone="danger"
         {...exerciseDelete.props.controller}
       >
         <Trash2 data-size="sm" />
-      </button>
+      </IconButton>
 
       <Dialog {...exerciseDelete}>
         <DialogHeader disabled={mutation.isLoading} onClose={exerciseDelete.disable}>

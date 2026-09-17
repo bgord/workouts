@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
+import { IconButton } from "../components";
 import { measurementsRoute } from "../router";
 
 export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeasurement }) {
@@ -25,19 +26,14 @@ export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeas
       data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
     >
-      <button
-        className="c-button"
-        data-color="neutral-500"
-        data-hover-color="danger-400"
-        data-px="0"
-        data-variant="ghost"
+      <IconButton
         disabled={mutation.isLoading}
         title={t("measurements.body_weight.remove.title")}
+        tone="danger"
         type="submit"
-        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
-      </button>
+      </IconButton>
     </form>
   );
 }

@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { BodyWeightGoalIcon } from "../components/body-weight-goal-icon";
+import { BodyWeightGoalIcon, IconButton } from "../components";
 import { measurementsRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -76,37 +76,23 @@ export function BodyWeightReferenceSet(
         ))}
       </div>
 
-      <button
+      <IconButton
         aria-label={t("app.save")}
-        className="c-button"
-        data-color="positive-400"
-        data-hover-color="positive-200"
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
         disabled={goal.empty || goal.unchanged || mutation.isLoading}
         title={t("app.save")}
+        tone="positive"
         type="submit"
-        {...bg.Rhythm().times(3).style.width}
       >
         <Check data-size="sm" />
-      </button>
+      </IconButton>
 
-      <button
+      <IconButton
         aria-label={t("app.cancel")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="neutral-0"
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
         onClick={bg.exec([goal.clear, mutation.reset, toggle.disable])}
         title={t("app.cancel")}
-        type="button"
-        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
-      </button>
+      </IconButton>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

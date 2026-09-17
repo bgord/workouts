@@ -5,7 +5,15 @@ import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
+import {
+  Dialog,
+  DialogError,
+  DialogFooter,
+  DialogHeader,
+  DialogInfo,
+  DialogStatus,
+  IconButton,
+} from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutSetRemove(props: {
@@ -46,21 +54,15 @@ export function WorkoutSetRemove(props: {
         data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
       >
-        <button
-          className="c-button"
-          data-color="neutral-400"
-          data-hover-color="danger-400"
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
+        <IconButton
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
+          tone="danger"
           type="submit"
-          {...bg.Rhythm().times(3).style.width}
           {...workoutSetRemove.props.controller}
         >
           <X data-size="sm" />
-        </button>
+        </IconButton>
       </form>
 
       <Dialog {...workoutSetRemove}>

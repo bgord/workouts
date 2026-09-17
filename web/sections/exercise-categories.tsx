@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { Select } from "../components";
+import { IconButton, Select } from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -90,37 +90,23 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
             ))}
           </Select>
 
-          <button
+          <IconButton
             aria-label={t("exercise.category.assign.cta")}
-            className="c-button"
-            data-color="positive-400"
-            data-hover-color="positive-200"
-            data-px="0"
-            data-shrink="0"
-            data-variant="ghost"
             disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
             title={t("exercise.category.assign.cta")}
+            tone="positive"
             type="submit"
-            {...bg.Rhythm().times(3).style.width}
           >
             <Check data-size="sm" />
-          </button>
+          </IconButton>
 
-          <button
+          <IconButton
             aria-label={t("app.cancel")}
-            className="c-button"
-            data-color="neutral-400"
-            data-hover-color="neutral-0"
-            data-px="0"
-            data-shrink="0"
-            data-variant="ghost"
             onClick={bg.exec([assign.reset, assignment.disable])}
             title={t("app.cancel")}
-            type="button"
-            {...bg.Rhythm().times(3).style.width}
           >
             <X data-size="sm" />
-          </button>
+          </IconButton>
         </form>
       )}
 

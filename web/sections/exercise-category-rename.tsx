@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, Pencil, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
+import { IconButton } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleReturnType) {
@@ -68,37 +69,23 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
           {...name.input.props}
         />
 
-        <button
+        <IconButton
           aria-label={t("app.save")}
-          className="c-button"
-          data-color="positive-400"
-          data-hover-color="positive-200"
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
           disabled={name.unchanged || mutation.isLoading}
           title={t("app.save")}
+          tone="positive"
           type="submit"
-          {...bg.Rhythm().times(3).style.width}
         >
           <Check data-size="sm" />
-        </button>
+        </IconButton>
 
-        <button
+        <IconButton
           aria-label={t("app.cancel")}
-          className="c-button"
-          data-color="neutral-400"
-          data-hover-color="neutral-0"
-          data-px="0"
-          data-shrink="0"
-          data-variant="ghost"
           onClick={bg.exec([name.clear, mutation.reset, toggle.disable])}
           title={t("app.cancel")}
-          type="button"
-          {...bg.Rhythm().times(3).style.width}
         >
           <X data-size="sm" />
-        </button>
+        </IconButton>
       </div>
 
       {mutation.isError && (

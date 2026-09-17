@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { Stepper } from "../components";
+import { IconButton, Stepper } from "../components";
 import { measurementsRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -100,21 +100,13 @@ export function BodyWeightMeasurementCorrect(
         </button>
       </Stepper>
 
-      <button
+      <IconButton
         aria-label={t("app.cancel")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="neutral-0"
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
         onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset, toggle.disable])}
         title={t("app.cancel")}
-        type="button"
-        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
-      </button>
+      </IconButton>
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="xs" data-width="100%">

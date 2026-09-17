@@ -2,7 +2,15 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
+import {
+  Dialog,
+  DialogError,
+  DialogFooter,
+  DialogHeader,
+  DialogInfo,
+  DialogStatus,
+  IconButton,
+} from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithExercises }) {
@@ -27,21 +35,14 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
 
   return (
     <>
-      <button
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="danger-400"
-        data-px="0"
-        data-shrink="0"
-        data-variant="ghost"
+      <IconButton
         onClick={planSectionRemove.enable}
         title={t("plan.section.remove.title", { name: props.section.name })}
-        type="button"
+        tone="danger"
         {...planSectionRemove.props.controller}
-        {...bg.Rhythm().times(3).style.width}
       >
         <X data-size="sm" />
-      </button>
+      </IconButton>
 
       <Dialog {...planSectionRemove}>
         <DialogHeader disabled={mutation.isLoading} onClose={planSectionRemove.disable}>

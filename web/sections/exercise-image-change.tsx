@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, FileImage, ImageUp, X } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ExerciseImage, ExerciseImageSize } from "../components";
+import { ExerciseImage, ExerciseImageSize, IconButton } from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -105,35 +105,23 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
               />
             </label>
 
-            <button
+            <IconButton
               aria-label={t("app.save")}
-              className="c-button"
-              data-color="positive-400"
-              data-hover-color="positive-200"
-              data-px="0"
-              data-variant="ghost"
               disabled={!image.isSelected || mutation.isLoading}
               title={t("app.save")}
+              tone="positive"
               type="submit"
-              {...bg.Rhythm().times(3).style.width}
             >
               <Check data-size="sm" />
-            </button>
+            </IconButton>
 
-            <button
+            <IconButton
               aria-label={t("app.cancel")}
-              className="c-button"
-              data-color="neutral-400"
-              data-hover-color="neutral-0"
-              data-px="0"
-              data-variant="ghost"
               onClick={bg.exec([image.actions.clearFile, mutation.reset, exerciseImageChange.disable])}
               title={t("app.cancel")}
-              type="button"
-              {...bg.Rhythm().times(3).style.width}
             >
               <X data-size="sm" />
-            </button>
+            </IconButton>
           </div>
 
           <div data-color="neutral-500" data-fs="xs">

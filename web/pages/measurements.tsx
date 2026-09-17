@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Download, Scale, Upload } from "lucide-react";
-import { Header, Main, SectionHeading } from "../components";
+import { Header, IconButton, Main, SectionHeading } from "../components";
 import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
@@ -22,21 +22,18 @@ export function Measurements() {
       <div data-cross="center" data-gap="1" data-stack="x">
         <Header data-grow="1">{t("measurements.body_weight.header")}</Header>
 
-        <button
-          className="c-button"
-          data-px="0"
-          data-variant="ghost"
+        <IconButton
           onClick={bodyWeightMeasurementImport.enable}
-          type="button"
-          {...bg.Rhythm().times(3).style.width}
           {...bodyWeightMeasurementImport.props.controller}
         >
           <Upload data-size="sm" />
-        </button>
+        </IconButton>
 
         {measurements.length > 0 && (
           <a
             className="c-button"
+            data-color="neutral-400"
+            data-hover-color="neutral-0"
             data-px="0"
             data-variant="ghost"
             download

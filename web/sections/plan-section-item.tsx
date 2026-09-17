@@ -80,8 +80,6 @@ export function PlanSectionItem(props: {
                 })}
           </div>
         )}
-        (
-        <PlanSectionRemove plan={plan} section={section} />)
         {actions.sectionRemove.available && planSectionRename.off && (
           <PlanSectionRemove plan={plan} section={section} />
         )}
