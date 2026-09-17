@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { ClipboardList, Plus } from "lucide-react";
-import { ActionHint, Header, Main, PlanCard } from "../components";
+import { ActionHint, Eyebrow, Header, Main, PlanCard } from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
@@ -38,9 +38,7 @@ export function Plans() {
       {plans.actions.create.enabled && <PlanCreate {...planCreate} />}
 
       <div data-gap="2" data-stack="y">
-        <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-          {t("plan.list.active.header")}
-        </div>
+        <Eyebrow>{t("plan.list.active.header")}</Eyebrow>
 
         {empty && (
           <div
@@ -75,15 +73,7 @@ export function Plans() {
       {plans.data.archived.length > 0 && (
         <div data-gap="2" data-stack="y">
           <div data-cross="center" data-gap="2" data-stack="x">
-            <div
-              data-color="neutral-500"
-              data-fs="xs"
-              data-grow="1"
-              data-ls="wide"
-              data-transform="uppercase"
-            >
-              {t("plan.list.archived.header")}
-            </div>
+            <Eyebrow data-grow="1">{t("plan.list.archived.header")}</Eyebrow>
           </div>
 
           <ul data-gap="2" data-opacity="high" data-stack="y">

@@ -1,9 +1,9 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { CalendarOff, ChevronRight } from "lucide-react";
+import { CalendarOff } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import { Header, Main, WorkoutCard } from "../components";
+import { Eyebrow, EyebrowLink, Header, Main, WorkoutCard } from "../components";
 import { dashboardRoute } from "../router";
 import { BodyWeightStats } from "../sections/body-weight-stats";
 import { DashboardCompleted } from "../sections/dashboard-completed";
@@ -69,9 +69,9 @@ export function Dashboard() {
       <div data-gap="3" data-md-gap="6" data-md-stack="y" data-stack="x">
         {upcoming && (
           <div data-gap="2" data-grow="1" data-stack="y" style={tile}>
-            <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
+            <Eyebrow>
               {t(dashboard.inProgress ? "dashboard.in_progress.header" : "dashboard.next_up.header")}
-            </div>
+            </Eyebrow>
 
             <ul data-gap="2" data-stack="y">
               <WorkoutCard {...upcoming} />
@@ -81,9 +81,7 @@ export function Dashboard() {
 
         {dashboard.lastCompleted && (
           <div data-gap="2" data-grow="1" data-stack="y" style={tile}>
-            <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-              {t("dashboard.last_completed.header")}
-            </div>
+            <Eyebrow>{t("dashboard.last_completed.header")}</Eyebrow>
 
             <ul data-gap="2" data-stack="y">
               <WorkoutCard {...dashboard.lastCompleted} />
@@ -96,21 +94,7 @@ export function Dashboard() {
 
       {measurements.length > 0 && (
         <div data-gap="2" data-stack="y">
-          <Link
-            data-color="neutral-500"
-            data-cross="center"
-            data-fs="xs"
-            data-gap="1"
-            data-hover-color="brand-300"
-            data-ls="wide"
-            data-self="start"
-            data-stack="x"
-            data-transform="uppercase"
-            to="/measurements"
-          >
-            {t("measurements.body_weight.header")}
-            <ChevronRight data-size="xs" />
-          </Link>
+          <EyebrowLink to="/measurements">{t("measurements.body_weight.header")}</EyebrowLink>
 
           <BodyWeightStats measurements={measurements} />
         </div>

@@ -3,7 +3,7 @@ import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
-import { ActionHint, ExerciseImage, ExerciseImageSize, Main, SectionHeading } from "../components";
+import { ActionHint, ExerciseImage, ExerciseImageSize, Eyebrow, Main, SectionHeading } from "../components";
 import { exerciseRoute } from "../router";
 import {
   ExerciseCategories,
@@ -110,9 +110,7 @@ export function Exercise() {
             <ExerciseCategories exercise={exercise} />
           ) : (
             <div data-gap="2" data-stack="y">
-              <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-                {t("exercise.categories.header")}
-              </div>
+              <Eyebrow>{t("exercise.categories.header")}</Eyebrow>
 
               <ul data-gap="2" data-stack="x" data-wrap="wrap">
                 {exercise.data.categories.map((category) => (
@@ -132,9 +130,7 @@ export function Exercise() {
           )}
 
           <div data-gap="2" data-stack="y">
-            <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-              {t("exercise.add.description.label")}
-            </div>
+            <Eyebrow>{t("exercise.add.description.label")}</Eyebrow>
 
             {exercise.actions.update.enabled ? (
               <ExerciseDescriptionUpdate exercise={exercise.data} />

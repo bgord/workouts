@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { IconButton, Select } from "../components";
+import { Eyebrow, IconButton, Select } from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -50,9 +50,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
       >
-        <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-          {t("exercise.categories.header")}
-        </div>
+        <Eyebrow>{t("exercise.categories.header")}</Eyebrow>
 
         {assignActionAvailable && assignment.off && (
           <button

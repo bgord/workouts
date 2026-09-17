@@ -1,4 +1,5 @@
 import { useTranslations } from "@bgord/ui";
+import { Eyebrow } from "../components";
 import { dashboardRoute } from "../router";
 
 const column = { flexBasis: 0 };
@@ -15,9 +16,7 @@ export function DashboardCompleted() {
 
   return (
     <section data-gap="2" data-stack="y">
-      <div data-color="neutral-500" data-fs="xs" data-ls="wide" data-transform="uppercase">
-        {t("dashboard.completed.header")}
-      </div>
+      <Eyebrow>{t("dashboard.completed.header")}</Eyebrow>
 
       <ul className="c-card" data-p="4" data-stack="x" data-variant="sunken">
         {tiles.map((tile, index) => (
