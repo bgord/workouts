@@ -1,22 +1,22 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Archive } from "lucide-react";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
-export function PlanArchive(props: Plan) {
+export function PlanArchive() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
 
   const planArchive = bg.useToggle({ name: "plan-archive" });
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/plans/${props.id}/archive`, {
+      fetch(`/api/plans/${plan.data.id}/archive`, {
         method: "POST",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
       }),
     onSuccess: async () => {
       planArchive.disable();
@@ -26,6 +26,8 @@ export function PlanArchive(props: Plan) {
       });
     },
   });
+
+  if (!plan.actions.archive.available) return null;
 
   return (
     <>
@@ -49,7 +51,7 @@ export function PlanArchive(props: Plan) {
         </ui.DialogHeader>
 
         <div data-stack="y" {...ui.Gap.related}>
-          <ui.DialogInfo>{t("plan.archive.info", { name: props.name })}</ui.DialogInfo>
+          <ui.DialogInfo>{t("plan.archive.info", { name: plan.data.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="restorable" />
         </div>
 

@@ -56,9 +56,9 @@ export function Plan() {
             <PlanRestore />
 
             <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
-              {plan.actions.archive.available && <PlanArchive {...plan.data} />}
+              <PlanArchive />
 
-              {plan.actions.remove.available && <PlanRemove {...plan.data} />}
+              <PlanRemove />
             </div>
           </div>
         </div>

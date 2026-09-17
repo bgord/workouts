@@ -1,23 +1,23 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
-export function PlanRemove(props: Plan) {
+export function PlanRemove() {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = planRoute.useNavigate();
+  const { plan } = planRoute.useLoaderData();
 
   const planRemove = bg.useToggle({ name: "plan-remove" });
 
   const mutation = bg.useMutation({
     perform: async () =>
-      fetch(`/api/plans/${props.id}`, {
+      fetch(`/api/plans/${plan.data.id}`, {
         method: "DELETE",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
       }),
     onSuccess: async () => {
       planRemove.disable();
@@ -25,6 +25,8 @@ export function PlanRemove(props: Plan) {
       await router.invalidate({ filter: (route) => route.id === plansRoute.id, sync: true });
     },
   });
+
+  if (!plan.actions.remove.available) return null;
 
   return (
     <>
@@ -48,7 +50,7 @@ export function PlanRemove(props: Plan) {
         </ui.DialogHeader>
 
         <div data-stack="y" {...ui.Gap.related}>
-          <ui.DialogInfo>{t("plan.remove.info", { name: props.name })}</ui.DialogInfo>
+          <ui.DialogInfo>{t("plan.remove.info", { name: plan.data.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
 
