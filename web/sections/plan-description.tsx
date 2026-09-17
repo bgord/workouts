@@ -60,7 +60,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
         </button>
       )}
 
-      {update.off && <ActionHint action={props.action} />}
+      {update.off && <ActionHint {...props.action} />}
 
       {update.on && (
         <form data-gap="2" data-stack="y" onSubmit={mutation.handleSubmit} {...update.props.target}>

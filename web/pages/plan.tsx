@@ -108,7 +108,7 @@ export function Plan() {
 
           <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
 
-          {plan.actions.finalize.available && <ActionHint action={plan.actions.finalize} />}
+          {plan.actions.finalize.available && <ActionHint {...plan.actions.finalize} />}
         </div>
       </div>
 

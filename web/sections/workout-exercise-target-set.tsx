@@ -143,7 +143,7 @@ export function WorkoutExerciseTargetSet(props: {
         </button>
       </div>
 
-      <ActionHint action={props.action} />
+      <ActionHint {...props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="xs" data-width="100%">

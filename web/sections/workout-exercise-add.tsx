@@ -108,7 +108,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           {t("workout.exercise.add.cta")}
         </button>
 
-        <ActionHint action={props.action} data-shrink="0" />
+        <ActionHint {...props.action} data-shrink="0" />
       </div>
 
       <Dialog {...add}>

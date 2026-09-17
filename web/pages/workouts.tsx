@@ -23,7 +23,7 @@ export function Workouts() {
       <div data-cross="center" data-gap="3" data-stack="x">
         <Header data-grow="1">{t("workout.list.header")}</Header>
 
-        <ActionHint action={workouts.actions.create} data-md-width="100%" />
+        <ActionHint {...workouts.actions.create} data-md-width="100%" />
 
         <button
           className="c-button"

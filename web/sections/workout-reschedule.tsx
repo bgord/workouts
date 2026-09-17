@@ -108,7 +108,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
         <X data-size="sm" />
       </button>
 
-      <ActionHint action={props.action} data-ml="2" />
+      <ActionHint {...props.action} data-ml="2" />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="xs" data-width="100%">

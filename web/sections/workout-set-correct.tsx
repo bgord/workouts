@@ -73,7 +73,7 @@ export function WorkoutSetCorrect(props: {
           <Pencil data-size="sm" />
         </button>
 
-        <ActionHint action={props.action} />
+        <ActionHint {...props.action} />
       </div>
     );
   }

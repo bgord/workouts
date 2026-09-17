@@ -18,7 +18,7 @@ export function Plans() {
       <div data-cross="center" data-gap="3" data-stack="x">
         <Header data-grow="1">{t("plan.list.header")}</Header>
 
-        <ActionHint action={plans.actions.create} data-md-width="100%" />
+        <ActionHint {...plans.actions.create} data-md-width="100%" />
 
         <button
           className="c-button"

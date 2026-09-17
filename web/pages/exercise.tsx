@@ -81,7 +81,7 @@ export function Exercise() {
           {exercise.actions.delete.available && (
             <div data-cross="center" data-gap="2" data-shrink="0" data-stack="x" data-wrap="nowrap">
               <div data-md-disp="none">
-                <ActionHint action={exercise.actions.delete} />
+                <ActionHint {...exercise.actions.delete} />
               </div>
 
               <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
@@ -91,7 +91,7 @@ export function Exercise() {
 
         {exercise.actions.delete.hints.length > 0 && (
           <div data-disp="none" data-md-disp="block">
-            <ActionHint action={exercise.actions.delete} />
+            <ActionHint {...exercise.actions.delete} />
           </div>
         )}
       </div>

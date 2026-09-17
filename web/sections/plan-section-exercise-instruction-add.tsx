@@ -109,7 +109,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           {t("plan.section.exercise.add.cta")}
         </button>
 
-        <ActionHint action={props.action} data-shrink="0" />
+        <ActionHint {...props.action} data-shrink="0" />
       </div>
     );
   }
@@ -173,7 +173,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           {t("plan.section.exercise.add.cta")}
         </button>
 
-        <ActionHint action={props.action} data-shrink="0" />
+        <ActionHint {...props.action} data-shrink="0" />
       </div>
 
       <Dialog {...add}>

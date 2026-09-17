@@ -2,10 +2,10 @@ import { useTranslations } from "@bgord/ui";
 import { Info } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 
-export function ActionHint(props: { action: ActionState } & React.JSX.IntrinsicElements["div"]) {
-  const { action, ...rest } = props;
+export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div"]) {
+  const { hints, ...rest } = props;
   const t = useTranslations();
-  const hint = action.hints[0];
+  const hint = hints[0];
 
   if (!hint) return null;
 

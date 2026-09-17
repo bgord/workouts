@@ -71,7 +71,7 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
       </div>
 
       {edit.off && props.loggedSet.actions.remove.available && (
-        <ActionHint action={props.loggedSet.actions.remove} data-pl="5" />
+        <ActionHint {...props.loggedSet.actions.remove} data-pl="5" />
       )}
     </li>
   );

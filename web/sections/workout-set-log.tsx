@@ -109,7 +109,7 @@ export function WorkoutSetLog(props: {
         variant="dense"
       />
 
-      <ActionHint action={props.action} />
+      <ActionHint {...props.action} />
 
       {mutation.isError && (
         <output data-color="danger-400" data-fs="sm">

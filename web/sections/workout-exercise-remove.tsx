@@ -64,7 +64,7 @@ export function WorkoutExerciseRemove(props: {
           <X data-size="sm" />
         </button>
 
-        <ActionHint action={props.action} />
+        <ActionHint {...props.action} />
       </form>
 
       <Dialog {...dialog}>

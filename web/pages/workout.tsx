@@ -121,9 +121,9 @@ export function Workout() {
             <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
           )}
 
-          {workout.actions.start.available && <ActionHint action={workout.actions.start} />}
+          {workout.actions.start.available && <ActionHint {...workout.actions.start} />}
 
-          {workout.actions.complete.available && <ActionHint action={workout.actions.complete} />}
+          {workout.actions.complete.available && <ActionHint {...workout.actions.complete} />}
         </div>
       </div>
 

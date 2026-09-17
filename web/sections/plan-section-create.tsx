@@ -71,7 +71,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           {t("plan.section.create.cta")}
         </button>
 
-        <ActionHint action={props.action} data-shrink="0" />
+        <ActionHint {...props.action} data-shrink="0" />
       </div>
     );
   }
