@@ -1,8 +1,6 @@
 import { useTranslations } from "@bgord/ui";
 import { RirColor } from "./rir-color";
 
-const dot = { width: 6, height: 6 };
-
 export function RirBadge(props: { rir: number }) {
   const t = useTranslations();
 
@@ -18,7 +16,7 @@ export function RirBadge(props: { rir: number }) {
       data-wrap="nowrap"
       title={t("workout.set.rir.title")}
     >
-      <span data-bg={RirColor(props.rir)} data-br="circle" style={dot} />
+      <span data-bg={RirColor(props.rir)} data-br="circle" style={{ width: 6, height: 6 }} />
       {t("workout.set.rir.label")} {props.rir}
     </span>
   );

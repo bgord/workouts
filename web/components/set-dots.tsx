@@ -7,23 +7,24 @@ const ring = (color: RirColor) => ({ ...dot, boxShadow: `inset 0 0 0 2px var(--c
 export function SetDots(props: { sets: Array<{ rir?: number }>; target: number }) {
   const t = useTranslations();
 
-  const label = t("workout.set.progress", { done: props.sets.length, target: props.target });
   const dots = Array.from({ length: Math.max(props.sets.length, props.target) }, (_, index) => index);
+
   const color = (index: number): RirColor => {
     const rir = props.sets[index]?.rir;
+
     return rir === undefined ? "positive-400" : RirColor(rir);
   };
 
   return (
     <div
-      aria-label={label}
+      aria-label={t("workout.set.progress", { done: props.sets.length, target: props.target })}
       data-cross="center"
       data-gap="1"
       data-shrink="0"
       data-stack="x"
       data-wrap="nowrap"
       role="img"
-      title={label}
+      title={t("workout.set.progress", { done: props.sets.length, target: props.target })}
     >
       {dots.map((index) => (
         <span

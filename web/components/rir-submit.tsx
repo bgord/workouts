@@ -4,8 +4,6 @@ import { RirColor } from "./rir-color";
 
 const RirOptions = [2, 1, 0];
 
-const segment = bg.Rhythm(34).times(1).height;
-
 export function RirSubmit(props: {
   onSelect: (rir: number | undefined) => void;
   value?: number;
@@ -48,7 +46,7 @@ export function RirSubmit(props: {
           disabled={props.disabled}
           key={String(option)}
           onClick={() => props.onSelect(option)}
-          style={segment}
+          {...bg.Rhythm(34).times(1).style.height}
           type="submit"
         >
           {option === undefined ? <Check data-size="sm" /> : option}

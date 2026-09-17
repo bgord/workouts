@@ -4,10 +4,6 @@ import type { ExerciseWithCategories } from "../../modules/exercises/value-objec
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 
-const shrinkable = { minHeight: 0 };
-const list = { ...shrinkable, maxHeight: "40vh" };
-const categories = { flexShrink: 2, maxWidth: "40%" };
-
 export function ExercisePicker(props: {
   exercises: ReadonlyArray<ExerciseWithCategories>;
   name: string;
@@ -23,7 +19,7 @@ export function ExercisePicker(props: {
   );
 
   return (
-    <div data-gap="2" data-stack="y" data-wrap="nowrap" style={shrinkable}>
+    <div data-gap="2" data-stack="y" data-wrap="nowrap" style={{ minHeight: 0 }}>
       <div data-cross="center" data-gap="1" data-stack="x" data-wrap="nowrap">
         <div data-cross="center" data-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
@@ -51,7 +47,7 @@ export function ExercisePicker(props: {
         data-bw="hairline"
         data-overflow="auto"
         data-stack="y"
-        style={list}
+        style={{ minHeight: 0, maxHeight: "40vh" }}
       >
         {matching.length === 0 && (
           <li data-color="neutral-500" data-fs="sm" data-main="center" data-py="4" data-stack="x">
@@ -102,7 +98,7 @@ export function ExercisePicker(props: {
                 data-fs="xs"
                 data-md-disp="none"
                 data-transform="truncate"
-                style={categories}
+                style={{ flexShrink: 2, maxWidth: "40%" }}
               >
                 {exercise.categories.map((category) => category.name).join(", ")}
               </span>
