@@ -49,8 +49,8 @@ export function ExerciseCatalog() {
   const pristine = ExerciseCatalogFiltersForm.Form.isDefault(search);
 
   return (
-    <div data-gap="4" data-stack="y">
-      <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
+    <div data-stack="y" {...ui.Spacing.block}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.toolbar}>
         <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
@@ -100,7 +100,7 @@ export function ExerciseCatalog() {
         </ui.IconButton>
       </div>
 
-      <ul data-gap="2" data-stack="x" data-wrap="wrap">
+      <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.chips}>
         {categories.map((category) => {
           const selected = search.category === category.id;
 
@@ -123,7 +123,7 @@ export function ExerciseCatalog() {
 
         {(hidden > 0 || categoryList.on) && (
           <li>
-            <ui.TextLink data-mx="1" onClick={categoryList.toggle}>
+            <ui.TextLink onClick={categoryList.toggle}>
               {categoryList.on ? (
                 <>
                   {t("exercise.catalog.categories.less")}
@@ -150,7 +150,7 @@ export function ExerciseCatalog() {
         </ui.EmptyState>
       )}
 
-      <ul data-gap="6" data-md-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">
+      <ul data-md-main="center" data-stack="x" data-wrap="wrap" {...ui.Spacing.grid}>
         {matching.map((exercise) => (
           <ui.ExerciseCard key={exercise.id} {...exercise} />
         ))}

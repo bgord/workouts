@@ -37,12 +37,12 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
           {t("exercise.category.delete.header")}
         </ui.DialogHeader>
 
-        <div data-gap="3" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.content}>
           <ui.DialogInfo>{t("exercise.category.delete.info", { name: props.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
 
-        <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
+        <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.dialogStack}>
           {mutation.isError && <ui.DialogError>{t("exercise.category.delete.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={exerciseCategoryDelete.disable}>

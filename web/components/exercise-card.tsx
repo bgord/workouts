@@ -15,13 +15,13 @@ export function ExerciseCard(props: ExerciseWithCategories) {
     <li data-maxw="100%" data-md-grow="1" data-stack="y" {...bg.Rhythm(232).times(1).style.width}>
       <Link
         className="c-card"
-        data-gap="3"
         data-grow="1"
         data-hover-bc="brand-500"
         params={{ exerciseId: props.id }}
         title={props.name}
         to="/catalog/exercise/$exerciseId"
         {...Spacing.surfaceCompact}
+        {...Spacing.content}
       >
         <span aria-hidden data-disp="flex">
           <ExerciseImage size={ExerciseImageSize.md} {...props} />
@@ -31,7 +31,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
           {props.name}
         </div>
 
-        <ul data-gap="1" data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap">
+        <ul data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap" {...Spacing.chips}>
           {visible.map((category) => (
             <li key={category.id}>
               <Chip data-transform="truncate">{category.name}</Chip>

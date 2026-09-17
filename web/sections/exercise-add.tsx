@@ -43,12 +43,12 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
 
       <form
         aria-busy={mutation.isLoading}
-        data-gap="6"
         data-stack="y"
         encType="multipart/form-data"
         onSubmit={mutation.handleSubmit}
+        {...ui.Spacing.form}
       >
-        <div data-gap="2" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.field}>
           <label
             data-bc="neutral-700"
             data-br="md"
@@ -58,14 +58,14 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
             data-cross="center"
             data-cursor="pointer"
             data-fs="xs"
-            data-gap="1-5"
             data-hover-bc="brand-500"
             data-main="center"
             data-overflow="hidden"
-            data-p={image.isSelected ? "0" : "4"}
             data-stack="y"
             data-transform="center"
             {...bg.Rhythm(144).times(1).style.height}
+            {...ui.Spacing.dropzone}
+            {...(image.isSelected ? { "data-p": "0" as const } : {})}
             {...image.label.props}
           >
             {image.isSelected ? (
@@ -98,9 +98,9 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
             data-color="neutral-500"
             data-cross="center"
             data-fs="xs"
-            data-gap="2"
             data-stack="x"
             data-wrap="nowrap"
+            {...ui.Spacing.inline}
           >
             {image.isSelected ? (
               <>
@@ -118,7 +118,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
           </output>
         </div>
 
-        <div data-gap="1-5" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.field}>
           <label className="c-label" {...name.label.props}>
             {t("exercise.add.name.label")}
           </label>
@@ -133,7 +133,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
           />
         </div>
 
-        <div data-gap="1-5" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.field}>
           <label className="c-label" {...description.label.props}>
             {t("exercise.add.description.label")}
           </label>
