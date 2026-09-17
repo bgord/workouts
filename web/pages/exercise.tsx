@@ -1,6 +1,5 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
@@ -11,6 +10,7 @@ import {
   ExerciseHistory,
   ExerciseImageChange,
   ExerciseName,
+  ExercisePerformancesEmpty,
   ExerciseProgressChart,
   ExerciseStats,
 } from "../sections";
@@ -75,15 +75,7 @@ export function Exercise() {
         </div>
       </div>
 
-      {performances.length === 0 && (
-        <ui.EmptyState>
-          <ui.EmptyStateIcon icon={Dumbbell} />
-
-          <ui.EmptyStateMessage>{t("statistics.exercise.history.empty")}</ui.EmptyStateMessage>
-
-          <ui.Meta>{t("statistics.exercise.history.empty.hint")}</ui.Meta>
-        </ui.EmptyState>
-      )}
+      <ExercisePerformancesEmpty />
 
       {performances.length > 0 && (
         <div data-stack="y" {...ui.Gap.section}>
