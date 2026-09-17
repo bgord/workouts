@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { IconButton, Stepper } from "../components";
+import { IconButton, Output, Stepper } from "../components";
 import { measurementsRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -108,11 +108,7 @@ export function BodyWeightMeasurementCorrect(
         <X data-size="sm" />
       </IconButton>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs" data-width="100%">
-          {t("measurements.body_weight.correct.error")}
-        </output>
-      )}
+      {mutation.isError && <Output data-width="100%">{t("measurements.body_weight.correct.error")}</Output>}
     </form>
   );
 }

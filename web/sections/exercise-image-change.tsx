@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, FileImage, ImageUp, X } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ExerciseImage, ExerciseImageSize, IconButton, Meta } from "../components";
+import { ExerciseImage, ExerciseImageSize, IconButton, Meta, Output } from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -126,11 +126,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
 
           <Meta>{t("exercise.image.change.hint")}</Meta>
 
-          {mutation.isError && (
-            <output data-color="danger-400" data-fs="xs">
-              {t("exercise.image.change.error")}
-            </output>
-          )}
+          {mutation.isError && <Output>{t("exercise.image.change.error")}</Output>}
         </form>
       )}
     </div>

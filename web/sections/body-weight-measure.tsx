@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
-import { IconButton, Stepper } from "../components";
+import { IconButton, Output, Stepper } from "../components";
 import { measurementsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
@@ -110,11 +110,7 @@ export function BodyWeightMeasure() {
         <X data-size="sm" />
       </IconButton>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs" data-width="100%">
-          {t("measurements.body_weight.measure.error")}
-        </output>
-      )}
+      {mutation.isError && <Output data-width="100%">{t("measurements.body_weight.measure.error")}</Output>}
     </form>
   );
 }

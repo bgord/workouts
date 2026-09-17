@@ -4,7 +4,7 @@ import { Check, Plus, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHint, IconButton } from "../components";
+import { ActionHint, IconButton, Output } from "../components";
 import { planRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
@@ -127,11 +127,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
         </div>
       </div>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs">
-          {t("plan.section.create.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("plan.section.create.error")}</Output>}
     </form>
   );
 }

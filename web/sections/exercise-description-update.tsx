@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ButtonCancel } from "../components";
+import { ButtonCancel, Output } from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategories }) {
@@ -80,11 +80,7 @@ export function ExerciseDescriptionUpdate(props: { exercise: ExerciseWithCategor
         />
       </div>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("exercise.update.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("exercise.update.error")}</Output>}
     </form>
   );
 }

@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ActionHint, IconButton } from "../components";
+import { ActionHint, IconButton, Output } from "../components";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
@@ -97,11 +97,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
 
       <ActionHint {...props.action} data-ml="2" />
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs" data-width="100%">
-          {t("workout.reschedule.error")}
-        </output>
-      )}
+      {mutation.isError && <Output data-width="100%">{t("workout.reschedule.error")}</Output>}
     </form>
   );
 }

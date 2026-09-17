@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { IconButton } from "../components";
+import { IconButton, Output } from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) {
@@ -89,11 +89,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
         </IconButton>
       </div>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs">
-          {t("exercise.update.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("exercise.update.error")}</Output>}
     </form>
   );
 }

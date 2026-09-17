@@ -1,6 +1,6 @@
 import { useMutation, useTranslations } from "@bgord/ui";
 import { CircleAlert, CircleCheck, KeyRound, Send } from "lucide-react";
-import { SectionHeading } from "../components";
+import { Output, SectionHeading } from "../components";
 import { rootRoute } from "../router";
 
 export function ProfilePasswordChange() {
@@ -49,31 +49,17 @@ export function ProfilePasswordChange() {
         </button>
 
         {mutation.isDone && (
-          <output
-            aria-live="polite"
-            data-color="positive-400"
-            data-cross="center"
-            data-fs="sm"
-            data-gap="2"
-            data-stack="x"
-          >
+          <Output data-cross="center" data-gap="2" data-stack="x" tone="positive">
             <CircleCheck data-size="sm" />
             {t("auth.change_password.sent")}
-          </output>
+          </Output>
         )}
 
         {mutation.isError && (
-          <output
-            aria-live="assertive"
-            data-color="danger-400"
-            data-cross="center"
-            data-fs="sm"
-            data-gap="2"
-            data-stack="x"
-          >
+          <Output data-cross="center" data-gap="2" data-stack="x">
             <CircleAlert data-size="sm" />
             {t("auth.change_password.error")}
-          </output>
+          </Output>
         )}
       </form>
     </section>

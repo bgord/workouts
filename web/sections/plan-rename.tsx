@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { IconButton } from "../components";
+import { IconButton, Output } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRename(props: Plan) {
@@ -92,11 +92,7 @@ export function PlanRename(props: Plan) {
         </IconButton>
       </div>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs">
-          {t("plan.rename.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("plan.rename.error")}</Output>}
     </form>
   );
 }

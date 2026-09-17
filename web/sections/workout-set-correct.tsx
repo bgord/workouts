@@ -5,7 +5,7 @@ import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, IconButton, RirSubmit, Stepper } from "../components";
+import { ActionHint, IconButton, Output, RirSubmit, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -122,11 +122,7 @@ export function WorkoutSetCorrect(
         <X data-size="sm" />
       </IconButton>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs" data-width="100%">
-          {t("workout.set.correct.error")}
-        </output>
-      )}
+      {mutation.isError && <Output data-width="100%">{t("workout.set.correct.error")}</Output>}
     </form>
   );
 }

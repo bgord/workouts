@@ -1,7 +1,7 @@
 import { exec, useFile, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, CircleUser, FileImage, ImageUp, X } from "lucide-react";
-import { IconButton, Meta, SectionHeading } from "../components";
+import { IconButton, Meta, Output, SectionHeading } from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -127,11 +127,7 @@ export function ProfileAvatarChange() {
 
             <Meta>{t("profile.avatar.hint")}</Meta>
 
-            {mutation.isError && (
-              <output data-color="danger-400" data-fs="xs">
-                {t("profile.avatar.upload.error")}
-              </output>
-            )}
+            {mutation.isError && <Output>{t("profile.avatar.upload.error")}</Output>}
           </form>
         )}
       </div>

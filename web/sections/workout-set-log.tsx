@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, RirSubmit, Stepper } from "../components";
+import { ActionHint, Output, RirSubmit, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -111,11 +111,7 @@ export function WorkoutSetLog(props: {
 
       <ActionHint {...props.action} />
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("workout.set.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("workout.set.error")}</Output>}
     </form>
   );
 }

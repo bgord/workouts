@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { Eyebrow, IconButton, Select } from "../components";
+import { Eyebrow, IconButton, Output, Select } from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -126,11 +126,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         )}
       </ul>
 
-      {assign.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("exercise.category.assign.error")}
-        </output>
-      )}
+      {assign.isError && <Output>{t("exercise.category.assign.error")}</Output>}
     </div>
   );
 }

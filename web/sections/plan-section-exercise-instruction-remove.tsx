@@ -6,7 +6,7 @@ import type {
   Plan,
   PlanSectionWithExercises,
 } from "../../modules/plans/value-objects/plan";
-import { IconButton } from "../components";
+import { IconButton, Output } from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionRemove(props: {
@@ -41,11 +41,7 @@ export function PlanSectionExerciseInstructionRemove(props: {
         <X data-size="sm" />
       </IconButton>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("plan.section.exercise.remove.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("plan.section.exercise.remove.error")}</Output>}
     </form>
   );
 }

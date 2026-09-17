@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, IconButton, Stepper } from "../components";
+import { ActionHint, IconButton, Output, Stepper } from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -130,11 +130,7 @@ export function WorkoutExerciseTargetSet(
 
       <ActionHint {...props.action} />
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs" data-width="100%">
-          {t("workout.target.error")}
-        </output>
-      )}
+      {mutation.isError && <Output data-width="100%">{t("workout.target.error")}</Output>}
     </form>
   );
 }

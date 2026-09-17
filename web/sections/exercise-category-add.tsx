@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
-import { IconButton } from "../components";
+import { IconButton, Output } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryAdd() {
@@ -62,11 +62,7 @@ export function ExerciseCategoryAdd() {
         </IconButton>
       </div>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs">
-          {t("exercise.category.add.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("exercise.category.add.error")}</Output>}
     </form>
   );
 }

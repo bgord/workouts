@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { BodyWeightGoalIcon, IconButton } from "../components";
+import { BodyWeightGoalIcon, IconButton, Output } from "../components";
 import { measurementsRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -94,11 +94,7 @@ export function BodyWeightReferenceSet(
         <X data-size="sm" />
       </IconButton>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("measurements.body_weight.reference.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("measurements.body_weight.reference.error")}</Output>}
     </form>
   );
 }

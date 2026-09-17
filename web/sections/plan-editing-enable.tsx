@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Pencil } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
+import { Output } from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanEditingEnable(props: Plan) {
@@ -29,11 +30,7 @@ export function PlanEditingEnable(props: Plan) {
         {t("plan.editing.enable.cta")}
       </button>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="sm">
-          {t("plan.editing.enable.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("plan.editing.enable.error")}</Output>}
     </form>
   );
 }

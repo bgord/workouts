@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, Pencil, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
-import { IconButton } from "../components";
+import { IconButton, Output } from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleReturnType) {
@@ -88,11 +88,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
         </IconButton>
       </div>
 
-      {mutation.isError && (
-        <output data-color="danger-400" data-fs="xs">
-          {t("exercise.category.rename.error")}
-        </output>
-      )}
+      {mutation.isError && <Output>{t("exercise.category.rename.error")}</Output>}
     </form>
   );
 }
