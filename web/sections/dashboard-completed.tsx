@@ -23,21 +23,13 @@ export function DashboardCompleted() {
             data-bsl="solid"
             data-bwl={index === 0 ? "none" : "hairline"}
             data-cross="center"
-            data-gap="0-5"
+            data-gap="1"
             data-grow="1"
             data-stack="y"
             key={tile.label}
             style={{ flexBasis: 0 }}
           >
-            <div
-              data-color="neutral-0"
-              data-fs="xl"
-              data-fw="semibold"
-              data-lh="tight"
-              data-transform="font-variant-numeric"
-            >
-              {tile.value}
-            </div>
+            <ui.TileValue>{tile.value}</ui.TileValue>
 
             <ui.Meta>{t(tile.label)}</ui.Meta>
           </li>
