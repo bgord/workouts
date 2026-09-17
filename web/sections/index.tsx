@@ -68,6 +68,7 @@ export * from "./workout-exercise-add";
 export * from "./workout-exercise-remove";
 export * from "./workout-exercise-row";
 export * from "./workout-exercise-target-set";
+export * from "./workout-exercises-empty";
 export * from "./workout-history";
 export * from "./workout-history-empty";
 export * from "./workout-history-filters";

@@ -1,7 +1,6 @@
 // fallow-ignore-file unused-export
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
-import { Dumbbell } from "lucide-react";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
@@ -9,6 +8,7 @@ import { WorkoutCopy } from "../sections/workout-copy";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
+import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
 import { WorkoutStart } from "../sections/workout-start";
@@ -69,19 +69,12 @@ export function Workout() {
           <WorkoutNote />
 
           {workout.actions.start.available && <ui.ActionHint {...workout.actions.start} />}
-
           {workout.actions.complete.available && <ui.ActionHint {...workout.actions.complete} />}
         </div>
       </div>
 
       <div data-stack="y">
-        {workout.data.exercises.length === 0 && !workout.actions.exerciseAdd.available && (
-          <ui.EmptyState>
-            <ui.EmptyStateIcon icon={Dumbbell} />
-
-            <ui.EmptyStateMessage>{t("workout.exercise.list.empty")}</ui.EmptyStateMessage>
-          </ui.EmptyState>
-        )}
+        <WorkoutExercisesEmpty />
 
         <ul data-stack="y">
           {workout.data.exercises.map((exercise, index) => (
