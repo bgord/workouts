@@ -14,12 +14,12 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
       <a
         className="c-card"
         data-cross="center"
-        data-gap="3"
         data-hover-bc="brand-500"
         data-opacity={opacity[variant]}
         data-stack="x"
         data-wrap="nowrap"
         {...Spacing.surface}
+        {...Spacing.row}
         {...rest}
       />
     </li>
@@ -27,7 +27,7 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
 });
 
 export function RowBody(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-gap="1" data-grow="1" data-stack="y" data-transform="truncate" {...props} />;
+  return <div data-grow="1" data-stack="y" data-transform="truncate" {...Spacing.lines} {...props} />;
 }
 
 export function RowTitle(props: React.JSX.IntrinsicElements["div"]) {

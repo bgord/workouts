@@ -1,15 +1,15 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
+import { Spacing } from "./spacing";
 
 export function EmptyState(props: React.JSX.IntrinsicElements["div"]) {
   return (
     <div
       className="c-card"
       data-cross="center"
-      data-gap="1"
-      data-py="8"
       data-stack="y"
       data-variant="flat"
+      {...Spacing.empty}
       {...props}
     />
   );

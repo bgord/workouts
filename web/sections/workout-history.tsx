@@ -44,13 +44,13 @@ export function WorkoutHistory() {
   }
 
   return (
-    <div data-gap="4" data-stack="y">
+    <div data-stack="y" {...ui.Spacing.block}>
       <div
         data-cross="center"
-        data-gap="2"
         data-stack="x"
         data-wrap="wrap"
         {...bg.Rhythm(36).times(1).style.minHeight}
+        {...ui.Spacing.toolbar}
       >
         <ui.Select
           aria-label={t("workout.list.filter.label")}
@@ -80,10 +80,10 @@ export function WorkoutHistory() {
 
         <ul
           data-cross="center"
-          data-gap="2"
           data-stack="x"
           data-wrap="wrap"
           {...bg.Rhythm(36).times(1).style.height}
+          {...ui.Spacing.chips}
         >
           {workouts.sections.map((section) => (
             <li key={section.id}>
@@ -130,7 +130,7 @@ export function WorkoutHistory() {
         </ui.EmptyState>
       )}
 
-      <ul data-gap="2" data-stack="y">
+      <ul data-stack="y" {...ui.Spacing.cards}>
         {matching.map((workout) => (
           <ui.WorkoutCard key={workout.id} {...workout} />
         ))}

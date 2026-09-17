@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { Chip } from "./chip";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
+import { Spacing } from "./spacing";
 
 const VISIBLE_CATEGORIES = 2;
 
@@ -17,10 +18,10 @@ export function ExerciseCard(props: ExerciseWithCategories) {
         data-gap="3"
         data-grow="1"
         data-hover-bc="brand-500"
-        data-p="3"
         params={{ exerciseId: props.id }}
         title={props.name}
         to="/catalog/exercise/$exerciseId"
+        {...Spacing.surfaceCompact}
       >
         <span aria-hidden data-disp="flex">
           <ExerciseImage size={ExerciseImageSize.md} {...props} />

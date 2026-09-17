@@ -69,12 +69,12 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
         )}
       </ui.DialogHeader>
 
-      <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
+      <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.form}>
         {plan && (
-          <div data-gap="1-5" data-stack="y">
+          <div data-stack="y" {...ui.Spacing.field}>
             <div className="c-label">{t("workout.create.section.label")}</div>
 
-            <ul data-gap="2" data-stack="y">
+            <ul data-stack="y" {...ui.Spacing.cards}>
               {plan.sections.map((option) => {
                 const selected = option.id === planSectionId.value;
 
@@ -87,11 +87,11 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                       data-bw="hairline"
                       data-cross="center"
                       data-cursor="pointer"
-                      data-gap="3"
                       data-hover-bc={selected ? "brand-500" : "neutral-600"}
-                      data-p="3"
                       data-stack="x"
                       data-wrap="nowrap"
+                      {...ui.Spacing.surfaceCompact}
+                      {...ui.Spacing.row}
                     >
                       <input
                         checked={selected}
@@ -108,7 +108,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                         <Circle data-color="neutral-600" data-shrink="0" data-size="sm" />
                       )}
 
-                      <div data-gap="0-5" data-grow="1" data-stack="y" data-transform="truncate">
+                      <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Spacing.lines}>
                         <div data-color="neutral-100" data-fs="sm" data-fw="medium">
                           {option.name}
                         </div>
@@ -131,12 +131,12 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
           </div>
         )}
 
-        <div data-gap="1-5" data-stack="y">
+        <div data-stack="y" {...ui.Spacing.field}>
           <label className="c-label" {...scheduledFor.label.props}>
             {t("workout.create.when.label")}
           </label>
 
-          <div data-gap="2" data-stack="x" data-wrap="wrap">
+          <div data-stack="x" data-wrap="wrap" {...ui.Spacing.chips}>
             {quick.map((date, offset) => {
               const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
 

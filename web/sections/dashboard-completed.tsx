@@ -27,7 +27,7 @@ export function DashboardCompleted() {
             data-stack="y"
             key={tile.label}
             style={{ flexBasis: 0 }}
-            {...ui.Spacing.stat}
+            {...ui.Spacing.lines}
           >
             <ui.TileValue>{tile.value}</ui.TileValue>
 

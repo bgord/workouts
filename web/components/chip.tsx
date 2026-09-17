@@ -1,4 +1,5 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
+import { Spacing } from "./spacing";
 
 export function Chip(props: React.JSX.IntrinsicElements["span"] & { muted?: boolean }) {
   const { muted, ...rest } = props;
@@ -8,8 +9,8 @@ export function Chip(props: React.JSX.IntrinsicElements["span"] & { muted?: bool
       className="c-badge"
       data-color={muted ? "neutral-400" : undefined}
       data-cross="center"
-      data-gap="1"
       data-variant="outline"
+      {...Spacing.iconTight}
       {...rest}
     />
   );
@@ -24,9 +25,9 @@ export function ChipButton(props: React.JSX.IntrinsicElements["button"] & { pres
       className="c-badge"
       data-cross="center"
       data-cursor="pointer"
-      data-gap="1"
       data-variant={pressed ? "primary" : "outline"}
       type="button"
+      {...Spacing.iconTight}
       {...rest}
     />
   );
