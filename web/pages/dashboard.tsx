@@ -5,7 +5,7 @@ import { Form as WorkoutHistoryFilters } from "../../app/services/workout-histor
 import * as ui from "../components";
 import { dashboardRoute } from "../router";
 import { BodyWeightStats } from "../sections/body-weight-stats";
-import { DashboardCompleted } from "../sections/dashboard-completed";
+import { DashboardWorkoutStats } from "../sections/dashboard-workouts-stats";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
 const tile = { flexBasis: 0, minWidth: 0 };
@@ -16,7 +16,7 @@ export function Dashboard() {
   const navigate = dashboardRoute.useNavigate();
 
   const upcoming = dashboard.inProgress ?? dashboard.nextUp;
-  const empty = !(upcoming || dashboard.lastCompleted);
+  const empty = !upcoming && !dashboard.lastCompleted;
 
   bg.useShortcuts({
     [ShortcutDefinitions.OpenUpcomingWorkout.trigger]: () => {
@@ -72,7 +72,7 @@ export function Dashboard() {
         )}
       </div>
 
-      <DashboardCompleted />
+      <DashboardWorkoutStats />
 
       {measurements.length > 0 && (
         <div data-stack="y" {...ui.Gap.cluster}>

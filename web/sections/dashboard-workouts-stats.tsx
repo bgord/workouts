@@ -2,7 +2,7 @@ import { useTranslations } from "@bgord/ui";
 import * as ui from "../components";
 import { dashboardRoute } from "../router";
 
-export function DashboardCompleted() {
+export function DashboardWorkoutStats() {
   const t = useTranslations();
   const { dashboard } = dashboardRoute.useLoaderData();
 
