@@ -66,9 +66,7 @@ export function Workout() {
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
           <WorkoutScheduledFor />
 
-          {workout.actions.noteSet.available && (
-            <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
-          )}
+          <WorkoutNote />
 
           {workout.actions.start.available && <ui.ActionHint {...workout.actions.start} />}
 

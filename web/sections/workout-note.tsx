@@ -1,25 +1,24 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/workout-note-form";
-import type { ActionState } from "../../modules/action-state";
-import type { Workout } from "../../modules/workouts/value-objects/workout";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutNote(props: Workout & { action: ActionState }) {
+export function WorkoutNote() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
 
-  const workoutNoteUpdate = bg.useToggle({ name: `workout-note-update-${props.id}` });
+  const workoutNoteUpdate = bg.useToggle({ name: `workout-note-update-${workout.data.id}` });
 
-  const note = bg.useTextField({ ...Form.note.field, defaultValue: props.note ?? "" });
+  const note = bg.useTextField({ ...Form.note.field, defaultValue: workout.data.note ?? "" });
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.id}/note`, {
+      fetch(`/api/workouts/${workout.data.id}/note`, {
         method: "PATCH",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.revision) },
+        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(workout.data.revision) },
         body: JSON.stringify({ note: note.value?.trim() || null }),
       }),
     onSuccess: async () => {
@@ -28,27 +27,29 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
     },
   });
 
+  if (!workout.actions.noteSet.available) return null;
+
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
       {workoutNoteUpdate.off && (
         <button
           className="c-prose"
-          data-color={props.note ? "neutral-200" : "neutral-500"}
+          data-color={workout.data.note ? "neutral-200" : "neutral-500"}
           data-cursor="pointer"
           data-fs="sm"
           data-self="start"
           data-ta="start"
-          disabled={!props.action.enabled}
+          disabled={!workout.actions.noteSet.enabled}
           onClick={workoutNoteUpdate.enable}
           title={t("workout.note.label")}
           type="button"
           {...workoutNoteUpdate.props.controller}
         >
-          {props.note ?? t("workout.note.placeholder")}
+          {workout.data.note ?? t("workout.note.placeholder")}
         </button>
       )}
 
-      {workoutNoteUpdate.off && <ui.ActionHint {...props.action} />}
+      {workoutNoteUpdate.off && <ui.ActionHint {...workout.actions.noteSet} />}
 
       {workoutNoteUpdate.on && (
         <form
