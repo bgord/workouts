@@ -1,7 +1,16 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Download, Scale, Upload } from "lucide-react";
-import { Header, IconButton, Main, Meta, SectionHeading } from "../components";
+import {
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateMessage,
+  Header,
+  IconButton,
+  Main,
+  Meta,
+  SectionHeading,
+} from "../components";
 import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
@@ -52,22 +61,13 @@ export function Measurements() {
       <BodyWeightMeasure />
 
       {measurements.length === 0 && (
-        <div
-          className="c-card"
-          data-cross="center"
-          data-gap="1"
-          data-py="8"
-          data-stack="y"
-          data-variant="flat"
-        >
-          <Scale data-color="neutral-600" data-size="md" />
+        <EmptyState>
+          <EmptyStateIcon icon={Scale} />
 
-          <div data-color="neutral-300" data-fs="sm" data-mt="2">
-            {t("measurements.body_weight.empty")}
-          </div>
+          <EmptyStateMessage>{t("measurements.body_weight.empty")}</EmptyStateMessage>
 
           <Meta>{t("measurements.body_weight.empty.hint")}</Meta>
-        </div>
+        </EmptyState>
       )}
 
       {measurements.length > 0 && (

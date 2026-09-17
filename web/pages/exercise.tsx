@@ -6,6 +6,9 @@ import {
   ActionHint,
   ButtonBack,
   ChipLink,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateMessage,
   ExerciseImage,
   ExerciseImageSize,
   Eyebrow,
@@ -119,24 +122,13 @@ export function Exercise() {
       </div>
 
       {performances.length === 0 && (
-        <div
-          className="c-card"
-          data-cross="center"
-          data-gap="1"
-          data-md-mx="0"
-          data-mx="4"
-          data-py="8"
-          data-stack="y"
-          data-variant="flat"
-        >
-          <Dumbbell data-color="neutral-600" data-size="md" />
+        <EmptyState data-md-mx="0" data-mx="4">
+          <EmptyStateIcon icon={Dumbbell} />
 
-          <div data-color="neutral-300" data-fs="sm" data-mt="2">
-            {t("statistics.exercise.history.empty")}
-          </div>
+          <EmptyStateMessage>{t("statistics.exercise.history.empty")}</EmptyStateMessage>
 
           <Meta>{t("statistics.exercise.history.empty.hint")}</Meta>
-        </div>
+        </EmptyState>
       )}
 
       {performances.length > 0 && (

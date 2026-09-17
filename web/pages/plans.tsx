@@ -1,7 +1,17 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { ClipboardList, Plus } from "lucide-react";
-import { ActionHint, Eyebrow, Header, Main, Meta, PlanCard } from "../components";
+import {
+  ActionHint,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateMessage,
+  Eyebrow,
+  Header,
+  Main,
+  Meta,
+  PlanCard,
+} from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
@@ -41,22 +51,13 @@ export function Plans() {
         <Eyebrow>{t("plan.list.active.header")}</Eyebrow>
 
         {empty && (
-          <div
-            className="c-card"
-            data-cross="center"
-            data-gap="1"
-            data-py="8"
-            data-stack="y"
-            data-variant="flat"
-          >
-            <ClipboardList data-color="neutral-600" data-size="md" />
+          <EmptyState>
+            <EmptyStateIcon icon={ClipboardList} />
 
-            <div data-color="neutral-300" data-fs="sm" data-mt="2">
-              {t(fresh ? "plan.list.empty" : "plan.list.empty.active")}
-            </div>
+            <EmptyStateMessage>{t(fresh ? "plan.list.empty" : "plan.list.empty.active")}</EmptyStateMessage>
 
             <Meta>{t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}</Meta>
-          </div>
+          </EmptyState>
         )}
 
         {plans.data.active.length > 0 && (

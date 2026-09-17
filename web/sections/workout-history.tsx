@@ -1,9 +1,18 @@
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
 import { CalendarOff, SearchX, X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
-import { ChipButton, IconButton, Meta, Select, WorkoutCard } from "../components";
+import {
+  ChipButton,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateLink,
+  EmptyStateMessage,
+  IconButton,
+  Meta,
+  Select,
+  WorkoutCard,
+} from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -32,19 +41,15 @@ export function WorkoutHistory() {
 
   if (workouts.data.length === 0) {
     return (
-      <div className="c-card" data-cross="center" data-gap="1" data-py="8" data-stack="y" data-variant="flat">
-        <CalendarOff data-color="neutral-600" data-size="md" />
+      <EmptyState>
+        <EmptyStateIcon icon={CalendarOff} />
 
-        <div data-color="neutral-300" data-fs="sm" data-mt="2">
-          {t("workout.list.empty")}
-        </div>
+        <EmptyStateMessage>{t("workout.list.empty")}</EmptyStateMessage>
 
         <Meta>{t("workout.list.empty.hint")}</Meta>
 
-        <Link className="c-link" data-fs="sm" data-mt="2" to="/plans">
-          {t("workout.list.empty.cta")}
-        </Link>
-      </div>
+        <EmptyStateLink to="/plans">{t("workout.list.empty.cta")}</EmptyStateLink>
+      </EmptyState>
     );
   }
 
@@ -126,22 +131,13 @@ export function WorkoutHistory() {
       </div>
 
       {matching.length === 0 && (
-        <div
-          className="c-card"
-          data-cross="center"
-          data-gap="1"
-          data-py="8"
-          data-stack="y"
-          data-variant="flat"
-        >
-          <SearchX data-color="neutral-600" data-size="md" />
+        <EmptyState>
+          <EmptyStateIcon icon={SearchX} />
 
-          <div data-color="neutral-300" data-fs="sm" data-mt="2">
-            {t("workout.list.no_matches")}
-          </div>
+          <EmptyStateMessage>{t("workout.list.no_matches")}</EmptyStateMessage>
 
           <Meta>{t("workout.list.no_matches.hint")}</Meta>
-        </div>
+        </EmptyState>
       )}
 
       <ul data-gap="2" data-stack="y">

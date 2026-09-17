@@ -1,9 +1,19 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
 import { CalendarOff } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import { Eyebrow, EyebrowLink, Header, Main, Meta, WorkoutCard } from "../components";
+import {
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateLink,
+  EmptyStateMessage,
+  Eyebrow,
+  EyebrowLink,
+  Header,
+  Main,
+  Meta,
+  WorkoutCard,
+} from "../components";
 import { dashboardRoute } from "../router";
 import { BodyWeightStats } from "../sections/body-weight-stats";
 import { DashboardCompleted } from "../sections/dashboard-completed";
@@ -36,32 +46,17 @@ export function Dashboard() {
       <Header>{t("dashboard.header")}</Header>
 
       {empty && (
-        <div
-          className="c-card"
-          data-cross="center"
-          data-gap="1"
-          data-py="8"
-          data-stack="y"
-          data-variant="flat"
-        >
-          <CalendarOff data-color="neutral-600" data-size="md" />
+        <EmptyState>
+          <EmptyStateIcon icon={CalendarOff} />
 
-          <div data-color="neutral-300" data-fs="sm" data-mt="2">
-            {t("dashboard.empty")}
-          </div>
+          <EmptyStateMessage>{t("dashboard.empty")}</EmptyStateMessage>
 
           <Meta>{t("dashboard.empty.hint")}</Meta>
 
-          <Link
-            className="c-link"
-            data-fs="sm"
-            data-mt="2"
-            search={WorkoutHistoryFilters.default}
-            to="/workouts"
-          >
+          <EmptyStateLink search={WorkoutHistoryFilters.default} to="/workouts">
             {t("dashboard.empty.cta")}
-          </Link>
-        </div>
+          </EmptyStateLink>
+        </EmptyState>
       )}
 
       <div data-gap="3" data-md-gap="6" data-md-stack="y" data-stack="x">

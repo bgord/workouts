@@ -2,7 +2,16 @@ import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ChipButton, ExerciseCard, IconButton, Meta, TextLink } from "../components";
+import {
+  ChipButton,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateMessage,
+  ExerciseCard,
+  IconButton,
+  Meta,
+  TextLink,
+} from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -147,22 +156,13 @@ export function ExerciseCatalog() {
       </ul>
 
       {matching.length === 0 && (
-        <div
-          className="c-card"
-          data-cross="center"
-          data-gap="1"
-          data-py="8"
-          data-stack="y"
-          data-variant="flat"
-        >
-          <SearchX data-color="neutral-600" data-size="md" />
+        <EmptyState>
+          <EmptyStateIcon icon={SearchX} />
 
-          <div data-color="neutral-300" data-fs="sm" data-mt="2">
-            {t("exercise.catalog.no_matches")}
-          </div>
+          <EmptyStateMessage>{t("exercise.catalog.no_matches")}</EmptyStateMessage>
 
           <Meta>{t("exercise.catalog.no_matches.hint")}</Meta>
-        </div>
+        </EmptyState>
       )}
 
       <ul data-gap="6" data-md-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">

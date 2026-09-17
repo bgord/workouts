@@ -2,7 +2,18 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import { Dumbbell } from "lucide-react";
-import { ActionHint, ButtonBack, Header, LinkBack, Main, Meta, WorkoutStatusBadge } from "../components";
+import {
+  ActionHint,
+  ButtonBack,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateMessage,
+  Header,
+  LinkBack,
+  Main,
+  Meta,
+  WorkoutStatusBadge,
+} from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCopy } from "../sections/workout-copy";
@@ -99,20 +110,11 @@ export function Workout() {
 
       <div data-stack="y">
         {workout.data.exercises.length === 0 && !workout.actions.exerciseAdd.available && (
-          <div
-            className="c-card"
-            data-cross="center"
-            data-gap="1"
-            data-py="8"
-            data-stack="y"
-            data-variant="flat"
-          >
-            <Dumbbell data-color="neutral-600" data-size="md" />
+          <EmptyState>
+            <EmptyStateIcon icon={Dumbbell} />
 
-            <div data-color="neutral-300" data-fs="sm" data-mt="2">
-              {t("workout.exercise.list.empty")}
-            </div>
-          </div>
+            <EmptyStateMessage>{t("workout.exercise.list.empty")}</EmptyStateMessage>
+          </EmptyState>
         )}
 
         <ul data-stack="y">
