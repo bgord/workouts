@@ -1,9 +1,9 @@
+import { Gap } from "./gap";
 import { Spacing } from "./spacing";
 
 export function Main(props: React.JSX.IntrinsicElements["main"]) {
   return (
     <main
-      data-gap="6"
       data-maxw="md"
       data-md-mb="8"
       data-md-pt="2"
@@ -12,6 +12,7 @@ export function Main(props: React.JSX.IntrinsicElements["main"]) {
       data-pt="6"
       data-stack="y"
       {...Spacing.gutter}
+      {...Gap.section}
       {...props}
     />
   );

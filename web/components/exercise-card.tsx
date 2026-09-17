@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { Chip } from "./chip";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
+import { Gap } from "./gap";
 import { Spacing } from "./spacing";
 
 const VISIBLE_CATEGORIES = 2;
@@ -21,7 +22,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
         title={props.name}
         to="/catalog/exercise/$exerciseId"
         {...Spacing.surfaceCompact}
-        {...Spacing.related}
+        {...Gap.related}
       >
         <span aria-hidden data-disp="flex">
           <ExerciseImage size={ExerciseImageSize.md} {...props} />
@@ -31,7 +32,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
           {props.name}
         </div>
 
-        <ul data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap" {...Spacing.cluster}>
+        <ul data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap" {...Gap.cluster}>
           {visible.map((category) => (
             <li key={category.id}>
               <Chip data-transform="truncate">{category.name}</Chip>

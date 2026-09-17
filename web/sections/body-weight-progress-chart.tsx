@@ -70,7 +70,7 @@ export function BodyWeightProgressChart(props: { measurements: ReadonlyArray<Bod
   const line = points.map((point) => `${point.x},${point.y}`).join(" ");
 
   return (
-    <div data-stack="y" data-variant="flat" {...ui.Spacing.related}>
+    <div data-stack="y" data-variant="flat" {...ui.Gap.related}>
       <ui.SectionHeading>{t("measurements.body_weight.progress")}</ui.SectionHeading>
 
       <svg

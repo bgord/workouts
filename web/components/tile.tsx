@@ -1,7 +1,7 @@
 import { Rhythm } from "@bgord/ui";
 import { createLink } from "@tanstack/react-router";
+import { Gap } from "./gap";
 import { Meta } from "./meta";
-import { Spacing } from "./spacing";
 
 const TILE_WIDTH = 168;
 
@@ -14,7 +14,6 @@ const item = {
 const card = {
   className: "c-card",
   "data-cross": "center",
-  "data-gap": "1",
   "data-md-cross": "baseline",
   "data-md-main": "between",
   "data-md-py": "3",
@@ -22,6 +21,7 @@ const card = {
   "data-md-wrap": "wrap",
   "data-p": "4",
   "data-stack": "y",
+  ...Gap.inline,
 } as const;
 
 export function Tile(props: React.JSX.IntrinsicElements["li"]) {
@@ -42,7 +42,7 @@ export function TileHeader(props: React.JSX.IntrinsicElements["div"]) {
       data-fs="xs"
       data-md-width="100%"
       data-stack="x"
-      {...Spacing.inline}
+      {...Gap.inline}
       {...props}
     />
   );
@@ -57,7 +57,7 @@ export function TileValue(props: React.JSX.IntrinsicElements["div"]) {
       data-fw="semibold"
       data-lh="tight"
       data-stack="x"
-      {...Spacing.cluster}
+      {...Gap.cluster}
       {...props}
     />
   );

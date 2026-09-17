@@ -19,14 +19,14 @@ export function ProfileAccountDelete() {
   });
 
   return (
-    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Spacing.related}>
-      <div data-main="between" data-md-stack="y" data-stack="x" {...ui.Spacing.cluster}>
-        <div data-cross="center" data-stack="x" {...ui.Spacing.cluster}>
+    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
+      <div data-main="between" data-md-stack="y" data-stack="x" {...ui.Gap.cluster}>
+        <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
           <UserX data-color="danger-400" data-size="sm" />
           <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
         </div>
 
-        <div data-color="danger-400" data-cross="center" data-fs="xs" data-stack="x" {...ui.Spacing.cluster}>
+        <div data-color="danger-400" data-cross="center" data-fs="xs" data-stack="x" {...ui.Gap.cluster}>
           <CircleAlert data-size="sm" />
           {t("app.dialog.irreversible")}
         </div>
@@ -48,7 +48,7 @@ export function ProfileAccountDelete() {
           {t("profile.delete_account.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>{t("profile.delete_account.info")}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
@@ -57,9 +57,9 @@ export function ProfileAccountDelete() {
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Spacing.stack}
+          {...ui.Gap.stack}
         >
-          <div data-cross="start" data-stack="y" {...ui.Spacing.field}>
+          <div data-cross="start" data-stack="y" {...ui.Gap.field}>
             <label className="c-label" htmlFor="challenge">
               {t("profile.delete_account.challenge")}
             </label>

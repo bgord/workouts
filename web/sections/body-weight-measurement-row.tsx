@@ -57,7 +57,7 @@ export function BodyWeightMeasurementRow(props: {
             onClick={bodyWeightMeasurementCorrect.enable}
             style={date}
             type="button"
-            {...ui.Spacing.cluster}
+            {...ui.Gap.inline}
           >
             <span data-shrink="0" data-transform="font-variant-numeric" style={day}>
               {DateFormat.day(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
@@ -92,7 +92,7 @@ export function BodyWeightMeasurementRow(props: {
             />
           </div>
 
-          <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+          <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
             <ui.IconButton
               onClick={bodyWeightReference.enable}
               title={t("measurements.body_weight.reference.title")}

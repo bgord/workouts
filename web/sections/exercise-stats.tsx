@@ -17,7 +17,7 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
   const set = best.sets.toSorted((a, b) => b.estimate - a.estimate)[0];
 
   return (
-    <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.related}>
+    <ul data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
       <ui.TileLink
         data-hover-bc="brand-500"
         params={{ workoutId: best.workoutId }}

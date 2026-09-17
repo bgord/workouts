@@ -3,6 +3,7 @@ import { Check, Search } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
+import { Gap } from "./gap";
 import { HairlineRow } from "./hairline";
 import { Spacing } from "./spacing";
 
@@ -21,8 +22,8 @@ export function ExercisePicker(props: {
   );
 
   return (
-    <div data-stack="y" data-wrap="nowrap" style={{ minHeight: 0 }} {...Spacing.cluster}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...Spacing.inline}>
+    <div data-stack="y" data-wrap="nowrap" style={{ minHeight: 0 }} {...Gap.cluster}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...Gap.inline}>
         <div data-cross="center" data-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 

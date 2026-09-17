@@ -28,7 +28,7 @@ export function PlanSectionItem(props: {
         data-stack="x"
         data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
-        {...ui.Spacing.related}
+        {...ui.Gap.related}
       >
         <ui.ChevronToggle {...planSectionVisibility} />
         <div data-grow="1" data-transform="truncate">

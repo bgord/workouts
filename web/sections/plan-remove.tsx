@@ -47,7 +47,7 @@ export function PlanRemove(props: Plan) {
           {t("plan.remove.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>{t("plan.remove.info", { name: props.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
@@ -56,7 +56,7 @@ export function PlanRemove(props: Plan) {
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Spacing.stack}
+          {...ui.Gap.stack}
         >
           {mutation.isError && <ui.DialogError>{t("plan.remove.error")}</ui.DialogError>}
 

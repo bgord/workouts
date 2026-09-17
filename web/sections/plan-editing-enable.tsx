@@ -24,7 +24,7 @@ export function PlanEditingEnable(props: Plan) {
   });
 
   return (
-    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.cluster}>
+    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
       <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
         <Pencil data-size="sm" />
         {t("plan.editing.enable.cta")}

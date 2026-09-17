@@ -1,6 +1,6 @@
 import { useTranslations } from "@bgord/ui";
+import { Gap } from "./gap";
 import { RirColor } from "./rir-color";
-import { Spacing } from "./spacing";
 
 export function RirBadge(props: { rir: number }) {
   const t = useTranslations();
@@ -15,7 +15,7 @@ export function RirBadge(props: { rir: number }) {
       data-transform="font-variant-numeric"
       data-wrap="nowrap"
       title={t("workout.set.rir.title")}
-      {...Spacing.inline}
+      {...Gap.inline}
     >
       <span data-bg={RirColor(props.rir)} data-br="circle" style={{ width: 6, height: 6 }} />
       {t("workout.set.rir.label")} {props.rir}

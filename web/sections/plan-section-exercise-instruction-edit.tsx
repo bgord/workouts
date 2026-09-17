@@ -125,7 +125,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
         <form
           aria-busy={mutation.isLoading}
           data-stack="y"
-          {...ui.Spacing.section}
+          {...ui.Gap.section}
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
@@ -193,7 +193,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-stack="x"
               data-wrap="nowrap"
               style={{ maxWidth: 336 }}
-              {...ui.Spacing.cluster}
+              {...ui.Gap.cluster}
             >
               <ui.Stepper
                 disabled={!actions.update.enabled}

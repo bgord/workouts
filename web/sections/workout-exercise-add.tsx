@@ -8,7 +8,6 @@ import * as ui from "../components";
 import { workoutRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
-const shrinkable = { minHeight: 0 };
 
 export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first: boolean }) {
   const t = bg.useTranslations();
@@ -63,7 +62,6 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
         first={props.first}
         last
         {...ui.Spacing.row}
-        {...ui.Spacing.related}
       >
         <button
           data-color="neutral-400"
@@ -78,7 +76,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           disabled={!props.action.enabled}
           onClick={workoutExerciseAdd.enable}
           type="button"
-          {...ui.Spacing.related}
+          {...ui.Gap.related}
           {...workoutExerciseAdd.props.controller}
         >
           <div
@@ -112,8 +110,8 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           data-stack="y"
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
-          style={shrinkable}
-          {...ui.Spacing.section}
+          style={{ minHeight: 0 }}
+          {...ui.Gap.section}
         >
           <ui.ExercisePicker
             exercises={exercises.data}
@@ -128,7 +126,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
             data-stack="x"
             data-wrap="nowrap"
             style={{ maxWidth: 336 }}
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
           >
             <ui.Stepper
               field={sets}

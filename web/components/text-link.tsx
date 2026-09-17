@@ -1,4 +1,4 @@
-import { Spacing } from "./spacing";
+import { Gap } from "./gap";
 
 const style = {
   className: "c-link",
@@ -7,7 +7,7 @@ const style = {
   "data-cursor": "pointer",
   "data-fs": "xs",
   "data-stack": "x",
-  ...Spacing.inline,
+  ...Gap.inline,
 } as const;
 
 export function TextLink(props: React.JSX.IntrinsicElements["button"]) {

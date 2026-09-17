@@ -48,7 +48,7 @@ export function PlanArchive(props: Plan) {
           {t("plan.archive.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>{t("plan.archive.info", { name: props.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="restorable" />
         </div>
@@ -57,7 +57,7 @@ export function PlanArchive(props: Plan) {
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Spacing.stack}
+          {...ui.Gap.stack}
         >
           {mutation.isError && <ui.DialogError>{t("plan.archive.error")}</ui.DialogError>}
 

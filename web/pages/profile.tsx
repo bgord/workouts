@@ -16,7 +16,7 @@ export function Profile() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-stack="x" {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("profile.header")}</ui.Header>
 
         <div data-color="neutral-500" data-fs="sm" data-transform="truncate">

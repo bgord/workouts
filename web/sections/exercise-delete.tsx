@@ -40,7 +40,7 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
           {t("exercise.delete.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>{t("exercise.delete.info", { name: props.exercise.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
@@ -49,7 +49,7 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Spacing.stack}
+          {...ui.Gap.stack}
         >
           {mutation.isError && <ui.DialogError>{t("exercise.delete.error")}</ui.DialogError>}
 

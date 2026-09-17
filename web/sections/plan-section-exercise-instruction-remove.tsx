@@ -31,7 +31,7 @@ export function PlanSectionExerciseInstructionRemove(props: {
   });
 
   return (
-    <form data-cross="end" data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.inline}>
+    <form data-cross="end" data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.inline}>
       <ui.IconButton
         disabled={mutation.isLoading}
         title={t("plan.section.exercise.remove.title", { name: props.exerciseInstruction.exercise.name })}

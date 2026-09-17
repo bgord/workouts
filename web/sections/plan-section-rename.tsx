@@ -51,8 +51,8 @@ export function PlanSectionRename(
   }
 
   return (
-    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.cluster} {...toggle.props.target}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster} {...toggle.props.target}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
         <input
           aria-label={t("plan.section.rename.label")}
           className="c-input"

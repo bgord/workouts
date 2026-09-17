@@ -68,7 +68,7 @@ export function Shortcuts() {
         data-stack="y"
         data-variant="overlay"
         data-width="100%"
-        {...ui.Spacing.block}
+        {...ui.Gap.block}
       >
         <div data-cross="center" data-main="between" data-stack="x">
           <div
@@ -77,7 +77,7 @@ export function Shortcuts() {
             data-fs="lg"
             data-fw="bold"
             data-stack="x"
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
           >
             <Keyboard data-size="sm" />
 

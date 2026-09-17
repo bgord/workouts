@@ -56,7 +56,7 @@ export function WorkoutSetCorrect(
 
   if (toggle.off) {
     return (
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
         <ui.IconButton
           disabled={!props.action.enabled}
           onClick={toggle.enable}
@@ -80,7 +80,7 @@ export function WorkoutSetCorrect(
       data-grow="1"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.cluster}
+      {...ui.Gap.cluster}
       {...toggle.props.target}
     >
       <ui.Stepper

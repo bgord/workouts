@@ -73,13 +73,13 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
         aria-busy={mutation.isLoading}
         data-stack="y"
         onSubmit={mutation.handleSubmit}
-        {...ui.Spacing.section}
+        {...ui.Gap.section}
       >
         {plan && (
-          <div data-stack="y" {...ui.Spacing.field}>
+          <div data-stack="y" {...ui.Gap.field}>
             <div className="c-label">{t("workout.create.section.label")}</div>
 
-            <ul data-stack="y" {...ui.Spacing.cluster}>
+            <ul data-stack="y" {...ui.Gap.cluster}>
               {plan.sections.map((option) => {
                 const selected = option.id === planSectionId.value;
 
@@ -96,7 +96,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                       data-stack="x"
                       data-wrap="nowrap"
                       {...ui.Spacing.surfaceCompact}
-                      {...ui.Spacing.related}
+                      {...ui.Gap.related}
                     >
                       <input
                         checked={selected}
@@ -113,7 +113,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                         <Circle data-color="neutral-600" data-shrink="0" data-size="sm" />
                       )}
 
-                      <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Spacing.inline}>
+                      <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Gap.inline}>
                         <div data-color="neutral-100" data-fs="sm" data-fw="medium">
                           {option.name}
                         </div>
@@ -136,12 +136,12 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
           </div>
         )}
 
-        <div data-stack="y" {...ui.Spacing.field}>
+        <div data-stack="y" {...ui.Gap.field}>
           <label className="c-label" {...scheduledFor.label.props}>
             {t("workout.create.when.label")}
           </label>
 
-          <div data-stack="x" data-wrap="wrap" {...ui.Spacing.cluster}>
+          <div data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
             {quick.map((date, offset) => {
               const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
 

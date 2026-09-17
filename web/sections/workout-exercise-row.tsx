@@ -40,7 +40,7 @@ export function WorkoutExerciseRow(props: {
   const mobile = width !== undefined && width <= 768;
 
   const actions = (
-    <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+    <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
       {props.exercise.actions.remove.available && (
         <WorkoutExerciseRemove
           action={props.exercise.actions.remove}
@@ -53,7 +53,7 @@ export function WorkoutExerciseRow(props: {
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
         {expandable ? (
           <ui.ChevronToggle {...workoutExerciseVisibility} />
         ) : (
@@ -80,7 +80,7 @@ export function WorkoutExerciseRow(props: {
           <ui.ExerciseImage size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm} {...exercise} />
         </button>
 
-        <div data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }} {...ui.Spacing.inline}>
+        <div data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }} {...ui.Gap.inline}>
           <Link
             data-color="neutral-100"
             data-fs="sm"
@@ -94,7 +94,7 @@ export function WorkoutExerciseRow(props: {
             {props.exercise.exerciseName}
           </Link>
 
-          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
             {props.exercise.actions.targetSet.available ? (
               <button
                 data-bc={props.exercise.target ? undefined : "neutral-700"}
@@ -116,7 +116,7 @@ export function WorkoutExerciseRow(props: {
                 onClick={workoutExerciseTarget.toggle}
                 title={t("workout.target.cta")}
                 type="button"
-                {...ui.Spacing.inline}
+                {...ui.Gap.inline}
                 {...workoutExerciseTarget.props.controller}
               >
                 <Target data-color="neutral-500" data-size="xs" />
@@ -145,7 +145,7 @@ export function WorkoutExerciseRow(props: {
                   data-stack="x"
                   data-transform="font-variant-numeric"
                   data-wrap="nowrap"
-                  {...ui.Spacing.inline}
+                  {...ui.Gap.inline}
                 >
                   <Target data-color="neutral-500" data-size="xs" />
                   <ui.SetsRepsLoad

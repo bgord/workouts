@@ -1,5 +1,5 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { Spacing } from "./spacing";
+import { Gap } from "./gap";
 
 export function Chip(props: React.JSX.IntrinsicElements["span"] & { muted?: boolean }) {
   const { muted, ...rest } = props;
@@ -10,7 +10,7 @@ export function Chip(props: React.JSX.IntrinsicElements["span"] & { muted?: bool
       data-color={muted ? "neutral-400" : undefined}
       data-cross="center"
       data-variant="outline"
-      {...Spacing.inline}
+      {...Gap.inline}
       {...rest}
     />
   );
@@ -27,7 +27,7 @@ export function ChipButton(props: React.JSX.IntrinsicElements["button"] & { pres
       data-cursor="pointer"
       data-variant={pressed ? "primary" : "outline"}
       type="button"
-      {...Spacing.inline}
+      {...Gap.inline}
       {...rest}
     />
   );

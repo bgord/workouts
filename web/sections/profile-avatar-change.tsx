@@ -34,8 +34,8 @@ export function ProfileAvatarChange() {
   });
 
   return (
-    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Spacing.related}>
-      <div data-cross="center" data-stack="x" {...ui.Spacing.cluster}>
+    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
         <CircleUser data-color="neutral-400" data-size="sm" />
         <ui.SectionHeading>{t("profile.avatar.header")}</ui.SectionHeading>
       </div>
@@ -45,7 +45,7 @@ export function ProfileAvatarChange() {
         data-md-self={profileAvatarChange.on ? "stretch" : undefined}
         data-self="start"
         data-stack="y"
-        {...ui.Spacing.related}
+        {...ui.Gap.related}
       >
         <ProfileAvatarDelete />
 
@@ -69,10 +69,10 @@ export function ProfileAvatarChange() {
             data-stack="y"
             encType="multipart/form-data"
             onSubmit={mutation.handleSubmit}
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
             {...profileAvatarChange.props.target}
           >
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+            <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
               <label
                 className="c-button"
                 data-cross="center"
@@ -83,7 +83,7 @@ export function ProfileAvatarChange() {
                 data-wrap="nowrap"
                 style={label}
                 tabIndex={0}
-                {...ui.Spacing.cluster}
+                {...ui.Gap.cluster}
                 {...avatar.label.props}
               >
                 {avatar.isSelected ? (

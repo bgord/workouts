@@ -19,10 +19,10 @@ export function Measurements() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-stack="x" {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("measurements.body_weight.header")}</ui.Header>
 
-        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
           <ui.IconButton
             onClick={bodyWeightMeasurementImport.enable}
             {...bodyWeightMeasurementImport.props.controller}
@@ -64,12 +64,12 @@ export function Measurements() {
       )}
 
       {measurements.length > 0 && (
-        <div data-stack="y" {...ui.Spacing.section}>
+        <div data-stack="y" {...ui.Gap.section}>
           <BodyWeightStats measurements={measurements} />
 
           <BodyWeightProgressChart measurements={measurements} />
 
-          <div data-stack="y" {...ui.Spacing.related}>
+          <div data-stack="y" {...ui.Gap.related}>
             <ui.SectionHeading>{t("measurements.body_weight.history")}</ui.SectionHeading>
 
             <BodyWeightMeasurementList measurements={measurements} />

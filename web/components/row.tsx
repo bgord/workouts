@@ -1,5 +1,6 @@
 import { createLink } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
+import { Gap } from "./gap";
 import { Spacing } from "./spacing";
 
 type RowVariant = "default" | "muted";
@@ -19,7 +20,7 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
         data-stack="x"
         data-wrap="nowrap"
         {...Spacing.surface}
-        {...Spacing.related}
+        {...Gap.related}
         {...rest}
       />
     </li>
@@ -27,7 +28,7 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
 });
 
 export function RowBody(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-grow="1" data-stack="y" data-transform="truncate" {...Spacing.inline} {...props} />;
+  return <div data-grow="1" data-stack="y" data-transform="truncate" {...Gap.inline} {...props} />;
 }
 
 export function RowTitle(props: React.JSX.IntrinsicElements["div"]) {

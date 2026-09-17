@@ -44,7 +44,7 @@ export function WorkoutSetRemove(props: {
         data-stack="x"
         data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
-        {...ui.Spacing.related}
+        {...ui.Gap.related}
       >
         <ui.IconButton
           disabled={!props.action.enabled || mutation.isLoading}
@@ -62,7 +62,7 @@ export function WorkoutSetRemove(props: {
           {t("workout.set.remove.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>
             {t("workout.set.remove.info", {
               setNumber: props.loggedSet.setNumber,
@@ -76,7 +76,7 @@ export function WorkoutSetRemove(props: {
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Spacing.stack}
+          {...ui.Gap.stack}
         >
           {mutation.isError && <ui.DialogError>{t("workout.set.remove.error")}</ui.DialogError>}
 

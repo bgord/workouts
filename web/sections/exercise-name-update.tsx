@@ -56,10 +56,10 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...bg.Rhythm().times(0).style.minWidth}
-      {...ui.Spacing.cluster}
+      {...ui.Gap.cluster}
       {...exerciseNameUpdate.props.target}
     >
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
         <input
           aria-label={t("exercise.update.name.label")}
           className="c-input"

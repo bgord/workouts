@@ -73,7 +73,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           disabled={!props.action.enabled}
           onClick={planSectionExerciseInstructionAdd.enable}
           type="button"
-          {...ui.Spacing.related}
+          {...ui.Gap.related}
           {...planSectionExerciseInstructionAdd.props.controller}
         >
           <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
@@ -132,7 +132,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           disabled={!props.action.enabled}
           onClick={planSectionExerciseInstructionAdd.enable}
           type="button"
-          {...ui.Spacing.related}
+          {...ui.Gap.related}
           {...planSectionExerciseInstructionAdd.props.controller}
         >
           <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
@@ -172,7 +172,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
         <form
           aria-busy={mutation.isLoading}
           data-stack="y"
-          {...ui.Spacing.section}
+          {...ui.Gap.section}
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
@@ -190,7 +190,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
             data-stack="x"
             data-wrap="nowrap"
             style={{ maxWidth: 336 }}
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
           >
             <ui.Stepper
               field={sets}

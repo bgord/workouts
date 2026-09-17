@@ -46,9 +46,9 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
         data-stack="y"
         encType="multipart/form-data"
         onSubmit={mutation.handleSubmit}
-        {...ui.Spacing.section}
+        {...ui.Gap.section}
       >
-        <div data-stack="y" {...ui.Spacing.field}>
+        <div data-stack="y" {...ui.Gap.field}>
           <label
             data-bc="neutral-700"
             data-br="md"
@@ -65,7 +65,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
             data-transform="center"
             {...bg.Rhythm(144).times(1).style.height}
             {...ui.Spacing.surface}
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
             {...(image.isSelected ? { "data-p": "0" as const } : {})}
             {...image.label.props}
           >
@@ -101,7 +101,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
             data-fs="xs"
             data-stack="x"
             data-wrap="nowrap"
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
           >
             {image.isSelected ? (
               <>
@@ -119,7 +119,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
           </output>
         </div>
 
-        <div data-stack="y" {...ui.Spacing.field}>
+        <div data-stack="y" {...ui.Gap.field}>
           <label className="c-label" {...name.label.props}>
             {t("exercise.add.name.label")}
           </label>
@@ -134,7 +134,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
           />
         </div>
 
-        <div data-stack="y" {...ui.Spacing.field}>
+        <div data-stack="y" {...ui.Gap.field}>
           <label className="c-label" {...description.label.props}>
             {t("exercise.add.description.label")}
           </label>

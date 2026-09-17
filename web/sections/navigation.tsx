@@ -38,7 +38,7 @@ function NavigationDesktop() {
         data-stack="x"
         data-width="100%"
         {...ui.Spacing.gutter}
-        {...ui.Spacing.section}
+        {...ui.Gap.section}
       >
         <ui.Logo />
 

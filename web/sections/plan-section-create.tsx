@@ -37,7 +37,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
 
   if (planSectionCreate.off) {
     return (
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
         <button
           data-color="neutral-400"
           data-cross="center"
@@ -51,7 +51,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           disabled={!props.action.enabled}
           onClick={planSectionCreate.enable}
           type="button"
-          {...ui.Spacing.related}
+          {...ui.Gap.related}
           {...planSectionCreate.props.controller}
         >
           <div
@@ -81,10 +81,10 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
     <form
       data-stack="y"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.cluster}
+      {...ui.Gap.cluster}
       {...planSectionCreate.props.target}
     >
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
         <div
           data-bc="neutral-700"
           data-br="sm"
@@ -111,7 +111,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           {...planSectionName.input.props}
         />
 
-        <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+        <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
           <ui.IconButton
             aria-label={t("app.save")}
             disabled={planSectionName.empty || mutation.isLoading}

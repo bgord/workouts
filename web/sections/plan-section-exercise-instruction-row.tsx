@@ -41,7 +41,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         <ui.ExerciseImage size={ui.ExerciseImageSize.sm} {...exerciseInstruction.exercise} />
       </Link>
 
-      <div data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth} {...ui.Spacing.inline}>
+      <div data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth} {...ui.Gap.inline}>
         <Link
           data-color="neutral-100"
           data-fs="sm"
@@ -69,7 +69,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       )}
 
       {controls && (
-        <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+        <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
           {editable && (
             <PlanSectionExerciseInstructionEdit
               exerciseInstruction={exerciseInstruction}

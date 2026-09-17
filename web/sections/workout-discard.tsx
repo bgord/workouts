@@ -50,7 +50,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
           {t("workout.discard.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>
             {t("workout.discard.info", {
               name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
@@ -63,7 +63,7 @@ export function WorkoutDiscard(props: WorkoutSummary) {
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Spacing.stack}
+          {...ui.Gap.stack}
         >
           {mutation.isError && <ui.DialogError>{t("workout.discard.error")}</ui.DialogError>}
 

@@ -33,14 +33,8 @@ export function Plan() {
 
   return (
     <ui.Main>
-      <div data-stack="y" {...ui.Spacing.related}>
-        <div
-          data-cross="center"
-          data-md-wrap="wrap"
-          data-stack="x"
-          data-wrap="nowrap"
-          {...ui.Spacing.related}
-        >
+      <div data-stack="y" {...ui.Gap.related}>
+        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
           <ui.ButtonBack to="/plans" />
 
           <div
@@ -49,7 +43,7 @@ export function Plan() {
             data-stack="x"
             data-wrap="nowrap"
             style={title}
-            {...ui.Spacing.related}
+            {...ui.Gap.related}
           >
             {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
@@ -66,7 +60,7 @@ export function Plan() {
             data-shrink="0"
             data-stack="x"
             data-wrap="nowrap"
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
           >
             {plan.actions.finalize.available && (
               <PlanFinalize action={plan.actions.finalize} {...plan.data} />
@@ -84,7 +78,7 @@ export function Plan() {
           </div>
         </div>
 
-        <div data-stack="y" {...ui.Spacing.inset} {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
           <ui.Meta truncate>
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),

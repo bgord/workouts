@@ -46,9 +46,9 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
         data-stack="y"
         encType="multipart/form-data"
         onSubmit={mutation.handleSubmit}
-        {...ui.Spacing.section}
+        {...ui.Gap.section}
       >
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           {file.isSelected ? (
             <div
               data-bc="neutral-700"
@@ -60,7 +60,7 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
               data-fs="sm"
               data-stack="y"
               {...ui.Spacing.surface}
-              {...ui.Spacing.cluster}
+              {...ui.Gap.cluster}
             >
               <FileSpreadsheet data-color="neutral-400" data-size="md" />
 
@@ -77,7 +77,7 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
                 data-stack="x"
                 onClick={bg.exec([file.actions.clearFile, mutation.reset])}
                 type="button"
-                {...ui.Spacing.inline}
+                {...ui.Gap.inline}
               >
                 <X data-size="xs" />
                 {t("app.clear")}
@@ -97,7 +97,7 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
               data-stack="y"
               tabIndex={0}
               {...ui.Spacing.surface}
-              {...ui.Spacing.cluster}
+              {...ui.Gap.cluster}
               {...file.label.props}
             >
               <FileUp data-color="neutral-400" data-size="md" />

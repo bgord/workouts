@@ -62,10 +62,10 @@ export function WorkoutExerciseTargetSet(
       data-cross="center"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.related}
+      {...ui.Gap.related}
       {...toggle.props.target}
     >
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
         <ui.Stepper
           disabled={mutation.isLoading}
           field={sets}
@@ -111,7 +111,7 @@ export function WorkoutExerciseTargetSet(
         data-shrink="0"
         data-stack="x"
         data-wrap="nowrap"
-        {...ui.Spacing.inline}
+        {...ui.Gap.inline}
       >
         <ui.IconButton
           aria-label={t("app.save")}

@@ -1,7 +1,7 @@
 import { useTranslations } from "@bgord/ui";
 import { Info } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
-import { Spacing } from "./spacing";
+import { Gap } from "./gap";
 
 export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div"]) {
   const { hints, ...rest } = props;
@@ -18,7 +18,7 @@ export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div
       data-stack="x"
       data-wrap="nowrap"
       key={hint}
-      {...Spacing.cluster}
+      {...Gap.cluster}
       {...rest}
     >
       <Info data-shrink="0" data-size="sm" />

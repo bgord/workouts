@@ -2,10 +2,10 @@ import { useLanguage, useTranslations } from "@bgord/ui";
 import { Layers } from "lucide-react";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
 import { DateFormat } from "../services/date-format";
+import { Gap } from "./gap";
 import { Meta } from "./meta";
 import { PlanStatusBadge } from "./plan-status-badge";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
-import { Spacing } from "./spacing";
 
 export function PlanCard(props: PlanSummary) {
   const t = useTranslations();
@@ -22,8 +22,8 @@ export function PlanCard(props: PlanSummary) {
           </Meta>
         )}
 
-        <Meta data-cross="center" data-stack="x" truncate {...Spacing.related}>
-          <div data-cross="center" data-stack="x" title={t("plan.sections")} {...Spacing.inline}>
+        <Meta data-cross="center" data-stack="x" truncate {...Gap.related}>
+          <div data-cross="center" data-stack="x" title={t("plan.sections")} {...Gap.inline}>
             <Layers data-size="xs" />
             {props.sections}
           </div>

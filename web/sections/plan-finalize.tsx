@@ -30,7 +30,7 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
       data-stack="x"
       data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.related}
+      {...ui.Gap.related}
     >
       <button
         className="c-button"

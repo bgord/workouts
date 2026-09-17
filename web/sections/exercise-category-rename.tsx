@@ -41,7 +41,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
         onClick={toggle.enable}
         title={t("exercise.category.rename.cta")}
         type="button"
-        {...ui.Spacing.related}
+        {...ui.Gap.related}
         {...toggle.props.controller}
       >
         <span data-transform="truncate">{props.name}</span>
@@ -56,10 +56,10 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...bg.Rhythm().times(0).style.minWidth}
-      {...ui.Spacing.cluster}
+      {...ui.Gap.cluster}
       {...toggle.props.target}
     >
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
         <input
           aria-label={t("exercise.category.rename.label")}
           className="c-input"

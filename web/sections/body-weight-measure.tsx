@@ -52,7 +52,7 @@ export function BodyWeightMeasure() {
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.inline}
+      {...ui.Gap.inline}
     >
       <label className="c-visually-hidden" {...measuredOn.label.props}>
         {t("measurements.body_weight.measure.date.label")}

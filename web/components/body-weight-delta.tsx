@@ -1,7 +1,7 @@
 import { Triangle } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
-import { Spacing } from "./spacing";
+import { Gap } from "./gap";
 
 const color = (positive: boolean, goal: BodyWeightGoalOptions | undefined) => {
   if (goal === BodyWeightGoalOptions.maintain) return "neutral-300";
@@ -33,7 +33,7 @@ export function BodyWeightDelta(
       data-stack="x"
       data-transform="nowrap"
       data-wrap="nowrap"
-      {...Spacing.inline}
+      {...Gap.inline}
       {...rest}
     >
       <Triangle

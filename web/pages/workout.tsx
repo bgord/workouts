@@ -34,14 +34,8 @@ export function Workout() {
 
   return (
     <ui.Main>
-      <div data-stack="y" {...ui.Spacing.related}>
-        <div
-          data-cross="center"
-          data-md-wrap="wrap"
-          data-stack="x"
-          data-wrap="nowrap"
-          {...ui.Spacing.related}
-        >
+      <div data-stack="y" {...ui.Gap.related}>
+        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
           <ui.ButtonBack search={search} to="/workouts" />
 
           <div
@@ -50,7 +44,7 @@ export function Workout() {
             data-stack="x"
             data-wrap="nowrap"
             style={{ flexBasis: 0, minWidth: 0 }}
-            {...ui.Spacing.related}
+            {...ui.Gap.related}
           >
             <ui.Header>
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
@@ -67,7 +61,7 @@ export function Workout() {
             data-shrink="0"
             data-stack="x"
             data-wrap="nowrap"
-            {...ui.Spacing.cluster}
+            {...ui.Gap.cluster}
           >
             {workout.actions.start.available && (
               <WorkoutStart action={workout.actions.start} {...workout.data} />
@@ -87,7 +81,7 @@ export function Workout() {
           </div>
         </div>
 
-        <div data-stack="y" {...ui.Spacing.inset} {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
           {workout.actions.reschedule.available ? (
             <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
           ) : (
@@ -128,7 +122,7 @@ export function Workout() {
         </ul>
 
         {workout.actions.exerciseAdd.available && (
-          <div data-stack="y" {...ui.Spacing.cluster}>
+          <div data-stack="y" {...ui.Gap.cluster}>
             <WorkoutExerciseAdd
               action={workout.actions.exerciseAdd}
               first={workout.data.exercises.length === 0}

@@ -13,7 +13,7 @@ export function DashboardCompleted() {
   ] as const;
 
   return (
-    <section data-stack="y" {...ui.Spacing.cluster}>
+    <section data-stack="y" {...ui.Gap.cluster}>
       <ui.Eyebrow>{t("dashboard.completed.header")}</ui.Eyebrow>
 
       <ul className="c-card" data-stack="x" data-variant="sunken" {...ui.Spacing.surface}>
@@ -27,7 +27,7 @@ export function DashboardCompleted() {
             data-stack="y"
             key={tile.label}
             style={{ flexBasis: 0 }}
-            {...ui.Spacing.inline}
+            {...ui.Gap.inline}
           >
             <ui.TileValue>{tile.value}</ui.TileValue>
 

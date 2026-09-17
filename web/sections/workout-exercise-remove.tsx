@@ -39,7 +39,7 @@ export function WorkoutExerciseRemove(props: {
         data-stack="x"
         data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
-        {...ui.Spacing.related}
+        {...ui.Gap.related}
       >
         <ui.IconButton
           disabled={!props.action.enabled || mutation.isLoading}
@@ -59,7 +59,7 @@ export function WorkoutExerciseRemove(props: {
           {t("workout.exercise.remove.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Spacing.related}>
+        <div data-stack="y" {...ui.Gap.related}>
           <ui.DialogInfo>
             {t("workout.exercise.remove.info", { name: props.exercise.exerciseName })}
           </ui.DialogInfo>
@@ -70,7 +70,7 @@ export function WorkoutExerciseRemove(props: {
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Spacing.stack}
+          {...ui.Gap.stack}
         >
           {mutation.isError && <ui.DialogError>{t("workout.exercise.remove.error")}</ui.DialogError>}
 

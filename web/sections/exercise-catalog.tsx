@@ -49,8 +49,8 @@ export function ExerciseCatalog() {
   const pristine = ExerciseCatalogFiltersForm.Form.isDefault(search);
 
   return (
-    <div data-stack="y" {...ui.Spacing.block}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
+    <div data-stack="y" {...ui.Gap.block}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
         <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
@@ -100,7 +100,7 @@ export function ExerciseCatalog() {
         </ui.IconButton>
       </div>
 
-      <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.cluster}>
+      <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
         {categories.map((category) => {
           const selected = search.category === category.id;
 
@@ -150,7 +150,7 @@ export function ExerciseCatalog() {
         </ui.EmptyState>
       )}
 
-      <ul data-gap="6" data-md-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">
+      <ul data-md-main="center" data-stack="x" data-wrap="wrap" {...ui.Gap.block}>
         {matching.map((exercise) => (
           <ui.ExerciseCard key={exercise.id} {...exercise} />
         ))}

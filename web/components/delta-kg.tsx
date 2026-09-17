@@ -1,6 +1,6 @@
 import { Triangle } from "lucide-react";
 import { WeightFormat } from "../services/weight-format";
-import { Spacing } from "./spacing";
+import { Gap } from "./gap";
 
 export function DeltaKg(props: { current: number; previous: number | undefined; decimals?: number }) {
   if (props.previous === undefined) return null;
@@ -18,7 +18,7 @@ export function DeltaKg(props: { current: number; previous: number | undefined; 
       data-stack="x"
       data-transform="nowrap"
       data-wrap="nowrap"
-      {...Spacing.inline}
+      {...Gap.inline}
     >
       <Triangle data-rotate={positive ? "0" : "180"} fill="currentColor" size={9} strokeWidth={0} />
 

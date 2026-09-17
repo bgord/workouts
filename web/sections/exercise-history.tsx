@@ -39,7 +39,7 @@ function ExerciseHistoryRow(props: {
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.related}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
         <ui.ChevronToggle {...open} />
 
         <Link
@@ -54,7 +54,7 @@ function ExerciseHistoryRow(props: {
           params={{ workoutId: props.performance.workoutId }}
           search={WorkoutHistoryFilters.default}
           to="/workouts/$workoutId"
-          {...ui.Spacing.inline}
+          {...ui.Gap.inline}
         >
           {props.performance.scheduledFor}
 
@@ -70,15 +70,14 @@ function ExerciseHistoryRow(props: {
         <div
           data-cross="baseline"
           data-md-cross="end"
-          data-md-gap="1"
           data-md-stack="y"
           data-ml="auto"
           data-shrink="0"
           data-stack="x"
           data-wrap="nowrap"
-          {...ui.Spacing.block}
+          {...ui.Gap.cluster}
         >
-          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
             <EqualApproximately data-color="neutral-600" data-self="center" data-size="xs" />
 
             <span
@@ -97,7 +96,7 @@ function ExerciseHistoryRow(props: {
             </span>
           </div>
 
-          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
             <Sigma data-color="neutral-600" data-self="center" data-size="xs" />
 
             <span
@@ -136,7 +135,7 @@ function ExerciseHistoryRow(props: {
 
               <div data-grow="1">{set.rir !== undefined && <ui.RirBadge rir={set.rir} />}</div>
 
-              <ui.Meta data-cross="center" data-stack="x" {...ui.Spacing.inline}>
+              <ui.Meta data-cross="center" data-stack="x" {...ui.Gap.inline}>
                 <EqualApproximately data-color="neutral-600" data-size="xs" />
                 {t("statistics.exercise.one_rep_max_estimate.value", {
                   load: WeightFormat.kilograms(set.estimate),

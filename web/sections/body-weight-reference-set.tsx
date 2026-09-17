@@ -44,7 +44,7 @@ export function BodyWeightReferenceSet(
       data-stack="x"
       data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.cluster}
+      {...ui.Gap.cluster}
       {...toggle.props.target}
     >
       <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
@@ -68,7 +68,7 @@ export function BodyWeightReferenceSet(
             key={option}
             onClick={() => goal.set(option)}
             type="button"
-            {...ui.Spacing.inline}
+            {...ui.Gap.inline}
           >
             <ui.BodyWeightGoalIcon goal={option} size="xs" />
             {t(`measurements.body_weight.goal.${option}`)}

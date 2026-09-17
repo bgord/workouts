@@ -64,7 +64,7 @@ export function WorkoutSetLog(props: {
         {props.exercise.loggedSets.length + 1}
       </div>
 
-      <div data-cross="center" data-md-grow="1" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
+      <div data-cross="center" data-md-grow="1" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
         <ui.Stepper
           disabled={busy}
           field={reps}

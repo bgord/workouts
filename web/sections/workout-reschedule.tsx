@@ -62,7 +62,7 @@ export function WorkoutReschedule(props: Workout & { action: ActionState }) {
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.inline}
+      {...ui.Gap.inline}
       {...workoutReschedule.props.target}
     >
       <input

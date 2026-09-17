@@ -42,9 +42,9 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
         aria-busy={mutation.isLoading}
         data-stack="y"
         onSubmit={mutation.handleSubmit}
-        {...ui.Spacing.section}
+        {...ui.Gap.section}
       >
-        <div data-stack="y" {...ui.Spacing.field}>
+        <div data-stack="y" {...ui.Gap.field}>
           <label className="c-label" {...name.label.props}>
             {t("plan.create.name.label")}
           </label>

@@ -2,12 +2,11 @@ import * as bg from "@bgord/ui";
 import { CircleAlert, RotateCcw } from "lucide-react";
 import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
-import { Spacing } from "./spacing";
+import { Gap } from "./gap";
 
 export function Dialog(props: bg.DialogPropsType) {
   return (
     <bg.Dialog
-      data-gap="8"
       data-md-mt="4"
       data-md-p="3"
       data-mt="12"
@@ -18,6 +17,7 @@ export function Dialog(props: bg.DialogPropsType) {
         maxHeight: "calc(100% - 4rem)",
         maxWidth: "calc(100% - 2rem)",
       }}
+      {...Gap.stack}
       {...props}
     />
   );
@@ -25,7 +25,7 @@ export function Dialog(props: bg.DialogPropsType) {
 
 export function DialogHeader(props: { disabled?: boolean; onClose: () => void; children: React.ReactNode }) {
   return (
-    <div data-cross="center" data-main="between" data-stack="x" data-wrap="nowrap" {...Spacing.related}>
+    <div data-cross="center" data-main="between" data-stack="x" data-wrap="nowrap" {...Gap.related}>
       <strong data-color="neutral-100" data-transform="truncate">
         {props.children}
       </strong>
@@ -52,7 +52,7 @@ export function DialogStatus(props: { variant: "irreversible" | "restorable" }) 
       data-fs="sm"
       data-stack="x"
       data-wrap="nowrap"
-      {...Spacing.cluster}
+      {...Gap.cluster}
     >
       {props.variant === "irreversible" && <CircleAlert data-shrink="0" data-size="sm" />}
       {props.variant === "restorable" && <RotateCcw data-shrink="0" data-size="sm" />}
@@ -70,7 +70,7 @@ export function DialogError(props: { children: React.ReactNode }) {
       data-fs="sm"
       data-stack="x"
       data-wrap="nowrap"
-      {...Spacing.cluster}
+      {...Gap.cluster}
     >
       <CircleAlert data-shrink="0" data-size="md" />
       <span>{props.children}</span>
@@ -80,7 +80,7 @@ export function DialogError(props: { children: React.ReactNode }) {
 
 export function DialogFooter(props: { disabled?: boolean; onCancel: () => void; children: React.ReactNode }) {
   return (
-    <div data-main="end" data-stack="x" {...Spacing.inline}>
+    <div data-main="end" data-stack="x" {...Gap.inline}>
       <ButtonCancel disabled={props.disabled} onClick={props.onCancel} />
       {props.children}
     </div>

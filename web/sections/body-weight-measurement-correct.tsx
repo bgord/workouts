@@ -50,7 +50,7 @@ export function BodyWeightMeasurementCorrect(
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.inline}
+      {...ui.Gap.inline}
       {...toggle.props.target}
     >
       <input

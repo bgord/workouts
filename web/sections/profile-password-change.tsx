@@ -20,8 +20,8 @@ export function ProfilePasswordChange() {
   });
 
   return (
-    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Spacing.related}>
-      <div data-cross="center" data-stack="x" {...ui.Spacing.cluster}>
+    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
         <KeyRound data-color="neutral-400" data-size="sm" />
         <ui.SectionHeading>{t("auth.change_password.header")}</ui.SectionHeading>
       </div>
@@ -36,7 +36,7 @@ export function ProfilePasswordChange() {
         data-stack="x"
         data-wrap="wrap"
         onSubmit={mutation.handleSubmit}
-        {...ui.Spacing.related}
+        {...ui.Gap.related}
       >
         <button
           className="c-button"
@@ -49,14 +49,14 @@ export function ProfilePasswordChange() {
         </button>
 
         {mutation.isDone && (
-          <ui.Output data-cross="center" data-stack="x" tone="positive" {...ui.Spacing.cluster}>
+          <ui.Output data-cross="center" data-stack="x" tone="positive" {...ui.Gap.cluster}>
             <CircleCheck data-size="sm" />
             {t("auth.change_password.sent")}
           </ui.Output>
         )}
 
         {mutation.isError && (
-          <ui.Output data-cross="center" data-stack="x" {...ui.Spacing.cluster}>
+          <ui.Output data-cross="center" data-stack="x" {...ui.Gap.cluster}>
             <CircleAlert data-size="sm" />
             {t("auth.change_password.error")}
           </ui.Output>

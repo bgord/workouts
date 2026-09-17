@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Form } from "../../app/services/workout-history-filters-form";
-import { Spacing } from "./spacing";
+import { Gap } from "./gap";
 
 export function Logo() {
   return (
@@ -15,7 +15,7 @@ export function Logo() {
         data-lh="none"
         data-ls="wider"
         data-transform="uppercase"
-        {...Spacing.cluster}
+        {...Gap.cluster}
       />
     </Link>
   );
