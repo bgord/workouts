@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { ButtonClear, Select } from "../components";
+import { ButtonClear, Select, TextLink } from "../components";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
@@ -62,16 +62,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
       </ul>
 
       {(hidden > 0 || all.on) && (
-        <button
-          className="c-link"
-          data-color="neutral-400"
-          data-cross="center"
-          data-fs="xs"
-          data-gap="1"
-          data-stack="x"
-          onClick={all.toggle}
-          type="button"
-        >
+        <TextLink onClick={all.toggle}>
           {all.on ? (
             <>
               {t("measurements.body_weight.history.less")}
@@ -83,7 +74,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
               <ChevronDown data-size="xs" />
             </>
           )}
-        </button>
+        </TextLink>
       )}
     </div>
   );

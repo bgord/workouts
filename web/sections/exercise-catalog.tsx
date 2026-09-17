@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import { ExerciseCard, IconButton, Meta } from "../components";
+import { ExerciseCard, IconButton, Meta, TextLink } from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -133,18 +133,7 @@ export function ExerciseCatalog() {
 
         {(hidden > 0 || categoryList.on) && (
           <li>
-            <button
-              className="c-link"
-              data-color="neutral-400"
-              data-cross="center"
-              data-cursor="pointer"
-              data-fs="xs"
-              data-gap="1"
-              data-mx="1"
-              data-stack="x"
-              onClick={categoryList.toggle}
-              type="button"
-            >
+            <TextLink data-mx="1" onClick={categoryList.toggle}>
               {categoryList.on ? (
                 <>
                   {t("exercise.catalog.categories.less")}
@@ -156,7 +145,7 @@ export function ExerciseCatalog() {
                   <ChevronDown data-size="xs" />
                 </>
               )}
-            </button>
+            </TextLink>
           </li>
         )}
       </ul>

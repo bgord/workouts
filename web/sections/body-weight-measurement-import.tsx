@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Download, FileSpreadsheet, FileUp, Upload, X } from "lucide-react";
-import { Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
+import { Dialog, DialogError, DialogFooter, DialogHeader, TextLinkAnchor } from "../components";
 import { measurementsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
@@ -120,14 +120,8 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
             </label>
           )}
 
-          <a
-            className="c-link"
-            data-color="neutral-400"
-            data-cross="center"
-            data-fs="xs"
-            data-gap="1-5"
+          <TextLinkAnchor
             data-self="start"
-            data-stack="x"
             download
             href="/public/body-weight-measurements-template.csv"
             rel="noopener"
@@ -135,7 +129,7 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
           >
             <Download data-size="xs" />
             {t("measurements.body_weight.import.template.cta")}
-          </a>
+          </TextLinkAnchor>
         </div>
 
         {mutation.isError && <DialogError>{t("measurements.body_weight.import.error")}</DialogError>}

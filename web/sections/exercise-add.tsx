@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ImageUp, Plus } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
-import { ButtonClear, Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
+import { ButtonClear, Dialog, DialogError, DialogFooter, DialogHeader, TextLink } from "../components";
 import { catalogRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -108,16 +108,9 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
                   {t("exercise.add.image.selected", { name: image.data.name })}
                 </span>
 
-                <button
-                  className="c-link"
-                  data-color="neutral-400"
-                  data-fs="xs"
-                  data-shrink="0"
-                  onClick={image.actions.clearFile}
-                  type="button"
-                >
+                <TextLink data-shrink="0" onClick={image.actions.clearFile}>
                   {t("exercise.add.image.replace")}
-                </button>
+                </TextLink>
               </>
             ) : (
               t("exercise.add.image.hint")

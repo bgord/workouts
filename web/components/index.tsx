@@ -32,6 +32,7 @@ export * from "./set-dots";
 export * from "./sets-reps";
 export * from "./sets-reps-load";
 export * from "./stepper";
+export * from "./text-link";
 export * from "./tile";
 export * from "./workout-card";
 export * from "./workout-status-badge";
