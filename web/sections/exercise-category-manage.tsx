@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Dialog, DialogHeader, Meta } from "../components";
+import * as ui from "../components";
 import { catalogRoute } from "../router";
 import { ExerciseCategoryAdd } from "./exercise-category-add";
 import { ExerciseCategoryRow } from "./exercise-category-row";
@@ -10,13 +10,8 @@ export function ExerciseCategoryManage(props: bg.UseToggleReturnType) {
   const { toggle } = bg.extractUseToggle(props);
 
   return (
-    <Dialog {...toggle}>
-      <DialogHeader onClose={toggle.disable}>
-        {t("exercise.category.manage.header")}
-        <span data-color="neutral-500" data-fw="regular" data-ml="2">
-          · {exerciseCategories.data.length}
-        </span>
-      </DialogHeader>
+    <ui.Dialog {...toggle}>
+      <ui.DialogHeader onClose={toggle.disable}>{t("exercise.category.manage.header")}</ui.DialogHeader>
 
       {exerciseCategories.actions.add.available && <ExerciseCategoryAdd />}
 
@@ -26,7 +21,7 @@ export function ExerciseCategoryManage(props: bg.UseToggleReturnType) {
             {t("exercise.category.list.empty")}
           </div>
 
-          <Meta>{t("exercise.category.list.empty.hint")}</Meta>
+          <ui.Meta>{t("exercise.category.list.empty.hint")}</ui.Meta>
         </div>
       )}
 
@@ -37,6 +32,6 @@ export function ExerciseCategoryManage(props: bg.UseToggleReturnType) {
           ))}
         </ul>
       )}
-    </Dialog>
+    </ui.Dialog>
   );
 }

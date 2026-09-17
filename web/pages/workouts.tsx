@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { CalendarPlus } from "lucide-react";
-import { ActionHint, Header, Main } from "../components";
+import * as ui from "../components";
 import { workoutsRoute } from "../router";
 import { WorkoutCreate } from "../sections/workout-create";
 import { WorkoutHistory } from "../sections/workout-history";
@@ -20,11 +20,11 @@ export function Workouts() {
   });
 
   return (
-    <Main>
+    <ui.Main>
       <div data-cross="center" data-gap="3" data-stack="x">
-        <Header data-grow="1">{t("workout.list.header")}</Header>
+        <ui.Header data-grow="1">{t("workout.list.header")}</ui.Header>
 
-        <ActionHint {...workouts.actions.create} data-md-width="100%" />
+        <ui.ActionHint {...workouts.actions.create} data-md-width="100%" />
 
         <button
           className="c-button"
@@ -43,6 +43,6 @@ export function Workouts() {
       {workouts.actions.create.enabled && <WorkoutCreate {...workoutCreate} />}
 
       <WorkoutHistory />
-    </Main>
+    </ui.Main>
   );
 }

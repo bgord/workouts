@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { Output } from "../components";
+import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanFinalize(props: Plan & { action: ActionState }) {
@@ -36,7 +36,7 @@ export function PlanFinalize(props: Plan & { action: ActionState }) {
         {t("plan.finalize.cta")}
       </button>
 
-      {mutation.isError && <Output>{t("plan.finalize.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("plan.finalize.error")}</ui.Output>}
     </form>
   );
 }

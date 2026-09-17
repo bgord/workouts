@@ -5,8 +5,7 @@ import type {
   PlanGetResponse,
   PlanSection,
 } from "../../modules/plans/queries/get-plan";
-import { ExerciseImage, ExerciseImageSize, HairlineRow, RowIndex } from "../components";
-import { SetsReps } from "../components/sets-reps";
+import * as ui from "../components";
 import { PlanSectionExerciseInstructionEdit } from "./plan-section-exercise-instruction-edit";
 import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
 
@@ -23,7 +22,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   const controls = editable || actions.remove.available;
 
   return (
-    <HairlineRow
+    <ui.HairlineRow
       data-cross="center"
       data-gap="3"
       data-md-ml="3"
@@ -33,7 +32,7 @@ export function PlanSectionExerciseInstructionRow(props: {
       data-wrap="nowrap"
       tone="subtle"
     >
-      <RowIndex>{props.position}</RowIndex>
+      <ui.RowIndex>{props.position}</ui.RowIndex>
 
       <Link
         aria-hidden
@@ -42,7 +41,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         tabIndex={-1}
         to="/catalog/exercise/$exerciseId"
       >
-        <ExerciseImage size={ExerciseImageSize.sm} {...exerciseInstruction.exercise} />
+        <ui.ExerciseImage size={ui.ExerciseImageSize.sm} {...exerciseInstruction.exercise} />
       </Link>
 
       <div data-gap="1" data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth}>
@@ -61,14 +60,14 @@ export function PlanSectionExerciseInstructionRow(props: {
 
         {controls && (
           <div data-color="neutral-300" data-fs="sm">
-            <SetsReps {...exerciseInstruction} />
+            <ui.SetsReps {...exerciseInstruction} />
           </div>
         )}
       </div>
 
       {!controls && (
         <div data-color="neutral-300" data-fs="sm" data-shrink="0">
-          <SetsReps {...exerciseInstruction} />
+          <ui.SetsReps {...exerciseInstruction} />
         </div>
       )}
 
@@ -91,6 +90,6 @@ export function PlanSectionExerciseInstructionRow(props: {
           )}
         </div>
       )}
-    </HairlineRow>
+    </ui.HairlineRow>
   );
 }

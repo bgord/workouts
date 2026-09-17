@@ -2,8 +2,7 @@ import { useTranslations } from "@bgord/ui";
 import { CalendarCheck, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
-import { RepsLoad } from "../components/reps-load";
-import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
+import * as ui from "../components";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseStats(props: { performances: Array<ExercisePerformance> }) {
@@ -19,58 +18,58 @@ export function ExerciseStats(props: { performances: Array<ExercisePerformance> 
 
   return (
     <ul data-gap="3" data-stack="x" data-wrap="wrap">
-      <TileLink
+      <ui.TileLink
         data-hover-bc="brand-500"
         params={{ workoutId: best.workoutId }}
         search={WorkoutHistoryFilters.default}
         to="/workouts/$workoutId"
       >
-        <TileHeader>
+        <ui.TileHeader>
           <Trophy data-color="brand-400" data-size="xs" />
           <div data-cross="center" data-stack="x">
             <EqualApproximately data-color="neutral-600" data-size="xs" />
             {t("statistics.exercise.one_rep_max_estimate")}
           </div>
-        </TileHeader>
+        </ui.TileHeader>
 
-        <TileValue>
+        <ui.TileValue>
           {t("statistics.exercise.one_rep_max_estimate.value", {
             load: WeightFormat.kilograms(best.bestEstimate),
           })}
-        </TileValue>
+        </ui.TileValue>
 
         {set && (
-          <TileContext>
-            <RepsLoad load={set.load} reps={set.reps} />
-          </TileContext>
+          <ui.TileContext>
+            <ui.RepsLoad load={set.load} reps={set.reps} />
+          </ui.TileContext>
         )}
-      </TileLink>
+      </ui.TileLink>
 
-      <Tile>
-        <TileHeader>
+      <ui.Tile>
+        <ui.TileHeader>
           <Sigma data-size="xs" />
           {t("statistics.exercise.volume")}
-        </TileHeader>
+        </ui.TileHeader>
 
-        <TileValue>
+        <ui.TileValue>
           {t("statistics.exercise.history.volume_load.value", {
             load: WeightFormat.kilograms(heaviest.volume),
           })}
-        </TileValue>
+        </ui.TileValue>
 
-        <TileContext>{heaviest.scheduledFor}</TileContext>
-      </Tile>
+        <ui.TileContext>{heaviest.scheduledFor}</ui.TileContext>
+      </ui.Tile>
 
-      <Tile>
-        <TileHeader>
+      <ui.Tile>
+        <ui.TileHeader>
           <CalendarCheck data-size="xs" />
           {t("statistics.exercise.sessions")}
-        </TileHeader>
+        </ui.TileHeader>
 
-        <TileValue>{props.performances.length}</TileValue>
+        <ui.TileValue>{props.performances.length}</ui.TileValue>
 
-        <TileContext>{latest.scheduledFor}</TileContext>
-      </Tile>
+        <ui.TileContext>{latest.scheduledFor}</ui.TileContext>
+      </ui.Tile>
     </ul>
   );
 }

@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
 import type { ExerciseGetResponse } from "../../modules/exercises/queries/get-exercise-with-categories";
-import { Chip, Eyebrow, IconButton, Output, Select } from "../components";
+import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
@@ -50,7 +50,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
       >
-        <Eyebrow>{t("exercise.categories.header")}</Eyebrow>
+        <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
         {assignActionAvailable && assignment.off && (
           <button
@@ -76,7 +76,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
           onSubmit={assign.handleSubmit}
           {...assignment.props.target}
         >
-          <Select
+          <ui.Select
             aria-label={t("exercise.category.assign.label")}
             disabled={!props.exercise.actions.categoryAssign.enabled}
             {...exerciseCategoryId.input.props}
@@ -86,9 +86,9 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
                 {category.name}
               </option>
             ))}
-          </Select>
+          </ui.Select>
 
-          <IconButton
+          <ui.IconButton
             aria-label={t("exercise.category.assign.cta")}
             disabled={!props.exercise.actions.categoryAssign.enabled || assign.isLoading}
             title={t("exercise.category.assign.cta")}
@@ -96,28 +96,28 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
             type="submit"
           >
             <Check data-size="sm" />
-          </IconButton>
+          </ui.IconButton>
 
-          <IconButton
+          <ui.IconButton
             aria-label={t("app.cancel")}
             onClick={bg.exec([assign.reset, assignment.disable])}
             title={t("app.cancel")}
           >
             <X data-size="sm" />
-          </IconButton>
+          </ui.IconButton>
         </form>
       )}
 
       <ul data-gap="2" data-stack="x" data-wrap="wrap">
         {assigned.map((category) => (
           <li key={category.id}>
-            <Chip>
+            <ui.Chip>
               {category.name}
 
               {props.exercise.actions.categoryUnassign.available && (
                 <ExerciseCategoryUnassign category={category} exerciseId={props.exercise.data.id} />
               )}
-            </Chip>
+            </ui.Chip>
           </li>
         ))}
 
@@ -128,7 +128,7 @@ export function ExerciseCategories(props: { exercise: ExerciseGetResponse }) {
         )}
       </ul>
 
-      {assign.isError && <Output>{t("exercise.category.assign.error")}</Output>}
+      {assign.isError && <ui.Output>{t("exercise.category.assign.error")}</ui.Output>}
     </div>
   );
 }

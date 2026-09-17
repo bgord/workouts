@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import { IconButton, Output } from "../components";
+import * as ui from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionRename(
@@ -63,7 +63,7 @@ export function PlanSectionRename(
           {...planSectionName.input.props}
         />
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.save")}
           disabled={planSectionName.unchanged || mutation.isLoading}
           title={t("app.save")}
@@ -71,18 +71,18 @@ export function PlanSectionRename(
           type="submit"
         >
           <Check data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.cancel")}
           onClick={bg.exec([planSectionName.clear, mutation.reset, toggle.disable])}
           title={t("app.cancel")}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </div>
 
-      {mutation.isError && <Output>{t("plan.section.rename.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("plan.section.rename.error")}</ui.Output>}
     </form>
   );
 }

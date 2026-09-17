@@ -3,7 +3,7 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { CircleHelp, Keyboard } from "lucide-react";
 import { Form as ExerciseCatalogFilters } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import { ButtonClose } from "../components";
+import * as ui from "../components";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { ShortcutGroup } from "./shortcut-group";
 
@@ -84,7 +84,7 @@ export function Shortcuts() {
             {t("app.shortcuts.header")}
           </div>
 
-          <ButtonClose onClick={shortcuts.disable} title={t("app.shortcuts.close")} />
+          <ui.ButtonClose onClick={shortcuts.disable} title={t("app.shortcuts.close")} />
         </div>
 
         {pathname === "/" && (

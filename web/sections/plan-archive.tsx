@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Archive } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
+import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanArchive(props: Plan) {
@@ -43,26 +43,26 @@ export function PlanArchive(props: Plan) {
         <Archive data-size="sm" />
       </button>
 
-      <Dialog {...planArchive}>
-        <DialogHeader disabled={mutation.isLoading} onClose={planArchive.disable}>
+      <ui.Dialog {...planArchive}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={planArchive.disable}>
           {t("plan.archive.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>{t("plan.archive.info", { name: props.name })}</DialogInfo>
-          <DialogStatus variant="restorable" />
+          <ui.DialogInfo>{t("plan.archive.info", { name: props.name })}</ui.DialogInfo>
+          <ui.DialogStatus variant="restorable" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && <DialogError>{t("plan.archive.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("plan.archive.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={planArchive.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={planArchive.disable}>
             <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
               {t("plan.archive.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

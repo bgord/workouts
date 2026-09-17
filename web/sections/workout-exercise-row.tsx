@@ -4,11 +4,7 @@ import { Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import { ChevronToggle, Chip, HairlineRow, Meta, RowIndex } from "../components";
-import { ExerciseImage, ExerciseImageSize } from "../components/exercise-image";
-import { SetDots } from "../components/set-dots";
-import { SetsReps } from "../components/sets-reps";
-import { SetsRepsLoad } from "../components/sets-reps-load";
+import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
@@ -56,7 +52,7 @@ export function WorkoutExerciseRow(props: {
   );
 
   return (
-    <HairlineRow
+    <ui.HairlineRow
       data-gap="2"
       data-pb={props.last ? undefined : "4"}
       data-pt={props.index === 0 ? undefined : "4"}
@@ -65,13 +61,13 @@ export function WorkoutExerciseRow(props: {
     >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
         {expandable ? (
-          <ChevronToggle {...workoutExerciseVisibility} />
+          <ui.ChevronToggle {...workoutExerciseVisibility} />
         ) : (
-          <RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
+          <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
             <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
               {props.workout.status === WorkoutStatusEnum.draft && props.index + 1}
             </span>
-          </RowIndex>
+          </ui.RowIndex>
         )}
 
         <button
@@ -87,7 +83,7 @@ export function WorkoutExerciseRow(props: {
           type="button"
           {...workoutExerciseDescription.props.controller}
         >
-          <ExerciseImage size={mobile ? ExerciseImageSize.xs : ExerciseImageSize.sm} {...exercise} />
+          <ui.ExerciseImage size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm} {...exercise} />
         </button>
 
         <div data-gap="1" data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }}>
@@ -133,7 +129,7 @@ export function WorkoutExerciseRow(props: {
 
                 {props.exercise.target ? (
                   <>
-                    <SetsRepsLoad
+                    <ui.SetsRepsLoad
                       load={props.exercise.target.load}
                       reps={props.exercise.target.reps}
                       sets={props.exercise.target.sets}
@@ -158,7 +154,7 @@ export function WorkoutExerciseRow(props: {
                   data-wrap="nowrap"
                 >
                   <Target data-color="neutral-500" data-size="xs" />
-                  <SetsRepsLoad
+                  <ui.SetsRepsLoad
                     load={props.exercise.target.load}
                     reps={props.exercise.target.reps}
                     sets={props.exercise.target.sets}
@@ -167,31 +163,31 @@ export function WorkoutExerciseRow(props: {
               )
             )}
 
-            <Meta data-md-disp={props.exercise.target ? "none" : undefined}>
-              <SetsReps {...props.exercise.prescription} />
-            </Meta>
+            <ui.Meta data-md-disp={props.exercise.target ? "none" : undefined}>
+              <ui.SetsReps {...props.exercise.prescription} />
+            </ui.Meta>
 
             {mobile &&
               !skipped &&
               props.exercise.target &&
               props.workout.status !== WorkoutStatusEnum.draft && (
                 <div data-self="center">
-                  <SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
+                  <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
                 </div>
               )}
           </div>
         </div>
 
         {skipped && (
-          <Chip data-shrink="0" muted>
+          <ui.Chip data-shrink="0" muted>
             {t("workout.exercise.skipped")}
-          </Chip>
+          </ui.Chip>
         )}
 
         {!(mobile || skipped) &&
           props.exercise.target &&
           props.workout.status !== WorkoutStatusEnum.draft && (
-            <SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
+            <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
           )}
 
         {actions}
@@ -240,6 +236,6 @@ export function WorkoutExerciseRow(props: {
           )}
         </div>
       )}
-    </HairlineRow>
+    </ui.HairlineRow>
   );
 }

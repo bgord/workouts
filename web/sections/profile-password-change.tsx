@@ -1,6 +1,6 @@
 import { useMutation, useTranslations } from "@bgord/ui";
 import { CircleAlert, CircleCheck, KeyRound, Send } from "lucide-react";
-import { Output, SectionHeading } from "../components";
+import * as ui from "../components";
 import { rootRoute } from "../router";
 
 export function ProfilePasswordChange() {
@@ -23,7 +23,7 @@ export function ProfilePasswordChange() {
     <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <KeyRound data-color="neutral-400" data-size="sm" />
-        <SectionHeading>{t("auth.change_password.header")}</SectionHeading>
+        <ui.SectionHeading>{t("auth.change_password.header")}</ui.SectionHeading>
       </div>
 
       <div data-color="neutral-500" data-fs="sm">
@@ -49,17 +49,17 @@ export function ProfilePasswordChange() {
         </button>
 
         {mutation.isDone && (
-          <Output data-cross="center" data-gap="2" data-stack="x" tone="positive">
+          <ui.Output data-cross="center" data-gap="2" data-stack="x" tone="positive">
             <CircleCheck data-size="sm" />
             {t("auth.change_password.sent")}
-          </Output>
+          </ui.Output>
         )}
 
         {mutation.isError && (
-          <Output data-cross="center" data-gap="2" data-stack="x">
+          <ui.Output data-cross="center" data-gap="2" data-stack="x">
             <CircleAlert data-size="sm" />
             {t("auth.change_password.error")}
-          </Output>
+          </ui.Output>
         )}
       </form>
     </section>

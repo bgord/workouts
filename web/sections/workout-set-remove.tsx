@@ -5,15 +5,7 @@ import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
-import {
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  DialogInfo,
-  DialogStatus,
-  IconButton,
-} from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutSetRemove(props: {
@@ -54,7 +46,7 @@ export function WorkoutSetRemove(props: {
         data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
       >
-        <IconButton
+        <ui.IconButton
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           tone="danger"
@@ -62,28 +54,28 @@ export function WorkoutSetRemove(props: {
           {...workoutSetRemove.props.controller}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </form>
 
-      <Dialog {...workoutSetRemove}>
-        <DialogHeader disabled={mutation.isLoading} onClose={workoutSetRemove.disable}>
+      <ui.Dialog {...workoutSetRemove}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutSetRemove.disable}>
           {t("workout.set.remove.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>
+          <ui.DialogInfo>
             {t("workout.set.remove.info", {
               setNumber: props.loggedSet.setNumber,
               name: props.exercise.exerciseName,
             })}
-          </DialogInfo>
-          <DialogStatus variant="irreversible" />
+          </ui.DialogInfo>
+          <ui.DialogStatus variant="irreversible" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && <DialogError>{t("workout.set.remove.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("workout.set.remove.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={workoutSetRemove.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutSetRemove.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -92,9 +84,9 @@ export function WorkoutSetRemove(props: {
             >
               {t("workout.set.remove.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

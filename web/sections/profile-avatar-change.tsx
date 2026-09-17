@@ -1,7 +1,7 @@
 import { exec, useFile, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, CircleUser, FileImage, ImageUp, X } from "lucide-react";
-import { IconButton, Meta, Output, SectionHeading } from "../components";
+import * as ui from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -37,7 +37,7 @@ export function ProfileAvatarChange() {
     <section className="c-card" data-gap="4" data-p="4" data-variant="flat">
       <div data-cross="center" data-gap="3" data-stack="x">
         <CircleUser data-color="neutral-400" data-size="sm" />
-        <SectionHeading>{t("profile.avatar.header")}</SectionHeading>
+        <ui.SectionHeading>{t("profile.avatar.header")}</ui.SectionHeading>
       </div>
 
       <div
@@ -106,7 +106,7 @@ export function ProfileAvatarChange() {
                 />
               </label>
 
-              <IconButton
+              <ui.IconButton
                 aria-label={t("app.save")}
                 disabled={!avatar.isSelected || mutation.isLoading}
                 title={t("app.save")}
@@ -114,20 +114,20 @@ export function ProfileAvatarChange() {
                 type="submit"
               >
                 <Check data-size="sm" />
-              </IconButton>
+              </ui.IconButton>
 
-              <IconButton
+              <ui.IconButton
                 aria-label={t("app.cancel")}
                 onClick={exec([avatar.actions.clearFile, mutation.reset, profileAvatarChange.disable])}
                 title={t("app.cancel")}
               >
                 <X data-size="sm" />
-              </IconButton>
+              </ui.IconButton>
             </div>
 
-            <Meta>{t("profile.avatar.hint")}</Meta>
+            <ui.Meta>{t("profile.avatar.hint")}</ui.Meta>
 
-            {mutation.isError && <Output>{t("profile.avatar.upload.error")}</Output>}
+            {mutation.isError && <ui.Output>{t("profile.avatar.upload.error")}</ui.Output>}
           </form>
         )}
       </div>

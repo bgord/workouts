@@ -4,19 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import {
-  ActionHint,
-  ButtonClear,
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  ExercisePicker,
-  HairlineBlock,
-  RowIndex,
-  Separator,
-  Stepper,
-} from "../components";
+import * as ui from "../components";
 import { planRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
@@ -65,7 +53,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   if (planSectionExerciseInstructionAdd.off) {
     return (
-      <HairlineBlock
+      <ui.HairlineBlock
         data-cross="center"
         data-gap="3"
         data-md-ml="3"
@@ -91,7 +79,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           type="button"
           {...planSectionExerciseInstructionAdd.props.controller}
         >
-          <RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</RowIndex>
+          <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
 
           <div
             data-bc="neutral-700"
@@ -111,8 +99,8 @@ export function PlanSectionExerciseInstructionAdd(props: {
           {t("plan.section.exercise.add.cta")}
         </button>
 
-        <ActionHint {...props.action} data-shrink="0" />
-      </HairlineBlock>
+        <ui.ActionHint {...props.action} data-shrink="0" />
+      </ui.HairlineBlock>
     );
   }
 
@@ -127,7 +115,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
   return (
     <>
-      <HairlineBlock data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap" tone="subtle">
+      <ui.HairlineBlock data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap" tone="subtle">
         <button
           data-color="neutral-400"
           data-cross="center"
@@ -145,7 +133,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           type="button"
           {...planSectionExerciseInstructionAdd.props.controller}
         >
-          <RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</RowIndex>
+          <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
 
           <div
             data-bc="neutral-700"
@@ -165,11 +153,11 @@ export function PlanSectionExerciseInstructionAdd(props: {
           {t("plan.section.exercise.add.cta")}
         </button>
 
-        <ActionHint {...props.action} data-shrink="0" />
-      </HairlineBlock>
+        <ui.ActionHint {...props.action} data-shrink="0" />
+      </ui.HairlineBlock>
 
-      <Dialog {...planSectionExerciseInstructionAdd}>
-        <DialogHeader
+      <ui.Dialog {...planSectionExerciseInstructionAdd}>
+        <ui.DialogHeader
           disabled={mutation.isLoading}
           onClose={bg.exec([clear, planSectionExerciseInstructionAdd.disable])}
         >
@@ -177,7 +165,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           <span data-color="neutral-500" data-fw="regular" data-ml="2">
             · {props.section.name}
           </span>
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <form
           aria-busy={mutation.isLoading}
@@ -187,7 +175,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
         >
-          <ExercisePicker
+          <ui.ExercisePicker
             exercises={exercises.data}
             name={exerciseId.input.props.name}
             onChange={exerciseId.set}
@@ -196,7 +184,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
           />
 
           <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }}>
-            <Stepper
+            <ui.Stepper
               field={sets}
               label={t("plan.section.exercise.add.sets.label")}
               max={Form.sets.pattern.max}
@@ -205,9 +193,9 @@ export function PlanSectionExerciseInstructionAdd(props: {
               variant="fill"
             />
 
-            <Separator>×</Separator>
+            <ui.Separator>×</ui.Separator>
 
-            <Stepper
+            <ui.Stepper
               field={repsMin}
               label={t("plan.section.exercise.add.reps.label")}
               max={Form.repsMin.pattern.max}
@@ -216,9 +204,9 @@ export function PlanSectionExerciseInstructionAdd(props: {
               variant="fill"
             />
 
-            <Separator>–</Separator>
+            <ui.Separator>–</ui.Separator>
 
-            <Stepper
+            <ui.Stepper
               field={repsMax}
               label={t("plan.section.exercise.add.reps.max.label")}
               max={Form.repsMax.pattern.max}
@@ -228,13 +216,13 @@ export function PlanSectionExerciseInstructionAdd(props: {
             />
           </div>
 
-          {mutation.isError && <DialogError>{t("plan.section.exercise.add.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("plan.section.exercise.add.error")}</ui.DialogError>}
 
-          <DialogFooter
+          <ui.DialogFooter
             disabled={mutation.isLoading}
             onCancel={bg.exec([clear, planSectionExerciseInstructionAdd.disable])}
           >
-            <ButtonClear
+            <ui.ButtonClear
               disabled={
                 exerciseId.empty && query.empty && sets.unchanged && repsMin.unchanged && repsMax.unchanged
               }
@@ -252,9 +240,9 @@ export function PlanSectionExerciseInstructionAdd(props: {
               <Plus data-size="sm" />
               {t("plan.section.exercise.add.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

@@ -2,17 +2,7 @@ import * as bg from "@bgord/ui";
 import { CalendarOff, SearchX, X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
-import {
-  ChipButton,
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateLink,
-  EmptyStateMessage,
-  IconButton,
-  Meta,
-  Select,
-  WorkoutCard,
-} from "../components";
+import * as ui from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -41,15 +31,15 @@ export function WorkoutHistory() {
 
   if (workouts.data.length === 0) {
     return (
-      <EmptyState>
-        <EmptyStateIcon icon={CalendarOff} />
+      <ui.EmptyState>
+        <ui.EmptyStateIcon icon={CalendarOff} />
 
-        <EmptyStateMessage>{t("workout.list.empty")}</EmptyStateMessage>
+        <ui.EmptyStateMessage>{t("workout.list.empty")}</ui.EmptyStateMessage>
 
-        <Meta>{t("workout.list.empty.hint")}</Meta>
+        <ui.Meta>{t("workout.list.empty.hint")}</ui.Meta>
 
-        <EmptyStateLink to="/plans">{t("workout.list.empty.cta")}</EmptyStateLink>
-      </EmptyState>
+        <ui.EmptyStateLink to="/plans">{t("workout.list.empty.cta")}</ui.EmptyStateLink>
+      </ui.EmptyState>
     );
   }
 
@@ -62,7 +52,7 @@ export function WorkoutHistory() {
         data-wrap="wrap"
         {...bg.Rhythm(36).times(1).style.minHeight}
       >
-        <Select
+        <ui.Select
           aria-label={t("workout.list.filter.label")}
           id={WorkoutHistoryFiltersForm.Form.filter.field.name}
           name={WorkoutHistoryFiltersForm.Form.filter.field.name}
@@ -86,7 +76,7 @@ export function WorkoutHistory() {
               {t(`workout.list.filter.${option}`)}
             </option>
           ))}
-        </Select>
+        </ui.Select>
 
         <ul
           data-cross="center"
@@ -97,7 +87,7 @@ export function WorkoutHistory() {
         >
           {workouts.sections.map((section) => (
             <li key={section.id}>
-              <ChipButton
+              <ui.ChipButton
                 onClick={() =>
                   navigate({
                     search: {
@@ -110,7 +100,7 @@ export function WorkoutHistory() {
                 pressed={search.section === section.id}
               >
                 {section.name}
-              </ChipButton>
+              </ui.ChipButton>
             </li>
           ))}
         </ul>
@@ -120,29 +110,29 @@ export function WorkoutHistory() {
         </div>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
-          <IconButton
+          <ui.IconButton
             aria-label={t("app.clear")}
             onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
             title={t("app.clear")}
           >
             <X data-size="sm" />
-          </IconButton>
+          </ui.IconButton>
         )}
       </div>
 
       {matching.length === 0 && (
-        <EmptyState>
-          <EmptyStateIcon icon={SearchX} />
+        <ui.EmptyState>
+          <ui.EmptyStateIcon icon={SearchX} />
 
-          <EmptyStateMessage>{t("workout.list.no_matches")}</EmptyStateMessage>
+          <ui.EmptyStateMessage>{t("workout.list.no_matches")}</ui.EmptyStateMessage>
 
-          <Meta>{t("workout.list.no_matches.hint")}</Meta>
-        </EmptyState>
+          <ui.Meta>{t("workout.list.no_matches.hint")}</ui.Meta>
+        </ui.EmptyState>
       )}
 
       <ul data-gap="2" data-stack="y">
         {matching.map((workout) => (
-          <WorkoutCard key={workout.id} {...workout} />
+          <ui.WorkoutCard key={workout.id} {...workout} />
         ))}
       </ul>
     </div>

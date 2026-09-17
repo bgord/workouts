@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
-import { ChevronToggle, HairlineRow, Meta } from "../components";
+import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -22,7 +22,7 @@ export function PlanSectionItem(props: {
   const planSectionRename = bg.useToggle({ name: `plan-section-rename-${section.id}` });
 
   return (
-    <HairlineRow
+    <ui.HairlineRow
       data-gap="2"
       data-pb={last ? undefined : "4"}
       data-pt={index === 0 ? undefined : "4"}
@@ -36,7 +36,7 @@ export function PlanSectionItem(props: {
         data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
       >
-        <ChevronToggle {...planSectionVisibility} />
+        <ui.ChevronToggle {...planSectionVisibility} />
         <div data-grow="1" data-transform="truncate">
           {actions.sectionRename.available && (
             <PlanSectionRename plan={plan} section={section} {...planSectionRename} />
@@ -49,7 +49,7 @@ export function PlanSectionItem(props: {
           )}
         </div>
         {planSectionRename.off && (
-          <Meta data-shrink="0">
+          <ui.Meta data-shrink="0">
             {section.exerciseInstructions.length === 0
               ? t("plan.section.exercise.list.empty")
               : t("plan.section.exercise.count", {
@@ -61,7 +61,7 @@ export function PlanSectionItem(props: {
                     genitive: t("plan.section.exercise.noun.genitive"),
                   }),
                 })}
-          </Meta>
+          </ui.Meta>
         )}
         {actions.sectionRemove.available && planSectionRename.off && (
           <PlanSectionRemove plan={plan} section={section} />
@@ -81,6 +81,6 @@ export function PlanSectionItem(props: {
           )}
         </div>
       )}
-    </HairlineRow>
+    </ui.HairlineRow>
   );
 }

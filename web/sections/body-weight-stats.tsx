@@ -1,9 +1,7 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { BodyWeightDelta } from "../components/body-weight-delta";
-import { BodyWeightGoalIcon } from "../components/body-weight-goal-icon";
-import { Tile, TileContext, TileHeader, TileValue } from "../components/tile";
+import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -35,77 +33,77 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
 
   return (
     <ul data-gap="3" data-stack="x" data-wrap="wrap">
-      <Tile>
-        <TileHeader>
+      <ui.Tile>
+        <ui.TileHeader>
           <Scale data-size="xs" />
           {t("measurements.body_weight.stats.latest")}
-        </TileHeader>
+        </ui.TileHeader>
 
-        <TileValue>
+        <ui.TileValue>
           {t("measurements.body_weight.value", {
             weight: WeightFormat.kilograms(latest.weight, BodyWeightDecimals),
           })}
 
           <span data-fs="xs">
-            <BodyWeightDelta current={latest.weight} goal={goal} previous={previous?.weight} />
+            <ui.BodyWeightDelta current={latest.weight} goal={goal} previous={previous?.weight} />
           </span>
-        </TileValue>
+        </ui.TileValue>
 
-        <TileContext>
+        <ui.TileContext>
           {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(latest.measuredOn))}
-        </TileContext>
-      </Tile>
+        </ui.TileContext>
+      </ui.Tile>
 
-      <Tile>
-        <TileHeader>
+      <ui.Tile>
+        <ui.TileHeader>
           <CalendarRange data-size="xs" />
           {t("measurements.body_weight.stats.week_average")}
-        </TileHeader>
+        </ui.TileHeader>
 
-        <TileValue>
+        <ui.TileValue>
           {t("measurements.body_weight.value", {
             weight: WeightFormat.kilograms(average(window), BodyWeightDecimals),
           })}
 
           {previousWindow.length > 0 && (
             <span data-fs="xs">
-              <BodyWeightDelta current={average(window)} goal={goal} previous={average(previousWindow)} />
+              <ui.BodyWeightDelta current={average(window)} goal={goal} previous={average(previousWindow)} />
             </span>
           )}
-        </TileValue>
+        </ui.TileValue>
 
-        <TileContext>
+        <ui.TileContext>
           {t("measurements.body_weight.stats.week_average.count", { count: window.length })}
-        </TileContext>
-      </Tile>
+        </ui.TileContext>
+      </ui.Tile>
 
-      <Tile>
-        <TileHeader>
-          {goal ? <BodyWeightGoalIcon goal={goal} size="xs" /> : <TrendingUp data-size="xs" />}
+      <ui.Tile>
+        <ui.TileHeader>
+          {goal ? <ui.BodyWeightGoalIcon goal={goal} size="xs" /> : <TrendingUp data-size="xs" />}
           {t(
             reference
               ? "measurements.body_weight.stats.since_reference"
               : "measurements.body_weight.stats.since_first",
           )}
-        </TileHeader>
+        </ui.TileHeader>
 
-        <TileValue>
+        <ui.TileValue>
           {latest.weight === baseline.weight ? (
             t("measurements.body_weight.value", { weight: 0 })
           ) : (
-            <BodyWeightDelta current={latest.weight} goal={goal} previous={baseline.weight} />
+            <ui.BodyWeightDelta current={latest.weight} goal={goal} previous={baseline.weight} />
           )}
-        </TileValue>
+        </ui.TileValue>
 
-        <TileContext>
+        <ui.TileContext>
           {goal
             ? t("measurements.body_weight.stats.since_reference.goal", {
                 goal: t(`measurements.body_weight.goal.${goal}`),
                 date: DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn)),
               })
             : DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn))}
-        </TileContext>
-      </Tile>
+        </ui.TileContext>
+      </ui.Tile>
     </ul>
   );
 }

@@ -2,16 +2,7 @@ import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
-import {
-  ChipButton,
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateMessage,
-  ExerciseCard,
-  IconButton,
-  Meta,
-  TextLink,
-} from "../components";
+import * as ui from "../components";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
@@ -100,7 +91,7 @@ export function ExerciseCatalog() {
           {t("exercise.catalog.count", { matching: matching.length, total: exercises.data.length })}
         </div>
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.clear")}
           data-disp={pristine ? "none" : undefined}
           data-md-disp={pristine ? "flex" : undefined}
@@ -112,7 +103,7 @@ export function ExerciseCatalog() {
           title={t("app.clear")}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </div>
 
       <ul data-gap="2" data-stack="x" data-wrap="wrap">
@@ -121,7 +112,7 @@ export function ExerciseCatalog() {
 
           return (
             <li key={category.id}>
-              <ChipButton
+              <ui.ChipButton
                 onClick={() =>
                   navigate({
                     search: { category: selected ? undefined : category.id, name: search.name },
@@ -131,14 +122,14 @@ export function ExerciseCatalog() {
                 pressed={selected}
               >
                 {category.name}
-              </ChipButton>
+              </ui.ChipButton>
             </li>
           );
         })}
 
         {(hidden > 0 || categoryList.on) && (
           <li>
-            <TextLink data-mx="1" onClick={categoryList.toggle}>
+            <ui.TextLink data-mx="1" onClick={categoryList.toggle}>
               {categoryList.on ? (
                 <>
                   {t("exercise.catalog.categories.less")}
@@ -150,24 +141,24 @@ export function ExerciseCatalog() {
                   <ChevronDown data-size="xs" />
                 </>
               )}
-            </TextLink>
+            </ui.TextLink>
           </li>
         )}
       </ul>
 
       {matching.length === 0 && (
-        <EmptyState>
-          <EmptyStateIcon icon={SearchX} />
+        <ui.EmptyState>
+          <ui.EmptyStateIcon icon={SearchX} />
 
-          <EmptyStateMessage>{t("exercise.catalog.no_matches")}</EmptyStateMessage>
+          <ui.EmptyStateMessage>{t("exercise.catalog.no_matches")}</ui.EmptyStateMessage>
 
-          <Meta>{t("exercise.catalog.no_matches.hint")}</Meta>
-        </EmptyState>
+          <ui.Meta>{t("exercise.catalog.no_matches.hint")}</ui.Meta>
+        </ui.EmptyState>
       )}
 
       <ul data-gap="6" data-md-gap="3" data-md-main="center" data-stack="x" data-wrap="wrap">
         {matching.map((exercise) => (
-          <ExerciseCard key={exercise.id} {...exercise} />
+          <ui.ExerciseCard key={exercise.id} {...exercise} />
         ))}
       </ul>
     </div>

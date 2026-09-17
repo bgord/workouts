@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ArchiveRestore } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { Output } from "../components";
+import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRestore(props: Plan) {
@@ -30,7 +30,7 @@ export function PlanRestore(props: Plan) {
         {t("plan.restore.cta")}
       </button>
 
-      {mutation.isError && <Output>{t("plan.restore.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("plan.restore.error")}</ui.Output>}
     </form>
   );
 }

@@ -1,17 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { ClipboardList, Plus } from "lucide-react";
-import {
-  ActionHint,
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateMessage,
-  Eyebrow,
-  Header,
-  Main,
-  Meta,
-  PlanCard,
-} from "../components";
+import * as ui from "../components";
 import { plansRoute } from "../router";
 import { PlanCreate } from "../sections/plan-create";
 
@@ -25,11 +15,11 @@ export function Plans() {
   const fresh = empty && plans.data.archived.length === 0;
 
   return (
-    <Main>
+    <ui.Main>
       <div data-cross="center" data-gap="3" data-stack="x">
-        <Header data-grow="1">{t("plan.list.header")}</Header>
+        <ui.Header data-grow="1">{t("plan.list.header")}</ui.Header>
 
-        <ActionHint {...plans.actions.create} data-md-width="100%" />
+        <ui.ActionHint {...plans.actions.create} data-md-width="100%" />
 
         <button
           className="c-button"
@@ -48,22 +38,24 @@ export function Plans() {
       {plans.actions.create.enabled && <PlanCreate {...planCreate} />}
 
       <div data-gap="2" data-stack="y">
-        <Eyebrow>{t("plan.list.active.header")}</Eyebrow>
+        <ui.Eyebrow>{t("plan.list.active.header")}</ui.Eyebrow>
 
         {empty && (
-          <EmptyState>
-            <EmptyStateIcon icon={ClipboardList} />
+          <ui.EmptyState>
+            <ui.EmptyStateIcon icon={ClipboardList} />
 
-            <EmptyStateMessage>{t(fresh ? "plan.list.empty" : "plan.list.empty.active")}</EmptyStateMessage>
+            <ui.EmptyStateMessage>
+              {t(fresh ? "plan.list.empty" : "plan.list.empty.active")}
+            </ui.EmptyStateMessage>
 
-            <Meta>{t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}</Meta>
-          </EmptyState>
+            <ui.Meta>{t(fresh ? "plan.list.empty.hint" : "plan.list.empty.active.hint")}</ui.Meta>
+          </ui.EmptyState>
         )}
 
         {plans.data.active.length > 0 && (
           <ul data-gap="2" data-stack="y">
             {plans.data.active.map((plan) => (
-              <PlanCard key={plan.id} {...plan} />
+              <ui.PlanCard key={plan.id} {...plan} />
             ))}
           </ul>
         )}
@@ -72,16 +64,16 @@ export function Plans() {
       {plans.data.archived.length > 0 && (
         <div data-gap="2" data-stack="y">
           <div data-cross="center" data-gap="2" data-stack="x">
-            <Eyebrow data-grow="1">{t("plan.list.archived.header")}</Eyebrow>
+            <ui.Eyebrow data-grow="1">{t("plan.list.archived.header")}</ui.Eyebrow>
           </div>
 
           <ul data-gap="2" data-opacity="high" data-stack="y">
             {plans.data.archived.map((plan) => (
-              <PlanCard key={plan.id} {...plan} />
+              <ui.PlanCard key={plan.id} {...plan} />
             ))}
           </ul>
         </div>
       )}
-    </Main>
+    </ui.Main>
   );
 }

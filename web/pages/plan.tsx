@@ -1,7 +1,7 @@
 // fallow-ignore-file unused-export
 
 import * as bg from "@bgord/ui";
-import { ActionHint, ButtonBack, Header, LinkBack, Main, Meta, PlanStatusBadge } from "../components";
+import * as ui from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanDescription } from "../sections/plan-description";
@@ -23,27 +23,27 @@ export function Plan() {
 
   if (!plan?.data) {
     return (
-      <Main>
-        <LinkBack to="/plans" />
+      <ui.Main>
+        <ui.LinkBack to="/plans" />
 
         <div data-color="neutral-400">{t("plan.not_found")}</div>
-      </Main>
+      </ui.Main>
     );
   }
 
   return (
-    <Main>
+    <ui.Main>
       <div data-gap="3" data-stack="y">
         <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
-          <ButtonBack to="/plans" />
+          <ui.ButtonBack to="/plans" />
 
           <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
             {plan.actions.rename.available && <PlanRename {...plan.data} />}
 
-            {!plan.actions.rename.available && <Header>{plan.data.name}</Header>}
+            {!plan.actions.rename.available && <ui.Header>{plan.data.name}</ui.Header>}
 
             <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
-              <PlanStatusBadge status={plan.data.status} />
+              <ui.PlanStatusBadge status={plan.data.status} />
             </div>
           </div>
 
@@ -73,19 +73,19 @@ export function Plan() {
         </div>
 
         <div data-gap="3" data-md-pl="4" data-pl="12" data-stack="y">
-          <Meta truncate>
+          <ui.Meta truncate>
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
             })}
-          </Meta>
+          </ui.Meta>
 
           <PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
 
-          {plan.actions.finalize.available && <ActionHint {...plan.actions.finalize} />}
+          {plan.actions.finalize.available && <ui.ActionHint {...plan.actions.finalize} />}
         </div>
       </div>
 
       <PlanSectionList {...plan?.data} actions={plan.actions} />
-    </Main>
+    </ui.Main>
   );
 }

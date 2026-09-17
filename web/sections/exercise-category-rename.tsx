@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, Pencil, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
-import { IconButton, Output } from "../components";
+import * as ui from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleReturnType) {
@@ -69,7 +69,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
           {...name.input.props}
         />
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.save")}
           disabled={name.unchanged || mutation.isLoading}
           title={t("app.save")}
@@ -77,18 +77,18 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
           type="submit"
         >
           <Check data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.cancel")}
           onClick={bg.exec([name.clear, mutation.reset, toggle.disable])}
           title={t("app.cancel")}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </div>
 
-      {mutation.isError && <Output>{t("exercise.category.rename.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("exercise.category.rename.error")}</ui.Output>}
     </form>
   );
 }

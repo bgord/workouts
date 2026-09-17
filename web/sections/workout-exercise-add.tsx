@@ -4,18 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import {
-  ActionHint,
-  ButtonClear,
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  ExercisePicker,
-  HairlineBlock,
-  Separator,
-  Stepper,
-} from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
@@ -67,7 +56,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
 
   return (
     <>
-      <HairlineBlock
+      <ui.HairlineBlock
         data-cross="center"
         data-gap="3"
         data-pt={props.first ? undefined : "4"}
@@ -109,13 +98,13 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           {t("workout.exercise.add.cta")}
         </button>
 
-        <ActionHint {...props.action} data-shrink="0" />
-      </HairlineBlock>
+        <ui.ActionHint {...props.action} data-shrink="0" />
+      </ui.HairlineBlock>
 
-      <Dialog {...workoutExerciseAdd}>
-        <DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutExerciseAdd.disable])}>
+      <ui.Dialog {...workoutExerciseAdd}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutExerciseAdd.disable])}>
           {t("workout.exercise.add.cta")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <form
           aria-busy={mutation.isLoading}
@@ -125,7 +114,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           onSubmit={mutation.handleSubmit}
           style={shrinkable}
         >
-          <ExercisePicker
+          <ui.ExercisePicker
             exercises={exercises.data}
             name={exerciseId.input.props.name}
             onChange={exerciseId.set}
@@ -134,7 +123,7 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
           />
 
           <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }}>
-            <Stepper
+            <ui.Stepper
               field={sets}
               label={t("workout.exercise.add.sets.label")}
               max={Form.sets.pattern.max}
@@ -143,9 +132,9 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
               variant="fill"
             />
 
-            <Separator>×</Separator>
+            <ui.Separator>×</ui.Separator>
 
-            <Stepper
+            <ui.Stepper
               field={repsMin}
               label={t("workout.exercise.add.reps.label")}
               max={Form.repsMin.pattern.max}
@@ -154,9 +143,9 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
               variant="fill"
             />
 
-            <Separator>–</Separator>
+            <ui.Separator>–</ui.Separator>
 
-            <Stepper
+            <ui.Stepper
               field={repsMax}
               label={t("workout.exercise.add.reps.max.label")}
               max={Form.repsMax.pattern.max}
@@ -166,10 +155,13 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
             />
           </div>
 
-          {mutation.isError && <DialogError>{t("workout.exercise.add.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([clear, workoutExerciseAdd.disable])}>
-            <ButtonClear
+          <ui.DialogFooter
+            disabled={mutation.isLoading}
+            onCancel={bg.exec([clear, workoutExerciseAdd.disable])}
+          >
+            <ui.ButtonClear
               disabled={
                 exerciseId.empty && query.empty && sets.unchanged && repsMin.unchanged && repsMax.unchanged
               }
@@ -187,9 +179,9 @@ export function WorkoutExerciseAdd(props: Workout & { action: ActionState; first
               <Plus data-size="sm" />
               {t("workout.exercise.add.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

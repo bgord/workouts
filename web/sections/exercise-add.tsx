@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ImageUp, Plus } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
-import { ButtonClear, Dialog, DialogError, DialogFooter, DialogHeader, TextLink } from "../components";
+import * as ui from "../components";
 import { catalogRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -36,10 +36,10 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
   });
 
   return (
-    <Dialog {...toggle}>
-      <DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
+    <ui.Dialog {...toggle}>
+      <ui.DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
         {t("exercise.add.cta")}
-      </DialogHeader>
+      </ui.DialogHeader>
 
       <form
         aria-busy={mutation.isLoading}
@@ -108,9 +108,9 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
                   {t("exercise.add.image.selected", { name: image.data.name })}
                 </span>
 
-                <TextLink data-shrink="0" onClick={image.actions.clearFile}>
+                <ui.TextLink data-shrink="0" onClick={image.actions.clearFile}>
                   {t("exercise.add.image.replace")}
-                </TextLink>
+                </ui.TextLink>
               </>
             ) : (
               t("exercise.add.image.hint")
@@ -148,10 +148,10 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
           />
         </div>
 
-        {mutation.isError && <DialogError>{t("exercise.add.error")}</DialogError>}
+        {mutation.isError && <ui.DialogError>{t("exercise.add.error")}</ui.DialogError>}
 
-        <DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
-          <ButtonClear
+        <ui.DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
+          <ui.ButtonClear
             disabled={name.unchanged && description.unchanged && !image.isSelected}
             onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
           />
@@ -165,8 +165,8 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
             <Plus data-size="sm" />
             {t("exercise.add.submit.cta")}
           </button>
-        </DialogFooter>
+        </ui.DialogFooter>
       </form>
-    </Dialog>
+    </ui.Dialog>
   );
 }

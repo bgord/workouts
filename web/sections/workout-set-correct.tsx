@@ -5,7 +5,7 @@ import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, IconButton, Output, RirSubmit, Separator, Stepper } from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -57,16 +57,16 @@ export function WorkoutSetCorrect(
   if (toggle.off) {
     return (
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
-        <IconButton
+        <ui.IconButton
           disabled={!props.action.enabled}
           onClick={toggle.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
           {...toggle.props.controller}
         >
           <Pencil data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <ActionHint {...props.action} />
+        <ui.ActionHint {...props.action} />
       </div>
     );
   }
@@ -84,7 +84,7 @@ export function WorkoutSetCorrect(
       onSubmit={mutation.handleSubmit}
       {...toggle.props.target}
     >
-      <Stepper
+      <ui.Stepper
         disabled={mutation.isLoading}
         field={reps}
         label={t("workout.set.reps.label")}
@@ -94,9 +94,9 @@ export function WorkoutSetCorrect(
         width={40}
       />
 
-      <Separator data-md-disp="none">×</Separator>
+      <ui.Separator data-md-disp="none">×</ui.Separator>
 
-      <Stepper
+      <ui.Stepper
         disabled={mutation.isLoading}
         field={load}
         label={t("workout.set.load.label")}
@@ -107,7 +107,7 @@ export function WorkoutSetCorrect(
         width={52}
       />
 
-      <RirSubmit
+      <ui.RirSubmit
         disabled={reps.empty || load.empty || mutation.isLoading}
         onSelect={(value) => {
           rir.current = value;
@@ -116,11 +116,11 @@ export function WorkoutSetCorrect(
         variant="dense"
       />
 
-      <IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
+      <ui.IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
         <X data-size="sm" />
-      </IconButton>
+      </ui.IconButton>
 
-      {mutation.isError && <Output data-width="100%">{t("workout.set.correct.error")}</Output>}
+      {mutation.isError && <ui.Output data-width="100%">{t("workout.set.correct.error")}</ui.Output>}
     </form>
   );
 }

@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
-import { Eyebrow, SectionHeading } from "../components";
+import * as ui from "../components";
 import { WeightFormat } from "../services/weight-format";
 
 const WIDTH = 600;
@@ -67,12 +67,12 @@ export function ExerciseProgressChart(props: { performances: Array<ExercisePerfo
   return (
     <div data-gap="3" data-stack="y" data-variant="flat">
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-        <SectionHeading>{t("statistics.exercise.progress")}</SectionHeading>
+        <ui.SectionHeading>{t("statistics.exercise.progress")}</ui.SectionHeading>
 
-        <Eyebrow data-cross="center" data-stack="x">
+        <ui.Eyebrow data-cross="center" data-stack="x">
           <EqualApproximately data-color="neutral-600" data-size="xs" />
           {t("statistics.exercise.one_rep_max_estimate")}
-        </Eyebrow>
+        </ui.Eyebrow>
       </div>
 
       <svg

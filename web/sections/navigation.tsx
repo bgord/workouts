@@ -3,7 +3,7 @@ import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { CalendarCheck, Dumbbell, ListChecks, LogOut, Weight } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import { Avatar, AvatarSize, Logo } from "../components";
+import * as ui from "../components";
 
 export function Navigation() {
   const { width } = useWindowDimensions();
@@ -40,7 +40,7 @@ function NavigationDesktop() {
         data-stack="x"
         data-width="100%"
       >
-        <Logo />
+        <ui.Logo />
 
         <NavigationLink
           activeOptions={{ exact: true }}
@@ -64,7 +64,7 @@ function NavigationDesktop() {
         <NavigationLink to="/measurements">{t("app.measurements")}</NavigationLink>
 
         <NavigationLink to="/profile">
-          <Avatar size={AvatarSize.md} />
+          <ui.Avatar size={ui.AvatarSize.md} />
         </NavigationLink>
 
         <NavigationLogout>{t("auth.logout.cta")}</NavigationLogout>
@@ -92,7 +92,7 @@ function NavigationMobileDrawer() {
       data-wrap="nowrap"
       data-z="3"
     >
-      <Logo />
+      <ui.Logo />
 
       <NavigationLink search={WorkoutHistoryFilters.default} title={t("app.workouts")} to="/workouts">
         <CalendarCheck data-size="md" />
@@ -111,7 +111,7 @@ function NavigationMobileDrawer() {
       </NavigationLink>
 
       <NavigationLink to="/profile">
-        <Avatar size={AvatarSize.sm} />
+        <ui.Avatar size={ui.AvatarSize.sm} />
       </NavigationLink>
 
       <NavigationLogout>
@@ -150,7 +150,7 @@ const NavigationLink: LinkComponent<typeof NavigationAnchor> = (props) => (
 function NavigationShell() {
   return (
     <nav data-cross="center" data-disp="flex" data-p="2" style={{ height: "70px" }}>
-      <Logo />
+      <ui.Logo />
     </nav>
   );
 }

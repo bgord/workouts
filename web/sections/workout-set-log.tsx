@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { useRef } from "react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, Output, RirSubmit, Separator, Stepper } from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -75,7 +75,7 @@ export function WorkoutSetLog(props: {
         data-stack="x"
         data-wrap="nowrap"
       >
-        <Stepper
+        <ui.Stepper
           disabled={busy}
           field={reps}
           label={t("workout.set.reps.label")}
@@ -85,9 +85,9 @@ export function WorkoutSetLog(props: {
           width={40}
         />
 
-        <Separator>×</Separator>
+        <ui.Separator>×</ui.Separator>
 
-        <Stepper
+        <ui.Stepper
           disabled={busy}
           field={load}
           label={t("workout.set.load.label")}
@@ -99,7 +99,7 @@ export function WorkoutSetLog(props: {
         />
       </div>
 
-      <RirSubmit
+      <ui.RirSubmit
         disabled={busy || reps.empty || load.empty}
         onSelect={(value) => {
           rir.current = value;
@@ -107,9 +107,9 @@ export function WorkoutSetLog(props: {
         variant="dense"
       />
 
-      <ActionHint {...props.action} />
+      <ui.ActionHint {...props.action} />
 
-      {mutation.isError && <Output>{t("workout.set.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("workout.set.error")}</ui.Output>}
     </form>
   );
 }

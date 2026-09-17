@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, FileImage, ImageUp, X } from "lucide-react";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { ExerciseImage, ExerciseImageSize, IconButton, Meta, Output } from "../components";
+import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -46,7 +46,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
         type="button"
         {...exerciseImageChange.props.controller}
       >
-        <ExerciseImage size={ExerciseImageSize.lg} {...props.exercise} />
+        <ui.ExerciseImage size={ui.ExerciseImageSize.lg} {...props.exercise} />
       </button>
 
       {exerciseImageChange.off && (
@@ -105,7 +105,7 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
               />
             </label>
 
-            <IconButton
+            <ui.IconButton
               aria-label={t("app.save")}
               disabled={!image.isSelected || mutation.isLoading}
               title={t("app.save")}
@@ -113,20 +113,20 @@ export function ExerciseImageChange(props: { exercise: ExerciseWithCategories })
               type="submit"
             >
               <Check data-size="sm" />
-            </IconButton>
+            </ui.IconButton>
 
-            <IconButton
+            <ui.IconButton
               aria-label={t("app.cancel")}
               onClick={bg.exec([image.actions.clearFile, mutation.reset, exerciseImageChange.disable])}
               title={t("app.cancel")}
             >
               <X data-size="sm" />
-            </IconButton>
+            </ui.IconButton>
           </div>
 
-          <Meta>{t("exercise.image.change.hint")}</Meta>
+          <ui.Meta>{t("exercise.image.change.hint")}</ui.Meta>
 
-          {mutation.isError && <Output>{t("exercise.image.change.error")}</Output>}
+          {mutation.isError && <ui.Output>{t("exercise.image.change.error")}</ui.Output>}
         </form>
       )}
     </div>

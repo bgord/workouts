@@ -3,7 +3,7 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/workout-history-filters-form";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
+import * as ui from "../components";
 import { dashboardRoute } from "../router";
 
 export function WorkoutDiscard(props: WorkoutSummary) {
@@ -45,24 +45,24 @@ export function WorkoutDiscard(props: WorkoutSummary) {
         <Trash2 data-size="sm" />
       </button>
 
-      <Dialog {...workoutDiscard}>
-        <DialogHeader disabled={mutation.isLoading} onClose={workoutDiscard.disable}>
+      <ui.Dialog {...workoutDiscard}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutDiscard.disable}>
           {t("workout.discard.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>
+          <ui.DialogInfo>
             {t("workout.discard.info", {
               name: t("workout.title", { plan: props.planName, section: props.planSectionName }),
             })}
-          </DialogInfo>
-          <DialogStatus variant="irreversible" />
+          </ui.DialogInfo>
+          <ui.DialogStatus variant="irreversible" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && <DialogError>{t("workout.discard.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("workout.discard.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={workoutDiscard.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutDiscard.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -71,9 +71,9 @@ export function WorkoutDiscard(props: WorkoutSummary) {
             >
               {t("workout.discard.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

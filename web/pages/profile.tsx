@@ -1,6 +1,6 @@
 // fallow-ignore-file unused-export
 import { useTranslations } from "@bgord/ui";
-import { Header, Main } from "../components";
+import * as ui from "../components";
 import { rootRoute } from "../router";
 import {
   ProfileAccountDelete,
@@ -15,9 +15,9 @@ export function Profile() {
   const { session } = rootRoute.useLoaderData();
 
   return (
-    <Main>
+    <ui.Main>
       <div data-cross="center" data-gap="3" data-stack="x">
-        <Header data-grow="1">{t("profile.header")}</Header>
+        <ui.Header data-grow="1">{t("profile.header")}</ui.Header>
 
         <div data-color="neutral-500" data-fs="sm" data-transform="truncate">
           {session.user.email}
@@ -33,6 +33,6 @@ export function Profile() {
       <ProfileWorkoutsExport />
 
       <ProfileAccountDelete />
-    </Main>
+    </ui.Main>
   );
 }

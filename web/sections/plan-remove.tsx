@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { Dialog, DialogError, DialogFooter, DialogHeader, DialogInfo, DialogStatus } from "../components";
+import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRemove(props: Plan) {
@@ -42,20 +42,20 @@ export function PlanRemove(props: Plan) {
         <Trash2 data-size="sm" />
       </button>
 
-      <Dialog {...planRemove}>
-        <DialogHeader disabled={mutation.isLoading} onClose={planRemove.disable}>
+      <ui.Dialog {...planRemove}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={planRemove.disable}>
           {t("plan.remove.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>{t("plan.remove.info", { name: props.name })}</DialogInfo>
-          <DialogStatus variant="irreversible" />
+          <ui.DialogInfo>{t("plan.remove.info", { name: props.name })}</ui.DialogInfo>
+          <ui.DialogStatus variant="irreversible" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && <DialogError>{t("plan.remove.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("plan.remove.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={planRemove.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={planRemove.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -64,9 +64,9 @@ export function PlanRemove(props: Plan) {
             >
               {t("plan.remove.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

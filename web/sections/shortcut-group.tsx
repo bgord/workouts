@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Eyebrow, Kbd } from "../components";
+import * as ui from "../components";
 import type * as ShortcutDefinitions from "../services/shortcuts";
 
 export function ShortcutGroup(props: { header: string; shortcuts: Array<ShortcutDefinitions.ShortcutType> }) {
@@ -7,7 +7,7 @@ export function ShortcutGroup(props: { header: string; shortcuts: Array<Shortcut
 
   return (
     <div data-gap="2" data-stack="y">
-      <Eyebrow>{props.header}</Eyebrow>
+      <ui.Eyebrow>{props.header}</ui.Eyebrow>
 
       <ul data-gap="2" data-stack="y">
         {props.shortcuts.map((shortcut) => (
@@ -16,7 +16,7 @@ export function ShortcutGroup(props: { header: string; shortcuts: Array<Shortcut
               {t(shortcut.label)}
             </span>
 
-            <Kbd keys={shortcut.keys} />
+            <ui.Kbd keys={shortcut.keys} />
           </li>
         ))}
       </ul>

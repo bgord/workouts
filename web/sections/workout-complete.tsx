@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { Output } from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutComplete(props: Workout & { action: ActionState }) {
@@ -32,7 +32,7 @@ export function WorkoutComplete(props: Workout & { action: ActionState }) {
         {t("workout.complete.cta")}
       </button>
 
-      {mutation.isError && <Output>{t("workout.complete.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("workout.complete.error")}</ui.Output>}
     </form>
   );
 }

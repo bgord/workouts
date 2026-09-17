@@ -2,18 +2,7 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import { Dumbbell } from "lucide-react";
-import {
-  ActionHint,
-  ButtonBack,
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateMessage,
-  Header,
-  LinkBack,
-  Main,
-  Meta,
-  WorkoutStatusBadge,
-} from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCopy } from "../sections/workout-copy";
@@ -36,29 +25,29 @@ export function Workout() {
 
   if (!workout) {
     return (
-      <Main>
-        <LinkBack search={search} to="/workouts" />
+      <ui.Main>
+        <ui.LinkBack search={search} to="/workouts" />
 
         <div data-color="neutral-400">{t("workout.not_found")}</div>
-      </Main>
+      </ui.Main>
     );
   }
 
   const primary = workout.actions.start.available || workout.actions.complete.available;
 
   return (
-    <Main>
+    <ui.Main>
       <div data-gap="3" data-stack="y">
         <div data-cross="center" data-gap="3" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap">
-          <ButtonBack search={search} to="/workouts" />
+          <ui.ButtonBack search={search} to="/workouts" />
 
           <div data-cross="center" data-gap="3" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
-            <Header>
+            <ui.Header>
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
-            </Header>
+            </ui.Header>
 
             <div data-cross="center" data-self="start" data-stack="x" {...bg.Rhythm().times(3).style.height}>
-              <WorkoutStatusBadge status={workout.data.status} />
+              <ui.WorkoutStatusBadge status={workout.data.status} />
             </div>
           </div>
 
@@ -93,28 +82,28 @@ export function Workout() {
           {workout.actions.reschedule.available ? (
             <WorkoutReschedule action={workout.actions.reschedule} {...workout.data} />
           ) : (
-            <Meta>
+            <ui.Meta>
               {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
-            </Meta>
+            </ui.Meta>
           )}
 
           {workout.actions.noteSet.available && (
             <WorkoutNote action={workout.actions.noteSet} {...workout.data} />
           )}
 
-          {workout.actions.start.available && <ActionHint {...workout.actions.start} />}
+          {workout.actions.start.available && <ui.ActionHint {...workout.actions.start} />}
 
-          {workout.actions.complete.available && <ActionHint {...workout.actions.complete} />}
+          {workout.actions.complete.available && <ui.ActionHint {...workout.actions.complete} />}
         </div>
       </div>
 
       <div data-stack="y">
         {workout.data.exercises.length === 0 && !workout.actions.exerciseAdd.available && (
-          <EmptyState>
-            <EmptyStateIcon icon={Dumbbell} />
+          <ui.EmptyState>
+            <ui.EmptyStateIcon icon={Dumbbell} />
 
-            <EmptyStateMessage>{t("workout.exercise.list.empty")}</EmptyStateMessage>
-          </EmptyState>
+            <ui.EmptyStateMessage>{t("workout.exercise.list.empty")}</ui.EmptyStateMessage>
+          </ui.EmptyState>
         )}
 
         <ul data-stack="y">
@@ -137,10 +126,12 @@ export function Workout() {
               {...workout.data}
             />
 
-            {workout.data.exercises.length === 0 && <Meta>{t("workout.exercise.list.empty.hint")}</Meta>}
+            {workout.data.exercises.length === 0 && (
+              <ui.Meta>{t("workout.exercise.list.empty.hint")}</ui.Meta>
+            )}
           </div>
         )}
       </div>
-    </Main>
+    </ui.Main>
   );
 }

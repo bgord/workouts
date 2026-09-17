@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { Header, IconButton, Output } from "../components";
+import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) {
@@ -30,7 +30,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
 
   if (exerciseNameUpdate.off) {
     return (
-      <Header data-grow="1" data-maxw="100%">
+      <ui.Header data-grow="1" data-maxw="100%">
         <button
           data-color="neutral-0"
           data-cursor="pointer"
@@ -46,7 +46,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
         >
           {props.exercise.name}
         </button>
-      </Header>
+      </ui.Header>
     );
   }
 
@@ -70,7 +70,7 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
           {...name.input.props}
         />
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.save")}
           disabled={name.unchanged || mutation.isLoading}
           title={t("app.save")}
@@ -78,18 +78,18 @@ export function ExerciseNameUpdate(props: { exercise: ExerciseWithCategories }) 
           type="submit"
         >
           <Check data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.cancel")}
           onClick={bg.exec([name.clear, mutation.reset, exerciseNameUpdate.disable])}
           title={t("app.cancel")}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </div>
 
-      {mutation.isError && <Output>{t("exercise.update.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("exercise.update.error")}</ui.Output>}
     </form>
   );
 }

@@ -3,10 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
-import { ChevronToggle, HairlineRow, Meta, RowIndex } from "../components";
-import { DeltaKg } from "../components/delta-kg";
-import { RepsLoad } from "../components/reps-load";
-import { RirBadge } from "../components/rir-badge";
+import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { WeightFormat } from "../services/weight-format";
 
@@ -41,7 +38,7 @@ function ExerciseHistoryRow(props: {
   const open = usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
   return (
-    <HairlineRow
+    <ui.HairlineRow
       data-gap="2"
       data-pb={props.last ? undefined : "3"}
       data-pt={props.index === 0 ? undefined : "3"}
@@ -49,7 +46,7 @@ function ExerciseHistoryRow(props: {
       first={props.index === 0}
     >
       <div data-cross="center" data-gap="3" data-md-gap="2" data-stack="x" data-wrap="nowrap">
-        <ChevronToggle {...open} />
+        <ui.ChevronToggle {...open} />
 
         <Link
           data-color="neutral-100"
@@ -102,7 +99,7 @@ function ExerciseHistoryRow(props: {
             </span>
 
             <span data-fs="xs">
-              <DeltaKg current={props.performance.bestEstimate} previous={props.previous?.bestEstimate} />
+              <ui.DeltaKg current={props.performance.bestEstimate} previous={props.previous?.bestEstimate} />
             </span>
           </div>
 
@@ -121,7 +118,7 @@ function ExerciseHistoryRow(props: {
             </span>
 
             <span data-fs="xs">
-              <DeltaKg current={props.performance.volume} previous={props.previous?.volume} />
+              <ui.DeltaKg current={props.performance.volume} previous={props.previous?.volume} />
             </span>
           </div>
         </div>
@@ -130,7 +127,7 @@ function ExerciseHistoryRow(props: {
       {open.on && (
         <ul data-md-pl="0" data-pl="12" data-stack="y" {...open.props.target}>
           {props.performance.sets.map((set, position) => (
-            <HairlineRow
+            <ui.HairlineRow
               data-cross="center"
               data-gap="3"
               data-md-ml="2"
@@ -140,24 +137,24 @@ function ExerciseHistoryRow(props: {
               key={set.setNumber}
               tone="subtle"
             >
-              <RowIndex>{set.setNumber}</RowIndex>
+              <ui.RowIndex>{set.setNumber}</ui.RowIndex>
 
               <div data-color="neutral-100" data-fs="sm" data-fw="medium">
-                <RepsLoad load={set.load} reps={set.reps} />
+                <ui.RepsLoad load={set.load} reps={set.reps} />
               </div>
 
-              <div data-grow="1">{set.rir !== undefined && <RirBadge rir={set.rir} />}</div>
+              <div data-grow="1">{set.rir !== undefined && <ui.RirBadge rir={set.rir} />}</div>
 
-              <Meta data-cross="center" data-gap="1" data-stack="x">
+              <ui.Meta data-cross="center" data-gap="1" data-stack="x">
                 <EqualApproximately data-color="neutral-600" data-size="xs" />
                 {t("statistics.exercise.one_rep_max_estimate.value", {
                   load: WeightFormat.kilograms(set.estimate),
                 })}
-              </Meta>
-            </HairlineRow>
+              </ui.Meta>
+            </ui.HairlineRow>
           ))}
         </ul>
       )}
-    </HairlineRow>
+    </ui.HairlineRow>
   );
 }

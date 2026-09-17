@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
-import { IconButton, Output, Stepper } from "../components";
+import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
@@ -67,7 +67,7 @@ export function BodyWeightMeasure() {
         max={today}
       />
 
-      <Stepper
+      <ui.Stepper
         disabled={mutation.isLoading}
         field={weight}
         label={t("measurements.body_weight.measure.weight.label")}
@@ -97,9 +97,9 @@ export function BodyWeightMeasure() {
         >
           <Check data-size="sm" />
         </button>
-      </Stepper>
+      </ui.Stepper>
 
-      <IconButton
+      <ui.IconButton
         aria-label={t("app.clear")}
         data-disp={pristine ? "none" : undefined}
         data-md-disp={pristine ? "flex" : undefined}
@@ -108,9 +108,11 @@ export function BodyWeightMeasure() {
         title={t("app.clear")}
       >
         <X data-size="sm" />
-      </IconButton>
+      </ui.IconButton>
 
-      {mutation.isError && <Output data-width="100%">{t("measurements.body_weight.measure.error")}</Output>}
+      {mutation.isError && (
+        <ui.Output data-width="100%">{t("measurements.body_weight.measure.error")}</ui.Output>
+      )}
     </form>
   );
 }

@@ -1,14 +1,6 @@
 import { Autocomplete, useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { CircleAlert, UserX } from "lucide-react";
-import {
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  DialogInfo,
-  DialogStatus,
-  SectionHeading,
-} from "../components";
+import * as ui from "../components";
 
 export function ProfileAccountDelete() {
   const t = useTranslations();
@@ -31,7 +23,7 @@ export function ProfileAccountDelete() {
       <div data-gap="2" data-main="between" data-md-stack="y" data-stack="x">
         <div data-cross="center" data-gap="3" data-stack="x">
           <UserX data-color="danger-400" data-size="sm" />
-          <SectionHeading>{t("profile.delete_account.header")}</SectionHeading>
+          <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
         </div>
 
         <div data-color="danger-400" data-cross="center" data-fs="xs" data-gap="1" data-stack="x">
@@ -51,14 +43,14 @@ export function ProfileAccountDelete() {
         {t("profile.delete_account.cta_primary")}
       </button>
 
-      <Dialog {...deleteAccount}>
-        <DialogHeader disabled={mutation.isLoading} onClose={deleteAccount.disable}>
+      <ui.Dialog {...deleteAccount}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={deleteAccount.disable}>
           {t("profile.delete_account.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>{t("profile.delete_account.info")}</DialogInfo>
-          <DialogStatus variant="irreversible" />
+          <ui.DialogInfo>{t("profile.delete_account.info")}</ui.DialogInfo>
+          <ui.DialogStatus variant="irreversible" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
@@ -79,9 +71,9 @@ export function ProfileAccountDelete() {
             />
           </div>
 
-          {mutation.isError && <DialogError>{t("profile.delete_account.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("profile.delete_account.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={deleteAccount.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={deleteAccount.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -90,9 +82,9 @@ export function ProfileAccountDelete() {
             >
               {t("profile.delete_account.cta_primary")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </section>
   );
 }

@@ -5,19 +5,7 @@ import { Form } from "../../app/services/plan-section-exercise-instruction-add-f
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import type { Plan } from "../../modules/plans/value-objects/plan";
 import { Plans } from "../api";
-import {
-  ButtonClear,
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  ExerciseImage,
-  ExerciseImageSize,
-  ExercisePicker,
-  IconButton,
-  Separator,
-  Stepper,
-} from "../components";
+import * as ui from "../components";
 import { planRoute } from "../router";
 
 const shrinkable = { minHeight: 0 };
@@ -117,22 +105,22 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
   return (
     <>
-      <IconButton
+      <ui.IconButton
         aria-label={t("plan.section.exercise.edit.cta")}
         onClick={planSectionExerciseInstructionEdit.enable}
         title={t("plan.section.exercise.edit.cta")}
         {...planSectionExerciseInstructionEdit.props.controller}
       >
         <Pencil data-size="sm" />
-      </IconButton>
+      </ui.IconButton>
 
-      <Dialog {...planSectionExerciseInstructionEdit}>
-        <DialogHeader disabled={mutation.isLoading} onClose={close}>
+      <ui.Dialog {...planSectionExerciseInstructionEdit}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
           {t("plan.section.exercise.edit.cta")}
           <span data-color="neutral-500" data-fw="regular" data-ml="2">
             · {props.section.name}
           </span>
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <form
           aria-busy={mutation.isLoading}
@@ -166,7 +154,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
               {...planSectionExerciseInstructionPick.props.controller}
             >
               <span data-shrink="0" data-stack="x">
-                <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
+                <ui.ExerciseImage size={ui.ExerciseImageSize.xs} {...exercise} />
               </span>
 
               <span data-grow="1" data-transform="truncate" title={exercise.name}>
@@ -186,7 +174,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
               style={shrinkable}
               {...planSectionExerciseInstructionPick.props.target}
             >
-              <ExercisePicker
+              <ui.ExercisePicker
                 exercises={exercises.data}
                 name={exerciseId.input.props.name}
                 onCancel={bg.exec([query.clear, planSectionExerciseInstructionPick.disable])}
@@ -202,7 +190,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
           {actions.update.available && (
             <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap" style={{ maxWidth: 336 }}>
-              <Stepper
+              <ui.Stepper
                 disabled={!actions.update.enabled}
                 field={sets}
                 label={t("plan.section.exercise.add.sets.label")}
@@ -212,9 +200,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 variant="fill"
               />
 
-              <Separator>×</Separator>
+              <ui.Separator>×</ui.Separator>
 
-              <Stepper
+              <ui.Stepper
                 disabled={!actions.update.enabled}
                 field={repsMin}
                 label={t("plan.section.exercise.add.reps.label")}
@@ -224,9 +212,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 variant="fill"
               />
 
-              <Separator>–</Separator>
+              <ui.Separator>–</ui.Separator>
 
-              <Stepper
+              <ui.Stepper
                 disabled={!actions.update.enabled}
                 field={repsMax}
                 label={t("plan.section.exercise.add.reps.max.label")}
@@ -238,10 +226,10 @@ export function PlanSectionExerciseInstructionEdit(props: {
             </div>
           )}
 
-          {mutation.isError && <DialogError>{t("plan.section.exercise.edit.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={close}>
-            <ButtonClear
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
+            <ui.ButtonClear
               disabled={exerciseId.unchanged && query.empty && instructionUnchanged}
               onClick={bg.exec([clear, planSectionExerciseInstructionPick.disable])}
             />
@@ -260,9 +248,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
             >
               {t("app.save")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

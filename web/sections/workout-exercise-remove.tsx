@@ -3,16 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import {
-  ActionHint,
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  DialogInfo,
-  DialogStatus,
-  IconButton,
-} from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutExerciseRemove(props: {
@@ -50,7 +41,7 @@ export function WorkoutExerciseRemove(props: {
         data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
       >
-        <IconButton
+        <ui.IconButton
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
           tone="danger"
@@ -58,25 +49,27 @@ export function WorkoutExerciseRemove(props: {
           {...workoutExerciseRemove.props.controller}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <ActionHint {...props.action} />
+        <ui.ActionHint {...props.action} />
       </form>
 
-      <Dialog {...workoutExerciseRemove}>
-        <DialogHeader disabled={mutation.isLoading} onClose={workoutExerciseRemove.disable}>
+      <ui.Dialog {...workoutExerciseRemove}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutExerciseRemove.disable}>
           {t("workout.exercise.remove.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>{t("workout.exercise.remove.info", { name: props.exercise.exerciseName })}</DialogInfo>
-          <DialogStatus variant="irreversible" />
+          <ui.DialogInfo>
+            {t("workout.exercise.remove.info", { name: props.exercise.exerciseName })}
+          </ui.DialogInfo>
+          <ui.DialogStatus variant="irreversible" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && <DialogError>{t("workout.exercise.remove.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("workout.exercise.remove.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={workoutExerciseRemove.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutExerciseRemove.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -85,9 +78,9 @@ export function WorkoutExerciseRemove(props: {
             >
               {t("workout.exercise.remove.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

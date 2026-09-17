@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { IconButton, Select, TextLink } from "../components";
+import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
@@ -31,7 +31,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
     <div data-gap="4" data-stack="y">
       <div data-cross="center" data-gap="2" data-stack="x" data-wrap="nowrap">
         <div data-md-grow="1">
-          <Select
+          <ui.Select
             aria-label={t("measurements.body_weight.history.month.label")}
             {...month.input.props}
             {...bg.Autocomplete.off}
@@ -43,13 +43,13 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
                 {props.measurements.filter((measurement) => measurement.measuredOn.startsWith(value)).length})
               </option>
             ))}
-          </Select>
+          </ui.Select>
         </div>
 
         {month.value && (
-          <IconButton onClick={month.clear}>
+          <ui.IconButton onClick={month.clear}>
             <X data-size="sm" />
-          </IconButton>
+          </ui.IconButton>
         )}
       </div>
 
@@ -66,7 +66,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
       </ul>
 
       {(hidden > 0 || all.on) && (
-        <TextLink onClick={all.toggle}>
+        <ui.TextLink onClick={all.toggle}>
           {all.on ? (
             <>
               {t("measurements.body_weight.history.less")}
@@ -78,7 +78,7 @@ export function BodyWeightMeasurementList(props: { measurements: ReadonlyArray<B
               <ChevronDown data-size="xs" />
             </>
           )}
-        </TextLink>
+        </ui.TextLink>
       )}
     </div>
   );

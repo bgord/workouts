@@ -1,7 +1,7 @@
 import { useMutation, useToggle, useTranslations } from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import { Avatar, AvatarSize } from "../components";
+import * as ui from "../components";
 import { rootRoute } from "../router";
 
 export function ProfileAvatarDelete() {
@@ -21,7 +21,7 @@ export function ProfileAvatarDelete() {
   return (
     <div data-position="relative" data-self="start">
       <button data-cursor="pointer" data-disp="block" onClick={profileAvatarDelete.toggle} type="button">
-        <Avatar size={AvatarSize.lg} />
+        <ui.Avatar size={ui.AvatarSize.lg} />
       </button>
 
       {profileAvatarDelete.on && enabled && (

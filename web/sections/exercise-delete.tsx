@@ -3,15 +3,7 @@ import { Trash2 } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import type { ActionState } from "../../modules/action-state";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import {
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  DialogInfo,
-  DialogStatus,
-  IconButton,
-} from "../components";
+import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
 export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action: ActionState }) {
@@ -32,7 +24,7 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
 
   return (
     <>
-      <IconButton
+      <ui.IconButton
         data-self="start"
         disabled={!props.action.enabled}
         onClick={exerciseDelete.enable}
@@ -41,22 +33,22 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
         {...exerciseDelete.props.controller}
       >
         <Trash2 data-size="sm" />
-      </IconButton>
+      </ui.IconButton>
 
-      <Dialog {...exerciseDelete}>
-        <DialogHeader disabled={mutation.isLoading} onClose={exerciseDelete.disable}>
+      <ui.Dialog {...exerciseDelete}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={exerciseDelete.disable}>
           {t("exercise.delete.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>{t("exercise.delete.info", { name: props.exercise.name })}</DialogInfo>
-          <DialogStatus variant="irreversible" />
+          <ui.DialogInfo>{t("exercise.delete.info", { name: props.exercise.name })}</ui.DialogInfo>
+          <ui.DialogStatus variant="irreversible" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && <DialogError>{t("exercise.delete.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("exercise.delete.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={exerciseDelete.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={exerciseDelete.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -65,9 +57,9 @@ export function ExerciseDelete(props: { exercise: ExerciseWithCategories; action
             >
               {t("exercise.delete.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { CalendarDays, CalendarPlus, Circle, CircleCheck } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
-import { ChipButton, Dialog, DialogError, DialogFooter, DialogHeader, Meta } from "../components";
+import * as ui from "../components";
 import { workoutsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
@@ -59,15 +59,15 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
   };
 
   return (
-    <Dialog {...toggle}>
-      <DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
+    <ui.Dialog {...toggle}>
+      <ui.DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
         {t("workout.create.toggle.cta")}
         {plan && (
           <span data-color="neutral-500" data-fw="regular" data-ml="2">
             · {plan.name}
           </span>
         )}
-      </DialogHeader>
+      </ui.DialogHeader>
 
       <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
         {plan && (
@@ -113,16 +113,16 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                           {option.name}
                         </div>
 
-                        <Meta truncate>
+                        <ui.Meta truncate>
                           {option.exerciseInstructions
                             .map((instruction) => instruction.exercise.name)
                             .join(" · ")}
-                        </Meta>
+                        </ui.Meta>
                       </div>
 
-                      <Meta data-shrink="0">
+                      <ui.Meta data-shrink="0">
                         {t("workout.create.section.exercises", { count: option.exerciseInstructions.length })}
-                      </Meta>
+                      </ui.Meta>
                     </label>
                   </li>
                 );
@@ -141,7 +141,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
               const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
 
               return (
-                <ChipButton
+                <ui.ChipButton
                   key={date.toString()}
                   onClick={() => {
                     workoutCreateCustomDate.disable();
@@ -150,18 +150,18 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                   pressed={selected}
                 >
                   {label(date, offset)}
-                </ChipButton>
+                </ui.ChipButton>
               );
             })}
 
-            <ChipButton
+            <ui.ChipButton
               onClick={workoutCreateCustomDate.enable}
               pressed={workoutCreateCustomDate.on}
               {...workoutCreateCustomDate.props.controller}
             >
               <CalendarDays data-size="xs" />
               {t("workout.create.when.custom")}
-            </ChipButton>
+            </ui.ChipButton>
           </div>
 
           {workoutCreateCustomDate.on && (
@@ -178,9 +178,9 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
           )}
         </div>
 
-        {mutation.isError && <DialogError>{t("workout.create.error")}</DialogError>}
+        {mutation.isError && <ui.DialogError>{t("workout.create.error")}</ui.DialogError>}
 
-        <DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
+        <ui.DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
           <button
             className="c-button"
             data-variant="primary"
@@ -190,8 +190,8 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
             <CalendarPlus data-size="sm" />
             {t("workout.create.cta")}
           </button>
-        </DialogFooter>
+        </ui.DialogFooter>
       </form>
-    </Dialog>
+    </ui.Dialog>
   );
 }

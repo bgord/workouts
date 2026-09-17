@@ -2,18 +2,7 @@
 import * as bg from "@bgord/ui";
 import { CalendarOff } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
-import {
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateLink,
-  EmptyStateMessage,
-  Eyebrow,
-  EyebrowLink,
-  Header,
-  Main,
-  Meta,
-  WorkoutCard,
-} from "../components";
+import * as ui from "../components";
 import { dashboardRoute } from "../router";
 import { BodyWeightStats } from "../sections/body-weight-stats";
 import { DashboardCompleted } from "../sections/dashboard-completed";
@@ -42,42 +31,42 @@ export function Dashboard() {
   });
 
   return (
-    <Main>
-      <Header>{t("dashboard.header")}</Header>
+    <ui.Main>
+      <ui.Header>{t("dashboard.header")}</ui.Header>
 
       {empty && (
-        <EmptyState>
-          <EmptyStateIcon icon={CalendarOff} />
+        <ui.EmptyState>
+          <ui.EmptyStateIcon icon={CalendarOff} />
 
-          <EmptyStateMessage>{t("dashboard.empty")}</EmptyStateMessage>
+          <ui.EmptyStateMessage>{t("dashboard.empty")}</ui.EmptyStateMessage>
 
-          <Meta>{t("dashboard.empty.hint")}</Meta>
+          <ui.Meta>{t("dashboard.empty.hint")}</ui.Meta>
 
-          <EmptyStateLink search={WorkoutHistoryFilters.default} to="/workouts">
+          <ui.EmptyStateLink search={WorkoutHistoryFilters.default} to="/workouts">
             {t("dashboard.empty.cta")}
-          </EmptyStateLink>
-        </EmptyState>
+          </ui.EmptyStateLink>
+        </ui.EmptyState>
       )}
 
       <div data-gap="3" data-md-gap="6" data-md-stack="y" data-stack="x">
         {upcoming && (
           <div data-gap="2" data-grow="1" data-stack="y" style={tile}>
-            <Eyebrow>
+            <ui.Eyebrow>
               {t(dashboard.inProgress ? "dashboard.in_progress.header" : "dashboard.next_up.header")}
-            </Eyebrow>
+            </ui.Eyebrow>
 
             <ul data-gap="2" data-stack="y">
-              <WorkoutCard {...upcoming} />
+              <ui.WorkoutCard {...upcoming} />
             </ul>
           </div>
         )}
 
         {dashboard.lastCompleted && (
           <div data-gap="2" data-grow="1" data-stack="y" style={tile}>
-            <Eyebrow>{t("dashboard.last_completed.header")}</Eyebrow>
+            <ui.Eyebrow>{t("dashboard.last_completed.header")}</ui.Eyebrow>
 
             <ul data-gap="2" data-stack="y">
-              <WorkoutCard {...dashboard.lastCompleted} />
+              <ui.WorkoutCard {...dashboard.lastCompleted} />
             </ul>
           </div>
         )}
@@ -87,11 +76,11 @@ export function Dashboard() {
 
       {measurements.length > 0 && (
         <div data-gap="2" data-stack="y">
-          <EyebrowLink to="/measurements">{t("measurements.body_weight.header")}</EyebrowLink>
+          <ui.EyebrowLink to="/measurements">{t("measurements.body_weight.header")}</ui.EyebrowLink>
 
           <BodyWeightStats measurements={measurements} />
         </div>
       )}
-    </Main>
+    </ui.Main>
   );
 }

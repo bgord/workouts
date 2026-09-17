@@ -2,22 +2,7 @@
 import * as bg from "@bgord/ui";
 import { Dumbbell } from "lucide-react";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
-import {
-  ActionHint,
-  ButtonBack,
-  ChipLink,
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateMessage,
-  ExerciseImage,
-  ExerciseImageSize,
-  Eyebrow,
-  Header,
-  LinkBack,
-  Main,
-  Meta,
-  SectionHeading,
-} from "../components";
+import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import {
   ExerciseCategories,
@@ -39,32 +24,32 @@ export function Exercise() {
 
   if (!exercise) {
     return (
-      <Main>
-        <LinkBack search={Form.default} to="/catalog" />
+      <ui.Main>
+        <ui.LinkBack search={Form.default} to="/catalog" />
 
         <div data-color="neutral-400">{t("exercise.not_found")}</div>
-      </Main>
+      </ui.Main>
     );
   }
 
   return (
-    <Main>
+    <ui.Main>
       <div data-gap="3" data-stack="y">
         <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
-          <ButtonBack search={Form.default} to="/catalog" />
+          <ui.ButtonBack search={Form.default} to="/catalog" />
 
           <div data-cross="center" data-gap="2" data-grow="1" data-stack="x" data-wrap="nowrap" style={title}>
             {exercise.actions.update.enabled ? (
               <ExerciseNameUpdate exercise={exercise.data} />
             ) : (
-              <Header data-grow="1">{exercise.data.name}</Header>
+              <ui.Header data-grow="1">{exercise.data.name}</ui.Header>
             )}
           </div>
 
           {exercise.actions.delete.available && (
             <div data-cross="center" data-gap="2" data-shrink="0" data-stack="x" data-wrap="nowrap">
               <div data-md-disp="none">
-                <ActionHint {...exercise.actions.delete} />
+                <ui.ActionHint {...exercise.actions.delete} />
               </div>
 
               <ExerciseDelete action={exercise.actions.delete} exercise={exercise.data} />
@@ -74,7 +59,7 @@ export function Exercise() {
 
         {exercise.actions.delete.hints.length > 0 && (
           <div data-disp="none" data-md-disp="block">
-            <ActionHint {...exercise.actions.delete} />
+            <ui.ActionHint {...exercise.actions.delete} />
           </div>
         )}
       </div>
@@ -84,7 +69,7 @@ export function Exercise() {
           {exercise.actions.imageChange.enabled ? (
             <ExerciseImageChange exercise={exercise.data} />
           ) : (
-            <ExerciseImage size={ExerciseImageSize.lg} {...exercise.data} />
+            <ui.ExerciseImage size={ui.ExerciseImageSize.lg} {...exercise.data} />
           )}
         </div>
 
@@ -93,14 +78,14 @@ export function Exercise() {
             <ExerciseCategories exercise={exercise} />
           ) : (
             <div data-gap="2" data-stack="y">
-              <Eyebrow>{t("exercise.categories.header")}</Eyebrow>
+              <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
               <ul data-gap="2" data-stack="x" data-wrap="wrap">
                 {exercise.data.categories.map((category) => (
                   <li key={category.id}>
-                    <ChipLink search={{ category: category.id, name: Form.default.name }} to="/catalog">
+                    <ui.ChipLink search={{ category: category.id, name: Form.default.name }} to="/catalog">
                       {category.name}
-                    </ChipLink>
+                    </ui.ChipLink>
                   </li>
                 ))}
               </ul>
@@ -108,7 +93,7 @@ export function Exercise() {
           )}
 
           <div data-gap="2" data-stack="y">
-            <Eyebrow>{t("exercise.add.description.label")}</Eyebrow>
+            <ui.Eyebrow>{t("exercise.add.description.label")}</ui.Eyebrow>
 
             {exercise.actions.update.enabled ? (
               <ExerciseDescriptionUpdate exercise={exercise.data} />
@@ -122,13 +107,13 @@ export function Exercise() {
       </div>
 
       {performances.length === 0 && (
-        <EmptyState data-md-mx="0" data-mx="4">
-          <EmptyStateIcon icon={Dumbbell} />
+        <ui.EmptyState data-md-mx="0" data-mx="4">
+          <ui.EmptyStateIcon icon={Dumbbell} />
 
-          <EmptyStateMessage>{t("statistics.exercise.history.empty")}</EmptyStateMessage>
+          <ui.EmptyStateMessage>{t("statistics.exercise.history.empty")}</ui.EmptyStateMessage>
 
-          <Meta>{t("statistics.exercise.history.empty.hint")}</Meta>
-        </EmptyState>
+          <ui.Meta>{t("statistics.exercise.history.empty.hint")}</ui.Meta>
+        </ui.EmptyState>
       )}
 
       {performances.length > 0 && (
@@ -138,12 +123,12 @@ export function Exercise() {
           <ExerciseProgressChart performances={performances} />
 
           <div data-gap="3" data-stack="y">
-            <SectionHeading>{t("statistics.exercise.history")}</SectionHeading>
+            <ui.SectionHeading>{t("statistics.exercise.history")}</ui.SectionHeading>
 
             <ExerciseHistory performances={performances} />
           </div>
         </div>
       )}
-    </Main>
+    </ui.Main>
   );
 }

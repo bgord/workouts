@@ -1,5 +1,5 @@
 import { useTranslations } from "@bgord/ui";
-import { Eyebrow, Meta } from "../components";
+import * as ui from "../components";
 import { dashboardRoute } from "../router";
 
 export function DashboardCompleted() {
@@ -14,7 +14,7 @@ export function DashboardCompleted() {
 
   return (
     <section data-gap="2" data-stack="y">
-      <Eyebrow>{t("dashboard.completed.header")}</Eyebrow>
+      <ui.Eyebrow>{t("dashboard.completed.header")}</ui.Eyebrow>
 
       <ul className="c-card" data-p="4" data-stack="x" data-variant="sunken">
         {tiles.map((tile, index) => (
@@ -39,7 +39,7 @@ export function DashboardCompleted() {
               {tile.value}
             </div>
 
-            <Meta>{t(tile.label)}</Meta>
+            <ui.Meta>{t(tile.label)}</ui.Meta>
           </li>
         ))}
       </ul>

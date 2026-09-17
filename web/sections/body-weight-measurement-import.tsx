@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Download, FileSpreadsheet, FileUp, Upload, X } from "lucide-react";
-import { Dialog, DialogError, DialogFooter, DialogHeader, TextLinkAnchor } from "../components";
+import * as ui from "../components";
 import { measurementsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
@@ -36,10 +36,10 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
   const close = bg.exec([file.actions.clearFile, mutation.reset, toggle.disable]);
 
   return (
-    <Dialog {...toggle}>
-      <DialogHeader disabled={mutation.isLoading} onClose={close}>
+    <ui.Dialog {...toggle}>
+      <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
         {t("measurements.body_weight.import.header")}
-      </DialogHeader>
+      </ui.DialogHeader>
 
       <form
         aria-busy={mutation.isLoading}
@@ -120,7 +120,7 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
             </label>
           )}
 
-          <TextLinkAnchor
+          <ui.TextLinkAnchor
             data-self="start"
             download
             href="/public/body-weight-measurements-template.csv"
@@ -129,12 +129,12 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
           >
             <Download data-size="xs" />
             {t("measurements.body_weight.import.template.cta")}
-          </TextLinkAnchor>
+          </ui.TextLinkAnchor>
         </div>
 
-        {mutation.isError && <DialogError>{t("measurements.body_weight.import.error")}</DialogError>}
+        {mutation.isError && <ui.DialogError>{t("measurements.body_weight.import.error")}</ui.DialogError>}
 
-        <DialogFooter disabled={mutation.isLoading} onCancel={close}>
+        <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
           <button
             className="c-button"
             data-variant="primary"
@@ -144,8 +144,8 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
             <Upload data-size="sm" />
             {t("measurements.body_weight.import.cta")}
           </button>
-        </DialogFooter>
+        </ui.DialogFooter>
       </form>
-    </Dialog>
+    </ui.Dialog>
   );
 }

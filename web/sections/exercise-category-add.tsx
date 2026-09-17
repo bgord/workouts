@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
-import { IconButton, Output } from "../components";
+import * as ui from "../components";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryAdd() {
@@ -42,7 +42,7 @@ export function ExerciseCategoryAdd() {
           {...name.input.props}
         />
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("exercise.category.add.submit.cta")}
           disabled={name.unchanged || mutation.isLoading}
           title={t("exercise.category.add.submit.cta")}
@@ -50,19 +50,19 @@ export function ExerciseCategoryAdd() {
           type="submit"
         >
           <Check data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.clear")}
           disabled={name.unchanged}
           onClick={bg.exec([name.clear, mutation.reset])}
           title={t("app.clear")}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </div>
 
-      {mutation.isError && <Output>{t("exercise.category.add.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("exercise.category.add.error")}</ui.Output>}
     </form>
   );
 }

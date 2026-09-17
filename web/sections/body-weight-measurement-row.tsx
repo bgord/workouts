@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Flag } from "lucide-react";
 import type { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
-import { BodyWeightDelta, HairlineRow, IconButton } from "../components";
+import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
@@ -29,7 +29,7 @@ export function BodyWeightMeasurementRow(props: {
   const open = bodyWeightMeasurementCorrect.on || bodyWeightReference.on;
 
   return (
-    <HairlineRow
+    <ui.HairlineRow
       data-cross="center"
       data-gap="3"
       data-md-gap="2"
@@ -86,7 +86,7 @@ export function BodyWeightMeasurementRow(props: {
           </button>
 
           <div data-fs="xs" data-main="end" data-shrink="0" data-stack="x" style={delta}>
-            <BodyWeightDelta
+            <ui.BodyWeightDelta
               current={props.measurement.weight}
               goal={props.goal}
               previous={props.previous?.weight}
@@ -94,19 +94,19 @@ export function BodyWeightMeasurementRow(props: {
           </div>
 
           <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
-            <IconButton
+            <ui.IconButton
               onClick={bodyWeightReference.enable}
               title={t("measurements.body_weight.reference.title")}
               tone={props.measurement.reference ? "brand" : "neutral"}
               {...bodyWeightReference.props.controller}
             >
               <Flag data-size="sm" fill={props.measurement.reference ? "currentColor" : "none"} />
-            </IconButton>
+            </ui.IconButton>
 
             <BodyWeightMeasurementRemove measurement={props.measurement} />
           </div>
         </>
       )}
-    </HairlineRow>
+    </ui.HairlineRow>
   );
 }

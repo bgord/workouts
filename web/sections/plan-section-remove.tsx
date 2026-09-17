@@ -2,15 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
-import {
-  Dialog,
-  DialogError,
-  DialogFooter,
-  DialogHeader,
-  DialogInfo,
-  DialogStatus,
-  IconButton,
-} from "../components";
+import * as ui from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithExercises }) {
@@ -35,29 +27,29 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
 
   return (
     <>
-      <IconButton
+      <ui.IconButton
         onClick={planSectionRemove.enable}
         title={t("plan.section.remove.title", { name: props.section.name })}
         tone="danger"
         {...planSectionRemove.props.controller}
       >
         <X data-size="sm" />
-      </IconButton>
+      </ui.IconButton>
 
-      <Dialog {...planSectionRemove}>
-        <DialogHeader disabled={mutation.isLoading} onClose={planSectionRemove.disable}>
+      <ui.Dialog {...planSectionRemove}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={planSectionRemove.disable}>
           {t("plan.section.remove.header")}
-        </DialogHeader>
+        </ui.DialogHeader>
 
         <div data-gap="3" data-stack="y">
-          <DialogInfo>{t("plan.section.remove.info", { name: props.section.name })}</DialogInfo>
-          <DialogStatus variant="irreversible" />
+          <ui.DialogInfo>{t("plan.section.remove.info", { name: props.section.name })}</ui.DialogInfo>
+          <ui.DialogStatus variant="irreversible" />
         </div>
 
         <form aria-busy={mutation.isLoading} data-gap="8" data-stack="y" onSubmit={mutation.handleSubmit}>
-          {mutation.isError && <DialogError>{t("plan.section.remove.error")}</DialogError>}
+          {mutation.isError && <ui.DialogError>{t("plan.section.remove.error")}</ui.DialogError>}
 
-          <DialogFooter disabled={mutation.isLoading} onCancel={planSectionRemove.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={planSectionRemove.disable}>
             <button
               className="c-button"
               data-variant="destructive"
@@ -66,9 +58,9 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
             >
               {t("plan.section.remove.cta")}
             </button>
-          </DialogFooter>
+          </ui.DialogFooter>
         </form>
-      </Dialog>
+      </ui.Dialog>
     </>
   );
 }

@@ -1,9 +1,7 @@
 import * as bg from "@bgord/ui";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, HairlineRow, RowIndex } from "../components";
-import { RepsLoad } from "../components/reps-load";
-import { RirBadge } from "../components/rir-badge";
+import * as ui from "../components";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
@@ -11,21 +9,21 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
   const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
-    <HairlineRow data-gap="1" data-py="1-5" data-stack="y" tone="subtle">
+    <ui.HairlineRow data-gap="1" data-py="1-5" data-stack="y" tone="subtle">
       <div data-cross="center" data-gap="3" data-stack="x" data-wrap="nowrap">
-        <RowIndex data-md-disp={workoutSetCorrect.on ? "none" : undefined}>
+        <ui.RowIndex data-md-disp={workoutSetCorrect.on ? "none" : undefined}>
           {props.loggedSet.setNumber}
-        </RowIndex>
+        </ui.RowIndex>
 
         {workoutSetCorrect.off && (
           <div data-color="neutral-100" data-fs="sm" data-fw="medium">
-            <RepsLoad load={props.loggedSet.load} reps={props.loggedSet.reps} />
+            <ui.RepsLoad load={props.loggedSet.load} reps={props.loggedSet.reps} />
           </div>
         )}
 
         {workoutSetCorrect.off && (
           <div data-grow="1">
-            {props.loggedSet.rir !== undefined && <RirBadge rir={props.loggedSet.rir} />}
+            {props.loggedSet.rir !== undefined && <ui.RirBadge rir={props.loggedSet.rir} />}
           </div>
         )}
 
@@ -59,8 +57,8 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
       </div>
 
       {workoutSetCorrect.off && props.loggedSet.actions.remove.available && (
-        <ActionHint {...props.loggedSet.actions.remove} data-pl="5" />
+        <ui.ActionHint {...props.loggedSet.actions.remove} data-pl="5" />
       )}
-    </HairlineRow>
+    </ui.HairlineRow>
   );
 }

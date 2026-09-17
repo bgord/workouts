@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/workout-note-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, ButtonCancel, Output } from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 
 export function WorkoutNote(props: Workout & { action: ActionState }) {
@@ -48,7 +48,7 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
         </button>
       )}
 
-      {workoutNoteUpdate.off && <ActionHint {...props.action} />}
+      {workoutNoteUpdate.off && <ui.ActionHint {...props.action} />}
 
       {workoutNoteUpdate.on && (
         <form
@@ -78,9 +78,9 @@ export function WorkoutNote(props: Workout & { action: ActionState }) {
               {t("app.save")}
             </button>
 
-            <ButtonCancel onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])} />
+            <ui.ButtonCancel onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])} />
 
-            {mutation.isError && <Output>{t("workout.note.error")}</Output>}
+            {mutation.isError && <ui.Output>{t("workout.note.error")}</ui.Output>}
           </div>
         </form>
       )}

@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
-import { Dialog, DialogError, DialogFooter, DialogHeader } from "../components";
+import * as ui from "../components";
 import { plansRoute } from "../router";
 
 export function PlanCreate(props: bg.UseToggleReturnType) {
@@ -33,10 +33,10 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
   });
 
   return (
-    <Dialog data-md-mt="12" {...toggle}>
-      <DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
+    <ui.Dialog data-md-mt="12" {...toggle}>
+      <ui.DialogHeader disabled={mutation.isLoading} onClose={toggle.disable}>
         {t("plan.create.cta")}
-      </DialogHeader>
+      </ui.DialogHeader>
 
       <form aria-busy={mutation.isLoading} data-gap="6" data-stack="y" onSubmit={mutation.handleSubmit}>
         <div data-gap="1-5" data-stack="y">
@@ -54,9 +54,9 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
           />
         </div>
 
-        {mutation.isError && <DialogError>{t("plan.create.error")}</DialogError>}
+        {mutation.isError && <ui.DialogError>{t("plan.create.error")}</ui.DialogError>}
 
-        <DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
+        <ui.DialogFooter disabled={mutation.isLoading} onCancel={toggle.disable}>
           <button
             className="c-button"
             data-variant="primary"
@@ -66,8 +66,8 @@ export function PlanCreate(props: bg.UseToggleReturnType) {
             <Plus data-size="sm" />
             {t("plan.create.submit.cta")}
           </button>
-        </DialogFooter>
+        </ui.DialogFooter>
       </form>
-    </Dialog>
+    </ui.Dialog>
   );
 }

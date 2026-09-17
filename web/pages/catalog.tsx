@@ -2,7 +2,7 @@
 
 import * as bg from "@bgord/ui";
 import { Plus, Tags } from "lucide-react";
-import { ActionHint, Header, Main } from "../components";
+import * as ui from "../components";
 import { catalogRoute } from "../router";
 import { ExerciseAdd } from "../sections/exercise-add";
 import { ExerciseCatalog } from "../sections/exercise-catalog";
@@ -16,14 +16,14 @@ export function Catalog() {
   const exerciseAdd = bg.useToggle({ name: "exercise-add" });
 
   return (
-    <Main>
+    <ui.Main>
       <div data-cross="center" data-gap="3" data-main="between" data-stack="x">
-        <Header>{t("exercise.catalog.header")}</Header>
+        <ui.Header>{t("exercise.catalog.header")}</ui.Header>
 
         <div data-cross="center" data-gap="3" data-md-width="100%" data-stack="x">
           {exerciseCategories.actions.add.available && (
             <>
-              <ActionHint {...exerciseCategories.actions.add} />
+              <ui.ActionHint {...exerciseCategories.actions.add} />
 
               <button
                 className="c-button"
@@ -42,7 +42,7 @@ export function Catalog() {
 
           {exercises.actions.add.available && (
             <>
-              <ActionHint {...exercises.actions.add} />
+              <ui.ActionHint {...exercises.actions.add} />
 
               <button
                 className="c-button"
@@ -66,6 +66,6 @@ export function Catalog() {
       {exercises.actions.add.enabled && <ExerciseAdd {...exerciseAdd} />}
 
       <ExerciseCatalog />
-    </Main>
+    </ui.Main>
   );
 }

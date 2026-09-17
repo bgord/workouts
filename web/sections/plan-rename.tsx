@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { Header, IconButton, Output } from "../components";
+import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRename(props: Plan) {
@@ -34,7 +34,7 @@ export function PlanRename(props: Plan) {
 
   if (planRename.off) {
     return (
-      <Header data-maxw="100%">
+      <ui.Header data-maxw="100%">
         <button
           data-color="neutral-0"
           data-cursor="pointer"
@@ -50,7 +50,7 @@ export function PlanRename(props: Plan) {
         >
           {props.name}
         </button>
-      </Header>
+      </ui.Header>
     );
   }
 
@@ -74,7 +74,7 @@ export function PlanRename(props: Plan) {
           {...planName.input.props}
         />
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.save")}
           disabled={planName.unchanged || mutation.isLoading}
           title={t("app.save")}
@@ -82,18 +82,18 @@ export function PlanRename(props: Plan) {
           type="submit"
         >
           <Check data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.cancel")}
           onClick={bg.exec([planName.clear, mutation.reset, planRename.disable])}
           title={t("app.cancel")}
         >
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </div>
 
-      {mutation.isError && <Output>{t("plan.rename.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("plan.rename.error")}</ui.Output>}
     </form>
   );
 }

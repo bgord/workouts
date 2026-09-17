@@ -4,7 +4,7 @@ import { Check, Plus, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHint, IconButton, Output } from "../components";
+import * as ui from "../components";
 import { planRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
@@ -72,7 +72,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           {t("plan.section.create.cta")}
         </button>
 
-        <ActionHint {...props.action} data-shrink="0" />
+        <ui.ActionHint {...props.action} data-shrink="0" />
       </div>
     );
   }
@@ -107,7 +107,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
         />
 
         <div data-cross="center" data-gap="1" data-shrink="0" data-stack="x" data-wrap="nowrap">
-          <IconButton
+          <ui.IconButton
             aria-label={t("app.save")}
             disabled={planSectionName.empty || mutation.isLoading}
             title={t("app.save")}
@@ -115,19 +115,19 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
             type="submit"
           >
             <Check data-size="sm" />
-          </IconButton>
+          </ui.IconButton>
 
-          <IconButton
+          <ui.IconButton
             aria-label={t("app.cancel")}
             onClick={bg.exec([planSectionName.clear, mutation.reset, planSectionCreate.disable])}
             title={t("app.cancel")}
           >
             <X data-size="sm" />
-          </IconButton>
+          </ui.IconButton>
         </div>
       </div>
 
-      {mutation.isError && <Output>{t("plan.section.create.error")}</Output>}
+      {mutation.isError && <ui.Output>{t("plan.section.create.error")}</ui.Output>}
     </form>
   );
 }

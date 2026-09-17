@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
-import { ActionHint, IconButton, Output, Separator, Stepper } from "../components";
+import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -67,7 +67,7 @@ export function WorkoutExerciseTargetSet(
       {...toggle.props.target}
     >
       <div data-cross="center" data-gap="2" data-md-gap="1" data-stack="x" data-wrap="nowrap">
-        <Stepper
+        <ui.Stepper
           disabled={mutation.isLoading}
           field={sets}
           label={t("workout.target.sets.label")}
@@ -78,9 +78,9 @@ export function WorkoutExerciseTargetSet(
           width={40}
         />
 
-        <Separator>×</Separator>
+        <ui.Separator>×</ui.Separator>
 
-        <Stepper
+        <ui.Stepper
           disabled={mutation.isLoading}
           field={reps}
           label={t("workout.target.reps.label")}
@@ -91,9 +91,9 @@ export function WorkoutExerciseTargetSet(
           width={40}
         />
 
-        <Separator>@</Separator>
+        <ui.Separator>@</ui.Separator>
 
-        <Stepper
+        <ui.Stepper
           disabled={mutation.isLoading}
           field={load}
           label={t("workout.target.load.label")}
@@ -107,7 +107,7 @@ export function WorkoutExerciseTargetSet(
       </div>
 
       <div data-cross="center" data-gap="1" data-ml="auto" data-shrink="0" data-stack="x" data-wrap="nowrap">
-        <IconButton
+        <ui.IconButton
           aria-label={t("app.save")}
           disabled={
             !props.action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
@@ -117,16 +117,16 @@ export function WorkoutExerciseTargetSet(
           type="submit"
         >
           <Check data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
-        <IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
+        <ui.IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
           <X data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
       </div>
 
-      <ActionHint {...props.action} />
+      <ui.ActionHint {...props.action} />
 
-      {mutation.isError && <Output data-width="100%">{t("workout.target.error")}</Output>}
+      {mutation.isError && <ui.Output data-width="100%">{t("workout.target.error")}</ui.Output>}
     </form>
   );
 }

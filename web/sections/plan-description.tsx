@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/plan-description-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
-import { ActionHint, ButtonCancel, Output } from "../components";
+import * as ui from "../components";
 import { planRoute } from "../router";
 
 export function PlanDescription(props: Plan & { action: ActionState }) {
@@ -61,7 +61,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
         </button>
       )}
 
-      {planDescriptionUpdate.off && <ActionHint {...props.action} />}
+      {planDescriptionUpdate.off && <ui.ActionHint {...props.action} />}
 
       {planDescriptionUpdate.on && (
         <form
@@ -91,11 +91,11 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
               {t("app.save")}
             </button>
 
-            <ButtonCancel
+            <ui.ButtonCancel
               onClick={bg.exec([description.clear, mutation.reset, planDescriptionUpdate.disable])}
             />
 
-            {mutation.isError && <Output>{t("plan.description.error")}</Output>}
+            {mutation.isError && <ui.Output>{t("plan.description.error")}</ui.Output>}
           </div>
         </form>
       )}

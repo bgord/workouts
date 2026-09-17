@@ -1,16 +1,7 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Download, Scale, Upload } from "lucide-react";
-import {
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateMessage,
-  Header,
-  IconButton,
-  Main,
-  Meta,
-  SectionHeading,
-} from "../components";
+import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import {
   BodyWeightMeasure,
@@ -27,16 +18,16 @@ export function Measurements() {
   const bodyWeightMeasurementImport = bg.useToggle({ name: "body-weight-measurement-import" });
 
   return (
-    <Main>
+    <ui.Main>
       <div data-cross="center" data-gap="1" data-stack="x">
-        <Header data-grow="1">{t("measurements.body_weight.header")}</Header>
+        <ui.Header data-grow="1">{t("measurements.body_weight.header")}</ui.Header>
 
-        <IconButton
+        <ui.IconButton
           onClick={bodyWeightMeasurementImport.enable}
           {...bodyWeightMeasurementImport.props.controller}
         >
           <Upload data-size="sm" />
-        </IconButton>
+        </ui.IconButton>
 
         {measurements.length > 0 && (
           <a
@@ -61,13 +52,13 @@ export function Measurements() {
       <BodyWeightMeasure />
 
       {measurements.length === 0 && (
-        <EmptyState>
-          <EmptyStateIcon icon={Scale} />
+        <ui.EmptyState>
+          <ui.EmptyStateIcon icon={Scale} />
 
-          <EmptyStateMessage>{t("measurements.body_weight.empty")}</EmptyStateMessage>
+          <ui.EmptyStateMessage>{t("measurements.body_weight.empty")}</ui.EmptyStateMessage>
 
-          <Meta>{t("measurements.body_weight.empty.hint")}</Meta>
-        </EmptyState>
+          <ui.Meta>{t("measurements.body_weight.empty.hint")}</ui.Meta>
+        </ui.EmptyState>
       )}
 
       {measurements.length > 0 && (
@@ -77,12 +68,12 @@ export function Measurements() {
           <BodyWeightProgressChart measurements={measurements} />
 
           <div data-gap="3" data-stack="y">
-            <SectionHeading>{t("measurements.body_weight.history")}</SectionHeading>
+            <ui.SectionHeading>{t("measurements.body_weight.history")}</ui.SectionHeading>
 
             <BodyWeightMeasurementList measurements={measurements} />
           </div>
         </div>
       )}
-    </Main>
+    </ui.Main>
   );
 }
