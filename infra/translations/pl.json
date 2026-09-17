@@ -311,7 +311,6 @@
   "workout.exercise.add.sets.label": "Serie",
   "workout.exercise.description.toggle": "Opis",
   "workout.exercise.list.empty": "Brak ćwiczeń",
-  "workout.exercise.list.empty.hint": "Dodaj ćwiczenie, aby zacząć trening",
   "workout.exercise.remove.cta": "Usuń",
   "workout.exercise.remove.error": "Nie udało się usunąć ćwiczenia",
   "workout.exercise.remove.header": "Usuwanie ćwiczenia",

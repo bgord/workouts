@@ -189,8 +189,6 @@ export function WorkoutExerciseAdd() {
           </ui.DialogFooter>
         </form>
       </ui.Dialog>
-
-      {first && <ui.Meta>{t("workout.exercise.list.empty.hint")}</ui.Meta>}
     </div>
   );
 }

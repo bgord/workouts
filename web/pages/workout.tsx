@@ -71,9 +71,9 @@ export function Workout() {
         </div>
       </div>
 
-      <div data-stack="y">
-        <WorkoutExercisesEmpty />
+      <WorkoutExercisesEmpty />
 
+      <div data-stack="y">
         <ul data-stack="y">
           {workout.data.exercises.map((exercise, index) => (
             <WorkoutExerciseRow

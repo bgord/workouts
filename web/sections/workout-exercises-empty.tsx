@@ -8,7 +8,7 @@ export function WorkoutExercisesEmpty() {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
 
-  const empty = workout.data.exercises.length === 0 && !workout.actions.exerciseAdd.available;
+  const empty = workout.data.exercises.length === 0;
 
   if (!empty) return null;
 
