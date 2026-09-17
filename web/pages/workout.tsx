@@ -9,7 +9,6 @@ import { WorkoutCopy } from "../sections/workout-copy";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
-import { WorkoutNotFound } from "../sections/workout-not-found";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutReschedule } from "../sections/workout-reschedule";
 import { WorkoutStart } from "../sections/workout-start";
@@ -20,8 +19,6 @@ export function Workout() {
   const language = bg.useLanguage();
   const { workout } = workoutRoute.useLoaderData();
   const search = workoutRoute.useSearch();
-
-  if (!workout) return <WorkoutNotFound />;
 
   const primary = workout.actions.start.available || workout.actions.complete.available;
 
@@ -56,9 +53,7 @@ export function Workout() {
             data-wrap="nowrap"
             {...ui.Gap.cluster}
           >
-            {workout.actions.start.available && (
-              <WorkoutStart action={workout.actions.start} {...workout.data} />
-            )}
+            <WorkoutStart />
 
             {workout.actions.complete.available && (
               <WorkoutComplete action={workout.actions.complete} {...workout.data} />

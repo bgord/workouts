@@ -147,10 +147,14 @@ export const workoutRoute = createRoute({
       ? (value["filter"] as WorkoutListFilterOptions)
       : WorkoutHistoryFiltersForm.Form.default.filter,
   }),
-  loader: async ({ context, params }) => ({
-    workout: await Workouts.get(context.request, params),
-    exercises: await Exercises.list(context.request),
-  }),
+  notFoundComponent: lazyRouteComponent(() => import("./sections/workout-not-found"), "WorkoutNotFound"),
+  loader: async ({ context, params }) => {
+    const workout = await Workouts.get(context.request, params);
+
+    if (!workout) throw notFound();
+
+    return { workout, exercises: await Exercises.list(context.request) };
+  },
 });
 
 export const measurementsRoute = createRoute({
