@@ -32,7 +32,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
   );
 
   return (
-    <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.tiles}>
+    <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.related}>
       <ui.Tile>
         <ui.TileHeader>
           <Scale data-size="xs" />

@@ -26,8 +26,8 @@ export function ExerciseCategoryAdd() {
   });
 
   return (
-    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.inline}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.controls}>
+    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.cluster}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.inline}>
         <label className="c-visually-hidden" {...name.label.props}>
           {t("exercise.category.add.name.label")}
         </label>

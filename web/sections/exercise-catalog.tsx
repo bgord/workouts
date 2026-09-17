@@ -50,7 +50,7 @@ export function ExerciseCatalog() {
 
   return (
     <div data-stack="y" {...ui.Spacing.block}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.toolbar}>
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Spacing.cluster}>
         <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
@@ -100,7 +100,7 @@ export function ExerciseCatalog() {
         </ui.IconButton>
       </div>
 
-      <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.chips}>
+      <ul data-stack="x" data-wrap="wrap" {...ui.Spacing.cluster}>
         {categories.map((category) => {
           const selected = search.category === category.id;
 

@@ -19,7 +19,7 @@ function EyebrowAnchor(props: React.JSX.IntrinsicElements["a"]) {
       data-self="start"
       data-stack="x"
       data-transform="uppercase"
-      {...Spacing.iconTight}
+      {...Spacing.inline}
       {...rest}
     >
       {children}

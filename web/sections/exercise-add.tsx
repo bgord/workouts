@@ -46,7 +46,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
         data-stack="y"
         encType="multipart/form-data"
         onSubmit={mutation.handleSubmit}
-        {...ui.Spacing.form}
+        {...ui.Spacing.section}
       >
         <div data-stack="y" {...ui.Spacing.field}>
           <label
@@ -64,7 +64,8 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
             data-stack="y"
             data-transform="center"
             {...bg.Rhythm(144).times(1).style.height}
-            {...ui.Spacing.dropzone}
+            {...ui.Spacing.surface}
+            {...ui.Spacing.cluster}
             {...(image.isSelected ? { "data-p": "0" as const } : {})}
             {...image.label.props}
           >
@@ -100,7 +101,7 @@ export function ExerciseAdd(props: bg.UseToggleReturnType) {
             data-fs="xs"
             data-stack="x"
             data-wrap="nowrap"
-            {...ui.Spacing.inline}
+            {...ui.Spacing.cluster}
           >
             {image.isSelected ? (
               <>

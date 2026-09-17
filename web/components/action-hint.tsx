@@ -18,7 +18,7 @@ export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div
       data-stack="x"
       data-wrap="nowrap"
       key={hint}
-      {...Spacing.icon}
+      {...Spacing.cluster}
       {...rest}
     >
       <Info data-shrink="0" data-size="sm" />

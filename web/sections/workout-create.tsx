@@ -69,12 +69,17 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
         )}
       </ui.DialogHeader>
 
-      <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Spacing.form}>
+      <form
+        aria-busy={mutation.isLoading}
+        data-stack="y"
+        onSubmit={mutation.handleSubmit}
+        {...ui.Spacing.section}
+      >
         {plan && (
           <div data-stack="y" {...ui.Spacing.field}>
             <div className="c-label">{t("workout.create.section.label")}</div>
 
-            <ul data-stack="y" {...ui.Spacing.cards}>
+            <ul data-stack="y" {...ui.Spacing.cluster}>
               {plan.sections.map((option) => {
                 const selected = option.id === planSectionId.value;
 
@@ -91,7 +96,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                       data-stack="x"
                       data-wrap="nowrap"
                       {...ui.Spacing.surfaceCompact}
-                      {...ui.Spacing.row}
+                      {...ui.Spacing.related}
                     >
                       <input
                         checked={selected}
@@ -108,7 +113,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
                         <Circle data-color="neutral-600" data-shrink="0" data-size="sm" />
                       )}
 
-                      <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Spacing.lines}>
+                      <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Spacing.inline}>
                         <div data-color="neutral-100" data-fs="sm" data-fw="medium">
                           {option.name}
                         </div>
@@ -136,7 +141,7 @@ export function WorkoutCreate(props: bg.UseToggleReturnType) {
             {t("workout.create.when.label")}
           </label>
 
-          <div data-stack="x" data-wrap="wrap" {...ui.Spacing.chips}>
+          <div data-stack="x" data-wrap="wrap" {...ui.Spacing.cluster}>
             {quick.map((date, offset) => {
               const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
 

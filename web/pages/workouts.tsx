@@ -21,7 +21,7 @@ export function Workouts() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-stack="x" {...ui.Spacing.header}>
+      <div data-cross="center" data-stack="x" {...ui.Spacing.related}>
         <ui.Header data-grow="1">{t("workout.list.header")}</ui.Header>
 
         <ui.ActionHint {...workouts.actions.create} data-md-width="100%" />

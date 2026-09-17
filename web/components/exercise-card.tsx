@@ -21,7 +21,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
         title={props.name}
         to="/catalog/exercise/$exerciseId"
         {...Spacing.surfaceCompact}
-        {...Spacing.content}
+        {...Spacing.related}
       >
         <span aria-hidden data-disp="flex">
           <ExerciseImage size={ExerciseImageSize.md} {...props} />
@@ -31,7 +31,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
           {props.name}
         </div>
 
-        <ul data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap" {...Spacing.chips}>
+        <ul data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap" {...Spacing.cluster}>
           {visible.map((category) => (
             <li key={category.id}>
               <Chip data-transform="truncate">{category.name}</Chip>

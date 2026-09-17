@@ -32,7 +32,7 @@ function LinkBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
   const t = useTranslations();
 
   return (
-    <a className="c-link" data-cross="center" data-stack="x" {...Spacing.iconTight} {...props}>
+    <a className="c-link" data-cross="center" data-stack="x" {...Spacing.inline} {...props}>
       <ChevronLeft data-size="sm" />
       {t("app.back")}
     </a>

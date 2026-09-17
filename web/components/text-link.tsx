@@ -7,7 +7,7 @@ const style = {
   "data-cursor": "pointer",
   "data-fs": "xs",
   "data-stack": "x",
-  ...Spacing.iconTight,
+  ...Spacing.inline,
 } as const;
 
 export function TextLink(props: React.JSX.IntrinsicElements["button"]) {

@@ -59,7 +59,8 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
               data-cross="center"
               data-fs="sm"
               data-stack="y"
-              {...ui.Spacing.dropzone}
+              {...ui.Spacing.surface}
+              {...ui.Spacing.cluster}
             >
               <FileSpreadsheet data-color="neutral-400" data-size="md" />
 
@@ -95,7 +96,8 @@ export function BodyWeightMeasurementImport(props: bg.UseToggleReturnType) {
               data-hover-bc="neutral-500"
               data-stack="y"
               tabIndex={0}
-              {...ui.Spacing.dropzone}
+              {...ui.Spacing.surface}
+              {...ui.Spacing.cluster}
               {...file.label.props}
             >
               <FileUp data-color="neutral-400" data-size="md" />

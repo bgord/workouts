@@ -22,7 +22,7 @@ export function Dialog(props: bg.DialogPropsType) {
 
 export function DialogHeader(props: { disabled?: boolean; onClose: () => void; children: React.ReactNode }) {
   return (
-    <div data-cross="center" data-main="between" data-stack="x" data-wrap="nowrap" {...Spacing.header}>
+    <div data-cross="center" data-main="between" data-stack="x" data-wrap="nowrap" {...Spacing.related}>
       <strong data-color="neutral-100" data-transform="truncate">
         {props.children}
       </strong>
@@ -49,7 +49,7 @@ export function DialogStatus(props: { variant: "irreversible" | "restorable" }) 
       data-fs="sm"
       data-stack="x"
       data-wrap="nowrap"
-      {...Spacing.icon}
+      {...Spacing.cluster}
     >
       {props.variant === "irreversible" && <CircleAlert data-shrink="0" data-size="sm" />}
       {props.variant === "restorable" && <RotateCcw data-shrink="0" data-size="sm" />}
@@ -67,7 +67,7 @@ export function DialogError(props: { children: React.ReactNode }) {
       data-fs="sm"
       data-stack="x"
       data-wrap="nowrap"
-      {...Spacing.icon}
+      {...Spacing.cluster}
     >
       <CircleAlert data-shrink="0" data-size="md" />
       <span>{props.children}</span>
@@ -77,7 +77,7 @@ export function DialogError(props: { children: React.ReactNode }) {
 
 export function DialogFooter(props: { disabled?: boolean; onCancel: () => void; children: React.ReactNode }) {
   return (
-    <div data-main="end" data-stack="x" {...Spacing.controls}>
+    <div data-main="end" data-stack="x" {...Spacing.inline}>
       <ButtonCancel disabled={props.disabled} onClick={props.onCancel} />
       {props.children}
     </div>

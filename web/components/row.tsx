@@ -19,7 +19,7 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
         data-stack="x"
         data-wrap="nowrap"
         {...Spacing.surface}
-        {...Spacing.row}
+        {...Spacing.related}
         {...rest}
       />
     </li>
@@ -27,7 +27,7 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
 });
 
 export function RowBody(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-grow="1" data-stack="y" data-transform="truncate" {...Spacing.lines} {...props} />;
+  return <div data-grow="1" data-stack="y" data-transform="truncate" {...Spacing.inline} {...props} />;
 }
 
 export function RowTitle(props: React.JSX.IntrinsicElements["div"]) {

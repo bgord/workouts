@@ -50,7 +50,7 @@ export function Dashboard() {
 
       <div data-md-stack="y" data-stack="x" {...ui.Spacing.columns}>
         {upcoming && (
-          <div data-grow="1" data-stack="y" style={tile} {...ui.Spacing.labelled}>
+          <div data-grow="1" data-stack="y" style={tile} {...ui.Spacing.cluster}>
             <ui.Eyebrow>
               {t(dashboard.inProgress ? "dashboard.in_progress.header" : "dashboard.next_up.header")}
             </ui.Eyebrow>
@@ -62,7 +62,7 @@ export function Dashboard() {
         )}
 
         {dashboard.lastCompleted && (
-          <div data-grow="1" data-stack="y" style={tile} {...ui.Spacing.labelled}>
+          <div data-grow="1" data-stack="y" style={tile} {...ui.Spacing.cluster}>
             <ui.Eyebrow>{t("dashboard.last_completed.header")}</ui.Eyebrow>
 
             <ul>
@@ -75,7 +75,7 @@ export function Dashboard() {
       <DashboardCompleted />
 
       {measurements.length > 0 && (
-        <div data-stack="y" {...ui.Spacing.labelled}>
+        <div data-stack="y" {...ui.Spacing.cluster}>
           <ui.EyebrowLink to="/measurements">{t("measurements.body_weight.header")}</ui.EyebrowLink>
 
           <BodyWeightStats measurements={measurements} />

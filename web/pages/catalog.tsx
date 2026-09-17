@@ -17,10 +17,10 @@ export function Catalog() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-main="between" data-stack="x" {...ui.Spacing.header}>
+      <div data-cross="center" data-main="between" data-stack="x" {...ui.Spacing.related}>
         <ui.Header>{t("exercise.catalog.header")}</ui.Header>
 
-        <div data-cross="center" data-md-width="100%" data-stack="x" {...ui.Spacing.header}>
+        <div data-cross="center" data-md-width="100%" data-stack="x" {...ui.Spacing.related}>
           {exerciseCategories.actions.add.available && (
             <>
               <ui.ActionHint {...exerciseCategories.actions.add} />
