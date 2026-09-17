@@ -1,18 +1,11 @@
 // fallow-ignore-file unused-export
 
 import * as bg from "@bgord/ui";
-import { Tags } from "lucide-react";
 import * as ui from "../components";
-import { catalogRoute } from "../router";
-import { ExerciseAdd } from "../sections/exercise-add";
-import { ExerciseCatalog } from "../sections/exercise-catalog";
-import { ExerciseCategoryManage } from "../sections/exercise-category-manage";
+import * as Sections from "../sections";
 
 export function Catalog() {
   const t = bg.useTranslations();
-  const { exerciseCategories } = catalogRoute.useLoaderData();
-
-  const exerciseCategoryManage = bg.useToggle({ name: "exercise-category-manage" });
 
   return (
     <ui.Main>
@@ -20,32 +13,13 @@ export function Catalog() {
         <ui.Header data-grow="1">{t("exercise.catalog.header")}</ui.Header>
 
         <div data-cross="center" data-md-width="100%" data-stack="x" {...ui.Gap.cluster}>
-          {exerciseCategories.actions.add.available && (
-            <>
-              <ui.ActionHint {...exerciseCategories.actions.add} />
+          <Sections.ExerciseCategoryManage />
 
-              <button
-                className="c-button"
-                data-md-grow="1"
-                data-variant="ghost"
-                disabled={!exerciseCategories.actions.add.enabled}
-                onClick={exerciseCategoryManage.enable}
-                type="button"
-                {...exerciseCategoryManage.props.controller}
-              >
-                <Tags data-size="sm" />
-                {t("exercise.category.manage.cta")}
-              </button>
-            </>
-          )}
-
-          <ExerciseAdd />
+          <Sections.ExerciseAdd />
         </div>
       </div>
 
-      <ExerciseCategoryManage {...exerciseCategoryManage} />
-
-      <ExerciseCatalog />
+      <Sections.ExerciseCatalog />
     </ui.Main>
   );
 }
