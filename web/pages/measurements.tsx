@@ -1,6 +1,5 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Scale } from "lucide-react";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import {
@@ -8,6 +7,7 @@ import {
   BodyWeightMeasurementExport,
   BodyWeightMeasurementImport,
   BodyWeightMeasurementList,
+  BodyWeightMeasurementsEmpty,
   BodyWeightProgressChart,
   BodyWeightStats,
 } from "../sections";
@@ -30,15 +30,7 @@ export function Measurements() {
 
       <BodyWeightMeasure />
 
-      {measurements.length === 0 && (
-        <ui.EmptyState>
-          <ui.EmptyStateIcon icon={Scale} />
-
-          <ui.EmptyStateMessage>{t("measurements.body_weight.empty")}</ui.EmptyStateMessage>
-
-          <ui.Meta>{t("measurements.body_weight.empty.hint")}</ui.Meta>
-        </ui.EmptyState>
-      )}
+      <BodyWeightMeasurementsEmpty />
 
       {measurements.length > 0 && (
         <div data-stack="y" {...ui.Gap.section}>

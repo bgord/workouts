@@ -5,6 +5,7 @@ export * from "./body-weight-measurement-import";
 export * from "./body-weight-measurement-list";
 export * from "./body-weight-measurement-remove";
 export * from "./body-weight-measurement-row";
+export * from "./body-weight-measurements-empty";
 export * from "./body-weight-progress-chart";
 export * from "./body-weight-reference-set";
 export * from "./body-weight-stats";
