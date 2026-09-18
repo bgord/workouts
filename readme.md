@@ -176,6 +176,7 @@ modules/
 │   ├── services
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
+│   │   ├── body-weight-stats-calculator.ts
 │   └── value-objects
 │       ├── body-weight-goal-options.ts
 │       ├── body-weight-goal.ts
@@ -184,6 +185,7 @@ modules/
 │       ├── body-weight-measurement-import-max-size.ts
 │       ├── body-weight-measurement-import-mime-registry.ts
 │       ├── body-weight-measurement.ts
+│       ├── body-weight-stats.ts
 │       ├── body-weight.ts
 ├── plans
 │   ├── aggregates
@@ -451,6 +453,7 @@ app/
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
 │   │   ├── body-weight-reference-set.ts
+│   │   ├── body-weight-stats-get.ts
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create.ts
