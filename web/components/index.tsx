@@ -31,6 +31,7 @@ export * from "./online-status-bar";
 export * from "./output";
 export * from "./plan-card";
 export * from "./plan-status-badge";
+export * from "./radio-tile";
 export * from "./reps-load";
 export * from "./rir-badge";
 export * from "./rir-submit";
