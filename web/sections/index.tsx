@@ -17,6 +17,8 @@ export * from "./dashboard-workouts-fast-call";
 export * from "./dashboard-workouts-stats";
 export * from "./exercise-add";
 export * from "./exercise-catalog";
+export * from "./exercise-catalog-empty";
+export * from "./exercise-catalog-filters";
 export * from "./exercise-categories";
 export * from "./exercise-category-add";
 export * from "./exercise-category-delete";
