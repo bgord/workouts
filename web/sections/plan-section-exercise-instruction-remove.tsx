@@ -1,18 +1,15 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import type {
-  ExerciseInstructionWithExercise,
-  Plan,
-  PlanSectionWithExercises,
-} from "../../modules/plans/value-objects/plan";
+import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
+import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionRemove(props: {
   plan: Plan;
-  section: PlanSectionWithExercises;
-  exerciseInstruction: ExerciseInstructionWithExercise;
+  section: PlanSection;
+  exerciseInstruction: PlanExerciseInstruction;
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -39,7 +36,10 @@ export function PlanSectionExerciseInstructionRemove(props: {
       {...ui.Gap.inline}
     >
       <ui.IconButton
-        disabled={mutation.isLoading}
+        aria-label={t("plan.section.exercise.remove.title", {
+          name: props.exerciseInstruction.exercise.name,
+        })}
+        disabled={!props.exerciseInstruction.actions.remove.enabled || mutation.isLoading}
         title={t("plan.section.exercise.remove.title", { name: props.exerciseInstruction.exercise.name })}
         tone="danger"
         type="submit"
