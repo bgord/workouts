@@ -46,43 +46,6 @@ export function PlanSectionExerciseInstructionAdd(props: {
     },
   });
 
-  if (planSectionExerciseInstructionAdd.off) {
-    return (
-      <ui.HairlineBlock
-        data-cross="center"
-        data-stack="x"
-        data-wrap="nowrap"
-        tone="subtle"
-        {...ui.Spacing.rowCompact}
-      >
-        <button
-          data-color="neutral-400"
-          data-cross="center"
-          data-cursor="pointer"
-          data-fs="sm"
-          data-fw="medium"
-          data-grow="1"
-          data-hover-color="neutral-0"
-          data-stack="x"
-          data-wrap="nowrap"
-          disabled={!props.action.enabled}
-          onClick={planSectionExerciseInstructionAdd.enable}
-          type="button"
-          {...ui.Gap.related}
-          {...planSectionExerciseInstructionAdd.props.controller}
-        >
-          <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
-
-          <ui.AddPlaceholder />
-
-          {t("plan.section.exercise.add.cta")}
-        </button>
-
-        <ui.ActionHint {...props.action} data-shrink="0" />
-      </ui.HairlineBlock>
-    );
-  }
-
   const clear = bg.exec([
     exerciseId.clear,
     query.clear,
@@ -142,9 +105,8 @@ export function PlanSectionExerciseInstructionAdd(props: {
           aria-busy={mutation.isLoading}
           data-minh="0"
           data-stack="y"
-          {...ui.Gap.section}
-          data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
+          {...ui.Gap.section}
         >
           <ui.ExercisePicker
             exercises={exercises.data}
