@@ -4,7 +4,6 @@ import type { BodyWeightGoalOptions } from "../../modules/measurements/value-obj
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
-import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
 import { BodyWeightMeasurementRemove } from "./body-weight-measurement-remove";
 import { BodyWeightReferenceSet } from "./body-weight-reference-set";
@@ -62,9 +61,9 @@ export function BodyWeightMeasurementRow(props: {
               {DateFormat.day(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
             </span>
 
-            <span data-color="neutral-500">
+            <ui.Meta>
               {DateFormat.weekday(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
-            </span>
+            </ui.Meta>
           </button>
 
           <button
@@ -78,9 +77,7 @@ export function BodyWeightMeasurementRow(props: {
             onClick={bodyWeightMeasurementCorrect.enable}
             type="button"
           >
-            {t("measurements.body_weight.value", {
-              weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
-            })}
+            <ui.BodyWeightValue weight={props.measurement.weight} />
           </button>
 
           <div

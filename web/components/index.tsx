@@ -2,6 +2,7 @@ export * from "./action-hint";
 export * from "./avatar";
 export * from "./body-weight-delta";
 export * from "./body-weight-goal-icon";
+export * from "./body-weight-value";
 export * from "./button-back";
 export * from "./button-cancel";
 export * from "./button-clear";

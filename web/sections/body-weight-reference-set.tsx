@@ -5,7 +5,6 @@ import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
-import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 const goals = [BodyWeightGoalOptions.bulk, BodyWeightGoalOptions.cut, BodyWeightGoalOptions.maintain];
 
@@ -49,9 +48,7 @@ export function BodyWeightReferenceSet(
       {...toggle.props.target}
     >
       <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
-        {t("measurements.body_weight.value", {
-          weight: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
-        })}
+        <ui.BodyWeightValue weight={props.measurement.weight} />
       </div>
 
       <div data-ml="auto" data-stack="x" {...ui.Gap.inline}>

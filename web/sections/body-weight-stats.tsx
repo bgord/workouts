@@ -3,7 +3,6 @@ import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
-import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 const ROLLING_WINDOW_DAYS = 7;
 
@@ -40,9 +39,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
         </ui.TileHeader>
 
         <ui.TileValue>
-          {t("measurements.body_weight.value", {
-            weight: WeightFormat.kilograms(latest.weight, BodyWeightDecimals),
-          })}
+          <ui.BodyWeightValue weight={latest.weight} />
 
           <ui.BodyWeightDelta current={latest.weight} data-fs="xs" goal={goal} previous={previous?.weight} />
         </ui.TileValue>
@@ -59,9 +56,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
         </ui.TileHeader>
 
         <ui.TileValue>
-          {t("measurements.body_weight.value", {
-            weight: WeightFormat.kilograms(average(window), BodyWeightDecimals),
-          })}
+          <ui.BodyWeightValue weight={average(window)} />
 
           {previousWindow.length > 0 && (
             <ui.BodyWeightDelta
