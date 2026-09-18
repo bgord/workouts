@@ -17,7 +17,7 @@ export function WorkoutExerciseRemove(props: {
   const workoutExerciseRemove = bg.useToggle({ name: `workout-exercise-remove-${props.exercise.id}` });
   const guarded = props.exercise.loggedSets.length > 0;
 
-  const confirm = (event: React.FormEvent) => {
+  const confirm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     workoutExerciseRemove.enable();
   };
@@ -43,6 +43,7 @@ export function WorkoutExerciseRemove(props: {
         {...ui.Gap.related}
       >
         <ui.IconButton
+          aria-label={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
           disabled={!props.action.enabled || mutation.isLoading}
           title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
           tone="danger"
@@ -53,6 +54,8 @@ export function WorkoutExerciseRemove(props: {
         </ui.IconButton>
 
         <ui.ActionHint {...props.action} />
+
+        {mutation.isError && <ui.Output>{t("workout.exercise.remove.error")}</ui.Output>}
       </form>
 
       <ui.Dialog {...workoutExerciseRemove}>

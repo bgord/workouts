@@ -21,7 +21,7 @@ export function WorkoutSetRemove(props: {
 
   const guarded = props.workout.status === WorkoutStatusEnum.completed;
 
-  const confirm = (event: React.FormEvent) => {
+  const confirm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     workoutSetRemove.enable();
   };
