@@ -5,6 +5,8 @@ import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
+const maxSizeBytes = 10_000_000;
+
 export function ExerciseImageChange() {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -12,7 +14,7 @@ export function ExerciseImageChange() {
 
   const exerciseImageChange = bg.useToggle({ name: "exercise-image-change" });
 
-  const image = bg.useFile("exercise-image-change-file", { mimeTypes, maxSizeBytes: 10_000_000 });
+  const image = bg.useFile("exercise-image-change-file", { mimeTypes, maxSizeBytes });
 
   const mutation = bg.useMutation({
     perform: () => {
