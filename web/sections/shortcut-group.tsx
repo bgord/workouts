@@ -16,7 +16,7 @@ export function ShortcutGroup(props: { header: string; shortcuts: Array<Shortcut
               {t(shortcut.label)}
             </span>
 
-            <ui.Kbd keys={shortcut.keys} />
+            <ui.Kbd>{shortcut.keys}</ui.Kbd>
           </li>
         ))}
       </ul>

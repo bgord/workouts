@@ -16,8 +16,6 @@ export function Shortcuts() {
   const shortcuts = bg.useToggle({ name: "shortcuts" });
   const pathname = useRouterState({ select: (state) => state.location.pathname });
 
-  bg.useScrollLock(shortcuts.on);
-
   bg.useShortcuts({
     [ShortcutDefinitions.GoToDashboard.trigger]: () => navigate({ to: "/" }),
     [ShortcutDefinitions.GoToWorkouts.trigger]: () =>
@@ -33,9 +31,19 @@ export function Shortcuts() {
 
   if (!width || width <= 768) return null;
 
-  if (shortcuts.off) {
-    return (
+  const groups: Record<string, { header: string; shortcuts: Array<ShortcutDefinitions.ShortcutType> }> = {
+    "/": { header: t("app.dashboard"), shortcuts: ShortcutDefinitions.DashboardGroup },
+    "/catalog": { header: t("app.catalog"), shortcuts: ShortcutDefinitions.CatalogGroup },
+    "/workouts": { header: t("app.workouts"), shortcuts: ShortcutDefinitions.WorkoutsGroup },
+    "/measurements": { header: t("app.measurements"), shortcuts: ShortcutDefinitions.MeasurementsGroup },
+  };
+
+  const group = groups[pathname];
+
+  return (
+    <>
       <button
+        aria-label={t("app.shortcuts.help")}
         className="c-button"
         data-bottom="4"
         data-interaction="subtle-scale"
@@ -49,64 +57,19 @@ export function Shortcuts() {
       >
         <CircleHelp data-size="md" />
       </button>
-    );
-  }
 
-  return (
-    <div
-      data-cross="center"
-      data-inset="0"
-      data-main="center"
-      data-position="fixed"
-      data-stack="x"
-      data-z="3"
-      style={{ backgroundColor: "var(--backdrop-medium)" }}
-      {...ui.Spacing.gutter}
-      {...shortcuts.props.target}
-    >
-      <div
-        className="c-card"
-        data-maxw="md"
-        data-stack="y"
-        data-variant="overlay"
-        data-width="100%"
-        {...ui.Gap.block}
-      >
-        <div data-cross="center" data-main="between" data-stack="x">
-          <div
-            data-color="neutral-0"
-            data-cross="center"
-            data-fs="lg"
-            data-fw="bold"
-            data-stack="x"
-            {...ui.Gap.cluster}
-          >
+      <ui.Dialog {...shortcuts}>
+        <ui.DialogHeader onClose={shortcuts.disable}>
+          <span data-cross="center" data-stack="x" {...ui.Gap.cluster}>
             <Keyboard data-size="sm" />
-
             {t("app.shortcuts.header")}
-          </div>
+          </span>
+        </ui.DialogHeader>
 
-          <ui.ButtonClose onClick={shortcuts.disable} title={t("app.shortcuts.close")} />
-        </div>
-
-        {pathname === "/" && (
-          <ShortcutGroup header={t("app.dashboard")} shortcuts={ShortcutDefinitions.DashboardGroup} />
-        )}
-
-        {pathname === "/catalog" && (
-          <ShortcutGroup header={t("app.catalog")} shortcuts={ShortcutDefinitions.CatalogGroup} />
-        )}
-
-        {pathname === "/workouts" && (
-          <ShortcutGroup header={t("app.workouts")} shortcuts={ShortcutDefinitions.WorkoutsGroup} />
-        )}
-
-        {pathname === "/measurements" && (
-          <ShortcutGroup header={t("app.measurements")} shortcuts={ShortcutDefinitions.MeasurementsGroup} />
-        )}
+        {group && <ShortcutGroup {...group} />}
 
         <ShortcutGroup header={t("app.shortcuts.global")} shortcuts={ShortcutDefinitions.GlobalGroup} />
-      </div>
-    </div>
+      </ui.Dialog>
+    </>
   );
 }
