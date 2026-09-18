@@ -154,13 +154,7 @@ export function WorkoutExerciseRow(props: {
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={props.exercise} workout={props.workout} />
 
-          {props.exercise.actions.setLog.available && (
-            <WorkoutSetLog
-              action={props.exercise.actions.setLog}
-              exercise={props.exercise}
-              workout={props.workout}
-            />
-          )}
+          <WorkoutSetLog exercise={props.exercise} />
         </div>
       )}
     </ui.HairlineRow>

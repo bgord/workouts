@@ -2,19 +2,16 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
-import type { ActionState } from "../../modules/action-state";
-import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function WorkoutSetLog(props: {
-  workout: Workout;
-  exercise: WorkoutExerciseWithSets;
-  action: ActionState;
-}) {
+export function WorkoutSetLog(props: { exercise: WorkoutExercise }) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
+  const action = props.exercise.actions.setLog;
 
   const reps = bg.useNumberField<number>({
     name: `logged-reps-${props.exercise.id}`,
@@ -32,10 +29,10 @@ export function WorkoutSetLog(props: {
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set`, {
+      fetch(`/api/workouts/${workout.data.id}/exercise/${props.exercise.id}/set`, {
         method: "POST",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.workout.revision),
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           reps: reps.value,
           load: WeightFormat.grams(load.value ?? 0),
@@ -45,7 +42,9 @@ export function WorkoutSetLog(props: {
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });
 
-  const busy = !props.action.enabled || mutation.isLoading;
+  if (!action.available) return null;
+
+  const busy = !action.enabled || mutation.isLoading;
 
   return (
     <form
@@ -94,7 +93,7 @@ export function WorkoutSetLog(props: {
         variant="dense"
       />
 
-      <ui.ActionHint {...props.action} />
+      <ui.ActionHint {...action} />
 
       {mutation.isError && <ui.Output>{t("workout.set.error")}</ui.Output>}
     </form>
