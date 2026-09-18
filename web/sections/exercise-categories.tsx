@@ -99,17 +99,19 @@ export function ExerciseCategories() {
           {...ui.Gap.inline}
           {...assignment.props.target}
         >
-          <ui.Select
-            aria-label={t("exercise.category.assign.label")}
-            disabled={!action.enabled}
-            {...exerciseCategoryId.input.props}
-          >
-            {assignable.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </ui.Select>
+          <div data-md-grow="1">
+            <ui.Select
+              aria-label={t("exercise.category.assign.label")}
+              disabled={!action.enabled}
+              {...exerciseCategoryId.input.props}
+            >
+              {assignable.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </ui.Select>
+          </div>
 
           <ui.IconButton
             aria-label={t("exercise.category.assign.cta")}
