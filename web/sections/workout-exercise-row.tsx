@@ -74,7 +74,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
             {props.exercise.exerciseName}
           </ui.ExerciseLink>
 
-          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+          <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
             <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />
 
             <ui.Meta data-md-disp={hasTarget ? "none" : undefined}>

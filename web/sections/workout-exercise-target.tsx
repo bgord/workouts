@@ -53,12 +53,12 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       {...ui.Gap.inline}
       {...toggle.props.controller}
     >
+      {target && <Pencil data-color="neutral-500" data-size="xs" />}
       <Target data-color="neutral-500" data-size="xs" />
 
       {target && (
         <>
           <ui.SetsRepsLoad load={target.load} reps={target.reps} sets={target.sets} />
-          <Pencil data-color="neutral-600" data-ml="1" data-size="xs" />
         </>
       )}
 
