@@ -10,10 +10,6 @@ export function PlanSectionExerciseInstructionRow(props: {
   position: number;
 }) {
   const { exerciseInstruction } = props;
-  const { actions } = exerciseInstruction;
-
-  const controls =
-    actions.update.available || actions.exerciseChange.available || actions.remove.available;
 
   return (
     <ui.HairlineRow
@@ -44,23 +40,21 @@ export function PlanSectionExerciseInstructionRow(props: {
           {exerciseInstruction.exercise.name}
         </ui.ExerciseLink>
 
-        {controls && (
-          <div data-color="neutral-300" data-fs="sm">
-            <ui.SetsReps {...exerciseInstruction} />
-          </div>
-        )}
-      </div>
-
-      {!controls && (
-        <div data-color="neutral-300" data-fs="sm" data-shrink="0">
+        <div data-color="neutral-300" data-fs="sm">
           <ui.SetsReps {...exerciseInstruction} />
         </div>
-      )}
+      </div>
 
       <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
-        <PlanSectionExerciseInstructionEdit exerciseInstruction={exerciseInstruction} section={props.section} />
+        <PlanSectionExerciseInstructionEdit
+          exerciseInstruction={exerciseInstruction}
+          section={props.section}
+        />
 
-        <PlanSectionExerciseInstructionRemove exerciseInstruction={exerciseInstruction} section={props.section} />
+        <PlanSectionExerciseInstructionRemove
+          exerciseInstruction={exerciseInstruction}
+          section={props.section}
+        />
       </div>
     </ui.HairlineRow>
   );
