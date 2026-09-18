@@ -26,7 +26,7 @@ export function PlanCreate() {
       const { id } = await response.json();
 
       planCreate.disable();
-      bg.Fields.clearAll([name]);
+      name.clear();
       context.form?.reset();
 
       await navigate({ params: { planId: id }, to: "/plans/$planId" });
@@ -83,7 +83,7 @@ export function PlanCreate() {
             <button
               className="c-button"
               data-variant="primary"
-              disabled={name.unchanged || mutation.isLoading}
+              disabled={name.empty || mutation.isLoading}
               type="submit"
             >
               <Plus data-size="sm" />
