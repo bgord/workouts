@@ -1,12 +1,12 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
+import { WorkoutExerciseTarget } from "./workout-exercise-target";
 import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
@@ -95,67 +95,7 @@ export function WorkoutExerciseRow(props: {
           </Link>
 
           <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
-            {props.exercise.actions.targetSet.available ? (
-              <button
-                data-bc={props.exercise.target ? undefined : "neutral-700"}
-                data-br="sm"
-                data-bs={props.exercise.target ? undefined : "dashed"}
-                data-bw={props.exercise.target ? undefined : "hairline"}
-                data-color={props.exercise.target ? "neutral-300" : "neutral-400"}
-                data-cross="center"
-                data-cursor="pointer"
-                data-fs={props.exercise.target ? "sm" : "xs"}
-                data-fw={props.exercise.target ? "medium" : undefined}
-                data-hover-color="neutral-0"
-                data-px={props.exercise.target ? undefined : "2"}
-                data-shrink="0"
-                data-stack="x"
-                data-transform="font-variant-numeric"
-                data-wrap="nowrap"
-                disabled={!props.exercise.actions.targetSet.enabled}
-                onClick={workoutExerciseTarget.toggle}
-                title={t("workout.target.cta")}
-                type="button"
-                {...ui.Gap.inline}
-                {...workoutExerciseTarget.props.controller}
-              >
-                <Target data-color="neutral-500" data-size="xs" />
-
-                {props.exercise.target ? (
-                  <>
-                    <ui.SetsRepsLoad
-                      load={props.exercise.target.load}
-                      reps={props.exercise.target.reps}
-                      sets={props.exercise.target.sets}
-                    />
-                    <Pencil data-color="neutral-600" data-ml="1" data-size="xs" />
-                  </>
-                ) : (
-                  t("workout.target.cta")
-                )}
-              </button>
-            ) : (
-              props.exercise.target && (
-                <div
-                  data-color="neutral-300"
-                  data-cross="center"
-                  data-fs="sm"
-                  data-fw="medium"
-                  data-shrink="0"
-                  data-stack="x"
-                  data-transform="font-variant-numeric"
-                  data-wrap="nowrap"
-                  {...ui.Gap.inline}
-                >
-                  <Target data-color="neutral-500" data-size="xs" />
-                  <ui.SetsRepsLoad
-                    load={props.exercise.target.load}
-                    reps={props.exercise.target.reps}
-                    sets={props.exercise.target.sets}
-                  />
-                </div>
-              )
-            )}
+            <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />
 
             <ui.Meta data-md-disp={props.exercise.target ? "none" : undefined}>
               <ui.SetsReps {...props.exercise.prescription} />
