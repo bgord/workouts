@@ -23,12 +23,9 @@ export function ExerciseDelete() {
 
   return (
     <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
-      <div data-md-disp="none">
-        <ui.ActionHint {...exercise.actions.delete} />
-      </div>
+      <ui.ActionHint {...exercise.actions.delete} data-md-disp="none" />
 
       <ui.IconButton
-        data-self="start"
         disabled={!exercise.actions.delete.enabled}
         onClick={exerciseDelete.enable}
         title={t("exercise.delete.title", { name: exercise.data.name })}
