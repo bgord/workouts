@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
@@ -13,11 +12,6 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
   const navigate = workoutsRoute.useNavigate();
   const search = workoutsRoute.useSearch();
 
-  const filter = bg.useTextField<WorkoutListFilterOptions>({
-    name: WorkoutHistoryFiltersForm.Form.filter.field.name,
-    defaultValue: search.filter ?? WorkoutListFilterOptions.last_week,
-  });
-
   return (
     <div
       data-cross="center"
@@ -31,19 +25,17 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
         id={WorkoutHistoryFiltersForm.Form.filter.field.name}
         name={WorkoutHistoryFiltersForm.Form.filter.field.name}
         onChange={(event) => {
-          filter.handleChange(event);
+          const filter = event.currentTarget.value as WorkoutListFilterOptions;
+
           navigate({
             search: {
               section: search.section,
-              filter:
-                event.currentTarget.value === WorkoutListFilterOptions.last_week
-                  ? undefined
-                  : (event.currentTarget.value as WorkoutListFilterOptions),
+              filter: filter === WorkoutListFilterOptions.last_week ? undefined : filter,
             },
             to: "/workouts",
           });
         }}
-        value={filter.value}
+        value={search.filter ?? WorkoutListFilterOptions.last_week}
       >
         {Object.values(WorkoutListFilterOptions).map((option) => (
           <option key={option} value={option}>
@@ -52,13 +44,7 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
         ))}
       </ui.Select>
 
-      <ul
-        data-cross="center"
-        data-stack="x"
-        data-wrap="wrap"
-        {...bg.Rhythm(36).times(1).style.height}
-        {...ui.Gap.cluster}
-      >
+      <ul data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
         {workouts.sections.map((section) => (
           <li key={section.id}>
             <ui.ChipButton
@@ -66,7 +52,7 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
                 navigate({
                   search: {
                     section: search.section === section.id ? undefined : section.id,
-                    filter: undefined,
+                    filter: search.filter,
                   },
                   to: "/workouts",
                 })
