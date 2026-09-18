@@ -44,40 +44,48 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
         ))}
       </ui.Select>
 
-      <ul data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
-        {workouts.sections.map((section) => (
-          <li key={section.id}>
-            <ui.ChipButton
-              onClick={() =>
-                navigate({
-                  search: {
-                    section: search.section === section.id ? undefined : section.id,
-                    filter: search.filter,
-                  },
-                  to: "/workouts",
-                })
-              }
-              pressed={search.section === section.id}
-            >
-              {section.name}
-            </ui.ChipButton>
-          </li>
-        ))}
-      </ul>
+      <div
+        data-cross="center"
+        data-stack="x"
+        data-wrap="wrap"
+        {...bg.Rhythm(36).times(1).style.minHeight}
+        {...ui.Gap.cluster}
+      >
+        <ul data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+          {workouts.sections.map((section) => (
+            <li key={section.id}>
+              <ui.ChipButton
+                onClick={() =>
+                  navigate({
+                    search: {
+                      section: search.section === section.id ? undefined : section.id,
+                      filter: search.filter,
+                    },
+                    to: "/workouts",
+                  })
+                }
+                pressed={search.section === section.id}
+              >
+                {section.name}
+              </ui.ChipButton>
+            </li>
+          ))}
+        </ul>
 
-      <ui.Meta>
-        {t("workout.list.count", { matching: props.matching.length, total: workouts.data.length })}
-      </ui.Meta>
+        <ui.Meta>
+          {t("workout.list.count", { matching: props.matching.length, total: workouts.data.length })}
+        </ui.Meta>
 
-      {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
-        <ui.IconButton
-          aria-label={t("app.clear")}
-          onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
-          title={t("app.clear")}
-        >
-          <X data-size="sm" />
-        </ui.IconButton>
-      )}
+        {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
+          <ui.IconButton
+            aria-label={t("app.clear")}
+            onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
+            title={t("app.clear")}
+          >
+            <X data-size="sm" />
+          </ui.IconButton>
+        )}
+      </div>
     </div>
   );
 }
