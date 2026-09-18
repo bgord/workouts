@@ -9,7 +9,7 @@ export function Dialog(props: bg.DialogPropsType) {
     <bg.Dialog
       data-md-mt="4"
       data-md-p="3"
-      data-mt="12"
+      data-mt="8"
       data-overflow="auto"
       data-wrap="nowrap"
       style={{
