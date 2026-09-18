@@ -33,13 +33,10 @@ export function WorkoutScheduledFor() {
     },
   });
 
-  if (!workout.actions.reschedule.available) {
-    return (
-      <ui.Meta>
-        {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
-      </ui.Meta>
-    );
-  }
+  const scheduledOn = DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor));
+  const today = Temporal.Now.plainDateISO();
+
+  if (!workout.actions.reschedule.available) return <ui.Meta>{scheduledOn}</ui.Meta>;
 
   if (workoutReschedule.off) {
     return (
@@ -54,7 +51,7 @@ export function WorkoutScheduledFor() {
         type="button"
         {...workoutReschedule.props.controller}
       >
-        {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor))}
+        {scheduledOn}
       </button>
     );
   }
@@ -77,15 +74,15 @@ export function WorkoutScheduledFor() {
         data-variant="transparent"
         data-width="auto"
         disabled={!workout.actions.reschedule.enabled}
+        max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+        min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
         type="date"
         {...scheduledFor.input.props}
-        max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-        min={Temporal.Now.plainDateISO().subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
       />
 
       <ui.IconButton
         aria-label={t("app.save")}
-        disabled={scheduledFor.unchanged || mutation.isLoading}
+        disabled={!workout.actions.reschedule.enabled || scheduledFor.unchanged || mutation.isLoading}
         title={t("app.save")}
         tone="positive"
         type="submit"
