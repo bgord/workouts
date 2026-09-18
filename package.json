@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@bgord/bun": "1.23.5",
-    "@bgord/design": "2.0.7",
+    "@bgord/design": "2.0.8",
     "@bgord/ui": "0.10.4",
     "@tanstack/react-router": "1.170.36",
     "better-auth": "1.7.4",
