@@ -22,7 +22,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
       fetch(`/api/plans/${props.id}/description`, {
         method: "PATCH",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.revision) },
+        headers: bg.WeakETag.fromRevision(props.revision),
         body: JSON.stringify({ description: description.value?.trim() || null }),
       }),
     onSuccess: async () => {

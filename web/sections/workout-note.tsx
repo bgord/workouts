@@ -18,7 +18,7 @@ export function WorkoutNote() {
       fetch(`/api/workouts/${workout.data.id}/note`, {
         method: "PATCH",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(workout.data.revision) },
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({ note: note.value?.trim() || null }),
       }),
     onSuccess: async () => {

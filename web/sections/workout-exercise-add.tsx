@@ -23,7 +23,7 @@ export function WorkoutExerciseAdd() {
       fetch(`/api/workouts/${workout.data.id}/exercise`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(workout.data.revision) },
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           exerciseId: exerciseId.value,
           sets: sets.value,

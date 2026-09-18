@@ -30,7 +30,6 @@ export function WorkoutCreate() {
       fetch("/api/workouts/create", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           planId: plan?.id,
           planSectionId: planSectionId.value,

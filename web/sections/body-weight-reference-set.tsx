@@ -25,7 +25,6 @@ export function BodyWeightReferenceSet(
       fetch(`/api/measurements/body-weight/measurement/${props.measurement.id}/reference`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ goal: goal.value }),
       }),
     onSuccess: async () => {

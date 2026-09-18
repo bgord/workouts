@@ -32,7 +32,6 @@ export function BodyWeightMeasure() {
       fetch("/api/measurements/body-weight/measure", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ measuredOn: measuredOn.value, weight: WeightFormat.grams(weight.value ?? 0) }),
       }),
     onSuccess: async () => {

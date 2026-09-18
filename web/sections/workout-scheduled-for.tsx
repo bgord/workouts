@@ -24,7 +24,7 @@ export function WorkoutScheduledFor() {
       fetch(`/api/workouts/${workout.data.id}/scheduled-for`, {
         method: "PATCH",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(workout.data.revision) },
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({ scheduledFor: scheduledFor.value }),
       }),
     onSuccess: async () => {

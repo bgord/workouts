@@ -40,7 +40,7 @@ export function WorkoutExerciseTargetSet(
       fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/target`, {
         method: "PATCH",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.workout.revision) },
+        headers: bg.WeakETag.fromRevision(props.workout.revision),
         body: JSON.stringify({
           sets: sets.value,
           reps: reps.value,

@@ -34,7 +34,7 @@ export function WorkoutSetLog(props: {
       fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json", ...bg.WeakETag.fromRevision(props.workout.revision) },
+        headers: bg.WeakETag.fromRevision(props.workout.revision),
         body: JSON.stringify({
           reps: reps.value,
           load: WeightFormat.grams(load.value ?? 0),
