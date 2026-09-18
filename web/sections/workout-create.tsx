@@ -36,8 +36,7 @@ export function WorkoutCreate() {
       const { id } = await response.json();
 
       workoutCreate.disable();
-      scheduledFor.clear();
-      workoutCreateCustomDate.disable();
+      clear();
 
       await navigate({
         params: { workoutId: id },
@@ -47,6 +46,13 @@ export function WorkoutCreate() {
       await router.invalidate({ filter: (route) => route.id === workoutsRoute.id, sync: true });
     },
   });
+
+  const clear = bg.exec([
+    planSectionId.clear,
+    scheduledFor.clear,
+    workoutCreateCustomDate.disable,
+    mutation.reset,
+  ]);
 
   bg.useShortcuts({
     [ShortcutDefinitions.ScheduleWorkout.trigger]: () => {
@@ -72,7 +78,7 @@ export function WorkoutCreate() {
       </button>
 
       <ui.Dialog {...workoutCreate}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutCreate.disable}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutCreate.disable])}>
           {t("workout.create.toggle.cta")}
           {plan && (
             <span data-color="neutral-500" data-fw="regular" data-ml="2">
@@ -136,7 +142,12 @@ export function WorkoutCreate() {
 
           {mutation.isError && <ui.DialogError>{t("workout.create.error")}</ui.DialogError>}
 
-          <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutCreate.disable}>
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([clear, workoutCreate.disable])}>
+            <ui.ButtonClear
+              disabled={bg.Fields.allUnchanged([planSectionId, scheduledFor]) && workoutCreateCustomDate.off}
+              onClick={clear}
+            />
+
             <button
               className="c-button"
               data-variant="primary"
