@@ -27,18 +27,20 @@ export function ExerciseName() {
     },
   });
 
-  if (!exercise.actions.update.enabled) return <ui.Header data-grow="1">{exercise.data.name}</ui.Header>;
+  if (!exercise.actions.update.enabled) {
+    return (
+      <ui.Header data-grow="1" data-minw="0">
+        {exercise.data.name}
+      </ui.Header>
+    );
+  }
 
   if (exerciseNameUpdate.off) {
     return (
-      <ui.Header data-grow="1" data-maxw="100%">
+      <ui.Header data-grow="1" data-minw="0">
         <button
-          data-color="neutral-0"
           data-cursor="pointer"
-          data-fs="2xl"
-          data-fw="black"
           data-maxw="100%"
-          data-md-fs="xl"
           data-transform="truncate"
           onClick={exerciseNameUpdate.enable}
           title={t("exercise.update.name.cta")}

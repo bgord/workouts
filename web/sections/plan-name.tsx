@@ -31,18 +31,14 @@ export function PlanName() {
     },
   });
 
-  if (!plan.actions.rename.available) return <ui.Header>{plan.data.name}</ui.Header>;
+  if (!plan.actions.rename.available) return <ui.Header data-minw="0">{plan.data.name}</ui.Header>;
 
   if (planRename.off) {
     return (
-      <ui.Header data-maxw="100%">
+      <ui.Header data-minw="0">
         <button
-          data-color="neutral-0"
           data-cursor="pointer"
-          data-fs="2xl"
-          data-fw="black"
           data-maxw="100%"
-          data-md-fs="xl"
           data-transform="truncate"
           onClick={planRename.enable}
           title={t("plan.rename.cta")}
