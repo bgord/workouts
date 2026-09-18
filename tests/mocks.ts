@@ -388,6 +388,12 @@ export const calculatedExercisePerformance = {
     },
   ],
   volume: v.parse(tools.WeightGrams, 1_350_000),
+  bestSet: {
+    setNumber: v.parse(Workouts.VO.SetNumber, 2),
+    reps: v.parse(Workouts.VO.Reps, 10),
+    load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
+  },
   bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
 };
 

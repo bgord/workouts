@@ -4,7 +4,7 @@ import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import type * as Ports from "+statistics/ports";
-import * as VO from "+statistics/value-objects";
+import type * as VO from "+statistics/value-objects";
 
 type Config = {
   OneRepEstimator: Ports.OneRepEstimatorPort;
@@ -26,6 +26,8 @@ export class ExercisePerformanceCalculator {
         estimate: this.config.OneRepEstimator.estimate(set),
       }));
 
+      const bestSet = sets.reduce((best, set) => (set.estimate > best.estimate ? set : best));
+
       return {
         ...performance,
         sets,
@@ -33,7 +35,8 @@ export class ExercisePerformanceCalculator {
           tools.WeightGrams,
           sets.reduce((total, set) => total + set.reps * set.load, 0),
         ),
-        bestEstimate: v.parse(VO.OneRepMaxEstimate, Math.max(...sets.map((set) => set.estimate))),
+        bestSet,
+        bestEstimate: bestSet.estimate,
       };
     });
   }

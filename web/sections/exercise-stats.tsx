@@ -15,8 +15,6 @@ export function ExerciseStats() {
 
   if (!(best && heaviest && latest)) return null;
 
-  const set = best.sets.toSorted((a, b) => b.estimate - a.estimate)[0];
-
   return (
     <ul data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
       <ui.TileLink
@@ -39,11 +37,9 @@ export function ExerciseStats() {
           })}
         </ui.TileValue>
 
-        {set && (
-          <ui.TileContext>
-            <ui.RepsLoad load={set.load} reps={set.reps} />
-          </ui.TileContext>
-        )}
+        <ui.TileContext>
+          <ui.RepsLoad load={best.bestSet.load} reps={best.bestSet.reps} />
+        </ui.TileContext>
       </ui.TileLink>
 
       <ui.Tile>
