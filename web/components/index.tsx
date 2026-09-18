@@ -26,6 +26,7 @@ export * from "./header";
 export * from "./icon-button";
 export * from "./kbd";
 export * from "./language-selector";
+export * from "./line-chart";
 export * from "./logo";
 export * from "./main";
 export * from "./meta";
