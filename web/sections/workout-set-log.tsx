@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { useRef } from "react";
+import { Form } from "../../app/services/workout-target-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import * as ui from "../components";
@@ -69,10 +70,8 @@ export function WorkoutSetLog(props: {
           disabled={busy}
           field={reps}
           label={t("workout.set.reps.label")}
-          max={100}
-          min={1}
-          step={1}
           width={40}
+          {...Form.reps.pattern}
         />
 
         <ui.Separator>×</ui.Separator>
@@ -81,11 +80,9 @@ export function WorkoutSetLog(props: {
           disabled={busy}
           field={load}
           label={t("workout.set.load.label")}
-          max={1000}
-          min={0}
-          step={0.5}
           unit="kg"
           width={52}
+          {...Form.load.pattern}
         />
       </div>
 

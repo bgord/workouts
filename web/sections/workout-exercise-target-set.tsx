@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
+import { Form } from "../../app/services/workout-target-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
 import * as ui from "../components";
@@ -54,7 +55,7 @@ export function WorkoutExerciseTargetSet(
   });
 
   const cancel = bg.exec([sets.clear, reps.clear, load.clear, mutation.reset, toggle.disable]);
-  const unchanged = props.exercise.target && sets.unchanged && reps.unchanged && load.unchanged;
+  const unchanged = Boolean(props.exercise.target) && sets.unchanged && reps.unchanged && load.unchanged;
 
   return (
     <form
@@ -70,11 +71,9 @@ export function WorkoutExerciseTargetSet(
           disabled={mutation.isLoading}
           field={sets}
           label={t("workout.target.sets.label")}
-          max={20}
-          min={1}
-          step={1}
           variant="compact"
           width={40}
+          {...Form.sets.pattern}
         />
 
         <ui.Separator>×</ui.Separator>
@@ -83,11 +82,9 @@ export function WorkoutExerciseTargetSet(
           disabled={mutation.isLoading}
           field={reps}
           label={t("workout.target.reps.label")}
-          max={100}
-          min={1}
-          step={1}
           variant="compact"
           width={40}
+          {...Form.reps.pattern}
         />
 
         <ui.Separator>@</ui.Separator>
@@ -96,12 +93,10 @@ export function WorkoutExerciseTargetSet(
           disabled={mutation.isLoading}
           field={load}
           label={t("workout.target.load.label")}
-          max={1000}
-          min={0}
-          step={0.5}
           unit="kg"
           variant="compact"
           width={52}
+          {...Form.load.pattern}
         />
       </div>
 
