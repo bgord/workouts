@@ -6,21 +6,18 @@ import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
-const date = { flexShrink: 0, minWidth: 0, width: "auto" };
-const submit = { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm(34).times(1).height };
-
 export function BodyWeightMeasurementCorrect(
   props: { measurement: BodyWeightMeasurement } & bg.UseToggleReturnType,
 ) {
   const t = bg.useTranslations();
   const router = useRouter();
+
   const { toggle } = bg.extractUseToggle(props);
 
   const measuredOn = bg.useDateField({
     name: `corrected-measured-on-${props.measurement.id}`,
     defaultValue: props.measurement.measuredOn,
   });
-
   const weight = bg.useNumberField({
     name: `corrected-weight-${props.measurement.id}`,
     defaultValue: WeightFormat.kilograms(props.measurement.weight, BodyWeightDecimals),
@@ -57,10 +54,11 @@ export function BodyWeightMeasurementCorrect(
         aria-label={t("measurements.body_weight.measure.date.label")}
         className="c-input"
         data-variant="transparent"
-        style={date}
+        data-width="auto"
+        max={Temporal.Now.plainDateISO().toString()}
+        style={{ flexShrink: 0, minWidth: 0 }}
         type="date"
         {...measuredOn.input.props}
-        max={Temporal.Now.plainDateISO().toString()}
       />
 
       <ui.Stepper
@@ -87,14 +85,13 @@ export function BodyWeightMeasurementCorrect(
           data-main="center"
           data-shrink="0"
           disabled={
-            measuredOn.empty ||
-            weight.empty ||
-            (measuredOn.unchanged && weight.unchanged) ||
+            bg.Fields.anyEmpty([measuredOn, weight]) ||
+            bg.Fields.allUnchanged([measuredOn, weight]) ||
             mutation.isLoading
           }
-          style={submit}
           title={t("app.save")}
           type="submit"
+          {...bg.Rhythm(34).times(1).style.square}
         >
           <Check data-size="sm" />
         </button>
