@@ -8,6 +8,7 @@ import { catalogRoute } from "../router";
 export function ExerciseCategoryDelete(props: ExerciseCategory) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { exerciseCategories } = catalogRoute.useLoaderData();
 
   const exerciseCategoryDelete = bg.useToggle({ name: `exercise-category-delete-${props.id}` });
 
@@ -19,9 +20,13 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
     },
   });
 
+  if (!exerciseCategories.actions.delete.available) return null;
+
   return (
     <>
       <ui.IconButton
+        aria-label={t("exercise.category.delete.title", { name: props.name })}
+        disabled={!exerciseCategories.actions.delete.enabled}
         onClick={exerciseCategoryDelete.enable}
         title={t("exercise.category.delete.title", { name: props.name })}
         tone="danger"

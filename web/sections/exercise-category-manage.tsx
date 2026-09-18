@@ -11,7 +11,9 @@ export function ExerciseCategoryManage() {
 
   const exerciseCategoryManage = bg.useToggle({ name: "exercise-category-manage" });
 
-  if (!exerciseCategories.actions.add.available) return null;
+  const actions = Object.values(exerciseCategories.actions);
+
+  if (!actions.some((action) => action.available)) return null;
 
   return (
     <>
@@ -21,7 +23,7 @@ export function ExerciseCategoryManage() {
         className="c-button"
         data-md-grow="1"
         data-variant="ghost"
-        disabled={!exerciseCategories.actions.add.enabled}
+        disabled={!actions.some((action) => action.enabled)}
         onClick={exerciseCategoryManage.enable}
         type="button"
         {...exerciseCategoryManage.props.controller}
@@ -38,13 +40,11 @@ export function ExerciseCategoryManage() {
         <ExerciseCategoryAdd />
 
         {exerciseCategories.data.length === 0 && (
-          <div data-cross="center" data-stack="y" {...ui.Spacing.empty}>
-            <div data-color="neutral-300" data-fs="sm">
-              {t("exercise.category.list.empty")}
-            </div>
+          <ui.EmptyState>
+            <ui.EmptyStateMessage>{t("exercise.category.list.empty")}</ui.EmptyStateMessage>
 
             <ui.Meta>{t("exercise.category.list.empty.hint")}</ui.Meta>
-          </div>
+          </ui.EmptyState>
         )}
 
         {exerciseCategories.data.length > 0 && (

@@ -10,6 +10,7 @@ export function ExerciseCategories() {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercise, exerciseCategories } = exerciseRoute.useLoaderData();
+  const action = exercise.actions.categoryAssign;
 
   const assignment = bg.useToggle({ name: "exercise-category-assign" });
 
@@ -19,7 +20,7 @@ export function ExerciseCategories() {
   );
 
   const exerciseCategoryId = bg.useTextField({
-    name: "exercise-category-assign",
+    name: "exercise-category-id",
     defaultValue: assignable[0]?.id ?? "",
   });
 
@@ -35,10 +36,10 @@ export function ExerciseCategories() {
           exerciseCategoryId: exerciseCategoryId.value,
         }),
       }),
-    onSuccess: bg.exec([refresh, assignment.disable]),
+    onSuccess: bg.exec([exerciseCategoryId.clear, refresh, assignment.disable]),
   });
 
-  if (!exercise.actions.categoryAssign.available) {
+  if (!action.available) {
     return (
       <div data-stack="y" {...ui.Gap.cluster}>
         <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
@@ -56,7 +57,7 @@ export function ExerciseCategories() {
     );
   }
 
-  const assignActionAvailable = assignable.length > 0;
+  const hasAssignable = assignable.length > 0;
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
@@ -70,34 +71,37 @@ export function ExerciseCategories() {
       >
         <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
-        {assignActionAvailable && assignment.off && (
-          <button
-            className="c-button"
-            data-variant="ghost"
-            disabled={!exercise.actions.categoryAssign.enabled}
-            onClick={assignment.enable}
-            type="button"
-            {...assignment.props.controller}
-          >
-            <Plus data-size="sm" />
-            {t("exercise.category.assign.cta")}
-          </button>
+        {hasAssignable && assignment.off && (
+          <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+            <ui.ActionHint {...action} />
+
+            <button
+              className="c-button"
+              data-variant="ghost"
+              disabled={!action.enabled}
+              onClick={assignment.enable}
+              type="button"
+              {...assignment.props.controller}
+            >
+              <Plus data-size="sm" />
+              {t("exercise.category.assign.cta")}
+            </button>
+          </div>
         )}
       </div>
 
-      {assignActionAvailable && assignment.on && (
+      {hasAssignable && assignment.on && (
         <form
           aria-busy={assign.isLoading}
           data-cross="center"
           data-stack="x"
-          data-wrap="nowrap"
           onSubmit={assign.handleSubmit}
           {...ui.Gap.inline}
           {...assignment.props.target}
         >
           <ui.Select
             aria-label={t("exercise.category.assign.label")}
-            disabled={!exercise.actions.categoryAssign.enabled}
+            disabled={!action.enabled}
             {...exerciseCategoryId.input.props}
           >
             {assignable.map((category) => (
@@ -109,7 +113,7 @@ export function ExerciseCategories() {
 
           <ui.IconButton
             aria-label={t("exercise.category.assign.cta")}
-            disabled={!exercise.actions.categoryAssign.enabled || assign.isLoading}
+            disabled={!action.enabled || assign.isLoading}
             title={t("exercise.category.assign.cta")}
             tone="positive"
             type="submit"
@@ -119,11 +123,13 @@ export function ExerciseCategories() {
 
           <ui.IconButton
             aria-label={t("app.cancel")}
-            onClick={bg.exec([assign.reset, assignment.disable])}
+            onClick={bg.exec([exerciseCategoryId.clear, assign.reset, assignment.disable])}
             title={t("app.cancel")}
           >
             <X data-size="sm" />
           </ui.IconButton>
+
+          {assign.isError && <ui.Output data-width="100%">{t("exercise.category.assign.error")}</ui.Output>}
         </form>
       )}
 
@@ -144,8 +150,6 @@ export function ExerciseCategories() {
           </li>
         )}
       </ul>
-
-      {assign.isError && <ui.Output>{t("exercise.category.assign.error")}</ui.Output>}
     </div>
   );
 }

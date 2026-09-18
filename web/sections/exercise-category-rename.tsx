@@ -9,6 +9,7 @@ import { catalogRoute } from "../router";
 export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { exerciseCategories } = catalogRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
 
   const name = bg.useTextField({ ...Form.name.field, defaultValue: props.name });
@@ -26,6 +27,8 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
     },
   });
 
+  if (!exerciseCategories.actions.rename.available) return <div data-fs="sm">{props.name}</div>;
+
   if (toggle.off) {
     return (
       <button
@@ -34,6 +37,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
         data-fs="sm"
         data-hover-color="brand-300"
         data-transform="truncate"
+        disabled={!exerciseCategories.actions.rename.enabled}
         onClick={toggle.enable}
         title={t("exercise.category.rename.cta")}
         type="button"
@@ -67,7 +71,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
 
         <ui.IconButton
           aria-label={t("app.save")}
-          disabled={name.unchanged || mutation.isLoading}
+          disabled={!exerciseCategories.actions.rename.enabled || name.unchanged || mutation.isLoading}
           title={t("app.save")}
           tone="positive"
           type="submit"
