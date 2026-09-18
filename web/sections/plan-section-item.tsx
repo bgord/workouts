@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import type { PlanGetResponse, PlanSection } from "../../modules/plans/queries/get-plan";
+import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
@@ -7,22 +7,15 @@ import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-inst
 import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
 
-export function PlanSectionItem(props: {
-  plan: PlanGetResponse["data"];
-  section: PlanSection;
-  actions: PlanGetResponse["actions"];
-  index: number;
-  last: boolean;
-}) {
+export function PlanSectionItem(props: { section: PlanSection; index: number; last: boolean }) {
   const t = bg.useTranslations();
   const pluralize = bg.usePluralize();
-  const { plan, section, actions, index, last } = props;
 
-  const planSectionVisibility = usePersistedToggle({ name: `plan-section-${section.id}` });
-  const planSectionRename = bg.useToggle({ name: `plan-section-rename-${section.id}` });
+  const planSectionVisibility = usePersistedToggle({ name: `plan-section-${props.section.id}` });
+  const planSectionRename = bg.useToggle({ name: `plan-section-rename-${props.section.id}` });
 
   return (
-    <ui.HairlineRow data-stack="y" first={index === 0} last={last} {...ui.Spacing.row}>
+    <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div
         data-cross="center"
         data-stack="x"
@@ -31,22 +24,19 @@ export function PlanSectionItem(props: {
         {...ui.Gap.related}
       >
         <ui.ChevronToggle {...planSectionVisibility} />
-        <div data-grow="1" data-transform="truncate">
-          <PlanSectionRename
-            action={actions.sectionRename}
-            plan={plan}
-            section={section}
-            {...planSectionRename}
-          />
+
+        <div data-grow="1" data-minw="0">
+          <PlanSectionRename section={props.section} {...planSectionRename} />
         </div>
+
         {planSectionRename.off && (
           <ui.Meta data-shrink="0">
-            {section.exerciseInstructions.length === 0
+            {props.section.exerciseInstructions.length === 0
               ? t("plan.section.exercise.list.empty")
               : t("plan.section.exercise.count", {
-                  count: section.exerciseInstructions.length,
+                  count: props.section.exerciseInstructions.length,
                   noun: pluralize({
-                    value: section.exerciseInstructions.length,
+                    value: props.section.exerciseInstructions.length,
                     singular: t("plan.section.exercise.noun.singular"),
                     plural: t("plan.section.exercise.noun.plural"),
                     genitive: t("plan.section.exercise.noun.genitive"),
@@ -54,22 +44,14 @@ export function PlanSectionItem(props: {
                 })}
           </ui.Meta>
         )}
-        {actions.sectionRemove.available && planSectionRename.off && (
-          <PlanSectionRemove action={actions.sectionRemove} plan={plan} section={section} />
-        )}
+        {planSectionRename.off && <PlanSectionRemove {...props.section} />}
       </div>
 
       {planSectionVisibility.on && (
         <div data-stack="y" {...ui.Spacing.inset} {...planSectionVisibility.props.target}>
-          <PlanSectionExerciseInstructionList plan={plan} section={section} />
+          <PlanSectionExerciseInstructionList {...props.section} />
 
-          {section.actions.exerciseInstructionAdd.available && (
-            <PlanSectionExerciseInstructionAdd
-              action={section.actions.exerciseInstructionAdd}
-              plan={plan}
-              section={section}
-            />
-          )}
+          <PlanSectionExerciseInstructionAdd {...props.section} />
         </div>
       )}
     </ui.HairlineRow>

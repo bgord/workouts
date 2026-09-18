@@ -1,27 +1,23 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import type { ActionState } from "../../modules/action-state";
-import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
+import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionRemove(props: {
-  plan: Plan;
-  section: PlanSectionWithExercises;
-  action: ActionState;
-}) {
+export function PlanSectionRemove(props: PlanSection) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
 
-  const planSectionRemove = bg.useToggle({ name: `plan-section-remove-${props.section.id}` });
+  const planSectionRemove = bg.useToggle({ name: `plan-section-remove-${props.id}` });
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/plans/${props.plan.id}/section/${props.section.id}`, {
+      fetch(`/api/plans/${plan.data.id}/section/${props.id}`, {
         method: "DELETE",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.plan.revision),
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
       }),
     onSuccess: async () => {
       planSectionRemove.disable();
@@ -29,13 +25,15 @@ export function PlanSectionRemove(props: {
     },
   });
 
+  if (!plan.actions.sectionRemove.available) return null;
+
   return (
     <>
       <ui.IconButton
-        aria-label={t("plan.section.remove.title", { name: props.section.name })}
-        disabled={!props.action.enabled}
+        aria-label={t("plan.section.remove.title", { name: props.name })}
+        disabled={!plan.actions.sectionRemove.enabled}
         onClick={planSectionRemove.enable}
-        title={t("plan.section.remove.title", { name: props.section.name })}
+        title={t("plan.section.remove.title", { name: props.name })}
         tone="danger"
         {...planSectionRemove.props.controller}
       >
@@ -48,7 +46,7 @@ export function PlanSectionRemove(props: {
         </ui.DialogHeader>
 
         <div data-stack="y" {...ui.Gap.related}>
-          <ui.DialogInfo>{t("plan.section.remove.info", { name: props.section.name })}</ui.DialogInfo>
+          <ui.DialogInfo>{t("plan.section.remove.info", { name: props.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
 

@@ -35,7 +35,7 @@ export function ExerciseCategoryManage() {
           {t("exercise.category.manage.header")}
         </ui.DialogHeader>
 
-        {exerciseCategories.actions.add.available && <ExerciseCategoryAdd />}
+        <ExerciseCategoryAdd />
 
         {exerciseCategories.data.length === 0 && (
           <div data-cross="center" data-stack="y" {...ui.Spacing.empty}>

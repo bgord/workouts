@@ -3,21 +3,20 @@ import { useRouter } from "@tanstack/react-router";
 import { ArrowLeftRight, Pencil } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import { Plans } from "../api";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionEdit(props: {
-  plan: Plan;
   section: PlanSection;
   exerciseInstruction: PlanExerciseInstruction;
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { exercises } = planRoute.useLoaderData();
+  const { plan, exercises } = planRoute.useLoaderData();
   const { exerciseInstruction } = props;
   const { actions } = exerciseInstruction;
+  const editable = actions.update.available || actions.exerciseChange.available;
 
   const planSectionExerciseInstructionEdit = bg.useToggle({
     name: `plan-section-exercise-instruction-edit-${exerciseInstruction.id}`,
@@ -52,11 +51,11 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
   const instructionUnchanged = sets.unchanged && repsMin.unchanged && repsMax.unchanged;
 
-  const base = `/api/plans/${props.plan.id}/section/${props.section.id}/exercise-instruction/${exerciseInstruction.id}`;
+  const base = `/api/plans/${plan.data.id}/section/${props.section.id}/exercise-instruction/${exerciseInstruction.id}`;
 
   const mutation = bg.useMutation({
     perform: async () => {
-      let revision = props.plan.revision;
+      let revision = plan.data.revision;
 
       if (!exerciseId.unchanged) {
         const response = await fetch(`${base}/exercise`, {
@@ -68,8 +67,8 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
         if (!response.ok || instructionUnchanged) return response;
 
-        const plan = await Plans.get(null, { planId: props.plan.id });
-        revision = plan?.data?.revision ?? revision;
+        const fresh = await Plans.get(null, { planId: plan.data.id });
+        revision = fresh?.data?.revision ?? revision;
       }
 
       return fetch(`${base}/instruction`, {
@@ -99,6 +98,8 @@ export function PlanSectionExerciseInstructionEdit(props: {
     planSectionExerciseInstructionPick.disable,
     planSectionExerciseInstructionEdit.disable,
   ]);
+
+  if (!editable) return null;
 
   return (
     <>

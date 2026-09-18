@@ -60,13 +60,13 @@ export function Plan() {
             })}
           </ui.Meta>
 
-          <Sections.PlanDescription action={plan.actions.descriptionSet} {...plan.data} />
+          <Sections.PlanDescription />
 
           {plan.actions.finalize.available && <ui.ActionHint {...plan.actions.finalize} />}
         </div>
       </div>
 
-      <Sections.PlanSectionList {...plan.data} actions={plan.actions} />
+      <Sections.PlanSectionList />
     </ui.Main>
   );
 }

@@ -2,30 +2,31 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionRemove(props: {
-  plan: Plan;
   section: PlanSection;
   exerciseInstruction: PlanExerciseInstruction;
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
 
   const mutation = bg.useMutation({
     perform: () =>
       fetch(
-        `/api/plans/${props.plan.id}/section/${props.section.id}/exercise-instruction/${props.exerciseInstruction.id}`,
+        `/api/plans/${plan.data.id}/section/${props.section.id}/exercise-instruction/${props.exerciseInstruction.id}`,
         {
           method: "DELETE",
           credentials: "include",
-          headers: bg.WeakETag.fromRevision(props.plan.revision),
+          headers: bg.WeakETag.fromRevision(plan.data.revision),
         },
       ),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true }),
   });
+
+  if (!props.exerciseInstruction.actions.remove.available) return null;
 
   return (
     <form

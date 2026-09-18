@@ -1,28 +1,27 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/plan-description-form";
-import type { ActionState } from "../../modules/action-state";
-import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-export function PlanDescription(props: Plan & { action: ActionState }) {
+export function PlanDescription() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
 
-  const planDescriptionUpdate = bg.useToggle({ name: `plan-description-update-${props.id}` });
+  const planDescriptionUpdate = bg.useToggle({ name: `plan-description-update-${plan.data.id}` });
 
   const description = bg.useTextField({
     ...Form.description.field,
-    defaultValue: props.description ?? "",
+    defaultValue: plan.data.description ?? "",
   });
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/plans/${props.id}/description`, {
+      fetch(`/api/plans/${plan.data.id}/description`, {
         method: "PATCH",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.revision),
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
         body: JSON.stringify({ description: description.value?.trim() || null }),
       }),
     onSuccess: async () => {
@@ -31,12 +30,12 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
     },
   });
 
-  if (!props.action.available) {
-    if (!props.description) return null;
+  if (!plan.actions.descriptionSet.available) {
+    if (!plan.data.description) return null;
 
     return (
       <p className="c-prose" data-color="neutral-200" data-fs="sm">
-        {props.description}
+        {plan.data.description}
       </p>
     );
   }
@@ -47,21 +46,21 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
         <>
           <button
             className="c-prose"
-            data-color={props.description ? "neutral-200" : "neutral-500"}
+            data-color={plan.data.description ? "neutral-200" : "neutral-500"}
             data-cursor="pointer"
             data-fs="sm"
             data-self="start"
             data-ta="start"
-            disabled={!props.action.enabled}
+            disabled={!plan.actions.descriptionSet.enabled}
             onClick={planDescriptionUpdate.enable}
             title={t("plan.description.label")}
             type="button"
             {...planDescriptionUpdate.props.controller}
           >
-            {props.description ?? t("plan.description.placeholder")}
+            {plan.data.description ?? t("plan.description.placeholder")}
           </button>
 
-          <ui.ActionHint {...props.action} />
+          <ui.ActionHint {...plan.actions.descriptionSet} />
         </>
       )}
 

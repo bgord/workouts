@@ -2,12 +2,12 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
-import type { ExerciseIdType } from "../../modules/exercises/value-objects/exercise-id";
 import { exerciseRoute } from "../router";
 
-export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; category: ExerciseCategory }) {
+export function ExerciseCategoryUnassign(props: ExerciseCategory) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { exercise } = exerciseRoute.useLoaderData();
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -15,12 +15,14 @@ export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; ca
         method: "POST",
         credentials: "include",
         body: JSON.stringify({
-          exerciseId: props.exerciseId,
-          exerciseCategoryId: props.category.id,
+          exerciseId: exercise.data.id,
+          exerciseCategoryId: props.id,
         }),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true }),
   });
+
+  if (!exercise.actions.categoryUnassign.available) return null;
 
   return (
     <button
@@ -29,9 +31,9 @@ export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; ca
       data-cursor="pointer"
       data-disp="flex"
       data-hover-color="danger-400"
-      disabled={mutation.isLoading}
+      disabled={!exercise.actions.categoryUnassign.enabled || mutation.isLoading}
       onClick={() => mutation.mutate()}
-      title={t("exercise.category.unassign.cta", { name: props.category.name })}
+      title={t("exercise.category.unassign.cta", { name: props.name })}
       type="button"
     >
       <X data-size="xs" />

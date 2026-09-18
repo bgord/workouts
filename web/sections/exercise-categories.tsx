@@ -133,9 +133,7 @@ export function ExerciseCategories() {
             <ui.Chip>
               {category.name}
 
-              {exercise.actions.categoryUnassign.available && (
-                <ExerciseCategoryUnassign category={category} exerciseId={exercise.data.id} />
-              )}
+              <ExerciseCategoryUnassign {...category} />
             </ui.Chip>
           </li>
         ))}

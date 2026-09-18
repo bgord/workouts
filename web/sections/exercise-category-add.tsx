@@ -8,6 +8,7 @@ import { catalogRoute } from "../router";
 export function ExerciseCategoryAdd() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { exerciseCategories } = catalogRoute.useLoaderData();
 
   const name = bg.useTextField(Form.name.field);
 
@@ -24,6 +25,8 @@ export function ExerciseCategoryAdd() {
       context.form?.reset();
     },
   });
+
+  if (!exerciseCategories.actions.add.available) return null;
 
   return (
     <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>

@@ -2,16 +2,14 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
-import type { ActionState } from "../../modules/action-state";
-import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
+import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionRename(
-  props: { plan: Plan; section: PlanSectionWithExercises; action: ActionState } & bg.UseToggleReturnType,
-) {
+export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { plan } = planRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
 
   const planSectionName = bg.useTextField({
@@ -21,10 +19,10 @@ export function PlanSectionRename(
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/plans/${props.plan.id}/section/${props.section.id}/rename`, {
+      fetch(`/api/plans/${plan.data.id}/section/${props.section.id}/rename`, {
         method: "POST",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.plan.revision),
+        headers: bg.WeakETag.fromRevision(plan.data.revision),
         body: JSON.stringify({ planSectionName: planSectionName.value }),
       }),
     onSuccess: async () => {
@@ -33,7 +31,7 @@ export function PlanSectionRename(
     },
   });
 
-  if (!props.action.available) {
+  if (!plan.actions.sectionRename.available) {
     return (
       <div className="c-card-title" data-transform="truncate" title={props.section.name}>
         {props.section.name}
@@ -46,10 +44,9 @@ export function PlanSectionRename(
       <button
         className="c-card-title"
         data-cursor="pointer"
-        data-hover-color="brand-300"
         data-maxw="100%"
         data-transform="truncate"
-        disabled={!props.action.enabled}
+        disabled={!plan.actions.sectionRename.enabled}
         onClick={toggle.enable}
         title={t("plan.section.rename.cta")}
         type="button"

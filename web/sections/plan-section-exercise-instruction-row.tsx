@@ -1,15 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import type {
-  PlanExerciseInstruction,
-  PlanGetResponse,
-  PlanSection,
-} from "../../modules/plans/queries/get-plan";
+import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { PlanSectionExerciseInstructionEdit } from "./plan-section-exercise-instruction-edit";
 import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
 
 export function PlanSectionExerciseInstructionRow(props: {
-  plan: PlanGetResponse["data"];
   section: PlanSection;
   exerciseInstruction: PlanExerciseInstruction;
   position: number;
@@ -17,8 +12,8 @@ export function PlanSectionExerciseInstructionRow(props: {
   const { exerciseInstruction } = props;
   const { actions } = exerciseInstruction;
 
-  const editable = actions.update.available || actions.exerciseChange.available;
-  const controls = editable || actions.remove.available;
+  const controls =
+    actions.update.available || actions.exerciseChange.available || actions.remove.available;
 
   return (
     <ui.HairlineRow
@@ -62,25 +57,11 @@ export function PlanSectionExerciseInstructionRow(props: {
         </div>
       )}
 
-      {controls && (
-        <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
-          {editable && (
-            <PlanSectionExerciseInstructionEdit
-              exerciseInstruction={exerciseInstruction}
-              plan={props.plan}
-              section={props.section}
-            />
-          )}
+      <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+        <PlanSectionExerciseInstructionEdit exerciseInstruction={exerciseInstruction} section={props.section} />
 
-          {actions.remove.available && (
-            <PlanSectionExerciseInstructionRemove
-              exerciseInstruction={exerciseInstruction}
-              plan={props.plan}
-              section={props.section}
-            />
-          )}
-        </div>
-      )}
+        <PlanSectionExerciseInstructionRemove exerciseInstruction={exerciseInstruction} section={props.section} />
+      </div>
     </ui.HairlineRow>
   );
 }
