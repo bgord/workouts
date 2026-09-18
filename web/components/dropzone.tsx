@@ -30,6 +30,26 @@ export function Dropzone(props: React.JSX.IntrinsicElements["label"] & DropzoneF
   );
 }
 
+export function FileButton(props: React.JSX.IntrinsicElements["label"] & DropzoneFile) {
+  const { file, ...rest } = props;
+
+  return (
+    <label
+      className="c-button"
+      data-cross="center"
+      data-disp="flex"
+      data-main="center"
+      data-minw="0"
+      data-variant="secondary"
+      data-wrap="nowrap"
+      tabIndex={0}
+      {...Gap.cluster}
+      {...file.label.props}
+      {...rest}
+    />
+  );
+}
+
 export function DropzoneInput(props: React.JSX.IntrinsicElements["input"] & DropzoneFile) {
   const { file, ...rest } = props;
 

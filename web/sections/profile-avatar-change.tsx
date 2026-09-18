@@ -5,12 +5,14 @@ import * as ui from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
+const maxSizeBytes = 10_000_000;
+
 export function ProfileAvatarChange() {
   const router = useRouter();
   const t = useTranslations();
 
   const profileAvatarChange = useToggle({ name: "profile-avatar-change" });
-  const avatar = useFile("avatar", { mimeTypes, maxSizeBytes: 10_000_000 });
+  const avatar = useFile("avatar", { mimeTypes, maxSizeBytes });
 
   const mutation = useMutation({
     perform: () => {
@@ -72,19 +74,7 @@ export function ProfileAvatarChange() {
             {...profileAvatarChange.props.target}
           >
             <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
-              <label
-                className="c-button"
-                data-cross="center"
-                data-disp="flex"
-                data-main="center"
-                data-md-grow="1"
-                data-minw="0"
-                data-variant="secondary"
-                data-wrap="nowrap"
-                tabIndex={0}
-                {...ui.Gap.cluster}
-                {...avatar.label.props}
-              >
+              <ui.FileButton data-md-grow="1" file={avatar}>
                 {avatar.isSelected ? (
                   <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />
                 ) : (
@@ -95,15 +85,8 @@ export function ProfileAvatarChange() {
                   {avatar.isSelected ? avatar.data.name : t("profile.avatar.select_file.cta")}
                 </span>
 
-                <input
-                  className="c-visually-hidden"
-                  disabled={avatar.isSelected}
-                  onChange={avatar.actions.selectFile}
-                  required
-                  type="file"
-                  {...avatar.input.props}
-                />
-              </label>
+                <ui.DropzoneInput file={avatar} />
+              </ui.FileButton>
 
               <ui.IconButton
                 aria-label={t("app.save")}

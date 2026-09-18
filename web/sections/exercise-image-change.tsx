@@ -60,6 +60,7 @@ export function ExerciseImageChange() {
           data-variant="ghost"
           onClick={exerciseImageChange.enable}
           type="button"
+          {...exerciseImageChange.props.controller}
         >
           <ImageUp data-size="sm" />
           {t("exercise.image.change.cta")}
@@ -76,38 +77,16 @@ export function ExerciseImageChange() {
           {...exerciseImageChange.props.target}
         >
           <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
-            <label
-              className="c-button"
-              data-cross="center"
-              data-disp="flex"
-              data-grow="1"
-              data-main="center"
-              data-minw="0"
-              data-variant="secondary"
-              data-wrap="nowrap"
-              tabIndex={0}
-              {...ui.Gap.cluster}
-              {...image.label.props}
-            >
-              {image.isSelected ? (
-                <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />
-              ) : (
-                <ImageUp data-shrink="0" data-size="sm" />
-              )}
+            <ui.FileButton data-grow="1" file={image}>
+              {image.isSelected && <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />}
+              {image.isSelected && <ImageUp data-shrink="0" data-size="sm" />}
 
               <span data-transform="truncate">
                 {image.isSelected ? image.data.name : t("exercise.image.change.select.cta")}
               </span>
 
-              <input
-                className="c-visually-hidden"
-                disabled={image.isSelected}
-                onChange={image.actions.selectFile}
-                required
-                type="file"
-                {...image.input.props}
-              />
-            </label>
+              <ui.DropzoneInput file={image} />
+            </ui.FileButton>
 
             <ui.IconButton
               aria-label={t("app.save")}
