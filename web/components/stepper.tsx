@@ -16,6 +16,7 @@ export function Stepper(props: {
   width?: number;
   disabled?: boolean;
   variant?: "default" | "compact" | "fill";
+  leading?: React.ReactNode;
   children?: React.ReactNode;
 }) {
   const variant = props.variant ?? "default";
@@ -41,6 +42,8 @@ export function Stepper(props: {
       data-wrap="nowrap"
       style={width(props.width)}
     >
+      {props.leading}
+
       <button
         aria-label={`${props.label} −${props.step}`}
         data-color="neutral-400"

@@ -76,7 +76,7 @@ g:hover > .chart-point {
 [data-stepper] > button {
   inline-size: 34px;
 }
-[data-stepper] > input {
+[data-stepper] > input[type="number"] {
   inline-size: var(--stepper-input);
 }
 [data-stepper="fill"] > button {
@@ -89,7 +89,7 @@ g:hover > .chart-point {
   [data-stepper="default"] > button {
     inline-size: 24px;
   }
-  [data-stepper="default"] > input {
+  [data-stepper="default"] > input[type="number"] {
     inline-size: 0;
   }
   [data-stepper="default"] > [data-unit] {

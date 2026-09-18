@@ -52,21 +52,27 @@ export function BodyWeightMeasure() {
         {t("measurements.body_weight.measure.date.label")}
       </label>
 
-      <input
-        className="c-input"
-        data-minw="0"
-        data-shrink="0"
-        data-variant="transparent"
-        data-width="auto"
-        type="date"
-        {...measuredOn.input.props}
-        max={today}
-      />
-
       <ui.Stepper
         disabled={mutation.isLoading}
         field={weight}
         label={t("measurements.body_weight.measure.weight.label")}
+        leading={
+          <input
+            className="c-input"
+            data-bcr="neutral-800"
+            data-br="none"
+            data-bs="none"
+            data-bsr="solid"
+            data-bwr="hairline"
+            data-minw="0"
+            data-shrink="0"
+            data-variant="transparent"
+            data-width="auto"
+            type="date"
+            {...measuredOn.input.props}
+            max={today}
+          />
+        }
         max={500}
         min={0}
         step={0.05}
