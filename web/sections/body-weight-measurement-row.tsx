@@ -9,11 +9,6 @@ import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct"
 import { BodyWeightMeasurementRemove } from "./body-weight-measurement-remove";
 import { BodyWeightReferenceSet } from "./body-weight-reference-set";
 
-const date = { minWidth: 0 };
-const first = { borderTopColor: "transparent" };
-const day = bg.Rhythm(100).times(1).width;
-const delta = bg.Rhythm(56).times(1).minWidth;
-
 export function BodyWeightMeasurementRow(props: {
   measurement: BodyWeightMeasurement;
   previous: BodyWeightMeasurement | undefined;
@@ -34,7 +29,7 @@ export function BodyWeightMeasurementRow(props: {
       data-md-gap="2"
       data-stack="x"
       data-wrap="nowrap"
-      style={props.first ? first : undefined}
+      first={props.first}
       {...ui.Spacing.rowCompact}
     >
       {open && (
@@ -55,11 +50,15 @@ export function BodyWeightMeasurementRow(props: {
             data-stack="x"
             data-transform="nowrap"
             onClick={bodyWeightMeasurementCorrect.enable}
-            style={date}
+            style={{ minWidth: 0 }}
             type="button"
             {...ui.Gap.inline}
           >
-            <span data-shrink="0" data-transform="font-variant-numeric" style={day}>
+            <span
+              data-shrink="0"
+              data-transform="font-variant-numeric"
+              {...bg.Rhythm(100).times(1).style.width}
+            >
               {DateFormat.day(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
             </span>
 
@@ -84,7 +83,13 @@ export function BodyWeightMeasurementRow(props: {
             })}
           </button>
 
-          <div data-fs="xs" data-main="end" data-shrink="0" data-stack="x" style={delta}>
+          <div
+            data-fs="xs"
+            data-main="end"
+            data-shrink="0"
+            data-stack="x"
+            {...bg.Rhythm(56).times(1).style.minWidth}
+          >
             <ui.BodyWeightDelta
               current={props.measurement.weight}
               goal={props.goal}
