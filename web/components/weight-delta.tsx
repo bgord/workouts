@@ -1,6 +1,6 @@
 import { Triangle } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
-import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
+import { WeightFormat } from "../services/weight-format";
 import { Gap } from "./gap";
 
 const color = (positive: boolean, goal: BodyWeightGoalOptions | undefined) => {
@@ -9,14 +9,15 @@ const color = (positive: boolean, goal: BodyWeightGoalOptions | undefined) => {
   return positive ? "positive-400" : "danger-400";
 };
 
-export function BodyWeightDelta(
+export function WeightDelta(
   props: {
     current: number;
     previous: number | undefined;
-    goal: BodyWeightGoalOptions | undefined;
+    goal?: BodyWeightGoalOptions;
+    decimals?: number;
   } & React.JSX.IntrinsicElements["span"],
 ) {
-  const { previous, current, goal, ...rest } = props;
+  const { previous, current, goal, decimals, ...rest } = props;
 
   if (previous === undefined) return null;
 
@@ -44,7 +45,7 @@ export function BodyWeightDelta(
         strokeWidth={0}
       />
 
-      {WeightFormat.kilograms(Math.abs(difference), BodyWeightDecimals)}
+      {WeightFormat.kilograms(Math.abs(difference), decimals)}
 
       {" kg"}
     </span>

@@ -71,9 +71,11 @@ export function ExerciseHistoryRow(props: {
               })}
             </span>
 
-            <span data-fs="xs">
-              <ui.DeltaKg current={props.performance.bestEstimate} previous={props.previous?.bestEstimate} />
-            </span>
+            <ui.WeightDelta
+              current={props.performance.bestEstimate}
+              data-fs="xs"
+              previous={props.previous?.bestEstimate}
+            />
           </div>
 
           <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
@@ -90,9 +92,11 @@ export function ExerciseHistoryRow(props: {
               })}
             </span>
 
-            <span data-fs="xs">
-              <ui.DeltaKg current={props.performance.volume} previous={props.previous?.volume} />
-            </span>
+            <ui.WeightDelta
+              current={props.performance.volume}
+              data-fs="xs"
+              previous={props.previous?.volume}
+            />
           </div>
         </div>
       </div>

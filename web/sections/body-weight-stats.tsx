@@ -3,6 +3,7 @@ import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
+import { BodyWeightDecimals } from "../services/weight-format";
 
 export function BodyWeightStats(props: VO.BodyWeightStats) {
   const t = useTranslations();
@@ -19,9 +20,10 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
         <ui.TileValue>
           <ui.BodyWeightValue weight={props.latest.weight} />
 
-          <ui.BodyWeightDelta
+          <ui.WeightDelta
             current={props.latest.weight}
             data-fs="xs"
+            decimals={BodyWeightDecimals}
             goal={props.reference?.goal}
             previous={props.previous?.weight}
           />
@@ -41,9 +43,10 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
         <ui.TileValue>
           <ui.BodyWeightValue weight={props.week.average} />
 
-          <ui.BodyWeightDelta
+          <ui.WeightDelta
             current={props.week.average}
             data-fs="xs"
+            decimals={BodyWeightDecimals}
             goal={props.reference?.goal}
             previous={props.previousWeek?.average}
           />
@@ -72,8 +75,9 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
           {props.latest.weight === props.baseline.weight ? (
             <ui.BodyWeightValue weight={0} />
           ) : (
-            <ui.BodyWeightDelta
+            <ui.WeightDelta
               current={props.latest.weight}
+              decimals={BodyWeightDecimals}
               goal={props.reference?.goal}
               previous={props.baseline.weight}
             />

@@ -1,6 +1,6 @@
 export const Gap = {
   // Text lines in a row body (RowBody, exercise name + sets/reps), icon + text badges
-  // (Chip, Eyebrow, DeltaKg, RirBadge, BodyWeightDelta, SetDots, TextLink, ButtonBack),
+  // (Chip, Eyebrow, WeightDelta, RirBadge, SetDots, TextLink, ButtonBack),
   // icon-button groups (measurement row, workout exercise row controls), DialogFooter buttons,
   // input + button inline forms (rename, note, description, category add)
   inline: { "data-gap": "1" },

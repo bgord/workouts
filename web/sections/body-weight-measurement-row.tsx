@@ -4,6 +4,7 @@ import type { BodyWeightGoalOptions } from "../../modules/measurements/value-obj
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
+import { BodyWeightDecimals } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
 import { BodyWeightMeasurementRemove } from "./body-weight-measurement-remove";
 import { BodyWeightReferenceSet } from "./body-weight-reference-set";
@@ -87,8 +88,9 @@ export function BodyWeightMeasurementRow(props: {
             data-stack="x"
             {...bg.Rhythm(56).times(1).style.minWidth}
           >
-            <ui.BodyWeightDelta
+            <ui.WeightDelta
               current={props.measurement.weight}
+              decimals={BodyWeightDecimals}
               goal={props.goal}
               previous={props.previous?.weight}
             />
