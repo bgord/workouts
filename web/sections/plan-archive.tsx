@@ -31,19 +31,14 @@ export function PlanArchive() {
 
   return (
     <>
-      <button
+      <ui.IconButton
         aria-label={t("plan.archive.cta")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="neutral-0"
-        data-variant="ghost"
         onClick={planArchive.enable}
         title={t("plan.archive.header")}
-        type="button"
         {...planArchive.props.controller}
       >
         <Archive data-size="sm" />
-      </button>
+      </ui.IconButton>
 
       <ui.Dialog {...planArchive}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={planArchive.disable}>
