@@ -1,3 +1,4 @@
+/* cSpell:disable */
 type NotificationLayoutConfig = {
   intro: string;
   cta: string;

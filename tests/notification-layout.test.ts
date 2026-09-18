@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import { describe, expect, test } from "bun:test";
 import * as Auth from "+auth";
 

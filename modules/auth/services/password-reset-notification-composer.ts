@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import * as v from "valibot";
+import { NotificationLayout } from "./notification-layout";
 
 export class PasswordResetNotificationComposer {
   compose(url: tools.UrlWithoutSlashType): bg.MailerTemplateMessage {
@@ -8,7 +9,12 @@ export class PasswordResetNotificationComposer {
       subject: v.parse(bg.MailerSubject, "Reset your Workouts password"),
       html: v.parse(
         bg.MailerContentHtml,
-        `<p>Click to reset your password: <a href="${url}">Reset password</a></p>`,
+        NotificationLayout.render({
+          intro: "We received a request to reset the password for this account. Choose a new one using the button below.",
+          cta: "Reset password",
+          url,
+          note: "The link expires in 1 hour. If you didn't ask for a reset, ignore this email — your password stays the same.",
+        }),
       ),
     };
   }
