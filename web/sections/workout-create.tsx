@@ -5,6 +5,7 @@ import * as ui from "../components";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { WorkoutDatePicker } from "./workout-date-picker";
+import { WorkoutSectionPicker } from "./workout-section-picker";
 
 export function WorkoutCreate() {
   const t = bg.useTranslations();
@@ -93,50 +94,7 @@ export function WorkoutCreate() {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.section}
         >
-          {plan && (
-            <div data-stack="y" {...ui.Gap.field}>
-              <div className="c-label">{t("workout.create.section.label")}</div>
-
-              <ul data-stack="y" {...ui.Gap.cluster}>
-                {plan.sections.map((option) => {
-                  const selected = option.id === planSectionId.value;
-
-                  return (
-                    <li key={option.id}>
-                      <ui.RadioTile selected={selected}>
-                        <input
-                          checked={selected}
-                          className="c-visually-hidden"
-                          name={planSectionId.input.props.name}
-                          onChange={planSectionId.input.props.onChange}
-                          type="radio"
-                          value={option.id}
-                        />
-
-                        <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Gap.inline}>
-                          <div data-color="neutral-100" data-fs="sm" data-fw="medium">
-                            {option.name}
-                          </div>
-
-                          <ui.Meta truncate>
-                            {option.exerciseInstructions
-                              .map((instruction) => instruction.exercise.name)
-                              .join(" · ")}
-                          </ui.Meta>
-                        </div>
-
-                        <ui.Meta data-shrink="0">
-                          {t("workout.create.section.exercises", {
-                            count: option.exerciseInstructions.length,
-                          })}
-                        </ui.Meta>
-                      </ui.RadioTile>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
+          {plan && <WorkoutSectionPicker field={planSectionId} sections={plan.sections} />}
 
           <WorkoutDatePicker field={scheduledFor} {...workoutCreateCustomDate} />
 
