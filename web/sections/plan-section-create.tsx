@@ -100,9 +100,9 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           aria-label={t("plan.section.create.cta")}
           className="c-input"
           data-grow="1"
+          data-minw="0"
           data-variant="transparent"
           placeholder={t("plan.section.create.placeholder")}
-          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.planSectionName.pattern)}
           {...planSectionName.input.props}
         />

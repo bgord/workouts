@@ -56,8 +56,8 @@ export function PlanSectionRename(
           aria-label={t("plan.section.rename.label")}
           className="c-input"
           data-grow="1"
+          data-minw="0"
           data-variant="transparent"
-          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.planSectionName.pattern)}
           {...planSectionName.input.props}
         />

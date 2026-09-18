@@ -58,9 +58,9 @@ export function PlanName() {
   return (
     <form
       data-grow="1"
+      data-minw="0"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
-      {...bg.Rhythm().times(0).style.minWidth}
       {...ui.Gap.cluster}
       {...planRename.props.target}
     >
@@ -69,8 +69,8 @@ export function PlanName() {
           aria-label={t("plan.rename.label")}
           className="c-input"
           data-grow="1"
+          data-minw="0"
           data-variant="transparent"
-          {...bg.Rhythm().times(0).style.minWidth}
           {...bg.Form.input(Form.name.pattern)}
           {...planName.input.props}
         />
