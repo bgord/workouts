@@ -1,4 +1,5 @@
 export * from "./action-hint";
+export * from "./add-button";
 export * from "./add-placeholder";
 export * from "./avatar";
 export * from "./body-weight-delta";

@@ -61,26 +61,15 @@ export function WorkoutExerciseAdd() {
         last
         {...ui.Spacing.row}
       >
-        <button
-          data-color="neutral-400"
-          data-cross="center"
-          data-cursor="pointer"
-          data-fs="sm"
-          data-fw="medium"
-          data-grow="1"
-          data-hover-color="neutral-0"
-          data-stack="x"
-          data-wrap="nowrap"
+        <ui.AddButton
           disabled={!workout.actions.exerciseAdd.enabled}
           onClick={workoutExerciseAdd.enable}
-          type="button"
-          {...ui.Gap.related}
           {...workoutExerciseAdd.props.controller}
         >
           <ui.AddPlaceholder />
 
           {t("workout.exercise.add.cta")}
-        </button>
+        </ui.AddButton>
 
         <ui.ActionHint {...workout.actions.exerciseAdd} data-shrink="0" />
       </ui.HairlineBlock>

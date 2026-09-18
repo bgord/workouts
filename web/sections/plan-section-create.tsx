@@ -34,26 +34,15 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   if (planSectionCreate.off) {
     return (
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
-        <button
-          data-color="neutral-400"
-          data-cross="center"
-          data-cursor="pointer"
-          data-fs="sm"
-          data-fw="medium"
-          data-grow="1"
-          data-hover-color="neutral-0"
-          data-stack="x"
-          data-wrap="nowrap"
+        <ui.AddButton
           disabled={!props.action.enabled}
           onClick={planSectionCreate.enable}
-          type="button"
-          {...ui.Gap.related}
           {...planSectionCreate.props.controller}
         >
           <ui.AddPlaceholder />
 
           {t("plan.section.create.cta")}
-        </button>
+        </ui.AddButton>
 
         <ui.ActionHint {...props.action} data-shrink="0" />
       </div>
