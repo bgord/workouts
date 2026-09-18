@@ -40,9 +40,3 @@ function LinkBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
     </a>
   );
 }
-
-const LinkBackLink = createLink(LinkBackAnchor);
-
-export const LinkBack: LinkComponent<typeof LinkBackAnchor> = (props) => (
-  <LinkBackLink activeProps={{}} {...props} />
-);
