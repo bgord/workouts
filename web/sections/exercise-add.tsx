@@ -70,25 +70,11 @@ export function ExerciseAdd() {
           {...ui.Gap.section}
         >
           <div data-stack="y" {...ui.Gap.field}>
-            <label
-              data-bc="neutral-700"
-              data-br="md"
-              data-bs={image.isSelected ? "solid" : "dashed"}
-              data-bw="hairline"
-              data-color="neutral-400"
-              data-cross="center"
-              data-cursor="pointer"
-              data-fs="xs"
-              data-hover-bc="brand-500"
-              data-main="center"
+            <ui.Dropzone
               data-overflow="hidden"
-              data-stack="y"
-              data-transform="center"
+              file={image}
               {...bg.Rhythm(144).times(1).style.height}
-              {...ui.Spacing.surface}
-              {...ui.Gap.cluster}
               {...(image.isSelected ? { "data-p": "0" as const } : {})}
-              {...image.label.props}
             >
               {image.isSelected && (
                 <img
@@ -100,22 +86,15 @@ export function ExerciseAdd() {
                   src={image.preview}
                 />
               )}
-              {image.isSelected && (
+              {!image.isSelected && (
                 <>
                   <ImageUp data-color="neutral-500" data-size="md" />
-                  <span data-color="neutral-300">{t("exercise.add.image.cta")}</span>
+                  <ui.DropzoneTitle>{t("exercise.add.image.cta")}</ui.DropzoneTitle>
                 </>
               )}
 
-              <input
-                className="c-visually-hidden"
-                disabled={image.isSelected}
-                onChange={image.actions.selectFile}
-                required
-                type="file"
-                {...image.input.props}
-              />
-            </label>
+              <ui.DropzoneInput file={image} />
+            </ui.Dropzone>
 
             <output
               data-color="neutral-500"
