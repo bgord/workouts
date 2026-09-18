@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
+import { X } from "lucide-react";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
@@ -73,26 +73,11 @@ export function BodyWeightMeasure() {
         unit={t("measurements.body_weight.measure.weight.unit")}
         width={72}
       >
-        <button
+        <ui.StepperSubmit
           aria-label={t("measurements.body_weight.measure.cta")}
-          data-bcl="neutral-800"
-          data-bg="alpha-subtle"
-          data-bsl="solid"
-          data-bwl="hairline"
-          data-color="positive-400"
-          data-cross="center"
-          data-cursor="pointer"
-          data-disp="flex"
-          data-hover-bg="alpha-soft"
-          data-main="center"
-          data-shrink="0"
           disabled={bg.Fields.anyEmpty([measuredOn, weight]) || mutation.isLoading}
           title={t("measurements.body_weight.measure.cta")}
-          type="submit"
-          {...bg.Rhythm(34).times(1).style.square}
-        >
-          <Check data-size="sm" />
-        </button>
+        />
       </ui.Stepper>
 
       <ui.IconButton

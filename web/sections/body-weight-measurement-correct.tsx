@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
+import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
@@ -13,6 +13,8 @@ export function BodyWeightMeasurementCorrect(
   const router = useRouter();
 
   const { toggle } = bg.extractUseToggle(props);
+
+  const today = Temporal.Now.plainDateISO().toString();
 
   const measuredOn = bg.useDateField({
     name: `corrected-measured-on-${props.measurement.id}`,
@@ -55,7 +57,7 @@ export function BodyWeightMeasurementCorrect(
         className="c-input"
         data-variant="transparent"
         data-width="auto"
-        max={Temporal.Now.plainDateISO().toString()}
+        max={today}
         style={{ flexShrink: 0, minWidth: 0 }}
         type="date"
         {...measuredOn.input.props}
@@ -71,30 +73,15 @@ export function BodyWeightMeasurementCorrect(
         unit={t("measurements.body_weight.measure.weight.unit")}
         width={72}
       >
-        <button
+        <ui.StepperSubmit
           aria-label={t("app.save")}
-          data-bcl="neutral-800"
-          data-bg="alpha-subtle"
-          data-bsl="solid"
-          data-bwl="hairline"
-          data-color="positive-400"
-          data-cross="center"
-          data-cursor="pointer"
-          data-disp="flex"
-          data-hover-bg="alpha-soft"
-          data-main="center"
-          data-shrink="0"
           disabled={
             bg.Fields.anyEmpty([measuredOn, weight]) ||
             bg.Fields.allUnchanged([measuredOn, weight]) ||
             mutation.isLoading
           }
           title={t("app.save")}
-          type="submit"
-          {...bg.Rhythm(34).times(1).style.square}
-        >
-          <Check data-size="sm" />
-        </button>
+        />
       </ui.Stepper>
 
       <ui.IconButton

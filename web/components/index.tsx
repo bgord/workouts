@@ -41,6 +41,7 @@ export * from "./sets-reps";
 export * from "./sets-reps-load";
 export * from "./spacing";
 export * from "./stepper";
+export * from "./stepper-submit";
 export * from "./text-link";
 export * from "./tile";
 export * from "./workout-card";
