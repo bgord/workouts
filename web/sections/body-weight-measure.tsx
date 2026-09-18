@@ -6,15 +6,12 @@ import { measurementsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
-const date = { flexShrink: 0, minWidth: 0, width: "auto" };
-const submit = { ...bg.Rhythm(34).times(1).width, ...bg.Rhythm(34).times(1).height };
-
 export function BodyWeightMeasure() {
   const t = bg.useTranslations();
   const router = useRouter();
   const { measurements } = measurementsRoute.useLoaderData();
-  const latest = measurements[0];
 
+  const latest = measurements[0];
   const today = Temporal.Now.plainDateISO().toString();
 
   const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
@@ -43,8 +40,6 @@ export function BodyWeightMeasure() {
     },
   });
 
-  const pristine = measuredOn.unchanged && weight.unchanged;
-
   return (
     <form
       aria-busy={mutation.isLoading}
@@ -61,7 +56,8 @@ export function BodyWeightMeasure() {
       <input
         className="c-input"
         data-variant="transparent"
-        style={date}
+        data-width="auto"
+        style={{ flexShrink: 0, minWidth: 0 }}
         type="date"
         {...measuredOn.input.props}
         max={today}
@@ -90,10 +86,10 @@ export function BodyWeightMeasure() {
           data-hover-bg="alpha-soft"
           data-main="center"
           data-shrink="0"
-          disabled={measuredOn.empty || weight.empty || mutation.isLoading}
-          style={submit}
+          disabled={bg.Fields.anyEmpty([measuredOn, weight]) || mutation.isLoading}
           title={t("measurements.body_weight.measure.cta")}
           type="submit"
+          {...bg.Rhythm(34).times(1).style.square}
         >
           <Check data-size="sm" />
         </button>
@@ -101,9 +97,9 @@ export function BodyWeightMeasure() {
 
       <ui.IconButton
         aria-label={t("app.clear")}
-        data-disp={pristine ? "none" : undefined}
-        data-md-disp={pristine ? "flex" : undefined}
-        disabled={pristine}
+        data-disp={bg.Fields.allUnchanged([measuredOn, weight]) ? "none" : undefined}
+        data-md-disp={bg.Fields.allUnchanged([measuredOn, weight]) ? "flex" : undefined}
+        disabled={bg.Fields.allUnchanged([measuredOn, weight])}
         onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset])}
         title={t("app.clear")}
       >
