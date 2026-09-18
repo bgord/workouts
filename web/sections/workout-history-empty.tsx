@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { SearchX } from "lucide-react";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";

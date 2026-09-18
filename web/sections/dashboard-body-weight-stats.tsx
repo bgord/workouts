@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Form as BodyWeightMeasurementFilters } from "../../app/services/body-weight-measurement-filters-form";
 import * as ui from "../components";

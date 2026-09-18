@@ -70,10 +70,6 @@ export function DropzoneTitle(props: React.JSX.IntrinsicElements["span"]) {
   return <span data-color="neutral-300" {...props} />;
 }
 
-export function DropzoneHint(props: React.JSX.IntrinsicElements["div"]) {
-  return <Meta {...props} />;
-}
-
 export function DropzoneFileName(props: React.JSX.IntrinsicElements["div"]) {
   return <Meta data-color="neutral-100" data-maxw="100%" truncate {...props} />;
 }

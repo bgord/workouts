@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
