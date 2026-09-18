@@ -47,6 +47,7 @@ export const dashboardRoute = createRoute({
   loader: async ({ context }) => ({
     dashboard: await Workouts.dashboard(context.request),
     measurements: await Measurements.listBodyWeight(context.request),
+    bodyWeightStats: await Measurements.getBodyWeightStats(context.request),
   }),
 });
 
@@ -168,7 +169,10 @@ export const measurementsRoute = createRoute({
         ? value["month"]
         : BodyWeightMeasurementFiltersForm.Form.default.month,
   }),
-  loader: async ({ context }) => ({ measurements: await Measurements.listBodyWeight(context.request) }),
+  loader: async ({ context }) => ({
+    measurements: await Measurements.listBodyWeight(context.request),
+    bodyWeightStats: await Measurements.getBodyWeightStats(context.request),
+  }),
 });
 
 const profileRoute = createRoute({

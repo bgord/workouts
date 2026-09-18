@@ -6,9 +6,9 @@ import { BodyWeightStats } from "../sections/body-weight-stats";
 
 export function DashboardBodyWeightStats() {
   const t = bg.useTranslations();
-  const { measurements } = dashboardRoute.useLoaderData();
+  const { bodyWeightStats } = dashboardRoute.useLoaderData();
 
-  if (measurements.length === 0) return null;
+  if (!bodyWeightStats) return null;
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
@@ -16,7 +16,7 @@ export function DashboardBodyWeightStats() {
         {t("measurements.body_weight.header")}
       </ui.EyebrowLink>
 
-      <BodyWeightStats measurements={measurements} />
+      <BodyWeightStats {...bodyWeightStats} />
     </div>
   );
 }

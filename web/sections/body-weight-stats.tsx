@@ -1,35 +1,15 @@
 import { useLanguage, useTranslations } from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
-import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
+import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
 
-const ROLLING_WINDOW_DAYS = 7;
-
-const average = (measurements: ReadonlyArray<BodyWeightMeasurement>) =>
-  measurements.reduce((sum, measurement) => sum + measurement.weight, 0) / measurements.length;
-
-export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightMeasurement> }) {
+export function BodyWeightStats(props: VO.BodyWeightStats) {
   const t = useTranslations();
   const language = useLanguage();
 
-  const latest = props.measurements[0];
-  const previous = props.measurements[1];
-  const reference = props.measurements.find((measurement) => measurement.reference);
-  const baseline = reference ?? props.measurements.at(-1);
+  const { latest, previous, reference, baseline, week, previousWeek } = props;
   const goal = reference?.goal;
-
-  if (!(latest && baseline)) return null;
-
-  const anchor = Temporal.PlainDate.from(latest.measuredOn);
-  const windowStart = anchor.subtract({ days: ROLLING_WINDOW_DAYS - 1 }).toString();
-  const previousWindowStart = anchor.subtract({ days: ROLLING_WINDOW_DAYS * 2 - 1 }).toString();
-
-  const window = props.measurements.filter((measurement) => measurement.measuredOn >= windowStart);
-  const previousWindow = props.measurements.filter(
-    (measurement) => measurement.measuredOn >= previousWindowStart && measurement.measuredOn < windowStart,
-  );
-  const weekAverage = average(window);
 
   const day = (iso: string) => DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(iso));
 
@@ -57,20 +37,18 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
         </ui.TileHeader>
 
         <ui.TileValue>
-          <ui.BodyWeightValue weight={weekAverage} />
+          <ui.BodyWeightValue weight={week.average} />
 
-          {previousWindow.length > 0 && (
-            <ui.BodyWeightDelta
-              current={weekAverage}
-              data-fs="xs"
-              goal={goal}
-              previous={average(previousWindow)}
-            />
-          )}
+          <ui.BodyWeightDelta
+            current={week.average}
+            data-fs="xs"
+            goal={goal}
+            previous={previousWeek?.average}
+          />
         </ui.TileValue>
 
         <ui.TileContext>
-          {t("measurements.body_weight.stats.week_average.count", { count: window.length })}
+          {t("measurements.body_weight.stats.week_average.count", { count: week.count })}
         </ui.TileContext>
       </ui.Tile>
 
