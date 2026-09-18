@@ -10,7 +10,7 @@ export function PlanRestore() {
   const { plan } = planRoute.useLoaderData();
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/plans/${plan.data.id}/restore`, {
         method: "POST",
         credentials: "include",

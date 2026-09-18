@@ -26,7 +26,7 @@ export function ExerciseCategories() {
   const refresh = () => router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
 
   const assign = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch("/api/exercises/category/assign", {
         method: "POST",
         credentials: "include",

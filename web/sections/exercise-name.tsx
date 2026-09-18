@@ -15,7 +15,7 @@ export function ExerciseName() {
   const name = bg.useTextField({ ...Form.name.field, defaultValue: exercise.data.name });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/exercises/${exercise.data.id}`, {
         method: "PATCH",
         credentials: "include",
@@ -23,7 +23,6 @@ export function ExerciseName() {
       }),
     onSuccess: async () => {
       exerciseNameUpdate.disable();
-
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
     },
   });

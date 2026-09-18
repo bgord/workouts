@@ -12,7 +12,7 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
   const planSectionRemove = bg.useToggle({ name: `plan-section-remove-${props.section.id}` });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/plans/${props.plan.id}/section/${props.section.id}`, {
         method: "DELETE",
         credentials: "include",
@@ -20,7 +20,6 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
       }),
     onSuccess: async () => {
       planSectionRemove.disable();
-
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
     },
   });

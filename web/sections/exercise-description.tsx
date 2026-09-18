@@ -17,7 +17,7 @@ export function ExerciseDescription() {
   });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/exercises/${exercise.data.id}`, {
         method: "PATCH",
         credentials: "include",
@@ -25,7 +25,6 @@ export function ExerciseDescription() {
       }),
     onSuccess: async () => {
       exerciseDescriptionUpdate.disable();
-
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
     },
   });

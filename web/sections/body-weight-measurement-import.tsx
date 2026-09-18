@@ -30,7 +30,6 @@ export function BodyWeightMeasurementImport() {
     onSuccess: async () => {
       bodyWeightMeasurementImport.disable();
       file.actions.clearFile();
-
       await router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true });
     },
   });

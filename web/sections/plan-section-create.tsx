@@ -25,9 +25,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
       }),
     onSuccess: async (_, context) => {
       planSectionCreate.disable();
-
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
-
       bg.Fields.clearAll([planSectionName]);
       context.form?.reset();
     },

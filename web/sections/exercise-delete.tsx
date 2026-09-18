@@ -12,11 +12,9 @@ export function ExerciseDelete() {
   const exerciseDelete = bg.useToggle({ name: "exercise-delete" });
 
   const mutation = bg.useMutation({
-    perform: async () =>
-      fetch(`/api/exercises/${exercise.data.id}`, { method: "DELETE", credentials: "include" }),
+    perform: () => fetch(`/api/exercises/${exercise.data.id}`, { method: "DELETE", credentials: "include" }),
     onSuccess: async () => {
       exerciseDelete.disable();
-
       await navigate({ search: Form.default, to: "/catalog" });
     },
   });

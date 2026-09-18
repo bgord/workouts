@@ -29,7 +29,6 @@ export function ExerciseImageChange() {
     onSuccess: async () => {
       exerciseImageChange.disable();
       image.actions.clearFile();
-
       await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
     },
   });

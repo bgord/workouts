@@ -14,7 +14,7 @@ export function WorkoutDiscard() {
   const workoutDiscard = bg.useToggle({ name: "workout-discard" });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/workouts/${workout.data.id}`, {
         method: "DELETE",
         credentials: "include",

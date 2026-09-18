@@ -40,9 +40,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
       }),
     onSuccess: async (_, context) => {
       planSectionExerciseInstructionAdd.disable();
-
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
-
       bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax]);
       context.form?.reset();
     },

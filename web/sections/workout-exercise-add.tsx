@@ -32,9 +32,7 @@ export function WorkoutExerciseAdd() {
       }),
     onSuccess: async (_, context) => {
       workoutExerciseAdd.disable();
-
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
-
       bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax]);
       context.form?.reset();
     },

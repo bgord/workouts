@@ -14,7 +14,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
   const name = bg.useTextField({ ...Form.name.field, defaultValue: props.name });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/exercises/category/${props.id}`, {
         method: "PATCH",
         credentials: "include",

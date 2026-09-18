@@ -12,11 +12,9 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
   const exerciseCategoryDelete = bg.useToggle({ name: `exercise-category-delete-${props.id}` });
 
   const mutation = bg.useMutation({
-    perform: async () =>
-      fetch(`/api/exercises/category/${props.id}`, { method: "DELETE", credentials: "include" }),
+    perform: () => fetch(`/api/exercises/category/${props.id}`, { method: "DELETE", credentials: "include" }),
     onSuccess: async () => {
       exerciseCategoryDelete.disable();
-
       await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
     },
   });

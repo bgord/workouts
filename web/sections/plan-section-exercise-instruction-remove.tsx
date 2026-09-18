@@ -18,7 +18,7 @@ export function PlanSectionExerciseInstructionRemove(props: {
   const router = useRouter();
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(
         `/api/plans/${props.plan.id}/section/${props.section.id}/exercise-instruction/${props.exerciseInstruction.id}`,
         {

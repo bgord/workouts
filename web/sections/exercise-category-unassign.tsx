@@ -10,7 +10,7 @@ export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; ca
   const router = useRouter();
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch("/api/exercises/category/unassign", {
         method: "POST",
         credentials: "include",
@@ -19,9 +19,8 @@ export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; ca
           exerciseCategoryId: props.category.id,
         }),
       }),
-    onSuccess: async () => {
-      await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
-    },
+    onSuccess: async () =>
+      router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true }),
   });
 
   return (

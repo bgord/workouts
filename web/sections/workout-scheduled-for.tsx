@@ -29,7 +29,6 @@ export function WorkoutScheduledFor() {
       }),
     onSuccess: async () => {
       workoutReschedule.disable();
-
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
     },
   });

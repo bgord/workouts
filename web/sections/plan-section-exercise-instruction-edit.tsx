@@ -82,7 +82,6 @@ export function PlanSectionExerciseInstructionEdit(props: {
     onSuccess: async () => {
       planSectionExerciseInstructionEdit.disable();
       planSectionExerciseInstructionPick.disable();
-
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
     },
   });

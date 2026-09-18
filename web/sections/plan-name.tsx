@@ -15,7 +15,7 @@ export function PlanName() {
   const planName = bg.useTextField({ ...Form.name.field, defaultValue: plan.data.name });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/plans/${plan.data.id}/rename`, {
         method: "POST",
         credentials: "include",
@@ -24,7 +24,6 @@ export function PlanName() {
       }),
     onSuccess: async () => {
       planRename.disable();
-
       await router.invalidate({
         filter: (route) => route.id === planRoute.id || route.id === plansRoute.id,
         sync: true,

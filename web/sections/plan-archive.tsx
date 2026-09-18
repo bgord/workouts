@@ -12,7 +12,7 @@ export function PlanArchive() {
   const planArchive = bg.useToggle({ name: "plan-archive" });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/plans/${plan.data.id}/archive`, {
         method: "POST",
         credentials: "include",

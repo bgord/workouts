@@ -13,7 +13,7 @@ export function PlanRemove() {
   const planRemove = bg.useToggle({ name: "plan-remove" });
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/plans/${plan.data.id}`, {
         method: "DELETE",
         credentials: "include",

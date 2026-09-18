@@ -10,7 +10,7 @@ export function PlanEditingEnable() {
   const { plan } = planRoute.useLoaderData();
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/plans/${plan.data.id}/editing/enable`, {
         method: "POST",
         credentials: "include",

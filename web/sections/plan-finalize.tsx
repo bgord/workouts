@@ -10,7 +10,7 @@ export function PlanFinalize() {
   const { plan } = planRoute.useLoaderData();
 
   const mutation = bg.useMutation({
-    perform: async () =>
+    perform: () =>
       fetch(`/api/plans/${plan.data.id}/finalize`, {
         method: "POST",
         credentials: "include",
