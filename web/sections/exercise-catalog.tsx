@@ -16,11 +16,6 @@ export function ExerciseCatalog() {
 
   const nameInput = useRef<HTMLInputElement>(null);
 
-  const name = bg.useTextField({
-    name: ExerciseCatalogFiltersForm.Form.name.field.name,
-    defaultValue: search.name ?? "",
-  });
-
   const categories = categoryList.on ? exerciseCategories.data : exerciseCategories.data.slice(0, 5);
 
   const hidden = exerciseCategories.data.length - categories.length;
@@ -61,18 +56,16 @@ export function ExerciseCatalog() {
             data-width="100%"
             id={ExerciseCatalogFiltersForm.Form.name.field.name}
             name={ExerciseCatalogFiltersForm.Form.name.field.name}
-            onChange={(event) => {
-              name.handleChange(event);
-
+            onChange={(event) =>
               navigate({
                 replace: true,
                 search: { category: search.category, name: event.currentTarget.value || undefined },
                 to: "/catalog",
-              });
-            }}
+              })
+            }
             placeholder={t("exercise.catalog.name.placeholder")}
             ref={nameInput}
-            value={name.input.props.value}
+            value={search.name ?? ""}
             {...bg.Autocomplete.off}
           />
         </div>
@@ -90,10 +83,7 @@ export function ExerciseCatalog() {
           data-disp={pristine ? "none" : undefined}
           data-md-disp={pristine ? "flex" : undefined}
           disabled={pristine}
-          onClick={() => {
-            name.clear();
-            navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" });
-          }}
+          onClick={() => navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" })}
           title={t("app.clear")}
         >
           <X data-size="sm" />
