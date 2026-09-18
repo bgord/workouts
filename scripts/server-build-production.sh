@@ -27,6 +27,10 @@ step_start "scripts/server-{start,backup}-production.sh copy"
 cp scripts/server-{start,backup}-production.sh $OUTPUT_DIRECTORY
 step_end "scripts/server-{start,backup}-production.sh copy"
 
+step_start "scripts/production-account-create.sh copy"
+cp scripts/production-account-create.sh $OUTPUT_DIRECTORY
+step_end "scripts/production-account-create.sh copy"
+
 step_start "package.json copy"
 cp package.json $OUTPUT_DIRECTORY
 step_end "package.json copy"
@@ -60,6 +64,10 @@ step_end "Temporary file directory directory create"
 step_start "App compile"
 bun build index.ts --outdir "$OUTPUT_DIRECTORY" --target bun --production --minify --sourcemap --metafile
 step_end "App compile"
+
+step_start "Account create script compile"
+bun build scripts/account-create.ts --outdir "$OUTPUT_DIRECTORY/scripts" --target bun --production --minify --sourcemap
+step_end "Account create script compile"
 
 ./bgord-scripts/css-purge.sh
 
