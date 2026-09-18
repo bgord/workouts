@@ -29,23 +29,20 @@ export function WorkoutDiscard() {
 
   if (!workout.actions.discard.available) return null;
 
+  const name = t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName });
+
   return (
     <>
-      <button
+      <ui.IconButton
         aria-label={t("workout.discard.cta")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="danger-400"
-        data-variant="ghost"
+        disabled={!workout.actions.discard.enabled}
         onClick={workoutDiscard.enable}
-        title={t("workout.discard.title", {
-          name: t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName }),
-        })}
-        type="button"
+        title={t("workout.discard.title", { name })}
+        tone="danger"
         {...workoutDiscard.props.controller}
       >
         <Trash2 data-size="sm" />
-      </button>
+      </ui.IconButton>
 
       <ui.Dialog {...workoutDiscard}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutDiscard.disable}>
@@ -53,14 +50,7 @@ export function WorkoutDiscard() {
         </ui.DialogHeader>
 
         <div data-stack="y" {...ui.Gap.related}>
-          <ui.DialogInfo>
-            {t("workout.discard.info", {
-              name: t("workout.title", {
-                plan: workout.data.planName,
-                section: workout.data.planSectionName,
-              }),
-            })}
-          </ui.DialogInfo>
+          <ui.DialogInfo>{t("workout.discard.info", { name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
 
