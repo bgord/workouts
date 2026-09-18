@@ -40,6 +40,7 @@ export * from "./separator";
 export * from "./set-dots";
 export * from "./sets-reps";
 export * from "./sets-reps-load";
+export * from "./show-more-link";
 export * from "./spacing";
 export * from "./stepper";
 export * from "./stepper-submit";

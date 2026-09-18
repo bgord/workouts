@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
@@ -66,19 +66,11 @@ export function BodyWeightMeasurementList() {
       </ul>
 
       {(hidden > 0 || all.on) && (
-        <ui.TextLink onClick={all.toggle}>
-          {all.on ? (
-            <>
-              {t("measurements.body_weight.history.less")}
-              <ChevronUp data-size="xs" />
-            </>
-          ) : (
-            <>
-              {t("measurements.body_weight.history.more", { count: hidden })}
-              <ChevronDown data-size="xs" />
-            </>
-          )}
-        </ui.TextLink>
+        <ui.ShowMoreLink
+          less={t("measurements.body_weight.history.less")}
+          more={t("measurements.body_weight.history.more", { count: hidden })}
+          {...all}
+        />
       )}
     </div>
   );

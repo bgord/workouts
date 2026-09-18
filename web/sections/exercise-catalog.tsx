@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp, Search, SearchX, X } from "lucide-react";
+import { Search, SearchX, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
@@ -123,19 +123,11 @@ export function ExerciseCatalog() {
 
         {(hidden > 0 || categoryList.on) && (
           <li>
-            <ui.TextLink onClick={categoryList.toggle}>
-              {categoryList.on ? (
-                <>
-                  {t("exercise.catalog.categories.less")}
-                  <ChevronUp data-size="xs" />
-                </>
-              ) : (
-                <>
-                  {t("exercise.catalog.categories.more", { count: hidden })}
-                  <ChevronDown data-size="xs" />
-                </>
-              )}
-            </ui.TextLink>
+            <ui.ShowMoreLink
+              less={t("exercise.catalog.categories.less")}
+              more={t("exercise.catalog.categories.more", { count: hidden })}
+              {...categoryList}
+            />
           </li>
         )}
       </ul>
