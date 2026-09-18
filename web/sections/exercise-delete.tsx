@@ -40,10 +40,10 @@ export function ExerciseDelete() {
           {t("exercise.delete.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Gap.related}>
+        <ui.DialogBody>
           <ui.DialogInfo>{t("exercise.delete.info", { name: exercise.data.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
-        </div>
+        </ui.DialogBody>
 
         <form
           aria-busy={mutation.isLoading}

@@ -61,7 +61,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
           {t("workout.set.remove.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Gap.related}>
+        <ui.DialogBody>
           <ui.DialogInfo>
             {t("workout.set.remove.info", {
               setNumber: props.loggedSet.setNumber,
@@ -69,7 +69,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
             })}
           </ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
-        </div>
+        </ui.DialogBody>
 
         <form
           aria-busy={mutation.isLoading}

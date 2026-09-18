@@ -47,10 +47,10 @@ export function ProfileAccountDelete() {
           {t("profile.delete_account.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Gap.related}>
+        <ui.DialogBody>
           <ui.DialogInfo>{t("profile.delete_account.info")}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
-        </div>
+        </ui.DialogBody>
 
         <form
           aria-busy={mutation.isLoading}

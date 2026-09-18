@@ -40,10 +40,10 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
           {t("exercise.category.delete.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Gap.related}>
+        <ui.DialogBody>
           <ui.DialogInfo>{t("exercise.category.delete.info", { name: props.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
-        </div>
+        </ui.DialogBody>
 
         <form
           aria-busy={mutation.isLoading}

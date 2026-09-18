@@ -62,10 +62,10 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
           {t("workout.exercise.remove.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Gap.related}>
+        <ui.DialogBody>
           <ui.DialogInfo>{t("workout.exercise.remove.info", { name: props.exerciseName })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
-        </div>
+        </ui.DialogBody>
 
         <form
           aria-busy={mutation.isLoading}

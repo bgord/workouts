@@ -45,10 +45,10 @@ export function PlanSectionRemove(props: PlanSection) {
           {t("plan.section.remove.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Gap.related}>
+        <ui.DialogBody>
           <ui.DialogInfo>{t("plan.section.remove.info", { name: props.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
-        </div>
+        </ui.DialogBody>
 
         <form
           aria-busy={mutation.isLoading}

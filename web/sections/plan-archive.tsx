@@ -45,10 +45,10 @@ export function PlanArchive() {
           {t("plan.archive.header")}
         </ui.DialogHeader>
 
-        <div data-stack="y" {...ui.Gap.related}>
+        <ui.DialogBody>
           <ui.DialogInfo>{t("plan.archive.info", { name: plan.data.name })}</ui.DialogInfo>
           <ui.DialogStatus variant="restorable" />
-        </div>
+        </ui.DialogBody>
 
         <form
           aria-busy={mutation.isLoading}

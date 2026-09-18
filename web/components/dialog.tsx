@@ -34,6 +34,10 @@ export function DialogHeader(props: { disabled?: boolean; onClose: () => void; c
   );
 }
 
+export function DialogBody(props: React.JSX.IntrinsicElements["div"]) {
+  return <div data-stack="y" {...Gap.related} {...props} />;
+}
+
 export function DialogInfo(props: { children: React.ReactNode }) {
   return (
     <p data-color="neutral-300" data-fs="sm" data-lh="loose">
