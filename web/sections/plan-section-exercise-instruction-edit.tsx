@@ -177,13 +177,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           )}
 
           {actions.update.available && (
-            <div
-              data-cross="center"
-              data-stack="x"
-              data-wrap="nowrap"
-              style={{ maxWidth: 336 }}
-              {...ui.Gap.cluster}
-            >
+            <ui.Prescription>
               <ui.Stepper
                 disabled={!actions.update.enabled}
                 field={sets}
@@ -212,7 +206,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 {...Form.repsMax.pattern}
                 min={repsMin.value ?? Form.repsMax.pattern.min}
               />
-            </div>
+            </ui.Prescription>
           )}
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}

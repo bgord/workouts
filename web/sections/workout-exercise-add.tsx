@@ -105,13 +105,7 @@ export function WorkoutExerciseAdd() {
             value={exerciseId.value}
           />
 
-          <div
-            data-cross="center"
-            data-stack="x"
-            data-wrap="nowrap"
-            style={{ maxWidth: 336 }}
-            {...ui.Gap.cluster}
-          >
+          <ui.Prescription>
             <ui.Stepper
               field={sets}
               label={t("workout.exercise.add.sets.label")}
@@ -137,7 +131,7 @@ export function WorkoutExerciseAdd() {
               {...Form.repsMax.pattern}
               min={repsMin.value ?? Form.repsMax.pattern.min}
             />
-          </div>
+          </ui.Prescription>
 
           {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 

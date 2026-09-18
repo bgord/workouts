@@ -116,13 +116,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
             value={exerciseId.value}
           />
 
-          <div
-            data-cross="center"
-            data-stack="x"
-            data-wrap="nowrap"
-            style={{ maxWidth: 336 }}
-            {...ui.Gap.cluster}
-          >
+          <ui.Prescription>
             <ui.Stepper
               field={sets}
               label={t("plan.section.exercise.add.sets.label")}
@@ -148,7 +142,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
               {...Form.repsMax.pattern}
               min={repsMin.value ?? Form.repsMax.pattern.min}
             />
-          </div>
+          </ui.Prescription>
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.add.error")}</ui.DialogError>}
 
