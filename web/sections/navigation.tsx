@@ -1,6 +1,7 @@
 import { useTranslations, useWindowDimensions } from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { CalendarCheck, Dumbbell, ListChecks, LogOut, Weight } from "lucide-react";
+import { Form as BodyWeightMeasurementFilters } from "../../app/services/body-weight-measurement-filters-form";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
@@ -61,7 +62,9 @@ function NavigationDesktop() {
 
         <NavigationLink to="/plans">{t("app.plans")}</NavigationLink>
 
-        <NavigationLink to="/measurements">{t("app.measurements")}</NavigationLink>
+        <NavigationLink search={BodyWeightMeasurementFilters.default} to="/measurements">
+          {t("app.measurements")}
+        </NavigationLink>
 
         <NavigationLink to="/profile">
           <ui.Avatar size={ui.AvatarSize.md} />
@@ -107,7 +110,11 @@ function NavigationMobileDrawer() {
         <ListChecks data-size="md" />
       </NavigationLink>
 
-      <NavigationLink title={t("app.measurements")} to="/measurements">
+      <NavigationLink
+        search={BodyWeightMeasurementFilters.default}
+        title={t("app.measurements")}
+        to="/measurements"
+      >
         <Weight data-size="md" />
       </NavigationLink>
 

@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { CircleHelp, Keyboard } from "lucide-react";
+import { Form as BodyWeightMeasurementFilters } from "../../app/services/body-weight-measurement-filters-form";
 import { Form as ExerciseCatalogFilters } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
@@ -24,7 +25,8 @@ export function Shortcuts() {
     [ShortcutDefinitions.GoToCatalog.trigger]: () =>
       navigate({ search: ExerciseCatalogFilters.default, to: "/catalog" }),
     [ShortcutDefinitions.GoToPlans.trigger]: () => navigate({ to: "/plans" }),
-    [ShortcutDefinitions.GoToMeasurements.trigger]: () => navigate({ to: "/measurements" }),
+    [ShortcutDefinitions.GoToMeasurements.trigger]: () =>
+      navigate({ search: BodyWeightMeasurementFilters.default, to: "/measurements" }),
     [ShortcutDefinitions.ToggleHelp.trigger]: shortcuts.toggle,
     [ShortcutDefinitions.CloseHelp.trigger]: shortcuts.disable,
   });

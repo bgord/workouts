@@ -1,66 +1,36 @@
 import * as bg from "@bgord/ui";
-import { X } from "lucide-react";
-import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
-import { DateFormat } from "../services/date-format";
+import { BodyWeightMeasurementFilters } from "./body-weight-measurement-filters";
 import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
 const VISIBLE = 15;
 
 export function BodyWeightMeasurementList() {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const { measurements } = measurementsRoute.useLoaderData();
+  const search = measurementsRoute.useSearch();
 
   const all = bg.useToggle({ name: "body-weight-measurement-list-all" });
-  const month = bg.useTextField({ name: "month", defaultValue: "" });
 
-  const months = [...new Set(measurements.map((measurement) => measurement.measuredOn.slice(0, 7)))];
-
-  const filtered = measurements.filter((measurement) => measurement.measuredOn.startsWith(month.value ?? ""));
-  const visible = month.value || all.on ? filtered : filtered.slice(0, VISIBLE);
+  const filtered = measurements.filter((measurement) =>
+    measurement.measuredOn.startsWith(search.month ?? ""),
+  );
+  const visible = search.month || all.on ? filtered : filtered.slice(0, VISIBLE);
   const hidden = filtered.length - visible.length;
-
-  const reference = measurements.find((measurement) => measurement.reference);
-
-  const previous = (measurement: BodyWeightMeasurement) =>
-    measurements[measurements.indexOf(measurement) + 1];
 
   return (
     <div data-stack="y" {...ui.Gap.block}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
-        <div data-md-grow="1">
-          <ui.Select
-            aria-label={t("measurements.body_weight.history.month.label")}
-            {...month.input.props}
-            {...bg.Autocomplete.off}
-          >
-            <option value="">{t("measurements.body_weight.history.month.all")}</option>
-            {months.map((value) => (
-              <option key={value} value={value}>
-                {DateFormat.month(language, Temporal.PlainDate.from(`${value}-01`))} (
-                {measurements.filter((measurement) => measurement.measuredOn.startsWith(value)).length})
-              </option>
-            ))}
-          </ui.Select>
-        </div>
-
-        {month.value && (
-          <ui.IconButton onClick={month.clear}>
-            <X data-size="sm" />
-          </ui.IconButton>
-        )}
-      </div>
+      <BodyWeightMeasurementFilters />
 
       <ul data-stack="y">
         {visible.map((measurement, index) => (
           <BodyWeightMeasurementRow
             first={index === 0}
-            goal={reference?.goal}
+            goal={measurements.find((measurement) => measurement.reference)?.goal}
             key={measurement.id}
             measurement={measurement}
-            previous={previous(measurement)}
+            previous={measurements[measurements.indexOf(measurement) + 1]}
           />
         ))}
       </ul>

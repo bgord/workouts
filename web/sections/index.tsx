@@ -1,6 +1,7 @@
 export * from "./body-weight-measure";
 export * from "./body-weight-measurement-correct";
 export * from "./body-weight-measurement-export";
+export * from "./body-weight-measurement-filters";
 export * from "./body-weight-measurement-history";
 export * from "./body-weight-measurement-import";
 export * from "./body-weight-measurement-list";
