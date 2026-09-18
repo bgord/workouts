@@ -6,6 +6,7 @@ import * as ui from "../components";
 import { catalogRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
+const maxSizeBytes = 10_000_000;
 
 export function ExerciseAdd() {
   const t = bg.useTranslations();
@@ -16,7 +17,7 @@ export function ExerciseAdd() {
 
   const name = bg.useTextField(Form.name.field);
   const description = bg.useTextField(Form.description.field);
-  const image = bg.useFile("exercise-image", { mimeTypes, maxSizeBytes: 10_000_000 });
+  const image = bg.useFile("exercise-image", { mimeTypes, maxSizeBytes });
 
   const mutation = bg.useMutation({
     perform: () => {
@@ -89,7 +90,7 @@ export function ExerciseAdd() {
               {...(image.isSelected ? { "data-p": "0" as const } : {})}
               {...image.label.props}
             >
-              {image.isSelected ? (
+              {image.isSelected && (
                 <img
                   alt=""
                   data-bg="neutral-0"
@@ -98,7 +99,8 @@ export function ExerciseAdd() {
                   data-width="100%"
                   src={image.preview}
                 />
-              ) : (
+              )}
+              {image.isSelected && (
                 <>
                   <ImageUp data-color="neutral-500" data-size="md" />
                   <span data-color="neutral-300">{t("exercise.add.image.cta")}</span>
@@ -123,7 +125,7 @@ export function ExerciseAdd() {
               data-wrap="nowrap"
               {...ui.Gap.cluster}
             >
-              {image.isSelected ? (
+              {image.isSelected && (
                 <>
                   <span data-transform="truncate">
                     {t("exercise.add.image.selected", { name: image.data.name })}
@@ -133,9 +135,8 @@ export function ExerciseAdd() {
                     {t("exercise.add.image.replace")}
                   </ui.TextLink>
                 </>
-              ) : (
-                t("exercise.add.image.hint")
               )}
+              {!image.isSelected && t("exercise.add.image.hint")}
             </output>
           </div>
 
@@ -173,7 +174,7 @@ export function ExerciseAdd() {
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={exerciseAdd.disable}>
             <ui.ButtonClear
-              disabled={name.unchanged && description.unchanged && !image.isSelected}
+              disabled={bg.Fields.allUnchanged([name, description]) && !image.isSelected}
               onClick={bg.exec([name.clear, description.clear, image.actions.clearFile, mutation.reset])}
             />
 
