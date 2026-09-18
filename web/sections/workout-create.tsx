@@ -1,15 +1,13 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CalendarDays, CalendarPlus } from "lucide-react";
-import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
+import { CalendarPlus } from "lucide-react";
 import * as ui from "../components";
 import { workoutsRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import * as ShortcutDefinitions from "../services/shortcuts";
+import { WorkoutDatePicker } from "./workout-date-picker";
 
 export function WorkoutCreate() {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const router = useRouter();
   const navigate = workoutsRoute.useNavigate();
   const { plan, workouts } = workoutsRoute.useLoaderData();
@@ -17,11 +15,11 @@ export function WorkoutCreate() {
   const workoutCreate = bg.useToggle({ name: "workout-create" });
   const workoutCreateCustomDate = bg.useToggle({ name: "workout-create-custom-date" });
 
-  const today = Temporal.Now.plainDateISO();
-  const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today.toString() });
+  const scheduledFor = bg.useDateField({
+    name: "scheduledFor",
+    defaultValue: Temporal.Now.plainDateISO().toString(),
+  });
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
-
-  const quick = Array.from({ length: 3 }, (_, offset) => today.add({ days: offset }));
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -49,12 +47,6 @@ export function WorkoutCreate() {
       await router.invalidate({ filter: (route) => route.id === workoutsRoute.id, sync: true });
     },
   });
-
-  const label = (date: Temporal.PlainDate, offset: number) => {
-    if (offset === 0) return t("workout.create.when.today");
-    if (offset === 1) return t("workout.create.when.tomorrow");
-    return DateFormat.weekdayWithDay(language, date);
-  };
 
   bg.useShortcuts({
     [ShortcutDefinitions.ScheduleWorkout.trigger]: () => {
@@ -140,52 +132,7 @@ export function WorkoutCreate() {
             </div>
           )}
 
-          <div data-stack="y" {...ui.Gap.field}>
-            <label className="c-label" {...scheduledFor.label.props}>
-              {t("workout.create.when.label")}
-            </label>
-
-            <div data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
-              {quick.map((date, offset) => {
-                const selected = workoutCreateCustomDate.off && scheduledFor.value === date.toString();
-
-                return (
-                  <ui.ChipButton
-                    key={date.toString()}
-                    onClick={() => {
-                      workoutCreateCustomDate.disable();
-                      scheduledFor.set(date.toString());
-                    }}
-                    pressed={selected}
-                  >
-                    {label(date, offset)}
-                  </ui.ChipButton>
-                );
-              })}
-
-              <ui.ChipButton
-                onClick={workoutCreateCustomDate.enable}
-                pressed={workoutCreateCustomDate.on}
-                {...workoutCreateCustomDate.props.controller}
-              >
-                <CalendarDays data-size="xs" />
-                {t("workout.create.when.custom")}
-              </ui.ChipButton>
-            </div>
-
-            {workoutCreateCustomDate.on && (
-              <input
-                className="c-input"
-                data-variant="transparent"
-                data-width="100%"
-                max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-                min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-                type="date"
-                {...scheduledFor.input.props}
-                {...workoutCreateCustomDate.props.target}
-              />
-            )}
-          </div>
+          <WorkoutDatePicker field={scheduledFor} {...workoutCreateCustomDate} />
 
           {mutation.isError && <ui.DialogError>{t("workout.create.error")}</ui.DialogError>}
 
