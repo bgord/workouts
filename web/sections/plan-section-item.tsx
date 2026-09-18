@@ -58,7 +58,7 @@ export function PlanSectionItem(props: {
           </ui.Meta>
         )}
         {actions.sectionRemove.available && planSectionRename.off && (
-          <PlanSectionRemove plan={plan} section={section} />
+          <PlanSectionRemove action={actions.sectionRemove} plan={plan} section={section} />
         )}
       </div>
 

@@ -1,11 +1,16 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
+import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithExercises }) {
+export function PlanSectionRemove(props: {
+  plan: Plan;
+  section: PlanSectionWithExercises;
+  action: ActionState;
+}) {
   const t = bg.useTranslations();
   const router = useRouter();
 
@@ -27,6 +32,8 @@ export function PlanSectionRemove(props: { plan: Plan; section: PlanSectionWithE
   return (
     <>
       <ui.IconButton
+        aria-label={t("plan.section.remove.title", { name: props.section.name })}
+        disabled={!props.action.enabled}
         onClick={planSectionRemove.enable}
         title={t("plan.section.remove.title", { name: props.section.name })}
         tone="danger"
