@@ -1,13 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CalendarDays, CalendarPlus, Circle, CircleCheck } from "lucide-react";
+import { CalendarDays, CalendarPlus } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import * as ui from "../components";
 import { workoutsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import * as ShortcutDefinitions from "../services/shortcuts";
-
-const QUICK_DAYS = 3;
 
 export function WorkoutCreate() {
   const t = bg.useTranslations();
@@ -23,7 +21,7 @@ export function WorkoutCreate() {
   const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today.toString() });
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
 
-  const quick = Array.from({ length: QUICK_DAYS }, (_, offset) => today.add({ days: offset }));
+  const quick = Array.from({ length: 3 }, (_, offset) => today.add({ days: offset }));
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -107,19 +105,7 @@ export function WorkoutCreate() {
 
                   return (
                     <li key={option.id}>
-                      <label
-                        data-bc={selected ? "brand-500" : "neutral-800"}
-                        data-br="md"
-                        data-bs="solid"
-                        data-bw="hairline"
-                        data-cross="center"
-                        data-cursor="pointer"
-                        data-hover-bc={selected ? "brand-500" : "neutral-600"}
-                        data-stack="x"
-                        data-wrap="nowrap"
-                        {...ui.Spacing.surfaceCompact}
-                        {...ui.Gap.related}
-                      >
+                      <ui.RadioTile selected={selected}>
                         <input
                           checked={selected}
                           className="c-visually-hidden"
@@ -128,12 +114,6 @@ export function WorkoutCreate() {
                           type="radio"
                           value={option.id}
                         />
-
-                        {selected ? (
-                          <CircleCheck data-color="brand-400" data-shrink="0" data-size="sm" />
-                        ) : (
-                          <Circle data-color="neutral-600" data-shrink="0" data-size="sm" />
-                        )}
 
                         <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Gap.inline}>
                           <div data-color="neutral-100" data-fs="sm" data-fw="medium">
@@ -152,7 +132,7 @@ export function WorkoutCreate() {
                             count: option.exerciseInstructions.length,
                           })}
                         </ui.Meta>
-                      </label>
+                      </ui.RadioTile>
                     </li>
                   );
                 })}
@@ -198,11 +178,11 @@ export function WorkoutCreate() {
                 className="c-input"
                 data-variant="transparent"
                 data-width="100%"
+                max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+                min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
                 type="date"
                 {...scheduledFor.input.props}
                 {...workoutCreateCustomDate.props.target}
-                max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-                min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
               />
             )}
           </div>
