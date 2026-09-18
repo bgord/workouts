@@ -7,8 +7,6 @@ import type { Plan } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
-
 export function PlanSectionCreate(props: Plan & { action: ActionState }) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -64,7 +62,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
             data-main="center"
             data-shrink="0"
             data-stack="x"
-            style={placeholder}
+            {...bg.Rhythm().times(3).style.square}
           >
             <Plus data-size="sm" />
           </div>
@@ -95,7 +93,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           data-main="center"
           data-shrink="0"
           data-stack="x"
-          style={placeholder}
+          {...bg.Rhythm().times(3).style.square}
         >
           <Plus data-size="sm" />
         </div>

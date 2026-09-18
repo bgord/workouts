@@ -5,8 +5,6 @@ import { Form } from "../../app/services/workout-exercise-add-form";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
-const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
-
 export function WorkoutExerciseAdd() {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -91,7 +89,7 @@ export function WorkoutExerciseAdd() {
             data-main="center"
             data-shrink="0"
             data-stack="x"
-            style={placeholder}
+            {...bg.Rhythm().times(3).style.square}
           >
             <Plus data-size="sm" />
           </div>
