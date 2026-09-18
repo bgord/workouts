@@ -34,7 +34,7 @@ export function ExerciseDescription() {
       <ui.Eyebrow>{t("exercise.add.description.label")}</ui.Eyebrow>
 
       {!exercise.actions.update.enabled && (
-        <p className="c-prose" data-color="neutral-200">
+        <p className="c-prose" data-color="neutral-200" data-fs="sm">
           {exercise.data.description}
         </p>
       )}
@@ -58,6 +58,7 @@ export function ExerciseDescription() {
 
       {exercise.actions.update.enabled && exerciseDescriptionUpdate.on && (
         <form
+          aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.cluster}
@@ -67,6 +68,7 @@ export function ExerciseDescription() {
             aria-label={t("exercise.update.description.label")}
             className="c-textarea"
             data-variant="transparent"
+            data-width="100%"
             rows={3}
             {...bg.Form.textarea(Form.description.pattern)}
             {...description.input.props}
