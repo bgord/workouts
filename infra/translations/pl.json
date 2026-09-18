@@ -152,7 +152,6 @@
   "measurements.body_weight.import.cta": "Importuj",
   "measurements.body_weight.import.error": "Nie udało się zaimportować pomiarów",
   "measurements.body_weight.import.header": "Importuj pomiary",
-  "measurements.body_weight.import.hint": "waga w gramach, jeden wiersz na dzień",
   "measurements.body_weight.import.select.cta": "Wybierz CSV",
   "measurements.body_weight.import.template.cta": "Pobierz szablon CSV",
   "measurements.body_weight.empty": "Brak zapisanych pomiarów",

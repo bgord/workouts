@@ -152,7 +152,6 @@
   "measurements.body_weight.import.cta": "Import",
   "measurements.body_weight.import.error": "Could not import the measurements",
   "measurements.body_weight.import.header": "Import measurements",
-  "measurements.body_weight.import.hint": "weight in grams, one row per day",
   "measurements.body_weight.import.select.cta": "Select CSV",
   "measurements.body_weight.import.template.cta": "CSV template",
   "measurements.body_weight.empty": "No measurements logged yet",
