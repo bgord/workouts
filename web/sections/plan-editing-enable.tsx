@@ -26,7 +26,7 @@ export function PlanEditingEnable() {
   if (!plan.actions.editingEnable.available) return null;
 
   return (
-    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
+    <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
       <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
         <Pencil data-size="sm" />
         {t("plan.editing.enable.cta")}

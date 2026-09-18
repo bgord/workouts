@@ -63,6 +63,7 @@ export function ProfileAvatarChange() {
 
         {profileAvatarChange.on && (
           <form
+            aria-busy={mutation.isLoading}
             data-md-width="100%"
             data-stack="y"
             encType="multipart/form-data"

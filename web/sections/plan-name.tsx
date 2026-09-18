@@ -57,6 +57,7 @@ export function PlanName() {
 
   return (
     <form
+      aria-busy={mutation.isLoading}
       data-grow="1"
       data-minw="0"
       data-stack="y"

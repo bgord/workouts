@@ -75,6 +75,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
 
   return (
     <form
+      aria-busy={mutation.isLoading}
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}

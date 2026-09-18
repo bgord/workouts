@@ -26,7 +26,7 @@ export function PlanRestore() {
   if (!plan.actions.restore.available) return null;
 
   return (
-    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
+    <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
       <button className="c-button" data-variant="primary" disabled={mutation.isLoading} type="submit">
         <ArchiveRestore data-size="sm" />
         {t("plan.restore.cta")}

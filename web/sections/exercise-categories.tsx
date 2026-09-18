@@ -87,6 +87,7 @@ export function ExerciseCategories() {
 
       {assignActionAvailable && assignment.on && (
         <form
+          aria-busy={assign.isLoading}
           data-cross="center"
           data-stack="x"
           data-wrap="nowrap"

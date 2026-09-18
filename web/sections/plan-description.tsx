@@ -65,6 +65,7 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
 
       {planDescriptionUpdate.on && (
         <form
+          aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.cluster}

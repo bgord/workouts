@@ -39,6 +39,7 @@ export function WorkoutSetRemove(props: {
   return (
     <>
       <form
+        aria-busy={mutation.isLoading}
         data-cross="center"
         data-self="start"
         data-stack="x"

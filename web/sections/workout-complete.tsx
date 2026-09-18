@@ -23,6 +23,7 @@ export function WorkoutComplete() {
 
   return (
     <form
+      aria-busy={mutation.isLoading}
       data-cross="center"
       data-stack="x"
       data-wrap="nowrap"

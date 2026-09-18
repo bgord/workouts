@@ -53,6 +53,7 @@ export function WorkoutNote() {
 
       {workoutNoteUpdate.on && (
         <form
+          aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.cluster}

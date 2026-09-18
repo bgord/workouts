@@ -66,6 +66,7 @@ export function ExerciseImageChange() {
 
       {exerciseImageChange.on && (
         <form
+          aria-busy={mutation.isLoading}
           data-stack="y"
           encType="multipart/form-data"
           onSubmit={mutation.handleSubmit}
