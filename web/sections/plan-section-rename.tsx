@@ -2,12 +2,13 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
+import type { ActionState } from "../../modules/action-state";
 import type { Plan, PlanSectionWithExercises } from "../../modules/plans/value-objects/plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
 export function PlanSectionRename(
-  props: { plan: Plan; section: PlanSectionWithExercises } & bg.UseToggleReturnType,
+  props: { plan: Plan; section: PlanSectionWithExercises; action: ActionState } & bg.UseToggleReturnType,
 ) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -32,13 +33,23 @@ export function PlanSectionRename(
     },
   });
 
+  if (!props.action.available) {
+    return (
+      <div className="c-card-title" data-transform="truncate" title={props.section.name}>
+        {props.section.name}
+      </div>
+    );
+  }
+
   if (toggle.off) {
     return (
       <button
         className="c-card-title"
         data-cursor="pointer"
         data-hover-color="brand-300"
+        data-maxw="100%"
         data-transform="truncate"
+        disabled={!props.action.enabled}
         onClick={toggle.enable}
         title={t("plan.section.rename.cta")}
         type="button"

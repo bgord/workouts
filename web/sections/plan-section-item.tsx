@@ -32,15 +32,12 @@ export function PlanSectionItem(props: {
       >
         <ui.ChevronToggle {...planSectionVisibility} />
         <div data-grow="1" data-transform="truncate">
-          {actions.sectionRename.available && (
-            <PlanSectionRename plan={plan} section={section} {...planSectionRename} />
-          )}
-
-          {!actions.sectionRename.available && (
-            <div className="c-card-title" data-transform="truncate" title={section.name}>
-              {section.name}
-            </div>
-          )}
+          <PlanSectionRename
+            action={actions.sectionRename}
+            plan={plan}
+            section={section}
+            {...planSectionRename}
+          />
         </div>
         {planSectionRename.off && (
           <ui.Meta data-shrink="0">
