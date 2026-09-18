@@ -42,21 +42,25 @@ export function DialogInfo(props: { children: React.ReactNode }) {
   );
 }
 
-export function DialogStatus(props: { variant: "irreversible" | "restorable" }) {
+export function DialogStatus(
+  props: React.JSX.IntrinsicElements["div"] & { variant: "irreversible" | "restorable" },
+) {
   const t = bg.useTranslations();
+  const { variant, ...rest } = props;
 
   return (
     <div
-      data-color={props.variant === "irreversible" ? "danger-400" : "positive-400"}
+      data-color={variant === "irreversible" ? "danger-400" : "positive-400"}
       data-cross="center"
       data-fs="sm"
       data-stack="x"
       data-wrap="nowrap"
       {...Gap.cluster}
+      {...rest}
     >
-      {props.variant === "irreversible" && <CircleAlert data-shrink="0" data-size="sm" />}
-      {props.variant === "restorable" && <RotateCcw data-shrink="0" data-size="sm" />}
-      {t(`app.dialog.${props.variant}`)}
+      {variant === "irreversible" && <CircleAlert data-shrink="0" data-size="sm" />}
+      {variant === "restorable" && <RotateCcw data-shrink="0" data-size="sm" />}
+      {t(`app.dialog.${variant}`)}
     </div>
   );
 }

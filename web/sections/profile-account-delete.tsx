@@ -1,11 +1,13 @@
-import { Autocomplete, useMutation, useToggle, useTranslations } from "@bgord/ui";
-import { CircleAlert, UserX } from "lucide-react";
+import { Autocomplete, useMutation, useTextField, useToggle, useTranslations } from "@bgord/ui";
+import { UserX } from "lucide-react";
 import * as ui from "../components";
 
 export function ProfileAccountDelete() {
   const t = useTranslations();
 
   const deleteAccount = useToggle({ name: "delete-account" });
+
+  const challenge = useTextField({ name: "challenge" });
 
   const mutation = useMutation({
     perform: () =>
@@ -26,10 +28,7 @@ export function ProfileAccountDelete() {
           <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
         </div>
 
-        <div data-color="danger-400" data-cross="center" data-fs="xs" data-stack="x" {...ui.Gap.cluster}>
-          <CircleAlert data-size="sm" />
-          {t("app.dialog.irreversible")}
-        </div>
+        <ui.DialogStatus data-fs="xs" variant="irreversible" />
       </div>
 
       <button
@@ -60,19 +59,17 @@ export function ProfileAccountDelete() {
           {...ui.Gap.stack}
         >
           <div data-cross="start" data-stack="y" {...ui.Gap.field}>
-            <label className="c-label" htmlFor="challenge">
+            <label className="c-label" {...challenge.label.props}>
               {t("profile.delete_account.challenge")}
             </label>
             <input
               className="c-input"
-              id="challenge"
-              name="challenge"
               pattern="delete"
               placeholder={t("profile.delete_account.input.placeholder")}
               required
               title={t("profile.delete_account.challenge")}
-              type="text"
               {...Autocomplete.off}
+              {...challenge.input.props}
             />
           </div>
 
@@ -82,7 +79,7 @@ export function ProfileAccountDelete() {
             <button
               className="c-button"
               data-variant="destructive"
-              disabled={mutation.isLoading}
+              disabled={challenge.value !== "delete" || mutation.isLoading}
               type="submit"
             >
               {t("profile.delete_account.cta_primary")}
