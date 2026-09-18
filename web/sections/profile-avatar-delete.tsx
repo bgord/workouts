@@ -1,19 +1,19 @@
-import { useMutation, useToggle, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import * as ui from "../components";
 import { rootRoute } from "../router";
 
 export function ProfileAvatarDelete() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const router = useRouter();
   const { avatarEtag } = rootRoute.useLoaderData();
 
-  const profileAvatarDelete = useToggle({ name: "profile-avatar-delete" });
+  const profileAvatarDelete = bg.useToggle({ name: "profile-avatar-delete" });
 
   const enabled = avatarEtag !== null;
 
-  const mutation = useMutation({
+  const mutation = bg.useMutation({
     perform: () => fetch("/api/preferences/profile-avatar", { method: "DELETE", credentials: "include" }),
     onSuccess: () => router.invalidate({ filter: () => true, sync: true }),
   });

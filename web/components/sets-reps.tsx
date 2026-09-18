@@ -1,8 +1,8 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import type { ExercisePrescriptionType } from "../../modules/workouts/value-objects/exercise-prescription";
 
 export function SetsReps(props: ExercisePrescriptionType) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <span>

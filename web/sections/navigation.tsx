@@ -1,4 +1,4 @@
-import { Rhythm, useTranslations, useWindowDimensions } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { CalendarCheck, Dumbbell, ListChecks, LogOut, Weight } from "lucide-react";
 import { Form as BodyWeightMeasurementFilters } from "../../app/services/body-weight-measurement-filters-form";
@@ -15,7 +15,7 @@ const link = {
 } as const;
 
 export function Navigation() {
-  const { width } = useWindowDimensions();
+  const { width } = bg.useWindowDimensions();
 
   if (!width) return <NavigationShell />; // Don't SSR navigation
   if (width <= 768) return <NavigationMobileDrawer />;
@@ -23,7 +23,7 @@ export function Navigation() {
 }
 
 function NavigationDesktop() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <nav
@@ -34,7 +34,7 @@ function NavigationDesktop() {
       data-top="0"
       data-z="2"
       style={{
-        ...Rhythm(70).times(1).height,
+        ...bg.Rhythm(70).times(1).height,
         backdropFilter: "blur(12px)",
         backgroundColor: "color-mix(in oklab, var(--surface-base) 80%, transparent)",
       }}
@@ -49,7 +49,7 @@ function NavigationDesktop() {
         {...ui.Spacing.gutter}
         {...ui.Gap.section}
       >
-        <ui.Logo />
+        <ui.Logo search={WorkoutHistoryFilters.default} to="/" />
 
         <NavigationLink
           activeOptions={{ exact: true }}
@@ -85,7 +85,7 @@ function NavigationDesktop() {
 }
 
 function NavigationMobileDrawer() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <nav
@@ -104,7 +104,7 @@ function NavigationMobileDrawer() {
       data-z="3"
       {...ui.Spacing.gutter}
     >
-      <ui.Logo />
+      <ui.Logo search={WorkoutHistoryFilters.default} to="/" />
 
       <NavigationLink search={WorkoutHistoryFilters.default} title={t("app.workouts")} to="/workouts">
         <CalendarCheck data-size="md" />
@@ -153,7 +153,7 @@ const NavigationLink: LinkComponent<typeof NavigationAnchor> = (props) => (
 
 function NavigationShell() {
   return (
-    <nav {...Rhythm(70).times(1).style.height}>
+    <nav {...bg.Rhythm(70).times(1).style.height}>
       <div
         data-cross="center"
         data-height="100%"
@@ -163,7 +163,7 @@ function NavigationShell() {
         data-width="100%"
         {...ui.Spacing.gutter}
       >
-        <ui.Logo />
+        <ui.Logo search={WorkoutHistoryFilters.default} to="/" />
       </div>
     </nav>
   );

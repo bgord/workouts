@@ -1,10 +1,10 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { Gap } from "./gap";
 
 function ButtonBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const { href, ...rest } = props;
 
   return (
@@ -31,7 +31,7 @@ export const ButtonBack: LinkComponent<typeof ButtonBackAnchor> = (props) => (
 );
 
 function LinkBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <a className="c-link" data-cross="center" data-stack="x" {...Gap.inline} {...props}>

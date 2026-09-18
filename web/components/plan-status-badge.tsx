@@ -1,4 +1,4 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 
 type Variant = "primary" | "outline" | "positive" | "danger";
@@ -21,7 +21,7 @@ const label: Record<PlanStatusEnum, string> = {
 
 export function PlanStatusBadge(props: { status: PlanStatusEnum } & React.JSX.IntrinsicElements["div"]) {
   const { status, ...rest } = props;
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <div className="c-badge" data-variant={variant[status]} {...rest}>

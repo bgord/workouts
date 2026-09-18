@@ -1,8 +1,8 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { X } from "lucide-react";
 
 export function ButtonClose(props: React.JSX.IntrinsicElements["button"]) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <button

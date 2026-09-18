@@ -1,11 +1,11 @@
 // fallow-ignore-file unused-export
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { rootRoute } from "../router";
 import * as Sections from "../sections";
 
 export function Profile() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const { session } = rootRoute.useLoaderData();
 
   return (

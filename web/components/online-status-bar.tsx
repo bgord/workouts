@@ -1,11 +1,11 @@
-import { OnlineStatus, useOnlineStatus, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Spacing } from "./spacing";
 
 export function OnlineStatusBar() {
-  const t = useTranslations();
-  const status = useOnlineStatus();
+  const t = bg.useTranslations();
+  const status = bg.useOnlineStatus();
 
-  if (status === OnlineStatus.online) return null;
+  if (status === bg.OnlineStatus.online) return null;
 
   return (
     <div

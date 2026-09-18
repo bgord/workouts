@@ -1,9 +1,9 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Languages } from "lucide-react";
 import * as ui from "../components";
 
 export function ProfileLanguageSelector() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>

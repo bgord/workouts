@@ -1,15 +1,15 @@
-import { Autocomplete, useMutation, useTextField, useToggle, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { UserX } from "lucide-react";
 import * as ui from "../components";
 
 export function ProfileAccountDelete() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
-  const deleteAccount = useToggle({ name: "delete-account" });
+  const deleteAccount = bg.useToggle({ name: "delete-account" });
 
-  const challenge = useTextField({ name: "challenge" });
+  const challenge = bg.useTextField({ name: "challenge" });
 
-  const mutation = useMutation({
+  const mutation = bg.useMutation({
     perform: () =>
       fetch("/api/auth/delete-user", {
         method: "POST",
@@ -68,7 +68,7 @@ export function ProfileAccountDelete() {
               placeholder={t("profile.delete_account.input.placeholder")}
               required
               title={t("profile.delete_account.challenge")}
-              {...Autocomplete.off}
+              {...bg.Autocomplete.off}
               {...challenge.input.props}
             />
           </div>

@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { Minus, Plus } from "lucide-react";
-import type React from "react";
 
 const control = bg.Rhythm(34).times(1).height;
 const inputs = { ...control, textAlign: "center" as const, minWidth: 0, paddingInline: 0, outline: "none" };

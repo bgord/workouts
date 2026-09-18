@@ -1,4 +1,4 @@
-import { Rhythm } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 
 export function Header(props: React.JSX.IntrinsicElements["h1"]) {
   return (
@@ -8,7 +8,7 @@ export function Header(props: React.JSX.IntrinsicElements["h1"]) {
       data-fw="black"
       data-md-fs="xl"
       data-transform="truncate"
-      style={{ lineHeight: Rhythm().times(3).px }}
+      style={{ lineHeight: bg.Rhythm().times(3).px }}
       {...props}
     />
   );

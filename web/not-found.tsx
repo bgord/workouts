@@ -1,10 +1,10 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { Form as WorkoutHistoryFilters } from "../app/services/workout-history-filters-form";
 import { Header, Main } from "./components";
 
 export function NotFound() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <Main>

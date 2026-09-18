@@ -1,4 +1,4 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { CalendarCheck, EqualApproximately, Sigma, Trophy } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
@@ -6,7 +6,7 @@ import { exerciseRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseStats() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const { performances } = exerciseRoute.useLoaderData();
 
   const best = performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];

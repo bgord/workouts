@@ -1,9 +1,9 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Download } from "lucide-react";
 import * as ui from "../components";
 
 export function ProfileWorkoutsExport() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>

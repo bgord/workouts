@@ -1,4 +1,4 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Gap } from "./gap";
 import { RirColor } from "./rir-color";
 
@@ -6,7 +6,7 @@ const dot = { width: 8, height: 8 };
 const ring = (color: RirColor) => ({ ...dot, boxShadow: `inset 0 0 0 2px var(--color-${color})` });
 
 export function SetDots(props: { sets: Array<{ rir?: number }>; target: number }) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   const dots = Array.from({ length: Math.max(props.sets.length, props.target) }, (_, index) => index);
 

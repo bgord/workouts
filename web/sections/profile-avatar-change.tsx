@@ -1,4 +1,4 @@
-import { exec, useFile, useMutation, useToggle, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, CircleUser, FileImage, ImageUp, X } from "lucide-react";
 import * as ui from "../components";
@@ -9,12 +9,12 @@ const maxSizeBytes = 10_000_000;
 
 export function ProfileAvatarChange() {
   const router = useRouter();
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
-  const profileAvatarChange = useToggle({ name: "profile-avatar-change" });
-  const avatar = useFile("avatar", { mimeTypes, maxSizeBytes });
+  const profileAvatarChange = bg.useToggle({ name: "profile-avatar-change" });
+  const avatar = bg.useFile("avatar", { mimeTypes, maxSizeBytes });
 
-  const mutation = useMutation({
+  const mutation = bg.useMutation({
     perform: () => {
       const form = new FormData();
 
@@ -94,7 +94,7 @@ export function ProfileAvatarChange() {
 
               <ui.IconButton
                 aria-label={t("app.cancel")}
-                onClick={exec([avatar.actions.clearFile, mutation.reset, profileAvatarChange.disable])}
+                onClick={bg.exec([avatar.actions.clearFile, mutation.reset, profileAvatarChange.disable])}
                 title={t("app.cancel")}
               >
                 <X data-size="sm" />

@@ -1,4 +1,4 @@
-import { Rhythm } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { rootRoute } from "../router";
 
 export enum AvatarSize {
@@ -31,7 +31,7 @@ export function Avatar(props: { size: AvatarSize }) {
       fetchPriority="high"
       src={src}
       title={session.user.email}
-      {...Rhythm().times(dimension[props.size]).style.square}
+      {...bg.Rhythm().times(dimension[props.size]).style.square}
     />
   );
 }

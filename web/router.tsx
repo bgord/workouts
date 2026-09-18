@@ -1,5 +1,5 @@
 // fallow-ignore-file circular-dependencies
-import { CSS, JS, META } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import {
   createRootRouteWithContext,
   createRoute,
@@ -21,9 +21,9 @@ type RouterContext = { request: Request | null; nonce: string };
 
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   head: () => ({
-    meta: [...META, { title: "Workouts" }],
-    links: [...CSS("/public/main.min.css"), ...CSS("/public/custom.css")],
-    scripts: [JS("/public/entry-client.js")],
+    meta: [...bg.META, { title: "Workouts" }],
+    links: [...bg.CSS("/public/main.min.css"), ...bg.CSS("/public/custom.css")],
+    scripts: [bg.JS("/public/entry-client.js")],
   }),
   component: Shell,
   staleTime: Number.POSITIVE_INFINITY,

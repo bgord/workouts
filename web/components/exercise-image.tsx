@@ -1,4 +1,4 @@
-import { Rhythm } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
 
 export enum ExerciseImageSize {
@@ -24,7 +24,7 @@ const height: Record<ExerciseImageSize, number> = {
 
 const style = (size: ExerciseImageSize) =>
   size === ExerciseImageSize.xs || size === ExerciseImageSize.sm
-    ? { ...Rhythm(width[size]).times(1).width, ...Rhythm(height[size]).times(1).height }
+    ? { ...bg.Rhythm(width[size]).times(1).width, ...bg.Rhythm(height[size]).times(1).height }
     : { width: "100%", aspectRatio: `${width[size]} / ${height[size]}` };
 
 type ExerciseImageProps = Pick<Exercise, "id" | "name" | "imageEtag"> & { size: ExerciseImageSize };

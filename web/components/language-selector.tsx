@@ -1,19 +1,19 @@
-import { Cookies, useLanguage, useSupportedLanguages, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { rootRoute } from "../router";
 import { Select } from "./select";
 
 export function LanguageSelector() {
   const router = useRouter();
-  const language = useLanguage();
-  const supportedLanguages = useSupportedLanguages();
-  const t = useTranslations();
+  const language = bg.useLanguage();
+  const supportedLanguages = bg.useSupportedLanguages();
+  const t = bg.useTranslations();
 
   return (
     <Select
       defaultValue={language}
       onChange={async (event) => {
-        Cookies.set("language", event.target.value);
+        bg.Cookies.set("language", event.target.value);
         await router.invalidate({ filter: (r) => r.routeId === rootRoute.id, sync: true });
       }}
     >

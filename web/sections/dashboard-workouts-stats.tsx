@@ -1,9 +1,9 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { dashboardRoute } from "../router";
 
 export function DashboardWorkoutStats() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const { dashboard } = dashboardRoute.useLoaderData();
 
   const tiles = [

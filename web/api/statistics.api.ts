@@ -1,4 +1,4 @@
-import { absoluteUrl, Cookies } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 
 export class Statistics {
@@ -8,8 +8,8 @@ export class Statistics {
   ): Promise<Array<ExercisePerformance>> {
     const BASE = `/api/statistics/exercises/${params.exerciseId}/performances`;
 
-    const url = absoluteUrl(BASE, request);
-    const headers = request ? { cookie: Cookies.extractFrom(request) } : undefined;
+    const url = bg.absoluteUrl(BASE, request);
+    const headers = request ? { cookie: bg.Cookies.extractFrom(request) } : undefined;
 
     const response = await fetch(url, { headers, credentials: "include" });
 

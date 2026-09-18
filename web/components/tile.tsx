@@ -1,14 +1,15 @@
-import { Rhythm } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { Gap } from "./gap";
 import { Meta } from "./meta";
+import { Spacing } from "./spacing";
 
 const TILE_WIDTH = 168;
 
 const item = {
   "data-grow": "1",
   "data-md-width": "100%",
-  ...Rhythm(TILE_WIDTH).times(1).style.width,
+  ...bg.Rhythm(TILE_WIDTH).times(1).style.width,
 } as const;
 
 const card = {
@@ -19,8 +20,8 @@ const card = {
   "data-md-py": "3",
   "data-md-stack": "x",
   "data-md-wrap": "wrap",
-  "data-p": "4",
   "data-stack": "y",
+  ...Spacing.surface,
   ...Gap.inline,
 } as const;
 

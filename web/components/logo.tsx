@@ -1,10 +1,9 @@
-import { Link } from "@tanstack/react-router";
-import { Form } from "../../app/services/workout-history-filters-form";
+import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { Gap } from "./gap";
 
-export function Logo() {
+function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
   return (
-    <Link data-cross="center" data-main="center" data-stack="x" search={Form.default} to="/">
+    <a data-cross="center" data-main="center" data-stack="x" {...props}>
       <div
         className="logo"
         data-color="brand-500"
@@ -17,6 +16,10 @@ export function Logo() {
         data-transform="uppercase"
         {...Gap.cluster}
       />
-    </Link>
+    </a>
   );
 }
+
+const LogoLink = createLink(LogoAnchor);
+
+export const Logo: LinkComponent<typeof LogoAnchor> = (props) => <LogoLink activeProps={{}} {...props} />;

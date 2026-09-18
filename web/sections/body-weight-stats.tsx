@@ -1,4 +1,4 @@
-import { useLanguage, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
@@ -6,8 +6,8 @@ import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals } from "../services/weight-format";
 
 export function BodyWeightStats(props: VO.BodyWeightStats) {
-  const t = useTranslations();
-  const language = useLanguage();
+  const t = bg.useTranslations();
+  const language = bg.useLanguage();
 
   return (
     <ul data-stack="x" data-wrap="wrap" {...ui.Gap.related}>

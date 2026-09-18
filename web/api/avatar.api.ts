@@ -1,13 +1,13 @@
-import { absoluteUrl, Cookies, type ETagValueType } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 
-export type AvatarEtagType = ETagValueType;
+export type AvatarEtagType = bg.ETagValueType;
 
 export class Avatar {
   private static readonly BASE = "/api/profile-avatar/get";
 
   static async getEtag(request: Request | null): Promise<AvatarEtagType | null> {
-    const url = absoluteUrl(Avatar.BASE, request);
-    const headers = request ? { cookie: Cookies.extractFrom(request) } : undefined;
+    const url = bg.absoluteUrl(Avatar.BASE, request);
+    const headers = request ? { cookie: bg.Cookies.extractFrom(request) } : undefined;
 
     const response = await fetch(url, { headers, credentials: "include" });
 

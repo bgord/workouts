@@ -1,4 +1,4 @@
-import { Rhythm } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Gap } from "./gap";
 
 export function Prescription(props: React.JSX.IntrinsicElements["div"]) {
@@ -7,7 +7,7 @@ export function Prescription(props: React.JSX.IntrinsicElements["div"]) {
       data-cross="center"
       data-stack="x"
       data-wrap="nowrap"
-      {...Rhythm(336).times(1).style.maxWidth}
+      {...bg.Rhythm(336).times(1).style.maxWidth}
       {...Gap.cluster}
       {...props}
     />

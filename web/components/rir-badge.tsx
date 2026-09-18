@@ -1,9 +1,9 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Gap } from "./gap";
 import { RirColor } from "./rir-color";
 
 export function RirBadge(props: { rir: number }) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <span

@@ -1,6 +1,6 @@
-import type { TranslationsKeyType } from "@bgord/ui";
+import type * as bg from "@bgord/ui";
 
-export type ShortcutType = { keys: string; trigger: string; label: TranslationsKeyType };
+export type ShortcutType = { keys: string; trigger: string; label: bg.TranslationsKeyType };
 
 export const GoToDashboard: ShortcutType = { keys: "g d", trigger: "g d", label: "app.dashboard" };
 export const GoToWorkouts: ShortcutType = { keys: "g w", trigger: "g w", label: "app.workouts" };

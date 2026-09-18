@@ -1,11 +1,11 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Info } from "lucide-react";
 import type { ActionState } from "../../modules/action-state";
 import { Gap } from "./gap";
 
 export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div"]) {
   const { hints, ...rest } = props;
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const hint = hints[0];
 
   if (!hint) return null;
@@ -17,7 +17,6 @@ export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div
       data-fs="xs"
       data-stack="x"
       data-wrap="nowrap"
-      key={hint}
       {...Gap.cluster}
       {...rest}
     >

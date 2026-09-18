@@ -1,4 +1,4 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 
 type Variant = "primary" | "outline" | "positive" | "danger";
@@ -23,7 +23,7 @@ export function WorkoutStatusBadge(
   props: { status: WorkoutStatusEnum } & React.JSX.IntrinsicElements["div"],
 ) {
   const { status, ...rest } = props;
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <div className="c-badge" data-variant={variant[status]} {...rest}>

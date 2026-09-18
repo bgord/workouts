@@ -1,7 +1,7 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 
 export function ButtonCancel(props: React.JSX.IntrinsicElements["button"]) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <button {...props} className="c-button" data-variant="ghost" type="button">

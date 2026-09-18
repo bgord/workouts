@@ -1,4 +1,4 @@
-import { useLanguage, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
@@ -8,8 +8,8 @@ import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 const POINT_HIT_RADIUS = 8;
 
 export function BodyWeightProgressChart() {
-  const t = useTranslations();
-  const language = useLanguage();
+  const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const data = measurementsRoute.useLoaderData();
 
   if (data.measurements.length < LineChart.MINIMAL_POINTS) return null;

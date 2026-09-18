@@ -1,14 +1,14 @@
-import { useMutation, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { KeyRound, Send } from "lucide-react";
 import * as ui from "../components";
 import { rootRoute } from "../router";
 
 export function ProfilePasswordChange() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   const { session } = rootRoute.useLoaderData();
 
-  const mutation = useMutation({
+  const mutation = bg.useMutation({
     perform: () =>
       fetch("/api/auth/request-password-reset", {
         method: "POST",

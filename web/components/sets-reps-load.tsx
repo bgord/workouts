@@ -1,8 +1,8 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { WeightFormat } from "../services/weight-format";
 
 export function SetsRepsLoad(props: { sets: number; reps: number; load: number }) {
-  const t = useTranslations();
+  const t = bg.useTranslations();
 
   return (
     <span>

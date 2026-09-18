@@ -1,4 +1,4 @@
-import { TranslationsContext } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { OnlineStatusBar } from "./components/online-status-bar";
 import { rootRoute } from "./router";
@@ -14,12 +14,12 @@ export function Shell() {
       </head>
       <body data-mx="auto">
         <div id="root">
-          <TranslationsContext.Provider value={i18n}>
+          <bg.TranslationsContext.Provider value={i18n}>
             <Navigation />
             <Outlet />
             <Shortcuts />
             <OnlineStatusBar />
-          </TranslationsContext.Provider>
+          </bg.TranslationsContext.Provider>
         </div>
         <Scripts />
       </body>

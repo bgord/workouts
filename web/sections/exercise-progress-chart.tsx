@@ -1,4 +1,4 @@
-import { useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
@@ -8,7 +8,7 @@ import { LineChart } from "../services/line-chart";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseProgressChart() {
-  const t = useTranslations();
+  const t = bg.useTranslations();
   const { performances } = exerciseRoute.useLoaderData();
 
   if (performances.length < LineChart.MINIMAL_POINTS) return null;

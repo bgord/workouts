@@ -1,4 +1,4 @@
-import { useLanguage, useTranslations } from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { Layers } from "lucide-react";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
 import { DateFormat } from "../services/date-format";
@@ -8,8 +8,8 @@ import { PlanStatusBadge } from "./plan-status-badge";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
 
 export function PlanCard(props: PlanSummary) {
-  const t = useTranslations();
-  const language = useLanguage();
+  const t = bg.useTranslations();
+  const language = bg.useLanguage();
 
   return (
     <RowLink params={{ planId: props.id }} title={props.name} to="/plans/$planId">
