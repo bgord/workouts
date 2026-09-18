@@ -36,7 +36,9 @@ export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: Log
         >
           <WorkoutSetCorrect exercise={props.exercise} loggedSet={props.loggedSet} {...workoutSetCorrect} />
 
-          {workoutSetCorrect.off && <WorkoutSetRemove exercise={props.exercise} loggedSet={props.loggedSet} />}
+          {workoutSetCorrect.off && (
+            <WorkoutSetRemove exercise={props.exercise} loggedSet={props.loggedSet} />
+          )}
         </div>
       </div>
 

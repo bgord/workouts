@@ -17,6 +17,7 @@ export * from "./dropzone";
 export * from "./empty-state";
 export * from "./exercise-card";
 export * from "./exercise-image";
+export * from "./exercise-link";
 export * from "./exercise-picker";
 export * from "./eyebrow";
 export * from "./gap";

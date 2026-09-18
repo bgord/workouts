@@ -1,5 +1,4 @@
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
@@ -21,18 +20,15 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
     name: `workout-exercise-description-${props.exercise.id}`,
   });
 
-  const exercise = {
-    id: props.exercise.exerciseId,
-    name: props.exercise.exerciseName,
-    imageEtag: props.exercise.exerciseImageEtag,
-  };
+  const isDraft = workout.data.status === WorkoutStatusEnum.draft;
+  const isCompleted = workout.data.status === WorkoutStatusEnum.completed;
+  const hasLoggedSets = props.exercise.loggedSets.length > 0;
+  const hasTarget = props.exercise.target;
 
-  const draft = workout.data.status === WorkoutStatusEnum.draft;
+  const isSkipped = isCompleted && !hasLoggedSets;
 
-  const skipped =
-    workout.data.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
-
-  const expandable = props.exercise.loggedSets.length > 0 || props.exercise.actions.setLog.available;
+  const target = !isSkipped && !isDraft ? hasTarget : undefined;
+  const isExpandable = hasLoggedSets || props.exercise.actions.setLog.available;
 
   const { width } = bg.useWindowDimensions();
   const mobile = width !== undefined && width <= 768;
@@ -40,12 +36,12 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
-        {expandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
+        {isExpandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
 
-        {!expandable && (
+        {!isExpandable && (
           <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
             <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
-              {draft && props.index + 1}
+              {isDraft && props.index + 1}
             </span>
           </ui.RowIndex>
         )}
@@ -61,46 +57,48 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
           type="button"
           {...workoutExerciseDescription.props.controller}
         >
-          <ui.ExerciseImage size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm} {...exercise} />
+          <ui.ExerciseImage
+            size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm}
+            id={props.exercise.exerciseId}
+            name={props.exercise.exerciseName}
+            imageEtag={props.exercise.exerciseImageEtag}
+          />
         </button>
 
         <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-          <Link
-            data-color="neutral-100"
-            data-fs="sm"
-            data-fw="medium"
-            data-hover-color="brand-300"
-            data-transform="truncate"
+          <ui.ExerciseLink
             params={{ exerciseId: props.exercise.exerciseId }}
             title={props.exercise.exerciseName}
             to="/catalog/exercise/$exerciseId"
           >
             {props.exercise.exerciseName}
-          </Link>
+          </ui.ExerciseLink>
 
           <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
             <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />
 
-            <ui.Meta data-md-disp={props.exercise.target ? "none" : undefined}>
+            <ui.Meta data-md-disp={hasTarget ? "none" : undefined}>
               <ui.SetsReps {...props.exercise.prescription} />
             </ui.Meta>
 
-            {mobile && !skipped && props.exercise.target && !draft && (
-              <div data-self="center">
-                <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
+            {target && (
+              <div data-disp="none" data-md-disp="block" data-self="center">
+                <ui.SetDots sets={props.exercise.loggedSets} target={target.sets} />
               </div>
             )}
           </div>
         </div>
 
-        {skipped && (
+        {isSkipped && (
           <ui.Chip data-shrink="0" muted>
             {t("workout.exercise.skipped")}
           </ui.Chip>
         )}
 
-        {!(mobile || skipped) && props.exercise.target && !draft && (
-          <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
+        {target && (
+          <div data-md-disp="none">
+            <ui.SetDots sets={props.exercise.loggedSets} target={target.sets} />
+          </div>
         )}
 
         <WorkoutExerciseRemove {...props.exercise} />
@@ -120,7 +118,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
 
       <WorkoutExerciseTargetSet exercise={props.exercise} {...workoutExerciseTarget} />
 
-      {expandable && workoutExerciseVisibility.on && (
+      {isExpandable && workoutExerciseVisibility.on && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={props.exercise} />
 

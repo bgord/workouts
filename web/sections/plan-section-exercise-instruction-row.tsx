@@ -41,18 +41,13 @@ export function PlanSectionExerciseInstructionRow(props: {
       </Link>
 
       <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-        <Link
-          data-color="neutral-100"
-          data-fs="sm"
-          data-fw="medium"
-          data-hover-color="brand-300"
-          data-transform="truncate"
+        <ui.ExerciseLink
           params={{ exerciseId: exerciseInstruction.exercise.id }}
           title={exerciseInstruction.exercise.name}
           to="/catalog/exercise/$exerciseId"
         >
           {exerciseInstruction.exercise.name}
-        </Link>
+        </ui.ExerciseLink>
 
         {controls && (
           <div data-color="neutral-300" data-fs="sm">
