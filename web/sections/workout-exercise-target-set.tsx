@@ -2,22 +2,17 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/workout-target-form";
-import type { ActionState } from "../../modules/action-state";
-import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function WorkoutExerciseTargetSet(
-  props: {
-    workout: Workout;
-    exercise: WorkoutExerciseWithSets;
-    action: ActionState;
-  } & bg.UseToggleReturnType,
-) {
+export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
+  const action = props.exercise.actions.targetSet;
 
   const sets = bg.useNumberField<number>({
     name: `sets-${props.exercise.id}`,
@@ -38,10 +33,10 @@ export function WorkoutExerciseTargetSet(
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/target`, {
+      fetch(`/api/workouts/${workout.data.id}/exercise/${props.exercise.id}/target`, {
         method: "PATCH",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.workout.revision),
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           sets: sets.value,
           reps: reps.value,
@@ -57,12 +52,15 @@ export function WorkoutExerciseTargetSet(
   const cancel = bg.exec([sets.clear, reps.clear, load.clear, mutation.reset, toggle.disable]);
   const unchanged = Boolean(props.exercise.target) && sets.unchanged && reps.unchanged && load.unchanged;
 
+  if (!action.available || toggle.off) return null;
+
   return (
     <form
       aria-busy={mutation.isLoading}
       data-cross="center"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
+      {...ui.Spacing.inset}
       {...ui.Gap.related}
       {...toggle.props.target}
     >
@@ -111,7 +109,7 @@ export function WorkoutExerciseTargetSet(
         <ui.IconButton
           aria-label={t("app.save")}
           disabled={
-            !props.action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
+            !action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
           }
           title={t("app.save")}
           tone="positive"
@@ -125,7 +123,7 @@ export function WorkoutExerciseTargetSet(
         </ui.IconButton>
       </div>
 
-      <ui.ActionHint {...props.action} />
+      <ui.ActionHint {...action} />
 
       {mutation.isError && <ui.Output data-width="100%">{t("workout.target.error")}</ui.Output>}
     </form>

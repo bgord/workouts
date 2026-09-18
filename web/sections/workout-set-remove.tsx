@@ -1,25 +1,20 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import type { ActionState } from "../../modules/action-state";
-import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
-import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutSetRemove(props: {
-  workout: Workout;
-  exercise: WorkoutExerciseWithSets;
-  loggedSet: LoggedSetType;
-  action: ActionState;
-}) {
+export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: LoggedSet }) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
+  const action = props.loggedSet.actions.remove;
 
   const workoutSetRemove = bg.useToggle({ name: `workout-set-remove-${props.loggedSet.id}` });
 
-  const guarded = props.workout.status === WorkoutStatusEnum.completed;
+  const guarded = workout.data.status === WorkoutStatusEnum.completed;
 
   const confirm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,13 +23,15 @@ export function WorkoutSetRemove(props: {
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set/${props.loggedSet.id}`, {
+      fetch(`/api/workouts/${workout.data.id}/exercise/${props.exercise.id}/set/${props.loggedSet.id}`, {
         method: "DELETE",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.workout.revision),
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });
+
+  if (!action.available) return null;
 
   return (
     <>
@@ -48,7 +45,7 @@ export function WorkoutSetRemove(props: {
         {...ui.Gap.related}
       >
         <ui.IconButton
-          disabled={!props.action.enabled || mutation.isLoading}
+          disabled={!action.enabled || mutation.isLoading}
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           tone="danger"
           type="submit"

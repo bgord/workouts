@@ -1,21 +1,18 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import type { ActionState } from "../../modules/action-state";
-import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutExerciseRemove(props: {
-  workout: Workout;
-  exercise: WorkoutExerciseWithSets;
-  action: ActionState;
-}) {
+export function WorkoutExerciseRemove(props: WorkoutExercise) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
+  const action = props.actions.remove;
 
-  const workoutExerciseRemove = bg.useToggle({ name: `workout-exercise-remove-${props.exercise.id}` });
-  const guarded = props.exercise.loggedSets.length > 0;
+  const workoutExerciseRemove = bg.useToggle({ name: `workout-exercise-remove-${props.id}` });
+  const guarded = props.loggedSets.length > 0;
 
   const confirm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,13 +21,15 @@ export function WorkoutExerciseRemove(props: {
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}`, {
+      fetch(`/api/workouts/${workout.data.id}/exercise/${props.id}`, {
         method: "DELETE",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.workout.revision),
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
       }),
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });
+
+  if (!action.available) return null;
 
   return (
     <>
@@ -43,9 +42,9 @@ export function WorkoutExerciseRemove(props: {
         {...ui.Gap.related}
       >
         <ui.IconButton
-          aria-label={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
-          disabled={!props.action.enabled || mutation.isLoading}
-          title={t("workout.exercise.remove.title", { name: props.exercise.exerciseName })}
+          aria-label={t("workout.exercise.remove.title", { name: props.exerciseName })}
+          disabled={!action.enabled || mutation.isLoading}
+          title={t("workout.exercise.remove.title", { name: props.exerciseName })}
           tone="danger"
           type="submit"
           {...workoutExerciseRemove.props.controller}
@@ -53,7 +52,7 @@ export function WorkoutExerciseRemove(props: {
           <X data-size="sm" />
         </ui.IconButton>
 
-        <ui.ActionHint {...props.action} />
+        <ui.ActionHint {...action} />
 
         {mutation.isError && <ui.Output>{t("workout.exercise.remove.error")}</ui.Output>}
       </form>
@@ -64,9 +63,7 @@ export function WorkoutExerciseRemove(props: {
         </ui.DialogHeader>
 
         <div data-stack="y" {...ui.Gap.related}>
-          <ui.DialogInfo>
-            {t("workout.exercise.remove.info", { name: props.exercise.exerciseName })}
-          </ui.DialogInfo>
+          <ui.DialogInfo>{t("workout.exercise.remove.info", { name: props.exerciseName })}</ui.DialogInfo>
           <ui.DialogStatus variant="irreversible" />
         </div>
 

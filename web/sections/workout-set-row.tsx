@@ -1,11 +1,10 @@
 import * as bg from "@bgord/ui";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
-import type { Workout } from "../../modules/workouts/value-objects/workout";
 import * as ui from "../components";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
-export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExercise; loggedSet: LoggedSet }) {
+export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: LoggedSet }) {
   const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
@@ -35,24 +34,9 @@ export function WorkoutSetRow(props: { workout: Workout; exercise: WorkoutExerci
           data-wrap="nowrap"
           {...ui.Gap.inline}
         >
-          {props.loggedSet.actions.correct.available && (
-            <WorkoutSetCorrect
-              action={props.loggedSet.actions.correct}
-              exercise={props.exercise}
-              loggedSet={props.loggedSet}
-              workout={props.workout}
-              {...workoutSetCorrect}
-            />
-          )}
+          <WorkoutSetCorrect exercise={props.exercise} loggedSet={props.loggedSet} {...workoutSetCorrect} />
 
-          {workoutSetCorrect.off && props.loggedSet.actions.remove.available && (
-            <WorkoutSetRemove
-              action={props.loggedSet.actions.remove}
-              exercise={props.exercise}
-              loggedSet={props.loggedSet}
-              workout={props.workout}
-            />
-          )}
+          {workoutSetCorrect.off && <WorkoutSetRemove exercise={props.exercise} loggedSet={props.loggedSet} />}
         </div>
       </div>
 

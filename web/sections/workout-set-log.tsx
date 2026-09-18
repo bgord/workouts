@@ -7,29 +7,27 @@ import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function WorkoutSetLog(props: { exercise: WorkoutExercise }) {
+export function WorkoutSetLog(props: WorkoutExercise) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
-  const action = props.exercise.actions.setLog;
+  const action = props.actions.setLog;
 
   const reps = bg.useNumberField<number>({
-    name: `logged-reps-${props.exercise.id}`,
-    defaultValue: props.exercise.target?.reps,
+    name: `logged-reps-${props.id}`,
+    defaultValue: props.target?.reps,
   });
 
   const load = bg.useNumberField<number>({
-    name: `logged-load-${props.exercise.id}`,
-    defaultValue: props.exercise.target
-      ? WeightFormat.kilograms(props.exercise.target.load)
-      : bg.NumberField.EMPTY,
+    name: `logged-load-${props.id}`,
+    defaultValue: props.target ? WeightFormat.kilograms(props.target.load) : bg.NumberField.EMPTY,
   });
 
   const rir = useRef<number | undefined>(undefined);
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${workout.data.id}/exercise/${props.exercise.id}/set`, {
+      fetch(`/api/workouts/${workout.data.id}/exercise/${props.id}/set`, {
         method: "POST",
         credentials: "include",
         headers: bg.WeakETag.fromRevision(workout.data.revision),
@@ -61,7 +59,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise }) {
         data-md-disp="none"
         data-transform="font-variant-numeric"
       >
-        {props.exercise.loggedSets.length + 1}
+        {props.loggedSets.length + 1}
       </div>
 
       <div data-cross="center" data-md-grow="1" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>

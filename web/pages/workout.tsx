@@ -82,7 +82,6 @@ export function Workout() {
               index={index}
               key={exercise.id}
               last={index === workout.data.exercises.length - 1 && !workout.actions.exerciseAdd.available}
-              workout={workout.data}
             />
           ))}
         </ul>

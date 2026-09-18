@@ -1,23 +1,19 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
-import type { Workout } from "../../modules/workouts/value-objects/workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
+import { workoutRoute } from "../router";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTarget } from "./workout-exercise-target";
 import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-export function WorkoutExerciseRow(props: {
-  workout: Workout;
-  exercise: WorkoutExercise;
-  index: number;
-  last: boolean;
-}) {
+export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: number; last: boolean }) {
   const t = bg.useTranslations();
+  const { workout } = workoutRoute.useLoaderData();
 
   const workoutExerciseVisibility = usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
   const workoutExerciseTarget = bg.useToggle({ name: `workout-exercise-target-${props.exercise.id}` });
@@ -31,35 +27,25 @@ export function WorkoutExerciseRow(props: {
     imageEtag: props.exercise.exerciseImageEtag,
   };
 
+  const draft = workout.data.status === WorkoutStatusEnum.draft;
+
   const skipped =
-    props.workout.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
+    workout.data.status === WorkoutStatusEnum.completed && props.exercise.loggedSets.length === 0;
 
   const expandable = props.exercise.loggedSets.length > 0 || props.exercise.actions.setLog.available;
 
   const { width } = bg.useWindowDimensions();
   const mobile = width !== undefined && width <= 768;
 
-  const actions = (
-    <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
-      {props.exercise.actions.remove.available && (
-        <WorkoutExerciseRemove
-          action={props.exercise.actions.remove}
-          exercise={props.exercise}
-          workout={props.workout}
-        />
-      )}
-    </div>
-  );
-
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
-        {expandable ? (
-          <ui.ChevronToggle {...workoutExerciseVisibility} />
-        ) : (
+        {expandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
+
+        {!expandable && (
           <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
             <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
-              {props.workout.status === WorkoutStatusEnum.draft && props.index + 1}
+              {draft && props.index + 1}
             </span>
           </ui.RowIndex>
         )}
@@ -69,8 +55,6 @@ export function WorkoutExerciseRow(props: {
           data-br="md"
           data-cursor="pointer"
           data-hover-opacity="medium"
-          data-p="0"
-          data-shrink="0"
           data-stack="x"
           onClick={workoutExerciseDescription.toggle}
           title={t("workout.exercise.description.toggle")}
@@ -101,14 +85,11 @@ export function WorkoutExerciseRow(props: {
               <ui.SetsReps {...props.exercise.prescription} />
             </ui.Meta>
 
-            {mobile &&
-              !skipped &&
-              props.exercise.target &&
-              props.workout.status !== WorkoutStatusEnum.draft && (
-                <div data-self="center">
-                  <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
-                </div>
-              )}
+            {mobile && !skipped && props.exercise.target && !draft && (
+              <div data-self="center">
+                <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
+              </div>
+            )}
           </div>
         </div>
 
@@ -118,13 +99,11 @@ export function WorkoutExerciseRow(props: {
           </ui.Chip>
         )}
 
-        {!(mobile || skipped) &&
-          props.exercise.target &&
-          props.workout.status !== WorkoutStatusEnum.draft && (
-            <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
-          )}
+        {!(mobile || skipped) && props.exercise.target && !draft && (
+          <ui.SetDots sets={props.exercise.loggedSets} target={props.exercise.target.sets} />
+        )}
 
-        {actions}
+        <WorkoutExerciseRemove {...props.exercise} />
       </div>
 
       {workoutExerciseDescription.on && (
@@ -139,22 +118,13 @@ export function WorkoutExerciseRow(props: {
         </div>
       )}
 
-      {workoutExerciseTarget.on && props.exercise.actions.targetSet.available && (
-        <div {...ui.Spacing.inset}>
-          <WorkoutExerciseTargetSet
-            action={props.exercise.actions.targetSet}
-            exercise={props.exercise}
-            workout={props.workout}
-            {...workoutExerciseTarget}
-          />
-        </div>
-      )}
+      <WorkoutExerciseTargetSet exercise={props.exercise} {...workoutExerciseTarget} />
 
       {expandable && workoutExerciseVisibility.on && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
-          <WorkoutSetList exercise={props.exercise} workout={props.workout} />
+          <WorkoutSetList exercise={props.exercise} />
 
-          <WorkoutSetLog exercise={props.exercise} />
+          <WorkoutSetLog {...props.exercise} />
         </div>
       )}
     </ui.HairlineRow>

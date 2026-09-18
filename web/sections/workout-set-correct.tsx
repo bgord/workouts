@@ -3,24 +3,19 @@ import { useRouter } from "@tanstack/react-router";
 import { Pencil, X } from "lucide-react";
 import { useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
-import type { ActionState } from "../../modules/action-state";
-import type { LoggedSetType } from "../../modules/workouts/value-objects/logged-set";
-import type { Workout, WorkoutExerciseWithSets } from "../../modules/workouts/value-objects/workout";
+import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
 export function WorkoutSetCorrect(
-  props: {
-    workout: Workout;
-    exercise: WorkoutExerciseWithSets;
-    loggedSet: LoggedSetType;
-    action: ActionState;
-  } & bg.UseToggleReturnType,
+  props: { exercise: WorkoutExercise; loggedSet: LoggedSet } & bg.UseToggleReturnType,
 ) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { workout } = workoutRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
+  const action = props.loggedSet.actions.correct;
 
   const reps = bg.useNumberField<number>({
     name: `corrected-reps-${props.loggedSet.id}`,
@@ -36,10 +31,10 @@ export function WorkoutSetCorrect(
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/workouts/${props.workout.id}/exercise/${props.exercise.id}/set/${props.loggedSet.id}`, {
+      fetch(`/api/workouts/${workout.data.id}/exercise/${props.exercise.id}/set/${props.loggedSet.id}`, {
         method: "PATCH",
         credentials: "include",
-        headers: bg.WeakETag.fromRevision(props.workout.revision),
+        headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           reps: reps.value,
           load: WeightFormat.grams(load.value ?? 0),
@@ -52,11 +47,13 @@ export function WorkoutSetCorrect(
     },
   });
 
+  if (!action.available) return null;
+
   if (toggle.off) {
     return (
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
         <ui.IconButton
-          disabled={!props.action.enabled}
+          disabled={!action.enabled}
           onClick={toggle.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
           {...toggle.props.controller}
@@ -64,7 +61,7 @@ export function WorkoutSetCorrect(
           <Pencil data-size="sm" />
         </ui.IconButton>
 
-        <ui.ActionHint {...props.action} />
+        <ui.ActionHint {...action} />
       </div>
     );
   }
