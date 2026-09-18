@@ -1,10 +1,18 @@
-import { useTranslations, useWindowDimensions } from "@bgord/ui";
+import { Rhythm, useTranslations, useWindowDimensions } from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { CalendarCheck, Dumbbell, ListChecks, LogOut, Weight } from "lucide-react";
 import { Form as BodyWeightMeasurementFilters } from "../../app/services/body-weight-measurement-filters-form";
-import { Form } from "../../app/services/exercise-catalog-filters-form";
+import { Form as ExerciseCatalogFilters } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
+
+const link = {
+  "data-color": "neutral-300",
+  "data-fs": "sm",
+  "data-fw": "medium",
+  "data-hover-color": "brand-300",
+  "data-ls": "wide",
+} as const;
 
 export function Navigation() {
   const { width } = useWindowDimensions();
@@ -26,9 +34,9 @@ function NavigationDesktop() {
       data-top="0"
       data-z="2"
       style={{
+        ...Rhythm(70).times(1).height,
         backdropFilter: "blur(12px)",
         backgroundColor: "color-mix(in oklab, var(--surface-base) 80%, transparent)",
-        height: "70px",
       }}
     >
       <div
@@ -56,7 +64,7 @@ function NavigationDesktop() {
           {t("app.workouts")}
         </NavigationLink>
 
-        <NavigationLink search={Form.default} to="/catalog">
+        <NavigationLink search={ExerciseCatalogFilters.default} to="/catalog">
           {t("app.catalog")}
         </NavigationLink>
 
@@ -102,7 +110,7 @@ function NavigationMobileDrawer() {
         <CalendarCheck data-size="md" />
       </NavigationLink>
 
-      <NavigationLink search={Form.default} title={t("app.catalog")} to="/catalog">
+      <NavigationLink search={ExerciseCatalogFilters.default} title={t("app.catalog")} to="/catalog">
         <Dumbbell data-size="md" />
       </NavigationLink>
 
@@ -130,19 +138,7 @@ function NavigationMobileDrawer() {
 }
 
 function NavigationAnchor(props: React.JSX.IntrinsicElements["a"]) {
-  return (
-    <a
-      data-color="neutral-300"
-      data-cross="center"
-      data-fs="sm"
-      data-fw="medium"
-      data-hover-color="brand-300"
-      data-ls="wide"
-      data-main="center"
-      data-stack="x"
-      {...props}
-    />
-  );
+  return <a data-cross="center" data-main="center" data-stack="x" {...link} {...props} />;
 }
 
 const NavigationAnchorLink = createLink(NavigationAnchor);
@@ -157,8 +153,18 @@ const NavigationLink: LinkComponent<typeof NavigationAnchor> = (props) => (
 
 function NavigationShell() {
   return (
-    <nav data-cross="center" data-disp="flex" data-p="2" style={{ height: "70px" }}>
-      <ui.Logo />
+    <nav {...Rhythm(70).times(1).style.height}>
+      <div
+        data-cross="center"
+        data-height="100%"
+        data-maxw="md"
+        data-mx="auto"
+        data-stack="x"
+        data-width="100%"
+        {...ui.Spacing.gutter}
+      >
+        <ui.Logo />
+      </div>
     </nav>
   );
 }
@@ -166,17 +172,13 @@ function NavigationShell() {
 function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
   return (
     <button
-      data-color="neutral-300"
       data-cursor="pointer"
-      data-fs="sm"
-      data-fw="medium"
-      data-hover-color="brand-300"
-      data-ls="wide"
       onClick={async () => {
         await fetch("/api/auth/sign-out", { method: "POST", credentials: "include" });
         location.replace("/public/login.html");
       }}
       type="button"
+      {...link}
       {...props}
     />
   );
