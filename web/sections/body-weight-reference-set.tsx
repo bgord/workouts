@@ -39,12 +39,13 @@ export function BodyWeightReferenceSet(
 
   return (
     <form
+      aria-busy={mutation.isLoading}
       data-cross="center"
       data-grow="1"
       data-stack="x"
-      data-wrap="nowrap"
+      data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
-      {...ui.Gap.cluster}
+      {...ui.Gap.inline}
       {...toggle.props.target}
     >
       <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
@@ -53,26 +54,12 @@ export function BodyWeightReferenceSet(
         })}
       </div>
 
-      <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
+      <div data-ml="auto" data-stack="x" {...ui.Gap.inline}>
         {goals.map((option) => (
-          <button
-            aria-pressed={option === goal.value}
-            className="c-button"
-            data-color={option === goal.value ? "brand-400" : "neutral-300"}
-            data-cross="center"
-            data-fs="xs"
-            data-hover-color="brand-300"
-            data-px="2"
-            data-stack="x"
-            data-variant="ghost"
-            key={option}
-            onClick={() => goal.set(option)}
-            type="button"
-            {...ui.Gap.inline}
-          >
+          <ui.ChipButton key={option} onClick={() => goal.set(option)} pressed={option === goal.value}>
             <ui.BodyWeightGoalIcon goal={option} size="xs" />
             {t(`measurements.body_weight.goal.${option}`)}
-          </button>
+          </ui.ChipButton>
         ))}
       </div>
 
@@ -94,7 +81,9 @@ export function BodyWeightReferenceSet(
         <X data-size="sm" />
       </ui.IconButton>
 
-      {mutation.isError && <ui.Output>{t("measurements.body_weight.reference.error")}</ui.Output>}
+      {mutation.isError && (
+        <ui.Output data-width="100%">{t("measurements.body_weight.reference.error")}</ui.Output>
+      )}
     </form>
   );
 }
