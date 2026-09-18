@@ -35,33 +35,35 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
     if (!props.description) return null;
 
     return (
-      <div className="c-prose" data-color="neutral-200" data-fs="sm">
+      <p className="c-prose" data-color="neutral-200" data-fs="sm">
         {props.description}
-      </div>
+      </p>
     );
   }
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
       {planDescriptionUpdate.off && (
-        <button
-          className="c-prose"
-          data-color={props.description ? "neutral-200" : "neutral-500"}
-          data-cursor="pointer"
-          data-fs="sm"
-          data-self="start"
-          data-ta="start"
-          disabled={!props.action.enabled}
-          onClick={planDescriptionUpdate.enable}
-          title={t("plan.description.label")}
-          type="button"
-          {...planDescriptionUpdate.props.controller}
-        >
-          {props.description ?? t("plan.description.placeholder")}
-        </button>
-      )}
+        <>
+          <button
+            className="c-prose"
+            data-color={props.description ? "neutral-200" : "neutral-500"}
+            data-cursor="pointer"
+            data-fs="sm"
+            data-self="start"
+            data-ta="start"
+            disabled={!props.action.enabled}
+            onClick={planDescriptionUpdate.enable}
+            title={t("plan.description.label")}
+            type="button"
+            {...planDescriptionUpdate.props.controller}
+          >
+            {props.description ?? t("plan.description.placeholder")}
+          </button>
 
-      {planDescriptionUpdate.off && <ui.ActionHint {...props.action} />}
+          <ui.ActionHint {...props.action} />
+        </>
+      )}
 
       {planDescriptionUpdate.on && (
         <form
@@ -95,9 +97,9 @@ export function PlanDescription(props: Plan & { action: ActionState }) {
             <ui.ButtonCancel
               onClick={bg.exec([description.clear, mutation.reset, planDescriptionUpdate.disable])}
             />
-
-            {mutation.isError && <ui.Output>{t("plan.description.error")}</ui.Output>}
           </div>
+
+          {mutation.isError && <ui.Output>{t("plan.description.error")}</ui.Output>}
         </form>
       )}
     </div>
