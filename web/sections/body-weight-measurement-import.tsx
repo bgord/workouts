@@ -61,67 +61,46 @@ export function BodyWeightMeasurementImport() {
           {...ui.Gap.section}
         >
           <div data-stack="y" {...ui.Gap.related}>
-            <label
-              data-bc="neutral-700"
-              data-br="sm"
-              data-bs={file.isSelected ? "solid" : "dashed"}
-              data-bw="hairline"
-              data-color={file.isSelected ? "neutral-100" : "neutral-300"}
-              data-cross="center"
-              data-cursor={file.isSelected ? undefined : "pointer"}
-              data-fs="sm"
-              data-hover-bc={file.isSelected ? undefined : "neutral-500"}
-              data-stack="y"
-              tabIndex={0}
-              {...ui.Spacing.surface}
-              {...ui.Gap.cluster}
-              {...file.label.props}
-            >
+            <ui.Dropzone file={file}>
               {file.isSelected && (
                 <>
                   <FileSpreadsheet data-color="neutral-400" data-size="md" />
-                  <ui.Meta data-fs="sm" data-maxw="100%" truncate>
-                    {file.data.name}
-                  </ui.Meta>
-                  <ui.ButtonClear onClick={bg.exec([file.actions.clearFile, mutation.reset])} />
+                  <ui.DropzoneFileName>{file.data.name}</ui.DropzoneFileName>
                 </>
               )}
 
               {!file.isSelected && (
                 <>
                   <FileUp data-color="neutral-400" data-size="md" />
-                  <span>{t("measurements.body_weight.import.select.cta")}</span>
-                  <ui.Meta {...bg.Rhythm(36).times(1).style.height}>
-                    {t("measurements.body_weight.import.hint")}
-                  </ui.Meta>
+                  <ui.DropzoneTitle>{t("measurements.body_weight.import.select.cta")}</ui.DropzoneTitle>
                 </>
               )}
 
-              <input
-                className="c-visually-hidden"
-                disabled={file.isSelected}
-                onChange={file.actions.selectFile}
-                required
-                type="file"
-                {...file.input.props}
-              />
-            </label>
+              <ui.DropzoneInput file={file} />
+            </ui.Dropzone>
 
-            <ui.TextLinkAnchor
-              data-self="start"
-              download
-              href="/public/body-weight-measurements-template.csv"
-              rel="noopener"
-              target="_blank"
-            >
-              <Download data-size="xs" />
-              {t("measurements.body_weight.import.template.cta")}
-            </ui.TextLinkAnchor>
+            <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+              <ui.TextLinkAnchor
+                data-shrink="0"
+                download
+                href="/public/body-weight-measurements-template.csv"
+                rel="noopener"
+                target="_blank"
+              >
+                <Download data-size="xs" />
+                {t("measurements.body_weight.import.template.cta")}
+              </ui.TextLinkAnchor>
+            </div>
           </div>
 
           {mutation.isError && <ui.DialogError>{t("measurements.body_weight.import.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
+            <ui.ButtonClear
+              disabled={!file.isSelected}
+              onClick={bg.exec([file.actions.clearFile, mutation.reset])}
+            />
+
             <button
               className="c-button"
               data-variant="primary"
