@@ -8,6 +8,7 @@ import {
   Router,
   redirect,
 } from "@tanstack/react-router";
+import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
@@ -161,6 +162,12 @@ export const measurementsRoute = createRoute({
   path: "/measurements",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/measurements"), "Measurements"),
+  validateSearch: (value) => ({
+    month:
+      typeof value["month"] === "string" && /^\d{4}-\d{2}$/.test(value["month"])
+        ? value["month"]
+        : BodyWeightMeasurementFiltersForm.Form.default.month,
+  }),
   loader: async ({ context }) => ({ measurements: await Measurements.listBodyWeight(context.request) }),
 });
 
