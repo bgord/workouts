@@ -80,7 +80,7 @@ export function WorkoutExerciseRow(props: {
           <ui.ExerciseImage size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm} {...exercise} />
         </button>
 
-        <div data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }} {...ui.Gap.inline}>
+        <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
           <Link
             data-color="neutral-100"
             data-fs="sm"

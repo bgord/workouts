@@ -27,7 +27,7 @@ export function DashboardWorkoutsFastCall() {
   return (
     <div data-md-stack="y" data-stack="x" {...ui.Gap.related}>
       {upcoming && (
-        <div data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }} {...ui.Gap.cluster}>
+        <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.cluster}>
           <ui.Eyebrow>
             {t(dashboard.inProgress ? "dashboard.in_progress.header" : "dashboard.next_up.header")}
           </ui.Eyebrow>
@@ -39,7 +39,7 @@ export function DashboardWorkoutsFastCall() {
       )}
 
       {dashboard.lastCompleted && (
-        <div data-grow="1" data-stack="y" style={{ flexBasis: 0, minWidth: 0 }} {...ui.Gap.cluster}>
+        <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.cluster}>
           <ui.Eyebrow>{t("dashboard.last_completed.header")}</ui.Eyebrow>
 
           <ul>

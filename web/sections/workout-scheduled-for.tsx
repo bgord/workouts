@@ -6,8 +6,6 @@ import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
-const date = { flexShrink: 0, minWidth: 0, width: "auto" };
-
 export function WorkoutScheduledFor() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
@@ -75,9 +73,11 @@ export function WorkoutScheduledFor() {
       <input
         aria-label={t("workout.reschedule.label")}
         className="c-input"
+        data-minw="0"
+        data-shrink="0"
         data-variant="transparent"
+        data-width="auto"
         disabled={!workout.actions.reschedule.enabled}
-        style={date}
         type="date"
         {...scheduledFor.input.props}
         max={Temporal.Now.plainDateISO().add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}

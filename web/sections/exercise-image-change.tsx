@@ -5,8 +5,6 @@ import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
-const label = { minWidth: 0 };
-
 export function ExerciseImageChange() {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -82,9 +80,9 @@ export function ExerciseImageChange() {
               data-disp="flex"
               data-grow="1"
               data-main="center"
+              data-minw="0"
               data-variant="secondary"
               data-wrap="nowrap"
-              style={label}
               tabIndex={0}
               {...ui.Gap.cluster}
               {...image.label.props}

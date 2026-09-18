@@ -109,10 +109,10 @@ export function WorkoutExerciseAdd() {
 
         <form
           aria-busy={mutation.isLoading}
+          data-minh="0"
           data-stack="y"
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
-          style={{ minHeight: 0 }}
           {...ui.Gap.section}
         >
           <ui.ExercisePicker

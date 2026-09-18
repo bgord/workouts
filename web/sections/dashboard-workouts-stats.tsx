@@ -19,6 +19,7 @@ export function DashboardWorkoutStats() {
       <ul className="c-card" data-stack="x" data-variant="sunken" {...ui.Spacing.surface}>
         {tiles.map((tile, index) => (
           <li
+            data-basis="0"
             data-bcl="alpha-subtle"
             data-bsl="solid"
             data-bwl={index === 0 ? "none" : "hairline"}
@@ -26,7 +27,6 @@ export function DashboardWorkoutStats() {
             data-grow="1"
             data-stack="y"
             key={tile.label}
-            style={{ flexBasis: 0 }}
             {...ui.Gap.inline}
           >
             <ui.TileValue>{tile.value}</ui.TileValue>

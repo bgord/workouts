@@ -46,10 +46,10 @@ export function BodyWeightMeasurementRow(props: {
             data-fs="sm"
             data-grow="1"
             data-md-fs="xs"
+            data-minw="0"
             data-stack="x"
             data-transform="nowrap"
             onClick={bodyWeightMeasurementCorrect.enable}
-            style={{ minWidth: 0 }}
             type="button"
             {...ui.Gap.inline}
           >

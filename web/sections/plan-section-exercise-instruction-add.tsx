@@ -8,7 +8,6 @@ import * as ui from "../components";
 import { planRoute } from "../router";
 
 const placeholder = { ...bg.Rhythm().times(3).width, ...bg.Rhythm().times(3).height };
-const shrinkable = { minHeight: 0 };
 
 export function PlanSectionExerciseInstructionAdd(props: {
   plan: Plan;
@@ -171,11 +170,11 @@ export function PlanSectionExerciseInstructionAdd(props: {
 
         <form
           aria-busy={mutation.isLoading}
+          data-minh="0"
           data-stack="y"
           {...ui.Gap.section}
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
-          style={shrinkable}
         >
           <ui.ExercisePicker
             exercises={exercises.data}

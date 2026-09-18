@@ -5,8 +5,6 @@ import * as ui from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
-const label = { minWidth: 0 };
-
 export function ProfileAvatarChange() {
   const router = useRouter();
   const t = useTranslations();
@@ -79,9 +77,9 @@ export function ProfileAvatarChange() {
                 data-disp="flex"
                 data-main="center"
                 data-md-grow="1"
+                data-minw="0"
                 data-variant="secondary"
                 data-wrap="nowrap"
-                style={label}
                 tabIndex={0}
                 {...ui.Gap.cluster}
                 {...avatar.label.props}

@@ -18,11 +18,12 @@ export function Plan() {
           <ui.ButtonBack to="/plans" />
 
           <div
+            data-basis="0"
             data-cross="center"
             data-grow="1"
+            data-minw="0"
             data-stack="x"
             data-wrap="nowrap"
-            style={{ flexBasis: 0, minWidth: 0 }}
             {...ui.Gap.related}
           >
             <Sections.PlanName />

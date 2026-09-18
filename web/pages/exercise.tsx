@@ -27,7 +27,7 @@ export function Exercise() {
       </div>
 
       <div data-cross="start" data-stack="x" data-wrap="wrap" {...ui.Gap.section}>
-        <div data-md-grow="1" style={{ flexBasis: 320, minWidth: 0 }}>
+        <div data-md-grow="1" data-minw="0" style={{ flexBasis: 320 }}>
           <Sections.ExerciseImageChange />
         </div>
 

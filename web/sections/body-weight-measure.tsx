@@ -55,9 +55,10 @@ export function BodyWeightMeasure() {
 
       <input
         className="c-input"
+        data-minw="0"
+        data-shrink="0"
         data-variant="transparent"
         data-width="auto"
-        style={{ flexShrink: 0, minWidth: 0 }}
         type="date"
         {...measuredOn.input.props}
         max={today}

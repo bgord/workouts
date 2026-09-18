@@ -1,4 +1,3 @@
-import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type {
   PlanExerciseInstruction,
@@ -41,7 +40,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         <ui.ExerciseImage size={ui.ExerciseImageSize.sm} {...exerciseInstruction.exercise} />
       </Link>
 
-      <div data-grow="1" data-stack="y" {...bg.Rhythm().times(0).style.minWidth} {...ui.Gap.inline}>
+      <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
         <Link
           data-color="neutral-100"
           data-fs="sm"

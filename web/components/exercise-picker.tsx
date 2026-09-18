@@ -22,7 +22,7 @@ export function ExercisePicker(props: {
   );
 
   return (
-    <div data-stack="y" data-wrap="nowrap" style={{ minHeight: 0 }} {...Gap.cluster}>
+    <div data-minh="0" data-stack="y" data-wrap="nowrap" {...Gap.cluster}>
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...Gap.inline}>
         <div data-cross="center" data-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
@@ -48,9 +48,10 @@ export function ExercisePicker(props: {
         data-br="md"
         data-bs="solid"
         data-bw="hairline"
+        data-minh="0"
         data-overflow="auto"
         data-stack="y"
-        style={{ minHeight: 0, maxHeight: "40vh" }}
+        style={{ maxHeight: "40vh" }}
       >
         {matching.length === 0 && (
           <li data-color="neutral-500" data-fs="sm" data-main="center" data-stack="x" {...Spacing.surface}>

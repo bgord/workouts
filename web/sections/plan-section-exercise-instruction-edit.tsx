@@ -8,8 +8,6 @@ import { Plans } from "../api";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-const shrinkable = { minHeight: 0 };
-
 export function PlanSectionExerciseInstructionEdit(props: {
   plan: Plan;
   section: PlanSection;
@@ -124,11 +122,11 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
         <form
           aria-busy={mutation.isLoading}
+          data-minh="0"
           data-stack="y"
           {...ui.Gap.section}
           data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
-          style={shrinkable}
         >
           {planSectionExerciseInstructionPick.off && exercise && (
             <button
@@ -168,9 +166,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
           {planSectionExerciseInstructionPick.on && (
             <div
+              data-minh="0"
               data-stack="y"
               data-wrap="nowrap"
-              style={shrinkable}
               {...planSectionExerciseInstructionPick.props.target}
             >
               <ui.ExercisePicker
