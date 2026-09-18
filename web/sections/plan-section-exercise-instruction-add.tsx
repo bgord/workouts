@@ -73,20 +73,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
         >
           <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
 
-          <div
-            data-bc="neutral-700"
-            data-br="sm"
-            data-bs="dashed"
-            data-bw="hairline"
-            data-color="neutral-500"
-            data-cross="center"
-            data-main="center"
-            data-shrink="0"
-            data-stack="x"
-            {...bg.Rhythm().times(3).style.square}
-          >
-            <Plus data-size="sm" />
-          </div>
+          <ui.AddPlaceholder />
 
           {t("plan.section.exercise.add.cta")}
         </button>
@@ -132,20 +119,7 @@ export function PlanSectionExerciseInstructionAdd(props: {
         >
           <ui.RowIndex aria-hidden>{props.section.exerciseInstructions.length + 1}</ui.RowIndex>
 
-          <div
-            data-bc="neutral-700"
-            data-br="sm"
-            data-bs="dashed"
-            data-bw="hairline"
-            data-color="neutral-500"
-            data-cross="center"
-            data-main="center"
-            data-shrink="0"
-            data-stack="x"
-            {...bg.Rhythm().times(3).style.square}
-          >
-            <Plus data-size="sm" />
-          </div>
+          <ui.AddPlaceholder />
 
           {t("plan.section.exercise.add.cta")}
         </button>

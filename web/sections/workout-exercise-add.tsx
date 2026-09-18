@@ -77,20 +77,7 @@ export function WorkoutExerciseAdd() {
           {...ui.Gap.related}
           {...workoutExerciseAdd.props.controller}
         >
-          <div
-            data-bc="neutral-700"
-            data-br="sm"
-            data-bs="dashed"
-            data-bw="hairline"
-            data-color="neutral-500"
-            data-cross="center"
-            data-main="center"
-            data-shrink="0"
-            data-stack="x"
-            {...bg.Rhythm().times(3).style.square}
-          >
-            <Plus data-size="sm" />
-          </div>
+          <ui.AddPlaceholder />
 
           {t("workout.exercise.add.cta")}
         </button>

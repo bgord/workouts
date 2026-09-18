@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Plus, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import type { ActionState } from "../../modules/action-state";
 import type { Plan } from "../../modules/plans/value-objects/plan";
@@ -26,7 +26,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
     onSuccess: async (_, context) => {
       planSectionCreate.disable();
       await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
-      bg.Fields.clearAll([planSectionName]);
+      planSectionName.clear();
       context.form?.reset();
     },
   });
@@ -50,20 +50,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
           {...ui.Gap.related}
           {...planSectionCreate.props.controller}
         >
-          <div
-            data-bc="neutral-700"
-            data-br="sm"
-            data-bs="dashed"
-            data-bw="hairline"
-            data-color="neutral-500"
-            data-cross="center"
-            data-main="center"
-            data-shrink="0"
-            data-stack="x"
-            {...bg.Rhythm().times(3).style.square}
-          >
-            <Plus data-size="sm" />
-          </div>
+          <ui.AddPlaceholder />
 
           {t("plan.section.create.cta")}
         </button>
@@ -82,20 +69,7 @@ export function PlanSectionCreate(props: Plan & { action: ActionState }) {
       {...planSectionCreate.props.target}
     >
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
-        <div
-          data-bc="neutral-700"
-          data-br="sm"
-          data-bs="dashed"
-          data-bw="hairline"
-          data-color="neutral-500"
-          data-cross="center"
-          data-main="center"
-          data-shrink="0"
-          data-stack="x"
-          {...bg.Rhythm().times(3).style.square}
-        >
-          <Plus data-size="sm" />
-        </div>
+        <ui.AddPlaceholder />
 
         <input
           aria-label={t("plan.section.create.cta")}
