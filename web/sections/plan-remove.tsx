@@ -30,19 +30,15 @@ export function PlanRemove() {
 
   return (
     <>
-      <button
+      <ui.IconButton
         aria-label={t("plan.remove.cta")}
-        className="c-button"
-        data-color="neutral-400"
-        data-hover-color="danger-400"
-        data-variant="ghost"
         onClick={planRemove.enable}
         title={t("plan.remove.header")}
-        type="button"
+        tone="danger"
         {...planRemove.props.controller}
       >
         <Trash2 data-size="sm" />
-      </button>
+      </ui.IconButton>
 
       <ui.Dialog {...planRemove}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={planRemove.disable}>
