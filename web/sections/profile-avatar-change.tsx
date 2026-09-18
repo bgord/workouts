@@ -40,7 +40,7 @@ export function ProfileAvatarChange() {
         <ui.SectionHeading>{t("profile.avatar.header")}</ui.SectionHeading>
       </div>
 
-      <div data-stack="y" {...ui.Gap.related}>
+      <div data-cross="start" data-stack="y" {...ui.Gap.related}>
         <ProfileAvatarDelete />
 
         {profileAvatarChange.off && (

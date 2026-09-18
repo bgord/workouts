@@ -19,31 +19,43 @@ export function ProfileAvatarDelete() {
   });
 
   return (
-    <div data-position="relative" data-self="start">
-      <button data-cursor="pointer" data-disp="block" onClick={profileAvatarDelete.toggle} type="button">
+    <div aria-busy={mutation.isLoading} data-position="relative" data-self="start">
+      <button
+        data-cursor="pointer"
+        data-disp="block"
+        disabled={!enabled}
+        onClick={profileAvatarDelete.toggle}
+        type="button"
+        {...profileAvatarDelete.props.controller}
+      >
         <ui.Avatar size={ui.AvatarSize.lg} />
       </button>
 
-      {profileAvatarDelete.on && enabled && (
-        <div data-bg="neutral-900" data-br="md" data-inset="0" data-opacity="high" data-position="absolute" />
-      )}
-      {profileAvatarDelete.on && enabled && (
-        <button
-          className="c-button"
-          data-color="neutral-200"
-          data-hover-color="danger-400"
-          data-left="5"
-          data-position="absolute"
-          data-right="5"
-          data-top="8"
-          data-variant="ghost"
-          disabled={mutation.isLoading}
-          onClick={() => mutation.mutate()}
-          title={t("profile.avatar.delete.title")}
-          type="button"
-        >
-          <X data-size="md" />
-        </button>
+      {profileAvatarDelete.on && (
+        <>
+          <div
+            data-bg="neutral-900"
+            data-br="md"
+            data-inset="0"
+            data-opacity="high"
+            data-position="absolute"
+          />
+
+          <ui.IconButton
+            aria-label={t("profile.avatar.delete.title")}
+            data-left="5"
+            data-position="absolute"
+            data-right="5"
+            data-top="8"
+            disabled={mutation.isLoading}
+            onClick={() => mutation.mutate()}
+            title={t("profile.avatar.delete.title")}
+            tone="danger"
+            {...profileAvatarDelete.props.target}
+          >
+            <X data-size="md" />
+          </ui.IconButton>
+        </>
       )}
     </div>
   );
