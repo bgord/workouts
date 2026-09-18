@@ -32,24 +32,26 @@ export function WorkoutNote() {
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
       {workoutNoteUpdate.off && (
-        <button
-          className="c-prose"
-          data-color={workout.data.note ? "neutral-200" : "neutral-500"}
-          data-cursor="pointer"
-          data-fs="sm"
-          data-self="start"
-          data-ta="start"
-          disabled={!workout.actions.noteSet.enabled}
-          onClick={workoutNoteUpdate.enable}
-          title={t("workout.note.label")}
-          type="button"
-          {...workoutNoteUpdate.props.controller}
-        >
-          {workout.data.note ?? t("workout.note.placeholder")}
-        </button>
-      )}
+        <>
+          <button
+            className="c-prose"
+            data-color={workout.data.note ? "neutral-200" : "neutral-500"}
+            data-cursor="pointer"
+            data-fs="sm"
+            data-self="start"
+            data-ta="start"
+            disabled={!workout.actions.noteSet.enabled}
+            onClick={workoutNoteUpdate.enable}
+            title={t("workout.note.label")}
+            type="button"
+            {...workoutNoteUpdate.props.controller}
+          >
+            {workout.data.note ?? t("workout.note.placeholder")}
+          </button>
 
-      {workoutNoteUpdate.off && <ui.ActionHint {...workout.actions.noteSet} />}
+          <ui.ActionHint {...workout.actions.noteSet} />
+        </>
+      )}
 
       {workoutNoteUpdate.on && (
         <form
@@ -81,9 +83,9 @@ export function WorkoutNote() {
             </button>
 
             <ui.ButtonCancel onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])} />
-
-            {mutation.isError && <ui.Output>{t("workout.note.error")}</ui.Output>}
           </div>
+
+          {mutation.isError && <ui.Output>{t("workout.note.error")}</ui.Output>}
         </form>
       )}
     </div>
