@@ -123,15 +123,13 @@ export function PlanSectionExerciseInstructionEdit(props: {
           aria-busy={mutation.isLoading}
           data-minh="0"
           data-stack="y"
-          {...ui.Gap.section}
-          data-wrap="nowrap"
           onSubmit={mutation.handleSubmit}
+          {...ui.Gap.section}
         >
           {planSectionExerciseInstructionPick.off && exercise && (
             <button
               data-bc="neutral-800"
               data-br="md"
-              data-bs="solid"
               data-bw="hairline"
               data-color="neutral-100"
               data-cross="center"
@@ -140,13 +138,12 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-hover-bc={actions.exerciseChange.enabled ? "brand-500" : undefined}
               data-px="3"
               data-stack="x"
-              data-transform="truncate"
               data-wrap="nowrap"
-              disabled={!(actions.exerciseChange.available && actions.exerciseChange.enabled)}
+              disabled={!actions.exerciseChange.enabled}
               onClick={planSectionExerciseInstructionPick.enable}
               title={t("plan.section.exercise.edit.change")}
-              {...ui.Spacing.rowCompact}
               type="button"
+              {...ui.Spacing.rowCompact}
               {...planSectionExerciseInstructionPick.props.controller}
             >
               <span data-shrink="0" data-stack="x">
@@ -164,12 +161,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           )}
 
           {planSectionExerciseInstructionPick.on && (
-            <div
-              data-minh="0"
-              data-stack="y"
-              data-wrap="nowrap"
-              {...planSectionExerciseInstructionPick.props.target}
-            >
+            <div data-minh="0" {...planSectionExerciseInstructionPick.props.target}>
               <ui.ExercisePicker
                 exercises={exercises.data}
                 name={exerciseId.input.props.name}
