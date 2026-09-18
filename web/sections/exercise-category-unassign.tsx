@@ -19,8 +19,7 @@ export function ExerciseCategoryUnassign(props: { exerciseId: ExerciseIdType; ca
           exerciseCategoryId: props.category.id,
         }),
       }),
-    onSuccess: async () =>
-      router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true }),
   });
 
   return (

@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Pencil, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import * as ui from "../components";
@@ -30,32 +30,27 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
     return (
       <button
         data-color="neutral-100"
-        data-cross="center"
         data-cursor="pointer"
         data-fs="sm"
-        data-grow="1"
-        data-hover-color="neutral-200"
-        data-main="between"
-        data-stack="x"
-        data-wrap="nowrap"
+        data-hover-color="brand-300"
+        data-transform="truncate"
         onClick={toggle.enable}
         title={t("exercise.category.rename.cta")}
         type="button"
-        {...ui.Gap.related}
         {...toggle.props.controller}
       >
-        <span data-transform="truncate">{props.name}</span>
-        <Pencil data-color="neutral-500" data-shrink="0" data-size="xs" />
+        {props.name}
       </button>
     );
   }
 
   return (
     <form
+      aria-busy={mutation.isLoading}
       data-grow="1"
+      data-minw="0"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
-      {...bg.Rhythm().times(0).style.minWidth}
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
@@ -64,7 +59,8 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
           aria-label={t("exercise.category.rename.label")}
           className="c-input"
           data-grow="1"
-          {...bg.Rhythm().times(0).style.minWidth}
+          data-minw="0"
+          data-variant="transparent"
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />
