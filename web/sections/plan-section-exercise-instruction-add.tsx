@@ -126,10 +126,8 @@ export function PlanSectionExerciseInstructionAdd(props: {
             <ui.Stepper
               field={sets}
               label={t("plan.section.exercise.add.sets.label")}
-              max={Form.sets.pattern.max}
-              min={Form.sets.pattern.min}
-              step={1}
               variant="fill"
+              {...Form.sets.pattern}
             />
 
             <ui.Separator>×</ui.Separator>
@@ -137,10 +135,8 @@ export function PlanSectionExerciseInstructionAdd(props: {
             <ui.Stepper
               field={repsMin}
               label={t("plan.section.exercise.add.reps.label")}
-              max={Form.repsMin.pattern.max}
-              min={Form.repsMin.pattern.min}
-              step={1}
               variant="fill"
+              {...Form.repsMin.pattern}
             />
 
             <ui.Separator>–</ui.Separator>
@@ -148,10 +144,9 @@ export function PlanSectionExerciseInstructionAdd(props: {
             <ui.Stepper
               field={repsMax}
               label={t("plan.section.exercise.add.reps.max.label")}
-              max={Form.repsMax.pattern.max}
-              min={repsMin.value ?? Form.repsMax.pattern.min}
-              step={1}
               variant="fill"
+              {...Form.repsMax.pattern}
+              min={repsMin.value ?? Form.repsMax.pattern.min}
             />
           </div>
 
