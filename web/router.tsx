@@ -44,11 +44,11 @@ export const dashboardRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/dashboard"), "Dashboard"),
-  loader: async ({ context }) => ({
-    dashboard: await Workouts.dashboard(context.request),
-    measurements: await Measurements.listBodyWeight(context.request),
-    bodyWeightStats: await Measurements.getBodyWeightStats(context.request),
-  }),
+  loader: async ({ context }) => {
+    const { measurements, stats } = await Measurements.listBodyWeight(context.request);
+
+    return { dashboard: await Workouts.dashboard(context.request), measurements, bodyWeightStats: stats };
+  },
 });
 
 export const workoutsRoute = createRoute({
@@ -169,10 +169,11 @@ export const measurementsRoute = createRoute({
         ? value["month"]
         : BodyWeightMeasurementFiltersForm.Form.default.month,
   }),
-  loader: async ({ context }) => ({
-    measurements: await Measurements.listBodyWeight(context.request),
-    bodyWeightStats: await Measurements.getBodyWeightStats(context.request),
-  }),
+  loader: async ({ context }) => {
+    const { measurements, stats } = await Measurements.listBodyWeight(context.request);
+
+    return { measurements, bodyWeightStats: stats };
+  },
 });
 
 const profileRoute = createRoute({

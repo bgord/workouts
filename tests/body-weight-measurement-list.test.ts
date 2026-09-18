@@ -31,7 +31,7 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([mocks.bodyWeightMeasurement]);
+    expect(json).toEqual({ measurements: [mocks.bodyWeightMeasurement], stats: mocks.bodyWeightStats });
   });
 
   test("happy path - empty", async () => {
@@ -45,6 +45,6 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([]);
+    expect(json).toEqual({ measurements: [], stats: null });
   });
 });

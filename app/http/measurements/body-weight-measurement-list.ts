@@ -1,5 +1,5 @@
 import type * as bg from "@bgord/bun";
-import type * as Measurements from "+measurements";
+import * as Measurements from "+measurements";
 
 type Dependencies = { ListBodyWeightMeasurementsQuery: Measurements.Queries.ListBodyWeightMeasurements };
 
@@ -9,6 +9,7 @@ export const BodyWeightMeasurementList =
     const userId = context.identity.authenticatedUserId();
 
     const measurements = await deps.ListBodyWeightMeasurementsQuery.execute(userId);
+    const stats = new Measurements.Services.BodyWeightStatsCalculator(measurements).calculate();
 
-    return Response.json(measurements);
+    return Response.json({ measurements, stats });
   };

@@ -1,38 +1,29 @@
-import { describe, expect, spyOn, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
-import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
 
-describe("BodyWeightStatsCalculator", async () => {
-  const di = await bootstrap();
+describe("BodyWeightStatsCalculator", () => {
+  test("happy path", () => {
+    const calculator = new Measurements.Services.BodyWeightStatsCalculator([mocks.bodyWeightMeasurement]);
 
-  const calculator = new Measurements.Services.BodyWeightStatsCalculator({
-    ListBodyWeightMeasurements: di.Adapters.Measurements.ListBodyWeightMeasurementsQuery,
+    expect(calculator.calculate()).toEqual(mocks.bodyWeightStats);
   });
 
-  test("happy path", async () => {
-    using _ = spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([
-      mocks.bodyWeightMeasurement,
-    ]);
-
-    expect(await calculator.calculate(mocks.userId)).toEqual(mocks.bodyWeightStats);
-  });
-
-  test("happy path - reference and previous week", async () => {
+  test("happy path - reference and previous week", () => {
     const earlier: Measurements.VO.BodyWeightMeasurement = {
       ...mocks.bodyWeightReferenceMeasurement,
       weight: v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(82).get()),
       measuredOn: v.parse(Measurements.VO.BodyWeightMeasuredOn, "2024-12-24"),
     };
 
-    using _ = spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([
+    const calculator = new Measurements.Services.BodyWeightStatsCalculator([
       mocks.bodyWeightMeasurement,
       earlier,
     ]);
 
-    expect(await calculator.calculate(mocks.userId)).toEqual({
+    expect(calculator.calculate()).toEqual({
       latest: mocks.bodyWeightMeasurement,
       previous: earlier,
       reference: earlier,
@@ -42,11 +33,9 @@ describe("BodyWeightStatsCalculator", async () => {
     });
   });
 
-  test("no measurements", async () => {
-    using _ = spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue(
-      [],
-    );
+  test("no measurements", () => {
+    const calculator = new Measurements.Services.BodyWeightStatsCalculator([]);
 
-    expect(await calculator.calculate(mocks.userId)).toEqual(null);
+    expect(calculator.calculate()).toEqual(null);
   });
 });
