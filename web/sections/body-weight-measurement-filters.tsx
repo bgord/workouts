@@ -22,7 +22,11 @@ export function BodyWeightMeasurementFilters() {
           id={BodyWeightMeasurementFiltersForm.Form.month.field.name}
           name={BodyWeightMeasurementFiltersForm.Form.month.field.name}
           onChange={(event) =>
-            navigate({ search: { month: event.currentTarget.value || undefined }, to: "/measurements" })
+            navigate({
+              resetScroll: false,
+              search: { month: event.currentTarget.value || undefined },
+              to: "/measurements",
+            })
           }
           value={search.month ?? ""}
           {...bg.Autocomplete.off}
@@ -41,7 +45,11 @@ export function BodyWeightMeasurementFilters() {
         <ui.IconButton
           aria-label={t("app.clear")}
           onClick={() =>
-            navigate({ search: BodyWeightMeasurementFiltersForm.Form.default, to: "/measurements" })
+            navigate({
+              resetScroll: false,
+              search: BodyWeightMeasurementFiltersForm.Form.default,
+              to: "/measurements",
+            })
           }
           title={t("app.clear")}
         >
