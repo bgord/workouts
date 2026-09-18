@@ -1,5 +1,5 @@
 import { useMutation, useTranslations } from "@bgord/ui";
-import { CircleAlert, CircleCheck, KeyRound, Send } from "lucide-react";
+import { KeyRound, Send } from "lucide-react";
 import * as ui from "../components";
 import { rootRoute } from "../router";
 
@@ -48,19 +48,9 @@ export function ProfilePasswordChange() {
           {mutation.isLoading ? t("auth.change_password.sending") : t("auth.change_password.send_cta")}
         </button>
 
-        {mutation.isDone && (
-          <ui.Output data-cross="center" data-stack="x" tone="positive" {...ui.Gap.cluster}>
-            <CircleCheck data-size="sm" />
-            {t("auth.change_password.sent")}
-          </ui.Output>
-        )}
+        {mutation.isDone && <ui.Output tone="positive">{t("auth.change_password.sent")}</ui.Output>}
 
-        {mutation.isError && (
-          <ui.Output data-cross="center" data-stack="x" {...ui.Gap.cluster}>
-            <CircleAlert data-size="sm" />
-            {t("auth.change_password.error")}
-          </ui.Output>
-        )}
+        {mutation.isError && <ui.Output>{t("auth.change_password.error")}</ui.Output>}
       </form>
     </section>
   );
