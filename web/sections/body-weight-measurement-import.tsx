@@ -1,10 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Download, FileSpreadsheet, FileUp, Upload, X } from "lucide-react";
+import { Download, FileSpreadsheet, FileUp, Upload } from "lucide-react";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
+const maxSizeBytes = 1_024_000;
 
 export function BodyWeightMeasurementImport() {
   const t = bg.useTranslations();
@@ -12,7 +13,7 @@ export function BodyWeightMeasurementImport() {
 
   const bodyWeightMeasurementImport = bg.useToggle({ name: "body-weight-measurement-import" });
 
-  const file = bg.useFile("body-weight-measurement-import-file", { mimeTypes, maxSizeBytes: 1_000_000 });
+  const file = bg.useFile("body-weight-measurement-import-file", { mimeTypes, maxSizeBytes });
 
   const mutation = bg.useMutation({
     perform: () => {
@@ -39,7 +40,9 @@ export function BodyWeightMeasurementImport() {
   return (
     <>
       <ui.IconButton
+        aria-label={t("measurements.body_weight.import.header")}
         onClick={bodyWeightMeasurementImport.enable}
+        title={t("measurements.body_weight.import.header")}
         {...bodyWeightMeasurementImport.props.controller}
       >
         <Upload data-size="sm" />
@@ -58,74 +61,51 @@ export function BodyWeightMeasurementImport() {
           {...ui.Gap.section}
         >
           <div data-stack="y" {...ui.Gap.related}>
-            {file.isSelected ? (
-              <div
-                data-bc="neutral-700"
-                data-br="sm"
-                data-bs="solid"
-                data-bw="hairline"
-                data-color="neutral-100"
-                data-cross="center"
-                data-fs="sm"
-                data-stack="y"
-                {...ui.Spacing.surface}
-                {...ui.Gap.cluster}
-              >
-                <FileSpreadsheet data-color="neutral-400" data-size="md" />
+            <label
+              data-bc="neutral-700"
+              data-br="sm"
+              data-bs={file.isSelected ? "solid" : "dashed"}
+              data-bw="hairline"
+              data-color={file.isSelected ? "neutral-100" : "neutral-300"}
+              data-cross="center"
+              data-cursor={file.isSelected ? undefined : "pointer"}
+              data-fs="sm"
+              data-hover-bc={file.isSelected ? undefined : "neutral-500"}
+              data-stack="y"
+              tabIndex={0}
+              {...ui.Spacing.surface}
+              {...ui.Gap.cluster}
+              {...file.label.props}
+            >
+              {file.isSelected && (
+                <>
+                  <FileSpreadsheet data-color="neutral-400" data-size="md" />
+                  <ui.Meta data-fs="sm" data-maxw="100%" truncate>
+                    {file.data.name}
+                  </ui.Meta>
+                  <ui.ButtonClear onClick={bg.exec([file.actions.clearFile, mutation.reset])} />
+                </>
+              )}
 
-                <span data-maxw="100%" data-transform="truncate">
-                  {file.data.name}
-                </span>
+              {!file.isSelected && (
+                <>
+                  <FileUp data-color="neutral-400" data-size="md" />
+                  <span>{t("measurements.body_weight.import.select.cta")}</span>
+                  <ui.Meta {...bg.Rhythm(36).times(1).style.height}>
+                    {t("measurements.body_weight.import.hint")}
+                  </ui.Meta>
+                </>
+              )}
 
-                <button
-                  data-color="neutral-400"
-                  data-cross="center"
-                  data-cursor="pointer"
-                  data-fs="xs"
-                  data-hover-color="neutral-0"
-                  data-stack="x"
-                  onClick={bg.exec([file.actions.clearFile, mutation.reset])}
-                  type="button"
-                  {...ui.Gap.inline}
-                >
-                  <X data-size="xs" />
-                  {t("app.clear")}
-                </button>
-              </div>
-            ) : (
-              <label
-                data-bc="neutral-700"
-                data-br="sm"
-                data-bs="dashed"
-                data-bw="hairline"
-                data-color="neutral-300"
-                data-cross="center"
-                data-cursor="pointer"
-                data-fs="sm"
-                data-hover-bc="neutral-500"
-                data-stack="y"
-                tabIndex={0}
-                {...ui.Spacing.surface}
-                {...ui.Gap.cluster}
-                {...file.label.props}
-              >
-                <FileUp data-color="neutral-400" data-size="md" />
-
-                {t("measurements.body_weight.import.select.cta")}
-
-                <span data-color="neutral-500" data-fs="xs">
-                  {t("measurements.body_weight.import.hint")}
-                </span>
-
-                <input
-                  className="c-visually-hidden"
-                  onChange={file.actions.selectFile}
-                  required
-                  type="file"
-                  {...file.input.props}
-                />
-              </label>
-            )}
+              <input
+                className="c-visually-hidden"
+                disabled={file.isSelected}
+                onChange={file.actions.selectFile}
+                required
+                type="file"
+                {...file.input.props}
+              />
+            </label>
 
             <ui.TextLinkAnchor
               data-self="start"
