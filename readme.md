@@ -61,6 +61,7 @@ modules/
 │   │   └── user-directory.ts
 │   ├── services
 │   │   ├── email-verification-notification-composer.ts
+│   │   ├── notification-layout.ts
 │   │   └── password-reset-notification-composer.ts
 │   └── value-objects
 │       ├── admin-user-id.ts
