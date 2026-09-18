@@ -1,5 +1,5 @@
 import { Rhythm } from "@bgord/ui";
-import { createLink } from "@tanstack/react-router";
+import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { Gap } from "./gap";
 import { Meta } from "./meta";
 
@@ -28,11 +28,19 @@ export function Tile(props: React.JSX.IntrinsicElements["li"]) {
   return <li {...item} {...card} {...props} />;
 }
 
-export const TileLink = createLink((props: React.JSX.IntrinsicElements["a"]) => (
-  <li {...item}>
-    <a {...card} data-height="100%" {...props} />
-  </li>
-));
+function TileAnchor(props: React.JSX.IntrinsicElements["a"]) {
+  return (
+    <li {...item}>
+      <a {...card} data-height="100%" {...props} />
+    </li>
+  );
+}
+
+const TileAnchorLink = createLink(TileAnchor);
+
+export const TileLink: LinkComponent<typeof TileAnchor> = (props) => (
+  <TileAnchorLink activeProps={{}} {...props} />
+);
 
 export function TileHeader(props: React.JSX.IntrinsicElements["div"]) {
   return (

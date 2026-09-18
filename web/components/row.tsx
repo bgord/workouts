@@ -1,4 +1,4 @@
-import { createLink } from "@tanstack/react-router";
+import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { Gap } from "./gap";
 import { Spacing } from "./spacing";
@@ -7,7 +7,7 @@ type RowVariant = "default" | "muted";
 
 const opacity = { default: "full", muted: "high" } as const satisfies Record<RowVariant, string>;
 
-export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.IntrinsicElements["a"]) => {
+function RowAnchor(props: { variant?: RowVariant } & React.JSX.IntrinsicElements["a"]) {
   const { variant = "default", ...rest } = props;
 
   return (
@@ -25,7 +25,13 @@ export const RowLink = createLink((props: { variant?: RowVariant } & React.JSX.I
       />
     </li>
   );
-});
+}
+
+const RowAnchorLink = createLink(RowAnchor);
+
+export const RowLink: LinkComponent<typeof RowAnchor> = (props) => (
+  <RowAnchorLink activeProps={{}} {...props} />
+);
 
 export function RowBody(props: React.JSX.IntrinsicElements["div"]) {
   return <div data-grow="1" data-stack="y" data-transform="truncate" {...Gap.inline} {...props} />;
