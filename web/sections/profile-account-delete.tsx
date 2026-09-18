@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { UserX } from "lucide-react";
+import { ArrowRight, UserX } from "lucide-react";
 import * as ui from "../components";
 
 export function ProfileAccountDelete() {
@@ -21,25 +21,33 @@ export function ProfileAccountDelete() {
   });
 
   return (
-    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
-      <div data-main="between" data-md-stack="y" data-stack="x" {...ui.Gap.cluster}>
-        <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
-          <UserX data-color="danger-400" data-size="sm" />
-          <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
-        </div>
-
-        <ui.DialogStatus data-fs="xs" variant="irreversible" />
+    <section
+      className="c-card"
+      data-cross="center"
+      data-main="between"
+      data-stack="x"
+      data-tone="danger"
+      data-variant="flat"
+      data-wrap="nowrap"
+      {...ui.Spacing.surface}
+      {...ui.Gap.related}
+    >
+      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+        <UserX data-color="danger-400" data-size="sm" />
+        <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
       </div>
 
       <button
         className="c-button"
-        data-mr="auto"
-        data-variant="destructive"
+        data-shrink="0"
+        data-tone="danger"
+        data-variant="ghost"
         onClick={deleteAccount.enable}
         type="button"
         {...deleteAccount.props.controller}
       >
-        {t("profile.delete_account.cta_primary")}
+        {t("profile.delete_account.cta_secondary")}
+        <ArrowRight data-size="sm" />
       </button>
 
       <ui.Dialog {...deleteAccount}>

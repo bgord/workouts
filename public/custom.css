@@ -99,3 +99,15 @@ g:hover > .chart-point {
     inline-size: 34px;
   }
 }
+
+.c-card[data-tone="danger"] {
+  border-color: var(--color-danger-900);
+  background-color: color-mix(in oklch, var(--color-danger-900) 18%, transparent);
+}
+.c-button[data-tone="danger"] {
+  color: var(--color-danger-400);
+}
+.c-button[data-tone="danger"]:hover:not(:disabled) {
+  color: var(--color-danger-200);
+  background-color: var(--color-danger-900);
+}

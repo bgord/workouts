@@ -268,6 +268,7 @@
   "profile.delete_account.challenge": "Wpisz „delete” w polu poniżej",
   "profile.delete_account.input.placeholder": "delete",
   "profile.delete_account.cta_primary": "Usuń konto",
+  "profile.delete_account.cta_secondary": "Dalej",
   "profile.delete_account.error": "Nie udało się usunąć konta",
   "profile.delete_account.header": "Usuwanie konta",
   "profile.delete_account.info": "Usunięcie konta kasuje wszystkie plany, treningi i pomiary.",
