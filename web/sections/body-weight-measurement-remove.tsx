@@ -19,13 +19,7 @@ export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeas
   });
 
   return (
-    <form
-      data-cross="center"
-      data-self="start"
-      data-stack="x"
-      data-wrap="nowrap"
-      onSubmit={mutation.handleSubmit}
-    >
+    <form data-stack="x" onSubmit={mutation.handleSubmit}>
       <ui.IconButton
         disabled={mutation.isLoading}
         title={t("measurements.body_weight.remove.title")}
