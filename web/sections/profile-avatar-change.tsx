@@ -27,9 +27,9 @@ export function ProfileAvatarChange() {
       });
     },
     onSuccess: async () => {
-      await router.invalidate({ filter: () => true, sync: true });
-      avatar.actions.clearFile();
       profileAvatarChange.disable();
+      avatar.actions.clearFile();
+      await router.invalidate({ filter: () => true, sync: true });
     },
   });
 
@@ -40,13 +40,7 @@ export function ProfileAvatarChange() {
         <ui.SectionHeading>{t("profile.avatar.header")}</ui.SectionHeading>
       </div>
 
-      <div
-        data-cross="start"
-        data-md-self={profileAvatarChange.on ? "stretch" : undefined}
-        data-self="start"
-        data-stack="y"
-        {...ui.Gap.related}
-      >
+      <div data-stack="y" {...ui.Gap.related}>
         <ProfileAvatarDelete />
 
         {profileAvatarChange.off && (

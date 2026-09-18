@@ -78,8 +78,11 @@ export function ExerciseImageChange() {
         >
           <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
             <ui.FileButton data-grow="1" file={image}>
-              {image.isSelected && <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />}
-              {image.isSelected && <ImageUp data-shrink="0" data-size="sm" />}
+              {image.isSelected ? (
+                <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />
+              ) : (
+                <ImageUp data-shrink="0" data-size="sm" />
+              )}
 
               <span data-transform="truncate">
                 {image.isSelected ? image.data.name : t("exercise.image.change.select.cta")}
