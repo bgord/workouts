@@ -34,7 +34,7 @@ export function ExerciseHistoryRow(props: {
           params={{ workoutId: props.performance.workoutId }}
           search={WorkoutHistoryFilters.default}
           to="/workouts/$workoutId"
-          {...ui.Gap.inline}
+          {...ui.Gap.cluster}
         >
           {props.performance.scheduledFor}
 
@@ -55,9 +55,9 @@ export function ExerciseHistoryRow(props: {
           data-shrink="0"
           data-stack="x"
           data-wrap="nowrap"
-          {...ui.Gap.cluster}
+          {...ui.Gap.related}
         >
-          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.field}>
             <EqualApproximately data-color="neutral-600" data-self="center" data-size="xs" />
 
             <span
