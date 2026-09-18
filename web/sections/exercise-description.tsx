@@ -16,6 +16,8 @@ export function ExerciseDescription() {
     defaultValue: exercise.data.description,
   });
 
+  const metaEnterSubmit = bg.useMetaEnterSubmit();
+
   const mutation = bg.useMutation({
     perform: () =>
       fetch(`/api/exercises/${exercise.data.id}`, {
@@ -72,6 +74,7 @@ export function ExerciseDescription() {
             rows={3}
             {...bg.Form.textarea(Form.description.pattern)}
             {...description.input.props}
+            {...metaEnterSubmit}
           />
 
           <div data-cross="center" data-stack="x" {...ui.Gap.inline}>

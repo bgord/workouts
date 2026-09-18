@@ -16,6 +16,8 @@ export function PlanDescription() {
     defaultValue: plan.data.description ?? "",
   });
 
+  const metaEnterSubmit = bg.useMetaEnterSubmit();
+
   const mutation = bg.useMutation({
     perform: () =>
       fetch(`/api/plans/${plan.data.id}/description`, {
@@ -81,6 +83,7 @@ export function PlanDescription() {
             rows={3}
             {...bg.Form.textarea(Form.description.pattern)}
             {...description.input.props}
+            {...metaEnterSubmit}
           />
 
           <div data-cross="center" data-stack="x" {...ui.Gap.inline}>

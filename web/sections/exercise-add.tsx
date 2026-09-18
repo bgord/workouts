@@ -17,6 +17,8 @@ export function ExerciseAdd() {
 
   const name = bg.useTextField(Form.name.field);
   const description = bg.useTextField(Form.description.field);
+
+  const metaEnterSubmit = bg.useMetaEnterSubmit();
   const image = bg.useFile("exercise-image", { mimeTypes, maxSizeBytes });
 
   const mutation = bg.useMutation({
@@ -146,6 +148,7 @@ export function ExerciseAdd() {
               rows={3}
               {...bg.Form.textarea(Form.description.pattern)}
               {...description.input.props}
+              {...metaEnterSubmit}
             />
           </div>
 

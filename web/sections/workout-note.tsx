@@ -13,6 +13,8 @@ export function WorkoutNote() {
 
   const note = bg.useTextField({ ...Form.note.field, defaultValue: workout.data.note ?? "" });
 
+  const metaEnterSubmit = bg.useMetaEnterSubmit();
+
   const mutation = bg.useMutation({
     perform: () =>
       fetch(`/api/workouts/${workout.data.id}/note`, {
@@ -70,6 +72,7 @@ export function WorkoutNote() {
             rows={3}
             {...bg.Form.textarea(Form.note.pattern)}
             {...note.input.props}
+            {...metaEnterSubmit}
           />
 
           <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
