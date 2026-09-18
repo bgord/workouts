@@ -26,7 +26,7 @@ export function ExerciseCategoryAdd() {
   });
 
   return (
-    <form data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
+    <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
         <label className="c-visually-hidden" {...name.label.props}>
           {t("exercise.category.add.name.label")}
@@ -44,7 +44,7 @@ export function ExerciseCategoryAdd() {
 
         <ui.IconButton
           aria-label={t("exercise.category.add.submit.cta")}
-          disabled={name.unchanged || mutation.isLoading}
+          disabled={name.empty || mutation.isLoading}
           title={t("exercise.category.add.submit.cta")}
           tone="positive"
           type="submit"
