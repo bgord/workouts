@@ -28,6 +28,7 @@ export * from "./exercise-category-unassign";
 export * from "./exercise-delete";
 export * from "./exercise-description";
 export * from "./exercise-history";
+export * from "./exercise-history-row";
 export * from "./exercise-image-change";
 export * from "./exercise-name";
 export * from "./exercise-not-found";
