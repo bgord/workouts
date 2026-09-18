@@ -1,5 +1,6 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
+import { Link } from "@tanstack/react-router";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
 
@@ -8,9 +9,21 @@ export function ExerciseNotFound() {
 
   return (
     <ui.Main>
-      <ui.LinkBack search={Form.default} to="/catalog" />
+      <div data-stack="y" {...ui.Gap.related}>
+        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+          <ui.ButtonBack search={Form.default} to="/catalog" />
 
-      <div data-color="neutral-400">{t("exercise.not_found")}</div>
+          <ui.Header>{t("exercise.not_found")}</ui.Header>
+        </div>
+
+        <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
+          <ui.Meta>{t("exercise.not_found.hint")}</ui.Meta>
+
+          <Link className="c-link" data-fs="sm" data-mr="auto" search={Form.default} to="/catalog">
+            {t("exercise.not_found.cta")}
+          </Link>
+        </div>
+      </div>
     </ui.Main>
   );
 }
