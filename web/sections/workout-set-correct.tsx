@@ -53,6 +53,7 @@ export function WorkoutSetCorrect(
     return (
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
         <ui.IconButton
+          aria-label={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
           disabled={!action.enabled}
           onClick={toggle.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}

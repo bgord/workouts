@@ -27,7 +27,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
 
   const isSkipped = isCompleted && !hasLoggedSets;
 
-  const target = !isSkipped && !isDraft ? hasTarget : undefined;
+  const target = !(isSkipped || isDraft) ? hasTarget : undefined;
   const isExpandable = hasLoggedSets || props.exercise.actions.setLog.available;
 
   const { width } = bg.useWindowDimensions();
@@ -58,10 +58,10 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
           {...workoutExerciseDescription.props.controller}
         >
           <ui.ExerciseImage
-            size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm}
             id={props.exercise.exerciseId}
-            name={props.exercise.exerciseName}
             imageEtag={props.exercise.exerciseImageEtag}
+            name={props.exercise.exerciseName}
+            size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm}
           />
         </button>
 

@@ -52,15 +52,9 @@ export function WorkoutSetLog(props: WorkoutExercise) {
       onSubmit={mutation.handleSubmit}
       {...ui.Spacing.rowCompact}
     >
-      <div
-        aria-hidden
-        data-color="neutral-600"
-        data-fs="xs"
-        data-md-disp="none"
-        data-transform="font-variant-numeric"
-      >
+      <ui.RowIndex aria-hidden data-md-disp="none">
         {props.loggedSets.length + 1}
-      </div>
+      </ui.RowIndex>
 
       <div data-cross="center" data-md-grow="1" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
         <ui.Stepper
