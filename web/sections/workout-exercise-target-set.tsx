@@ -58,9 +58,11 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
     <form
       aria-busy={mutation.isLoading}
       data-cross="center"
+      data-md-ml="1"
+      data-md-pl="8"
+      data-pl="12"
       data-stack="x"
       onSubmit={mutation.handleSubmit}
-      {...ui.Spacing.inset}
       {...ui.Gap.related}
       {...toggle.props.target}
     >
