@@ -15,15 +15,15 @@ export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: Log
         </ui.RowIndex>
 
         {workoutSetCorrect.off && (
-          <div data-color="neutral-100" data-fs="sm" data-fw="medium">
-            <ui.RepsLoad load={props.loggedSet.load} reps={props.loggedSet.reps} />
-          </div>
-        )}
+          <>
+            <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+              <ui.RepsLoad load={props.loggedSet.load} reps={props.loggedSet.reps} />
+            </div>
 
-        {workoutSetCorrect.off && (
-          <div data-grow="1">
-            {props.loggedSet.rir !== undefined && <ui.RirBadge rir={props.loggedSet.rir} />}
-          </div>
+            <div data-grow="1">
+              {props.loggedSet.rir !== undefined && <ui.RirBadge rir={props.loggedSet.rir} />}
+            </div>
+          </>
         )}
 
         <div

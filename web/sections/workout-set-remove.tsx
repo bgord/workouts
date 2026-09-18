@@ -38,13 +38,12 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
       <form
         aria-busy={mutation.isLoading}
         data-cross="center"
-        data-self="start"
         data-stack="x"
-        data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
-        {...ui.Gap.related}
+        {...ui.Gap.cluster}
       >
         <ui.IconButton
+          aria-label={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           disabled={!action.enabled || mutation.isLoading}
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           tone="danger"
@@ -53,6 +52,8 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
         >
           <X data-size="sm" />
         </ui.IconButton>
+
+        {mutation.isError && <ui.Output>{t("workout.set.remove.error")}</ui.Output>}
       </form>
 
       <ui.Dialog {...workoutSetRemove}>
