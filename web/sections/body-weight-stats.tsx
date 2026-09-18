@@ -29,6 +29,9 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
   const previousWindow = props.measurements.filter(
     (measurement) => measurement.measuredOn >= previousWindowStart && measurement.measuredOn < windowStart,
   );
+  const weekAverage = average(window);
+
+  const day = (iso: string) => DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(iso));
 
   return (
     <ul data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
@@ -44,9 +47,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           <ui.BodyWeightDelta current={latest.weight} data-fs="xs" goal={goal} previous={previous?.weight} />
         </ui.TileValue>
 
-        <ui.TileContext>
-          {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(latest.measuredOn))}
-        </ui.TileContext>
+        <ui.TileContext>{day(latest.measuredOn)}</ui.TileContext>
       </ui.Tile>
 
       <ui.Tile>
@@ -56,11 +57,11 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
         </ui.TileHeader>
 
         <ui.TileValue>
-          <ui.BodyWeightValue weight={average(window)} />
+          <ui.BodyWeightValue weight={weekAverage} />
 
           {previousWindow.length > 0 && (
             <ui.BodyWeightDelta
-              current={average(window)}
+              current={weekAverage}
               data-fs="xs"
               goal={goal}
               previous={average(previousWindow)}
@@ -85,7 +86,7 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
 
         <ui.TileValue>
           {latest.weight === baseline.weight ? (
-            t("measurements.body_weight.value", { weight: 0 })
+            <ui.BodyWeightValue weight={0} />
           ) : (
             <ui.BodyWeightDelta current={latest.weight} goal={goal} previous={baseline.weight} />
           )}
@@ -95,9 +96,9 @@ export function BodyWeightStats(props: { measurements: ReadonlyArray<BodyWeightM
           {goal
             ? t("measurements.body_weight.stats.since_reference.goal", {
                 goal: t(`measurements.body_weight.goal.${goal}`),
-                date: DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn)),
+                date: day(baseline.measuredOn),
               })
-            : DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(baseline.measuredOn))}
+            : day(baseline.measuredOn)}
         </ui.TileContext>
       </ui.Tile>
     </ul>
