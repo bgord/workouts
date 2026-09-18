@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
-import { LineChart } from "../services/line-chart";
+import { LineChartMath } from "../services/line-chart";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 const POINT_HIT_RADIUS = 8;
@@ -12,11 +12,11 @@ export function BodyWeightProgressChart() {
   const language = bg.useLanguage();
   const data = measurementsRoute.useLoaderData();
 
-  if (data.measurements.length < LineChart.MINIMAL_POINTS) return null;
+  if (data.measurements.length < LineChartMath.MINIMAL_POINTS) return null;
 
   const measurements = data.measurements.toReversed();
 
-  const layout = LineChart.layout(
+  const layout = LineChartMath.layout(
     measurements.map((measurement) => WeightFormat.kilograms(measurement.weight, BodyWeightDecimals)),
     (weight) => t("measurements.body_weight.value", { weight }),
   );

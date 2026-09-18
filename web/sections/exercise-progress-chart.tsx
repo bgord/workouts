@@ -4,16 +4,16 @@ import { EqualApproximately } from "lucide-react";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
-import { LineChart } from "../services/line-chart";
+import { LineChartMath } from "../services/line-chart";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseProgressChart() {
   const t = bg.useTranslations();
   const { performances } = exerciseRoute.useLoaderData();
 
-  if (performances.length < LineChart.MINIMAL_POINTS) return null;
+  if (performances.length < LineChartMath.MINIMAL_POINTS) return null;
 
-  const layout = LineChart.layout(
+  const layout = LineChartMath.layout(
     performances.map((performance) => WeightFormat.kilograms(performance.bestEstimate)),
     (load) => t("statistics.exercise.one_rep_max_estimate.value", { load }),
   );

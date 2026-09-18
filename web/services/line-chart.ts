@@ -8,9 +8,9 @@ const SCALE_MARGIN = 1;
 const GRIDLINES_LIMIT = 5;
 const GRIDLINE_LABEL_GAP = 8;
 
-export type LineChartLayout = ReturnType<typeof LineChart.layout>;
+export type LineChartLayout = ReturnType<typeof LineChartMath.layout>;
 
-export const LineChart = {
+export const LineChartMath = {
   WIDTH,
   HEIGHT,
   LABEL_FONT_SIZE,

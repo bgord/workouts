@@ -1,4 +1,4 @@
-import { LineChart as Chart, type LineChartLayout } from "../services/line-chart";
+import { LineChartMath as Chart, type LineChartLayout } from "../services/line-chart";
 
 export function LineChart(props: React.JSX.IntrinsicElements["svg"]) {
   return <svg role="img" viewBox={`0 0 ${Chart.WIDTH} ${Chart.HEIGHT}`} width="100%" {...props} />;
