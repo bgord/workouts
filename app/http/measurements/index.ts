@@ -5,3 +5,4 @@ export * from "./body-weight-measurement-import";
 export * from "./body-weight-measurement-list";
 export * from "./body-weight-measurement-remove";
 export * from "./body-weight-reference-set";
+export * from "./body-weight-stats-get";

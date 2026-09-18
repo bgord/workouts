@@ -318,6 +318,16 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementList(Adapters.Measurements)),
   );
   measurements.get(
+    "/body-weight/stats",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Measurements.BodyWeightStatsGet({
+        BodyWeightStatsCalculator: new Measurements.Services.BodyWeightStatsCalculator({
+          ListBodyWeightMeasurements: Adapters.Measurements.ListBodyWeightMeasurementsQuery,
+        }),
+      }),
+    ),
+  );
+  measurements.get(
     "/body-weight/export",
     Tools.ShieldRateLimit.handle(),
     bg.EndpointHonoAdapter.adapt(

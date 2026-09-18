@@ -1248,6 +1248,15 @@ export const bodyWeightReferenceMeasurement: Measurements.VO.BodyWeightMeasureme
   reference: true,
 };
 
+export const bodyWeightStats: Measurements.VO.BodyWeightStats = {
+  latest: bodyWeightMeasurement,
+  previous: undefined,
+  reference: undefined,
+  baseline: bodyWeightMeasurement,
+  week: { average: bodyWeight, count: 1 },
+  previousWeek: undefined,
+};
+
 export const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
 
 export const bodyWeightMeasurementCsv = [
