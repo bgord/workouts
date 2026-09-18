@@ -95,7 +95,7 @@ function NavigationMobileDrawer() {
       data-bst="solid"
       data-bwt="hairline"
       data-left="0"
-      data-main="between"
+      data-main="around"
       data-position="fixed"
       data-py="4"
       data-right="0"
@@ -172,7 +172,10 @@ function NavigationShell() {
 function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
   return (
     <button
+      data-cross="center"
       data-cursor="pointer"
+      data-main="center"
+      data-stack="x"
       onClick={async () => {
         await fetch("/api/auth/sign-out", { method: "POST", credentials: "include" });
         location.replace("/public/login.html");
