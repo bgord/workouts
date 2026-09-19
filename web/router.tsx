@@ -22,10 +22,12 @@ type RouterContext = { request: Request | null; nonce: string };
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
-      ...bg.META,
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Workouts" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
       { name: "apple-mobile-web-app-title", content: "Workouts" },
     ],
     links: [
