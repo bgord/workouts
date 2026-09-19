@@ -74,29 +74,34 @@ export function WorkoutSetCorrect(
       aria-busy={mutation.isLoading}
       data-cross="center"
       data-grow="1"
+      data-md-main="end"
+      data-md-wrap="wrap"
       data-stack="x"
+      data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
-      <ui.Stepper
-        disabled={mutation.isLoading}
-        field={reps}
-        label={t("workout.set.reps.label")}
-        width={40}
-        {...Form.reps.pattern}
-      />
+      <div data-cross="center" data-md-width="100%" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+        <ui.Stepper
+          disabled={mutation.isLoading}
+          field={reps}
+          label={t("workout.set.reps.label")}
+          width={40}
+          {...Form.reps.pattern}
+        />
 
-      <ui.Separator data-md-disp="none">×</ui.Separator>
+        <ui.Separator>×</ui.Separator>
 
-      <ui.Stepper
-        disabled={mutation.isLoading}
-        field={load}
-        label={t("workout.set.load.label")}
-        unit="kg"
-        width={52}
-        {...Form.load.pattern}
-      />
+        <ui.Stepper
+          disabled={mutation.isLoading}
+          field={load}
+          label={t("workout.set.load.label")}
+          unit="kg"
+          width={52}
+          {...Form.load.pattern}
+        />
+      </div>
 
       <ui.RirSubmit
         disabled={reps.empty || load.empty || mutation.isLoading}
