@@ -437,7 +437,11 @@ export const exerciseTargetProgression: Workouts.VO.ExerciseTargetProgression = 
     reps: v.parse(Workouts.VO.Reps, 4),
     load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
   }),
-  progress: undefined,
+  progress: v.parse(Workouts.VO.ExerciseTarget, {
+    sets: v.parse(Workouts.VO.Sets, 2),
+    reps: v.parse(Workouts.VO.Reps, 6),
+    load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  }),
 };
 
 export const exerciseTargetDiff: Workouts.VO.ExerciseTargetDiff = {

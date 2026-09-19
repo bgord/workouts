@@ -5,13 +5,44 @@ import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
 
 describe("DoubleProgressionCalculator", () => {
-  test("below range - no progress, one rep down", () => {
+  test("below range - one rep either way", () => {
     const calculator = new Workouts.Services.DoubleProgressionCalculator(
       mocks.exercisePrescription,
       mocks.exercisePerformance,
     );
 
     expect(calculator.calculate()).toEqual(mocks.exerciseTargetProgression);
+  });
+
+  test("one below range minimum - progress reaches range minimum", () => {
+    const calculator = new Workouts.Services.DoubleProgressionCalculator(mocks.exercisePrescription, {
+      ...mocks.exercisePerformance,
+      sets: [
+        {
+          setNumber: v.parse(Workouts.VO.SetNumber, 1),
+          reps: v.parse(Workouts.VO.Reps, 7),
+          load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+        },
+      ],
+    });
+
+    expect(calculator.calculate()).toEqual({
+      last: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Workouts.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 7),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+      }),
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Workouts.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 6),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+      }),
+      progress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Workouts.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 8),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+      }),
+    });
   });
 
   test("mid range - one rep either way", () => {
@@ -196,7 +227,7 @@ describe("DoubleProgressionCalculator", () => {
     });
   });
 
-  test("single rep below range - no regress", () => {
+  test("single rep below range - no regress, one rep up", () => {
     const calculator = new Workouts.Services.DoubleProgressionCalculator(mocks.exercisePrescription, {
       ...mocks.exercisePerformance,
       sets: [
@@ -215,7 +246,11 @@ describe("DoubleProgressionCalculator", () => {
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
       }),
       regress: undefined,
-      progress: undefined,
+      progress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Workouts.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 2),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+      }),
     });
   });
 

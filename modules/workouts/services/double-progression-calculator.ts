@@ -34,8 +34,6 @@ export class DoubleProgressionCalculator {
   private progress(last: VO.ExerciseTargetType): VO.ExerciseTargetType | undefined {
     const { min, max } = this.prescription.reps;
 
-    if (last.reps < min) return undefined;
-
     if (last.reps >= max) {
       return v.parse(VO.ExerciseTarget, { ...last, reps: min, load: last.load + LOAD_STEP });
     }
