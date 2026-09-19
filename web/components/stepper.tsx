@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Minus, Plus } from "lucide-react";
 
 const control = bg.Rhythm(34).times(1).height;
-const inputs = { ...control, textAlign: "center" as const, minWidth: 0, paddingInline: 0, outline: "none" };
+const inputs = { ...control, textAlign: "center" as const, minWidth: 0, paddingInline: 0 };
 const width = (value?: number): React.CSSProperties | undefined =>
   value ? ({ "--stepper-input": bg.Rhythm(value).times(1).width.width } as React.CSSProperties) : undefined;
 
@@ -50,6 +50,7 @@ export function Stepper(props: {
         data-cross="center"
         data-cursor="pointer"
         data-disp="flex"
+        data-focus-ring-offset="inset"
         data-hover-color="neutral-0"
         data-main="center"
         data-md-disp={variant === "compact" ? "none" : undefined}
@@ -68,6 +69,7 @@ export function Stepper(props: {
         data-br="none"
         data-bs="none"
         data-color="neutral-0"
+        data-focus-ring-offset="inset"
         data-fw="medium"
         data-grow={variant === "fill" ? "1" : undefined}
         data-md-grow={variant === "compact" ? undefined : "1"}
@@ -95,6 +97,7 @@ export function Stepper(props: {
         data-cross="center"
         data-cursor="pointer"
         data-disp="flex"
+        data-focus-ring-offset="inset"
         data-hover-color="neutral-0"
         data-main="center"
         data-md-disp={variant === "compact" ? "none" : undefined}
