@@ -65,7 +65,7 @@ export function WorkoutSetLog(props: WorkoutExercise) {
           {...Form.reps.pattern}
         />
 
-        <ui.Separator>×</ui.Separator>
+        <ui.Separator data-md-disp="none">×</ui.Separator>
 
         <ui.Stepper
           disabled={busy}
