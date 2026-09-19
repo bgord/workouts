@@ -18,7 +18,7 @@ export function WorkoutCreate() {
 
   const scheduledFor = bg.useDateField({
     name: "scheduledFor",
-    defaultValue: Temporal.Now.plainDateISO().toString(),
+    defaultValue: Temporal.Now.plainDateISO().add({ days: 3 }).toString(),
   });
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
 

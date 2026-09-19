@@ -299,7 +299,7 @@
   "workout.create.when.label": "Date",
   "workout.create.when.today": "Today",
   "workout.create.when.tomorrow": "Tomorrow",
-  "workout.create.when.custom": "Pick a date",
+  "workout.create.when.custom": "Pick",
   "workout.create.error": "Could not schedule the workout",
   "workout.create.section.label": "Section",
   "workout.create.toggle.cta": "New workout",
