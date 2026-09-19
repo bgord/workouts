@@ -1,3 +1,4 @@
+export * from "./get-exercise-previous-performance";
 export * from "./get-workout";
 export * from "./get-workout-dashboard";
 export * from "./get-workout-draft-for-owner-count";

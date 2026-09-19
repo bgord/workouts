@@ -387,6 +387,7 @@ modules/
     ├── ports
     │   └── workout-repository.ts
     ├── queries
+    │   ├── get-exercise-previous-performance.ts
     │   ├── get-workout-dashboard.ts
     │   ├── get-workout-draft-for-owner-count.ts
     │   ├── get-workout-in-progress-for-owner-count.ts
