@@ -30,7 +30,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
         </>
       )}
 
-      <span data-color="neutral-600">· {scheduledFor}</span>
+      <span data-color="neutral-600">{scheduledFor}</span>
     </ui.Meta>
   );
 }

@@ -104,6 +104,20 @@ g:hover > .chart-point {
   border-color: var(--color-danger-900);
   background-color: color-mix(in oklch, var(--color-danger-900) 18%, transparent);
 }
+.c-badge[data-tone="soft"][data-variant="positive"] {
+  color: var(--color-positive-400);
+  border-color: transparent;
+  background-color: color-mix(in oklch, var(--color-positive-900) 45%, transparent);
+}
+.c-badge[data-tone="soft"][data-variant="danger"] {
+  color: var(--color-danger-400);
+  border-color: transparent;
+  background-color: color-mix(in oklch, var(--color-danger-900) 45%, transparent);
+}
+.c-badge[data-tone="soft"][data-variant="outline"] {
+  color: var(--color-neutral-500);
+  border-color: var(--color-neutral-800);
+}
 .c-button[data-tone="danger"] {
   color: var(--color-danger-400);
 }

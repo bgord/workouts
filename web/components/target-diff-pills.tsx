@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { Equal } from "lucide-react";
 import type { ExerciseTargetDiff } from "../../modules/workouts/value-objects/exercise-target-diff";
 import { WeightFormat } from "../services/weight-format";
 import { Gap } from "./gap";
@@ -7,7 +8,7 @@ const sign = (value: number) => (value > 0 ? `+${value}` : `−${Math.abs(value)
 
 function TargetDiffPill(props: { value: number; children: React.ReactNode }) {
   return (
-    <span className="c-badge" data-variant={props.value > 0 ? "positive" : "danger"}>
+    <span className="c-badge" data-tone="soft" data-variant={props.value > 0 ? "positive" : "danger"}>
       {props.children}
     </span>
   );
@@ -18,7 +19,7 @@ export function TargetDiffPills(props: { diff: ExerciseTargetDiff } & React.JSX.
   const t = bg.useTranslations();
   const pluralize = bg.usePluralize();
 
-  if (diff.sets === 0 && diff.reps === 0 && diff.load === 0) return null;
+  const unchanged = diff.sets === 0 && diff.reps === 0 && diff.load === 0;
 
   return (
     <span
@@ -30,6 +31,12 @@ export function TargetDiffPills(props: { diff: ExerciseTargetDiff } & React.JSX.
       {...Gap.inline}
       {...rest}
     >
+      {unchanged && (
+        <span className="c-badge" data-tone="soft" data-variant="outline">
+          <Equal data-size="xs" />
+        </span>
+      )}
+
       {diff.sets !== 0 && (
         <TargetDiffPill value={diff.sets}>
           {t("workout.previous_performance.diff.sets", {

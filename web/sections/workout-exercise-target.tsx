@@ -38,7 +38,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       data-color={target ? "neutral-300" : "neutral-400"}
       data-cross="center"
       data-cursor="pointer"
-      data-fs={target ? "sm" : "xs"}
+      data-fs="xs"
       data-fw={target ? "medium" : undefined}
       data-hover-color="neutral-0"
       data-px={target ? undefined : "2"}

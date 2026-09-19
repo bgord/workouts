@@ -75,7 +75,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
             {props.exercise.exerciseName}
           </ui.ExerciseLink>
 
-          <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
             <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />
 
             <ui.Meta data-md-disp={hasTarget ? "none" : undefined}>
@@ -123,7 +123,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
 
       {isExpandable && workoutExerciseVisibility.on && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
-          <WorkoutSetList exercise={props.exercise} />
+          <WorkoutSetList {...props.exercise} />
 
           <WorkoutSetLog {...props.exercise} />
         </div>
