@@ -396,12 +396,14 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
+    │   ├── double-progression-calculator.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
     │   └── workout-export-file-csv.ts
     └── value-objects
         ├── exercise-prescription.ts
         ├── exercise-target-diff.ts
+        ├── exercise-target-progression.ts
         ├── exercise-target.ts
         ├── load.ts
         ├── logged-set-id.ts
