@@ -396,9 +396,11 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
+    │   ├── exercise-target-diff.ts
     │   └── workout-export-file-csv.ts
     └── value-objects
         ├── exercise-prescription.ts
+        ├── exercise-target-diff.ts
         ├── exercise-target.ts
         ├── load.ts
         ├── logged-set-id.ts

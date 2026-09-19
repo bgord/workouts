@@ -1,5 +1,6 @@
 export * from "./exercise-prescription";
 export * from "./exercise-target";
+export * from "./exercise-target-diff";
 export * from "./load";
 export * from "./logged-set";
 export * from "./logged-set-id";
