@@ -17,7 +17,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
       data-cross="center"
       data-stack="x"
       title={t("workout.previous_performance.title")}
-      {...ui.Gap.inline}
+      {...ui.Gap.cluster}
     >
       {previous.diff ? (
         <ui.TargetDiffPills diff={previous.diff} />

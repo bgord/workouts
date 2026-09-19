@@ -15,7 +15,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       <div
         data-color="neutral-300"
         data-cross="center"
-        data-fs="sm"
+        data-fs="xs"
         data-fw="medium"
         data-shrink="0"
         data-stack="x"
