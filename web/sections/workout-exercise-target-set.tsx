@@ -60,75 +60,81 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
   if (!action.available || toggle.off) return null;
 
   return (
-    <form
-      aria-busy={mutation.isLoading}
-      data-cross="center"
-      data-md-ml="1"
-      data-md-pl="8"
-      data-pl="12"
-      data-stack="x"
-      onSubmit={mutation.handleSubmit}
-      {...ui.Gap.related}
-      {...toggle.props.target}
-    >
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
-        <ui.Stepper
-          disabled={mutation.isLoading}
-          field={sets}
-          label={t("workout.target.sets.label")}
-          variant="compact"
-          width={40}
-          {...Form.sets.pattern}
-        />
-
-        <ui.Separator>×</ui.Separator>
-
-        <ui.Stepper
-          disabled={mutation.isLoading}
-          field={reps}
-          label={t("workout.target.reps.label")}
-          variant="compact"
-          width={40}
-          {...Form.reps.pattern}
-        />
-
-        <ui.Separator>@</ui.Separator>
-
-        <ui.Stepper
-          disabled={mutation.isLoading}
-          field={load}
-          label={t("workout.target.load.label")}
-          unit="kg"
-          variant="compact"
-          width={52}
-          {...Form.load.pattern}
-        />
-      </div>
-
-      <div
+    <>
+      <form
+        aria-busy={mutation.isLoading}
         data-cross="center"
-        data-ml="auto"
-        data-shrink="0"
+        data-md-ml="1"
+        data-md-pl="8"
+        data-pl="12"
         data-stack="x"
-        data-wrap="nowrap"
-        {...ui.Gap.inline}
+        onSubmit={mutation.handleSubmit}
+        {...ui.Gap.related}
+        {...toggle.props.target}
       >
-        <ui.IconButton
-          aria-label={t("app.save")}
-          disabled={
-            !action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
-          }
-          title={t("app.save")}
-          tone="positive"
-          type="submit"
-        >
-          <Check data-size="sm" />
-        </ui.IconButton>
+        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+          <ui.Stepper
+            disabled={mutation.isLoading}
+            field={sets}
+            label={t("workout.target.sets.label")}
+            variant="compact"
+            width={40}
+            {...Form.sets.pattern}
+          />
 
-        <ui.IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
-          <X data-size="sm" />
-        </ui.IconButton>
-      </div>
+          <ui.Separator>×</ui.Separator>
+
+          <ui.Stepper
+            disabled={mutation.isLoading}
+            field={reps}
+            label={t("workout.target.reps.label")}
+            variant="compact"
+            width={40}
+            {...Form.reps.pattern}
+          />
+
+          <ui.Separator>@</ui.Separator>
+
+          <ui.Stepper
+            disabled={mutation.isLoading}
+            field={load}
+            label={t("workout.target.load.label")}
+            unit="kg"
+            variant="compact"
+            width={52}
+            {...Form.load.pattern}
+          />
+        </div>
+
+        <div
+          data-cross="center"
+          data-ml="auto"
+          data-shrink="0"
+          data-stack="x"
+          data-wrap="nowrap"
+          {...ui.Gap.inline}
+        >
+          <ui.IconButton
+            aria-label={t("app.save")}
+            disabled={
+              !action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
+            }
+            title={t("app.save")}
+            tone="positive"
+            type="submit"
+          >
+            <Check data-size="sm" />
+          </ui.IconButton>
+
+          <ui.IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
+            <X data-size="sm" />
+          </ui.IconButton>
+        </div>
+
+        <ui.ActionHint {...action} />
+
+        {mutation.isError && <ui.Output data-width="100%">{t("workout.target.error")}</ui.Output>}
+      </form>
 
       {progression && (
         <WorkoutExerciseTargetProgression
@@ -139,10 +145,6 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           sets={sets}
         />
       )}
-
-      <ui.ActionHint {...action} />
-
-      {mutation.isError && <ui.Output data-width="100%">{t("workout.target.error")}</ui.Output>}
-    </form>
+    </>
   );
 }

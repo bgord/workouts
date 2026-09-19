@@ -37,9 +37,11 @@ export function WorkoutExerciseTargetProgression(
 
   return (
     <div
+      data-md-ml="1"
+      data-md-pl="8"
+      data-pl="12"
       data-stack="x"
       data-transform="font-variant-numeric"
-      data-width="100%"
       data-wrap="wrap"
       title={t("workout.target.progression.title")}
       {...ui.Gap.cluster}
