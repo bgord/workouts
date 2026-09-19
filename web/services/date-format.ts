@@ -16,6 +16,9 @@ export const DateFormat = {
   weekday: (language: string, date: Temporal.PlainDate) =>
     date.toLocaleString(language, { weekday: "short" }),
 
+  shortDay: (language: string, date: Temporal.PlainDate) =>
+    date.toLocaleString(language, { day: "numeric", month: "short" }),
+
   weekdayWithDay: (language: string, date: Temporal.PlainDate) =>
     date.toLocaleString(language, { weekday: "short", day: "numeric", month: "short" }),
 

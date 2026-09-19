@@ -69,6 +69,7 @@ export * from "./workout-complete";
 export * from "./workout-create";
 export * from "./workout-discard";
 export * from "./workout-exercise-add";
+export * from "./workout-exercise-previous-performance";
 export * from "./workout-exercise-remove";
 export * from "./workout-exercise-row";
 export * from "./workout-exercise-target-set";

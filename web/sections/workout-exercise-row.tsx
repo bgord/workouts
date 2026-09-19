@@ -4,6 +4,7 @@ import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { workoutRoute } from "../router";
+import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTarget } from "./workout-exercise-target";
 import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
@@ -87,6 +88,8 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
               </div>
             )}
           </div>
+
+          <WorkoutExercisePreviousPerformance {...props.exercise} />
         </div>
 
         {isSkipped && (
