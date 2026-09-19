@@ -396,6 +396,7 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
+    │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
     │   └── workout-export-file-csv.ts
     └── value-objects
