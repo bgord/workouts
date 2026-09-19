@@ -430,6 +430,16 @@ export const exercisePerformanceWeakestSet = v.parse(Workouts.VO.ExerciseTarget,
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
 });
 
+export const exerciseTargetProgression: Workouts.VO.ExerciseTargetProgression = {
+  last: exercisePerformanceWeakestSet,
+  regress: v.parse(Workouts.VO.ExerciseTarget, {
+    sets: v.parse(Workouts.VO.Sets, 2),
+    reps: v.parse(Workouts.VO.Reps, 4),
+    load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+  }),
+  progress: undefined,
+};
+
 export const exerciseTargetDiff: Workouts.VO.ExerciseTargetDiff = {
   sets: v.parse(tools.Integer, 1),
   reps: v.parse(tools.Integer, 4),
