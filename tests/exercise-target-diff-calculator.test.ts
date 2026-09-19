@@ -11,11 +11,7 @@ describe("ExerciseTargetDiffCalculator", () => {
       mocks.exercisePerformance,
     );
 
-    expect(calculator.calculate()).toEqual({
-      sets: v.parse(tools.Integer, 1),
-      reps: v.parse(tools.Integer, 4),
-      load: v.parse(tools.Integer, -tools.Weight.fromKilograms(10).get()),
-    });
+    expect(calculator.calculate()).toEqual(mocks.exerciseTargetDiff);
   });
 
   test("no change", () => {

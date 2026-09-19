@@ -2,6 +2,7 @@ import type { ActionState } from "+action-state";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as VO from "+workouts/value-objects";
+import type { ExercisePerformance } from "./list-exercise-performances";
 
 export type WorkoutExerciseActions = {
   targetSet: ActionState;
@@ -13,10 +14,15 @@ export type LoggedSetActions = { correct: ActionState; remove: ActionState };
 
 export type LoggedSet = VO.LoggedSetType & { actions: LoggedSetActions };
 
+export type ExercisePreviousPerformance = Pick<ExercisePerformance, "scheduledFor" | "sets"> & {
+  diff?: VO.ExerciseTargetDiff;
+};
+
 export type WorkoutExercise = Omit<VO.WorkoutExercise, "loggedSets"> & {
   exerciseImageEtag: Exercises.VO.Exercise["imageEtag"];
   exerciseDescription: Exercises.VO.Exercise["description"];
   loggedSets: Array<LoggedSet>;
+  previousPerformance?: ExercisePreviousPerformance;
   actions: WorkoutExerciseActions;
 };
 

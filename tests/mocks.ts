@@ -424,6 +424,18 @@ export const workout: Workouts.VO.Workout = {
   ],
 };
 
+export const exerciseTargetDiff: Workouts.VO.ExerciseTargetDiff = {
+  sets: v.parse(tools.Integer, 1),
+  reps: v.parse(tools.Integer, 4),
+  load: v.parse(tools.Integer, -tools.Weight.fromKilograms(10).get()),
+};
+
+export const exercisePreviousPerformance: Workouts.Queries.ExercisePreviousPerformance = {
+  scheduledFor: pastWorkoutScheduledFor,
+  sets: exercisePerformance.sets,
+  diff: exerciseTargetDiff,
+};
+
 export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["data"] = {
   ...workout,
   exercises: workout.exercises.map((exercise) => ({
@@ -437,6 +449,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
         remove: { available: true, enabled: true, hints: [] },
       },
     })),
+    previousPerformance: exercisePreviousPerformance,
     actions: {
       targetSet: { available: true, enabled: true, hints: [] },
       remove: { available: true, enabled: true, hints: [] },

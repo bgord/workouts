@@ -6,6 +6,7 @@ import type * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
+import { GetExercisePreviousPerformanceQuery } from "./get-exercise-previous-performance.adapter";
 
 class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
   async execute(
@@ -43,6 +44,12 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         ),
       ),
     ]);
+
+    const previousPerformances = await Promise.all(
+      exercises.map((exercise) =>
+        GetExercisePreviousPerformanceQuery.execute(userId, exercise.exerciseId, workout),
+      ),
+    );
 
     const status = workout.status;
 
@@ -83,44 +90,55 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       completedAt: workout.completedAt ?? undefined,
       note: workout.note ?? undefined,
       revision: workout.revision,
-      exercises: exercises.map((exercise) => ({
-        id: exercise.id,
-        exerciseId: exercise.exerciseId,
-        exerciseName: exercise.exerciseName,
-        exerciseImageEtag: exercise.exerciseImageEtag,
-        exerciseDescription: exercise.exerciseDescription,
-        prescription: v.parse(Workouts.VO.ExercisePrescription, {
-          sets: exercise.prescriptionSets,
-          reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },
-        }),
-        target:
+      exercises: exercises.map((exercise, index) => {
+        const target =
           exercise.targetSets === null
             ? undefined
             : v.parse(Workouts.VO.ExerciseTarget, {
                 sets: exercise.targetSets,
                 reps: exercise.targetReps,
                 load: exercise.targetLoad,
-              }),
-        loggedSets: loggedSets
-          .filter((loggedSet) => loggedSet.workoutExerciseId === exercise.id)
-          .map((loggedSet) => ({
-            id: loggedSet.id,
-            setNumber: loggedSet.setNumber,
-            reps: loggedSet.reps,
-            load: loggedSet.load,
-            rir: loggedSet.rir ?? undefined,
-            actions: { correct: whenCorrectable, remove: setRemove },
-          })),
-        actions: {
-          targetSet: {
-            available: draft || (inProgress && exercise.targetSets === null),
-            enabled: editable,
-            hints: [],
+              });
+
+        const previous = previousPerformances[index];
+
+        return {
+          id: exercise.id,
+          exerciseId: exercise.exerciseId,
+          exerciseName: exercise.exerciseName,
+          exerciseImageEtag: exercise.exerciseImageEtag,
+          exerciseDescription: exercise.exerciseDescription,
+          prescription: v.parse(Workouts.VO.ExercisePrescription, {
+            sets: exercise.prescriptionSets,
+            reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },
+          }),
+          target,
+          loggedSets: loggedSets
+            .filter((loggedSet) => loggedSet.workoutExerciseId === exercise.id)
+            .map((loggedSet) => ({
+              id: loggedSet.id,
+              setNumber: loggedSet.setNumber,
+              reps: loggedSet.reps,
+              load: loggedSet.load,
+              rir: loggedSet.rir ?? undefined,
+              actions: { correct: whenCorrectable, remove: setRemove },
+            })),
+          previousPerformance: previous && {
+            scheduledFor: previous.scheduledFor,
+            sets: previous.sets,
+            diff: target && new Workouts.Services.ExerciseTargetDiffCalculator(target, previous).calculate(),
           },
-          remove: whenEditable,
-          setLog: whenInProgress,
-        },
-      })),
+          actions: {
+            targetSet: {
+              available: draft || (inProgress && exercise.targetSets === null),
+              enabled: editable,
+              hints: [],
+            },
+            remove: whenEditable,
+            setLog: whenInProgress,
+          },
+        };
+      }),
     };
 
     const workoutExercises = data.exercises;
