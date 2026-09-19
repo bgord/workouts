@@ -21,8 +21,18 @@ type RouterContext = { request: Request | null; nonce: string };
 
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   head: () => ({
-    meta: [...bg.META, { title: "Workouts" }],
-    links: [...bg.CSS("/public/main.min.css"), ...bg.CSS("/public/custom.css")],
+    meta: [
+      ...bg.META,
+      { title: "Workouts" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "Workouts" },
+    ],
+    links: [
+      { rel: "apple-touch-icon", href: "/public/apple-touch-icon.png" },
+      ...bg.CSS("/public/main.min.css"),
+      ...bg.CSS("/public/custom.css"),
+    ],
     scripts: [bg.JS("/public/entry-client.js")],
   }),
   component: Shell,
