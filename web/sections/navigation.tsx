@@ -14,6 +14,8 @@ const link = {
   "data-ls": "wide",
 } as const;
 
+const drawerItem = { "data-grow": "1", "data-py": "4" } as const;
+
 export function Navigation() {
   const { width } = bg.useWindowDimensions();
 
@@ -97,24 +99,34 @@ function NavigationMobileDrawer() {
       data-left="0"
       data-main="around"
       data-position="fixed"
-      data-py="4"
       data-right="0"
+      data-safe-area="bottom"
       data-stack="x"
       data-wrap="nowrap"
       data-z="3"
       {...ui.Spacing.gutter}
     >
-      <ui.Logo search={WorkoutHistoryFilters.default} to="/" />
+      <ui.Logo search={WorkoutHistoryFilters.default} to="/" {...drawerItem} />
 
-      <NavigationLink search={WorkoutHistoryFilters.default} title={t("app.workouts")} to="/workouts">
+      <NavigationLink
+        search={WorkoutHistoryFilters.default}
+        title={t("app.workouts")}
+        to="/workouts"
+        {...drawerItem}
+      >
         <CalendarCheck data-size="md" />
       </NavigationLink>
 
-      <NavigationLink search={ExerciseCatalogFilters.default} title={t("app.catalog")} to="/catalog">
+      <NavigationLink
+        search={ExerciseCatalogFilters.default}
+        title={t("app.catalog")}
+        to="/catalog"
+        {...drawerItem}
+      >
         <Dumbbell data-size="md" />
       </NavigationLink>
 
-      <NavigationLink title={t("app.plans")} to="/plans">
+      <NavigationLink title={t("app.plans")} to="/plans" {...drawerItem}>
         <ListChecks data-size="md" />
       </NavigationLink>
 
@@ -122,15 +134,16 @@ function NavigationMobileDrawer() {
         search={BodyWeightMeasurementFilters.default}
         title={t("app.measurements")}
         to="/measurements"
+        {...drawerItem}
       >
         <Weight data-size="md" />
       </NavigationLink>
 
-      <NavigationLink to="/profile">
+      <NavigationLink to="/profile" {...drawerItem}>
         <ui.Avatar size={ui.AvatarSize.sm} />
       </NavigationLink>
 
-      <NavigationLogout>
+      <NavigationLogout {...drawerItem}>
         <LogOut data-size="md" />
       </NavigationLogout>
     </nav>
