@@ -23,6 +23,7 @@ export type WorkoutExercise = Omit<VO.WorkoutExercise, "loggedSets"> & {
   exerciseDescription: Exercises.VO.Exercise["description"];
   loggedSets: Array<LoggedSet>;
   previousPerformance?: ExercisePreviousPerformance;
+  targetProgression?: VO.ExerciseTargetProgression;
   actions: WorkoutExerciseActions;
 };
 

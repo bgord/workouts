@@ -466,6 +466,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
       },
     })),
     previousPerformance: exercisePreviousPerformance,
+    targetProgression: exerciseTargetProgression,
     actions: {
       targetSet: { available: true, enabled: true, hints: [] },
       remove: { available: true, enabled: true, hints: [] },
