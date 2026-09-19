@@ -6,6 +6,7 @@ import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
+import { WorkoutExerciseTargetProgression } from "./workout-exercise-target-progression";
 
 export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
@@ -13,22 +14,26 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
   const { workout } = workoutRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
   const action = props.exercise.actions.targetSet;
+  const progression = props.exercise.targetProgression;
 
   const sets = bg.useNumberField<number>({
     name: `sets-${props.exercise.id}`,
-    defaultValue: props.exercise.target?.sets ?? props.exercise.prescription.sets,
+    defaultValue: props.exercise.target?.sets ?? progression?.last.sets ?? props.exercise.prescription.sets,
   });
 
   const reps = bg.useNumberField<number>({
     name: `reps-${props.exercise.id}`,
-    defaultValue: props.exercise.target?.reps ?? props.exercise.prescription.reps.min,
+    defaultValue:
+      props.exercise.target?.reps ?? progression?.last.reps ?? props.exercise.prescription.reps.min,
   });
 
   const load = bg.useNumberField<number>({
     name: `load-${props.exercise.id}`,
     defaultValue: props.exercise.target
       ? WeightFormat.kilograms(props.exercise.target.load)
-      : bg.NumberField.EMPTY,
+      : progression
+        ? WeightFormat.kilograms(progression.last.load)
+        : bg.NumberField.EMPTY,
   });
 
   const mutation = bg.useMutation({
@@ -124,6 +129,16 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           <X data-size="sm" />
         </ui.IconButton>
       </div>
+
+      {progression && (
+        <WorkoutExerciseTargetProgression
+          disabled={mutation.isLoading}
+          load={load}
+          progression={progression}
+          reps={reps}
+          sets={sets}
+        />
+      )}
 
       <ui.ActionHint {...action} />
 
