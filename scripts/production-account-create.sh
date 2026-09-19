@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ]; then
+if [[ -z "$1" ]]; then
   echo "Usage: $0 <email>"
   exit 1
 fi
