@@ -385,6 +385,8 @@
   "workout.target.cta": "Set target",
   "workout.target.error": "Could not set the target",
   "workout.target.load.label": "Load (kg)",
+  "workout.target.progression.last": "Last",
+  "workout.target.progression.title": "Based on the previous session",
   "workout.target.reps.label": "Reps",
   "workout.target.sets.label": "Sets",
   "workout.title": "{{plan}} – {{section}}"

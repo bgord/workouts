@@ -385,6 +385,8 @@
   "workout.target.cta": "Ustaw cel",
   "workout.target.error": "Nie udało się ustawić celu",
   "workout.target.load.label": "Ciężar (kg)",
+  "workout.target.progression.last": "Ostatnio",
+  "workout.target.progression.title": "Na podstawie poprzedniej sesji",
   "workout.target.reps.label": "Powtórzenia",
   "workout.target.sets.label": "Serie",
   "workout.title": "{{plan}} · {{section}}"
