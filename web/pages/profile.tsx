@@ -2,7 +2,11 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { rootRoute } from "../router";
-import * as Sections from "../sections";
+import { ProfileAccountDelete } from "../sections/profile-account-delete";
+import { ProfileAvatarChange } from "../sections/profile-avatar-change";
+import { ProfileLanguageSelector } from "../sections/profile-language-selector";
+import { ProfilePasswordChange } from "../sections/profile-password-change";
+import { ProfileWorkoutsExport } from "../sections/profile-workouts-export";
 
 export function Profile() {
   const t = bg.useTranslations();
@@ -17,15 +21,15 @@ export function Profile() {
 
       <div>{session.user.email}</div>
 
-      <Sections.ProfileAvatarChange />
+      <ProfileAvatarChange />
 
-      <Sections.ProfileLanguageSelector />
+      <ProfileLanguageSelector />
 
-      <Sections.ProfilePasswordChange />
+      <ProfilePasswordChange />
 
-      <Sections.ProfileWorkoutsExport />
+      <ProfileWorkoutsExport />
 
-      <Sections.ProfileAccountDelete />
+      <ProfileAccountDelete />
     </ui.Main>
   );
 }

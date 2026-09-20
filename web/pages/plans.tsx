@@ -1,7 +1,10 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import * as Sections from "../sections";
+import { PlanCreate } from "../sections/plan-create";
+import { PlansActive } from "../sections/plans-active";
+import { PlansArchived } from "../sections/plans-archived";
+import { PlansEmpty } from "../sections/plans-empty";
 
 export function Plans() {
   const t = bg.useTranslations();
@@ -11,14 +14,14 @@ export function Plans() {
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("plan.list.header")}</ui.Header>
 
-        <Sections.PlanCreate />
+        <PlanCreate />
       </div>
 
-      <Sections.PlansEmpty />
+      <PlansEmpty />
 
-      <Sections.PlansActive />
+      <PlansActive />
 
-      <Sections.PlansArchived />
+      <PlansArchived />
     </ui.Main>
   );
 }

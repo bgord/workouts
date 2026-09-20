@@ -3,7 +3,14 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { planRoute } from "../router";
-import * as Sections from "../sections";
+import { PlanArchive } from "../sections/plan-archive";
+import { PlanDescription } from "../sections/plan-description";
+import { PlanEditingEnable } from "../sections/plan-editing-enable";
+import { PlanFinalize } from "../sections/plan-finalize";
+import { PlanName } from "../sections/plan-name";
+import { PlanRemove } from "../sections/plan-remove";
+import { PlanRestore } from "../sections/plan-restore";
+import { PlanSectionList } from "../sections/plan-section-list";
 import { DateFormat } from "../services/date-format";
 
 export function Plan() {
@@ -26,7 +33,7 @@ export function Plan() {
             data-wrap="nowrap"
             {...ui.Gap.related}
           >
-            <Sections.PlanName />
+            <PlanName />
 
             <ui.PlanStatusBadge status={plan.data.status} />
           </div>
@@ -39,16 +46,16 @@ export function Plan() {
             data-wrap="nowrap"
             {...ui.Gap.cluster}
           >
-            <Sections.PlanFinalize />
+            <PlanFinalize />
 
-            <Sections.PlanEditingEnable />
+            <PlanEditingEnable />
 
-            <Sections.PlanRestore />
+            <PlanRestore />
 
             <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
-              <Sections.PlanArchive />
+              <PlanArchive />
 
-              <Sections.PlanRemove />
+              <PlanRemove />
             </div>
           </div>
         </div>
@@ -60,13 +67,13 @@ export function Plan() {
             })}
           </ui.Meta>
 
-          <Sections.PlanDescription />
+          <PlanDescription />
 
           {plan.actions.finalize.available && <ui.ActionHint {...plan.actions.finalize} />}
         </div>
       </div>
 
-      <Sections.PlanSectionList />
+      <PlanSectionList />
     </ui.Main>
   );
 }

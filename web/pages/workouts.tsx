@@ -1,7 +1,9 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import * as Sections from "../sections";
+import { WorkoutCreate } from "../sections/workout-create";
+import { WorkoutHistory } from "../sections/workout-history";
+import { WorkoutsEmpty } from "../sections/workouts-empty";
 
 export function Workouts() {
   const t = bg.useTranslations();
@@ -11,12 +13,12 @@ export function Workouts() {
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("workout.list.header")}</ui.Header>
 
-        <Sections.WorkoutCreate />
+        <WorkoutCreate />
       </div>
 
-      <Sections.WorkoutsEmpty />
+      <WorkoutsEmpty />
 
-      <Sections.WorkoutHistory />
+      <WorkoutHistory />
     </ui.Main>
   );
 }

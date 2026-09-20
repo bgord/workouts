@@ -2,7 +2,8 @@ import * as bg from "@bgord/ui";
 import { HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { OnlineStatusBar } from "./components/online-status-bar";
 import { rootRoute } from "./router";
-import { Navigation, Shortcuts } from "./sections";
+import { Navigation } from "./sections/navigation";
+import { Shortcuts } from "./sections/shortcuts";
 
 export function Shell() {
   const { i18n } = rootRoute.useLoaderData();

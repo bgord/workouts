@@ -3,7 +3,13 @@ import * as bg from "@bgord/ui";
 import { Form } from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
-import * as Sections from "../sections";
+import { ExerciseCategories } from "../sections/exercise-categories";
+import { ExerciseDelete } from "../sections/exercise-delete";
+import { ExerciseDescription } from "../sections/exercise-description";
+import { ExerciseImageChange } from "../sections/exercise-image-change";
+import { ExerciseName } from "../sections/exercise-name";
+import { ExercisePerformanceHistory } from "../sections/exercise-performance-history";
+import { ExercisePerformancesEmpty } from "../sections/exercise-performances-empty";
 
 export function Exercise() {
   const { exercise } = exerciseRoute.useLoaderData();
@@ -14,9 +20,9 @@ export function Exercise() {
         <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
           <ui.ButtonBack search={Form.default} to="/catalog" />
 
-          <Sections.ExerciseName />
+          <ExerciseName />
 
-          <Sections.ExerciseDelete />
+          <ExerciseDelete />
         </div>
 
         {exercise.actions.delete.hints.length > 0 && (
@@ -28,19 +34,19 @@ export function Exercise() {
 
       <div data-cross="start" data-stack="x" data-wrap="wrap" {...ui.Gap.section}>
         <div data-md-grow="1" data-minw="0" style={{ flexBasis: 320 }}>
-          <Sections.ExerciseImageChange />
+          <ExerciseImageChange />
         </div>
 
         <div data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width} {...ui.Gap.block}>
-          <Sections.ExerciseCategories />
+          <ExerciseCategories />
 
-          <Sections.ExerciseDescription />
+          <ExerciseDescription />
         </div>
       </div>
 
-      <Sections.ExercisePerformancesEmpty />
+      <ExercisePerformancesEmpty />
 
-      <Sections.ExercisePerformanceHistory />
+      <ExercisePerformanceHistory />
     </ui.Main>
   );
 }

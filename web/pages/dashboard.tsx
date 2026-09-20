@@ -1,7 +1,10 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import * as Sections from "../sections";
+import { DashboardBodyWeightStats } from "../sections/dashboard-body-weight-stats";
+import { DashboardEmpty } from "../sections/dashboard-empty";
+import { DashboardWorkoutsFastCall } from "../sections/dashboard-workouts-fast-call";
+import { DashboardWorkoutStats } from "../sections/dashboard-workouts-stats";
 
 export function Dashboard() {
   const t = bg.useTranslations();
@@ -10,13 +13,13 @@ export function Dashboard() {
     <ui.Main>
       <ui.Header>{t("dashboard.header")}</ui.Header>
 
-      <Sections.DashboardEmpty />
+      <DashboardEmpty />
 
-      <Sections.DashboardWorkoutsFastCall />
+      <DashboardWorkoutsFastCall />
 
-      <Sections.DashboardWorkoutStats />
+      <DashboardWorkoutStats />
 
-      <Sections.DashboardBodyWeightStats />
+      <DashboardBodyWeightStats />
     </ui.Main>
   );
 }
