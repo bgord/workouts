@@ -15,3 +15,4 @@ export * from "./plan-section-exercise-instruction-remove";
 export * from "./plan-section-exercise-instruction-update";
 export * from "./plan-section-remove";
 export * from "./plan-section-rename";
+export * from "./plan-section-warmup-set";

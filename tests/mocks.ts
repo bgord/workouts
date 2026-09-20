@@ -415,6 +415,7 @@ export const workout: Workouts.VO.Workout = {
   planName,
   planSectionId,
   planSectionName,
+  planSectionWarmup,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.in_progress,
   revision: revision.value,

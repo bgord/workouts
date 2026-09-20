@@ -21,6 +21,7 @@ type AcceptedCommand =
   | PlansCommands.PlanSectionCreateCommandType
   | PlansCommands.PlanSectionRemoveCommandType
   | PlansCommands.PlanSectionRenameCommandType
+  | PlansCommands.PlanSectionWarmupSetCommandType
   | PlansCommands.PlanArchiveCommandType
   | PlansCommands.PlanFinalizeCommandType
   | PlansCommands.PlanRestoreCommandType

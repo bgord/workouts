@@ -63,6 +63,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         const planSection = {
           id: section.id,
           name: section.name,
+          warmup: section.warmup ?? undefined,
           exerciseInstructions: exerciseInstructions
             .filter((exerciseInstruction) => exerciseInstruction.planSectionId === section.id)
             .map((exerciseInstruction) => ({
@@ -139,6 +140,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           hints: sectionsAvailable ? [] : ["plan.section.list.limit.hint"],
         },
         sectionRename: whenEditable,
+        sectionWarmupSet: whenEditable,
         sectionRemove: whenEditable,
       },
     };
