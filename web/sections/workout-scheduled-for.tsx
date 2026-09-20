@@ -33,8 +33,8 @@ export function WorkoutScheduledFor() {
     },
   });
 
-  const scheduledOn = DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(workout.data.scheduledFor));
-  const today = Temporal.Now.plainDateISO();
+  const scheduledOn = DateFormat.dayWithWeekday(language, workout.data.scheduledFor);
+  const today = DateFormat.todayISO();
 
   if (!workout.actions.reschedule.available) return <ui.Meta>{scheduledOn}</ui.Meta>;
 
@@ -74,8 +74,8 @@ export function WorkoutScheduledFor() {
         data-variant="transparent"
         data-width="auto"
         disabled={!workout.actions.reschedule.enabled}
-        max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-        min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+        max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
+        min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
         type="date"
         {...scheduledFor.input.props}
       />

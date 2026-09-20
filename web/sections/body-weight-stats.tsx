@@ -29,9 +29,7 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
           />
         </ui.TileValue>
 
-        <ui.TileContext>
-          {DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.latest.measuredOn))}
-        </ui.TileContext>
+        <ui.TileContext>{DateFormat.dayWithWeekday(language, props.latest.measuredOn)}</ui.TileContext>
       </ui.Tile>
 
       <ui.Tile>
@@ -88,9 +86,9 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
           {props.reference?.goal
             ? t("measurements.body_weight.stats.since_reference.goal", {
                 goal: t(`measurements.body_weight.goal.${props.reference?.goal}`),
-                date: DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.baseline.measuredOn)),
+                date: DateFormat.dayWithWeekday(language, props.baseline.measuredOn),
               })
-            : DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.baseline.measuredOn))}
+            : DateFormat.dayWithWeekday(language, props.baseline.measuredOn)}
         </ui.TileContext>
       </ui.Tile>
     </ul>

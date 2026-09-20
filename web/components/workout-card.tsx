@@ -9,7 +9,7 @@ export function WorkoutCard(props: WorkoutSummary) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
 
-  const scheduledFor = DateFormat.dayWithWeekday(language, Temporal.PlainDate.from(props.scheduledFor));
+  const scheduledFor = DateFormat.dayWithWeekday(language, props.scheduledFor);
 
   return (
     <RowLink

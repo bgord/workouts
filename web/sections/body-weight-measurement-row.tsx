@@ -59,12 +59,10 @@ export function BodyWeightMeasurementRow(props: {
               data-transform="font-variant-numeric"
               {...bg.Rhythm(100).times(1).style.width}
             >
-              {DateFormat.day(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
+              {DateFormat.day(language, props.measurement.measuredOn)}
             </span>
 
-            <ui.Meta>
-              {DateFormat.weekday(language, Temporal.PlainDate.from(props.measurement.measuredOn))}
-            </ui.Meta>
+            <ui.Meta>{DateFormat.weekday(language, props.measurement.measuredOn)}</ui.Meta>
           </button>
 
           <button

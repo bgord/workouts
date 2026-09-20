@@ -34,7 +34,7 @@ export function BodyWeightMeasurementFilters() {
           <option value="">{t("measurements.body_weight.history.month.all")}</option>
           {months.map((value) => (
             <option key={value} value={value}>
-              {DateFormat.month(language, Temporal.PlainDate.from(`${value}-01`))} (
+              {DateFormat.month(language, `${value}-01`)} (
               {measurements.filter((measurement) => measurement.measuredOn.startsWith(value)).length})
             </option>
           ))}

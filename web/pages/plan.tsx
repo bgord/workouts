@@ -63,7 +63,7 @@ export function Plan() {
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
           <ui.Meta truncate>
             {t("plan.updated_at", {
-              date: DateFormat.dayWithTime(language, DateFormat.zoned(plan.data.updatedAt)),
+              date: DateFormat.dayWithTime(language, plan.data.updatedAt),
             })}
           </ui.Meta>
 

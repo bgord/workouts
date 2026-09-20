@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
+import { DateFormat } from "../services/date-format";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -12,7 +13,7 @@ export function BodyWeightMeasure() {
   const { measurements } = measurementsRoute.useLoaderData();
 
   const latest = measurements[0];
-  const today = Temporal.Now.plainDateISO().toString();
+  const today = DateFormat.todayISO();
 
   const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
   const weight = bg.useNumberField({

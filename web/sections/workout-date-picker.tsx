@@ -10,10 +10,10 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
   const { toggle: custom } = bg.extractUseToggle(props);
   const { field } = props;
 
-  const today = Temporal.Now.plainDateISO();
-  const predefined = Array.from({ length: 3 }, (_, offset) => today.add({ days: offset }));
+  const today = DateFormat.todayISO();
+  const predefined = Array.from({ length: 3 }, (_, offset) => DateFormat.addDays(today, offset));
 
-  const label = (date: Temporal.PlainDate, offset: number) => {
+  const label = (date: string, offset: number) => {
     if (offset === 0) return t("workout.create.when.today");
     if (offset === 1) return t("workout.create.when.tomorrow");
     return DateFormat.weekdayWithDay(language, date);
@@ -29,12 +29,12 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
         <div data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           {predefined.map((date, offset) => (
             <ui.ChipButton
-              key={date.toString()}
+              key={date}
               onClick={() => {
                 custom.disable();
-                field.set(date.toString());
+                field.set(date);
               }}
-              pressed={custom.off && field.value === date.toString()}
+              pressed={custom.off && field.value === date}
             >
               {label(date, offset)}
             </ui.ChipButton>
@@ -52,8 +52,8 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
             data-md-self="stretch"
             data-self="start"
             data-variant="transparent"
-            max={today.add({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
-            min={today.subtract({ days: WorkoutScheduledForHorizonDaysMax }).toString()}
+            max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
+            min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
             type="date"
             {...field.input.props}
             {...custom.props.target}

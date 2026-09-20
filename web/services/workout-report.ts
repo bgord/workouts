@@ -1,4 +1,5 @@
 import type { Workout } from "../../modules/workouts/value-objects/workout";
+import { DateFormat } from "./date-format";
 import { WeightFormat } from "./weight-format";
 
 export const WorkoutReport = {
@@ -13,7 +14,7 @@ export const WorkoutReport = {
     return [
       `# Workout: ${workout.planName} - ${workout.planSectionName}`,
       "",
-      `Completed at: ${Temporal.Instant.fromEpochMilliseconds(workout.completedAt).toString()}`,
+      `Completed at: ${DateFormat.instant(workout.completedAt)}`,
       `Workout id: ${workout.id}`,
       `Logged sets: ${rows.length}`,
       "",

@@ -29,9 +29,9 @@ export function BodyWeightProgressChart() {
 
       <ui.LineChart aria-label={t("measurements.body_weight.progress")}>
         <ui.LineChartGrid
-          end={DateFormat.plainDay(language, Temporal.PlainDate.from(measurements.at(-1)!.measuredOn))}
+          end={DateFormat.plainDay(language, measurements.at(-1)!.measuredOn)}
           layout={layout}
-          start={DateFormat.plainDay(language, Temporal.PlainDate.from(measurements[0]!.measuredOn))}
+          start={DateFormat.plainDay(language, measurements[0]!.measuredOn)}
         />
 
         {reference && (
@@ -52,7 +52,7 @@ export function BodyWeightProgressChart() {
             <g data-color="brand-300" key={measurement.id}>
               <title>
                 {t("measurements.body_weight.progress.point", {
-                  date: DateFormat.plainDay(language, Temporal.PlainDate.from(measurement.measuredOn)),
+                  date: DateFormat.plainDay(language, measurement.measuredOn),
                   weight: WeightFormat.kilograms(measurement.weight, BodyWeightDecimals),
                 })}
               </title>

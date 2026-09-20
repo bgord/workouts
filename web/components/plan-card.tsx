@@ -28,7 +28,7 @@ export function PlanCard(props: PlanSummary) {
             {props.sections}
           </div>
 
-          {t("plan.updated_at", { date: DateFormat.day(language, DateFormat.zoned(props.updatedAt)) })}
+          {t("plan.updated_at", { date: DateFormat.day(language, props.updatedAt) })}
         </Meta>
       </RowBody>
 

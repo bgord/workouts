@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { CalendarPlus } from "lucide-react";
 import * as ui from "../components";
 import { workoutsRoute } from "../router";
+import { DateFormat } from "../services/date-format";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { WorkoutDatePicker } from "./workout-date-picker";
 import { WorkoutSectionPicker } from "./workout-section-picker";
@@ -18,7 +19,7 @@ export function WorkoutCreate() {
 
   const scheduledFor = bg.useDateField({
     name: "scheduledFor",
-    defaultValue: Temporal.Now.plainDateISO().add({ days: 3 }).toString(),
+    defaultValue: DateFormat.addDays(DateFormat.todayISO(), 3),
   });
   const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
 

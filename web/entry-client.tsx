@@ -1,4 +1,3 @@
-import "temporal-polyfill/global";
 import { RouterClient } from "@tanstack/react-router/ssr/client";
 import { hydrateRoot } from "react-dom/client";
 import { createRouter } from "./router";

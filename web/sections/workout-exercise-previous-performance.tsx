@@ -10,7 +10,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
 
   if (!previous) return null;
 
-  const scheduledFor = DateFormat.shortDay(language, Temporal.PlainDate.from(previous.scheduledFor));
+  const scheduledFor = DateFormat.shortDay(language, previous.scheduledFor);
 
   return (
     <ui.Meta
