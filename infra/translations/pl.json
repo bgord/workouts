@@ -219,6 +219,9 @@
   "plan.remove.info": "Usunięcie {{name}} kasuje plan wraz z jego sekcjami. Treningi już z niego utworzone zostają.",
   "plan.restore.cta": "Przywróć",
   "plan.restore.error": "Nie udało się przywrócić planu",
+  "plan.section.cooldown.error": "Nie udało się zapisać schłodzenia",
+  "plan.section.cooldown.label": "Schłodzenie",
+  "plan.section.cooldown.placeholder": "Dodaj schłodzenie...",
   "plan.section.create.cta": "Nowa sekcja",
   "plan.section.create.error": "Nie udało się utworzyć sekcji",
   "plan.section.create.placeholder": "Góra A",
@@ -250,6 +253,9 @@
   "plan.section.rename.cta": "Zmień nazwę",
   "plan.section.rename.error": "Nie udało się zmienić nazwy sekcji",
   "plan.section.rename.label": "Nazwa sekcji",
+  "plan.section.warmup.error": "Nie udało się zapisać rozgrzewki",
+  "plan.section.warmup.label": "Rozgrzewka",
+  "plan.section.warmup.placeholder": "Dodaj rozgrzewkę...",
   "plan.status.archived": "Zarchiwizowany",
   "plan.status.draft": "Szkic",
   "plan.status.finalized": "Zatwierdzony",
@@ -289,6 +295,8 @@
   "workout.complete.blocked.no_logged_sets": "Najpierw zapisz przynajmniej jedną serię",
   "workout.complete.cta": "Zakończ",
   "workout.complete.error": "Nie udało się zakończyć treningu",
+  "workout.cooldown.label": "Schłodzenie",
+  "workout.cooldown.toggle": "Pokaż lub ukryj schłodzenie",
   "workout.copy.cta": "Kopiuj trening",
   "workout.copy.done": "Skopiowano do schowka",
   "workout.copy.title": "Skopiuj zapisane serie",
@@ -389,5 +397,7 @@
   "workout.target.progression.title": "Na podstawie poprzedniej sesji",
   "workout.target.reps.label": "Powtórzenia",
   "workout.target.sets.label": "Serie",
-  "workout.title": "{{plan}} · {{section}}"
+  "workout.title": "{{plan}} · {{section}}",
+  "workout.warmup.label": "Rozgrzewka",
+  "workout.warmup.toggle": "Pokaż lub ukryj rozgrzewkę"
 }

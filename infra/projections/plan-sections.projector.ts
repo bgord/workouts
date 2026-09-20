@@ -10,6 +10,8 @@ type Dependencies = {
     | Plans.Events.PlanSectionCreatedEventType
     | Plans.Events.PlanSectionRemovedEventType
     | Plans.Events.PlanSectionRenamedEventType
+    | Plans.Events.PlanSectionWarmupSetEventType
+    | Plans.Events.PlanSectionCooldownSetEventType
     | Plans.Events.PlanRemovedEventType
     | Auth.Events.AccountDeletedEventType
   >;
@@ -29,6 +31,14 @@ export class PlanSectionsProjector {
     deps.EventBus.on(
       Plans.Events.PLAN_SECTION_RENAMED_EVENT,
       deps.EventHandler.handle(this.onPlanSectionRenamedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Plans.Events.PLAN_SECTION_WARMUP_SET_EVENT,
+      deps.EventHandler.handle(this.onPlanSectionWarmupSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Plans.Events.PLAN_SECTION_COOLDOWN_SET_EVENT,
+      deps.EventHandler.handle(this.onPlanSectionCooldownSetEvent.bind(this)),
     );
     deps.EventBus.on(
       Plans.Events.PLAN_REMOVED_EVENT,
@@ -67,6 +77,32 @@ export class PlanSectionsProjector {
     await db
       .update(Schema.planSections)
       .set({ name: event.payload.planSectionName, updatedAt: event.createdAt })
+      .where(
+        and(
+          eq(Schema.planSections.id, event.payload.planSectionId),
+          eq(Schema.planSections.planId, event.payload.planId),
+          eq(Schema.planSections.userId, event.payload.requesterId),
+        ),
+      );
+  }
+
+  async onPlanSectionWarmupSetEvent(event: Plans.Events.PlanSectionWarmupSetEventType) {
+    await db
+      .update(Schema.planSections)
+      .set({ warmup: event.payload.warmup ?? null, updatedAt: event.createdAt })
+      .where(
+        and(
+          eq(Schema.planSections.id, event.payload.planSectionId),
+          eq(Schema.planSections.planId, event.payload.planId),
+          eq(Schema.planSections.userId, event.payload.requesterId),
+        ),
+      );
+  }
+
+  async onPlanSectionCooldownSetEvent(event: Plans.Events.PlanSectionCooldownSetEventType) {
+    await db
+      .update(Schema.planSections)
+      .set({ cooldown: event.payload.cooldown ?? null, updatedAt: event.createdAt })
       .where(
         and(
           eq(Schema.planSections.id, event.payload.planSectionId),

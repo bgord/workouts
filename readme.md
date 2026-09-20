@@ -200,6 +200,7 @@ modules/
 │   │   ├── handlePlanRemoveCommand.ts
 │   │   ├── handlePlanRenameCommand.ts
 │   │   ├── handlePlanRestoreCommand.ts
+│   │   ├── handlePlanSectionCooldownSetCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionExerciseChangeCommand.ts
@@ -207,6 +208,7 @@ modules/
 │   │   ├── handlePlanSectionExerciseInstructionUpdateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
 │   │   ├── handlePlanSectionRenameCommand.ts
+│   │   ├── handlePlanSectionWarmupSetCommand.ts
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_CREATE_COMMAND.ts
@@ -216,13 +218,15 @@ modules/
 │   │   ├── PLAN_REMOVE_COMMAND.ts
 │   │   ├── PLAN_RENAME_COMMAND.ts
 │   │   ├── PLAN_RESTORE_COMMAND.ts
+│   │   ├── PLAN_SECTION_COOLDOWN_SET_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
-│   │   └── PLAN_SECTION_RENAME_COMMAND.ts
+│   │   ├── PLAN_SECTION_RENAME_COMMAND.ts
+│   │   └── PLAN_SECTION_WARMUP_SET_COMMAND.ts
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
 │   │   ├── PLAN_CREATED_EVENT.ts
@@ -232,13 +236,15 @@ modules/
 │   │   ├── PLAN_REMOVED_EVENT.ts
 │   │   ├── PLAN_RENAMED_EVENT.ts
 │   │   ├── PLAN_RESTORED_EVENT.ts
+│   │   ├── PLAN_SECTION_COOLDOWN_SET_EVENT.ts
 │   │   ├── PLAN_SECTION_CREATED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT.ts
 │   │   ├── PLAN_SECTION_REMOVED_EVENT.ts
-│   │   └── PLAN_SECTION_RENAMED_EVENT.ts
+│   │   ├── PLAN_SECTION_RENAMED_EVENT.ts
+│   │   └── PLAN_SECTION_WARMUP_SET_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-belongs-to-user.ts
 │   │   ├── plan-description-has-changed.ts
@@ -253,6 +259,7 @@ modules/
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-has-changed.ts
 │   │   ├── plan-name-is-unique-for-owner.ts
+│   │   ├── plan-section-cooldown-has-changed.ts
 │   │   ├── plan-section-exercise-exists.ts
 │   │   ├── plan-section-exercise-instruction-exercise-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-exists.ts
@@ -260,7 +267,8 @@ modules/
 │   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
-│   │   └── plan-section-name-is-unique-for-plan.ts
+│   │   ├── plan-section-name-is-unique-for-plan.ts
+│   │   └── plan-section-warmup-has-changed.ts
 │   ├── open-host-queries
 │   ├── ports
 │   │   └── plan-repository.ts
@@ -278,11 +286,15 @@ modules/
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
+│       ├── plan-section-cooldown.ts
+│       ├── plan-section-cooldown.validation.ts
 │       ├── plan-section-exercise-instruction-limit.ts
 │       ├── plan-section-id.ts
 │       ├── plan-section-limit-for-plan.ts
 │       ├── plan-section-name.ts
 │       ├── plan-section-name.validation.ts
+│       ├── plan-section-warmup.ts
+│       ├── plan-section-warmup.validation.ts
 │       ├── plan-section.ts
 │       ├── plan-status.ts
 │       ├── plan-summary.ts
@@ -471,13 +483,15 @@ app/
 │   │   ├── plan-remove.ts
 │   │   ├── plan-rename.ts
 │   │   ├── plan-restore.ts
+│   │   ├── plan-section-cooldown-set.ts
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
 │   │   ├── plan-section-exercise-instruction-exercise-change.ts
 │   │   ├── plan-section-exercise-instruction-remove.ts
 │   │   ├── plan-section-exercise-instruction-update.ts
 │   │   ├── plan-section-remove.ts
-│   │   └── plan-section-rename.ts
+│   │   ├── plan-section-rename.ts
+│   │   └── plan-section-warmup-set.ts
 │   ├── preferences
 │   │   ├── get-profile-avatar.ts
 │   │   ├── remove-profile-avatar.ts
@@ -509,8 +523,10 @@ app/
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
     ├── plan-description-form.ts
+    ├── plan-section-cooldown-form.ts
     ├── plan-section-create-form.ts
     ├── plan-section-exercise-instruction-add-form.ts
+    ├── plan-section-warmup-form.ts
     ├── workout-exercise-add-form.ts
     ├── workout-history-filters-form.ts
     ├── workout-note-form.ts

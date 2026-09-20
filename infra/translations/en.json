@@ -219,6 +219,9 @@
   "plan.remove.info": "Deleting {{name}} removes it and its sections. Workouts already created from it are kept.",
   "plan.restore.cta": "Restore",
   "plan.restore.error": "Could not restore the plan",
+  "plan.section.cooldown.error": "Could not save the cool-down",
+  "plan.section.cooldown.label": "Cool-down",
+  "plan.section.cooldown.placeholder": "Add a cool-down...",
   "plan.section.create.cta": "New section",
   "plan.section.create.error": "Could not create a section",
   "plan.section.create.placeholder": "Upper A",
@@ -250,6 +253,9 @@
   "plan.section.rename.cta": "Rename",
   "plan.section.rename.error": "Could not rename the section",
   "plan.section.rename.label": "Section name",
+  "plan.section.warmup.error": "Could not save the warm-up",
+  "plan.section.warmup.label": "Warm-up",
+  "plan.section.warmup.placeholder": "Add a warm-up...",
   "plan.status.archived": "Archived",
   "plan.status.draft": "Draft",
   "plan.status.finalized": "Finalized",
@@ -289,6 +295,8 @@
   "workout.complete.blocked.no_logged_sets": "Log at least one set first",
   "workout.complete.cta": "Complete",
   "workout.complete.error": "Could not complete the workout",
+  "workout.cooldown.label": "Cool-down",
+  "workout.cooldown.toggle": "Toggle cool-down",
   "workout.copy.cta": "Copy workout",
   "workout.copy.done": "Copied to the clipboard",
   "workout.copy.title": "Copy the logged sets",
@@ -389,5 +397,7 @@
   "workout.target.progression.title": "Based on the previous session",
   "workout.target.reps.label": "Reps",
   "workout.target.sets.label": "Sets",
-  "workout.title": "{{plan}} – {{section}}"
+  "workout.title": "{{plan}} – {{section}}",
+  "workout.warmup.label": "Warm-up",
+  "workout.warmup.toggle": "Toggle warm-up"
 }

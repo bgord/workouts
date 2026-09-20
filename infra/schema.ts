@@ -19,8 +19,10 @@ import type { ExerciseInstructionIdType } from "../modules/plans/value-objects/e
 import type { PlanDescriptionType } from "../modules/plans/value-objects/plan-description";
 import type { PlanIdType } from "../modules/plans/value-objects/plan-id";
 import type { PlanNameType } from "../modules/plans/value-objects/plan-name";
+import type { PlanSectionCooldownType } from "../modules/plans/value-objects/plan-section-cooldown";
 import type { PlanSectionIdType } from "../modules/plans/value-objects/plan-section-id";
 import type { PlanSectionNameType } from "../modules/plans/value-objects/plan-section-name";
+import type { PlanSectionWarmupType } from "../modules/plans/value-objects/plan-section-warmup";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { SetsType } from "../modules/plans/value-objects/sets";
 import type { LoadType } from "../modules/workouts/value-objects/load";
@@ -228,6 +230,8 @@ export const planSections = sqliteTable("planSections", {
   id: identifier<PlanSectionIdType>(),
   planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
   name: text("name").notNull().$type<PlanSectionNameType>(),
+  warmup: text("warmup").$type<PlanSectionWarmupType>(),
+  cooldown: text("cooldown").$type<PlanSectionCooldownType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
@@ -252,6 +256,8 @@ export const workouts = sqliteTable("workouts", {
   planName: text("planName").notNull().$type<PlanNameType>(),
   planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
   planSectionName: text("planSectionName").notNull().$type<PlanSectionNameType>(),
+  planSectionWarmup: text("planSectionWarmup").$type<PlanSectionWarmupType>(),
+  planSectionCooldown: text("planSectionCooldown").$type<PlanSectionCooldownType>(),
   scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
   status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
   completedAt: timestamp("completedAt"),

@@ -108,6 +108,17 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionRenameCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );
   Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_WARMUP_SET_COMMAND,
+    PlansCommandHandlers.handlePlanSectionWarmupSetCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
+  );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_COOLDOWN_SET_COMMAND,
+    PlansCommandHandlers.handlePlanSectionCooldownSetCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+    }),
+  );
+  Tools.CommandBus.on(
     PlansCommands.PLAN_SECTION_REMOVE_COMMAND,
     PlansCommandHandlers.handlePlanSectionRemoveCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );

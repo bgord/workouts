@@ -4,6 +4,7 @@ import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
+import { WorkoutCooldown } from "../sections/workout-cooldown";
 import { WorkoutCopy } from "../sections/workout-copy";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
@@ -12,6 +13,7 @@ import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
 import { WorkoutStart } from "../sections/workout-start";
+import { WorkoutWarmup } from "../sections/workout-warmup";
 
 export function Workout() {
   const t = bg.useTranslations();
@@ -72,6 +74,8 @@ export function Workout() {
         </div>
       </div>
 
+      <WorkoutWarmup />
+
       <WorkoutExercisesEmpty />
 
       <div data-stack="y">
@@ -88,6 +92,8 @@ export function Workout() {
 
         <WorkoutExerciseAdd />
       </div>
+
+      <WorkoutCooldown />
     </ui.Main>
   );
 }

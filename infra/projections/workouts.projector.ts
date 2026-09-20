@@ -64,6 +64,8 @@ export class WorkoutsProjector {
       planName: event.payload.planName,
       planSectionId: event.payload.planSectionId,
       planSectionName: event.payload.planSectionName,
+      planSectionWarmup: event.payload.planSectionWarmup,
+      planSectionCooldown: event.payload.planSectionCooldown,
       scheduledFor: event.payload.scheduledFor,
       status: Workouts.VO.WorkoutStatusEnum.draft,
       revision: event.revision ?? tools.Revision.INITIAL,
