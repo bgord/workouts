@@ -4,6 +4,7 @@ import type { ExerciseInstructionIdType } from "./exercise-instruction-id";
 import type { PlanDescriptionType } from "./plan-description";
 import type { PlanIdType } from "./plan-id";
 import type { PlanNameType } from "./plan-name";
+import type { PlanSectionCooldownType } from "./plan-section-cooldown";
 import type { PlanSectionIdType } from "./plan-section-id";
 import type { PlanSectionNameType } from "./plan-section-name";
 import type { PlanSectionWarmupType } from "./plan-section-warmup";
@@ -22,6 +23,7 @@ export type PlanSectionWithExercises = {
   id: PlanSectionIdType;
   name: PlanSectionNameType;
   warmup?: PlanSectionWarmupType;
+  cooldown?: PlanSectionCooldownType;
   exerciseInstructions: Array<ExerciseInstructionWithExercise>;
 };
 

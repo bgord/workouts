@@ -200,6 +200,7 @@ modules/
 │   │   ├── handlePlanRemoveCommand.ts
 │   │   ├── handlePlanRenameCommand.ts
 │   │   ├── handlePlanRestoreCommand.ts
+│   │   ├── handlePlanSectionCooldownSetCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionExerciseChangeCommand.ts
@@ -217,6 +218,7 @@ modules/
 │   │   ├── PLAN_REMOVE_COMMAND.ts
 │   │   ├── PLAN_RENAME_COMMAND.ts
 │   │   ├── PLAN_RESTORE_COMMAND.ts
+│   │   ├── PLAN_SECTION_COOLDOWN_SET_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND.ts
@@ -234,6 +236,7 @@ modules/
 │   │   ├── PLAN_REMOVED_EVENT.ts
 │   │   ├── PLAN_RENAMED_EVENT.ts
 │   │   ├── PLAN_RESTORED_EVENT.ts
+│   │   ├── PLAN_SECTION_COOLDOWN_SET_EVENT.ts
 │   │   ├── PLAN_SECTION_CREATED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT.ts
@@ -256,6 +259,7 @@ modules/
 │   │   ├── plan-limit-for-owner.ts
 │   │   ├── plan-name-has-changed.ts
 │   │   ├── plan-name-is-unique-for-owner.ts
+│   │   ├── plan-section-cooldown-has-changed.ts
 │   │   ├── plan-section-exercise-exists.ts
 │   │   ├── plan-section-exercise-instruction-exercise-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-exists.ts
@@ -282,6 +286,8 @@ modules/
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
+│       ├── plan-section-cooldown.ts
+│       ├── plan-section-cooldown.validation.ts
 │       ├── plan-section-exercise-instruction-limit.ts
 │       ├── plan-section-id.ts
 │       ├── plan-section-limit-for-plan.ts
@@ -477,6 +483,7 @@ app/
 │   │   ├── plan-remove.ts
 │   │   ├── plan-rename.ts
 │   │   ├── plan-restore.ts
+│   │   ├── plan-section-cooldown-set.ts
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
 │   │   ├── plan-section-exercise-instruction-exercise-change.ts
@@ -516,6 +523,7 @@ app/
     ├── exercise-category-add-form.ts
     ├── plan-create-form.ts
     ├── plan-description-form.ts
+    ├── plan-section-cooldown-form.ts
     ├── plan-section-create-form.ts
     ├── plan-section-exercise-instruction-add-form.ts
     ├── plan-section-warmup-form.ts
