@@ -392,5 +392,7 @@
   "workout.target.progression.title": "Based on the previous session",
   "workout.target.reps.label": "Reps",
   "workout.target.sets.label": "Sets",
-  "workout.title": "{{plan}} – {{section}}"
+  "workout.title": "{{plan}} – {{section}}",
+  "workout.warmup.label": "Warm-up",
+  "workout.warmup.toggle": "Toggle warm-up"
 }

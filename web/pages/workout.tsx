@@ -12,6 +12,7 @@ import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
 import { WorkoutStart } from "../sections/workout-start";
+import { WorkoutWarmup } from "../sections/workout-warmup";
 
 export function Workout() {
   const t = bg.useTranslations();
@@ -71,6 +72,8 @@ export function Workout() {
           {workout.actions.complete.available && <ui.ActionHint {...workout.actions.complete} />}
         </div>
       </div>
+
+      <WorkoutWarmup />
 
       <WorkoutExercisesEmpty />
 

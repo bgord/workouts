@@ -392,5 +392,7 @@
   "workout.target.progression.title": "Na podstawie poprzedniej sesji",
   "workout.target.reps.label": "Powtórzenia",
   "workout.target.sets.label": "Serie",
-  "workout.title": "{{plan}} · {{section}}"
+  "workout.title": "{{plan}} · {{section}}",
+  "workout.warmup.label": "Rozgrzewka",
+  "workout.warmup.toggle": "Pokaż lub ukryj rozgrzewkę"
 }
