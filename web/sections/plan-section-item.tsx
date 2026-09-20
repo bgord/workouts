@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
+import { PlanSectionCooldown } from "./plan-section-cooldown";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
 import { PlanSectionRemove } from "./plan-section-remove";
@@ -55,6 +56,8 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
           <PlanSectionExerciseInstructionList {...props.section} />
 
           <PlanSectionExerciseInstructionAdd {...props.section} />
+
+          <PlanSectionCooldown section={props.section} />
         </div>
       )}
     </ui.HairlineRow>

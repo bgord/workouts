@@ -4,6 +4,7 @@ import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
+import { WorkoutCooldown } from "../sections/workout-cooldown";
 import { WorkoutCopy } from "../sections/workout-copy";
 import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
@@ -91,6 +92,8 @@ export function Workout() {
 
         <WorkoutExerciseAdd />
       </div>
+
+      <WorkoutCooldown />
     </ui.Main>
   );
 }
