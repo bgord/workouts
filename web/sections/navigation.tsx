@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { CalendarCheck, Dumbbell, ListChecks, LogOut, Weight } from "lucide-react";
+import { CalendarCheck, Dumbbell, ListChecks, Weight } from "lucide-react";
 import { Form as BodyWeightMeasurementFilters } from "../../app/services/body-weight-measurement-filters-form";
 import { Form as ExerciseCatalogFilters } from "../../app/services/exercise-catalog-filters-form";
 import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
@@ -79,8 +79,6 @@ function NavigationDesktop() {
         <NavigationLink to="/profile">
           <ui.Avatar size={ui.AvatarSize.md} />
         </NavigationLink>
-
-        <NavigationLogout>{t("auth.logout.cta")}</NavigationLogout>
       </div>
     </nav>
   );
@@ -142,10 +140,6 @@ function NavigationMobileDrawer() {
       <NavigationLink to="/profile" {...drawerItem}>
         <ui.Avatar size={ui.AvatarSize.sm} />
       </NavigationLink>
-
-      <NavigationLogout {...drawerItem}>
-        <LogOut data-size="md" />
-      </NavigationLogout>
     </nav>
   );
 }
@@ -179,23 +173,5 @@ function NavigationShell() {
         <ui.Logo search={WorkoutHistoryFilters.default} to="/" />
       </div>
     </nav>
-  );
-}
-
-function NavigationLogout(props: React.JSX.IntrinsicElements["button"]) {
-  return (
-    <button
-      data-cross="center"
-      data-cursor="pointer"
-      data-main="center"
-      data-stack="x"
-      onClick={async () => {
-        await fetch("/api/auth/sign-out", { method: "POST", credentials: "include" });
-        location.replace("/public/login.html");
-      }}
-      type="button"
-      {...link}
-      {...props}
-    />
   );
 }

@@ -10,8 +10,9 @@ export function Profile() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+      <div data-cross="center" data-main="between" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("profile.header")}</ui.Header>
+        <ui.Logout />
       </div>
 
       <div>{session.user.email}</div>

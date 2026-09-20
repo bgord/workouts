@@ -27,6 +27,7 @@ export * from "./kbd";
 export * from "./language-selector";
 export * from "./line-chart";
 export * from "./logo";
+export * from "./logout";
 export * from "./main";
 export * from "./meta";
 export * from "./online-status-bar";
