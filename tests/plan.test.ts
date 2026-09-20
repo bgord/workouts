@@ -386,6 +386,126 @@ describe("Plan", async () => {
     );
   });
 
+  test("setSectionCooldown", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventThird,
+        mocks.GenericPlanSectionCreatedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.setSectionCooldown(mocks.planSectionId, mocks.planSectionCooldown, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCooldownSetEvent]);
+    expect(plan.sections).toEqual([
+      { id: mocks.anotherPlanSectionId, name: mocks.thirdPlanSectionName, exerciseInstructions: [] },
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        cooldown: mocks.planSectionCooldown,
+        exerciseInstructions: [],
+      },
+    ]);
+  });
+
+  test("setSectionCooldown - clears an existing cooldown", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCooldownSetEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.setSectionCooldown(mocks.planSectionId, undefined, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCooldownUnsetEvent]);
+    expect(plan.sections).toEqual([
+      { id: mocks.planSectionId, name: mocks.planSectionName, cooldown: undefined, exerciseInstructions: [] },
+    ]);
+  });
+
+  test("setSectionCooldown - PlanIsEditable - archived", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      deps,
+    );
+
+    expect(() =>
+      plan.setSectionCooldown(mocks.planSectionId, mocks.planSectionCooldown, mocks.userId),
+    ).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("setSectionCooldown - PlanIsEditable - finalized", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      deps,
+    );
+
+    expect(() =>
+      plan.setSectionCooldown(mocks.planSectionId, mocks.planSectionCooldown, mocks.userId),
+    ).toThrow(Plans.Invariants.PlanIsEditable.error);
+  });
+
+  test("setSectionCooldown - PlanBelongsToUser", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
+
+    expect(() =>
+      plan.setSectionCooldown(mocks.planSectionId, mocks.planSectionCooldown, mocks.anotherUserId),
+    ).toThrow(Plans.Invariants.PlanBelongsToUser.error);
+  });
+
+  test("setSectionCooldown - PlanSectionExists", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      plan.setSectionCooldown(mocks.anotherPlanSectionId, mocks.planSectionCooldown, mocks.userId),
+    ).toThrow(Plans.Invariants.PlanSectionExists.error);
+  });
+
+  test("setSectionCooldown - PlanSectionCooldownHasChanged", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCooldownSetEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      plan.setSectionCooldown(mocks.planSectionId, mocks.planSectionCooldown, mocks.userId),
+    ).toThrow(Plans.Invariants.PlanSectionCooldownHasChanged.error);
+  });
+
+  test("setSectionCooldown - PlanSectionCooldownHasChanged - clearing an absent cooldown", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      deps,
+    );
+
+    expect(() => plan.setSectionCooldown(mocks.planSectionId, undefined, mocks.userId)).toThrow(
+      Plans.Invariants.PlanSectionCooldownHasChanged.error,
+    );
+  });
+
   test("archive - draft", async () => {
     const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 

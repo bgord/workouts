@@ -141,6 +141,11 @@ export const planSectionWarmup = v.parse(
   "5 min bike, band pull-aparts 2x15, empty bar bench 2x10",
 );
 
+export const planSectionCooldown = v.parse(
+  Plans.VO.PlanSectionCooldown,
+  "Pec stretch 2x30s each side, lat hang 60s",
+);
+
 export const anotherPlanSectionId = v.parse(Plans.VO.PlanSectionId, "a792b3cd-e519-4db4-8b99-c0b18aadb44b");
 export const anotherPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Push A");
 export const thirdPlanSectionId = v.parse(Plans.VO.PlanSectionId, "b0f0f0f7-6a0e-4c58-9a05-2f0c39e4a2f1");
@@ -226,6 +231,7 @@ const planSection: Plans.VO.PlanSectionWithExercises = {
   id: planSectionId,
   name: planSectionName,
   warmup: planSectionWarmup,
+  cooldown: planSectionCooldown,
   exerciseInstructions: [
     { id: exerciseInstruction.id, exercise, sets: exerciseInstruction.sets, reps: exerciseInstruction.reps },
   ],
@@ -416,6 +422,7 @@ export const workout: Workouts.VO.Workout = {
   planSectionId,
   planSectionName,
   planSectionWarmup,
+  planSectionCooldown,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.in_progress,
   revision: revision.value,
@@ -809,6 +816,28 @@ export const GenericPlanSectionWarmupUnsetEvent = {
   payload: { planId, planSectionId, warmup: undefined, requesterId: userId },
 } satisfies Plans.Events.PlanSectionWarmupSetEventType;
 
+export const GenericPlanSectionCooldownSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_COOLDOWN_SET_EVENT",
+  payload: { planId, planSectionId, cooldown: planSectionCooldown, requesterId: userId },
+} satisfies Plans.Events.PlanSectionCooldownSetEventType;
+
+export const GenericPlanSectionCooldownUnsetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_COOLDOWN_SET_EVENT",
+  payload: { planId, planSectionId, cooldown: undefined, requesterId: userId },
+} satisfies Plans.Events.PlanSectionCooldownSetEventType;
+
 export const GenericPlanArchivedEvent = {
   id: expectAnyId,
   correlationId,
@@ -1019,6 +1048,7 @@ export const GenericWorkoutCreatedEvent = {
     planSectionId,
     planSectionName,
     planSectionWarmup,
+    planSectionCooldown,
     scheduledFor: workoutScheduledFor,
     userId,
   },
@@ -1039,6 +1069,7 @@ export const PastGenericWorkoutCreatedEvent = {
     planSectionId,
     planSectionName,
     planSectionWarmup,
+    planSectionCooldown,
     scheduledFor: pastWorkoutScheduledFor,
     userId,
   },

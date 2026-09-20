@@ -32,6 +32,7 @@ export type PlanGetResponse = {
     sectionCreate: ActionState;
     sectionRename: ActionState;
     sectionWarmupSet: ActionState;
+    sectionCooldownSet: ActionState;
     sectionRemove: ActionState;
   };
 };
