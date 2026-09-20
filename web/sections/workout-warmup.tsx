@@ -13,11 +13,17 @@ export function WorkoutWarmup() {
   if (!workout.data.planSectionWarmup) return null;
 
   return (
-    <div data-stack="y" {...ui.Spacing.inset}>
+    <div
+      data-stack="y"
+      data-br="md"
+      data-bc="neutral-850"
+      data-bw="hairline"
+      data-bs="dashed"
+      {...ui.Gap.block}
+    >
       <button
         aria-label={t("workout.warmup.toggle")}
         data-bc="neutral-800"
-        data-bg="neutral-900"
         data-br="md"
         data-bw="hairline"
         data-cross={workoutWarmupExpanded.on ? "start" : "center"}
@@ -29,10 +35,10 @@ export function WorkoutWarmup() {
         onClick={workoutWarmupExpanded.toggle}
         title={t("workout.warmup.toggle")}
         type="button"
-        {...ui.Gap.related}
+        {...ui.Gap.block}
         {...workoutWarmupExpanded.props.controller}
       >
-        <Flame data-color="warning-500" data-shrink="0" data-size="sm" />
+        <Flame data-color="neutral-600" data-shrink="0" data-size="sm" />
 
         {workoutWarmupExpanded.on && (
           <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.cluster}>

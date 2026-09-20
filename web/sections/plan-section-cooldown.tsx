@@ -39,7 +39,7 @@ export function PlanSectionCooldown(props: { section: PlanSection }) {
     if (!props.section.cooldown) return null;
 
     return (
-      <div data-stack="y" {...ui.Gap.field} data-mb="3">
+      <div data-stack="y" {...ui.Gap.field} data-mx="3">
         <ui.Eyebrow>{t("plan.section.cooldown.label")}</ui.Eyebrow>
 
         <p className="c-prose" data-color="neutral-200" data-fs="sm">
@@ -50,7 +50,7 @@ export function PlanSectionCooldown(props: { section: PlanSection }) {
   }
 
   return (
-    <div data-mb="3" data-stack="y" {...ui.Gap.cluster}>
+    <div data-my="3" data-stack="y" {...ui.Gap.cluster}>
       {planSectionCooldownUpdate.off && !props.section.cooldown && (
         <>
           <button

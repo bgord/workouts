@@ -15,11 +15,17 @@ export function WorkoutCooldown() {
   if (!workout.data.planSectionCooldown) return null;
 
   return (
-    <div data-stack="y" {...ui.Spacing.inset}>
+    <div
+      data-stack="y"
+      data-br="md"
+      data-bc="neutral-850"
+      data-bw="hairline"
+      data-bs="dashed"
+      {...ui.Gap.block}
+    >
       <button
         aria-label={t("workout.cooldown.toggle")}
         data-bc="neutral-800"
-        data-bg="neutral-900"
         data-br="md"
         data-bw="hairline"
         data-cross={workoutCooldownExpanded.on ? "start" : "center"}
@@ -31,10 +37,10 @@ export function WorkoutCooldown() {
         onClick={workoutCooldownExpanded.toggle}
         title={t("workout.cooldown.toggle")}
         type="button"
-        {...ui.Gap.related}
+        {...ui.Gap.block}
         {...workoutCooldownExpanded.props.controller}
       >
-        <Snowflake data-color="positive-400" data-shrink="0" data-size="sm" />
+        <Snowflake data-color="neutral-600" data-shrink="0" data-size="sm" />
 
         {workoutCooldownExpanded.on && (
           <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.cluster}>
