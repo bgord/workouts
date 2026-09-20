@@ -207,6 +207,7 @@ modules/
 │   │   ├── handlePlanSectionExerciseInstructionUpdateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
 │   │   ├── handlePlanSectionRenameCommand.ts
+│   │   ├── handlePlanSectionWarmupSetCommand.ts
 │   ├── commands
 │   │   ├── PLAN_ARCHIVE_COMMAND.ts
 │   │   ├── PLAN_CREATE_COMMAND.ts
@@ -222,7 +223,8 @@ modules/
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
-│   │   └── PLAN_SECTION_RENAME_COMMAND.ts
+│   │   ├── PLAN_SECTION_RENAME_COMMAND.ts
+│   │   └── PLAN_SECTION_WARMUP_SET_COMMAND.ts
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
 │   │   ├── PLAN_CREATED_EVENT.ts
@@ -238,7 +240,8 @@ modules/
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT.ts
 │   │   ├── PLAN_SECTION_REMOVED_EVENT.ts
-│   │   └── PLAN_SECTION_RENAMED_EVENT.ts
+│   │   ├── PLAN_SECTION_RENAMED_EVENT.ts
+│   │   └── PLAN_SECTION_WARMUP_SET_EVENT.ts
 │   ├── invariants
 │   │   ├── plan-belongs-to-user.ts
 │   │   ├── plan-description-has-changed.ts
@@ -260,7 +263,8 @@ modules/
 │   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
-│   │   └── plan-section-name-is-unique-for-plan.ts
+│   │   ├── plan-section-name-is-unique-for-plan.ts
+│   │   └── plan-section-warmup-has-changed.ts
 │   ├── open-host-queries
 │   ├── ports
 │   │   └── plan-repository.ts
@@ -283,6 +287,8 @@ modules/
 │       ├── plan-section-limit-for-plan.ts
 │       ├── plan-section-name.ts
 │       ├── plan-section-name.validation.ts
+│       ├── plan-section-warmup.ts
+│       ├── plan-section-warmup.validation.ts
 │       ├── plan-section.ts
 │       ├── plan-status.ts
 │       ├── plan-summary.ts

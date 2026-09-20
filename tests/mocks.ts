@@ -780,6 +780,28 @@ export const GenericPlanSectionRenamedEvent = {
   payload: { planId, planSectionId, planSectionName: anotherPlanSectionName, requesterId: userId },
 } satisfies Plans.Events.PlanSectionRenamedEventType;
 
+export const GenericPlanSectionWarmupSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_WARMUP_SET_EVENT",
+  payload: { planId, planSectionId, warmup: planSectionWarmup, requesterId: userId },
+} satisfies Plans.Events.PlanSectionWarmupSetEventType;
+
+export const GenericPlanSectionWarmupUnsetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_WARMUP_SET_EVENT",
+  payload: { planId, planSectionId, warmup: undefined, requesterId: userId },
+} satisfies Plans.Events.PlanSectionWarmupSetEventType;
+
 export const GenericPlanArchivedEvent = {
   id: expectAnyId,
   correlationId,
