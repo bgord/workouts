@@ -26,6 +26,7 @@ export type Workout = {
   planSectionId: Plans.VO.PlanSectionIdType;
   planSectionName: Plans.VO.PlanSectionNameType;
   planSectionWarmup?: Plans.VO.PlanSectionWarmupType;
+  planSectionCooldown?: Plans.VO.PlanSectionCooldownType;
   scheduledFor: WorkoutScheduledForType;
   status: WorkoutStatusEnum;
   completedAt?: tools.TimestampValueType;

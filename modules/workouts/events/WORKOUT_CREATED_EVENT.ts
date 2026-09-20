@@ -16,6 +16,7 @@ export const WorkoutCreatedEvent = v.object({
     planSectionId: Plans.VO.PlanSectionId,
     planSectionName: Plans.VO.PlanSectionName,
     planSectionWarmup: v.optional(Plans.VO.PlanSectionWarmup),
+    planSectionCooldown: v.optional(Plans.VO.PlanSectionCooldown),
     scheduledFor: VO.WorkoutScheduledFor,
     userId: Auth.VO.UserId,
   }),

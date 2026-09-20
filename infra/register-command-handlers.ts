@@ -112,6 +112,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionWarmupSetCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );
   Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_COOLDOWN_SET_COMMAND,
+    PlansCommandHandlers.handlePlanSectionCooldownSetCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+    }),
+  );
+  Tools.CommandBus.on(
     PlansCommands.PLAN_SECTION_REMOVE_COMMAND,
     PlansCommandHandlers.handlePlanSectionRemoveCommand({ ...deps, repo: Adapters.Plans.PlanRepository }),
   );

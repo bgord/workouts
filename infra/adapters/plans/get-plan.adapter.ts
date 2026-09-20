@@ -64,6 +64,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           id: section.id,
           name: section.name,
           warmup: section.warmup ?? undefined,
+          cooldown: section.cooldown ?? undefined,
           exerciseInstructions: exerciseInstructions
             .filter((exerciseInstruction) => exerciseInstruction.planSectionId === section.id)
             .map((exerciseInstruction) => ({
@@ -141,6 +142,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         },
         sectionRename: whenEditable,
         sectionWarmupSet: whenEditable,
+        sectionCooldownSet: whenEditable,
         sectionRemove: whenEditable,
       },
     };
