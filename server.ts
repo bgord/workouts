@@ -152,6 +152,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionWarmupSet(deps)),
   );
+  plans.patch(
+    "/:planId/section/:planSectionId/cooldown",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionCooldownSet(deps)),
+  );
   plans.delete(
     "/:planId/section/:planSectionId",
     Tools.ShieldCaptcha.handle(),
