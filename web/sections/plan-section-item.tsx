@@ -51,13 +51,13 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
 
       {planSectionVisibility.on && (
         <div data-stack="y" {...ui.Spacing.inset} {...planSectionVisibility.props.target}>
-          <PlanSectionWarmup section={props.section} />
+          <PlanSectionWarmup {...props.section} />
 
           <PlanSectionExerciseInstructionList {...props.section} />
 
           <PlanSectionExerciseInstructionAdd {...props.section} />
 
-          <PlanSectionCooldown section={props.section} />
+          <PlanSectionCooldown {...props.section} />
         </div>
       )}
     </ui.HairlineRow>

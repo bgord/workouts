@@ -5,25 +5,20 @@ import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionCooldown(props: { section: PlanSection }) {
+export function PlanSectionCooldown(props: PlanSection) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { plan } = planRoute.useLoaderData();
 
-  const planSectionCooldownUpdate = bg.useToggle({
-    name: `plan-section-cooldown-update-${props.section.id}`,
-  });
+  const planSectionCooldownUpdate = bg.useToggle({ name: `plan-section-cooldown-update-${props.id}` });
 
-  const cooldown = bg.useTextField({
-    ...Form.cooldown.field,
-    defaultValue: props.section.cooldown ?? "",
-  });
+  const cooldown = bg.useTextField({ ...Form.cooldown.field, defaultValue: props.cooldown ?? "" });
 
   const metaEnterSubmit = bg.useMetaEnterSubmit();
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/plans/${plan.data.id}/section/${props.section.id}/cooldown`, {
+      fetch(`/api/plans/${plan.data.id}/section/${props.id}/cooldown`, {
         method: "PATCH",
         credentials: "include",
         headers: bg.WeakETag.fromRevision(plan.data.revision),
@@ -36,14 +31,14 @@ export function PlanSectionCooldown(props: { section: PlanSection }) {
   });
 
   if (!plan.actions.sectionCooldownSet.available) {
-    if (!props.section.cooldown) return null;
+    if (!props.cooldown) return null;
 
     return (
       <div data-stack="y" {...ui.Gap.field} data-mx="3">
         <ui.Eyebrow>{t("plan.section.cooldown.label")}</ui.Eyebrow>
 
         <p className="c-prose" data-color="neutral-200" data-fs="sm">
-          {props.section.cooldown}
+          {props.cooldown}
         </p>
       </div>
     );
@@ -51,7 +46,7 @@ export function PlanSectionCooldown(props: { section: PlanSection }) {
 
   return (
     <div data-my="3" data-stack="y" {...ui.Gap.cluster}>
-      {planSectionCooldownUpdate.off && !props.section.cooldown && (
+      {planSectionCooldownUpdate.off && !props.cooldown && (
         <>
           <button
             className="c-prose"
@@ -73,7 +68,7 @@ export function PlanSectionCooldown(props: { section: PlanSection }) {
         </>
       )}
 
-      {planSectionCooldownUpdate.off && props.section.cooldown && (
+      {planSectionCooldownUpdate.off && props.cooldown && (
         <button
           data-bc="positive-400"
           data-bwl="thin"
@@ -90,7 +85,7 @@ export function PlanSectionCooldown(props: { section: PlanSection }) {
           <ui.Eyebrow>{t("plan.section.cooldown.label")}</ui.Eyebrow>
 
           <span className="c-prose" data-color="neutral-200" data-fs="sm">
-            {props.section.cooldown}
+            {props.cooldown}
           </span>
         </button>
       )}

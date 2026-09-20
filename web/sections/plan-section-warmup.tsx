@@ -5,23 +5,20 @@ import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { planRoute } from "../router";
 
-export function PlanSectionWarmup(props: { section: PlanSection }) {
+export function PlanSectionWarmup(props: PlanSection) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { plan } = planRoute.useLoaderData();
 
-  const planSectionWarmupUpdate = bg.useToggle({ name: `plan-section-warmup-update-${props.section.id}` });
+  const planSectionWarmupUpdate = bg.useToggle({ name: `plan-section-warmup-update-${props.id}` });
 
-  const warmup = bg.useTextField({
-    ...Form.warmup.field,
-    defaultValue: props.section.warmup ?? "",
-  });
+  const warmup = bg.useTextField({ ...Form.warmup.field, defaultValue: props.warmup ?? "" });
 
   const metaEnterSubmit = bg.useMetaEnterSubmit();
 
   const mutation = bg.useMutation({
     perform: () =>
-      fetch(`/api/plans/${plan.data.id}/section/${props.section.id}/warmup`, {
+      fetch(`/api/plans/${plan.data.id}/section/${props.id}/warmup`, {
         method: "PATCH",
         credentials: "include",
         headers: bg.WeakETag.fromRevision(plan.data.revision),
@@ -34,14 +31,14 @@ export function PlanSectionWarmup(props: { section: PlanSection }) {
   });
 
   if (!plan.actions.sectionWarmupSet.available) {
-    if (!props.section.warmup) return null;
+    if (!props.warmup) return null;
 
     return (
       <div data-stack="y" {...ui.Gap.field} data-my="4">
         <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
 
         <p className="c-prose" data-color="neutral-200" data-fs="sm">
-          {props.section.warmup}
+          {props.warmup}
         </p>
       </div>
     );
@@ -49,7 +46,7 @@ export function PlanSectionWarmup(props: { section: PlanSection }) {
 
   return (
     <div data-my="4" data-stack="y" {...ui.Gap.cluster}>
-      {planSectionWarmupUpdate.off && !props.section.warmup && (
+      {planSectionWarmupUpdate.off && !props.warmup && (
         <>
           <button
             className="c-prose"
@@ -71,7 +68,7 @@ export function PlanSectionWarmup(props: { section: PlanSection }) {
         </>
       )}
 
-      {planSectionWarmupUpdate.off && props.section.warmup && (
+      {planSectionWarmupUpdate.off && props.warmup && (
         <button
           data-bc="warning-500"
           data-bwl="thin"
@@ -88,7 +85,7 @@ export function PlanSectionWarmup(props: { section: PlanSection }) {
           <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
 
           <span className="c-prose" data-color="neutral-200" data-fs="sm">
-            {props.section.warmup}
+            {props.warmup}
           </span>
         </button>
       )}
