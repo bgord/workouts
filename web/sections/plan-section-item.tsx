@@ -6,6 +6,7 @@ import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instr
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
 import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
+import { PlanSectionWarmup } from "./plan-section-warmup";
 
 export function PlanSectionItem(props: { section: PlanSection; index: number; last: boolean }) {
   const t = bg.useTranslations();
@@ -49,6 +50,8 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
 
       {planSectionVisibility.on && (
         <div data-stack="y" {...ui.Spacing.inset} {...planSectionVisibility.props.target}>
+          <PlanSectionWarmup section={props.section} />
+
           <PlanSectionExerciseInstructionList {...props.section} />
 
           <PlanSectionExerciseInstructionAdd {...props.section} />
