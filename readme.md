@@ -483,7 +483,8 @@ app/
 │   │   ├── plan-section-exercise-instruction-remove.ts
 │   │   ├── plan-section-exercise-instruction-update.ts
 │   │   ├── plan-section-remove.ts
-│   │   └── plan-section-rename.ts
+│   │   ├── plan-section-rename.ts
+│   │   └── plan-section-warmup-set.ts
 │   ├── preferences
 │   │   ├── get-profile-avatar.ts
 │   │   ├── remove-profile-avatar.ts
