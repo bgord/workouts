@@ -19,3 +19,4 @@ export * from "./plan-section-exercise-instruction-limit";
 export * from "./plan-section-exists";
 export * from "./plan-section-limit-for-plan";
 export * from "./plan-section-name-is-unique-for-plan";
+export * from "./plan-section-warmup-has-changed";
