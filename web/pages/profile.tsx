@@ -12,9 +12,9 @@ export function Profile() {
     <ui.Main>
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("profile.header")}</ui.Header>
-
-        <ui.Meta>{session.user.email}</ui.Meta>
       </div>
+
+      <div>{session.user.email}</div>
 
       <Sections.ProfileAvatarChange />
 

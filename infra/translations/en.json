@@ -275,7 +275,7 @@
   "profile.export_workouts.cta": "Download CSV",
   "profile.export_workouts.header": "Export workouts",
   "profile.export_workouts.hint": "Every logged set from your completed workouts",
-  "profile.header": "Profile settings",
+  "profile.header": "Profile",
   "statistics.exercise.history.volume_load.value": "{{load}} kg",
   "statistics.exercise.history": "History",
   "statistics.exercise.history.empty": "No sessions logged yet",
