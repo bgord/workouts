@@ -9,6 +9,7 @@ export * from "./plan-section-exercise-instruction-limit";
 export * from "./plan-section-id";
 export * from "./plan-section-limit-for-plan";
 export * from "./plan-section-name";
+export * from "./plan-section-warmup";
 export * from "./plan-status";
 export * from "./plan-summary";
 export * from "./reps";
