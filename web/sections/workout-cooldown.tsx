@@ -28,36 +28,34 @@ export function WorkoutCooldown() {
         data-bc="neutral-800"
         data-br="md"
         data-bw="hairline"
-        data-cross={workoutCooldownExpanded.on ? "start" : "center"}
         data-cursor="pointer"
         data-p="3"
-        data-stack="x"
+        data-stack="y"
         data-ta="start"
-        data-wrap="nowrap"
         onClick={workoutCooldownExpanded.toggle}
         title={t("workout.cooldown.toggle")}
         type="button"
-        {...ui.Gap.block}
+        {...ui.Gap.cluster}
         {...workoutCooldownExpanded.props.controller}
       >
-        <Snowflake data-color="neutral-600" data-shrink="0" data-size="sm" />
+        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.block}>
+          <Snowflake data-color="neutral-600" data-shrink="0" data-size="sm" />
+
+          <ui.Eyebrow data-grow="1">{t("workout.cooldown.label")}</ui.Eyebrow>
+
+          {workoutCooldownExpanded.on && (
+            <ChevronUp data-color="neutral-500" data-shrink="0" data-size="sm" />
+          )}
+
+          {workoutCooldownExpanded.off && (
+            <ChevronDown data-color="neutral-500" data-shrink="0" data-size="sm" />
+          )}
+        </div>
 
         {workoutCooldownExpanded.on && (
-          <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.cluster}>
-            <ui.Eyebrow>{t("workout.cooldown.label")}</ui.Eyebrow>
-
-            <span className="c-prose" data-color="neutral-200" data-fs="sm" data-ws="pre-line">
-              {workout.data.planSectionCooldown}
-            </span>
-          </div>
-        )}
-
-        {workoutCooldownExpanded.off && <ui.Eyebrow data-grow="1">{t("workout.cooldown.label")}</ui.Eyebrow>}
-
-        {workoutCooldownExpanded.on && <ChevronUp data-color="neutral-500" data-shrink="0" data-size="sm" />}
-
-        {!workoutCooldownExpanded.on && (
-          <ChevronDown data-color="neutral-500" data-shrink="0" data-size="sm" />
+          <span className="c-prose" data-color="neutral-200" data-fs="sm" data-pl="8" data-ws="pre-line">
+            {workout.data.planSectionCooldown}
+          </span>
         )}
       </button>
     </div>

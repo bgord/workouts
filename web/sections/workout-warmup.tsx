@@ -26,35 +26,33 @@ export function WorkoutWarmup() {
         data-bc="neutral-800"
         data-br="md"
         data-bw="hairline"
-        data-cross={workoutWarmupExpanded.on ? "start" : "center"}
         data-cursor="pointer"
         data-p="3"
-        data-stack="x"
+        data-stack="y"
         data-ta="start"
-        data-wrap="nowrap"
         onClick={workoutWarmupExpanded.toggle}
         title={t("workout.warmup.toggle")}
         type="button"
-        {...ui.Gap.block}
+        {...ui.Gap.cluster}
         {...workoutWarmupExpanded.props.controller}
       >
-        <Flame data-color="neutral-600" data-shrink="0" data-size="sm" />
+        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.block}>
+          <Flame data-color="neutral-600" data-shrink="0" data-size="sm" />
+
+          <ui.Eyebrow data-grow="1">{t("workout.warmup.label")}</ui.Eyebrow>
+
+          {workoutWarmupExpanded.on && <ChevronUp data-color="neutral-500" data-shrink="0" data-size="sm" />}
+
+          {workoutWarmupExpanded.off && (
+            <ChevronDown data-color="neutral-500" data-shrink="0" data-size="sm" />
+          )}
+        </div>
 
         {workoutWarmupExpanded.on && (
-          <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.cluster}>
-            <ui.Eyebrow>{t("workout.warmup.label")}</ui.Eyebrow>
-
-            <span className="c-prose" data-color="neutral-200" data-fs="sm" data-ws="pre-line">
-              {workout.data.planSectionWarmup}
-            </span>
-          </div>
+          <span className="c-prose" data-color="neutral-200" data-fs="sm" data-pl="8" data-ws="pre-line">
+            {workout.data.planSectionWarmup}
+          </span>
         )}
-
-        {workoutWarmupExpanded.off && <ui.Eyebrow data-grow="1">{t("workout.warmup.label")}</ui.Eyebrow>}
-
-        {workoutWarmupExpanded.on && <ChevronUp data-color="neutral-500" data-shrink="0" data-size="sm" />}
-
-        {!workoutWarmupExpanded.on && <ChevronDown data-color="neutral-500" data-shrink="0" data-size="sm" />}
       </button>
     </div>
   );
