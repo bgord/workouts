@@ -34,7 +34,7 @@ export function PlanSectionWarmup(props: PlanSection) {
     if (!props.warmup) return null;
 
     return (
-      <div data-stack="y" {...ui.Gap.field} data-my="4">
+      <div data-stack="y" {...ui.Gap.field} data-mb="3">
         <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
 
         <p className="c-prose" data-color="neutral-200" data-fs="sm" data-ws="pre-line">
@@ -45,7 +45,7 @@ export function PlanSectionWarmup(props: PlanSection) {
   }
 
   return (
-    <div data-my="4" data-stack="y" {...ui.Gap.cluster}>
+    <div data-mb="3" data-stack="y" {...ui.Gap.cluster}>
       {planSectionWarmupUpdate.off && !props.warmup && (
         <>
           <button
