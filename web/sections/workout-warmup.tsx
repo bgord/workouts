@@ -14,11 +14,11 @@ export function WorkoutWarmup() {
 
   return (
     <div
-      data-stack="y"
-      data-br="md"
       data-bc="neutral-850"
-      data-bw="hairline"
+      data-br="md"
       data-bs="dashed"
+      data-bw="hairline"
+      data-stack="y"
       {...ui.Gap.block}
     >
       <button

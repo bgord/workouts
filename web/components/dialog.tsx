@@ -14,8 +14,9 @@ export function Dialog(props: bg.DialogPropsType) {
       data-wrap="nowrap"
       style={{
         ...bg.Rhythm().times(50).width,
-        maxHeight: "calc(100% - 4rem)",
+        maxHeight: "calc(100% - 4rem - env(safe-area-inset-top))",
         maxWidth: "calc(100% - 2rem)",
+        top: "env(safe-area-inset-top)",
       }}
       {...Gap.stack}
       {...props}
