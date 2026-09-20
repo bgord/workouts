@@ -6,6 +6,7 @@ import type { PlanIdType } from "./plan-id";
 import type { PlanNameType } from "./plan-name";
 import type { PlanSectionIdType } from "./plan-section-id";
 import type { PlanSectionNameType } from "./plan-section-name";
+import type { PlanSectionWarmupType } from "./plan-section-warmup";
 import type { PlanStatusEnum } from "./plan-status";
 import type { RepsType } from "./reps";
 import type { SetsType } from "./sets";
@@ -20,6 +21,7 @@ export type ExerciseInstructionWithExercise = {
 export type PlanSectionWithExercises = {
   id: PlanSectionIdType;
   name: PlanSectionNameType;
+  warmup?: PlanSectionWarmupType;
   exerciseInstructions: Array<ExerciseInstructionWithExercise>;
 };
 

@@ -51,6 +51,7 @@ export const handleWorkoutCreateCommand =
       plan!.name,
       section!.id,
       section!.name,
+      section!.warmup,
       command.payload.scheduledFor,
       command.payload.userId,
       deps,

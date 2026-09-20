@@ -5,9 +5,7 @@ import * as Plans from "+plans";
 describe("PlanSectionWarmup", () => {
   test("happy path", () => {
     expect(v.safeParse(Plans.VO.PlanSectionWarmup, "f".repeat(500)).success).toEqual(true);
-    expect(v.safeParse(Plans.VO.PlanSectionWarmup, "5 min bike\nband pull-aparts 2x15").success).toEqual(
-      true,
-    );
+    expect(v.safeParse(Plans.VO.PlanSectionWarmup, "5 min bike\nband pull-apart 2x15").success).toEqual(true);
   });
 
   test("rejects non-string - null", () => {

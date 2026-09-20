@@ -11,6 +11,7 @@ export type PlanEventType =
   | Events.PlanSectionCreatedEventType
   | Events.PlanSectionRemovedEventType
   | Events.PlanSectionRenamedEventType
+  | Events.PlanSectionWarmupSetEventType
   | Events.PlanArchivedEventType
   | Events.PlanFinalizedEventType
   | Events.PlanRestoredEventType
@@ -36,6 +37,7 @@ export class Plan {
     [Events.PLAN_SECTION_CREATED_EVENT]: Events.PlanSectionCreatedEvent,
     [Events.PLAN_SECTION_REMOVED_EVENT]: Events.PlanSectionRemovedEvent,
     [Events.PLAN_SECTION_RENAMED_EVENT]: Events.PlanSectionRenamedEvent,
+    [Events.PLAN_SECTION_WARMUP_SET_EVENT]: Events.PlanSectionWarmupSetEvent,
     [Events.PLAN_ARCHIVED_EVENT]: Events.PlanArchivedEvent,
     [Events.PLAN_FINALIZED_EVENT]: Events.PlanFinalizedEvent,
     [Events.PLAN_RESTORED_EVENT]: Events.PlanRestoredEvent,
@@ -149,6 +151,29 @@ export class Plan {
       Events.PlanSectionRenamedEvent,
       Plan.getStream(this.id),
       { planId: this.id, planSectionId, planSectionName, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
+  setSectionWarmup(
+    planSectionId: VO.PlanSectionIdType,
+    warmup: VO.PlanSectionWarmupType | undefined,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
+    Invariants.PlanSectionWarmupHasChanged.enforce({
+      current: this.sections.find((section) => section.id === planSectionId)?.warmup,
+      incoming: warmup,
+    });
+
+    const event = bg.event(
+      Events.PlanSectionWarmupSetEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, planSectionId, warmup, requesterId },
       this.deps,
     );
 
@@ -403,6 +428,14 @@ export class Plan {
           section.id === event.payload.planSectionId
             ? { ...section, name: event.payload.planSectionName }
             : section,
+        );
+        break;
+      }
+
+      case Events.PLAN_SECTION_WARMUP_SET_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.map((section) =>
+          section.id === event.payload.planSectionId ? { ...section, warmup: event.payload.warmup } : section,
         );
         break;
       }

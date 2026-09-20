@@ -43,6 +43,7 @@ describe("Workout", async () => {
         mocks.planName,
         mocks.planSectionId,
         mocks.planSectionName,
+        mocks.planSectionWarmup,
         mocks.workoutScheduledFor,
         mocks.userId,
         deps,
