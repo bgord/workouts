@@ -1,6 +1,6 @@
 import type * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import * as Workouts from "+workouts";
@@ -48,8 +48,6 @@ export class WorkoutExercisesProjector {
   }
 
   async onWorkoutExerciseAddedEvent(event: Workouts.Events.WorkoutExerciseAddedEventType) {
-    const siblings = await this.siblings(event.payload.workoutId);
-
     await db.insert(Schema.workoutExercises).values({
       id: event.payload.workoutExerciseId,
       workoutId: event.payload.workoutId,
@@ -60,7 +58,7 @@ export class WorkoutExercisesProjector {
       prescriptionSets: event.payload.prescription.sets,
       prescriptionRepsMin: event.payload.prescription.reps.min,
       prescriptionRepsMax: event.payload.prescription.reps.max,
-      position: v.parse(Workouts.VO.WorkoutExercisePosition, siblings.length),
+      position: sql`(SELECT COUNT(*) FROM ${Schema.workoutExercises} WHERE ${Schema.workoutExercises.workoutId} = ${event.payload.workoutId})`,
       userId: event.payload.requesterId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
