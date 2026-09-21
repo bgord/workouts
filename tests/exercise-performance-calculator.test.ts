@@ -9,7 +9,7 @@ describe("ExercisePerformanceCalculator", async () => {
 
   const calculator = new Statistics.Services.ExercisePerformanceCalculator({
     OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
-    ListExercisePerformances: di.Adapters.Workouts.ListExercisePerformancesQuery,
+    ListExercisePerformancesOHQ: di.Adapters.Workouts.ListExercisePerformancesQuery,
   });
 
   test("happy path", async () => {

@@ -1,10 +1,8 @@
 import type * as bg from "@bgord/bun";
 import type * as Workouts from "+workouts";
-import { GetExercisePreviousPerformanceQuery } from "./get-exercise-previous-performance.adapter";
 import { GetWorkoutQuery } from "./get-workout.adapter";
 import { GetWorkoutDashboardQuery } from "./get-workout-dashboard.adapter";
-import { GetWorkoutDraftForOwnerCountQuery } from "./get-workout-draft-for-owner-count.adapter";
-import { GetWorkoutInProgressForOwnerCountQuery } from "./get-workout-in-progress-for-owner-count.adapter";
+import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
 import { ListExercisePerformancesQuery } from "./list-exercise-performances.adapter";
 import { ListWorkoutExportRowsQuery } from "./list-workout-export-rows.adapter";
 import { ListWorkoutsQuery } from "./list-workouts.adapter";
@@ -19,11 +17,9 @@ type Dependencies = {
 
 export function createWorkoutsAdapters(deps: Dependencies) {
   return {
-    GetExercisePreviousPerformanceQuery,
     GetWorkoutQuery,
     GetWorkoutDashboardQuery,
-    GetWorkoutDraftForOwnerCountQuery,
-    GetWorkoutInProgressForOwnerCountQuery,
+    GetWorkoutStatusForOwnerCountQuery,
     ListExercisePerformancesQuery,
     ListWorkoutExportRowsQuery,
     ListWorkoutsQuery,

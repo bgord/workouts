@@ -6,7 +6,6 @@ export * from "./get-exercise-usage-count";
 export * from "./get-exercise-with-categories";
 export * from "./list-categories-assigned-to-exercise";
 export * from "./list-exercise-categories";
-export * from "./list-exercises";
 export * from "./list-exercises-with-categories";
 export * from "./search-exercise-categories";
 export * from "./search-exercises";

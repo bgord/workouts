@@ -10,6 +10,7 @@ import { WorkoutPlanSectionReady } from "../invariants/workout-plan-section-read
 import { WorkoutScheduledForIsWithinHorizon } from "../invariants/workout-scheduled-for-is-within-horizon";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
 import { WorkoutScheduledForHorizonDaysMax } from "../value-objects/workout-scheduled-for-horizon";
+import { WorkoutStatusEnum } from "../value-objects/workout-status";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -17,7 +18,7 @@ type Dependencies = {
   CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   repo: Workouts.Ports.WorkoutRepositoryPort;
   GetFinalizedPlanOHQ: Plans.OHQ.GetFinalizedPlanOHQ;
-  GetWorkoutDraftForOwnerCountQuery: Workouts.Queries.GetWorkoutDraftForOwnerCount;
+  GetWorkoutStatusForOwnerCountQuery: Workouts.Queries.GetWorkoutStatusForOwnerCount;
 };
 
 export const handleWorkoutCreateCommand =
@@ -41,7 +42,10 @@ export const handleWorkoutCreateCommand =
 
     WorkoutPlanSectionReady.enforce({ section });
 
-    const count = await deps.GetWorkoutDraftForOwnerCountQuery.execute(command.payload.userId);
+    const count = await deps.GetWorkoutStatusForOwnerCountQuery.execute(
+      command.payload.userId,
+      WorkoutStatusEnum.draft,
+    );
 
     WorkoutDraftLimitForOwner.enforce({ count });
 

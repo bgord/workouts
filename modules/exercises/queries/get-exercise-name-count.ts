@@ -1,6 +1,6 @@
 import type * as tools from "@bgord/tools";
-import type * as Exercises from "+exercises";
+import type * as VO from "+exercises/value-objects";
 
 export interface GetExerciseNameCount {
-  execute(exerciseName: Exercises.VO.ExerciseNameType): Promise<tools.IntegerNonNegativeType>;
+  execute(exerciseName: VO.ExerciseNameType): Promise<tools.IntegerNonNegativeType>;
 }

@@ -230,7 +230,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
       HTTP.Statistics.ExercisePerformancesGet({
         ExercisePerformanceCalculator: new Statistics.Services.ExercisePerformanceCalculator({
           OneRepEstimator,
-          ListExercisePerformances: Adapters.Workouts.ListExercisePerformancesQuery,
+          ListExercisePerformancesOHQ: Adapters.Workouts.ListExercisePerformancesQuery,
         }),
       }),
     ),

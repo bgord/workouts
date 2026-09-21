@@ -8,7 +8,7 @@ import type * as VO from "+statistics/value-objects";
 
 type Config = {
   OneRepEstimator: Ports.OneRepEstimatorPort;
-  ListExercisePerformances: Workouts.Queries.ListExercisePerformances;
+  ListExercisePerformancesOHQ: Workouts.OHQ.ListExercisePerformancesOHQ;
 };
 
 export class ExercisePerformanceCalculator {
@@ -18,7 +18,7 @@ export class ExercisePerformanceCalculator {
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
   ): Promise<Array<VO.ExercisePerformance>> {
-    const performances = await this.config.ListExercisePerformances.execute(userId, exerciseId);
+    const performances = await this.config.ListExercisePerformancesOHQ.execute(userId, exerciseId);
 
     return performances.map((performance) => {
       const sets = performance.sets.map((set) => ({

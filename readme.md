@@ -123,7 +123,6 @@ modules/
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
 │   │   ├── list-exercises-with-categories.ts
-│   │   ├── list-exercises.ts
 │   │   ├── search-exercise-categories.ts
 │   │   └── search-exercises.ts
 │   └── value-objects
@@ -551,7 +550,6 @@ infra/
 │   │   ├── list-categories-assigned-to-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
 │   │   ├── list-exercises-with-categories.adapter.ts
-│   │   ├── list-exercises.adapter.ts
 │   │   ├── search-exercise-categories.adapter.ts
 │   │   └── search-exercises.adapter.ts
 │   ├── measurements

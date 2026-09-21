@@ -172,7 +172,7 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(3));
 
     const response = await server.request(
@@ -201,7 +201,7 @@ describe(`POST ${url}`, async () => {
       .mockReturnValue(mocks.workoutExerciseId);
     spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -236,7 +236,7 @@ describe(`POST ${url}`, async () => {
       .mockReturnValue(mocks.workoutExerciseId);
     spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -272,7 +272,7 @@ describe(`POST ${url}`, async () => {
       .use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute"))
       .mockResolvedValue(mocks.planAtInstructionLimit);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -303,7 +303,7 @@ describe(`POST ${url}`, async () => {
       .mockReturnValue(mocks.workoutExerciseId);
     spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(2));
 
     const response = await server.request(

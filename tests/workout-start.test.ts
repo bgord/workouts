@@ -41,7 +41,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -65,7 +65,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(1));
 
     const response = await server.request(
@@ -90,7 +90,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -114,7 +114,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -134,7 +134,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -154,7 +154,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(
@@ -197,7 +197,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
-      .use(spyOn(di.Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery, "execute"))
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
     const response = await server.request(

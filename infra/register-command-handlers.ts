@@ -215,7 +215,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       ...deps,
       repo: Adapters.Workouts.WorkoutRepository,
       GetFinalizedPlanOHQ: Adapters.Plans.GetFinalizedPlanQuery,
-      GetWorkoutDraftForOwnerCountQuery: Adapters.Workouts.GetWorkoutDraftForOwnerCountQuery,
+      GetWorkoutStatusForOwnerCountQuery: Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery,
     }),
   );
   Tools.CommandBus.on(
@@ -245,7 +245,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     WorkoutsCommandHandlers.handleWorkoutStartCommand({
       ...deps,
       repo: Adapters.Workouts.WorkoutRepository,
-      GetWorkoutInProgressForOwnerCountQuery: Adapters.Workouts.GetWorkoutInProgressForOwnerCountQuery,
+      GetWorkoutStatusForOwnerCountQuery: Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery,
     }),
   );
   Tools.CommandBus.on(
