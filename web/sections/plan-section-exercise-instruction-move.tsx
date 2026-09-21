@@ -34,7 +34,9 @@ export function PlanSectionExerciseInstructionMove(props: {
     onSuccess: () => router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true }),
   });
 
-  if (!props.exerciseInstruction.actions.move.available) return null;
+  if (!props.exerciseInstruction.actions.move.available) {
+    return <ui.RowIndex>{props.position + 1}</ui.RowIndex>;
+  }
 
   const busy = up.isLoading || down.isLoading;
 
