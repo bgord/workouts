@@ -3,6 +3,7 @@ export * from "./workout-create";
 export * from "./workout-dashboard";
 export * from "./workout-discard";
 export * from "./workout-exercise-add";
+export * from "./workout-exercise-move";
 export * from "./workout-exercise-remove";
 export * from "./workout-exercise-set-target";
 export * from "./workout-export";

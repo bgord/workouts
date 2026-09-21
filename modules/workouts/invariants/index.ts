@@ -4,6 +4,8 @@ export * from "./workout-catalog-exercise-exists";
 export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise-exists";
 export * from "./workout-exercise-limit";
+export * from "./workout-exercise-position-has-changed";
+export * from "./workout-exercise-position-in-range";
 export * from "./workout-exists";
 export * from "./workout-has-logged-sets";
 export * from "./workout-in-progress-limit-for-owner";
