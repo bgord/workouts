@@ -424,6 +424,8 @@ modules/
     │   ├── exercise-target-diff-calculator.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts
+    │   ├── progression-method-linear-progression.strategy.ts
+    │   ├── progression-method-load-step.ts
     │   ├── progression-method.strategy.ts
     │   └── workout-export-file-csv.ts
     └── value-objects
