@@ -266,6 +266,7 @@
   "plan.status.removed": "Usunięty",
   "progression.method.double_progression": "Podwójna progresja",
   "progression.method.label": "Progresja",
+  "progression.method.linear_progression": "Progresja liniowa",
   "profile.avatar.alt": "Obraz",
   "profile.avatar.change.cta": "Zmień awatar",
   "profile.avatar.delete.title": "Usuń awatar",
