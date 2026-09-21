@@ -4,6 +4,7 @@ import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { workoutRoute } from "../router";
+import { WorkoutExerciseMove } from "./workout-exercise-move";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTarget } from "./workout-exercise-target";
@@ -37,15 +38,17 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
-        {isExpandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
+        <WorkoutExerciseMove exercise={props.exercise} position={props.index}>
+          {isExpandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
 
-        {!isExpandable && (
-          <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
-            <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
-              {isDraft && props.index + 1}
-            </span>
-          </ui.RowIndex>
-        )}
+          {!isExpandable && (
+            <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
+              <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
+                {isDraft && props.index + 1}
+              </span>
+            </ui.RowIndex>
+          )}
+        </WorkoutExerciseMove>
 
         <button
           aria-label={t("workout.exercise.description.toggle")}
