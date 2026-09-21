@@ -3,4 +3,6 @@ export * from "./exercise-target-diff-calculator";
 export * from "./progression-method.strategy";
 export * from "./progression-method-double-progression.strategy";
 export * from "./progression-method-factory.strategy";
+export * from "./progression-method-linear-progression.strategy";
+export * from "./progression-method-load-step";
 export * from "./workout-export-file-csv";

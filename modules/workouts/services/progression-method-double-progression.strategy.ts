@@ -1,11 +1,9 @@
-import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Queries from "+workouts/queries";
 import * as VO from "+workouts/value-objects";
 import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-set";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
-
-const LOAD_STEP = tools.Weight.fromKilograms(2.5).get();
+import { PROGRESSION_METHOD_LOAD_STEP } from "./progression-method-load-step";
 
 export class ProgressionMethodDoubleProgressionStrategy implements ProgressionMethodStrategy {
   constructor(
@@ -23,8 +21,12 @@ export class ProgressionMethodDoubleProgressionStrategy implements ProgressionMe
     const { min, max } = this.prescription.reps;
 
     if (last.reps === min) {
-      if (last.load < LOAD_STEP) return undefined;
-      return v.parse(VO.ExerciseTarget, { ...last, reps: max, load: last.load - LOAD_STEP });
+      if (last.load < PROGRESSION_METHOD_LOAD_STEP) return undefined;
+      return v.parse(VO.ExerciseTarget, {
+        ...last,
+        reps: max,
+        load: last.load - PROGRESSION_METHOD_LOAD_STEP,
+      });
     }
 
     if (last.reps === 1) return undefined;
@@ -36,7 +38,11 @@ export class ProgressionMethodDoubleProgressionStrategy implements ProgressionMe
     const { min, max } = this.prescription.reps;
 
     if (last.reps >= max) {
-      return v.parse(VO.ExerciseTarget, { ...last, reps: min, load: last.load + LOAD_STEP });
+      return v.parse(VO.ExerciseTarget, {
+        ...last,
+        reps: min,
+        load: last.load + PROGRESSION_METHOD_LOAD_STEP,
+      });
     }
 
     return v.parse(VO.ExerciseTarget, { ...last, reps: last.reps + 1 });
