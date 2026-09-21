@@ -420,11 +420,11 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
-    │   ├── double-progression-calculator.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
-    │   ├── progression-strategy-factory.ts
-    │   ├── progression-strategy.ts
+    │   ├── progression-method-double-progression.strategy.ts
+    │   ├── progression-method-factory.strategy.ts
+    │   ├── progression-method.strategy.ts
     │   └── workout-export-file-csv.ts
     └── value-objects
         ├── exercise-prescription.ts

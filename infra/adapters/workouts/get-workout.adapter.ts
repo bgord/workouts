@@ -128,7 +128,8 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             diff: target && new Workouts.Services.ExerciseTargetDiffCalculator(target, previous).calculate(),
           },
           targetProgression:
-            previous && Workouts.Services.ProgressionStrategyFactory.for(prescription, previous).calculate(),
+            previous &&
+            Workouts.Services.ProgressionMethodStrategyFactory.for(prescription, previous).calculate(),
           actions: {
             targetSet: {
               available: draft || (inProgress && exercise.targetSets === null),
