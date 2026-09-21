@@ -140,6 +140,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         <WorkoutExerciseTargetProgression
           disabled={mutation.isLoading}
           load={load}
+          method={props.exercise.prescription.progression}
           progression={progression}
           reps={reps}
           sets={sets}

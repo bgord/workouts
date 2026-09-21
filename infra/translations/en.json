@@ -264,6 +264,8 @@
   "plan.status.finalized": "Finalized",
   "plan.status.initial": "Initial",
   "plan.status.removed": "Removed",
+  "progression.method.double_progression": "Double progression",
+  "progression.method.label": "Progression",
   "profile.avatar.alt": "Image",
   "profile.avatar.change.cta": "Change avatar",
   "profile.avatar.delete.title": "Delete avatar",

@@ -1,3 +1,4 @@
+import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
@@ -10,6 +11,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   exerciseInstruction: PlanExerciseInstruction;
   position: number;
 }) {
+  const t = bg.useTranslations();
   const { exerciseInstruction } = props;
 
   return (
@@ -47,6 +49,9 @@ export function PlanSectionExerciseInstructionRow(props: {
 
         <div data-color="neutral-300" data-fs="sm">
           <ui.SetsReps {...exerciseInstruction} />
+          <span data-color="neutral-500" data-ml="2">
+            · {t(`progression.method.${exerciseInstruction.progression}`)}
+          </span>
         </div>
       </div>
 
