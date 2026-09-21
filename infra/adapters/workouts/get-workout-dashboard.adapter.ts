@@ -4,22 +4,7 @@ import type * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
-
-type WorkoutRow = typeof Schema.workouts.$inferSelect;
-
-function summarize(workout: WorkoutRow): Workouts.VO.WorkoutSummary {
-  return {
-    id: workout.id,
-    planId: workout.planId,
-    planName: workout.planName,
-    planSectionId: workout.planSectionId,
-    planSectionName: workout.planSectionName,
-    scheduledFor: workout.scheduledFor,
-    status: workout.status,
-    completedAt: workout.completedAt ?? undefined,
-    revision: workout.revision,
-  };
-}
+import { toWorkoutSummary } from "./to-workout-summary";
 
 class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDashboard {
   async execute(
@@ -29,31 +14,17 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
     const today = now.toZonedDateTimeUTC().startOfDay();
     const yearStart = tools.Timestamp.fromInstant(today.with({ month: 1, day: 1 }).toInstant()).ms;
 
-    const completed = and(
-      eq(Schema.workouts.userId, userId),
-      eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
-    );
+    const withStatus = (status: Workouts.VO.WorkoutStatusEnum) =>
+      and(eq(Schema.workouts.userId, userId), eq(Schema.workouts.status, status));
+
+    const completed = withStatus(Workouts.VO.WorkoutStatusEnum.completed);
 
     const [inProgress, nextUp, lastCompleted, month, year, total] = await Promise.all([
+      db.select().from(Schema.workouts).where(withStatus(Workouts.VO.WorkoutStatusEnum.in_progress)).get(),
       db
         .select()
         .from(Schema.workouts)
-        .where(
-          and(
-            eq(Schema.workouts.userId, userId),
-            eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.in_progress),
-          ),
-        )
-        .get(),
-      db
-        .select()
-        .from(Schema.workouts)
-        .where(
-          and(
-            eq(Schema.workouts.userId, userId),
-            eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.draft),
-          ),
-        )
+        .where(withStatus(Workouts.VO.WorkoutStatusEnum.draft))
         .orderBy(asc(Schema.workouts.scheduledFor), asc(Schema.workouts.createdAt))
         .get(),
       db.select().from(Schema.workouts).where(completed).orderBy(desc(Schema.workouts.scheduledFor)).get(),
@@ -75,9 +46,9 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
     ]);
 
     return {
-      inProgress: inProgress ? summarize(inProgress) : null,
-      nextUp: nextUp ? summarize(nextUp) : null,
-      lastCompleted: lastCompleted ? summarize(lastCompleted) : null,
+      inProgress: inProgress ? toWorkoutSummary(inProgress) : null,
+      nextUp: nextUp ? toWorkoutSummary(nextUp) : null,
+      lastCompleted: lastCompleted ? toWorkoutSummary(lastCompleted) : null,
       completed: {
         month: tools.Int.nonNegative(month),
         year: tools.Int.nonNegative(year),

@@ -9,17 +9,9 @@ class GetExerciseQueryDrizzle implements Exercises.Queries.GetExercise {
       .select()
       .from(Schema.exercises)
       .where(eq(Schema.exercises.id, exerciseId))
-      .limit(1);
+      .get();
 
-    if (!exercise[0]) return null;
-
-    return {
-      id: exercise[0].id,
-      name: exercise[0].name,
-      description: exercise[0].description,
-      image: exercise[0].image,
-      imageEtag: exercise[0].imageEtag,
-    };
+    return exercise ?? null;
   }
 }
 

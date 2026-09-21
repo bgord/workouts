@@ -6,20 +6,11 @@ import * as Schema from "+infra/schema";
 
 class ListBodyWeightMeasurementsQueryDrizzle implements Measurements.Queries.ListBodyWeightMeasurements {
   async execute(userId: Auth.VO.UserIdType): Promise<ReadonlyArray<Measurements.VO.BodyWeightMeasurement>> {
-    const entries = await db
+    return db
       .select()
       .from(Schema.bodyWeightMeasurements)
       .where(eq(Schema.bodyWeightMeasurements.userId, userId))
       .orderBy(desc(Schema.bodyWeightMeasurements.measuredOn), desc(Schema.bodyWeightMeasurements.createdAt));
-
-    return entries.map((entry) => ({
-      id: entry.id,
-      weight: entry.weight,
-      measuredOn: entry.measuredOn,
-      userId: entry.userId,
-      reference: entry.reference,
-      goal: entry.goal,
-    }));
   }
 }
 

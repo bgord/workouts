@@ -395,13 +395,13 @@ modules/
     │   ├── workout-retains-logged-sets.ts
     │   ├── workout-scheduled-for-has-changed.ts
     │   └── workout-scheduled-for-is-within-horizon.ts
+    ├── open-host-queries
     ├── ports
     │   └── workout-repository.ts
     ├── queries
     │   ├── get-exercise-previous-performance.ts
     │   ├── get-workout-dashboard.ts
-    │   ├── get-workout-draft-for-owner-count.ts
-    │   ├── get-workout-in-progress-for-owner-count.ts
+    │   ├── get-workout-status-for-owner-count.ts
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
     │   ├── list-workout-export-rows.ts
@@ -594,8 +594,7 @@ infra/
 │   └── workouts
 │       ├── get-exercise-previous-performance.adapter.ts
 │       ├── get-workout-dashboard.adapter.ts
-│       ├── get-workout-draft-for-owner-count.adapter.ts
-│       ├── get-workout-in-progress-for-owner-count.adapter.ts
+│       ├── get-workout-status-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts

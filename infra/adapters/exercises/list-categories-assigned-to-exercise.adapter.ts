@@ -9,8 +9,8 @@ class ListCategoriesAssignedToExerciseQueryDrizzle
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
   ): Promise<ReadonlyArray<Exercises.VO.ExerciseCategory>> {
-    const result = await db
-      .select()
+    return db
+      .select({ id: Schema.exerciseCategories.id, name: Schema.exerciseCategories.name })
       .from(Schema.exerciseCategories)
       .innerJoin(
         Schema.exerciseCategoryAssignments,
@@ -18,8 +18,6 @@ class ListCategoriesAssignedToExerciseQueryDrizzle
       )
       .where(eq(Schema.exerciseCategoryAssignments.exerciseId, exerciseId))
       .orderBy(asc(Schema.exerciseCategoryAssignments.createdAt));
-
-    return result.map((row) => ({ id: row.exercise_categories.id, name: row.exercise_categories.name }));
   }
 }
 

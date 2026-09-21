@@ -10,20 +10,12 @@ class SearchExercisesQueryDrizzle implements Exercises.Queries.SearchExercises {
     name: Exercises.VO.ExerciseNameType,
     limit: tools.IntegerPositiveType,
   ): Promise<ReadonlyArray<Exercises.VO.Exercise>> {
-    const exercises = await db
+    return db
       .select()
       .from(Schema.exercises)
       .where(ilike(Schema.exercises.name, name))
       .orderBy(desc(Schema.exercises.updatedAt))
       .limit(limit);
-
-    return exercises.map((exercise) => ({
-      id: exercise.id,
-      name: exercise.name,
-      description: exercise.description,
-      image: exercise.image,
-      imageEtag: exercise.imageEtag,
-    }));
   }
 }
 

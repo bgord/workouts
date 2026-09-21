@@ -20,34 +20,42 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
 
     if (!plan) return null;
 
-    const sections = await db
-      .select()
-      .from(Schema.planSections)
-      .where(and(eq(Schema.planSections.planId, planId), eq(Schema.planSections.userId, userId)))
-      .orderBy(asc(Schema.planSections.createdAt));
-
-    const exerciseInstructions = await db
-      .select({
-        id: Schema.planSectionExerciseInstructions.id,
-        planSectionId: Schema.planSectionExerciseInstructions.planSectionId,
-        sets: Schema.planSectionExerciseInstructions.sets,
-        repsMin: Schema.planSectionExerciseInstructions.repsMin,
-        repsMax: Schema.planSectionExerciseInstructions.repsMax,
-        exerciseId: Schema.exercises.id,
-        exerciseName: Schema.exercises.name,
-        exerciseDescription: Schema.exercises.description,
-        exerciseImage: Schema.exercises.image,
-        exerciseImageEtag: Schema.exercises.imageEtag,
-      })
-      .from(Schema.planSectionExerciseInstructions)
-      .innerJoin(Schema.exercises, eq(Schema.planSectionExerciseInstructions.exerciseId, Schema.exercises.id))
-      .where(
-        and(
-          eq(Schema.planSectionExerciseInstructions.planId, planId),
-          eq(Schema.planSectionExerciseInstructions.userId, userId),
-        ),
-      )
-      .orderBy(asc(Schema.planSectionExerciseInstructions.createdAt));
+    const [sections, exerciseInstructions] = await Promise.all([
+      db
+        .select()
+        .from(Schema.planSections)
+        .where(and(eq(Schema.planSections.planId, planId), eq(Schema.planSections.userId, userId)))
+        .orderBy(asc(Schema.planSections.createdAt)),
+      db
+        .select({
+          id: Schema.planSectionExerciseInstructions.id,
+          planSectionId: Schema.planSectionExerciseInstructions.planSectionId,
+          sets: Schema.planSectionExerciseInstructions.sets,
+          reps: {
+            min: Schema.planSectionExerciseInstructions.repsMin,
+            max: Schema.planSectionExerciseInstructions.repsMax,
+          },
+          exercise: {
+            id: Schema.exercises.id,
+            name: Schema.exercises.name,
+            description: Schema.exercises.description,
+            image: Schema.exercises.image,
+            imageEtag: Schema.exercises.imageEtag,
+          },
+        })
+        .from(Schema.planSectionExerciseInstructions)
+        .innerJoin(
+          Schema.exercises,
+          eq(Schema.planSectionExerciseInstructions.exerciseId, Schema.exercises.id),
+        )
+        .where(
+          and(
+            eq(Schema.planSectionExerciseInstructions.planId, planId),
+            eq(Schema.planSectionExerciseInstructions.userId, userId),
+          ),
+        )
+        .orderBy(asc(Schema.planSectionExerciseInstructions.createdAt)),
+    ]);
 
     const editable = Plans.Invariants.PlanIsEditable.passes({ status: plan.status });
     const whenEditable = { available: editable, enabled: editable, hints: [] };
@@ -69,18 +77,9 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
             .filter((exerciseInstruction) => exerciseInstruction.planSectionId === section.id)
             .map((exerciseInstruction) => ({
               id: exerciseInstruction.id,
-              exercise: {
-                id: exerciseInstruction.exerciseId,
-                name: exerciseInstruction.exerciseName,
-                description: exerciseInstruction.exerciseDescription,
-                image: exerciseInstruction.exerciseImage,
-                imageEtag: exerciseInstruction.exerciseImageEtag,
-              },
+              exercise: exerciseInstruction.exercise,
               sets: exerciseInstruction.sets,
-              reps: v.parse(Plans.VO.Reps, {
-                min: exerciseInstruction.repsMin,
-                max: exerciseInstruction.repsMax,
-              }),
+              reps: v.parse(Plans.VO.Reps, exerciseInstruction.reps),
               actions: { update: whenEditable, exerciseChange: whenEditable, remove: whenEditable },
             })),
         };

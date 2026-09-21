@@ -7,6 +7,7 @@ import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 import { GetExercisePreviousPerformanceQuery } from "./get-exercise-previous-performance.adapter";
+import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
 
 class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
   async execute(
@@ -36,13 +37,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
           and(eq(Schema.workoutLoggedSets.workoutId, workoutId), eq(Schema.workoutLoggedSets.userId, userId)),
         )
         .orderBy(asc(Schema.workoutLoggedSets.setNumber)),
-      db.$count(
-        Schema.workouts,
-        and(
-          eq(Schema.workouts.userId, userId),
-          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.in_progress),
-        ),
-      ),
+      GetWorkoutStatusForOwnerCountQuery.execute(userId, Workouts.VO.WorkoutStatusEnum.in_progress),
     ]);
 
     const previousPerformances = await Promise.all(
@@ -63,7 +58,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       count: tools.Int.nonNegative(loggedSets.length),
     });
     const inProgressAvailable = Workouts.Invariants.WorkoutInProgressLimitForOwner.passes({
-      count: tools.Int.nonNegative(inProgressCount),
+      count: inProgressCount,
     });
 
     const setRemoveBlockers: Array<bg.TranslationsKeyType> = [];

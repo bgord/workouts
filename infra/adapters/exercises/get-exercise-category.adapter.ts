@@ -8,14 +8,12 @@ class GetExerciseCategoryQueryDrizzle implements Exercises.Queries.GetExerciseCa
     exerciseCategoryId: Exercises.VO.ExerciseCategoryIdType,
   ): Promise<Exercises.VO.ExerciseCategory | null> {
     const exerciseCategory = await db
-      .select()
+      .select({ id: Schema.exerciseCategories.id, name: Schema.exerciseCategories.name })
       .from(Schema.exerciseCategories)
       .where(eq(Schema.exerciseCategories.id, exerciseCategoryId))
-      .limit(1);
+      .get();
 
-    if (!exerciseCategory[0]) return null;
-
-    return { id: exerciseCategory[0].id, name: exerciseCategory[0].name };
+    return exerciseCategory ?? null;
   }
 }
 

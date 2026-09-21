@@ -7,11 +7,11 @@ class GetBodyWeightMeasurementQueryDrizzle implements Measurements.Queries.GetBo
   async execute(
     id: Measurements.VO.BodyWeightMeasurementIdType,
   ): Promise<Measurements.VO.BodyWeightMeasurement | null> {
-    const [measurement] = await db
+    const measurement = await db
       .select()
       .from(Schema.bodyWeightMeasurements)
       .where(eq(Schema.bodyWeightMeasurements.id, id))
-      .limit(1);
+      .get();
 
     return measurement ?? null;
   }

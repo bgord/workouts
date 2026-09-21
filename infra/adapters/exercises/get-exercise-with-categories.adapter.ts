@@ -13,8 +13,10 @@ class GetExerciseWithCategoriesQueryComposed implements Exercises.Queries.GetExe
 
     if (!exercise) return null;
 
-    const categories = await ListCategoriesAssignedToExerciseQuery.execute(exerciseId);
-    const count = await GetExerciseUsageCountQuery.execute(exerciseId);
+    const [categories, count] = await Promise.all([
+      ListCategoriesAssignedToExerciseQuery.execute(exerciseId),
+      GetExerciseUsageCountQuery.execute(exerciseId),
+    ]);
 
     const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });
     const whenManaged = { available: managed, enabled: managed, hints: [] };

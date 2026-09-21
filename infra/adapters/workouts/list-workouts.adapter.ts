@@ -6,6 +6,8 @@ import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
+import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
+import { toWorkoutSummary } from "./to-workout-summary";
 
 class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
   async execute(
@@ -29,34 +31,22 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       since ? gte(Schema.workouts.scheduledFor, since) : undefined,
     );
 
-    const workouts = await db
-      .select()
-      .from(Schema.workouts)
-      .where(scope)
-      .orderBy(desc(Schema.workouts.scheduledFor));
-
-    const finalizedPlan = await db
-      .select({
-        id: Schema.plans.id,
-        name: Schema.plans.name,
-        status: Schema.plans.status,
-        revision: Schema.plans.revision,
-      })
-      .from(Schema.plans)
-      .where(and(eq(Schema.plans.userId, userId), eq(Schema.plans.status, Plans.VO.PlanStatusEnum.finalized)))
-      .get();
-
-    const data = workouts.map((workout) => ({
-      id: workout.id,
-      planId: workout.planId,
-      planName: workout.planName,
-      planSectionId: workout.planSectionId,
-      planSectionName: workout.planSectionName,
-      scheduledFor: workout.scheduledFor,
-      status: workout.status,
-      completedAt: workout.completedAt ?? undefined,
-      revision: workout.revision,
-    }));
+    const [workouts, finalizedPlan, drafts] = await Promise.all([
+      db.select().from(Schema.workouts).where(scope).orderBy(desc(Schema.workouts.scheduledFor)),
+      db
+        .select({
+          id: Schema.plans.id,
+          name: Schema.plans.name,
+          status: Schema.plans.status,
+          revision: Schema.plans.revision,
+        })
+        .from(Schema.plans)
+        .where(
+          and(eq(Schema.plans.userId, userId), eq(Schema.plans.status, Plans.VO.PlanStatusEnum.finalized)),
+        )
+        .get(),
+      GetWorkoutStatusForOwnerCountQuery.execute(userId, Workouts.VO.WorkoutStatusEnum.draft),
+    ]);
 
     const sections = await db
       .select({
@@ -77,18 +67,8 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       .groupBy(Schema.workouts.planSectionId)
       .orderBy(desc(max(Schema.workouts.createdAt)));
 
-    const drafts = await db.$count(
-      Schema.workouts,
-      and(
-        eq(Schema.workouts.userId, userId),
-        eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.draft),
-      ),
-    );
-
     const planReady = Workouts.Invariants.WorkoutPlanReady.passes({ plan: finalizedPlan ?? null });
-    const draftsAvailable = Workouts.Invariants.WorkoutDraftLimitForOwner.passes({
-      count: tools.Int.nonNegative(drafts),
-    });
+    const draftsAvailable = Workouts.Invariants.WorkoutDraftLimitForOwner.passes({ count: drafts });
 
     const hints: Array<bg.TranslationsKeyType> = [];
 
@@ -96,7 +76,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
     if (!draftsAvailable) hints.push("workout.create.blocked.draft_limit");
 
     return {
-      data,
+      data: workouts.map(toWorkoutSummary),
       sections: sections.map((section) => ({ id: section.id, name: section.name })),
       actions: { create: { available: true, enabled: planReady && draftsAvailable, hints } },
     };

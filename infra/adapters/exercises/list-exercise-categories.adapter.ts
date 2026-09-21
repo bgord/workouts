@@ -6,7 +6,7 @@ import * as Schema from "+infra/schema";
 
 class ListExerciseCategoriesQueryDrizzle implements Exercises.Queries.ListExerciseCategories {
   async execute(requesterId: Auth.VO.UserIdType): Promise<Exercises.Queries.ExerciseCategoryListResponse> {
-    const exerciseCategories = await db
+    const data = await db
       .select({ id: Schema.exerciseCategories.id, name: Schema.exerciseCategories.name })
       .from(Schema.exerciseCategories)
       .leftJoin(
@@ -18,11 +18,6 @@ class ListExerciseCategoriesQueryDrizzle implements Exercises.Queries.ListExerci
         desc(count(Schema.exerciseCategoryAssignments.exerciseId)),
         asc(Schema.exerciseCategories.name),
       );
-
-    const data = exerciseCategories.map((exerciseCategory) => ({
-      id: exerciseCategory.id,
-      name: exerciseCategory.name,
-    }));
 
     const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });
     const whenManaged = { available: managed, enabled: managed, hints: [] };
