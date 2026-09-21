@@ -7,6 +7,7 @@ import type { ExercisePerformance } from "./list-exercise-performances";
 export type WorkoutExerciseActions = {
   targetSet: ActionState;
   remove: ActionState;
+  move: ActionState;
   setLog: ActionState;
 };
 
