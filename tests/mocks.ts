@@ -324,6 +324,9 @@ export const anotherWorkoutExerciseId = v.parse(
   "6b2e4a17-9c05-4d3f-8a61-0e7d2f4b5c93",
 );
 
+export const workoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 0);
+export const anotherWorkoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 1);
+
 export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps });
 
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
@@ -492,6 +495,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     actions: {
       targetSet: { available: true, enabled: true, hints: [] },
       remove: { available: true, enabled: true, hints: [] },
+      move: { available: true, enabled: true, hints: [] },
       setLog: { available: false, enabled: false, hints: [] },
     },
   })),
@@ -1154,6 +1158,17 @@ export const GenericWorkoutExerciseRemovedEvent = {
   name: "WORKOUT_EXERCISE_REMOVED_EVENT",
   payload: { workoutId, workoutExerciseId, requesterId: userId },
 } satisfies Workouts.Events.WorkoutExerciseRemovedEventType;
+
+export const GenericWorkoutExerciseMovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_EXERCISE_MOVED_EVENT",
+  payload: { workoutId, workoutExerciseId, position: anotherWorkoutExercisePosition, requesterId: userId },
+} satisfies Workouts.Events.WorkoutExerciseMovedEventType;
 
 export const GenericWorkoutExerciseTargetSetEvent = {
   id: expectAnyId,

@@ -32,6 +32,7 @@ import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-obje
 import type { RirType } from "../modules/workouts/value-objects/rir";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
+import type { WorkoutExercisePositionType } from "../modules/workouts/value-objects/workout-exercise-position";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
 import type { WorkoutNoteType } from "../modules/workouts/value-objects/workout-note";
 import type { WorkoutScheduledForType } from "../modules/workouts/value-objects/workout-scheduled-for";
@@ -290,6 +291,7 @@ export const workoutExercises = sqliteTable("workoutExercises", {
   targetSets: integer("targetSets", { mode: "number" }).$type<SetsType>(),
   targetReps: integer("targetReps", { mode: "number" }).$type<WorkoutRepsType>(),
   targetLoad: integer("targetLoad", { mode: "number" }).$type<LoadType>(),
+  position: integer("position", { mode: "number" }).notNull().default(0).$type<WorkoutExercisePositionType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),

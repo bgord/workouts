@@ -286,6 +286,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutExerciseRemove(deps)),
   );
+  workouts.patch(
+    "/:workoutId/exercise/:workoutExerciseId/position",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutExerciseMove(deps)),
+  );
   workouts.delete(
     "/:workoutId/exercise/:workoutExerciseId/set/:loggedSetId",
     Tools.ShieldCaptcha.handle(),

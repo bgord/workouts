@@ -2,6 +2,7 @@ export * from "./WORKOUT_COMPLETE_COMMAND";
 export * from "./WORKOUT_CREATE_COMMAND";
 export * from "./WORKOUT_DISCARD_COMMAND";
 export * from "./WORKOUT_EXERCISE_ADD_COMMAND";
+export * from "./WORKOUT_EXERCISE_MOVE_COMMAND";
 export * from "./WORKOUT_EXERCISE_REMOVE_COMMAND";
 export * from "./WORKOUT_EXERCISE_SET_TARGET_COMMAND";
 export * from "./WORKOUT_NOTE_SET_COMMAND";

@@ -273,6 +273,167 @@ describe("Workout", async () => {
     );
   });
 
+  test("moveExercise", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.moveExercise(mocks.workoutExerciseId, mocks.anotherWorkoutExercisePosition, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseMovedEvent]);
+    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([
+      mocks.anotherWorkoutExerciseId,
+      mocks.workoutExerciseId,
+    ]);
+  });
+
+  test("moveExercise - back to the front", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseMovedEvent,
+      ],
+      deps,
+    );
+
+    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([
+      mocks.anotherWorkoutExerciseId,
+      mocks.workoutExerciseId,
+    ]);
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.moveExercise(mocks.workoutExerciseId, mocks.workoutExercisePosition, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([
+      {
+        ...mocks.GenericWorkoutExerciseMovedEvent,
+        payload: {
+          ...mocks.GenericWorkoutExerciseMovedEvent.payload,
+          position: mocks.workoutExercisePosition,
+        },
+      },
+    ]);
+    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([
+      mocks.workoutExerciseId,
+      mocks.anotherWorkoutExerciseId,
+    ]);
+  });
+
+  test("moveExercise - in progress keeps the logged sets", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.moveExercise(mocks.workoutExerciseId, mocks.anotherWorkoutExercisePosition, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseMovedEvent]);
+    expect(workout.exercises[1]?.id).toEqual(mocks.workoutExerciseId);
+    expect(workout.exercises[1]?.loggedSets).toEqual([mocks.GenericWorkoutSetLoggedEvent.payload.loggedSet]);
+  });
+
+  test("moveExercise - WorkoutIsEditable", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+        mocks.GenericWorkoutCompletedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.moveExercise(mocks.workoutExerciseId, mocks.anotherWorkoutExercisePosition, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutIsEditable.error);
+  });
+
+  test("moveExercise - WorkoutBelongsToUser", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.moveExercise(
+        mocks.workoutExerciseId,
+        mocks.anotherWorkoutExercisePosition,
+        mocks.anotherUserId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
+  });
+
+  test("moveExercise - WorkoutExerciseExists", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.moveExercise(mocks.anotherWorkoutExerciseId, mocks.workoutExercisePosition, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
+  });
+
+  test("moveExercise - WorkoutExercisePositionInRange", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.moveExercise(mocks.workoutExerciseId, mocks.anotherWorkoutExercisePosition, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutExercisePositionInRange.error);
+  });
+
+  test("moveExercise - WorkoutExercisePositionHasChanged", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.moveExercise(mocks.workoutExerciseId, mocks.workoutExercisePosition, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutExercisePositionHasChanged.error);
+  });
+
   test("setExerciseTarget", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

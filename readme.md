@@ -346,6 +346,7 @@ modules/
     │   ├── handleWorkoutCreateCommand.ts
     │   ├── handleWorkoutDiscardCommand.ts
     │   ├── handleWorkoutExerciseAddCommand.ts
+    │   ├── handleWorkoutExerciseMoveCommand.ts
     │   ├── handleWorkoutExerciseRemoveCommand.ts
     │   ├── handleWorkoutExerciseSetTargetCommand.ts
     │   ├── handleWorkoutNoteSetCommand.ts
@@ -359,6 +360,7 @@ modules/
     │   ├── WORKOUT_CREATE_COMMAND.ts
     │   ├── WORKOUT_DISCARD_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_ADD_COMMAND.ts
+    │   ├── WORKOUT_EXERCISE_MOVE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_REMOVE_COMMAND.ts
     │   ├── WORKOUT_EXERCISE_SET_TARGET_COMMAND.ts
     │   ├── WORKOUT_NOTE_SET_COMMAND.ts
@@ -372,6 +374,7 @@ modules/
     │   ├── WORKOUT_CREATED_EVENT.ts
     │   ├── WORKOUT_DISCARDED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_ADDED_EVENT.ts
+    │   ├── WORKOUT_EXERCISE_MOVED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_REMOVED_EVENT.ts
     │   ├── WORKOUT_EXERCISE_TARGET_SET_EVENT.ts
     │   ├── WORKOUT_NOTE_SET_EVENT.ts
@@ -386,6 +389,8 @@ modules/
     │   ├── workout-draft-limit-for-owner.ts
     │   ├── workout-exercise-exists.ts
     │   ├── workout-exercise-limit.ts
+    │   ├── workout-exercise-position-has-changed.ts
+    │   ├── workout-exercise-position-in-range.ts
     │   ├── workout-exists.ts
     │   ├── workout-has-logged-sets.ts
     │   ├── workout-in-progress-limit-for-owner.ts
@@ -433,6 +438,7 @@ modules/
         ├── workout-draft-limit-for-owner.ts
         ├── workout-exercise-id.ts
         ├── workout-exercise-limit.ts
+        ├── workout-exercise-position.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts
@@ -511,6 +517,7 @@ app/
 │       ├── workout-dashboard.ts
 │       ├── workout-discard.ts
 │       ├── workout-exercise-add.ts
+│       ├── workout-exercise-move.ts
 │       ├── workout-exercise-remove.ts
 │       ├── workout-exercise-set-target.ts
 │       ├── workout-export.ts

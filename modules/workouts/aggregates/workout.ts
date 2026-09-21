@@ -13,6 +13,7 @@ export type WorkoutEventType =
   | Events.WorkoutCreatedEventType
   | Events.WorkoutExerciseAddedEventType
   | Events.WorkoutExerciseRemovedEventType
+  | Events.WorkoutExerciseMovedEventType
   | Events.WorkoutExerciseTargetSetEventType
   | Events.WorkoutStartedEventType
   | Events.WorkoutSetLoggedEventType
@@ -35,6 +36,7 @@ export class Workout {
     [Events.WORKOUT_CREATED_EVENT]: Events.WorkoutCreatedEvent,
     [Events.WORKOUT_EXERCISE_ADDED_EVENT]: Events.WorkoutExerciseAddedEvent,
     [Events.WORKOUT_EXERCISE_REMOVED_EVENT]: Events.WorkoutExerciseRemovedEvent,
+    [Events.WORKOUT_EXERCISE_MOVED_EVENT]: Events.WorkoutExerciseMovedEvent,
     [Events.WORKOUT_EXERCISE_TARGET_SET_EVENT]: Events.WorkoutExerciseTargetSetEvent,
     [Events.WORKOUT_STARTED_EVENT]: Events.WorkoutStartedEvent,
     [Events.WORKOUT_SET_LOGGED_EVENT]: Events.WorkoutSetLoggedEvent,
@@ -151,6 +153,31 @@ export class Workout {
       Events.WorkoutExerciseRemovedEvent,
       Workout.getStream(this.id),
       { workoutId: this.id, workoutExerciseId, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
+  moveExercise(
+    workoutExerciseId: VO.WorkoutExerciseIdType,
+    position: VO.WorkoutExercisePositionType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    Invariants.WorkoutIsEditable.enforce({ status: this.status });
+    Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+    Invariants.WorkoutExercisePositionInRange.enforce({ workoutExercises: this.exercises, position });
+    Invariants.WorkoutExercisePositionHasChanged.enforce({
+      workoutExerciseId,
+      workoutExercises: this.exercises,
+      position,
+    });
+
+    const event = bg.event(
+      Events.WorkoutExerciseMovedEvent,
+      Workout.getStream(this.id),
+      { workoutId: this.id, workoutExerciseId, position, requesterId },
       this.deps,
     );
 
@@ -376,6 +403,19 @@ export class Workout {
       case Events.WORKOUT_EXERCISE_REMOVED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.filter((exercise) => exercise.id !== event.payload.workoutExerciseId);
+        break;
+      }
+
+      case Events.WORKOUT_EXERCISE_MOVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        const moved = this.exercises.find((exercise) => exercise.id === event.payload.workoutExerciseId);
+        const exercises = this.exercises.filter(
+          (exercise) => exercise.id !== event.payload.workoutExerciseId,
+        );
+
+        if (moved) exercises.splice(event.payload.position, 0, moved);
+
+        this.exercises = exercises;
         break;
       }
 

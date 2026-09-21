@@ -29,7 +29,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         .where(
           and(eq(Schema.workoutExercises.workoutId, workoutId), eq(Schema.workoutExercises.userId, userId)),
         )
-        .orderBy(asc(Schema.workoutExercises.createdAt)),
+        .orderBy(asc(Schema.workoutExercises.position)),
       db
         .select()
         .from(Schema.workoutLoggedSets)
@@ -136,6 +136,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               hints: [],
             },
             remove: whenEditable,
+            move: whenEditable,
             setLog: whenInProgress,
           },
         };

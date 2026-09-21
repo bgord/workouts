@@ -241,6 +241,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
+    WorkoutsCommands.WORKOUT_EXERCISE_MOVE_COMMAND,
+    WorkoutsCommandHandlers.handleWorkoutExerciseMoveCommand({
+      ...deps,
+      repo: Adapters.Workouts.WorkoutRepository,
+    }),
+  );
+  Tools.CommandBus.on(
     WorkoutsCommands.WORKOUT_EXERCISE_SET_TARGET_COMMAND,
     WorkoutsCommandHandlers.handleWorkoutExerciseSetTargetCommand({
       ...deps,

@@ -1,0 +1,285 @@
+import { describe, expect, spyOn, test } from "bun:test";
+import * as bg from "@bgord/bun";
+import { bootstrap } from "+infra/bootstrap";
+import { registerCommandHandlers } from "+infra/register-command-handlers";
+import { registerEventHandlers } from "+infra/register-event-handlers";
+import { createServer } from "../server";
+import * as mocks from "./mocks";
+import * as testcases from "./testcases";
+
+const url = `/api/workouts/${mocks.workoutId}/exercise/${mocks.workoutExerciseId}/position`;
+
+const draft = [
+  mocks.GenericWorkoutCreatedEvent,
+  mocks.GenericWorkoutExerciseAddedEvent,
+  mocks.AnotherGenericWorkoutExerciseAddedEvent,
+] as const;
+
+describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/position", async () => {
+  const di = await bootstrap();
+  registerEventHandlers(di.Env, di);
+  registerCommandHandlers(di);
+  const server = createServer(di);
+
+  test("validation - AccessDeniedAuthShieldError", async () => {
+    const response = await server.request(url, { method: "PATCH" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(401);
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+  });
+
+  test("validation - incorrect workout id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      `/api/workouts/id/exercise/${mocks.workoutExerciseId}/position`,
+      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type" });
+  });
+
+  test("validation - incorrect workout exercise id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      `/api/workouts/${mocks.workoutId}/exercise/id/position`,
+      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "uuid.type" });
+  });
+
+  test("validation - position - missing", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "integer.non.negative.type" });
+  });
+
+  test("validation - position - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ position: -1 }) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "integer.non.negative.invalid" });
+  });
+
+  test("WorkoutExists", async () => {
+    const events = [] as const;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 404, "workout.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutIsEditable - completed", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+      mocks.GenericWorkoutSetLoggedEvent,
+      mocks.GenericWorkoutCompletedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.is.editable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutBelongsToUser", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(draft.length),
+        body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutExerciseExists", async () => {
+    const events = [mocks.GenericWorkoutCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify({ position: mocks.workoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.exercise.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutExercisePositionInRange", async () => {
+    const events = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.exercise.position.in.range");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutExercisePositionHasChanged", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(draft.length),
+        body: JSON.stringify({ position: mocks.workoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.exercise.position.has.changed");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("revision mismatch", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(99),
+        body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+  });
+
+  test("happy path", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.correlationIdAndRevisionHeaders(draft.length),
+        body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseMovedEvent]);
+  });
+
+  test("happy path - in progress", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEvent,
+      mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+      mocks.GenericWorkoutSetLoggedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseMovedEvent]);
+  });
+});

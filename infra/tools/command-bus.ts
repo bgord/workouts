@@ -41,6 +41,7 @@ type AcceptedCommand =
   | WorkoutsCommands.WorkoutCreateCommandType
   | WorkoutsCommands.WorkoutExerciseAddCommandType
   | WorkoutsCommands.WorkoutExerciseRemoveCommandType
+  | WorkoutsCommands.WorkoutExerciseMoveCommandType
   | WorkoutsCommands.WorkoutExerciseSetTargetCommandType
   | WorkoutsCommands.WorkoutStartCommandType
   | WorkoutsCommands.WorkoutSetLogCommandType
