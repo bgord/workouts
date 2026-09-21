@@ -80,7 +80,12 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
               exercise: exerciseInstruction.exercise,
               sets: exerciseInstruction.sets,
               reps: v.parse(Plans.VO.Reps, exerciseInstruction.reps),
-              actions: { update: whenEditable, exerciseChange: whenEditable, remove: whenEditable },
+              actions: {
+                update: whenEditable,
+                exerciseChange: whenEditable,
+                move: whenEditable,
+                remove: whenEditable,
+              },
             })),
         };
 

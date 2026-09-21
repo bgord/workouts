@@ -7,6 +7,7 @@ export type PlanSectionActions = { exerciseInstructionAdd: ActionState };
 export type ExerciseInstructionActions = {
   update: ActionState;
   exerciseChange: ActionState;
+  move: ActionState;
   remove: ActionState;
 };
 
