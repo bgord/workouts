@@ -56,6 +56,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
     <>
       <ui.HairlineBlock
         data-cross="center"
+        data-ml="1-5"
         data-stack="x"
         data-wrap="nowrap"
         tone="subtle"

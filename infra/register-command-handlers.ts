@@ -188,6 +188,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetExerciseOHQ: Adapters.Exercises.GetExerciseQuery,
     }),
   );
+  Tools.CommandBus.on(
+    PlansCommands.PLAN_SECTION_EXERCISE_INSTRUCTION_MOVE_COMMAND,
+    PlansCommandHandlers.handlePlanSectionExerciseInstructionMoveCommand({
+      ...deps,
+      repo: Adapters.Plans.PlanRepository,
+    }),
+  );
 
   // Preferences ============================================================
   Tools.CommandBus.on(

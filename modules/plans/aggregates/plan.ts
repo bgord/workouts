@@ -23,7 +23,8 @@ export type PlanEventType =
   | Events.PlanSectionExerciseInstructionAddedEventType
   | Events.PlanSectionExerciseInstructionRemovedEventType
   | Events.PlanSectionExerciseInstructionUpdatedEventType
-  | Events.PlanSectionExerciseInstructionExerciseChangedEventType;
+  | Events.PlanSectionExerciseInstructionExerciseChangedEventType
+  | Events.PlanSectionExerciseInstructionMovedEventType;
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -54,6 +55,7 @@ export class Plan {
       Events.PlanSectionExerciseInstructionUpdatedEvent,
     [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT]:
       Events.PlanSectionExerciseInstructionExerciseChangedEvent,
+    [Events.PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT]: Events.PlanSectionExerciseInstructionMovedEvent,
   });
   // Stryker restore all
 
@@ -414,6 +416,35 @@ export class Plan {
     this.record(event);
   }
 
+  moveSectionExerciseInstruction(
+    planSectionId: VO.PlanSectionIdType,
+    exerciseInstructionId: VO.ExerciseInstructionIdType,
+    position: VO.ExerciseInstructionPositionType,
+    requesterId: Auth.VO.UserIdType,
+  ) {
+    const planSection = this.sections.find((section) => section.id === planSectionId);
+
+    Invariants.PlanIsEditable.enforce({ status: this.status });
+    Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
+    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
+    Invariants.PlanSectionExerciseInstructionExists.enforce({ planSection, exerciseInstructionId });
+    Invariants.PlanSectionExerciseInstructionPositionInRange.enforce({ planSection, position });
+    Invariants.PlanSectionExerciseInstructionPositionHasChanged.enforce({
+      planSection,
+      exerciseInstructionId,
+      position,
+    });
+
+    const event = bg.event(
+      Events.PlanSectionExerciseInstructionMovedEvent,
+      Plan.getStream(this.id),
+      { planId: this.id, planSectionId, exerciseInstructionId, position, requesterId },
+      this.deps,
+    );
+
+    this.record(event);
+  }
+
   pullEvents(): ReadonlyArray<PlanEventType> {
     const events = [...this.pending];
 
@@ -587,6 +618,25 @@ export class Plan {
               }
             : section,
         );
+        break;
+      }
+
+      case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT: {
+        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+        this.sections = this.sections.map((section) => {
+          if (section.id !== event.payload.planSectionId) return section;
+
+          const moved = section.exerciseInstructions.find(
+            (exerciseInstruction) => exerciseInstruction.id === event.payload.exerciseInstructionId,
+          );
+          const exerciseInstructions = section.exerciseInstructions.filter(
+            (exerciseInstruction) => exerciseInstruction.id !== event.payload.exerciseInstructionId,
+          );
+
+          if (moved) exerciseInstructions.splice(event.payload.position, 0, moved);
+
+          return { ...section, exerciseInstructions };
+        });
         break;
       }
     }

@@ -161,6 +161,9 @@ export const anotherExerciseInstructionId = v.parse(
   "0dd8da64-d1a8-4904-8fbb-8835589b93e7",
 );
 
+export const exerciseInstructionPosition = v.parse(Plans.VO.ExerciseInstructionPosition, 0);
+export const anotherExerciseInstructionPosition = v.parse(Plans.VO.ExerciseInstructionPosition, 1);
+
 export const sets = v.parse(Plans.VO.Sets, 3);
 export const anotherSets = v.parse(Plans.VO.Sets, 4);
 
@@ -283,6 +286,7 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
       actions: {
         update: { available: true, enabled: true, hints: [] },
         exerciseChange: { available: true, enabled: true, hints: [] },
+        move: { available: true, enabled: true, hints: [] },
         remove: { available: true, enabled: true, hints: [] },
       },
     })),
@@ -1032,6 +1036,23 @@ export const GenericPlanSectionExerciseInstructionExerciseChangedEvent = {
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionExerciseChangedEventType;
+
+export const GenericPlanSectionExerciseInstructionMovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 1,
+  commit,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT",
+  payload: {
+    planId,
+    planSectionId,
+    exerciseInstructionId,
+    position: anotherExerciseInstructionPosition,
+    requesterId: userId,
+  },
+} satisfies Plans.Events.PlanSectionExerciseInstructionMovedEventType;
 
 export const GenericWorkoutCreatedEvent = {
   id: expectAnyId,

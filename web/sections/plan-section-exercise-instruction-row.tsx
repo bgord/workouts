@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { PlanSectionExerciseInstructionEdit } from "./plan-section-exercise-instruction-edit";
+import { PlanSectionExerciseInstructionMove } from "./plan-section-exercise-instruction-move";
 import { PlanSectionExerciseInstructionRemove } from "./plan-section-exercise-instruction-remove";
 
 export function PlanSectionExerciseInstructionRow(props: {
@@ -19,7 +20,11 @@ export function PlanSectionExerciseInstructionRow(props: {
       tone="subtle"
       {...ui.Spacing.rowCompact}
     >
-      <ui.RowIndex>{props.position}</ui.RowIndex>
+      <PlanSectionExerciseInstructionMove
+        exerciseInstruction={exerciseInstruction}
+        position={props.position}
+        section={props.section}
+      />
 
       <Link
         aria-hidden

@@ -16,6 +16,7 @@ import { BodyWeightGoalOptions } from "../modules/measurements/value-objects/bod
 import type { BodyWeightMeasuredOnType } from "../modules/measurements/value-objects/body-weight-measured-on";
 import type { BodyWeightMeasurementIdType } from "../modules/measurements/value-objects/body-weight-measurement-id";
 import type { ExerciseInstructionIdType } from "../modules/plans/value-objects/exercise-instruction-id";
+import type { ExerciseInstructionPositionType } from "../modules/plans/value-objects/exercise-instruction-position";
 import type { PlanDescriptionType } from "../modules/plans/value-objects/plan-description";
 import type { PlanIdType } from "../modules/plans/value-objects/plan-id";
 import type { PlanNameType } from "../modules/plans/value-objects/plan-name";
@@ -245,6 +246,10 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
   sets: integer("sets", { mode: "number" }).notNull().$type<SetsType>(),
   repsMin: integer("repsMin", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
   repsMax: integer("repsMax", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
+  position: integer("position", { mode: "number" })
+    .notNull()
+    .default(0)
+    .$type<ExerciseInstructionPositionType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),

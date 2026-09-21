@@ -10,7 +10,7 @@ export function PlanSectionExerciseInstructionList(props: PlanSection) {
         <PlanSectionExerciseInstructionRow
           exerciseInstruction={exerciseInstruction}
           key={exerciseInstruction.id}
-          position={position + 1}
+          position={position}
           section={props}
         />
       ))}
