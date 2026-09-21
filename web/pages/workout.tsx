@@ -11,6 +11,7 @@ import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
 import { WorkoutNote } from "../sections/workout-note";
+import { WorkoutReorder } from "../sections/workout-reorder";
 import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
 import { WorkoutStart } from "../sections/workout-start";
 import { WorkoutWarmup } from "../sections/workout-warmup";
@@ -19,6 +20,8 @@ export function Workout() {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
   const search = workoutRoute.useSearch();
+
+  const workoutReorder = bg.useToggle({ name: `workout-reorder-${workout.data.id}` });
 
   const primary = workout.actions.start.available || workout.actions.complete.available;
 
@@ -57,6 +60,8 @@ export function Workout() {
             <WorkoutComplete />
 
             <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
+              <WorkoutReorder {...workoutReorder} />
+
               <WorkoutCopy />
 
               <WorkoutDiscard />
@@ -86,6 +91,7 @@ export function Workout() {
               index={index}
               key={exercise.id}
               last={index === workout.data.exercises.length - 1 && !workout.actions.exerciseAdd.available}
+              reordering={workoutReorder.on}
             />
           ))}
         </ul>

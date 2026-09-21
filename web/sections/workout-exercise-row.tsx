@@ -12,7 +12,12 @@ import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: number; last: boolean }) {
+export function WorkoutExerciseRow(props: {
+  exercise: WorkoutExercise;
+  index: number;
+  last: boolean;
+  reordering: boolean;
+}) {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
 
@@ -30,7 +35,7 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
   const isSkipped = isCompleted && !hasLoggedSets;
 
   const target = !(isSkipped || isDraft) ? hasTarget : undefined;
-  const isExpandable = hasLoggedSets || props.exercise.actions.setLog.available;
+  const isExpandable = !props.reordering && (hasLoggedSets || props.exercise.actions.setLog.available);
 
   const { width } = bg.useWindowDimensions();
   const mobile = width !== undefined && width <= 768;
@@ -38,13 +43,17 @@ export function WorkoutExerciseRow(props: { exercise: WorkoutExercise; index: nu
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
-        <WorkoutExerciseMove exercise={props.exercise} position={props.index}>
+        <WorkoutExerciseMove
+          active={isDraft || props.reordering}
+          exercise={props.exercise}
+          position={props.index}
+        >
           {isExpandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
 
           {!isExpandable && (
             <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
               <span data-transform="center" {...bg.Rhythm(16).times(1).style.width}>
-                {isDraft && props.index + 1}
+                {(isDraft || props.reordering) && props.index + 1}
               </span>
             </ui.RowIndex>
           )}

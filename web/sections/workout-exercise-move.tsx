@@ -8,6 +8,7 @@ import { workoutRoute } from "../router";
 export function WorkoutExerciseMove(props: {
   exercise: WorkoutExercise;
   position: number;
+  active: boolean;
   children: React.ReactNode;
 }) {
   const t = bg.useTranslations();
@@ -31,7 +32,7 @@ export function WorkoutExerciseMove(props: {
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });
 
-  if (!props.exercise.actions.move.available) return props.children;
+  if (!(props.active && props.exercise.actions.move.available)) return props.children;
 
   const busy = up.isLoading || down.isLoading;
 

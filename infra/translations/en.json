@@ -335,6 +335,8 @@
   "workout.exercise.remove.header": "Remove exercise",
   "workout.exercise.remove.info": "Removing {{name}} also deletes every set logged for it.",
   "workout.exercise.remove.title": "Remove {{name}}",
+  "workout.exercise.reorder.start.title": "Reorder exercises",
+  "workout.exercise.reorder.stop.title": "Done reordering",
   "workout.exercise.skipped": "Skipped",
   "workout.list.count": "{{matching}} of {{total}}",
   "workout.list.completed_on": "{{date}} · completed {{completed}}",
