@@ -58,6 +58,7 @@ export class WorkoutExercisesProjector {
       prescriptionSets: event.payload.prescription.sets,
       prescriptionRepsMin: event.payload.prescription.reps.min,
       prescriptionRepsMax: event.payload.prescription.reps.max,
+      prescriptionProgression: event.payload.prescription.progression,
       position: sql`(SELECT COUNT(*) FROM ${Schema.workoutExercises} WHERE ${Schema.workoutExercises.workoutId} = ${event.payload.workoutId})`,
       userId: event.payload.requesterId,
       createdAt: event.createdAt,

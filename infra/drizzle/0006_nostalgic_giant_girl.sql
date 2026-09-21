@@ -1,0 +1,2 @@
+ALTER TABLE `planSectionExerciseInstructions` ADD `progression` text DEFAULT 'double_progression' NOT NULL;--> statement-breakpoint
+ALTER TABLE `workoutExercises` ADD `prescriptionProgression` text DEFAULT 'double_progression' NOT NULL;

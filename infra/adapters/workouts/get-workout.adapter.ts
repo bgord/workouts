@@ -100,6 +100,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         const prescription = v.parse(Workouts.VO.ExercisePrescription, {
           sets: exercise.prescriptionSets,
           reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },
+          progression: exercise.prescriptionProgression,
         });
 
         const previous = previousPerformances[index];

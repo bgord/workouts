@@ -70,6 +70,7 @@ export class PlanSectionExerciseInstructionProjector {
       sets: event.payload.exerciseInstruction.sets,
       repsMin: event.payload.exerciseInstruction.reps.min,
       repsMax: event.payload.exerciseInstruction.reps.max,
+      progression: event.payload.exerciseInstruction.progression,
       position: v.parse(Plans.VO.ExerciseInstructionPosition, siblings.length),
       userId: event.payload.requesterId,
       createdAt: event.createdAt,
@@ -98,6 +99,7 @@ export class PlanSectionExerciseInstructionProjector {
         sets: event.payload.exerciseInstruction.sets,
         repsMin: event.payload.exerciseInstruction.reps.min,
         repsMax: event.payload.exerciseInstruction.reps.max,
+        progression: event.payload.exerciseInstruction.progression,
         updatedAt: event.createdAt,
       })
       .where(eq(Schema.planSectionExerciseInstructions.id, event.payload.exerciseInstruction.id));
