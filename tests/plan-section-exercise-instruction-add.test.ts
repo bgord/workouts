@@ -152,6 +152,28 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     expect(json).toEqual({ message: "reps.range" });
   });
 
+  test("validation - progression - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: "linear",
+        }),
+      },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "progression.method.invalid" });
+  });
+
   test("PlanSectionExerciseExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -162,7 +184,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       url,
       {
         method: "POST",
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
         headers: mocks.revisionHeaders(),
       },
       mocks.ip,
@@ -184,7 +211,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       url,
       {
         method: "POST",
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
         headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
@@ -206,7 +238,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       url,
       {
         method: "POST",
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
         headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
@@ -228,7 +265,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       url,
       {
         method: "POST",
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
         headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
@@ -250,7 +292,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       url,
       {
         method: "POST",
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
         headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
@@ -272,7 +319,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       url,
       {
         method: "POST",
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
         headers: mocks.correlationIdAndRevisionHeaders(events.length),
       },
       mocks.ip,
@@ -298,7 +350,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       url,
       {
         method: "POST",
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
         headers: mocks.correlationIdAndRevisionHeaders(events.length),
       },
       mocks.ip,
@@ -323,7 +380,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       {
         method: "POST",
         headers: mocks.correlationIdAndRevisionHeaders(99),
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
       },
       mocks.ip,
     );
@@ -347,7 +409,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       {
         method: "POST",
         headers: mocks.correlationIdAndRevisionHeaders(events.length),
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
       },
       mocks.ip,
     );
@@ -376,7 +443,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       {
         method: "POST",
         headers: mocks.correlationIdAndRevisionHeaders(events.length),
-        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: mocks.reps }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.reps,
+          progression: mocks.progression,
+        }),
       },
       mocks.ip,
     );

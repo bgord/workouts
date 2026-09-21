@@ -22,6 +22,7 @@ export const WorkoutExerciseAdd =
     const prescription = v.parse(Workouts.VO.ExercisePrescription, {
       sets: body["sets"],
       reps: body["reps"],
+      progression: body["progression"],
     });
 
     const command = bg.command(

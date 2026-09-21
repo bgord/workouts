@@ -167,6 +167,8 @@ export const anotherExerciseInstructionPosition = v.parse(Plans.VO.ExerciseInstr
 export const sets = v.parse(Plans.VO.Sets, 3);
 export const anotherSets = v.parse(Plans.VO.Sets, 4);
 
+export const progression = Plans.VO.ProgressionMethodOptions.double_progression;
+
 export const reps = v.parse(Plans.VO.Reps, { min: 8, max: 12 });
 export const anotherReps = v.parse(Plans.VO.Reps, { min: 6, max: 6 });
 
@@ -175,6 +177,7 @@ export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
   exerciseId,
   reps,
   sets,
+  progression,
 };
 
 export const anotherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
@@ -182,6 +185,7 @@ export const anotherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   exerciseId,
   reps: anotherReps,
   sets: anotherSets,
+  progression,
 };
 
 export const anotherExerciseInstructionAndExercise: Pick<
@@ -194,6 +198,7 @@ export const anotherExerciseInstructionAndId: Plans.VO.ExerciseInstructionType =
   exerciseId,
   reps: anotherReps,
   sets: anotherSets,
+  progression,
 };
 
 export const anotherExerciseInstructionAndIdAndExercise: Plans.VO.ExerciseInstructionType = {
@@ -201,6 +206,7 @@ export const anotherExerciseInstructionAndIdAndExercise: Plans.VO.ExerciseInstru
   exerciseId: anotherExerciseId,
   reps: anotherReps,
   sets: anotherSets,
+  progression,
 };
 
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
@@ -236,7 +242,13 @@ const planSection: Plans.VO.PlanSectionWithExercises = {
   warmup: planSectionWarmup,
   cooldown: planSectionCooldown,
   exerciseInstructions: [
-    { id: exerciseInstruction.id, exercise, sets: exerciseInstruction.sets, reps: exerciseInstruction.reps },
+    {
+      id: exerciseInstruction.id,
+      exercise,
+      sets: exerciseInstruction.sets,
+      reps: exerciseInstruction.reps,
+      progression,
+    },
   ],
 };
 const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
@@ -248,6 +260,7 @@ const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
       exercise,
       sets: anotherExerciseInstructionAndId.sets,
       reps: anotherExerciseInstructionAndId.reps,
+      progression,
     },
   ],
 };
@@ -260,6 +273,7 @@ export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = 
     exercise,
     sets: exerciseInstruction.sets,
     reps: exerciseInstruction.reps,
+    progression,
   })),
 };
 
@@ -327,7 +341,7 @@ export const anotherWorkoutExerciseId = v.parse(
 export const workoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 0);
 export const anotherWorkoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 1);
 
-export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps });
+export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps, progression });
 
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
 
@@ -1020,7 +1034,7 @@ export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
   payload: {
     planId,
     planSectionId,
-    exerciseInstruction: { id: exerciseInstructionId, reps: anotherReps, sets: anotherSets },
+    exerciseInstruction: { id: exerciseInstructionId, reps: anotherReps, sets: anotherSets, progression },
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionUpdatedEventType;

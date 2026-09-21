@@ -23,6 +23,7 @@ export const PlanSectionExerciseInstructionAdd =
       exerciseId: v.parse(Exercises.VO.ExerciseId, body["exerciseId"]),
       sets: v.parse(Plans.VO.Sets, body["sets"]),
       reps: v.parse(Plans.VO.Reps, body["reps"]),
+      progression: v.parse(Plans.VO.ProgressionMethod, body["progression"]),
     };
 
     const command = bg.command(
