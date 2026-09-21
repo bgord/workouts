@@ -4,8 +4,8 @@ import type * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionHasChangedError extends Error {}
 
 type PlanSectionExerciseInstructionHasChangedConfigType = {
-  current: Pick<VO.ExerciseInstructionType, "sets" | "reps"> | undefined;
-  incoming: Pick<VO.ExerciseInstructionType, "sets" | "reps">;
+  current: Pick<VO.ExerciseInstructionType, "sets" | "reps" | "progression"> | undefined;
+  incoming: Pick<VO.ExerciseInstructionType, "sets" | "reps" | "progression">;
 };
 
 class PlanSectionExerciseInstructionHasChangedFactory extends bg.Invariant<PlanSectionExerciseInstructionHasChangedConfigType> {
@@ -15,7 +15,8 @@ class PlanSectionExerciseInstructionHasChangedFactory extends bg.Invariant<PlanS
     return (
       config.current.sets !== config.incoming.sets ||
       config.current.reps.min !== config.incoming.reps.min ||
-      config.current.reps.max !== config.incoming.reps.max
+      config.current.reps.max !== config.incoming.reps.max ||
+      config.current.progression !== config.incoming.progression
     );
   }
 

@@ -595,6 +595,7 @@ export class Plan {
                         ...exerciseInstruction,
                         reps: event.payload.exerciseInstruction.reps,
                         sets: event.payload.exerciseInstruction.sets,
+                        progression: event.payload.exerciseInstruction.progression,
                       }
                     : exerciseInstruction,
                 ),

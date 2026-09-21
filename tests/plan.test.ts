@@ -1185,6 +1185,38 @@ describe("Plan", async () => {
     ]);
   });
 
+  test("updateSectionExerciseInstruction - only the progression changed", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      deps,
+    );
+    const exerciseInstruction = {
+      id: mocks.exerciseInstructionId,
+      reps: mocks.reps,
+      sets: mocks.sets,
+      progression: Plans.VO.ProgressionMethodOptions.linear_progression,
+    };
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
+          exerciseInstruction,
+        },
+      },
+    ]);
+  });
+
   test("updateSectionExerciseInstruction - PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
