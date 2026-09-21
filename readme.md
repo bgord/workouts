@@ -304,6 +304,8 @@ modules/
 │       ├── plan-status.ts
 │       ├── plan-summary.ts
 │       ├── plan.ts
+│       ├── progression-method-options.ts
+│       ├── progression-method.ts
 │       ├── reps.ts
 │       └── sets.ts
 ├── preferences
@@ -421,6 +423,8 @@ modules/
     │   ├── double-progression-calculator.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
+    │   ├── progression-strategy-factory.ts
+    │   ├── progression-strategy.ts
     │   └── workout-export-file-csv.ts
     └── value-objects
         ├── exercise-prescription.ts
