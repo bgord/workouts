@@ -59,6 +59,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
         data-stack="x"
         data-wrap="nowrap"
         tone="subtle"
+        data-ml="1-5"
         {...ui.Spacing.rowCompact}
       >
         <ui.AddButton
