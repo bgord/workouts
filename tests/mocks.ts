@@ -958,7 +958,7 @@ export const GenericPlanSectionExerciseInstructionAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: planStream,
-  version: 1,
+  version: 2,
   commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
   payload: { planId, planSectionId, exerciseInstruction, requesterId: userId },
@@ -969,7 +969,7 @@ export const GenericPlanSectionExerciseInstructionAddedEventSecond = {
   correlationId,
   createdAt: T0.ms,
   stream: planStream,
-  version: 1,
+  version: 2,
   commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
   payload: {
@@ -985,7 +985,7 @@ export const GenericPlanSectionExerciseInstructionAddedEventThird = {
   correlationId,
   createdAt: T0.ms,
   stream: planStream,
-  version: 1,
+  version: 2,
   commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
   payload: {
@@ -1001,7 +1001,7 @@ export const GenericAnotherPlanSectionExerciseInstructionAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: planStream,
-  version: 1,
+  version: 2,
   commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
   payload: {
@@ -1028,7 +1028,7 @@ export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: planStream,
-  version: 1,
+  version: 2,
   commit,
   name: "PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT",
   payload: {
@@ -1119,7 +1119,7 @@ export const GenericWorkoutExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 1,
+  version: 2,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -1147,7 +1147,7 @@ export const AnotherGenericWorkoutExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 1,
+  version: 2,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {

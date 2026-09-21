@@ -649,6 +649,7 @@ infra/
 │   ├── event-bus.ts
 │   ├── event-handler.ts
 │   ├── event-store.ts
+│   ├── event-upcaster.ts
 │   ├── hash-content.strategy.ts
 │   ├── prerequisites.ts
 │   ├── shield-auth.strategy.ts

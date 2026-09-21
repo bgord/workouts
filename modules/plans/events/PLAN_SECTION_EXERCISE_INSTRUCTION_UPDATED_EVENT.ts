@@ -9,6 +9,7 @@ export const PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT =
 export const PlanSectionExerciseInstructionUpdatedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT),
+  version: v.literal(2),
   payload: v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
