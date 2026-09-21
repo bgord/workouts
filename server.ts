@@ -177,6 +177,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionExerciseChange(deps)),
   );
+  plans.patch(
+    "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/position",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionMove(deps)),
+  );
   plans.delete(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId",
     Tools.ShieldCaptcha.handle(),
