@@ -203,6 +203,7 @@ modules/
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionExerciseChangeCommand.ts
+│   │   ├── handlePlanSectionExerciseInstructionMoveCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionRemoveCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionUpdateCommand.ts
 │   │   ├── handlePlanSectionRemoveCommand.ts
@@ -221,6 +222,7 @@ modules/
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND.ts
+│   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_MOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
@@ -239,6 +241,7 @@ modules/
 │   │   ├── PLAN_SECTION_CREATED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT.ts
+│   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT.ts
 │   │   ├── PLAN_SECTION_REMOVED_EVENT.ts
@@ -264,6 +267,8 @@ modules/
 │   │   ├── plan-section-exercise-instruction-exists.ts
 │   │   ├── plan-section-exercise-instruction-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-limit.ts
+│   │   ├── plan-section-exercise-instruction-position-has-changed.ts
+│   │   ├── plan-section-exercise-instruction-position-in-range.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
 │   │   ├── plan-section-name-is-unique-for-plan.ts
@@ -279,6 +284,7 @@ modules/
 │   │   └── list-plans.ts
 │   └── value-objects
 │       ├── exercise-instruction-id.ts
+│       ├── exercise-instruction-position.ts
 │       ├── exercise-instruction.ts
 │       ├── plan-description.ts
 │       ├── plan-description.validation.ts
@@ -486,6 +492,7 @@ app/
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
 │   │   ├── plan-section-exercise-instruction-exercise-change.ts
+│   │   ├── plan-section-exercise-instruction-move.ts
 │   │   ├── plan-section-exercise-instruction-remove.ts
 │   │   ├── plan-section-exercise-instruction-update.ts
 │   │   ├── plan-section-remove.ts
@@ -558,7 +565,7 @@ infra/
 │   ├── plans
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
-│   │   ├── get-plan-name-for-user-count.adapter.ts
+│   │   ├── get-plan-name-for-owner-count.adapter.ts
 │   │   ├── get-plan.adapter.ts
 │   │   ├── list-plans.adapter.ts
 │   │   └── plan-repository.adapter.ts
@@ -599,6 +606,7 @@ infra/
 │       ├── list-exercise-performances.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts
 │       ├── list-workouts.adapter.ts
+│       ├── to-workout-summary.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
 ├── config.ts
