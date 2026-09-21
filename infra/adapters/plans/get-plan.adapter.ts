@@ -54,7 +54,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
             eq(Schema.planSectionExerciseInstructions.userId, userId),
           ),
         )
-        .orderBy(asc(Schema.planSectionExerciseInstructions.createdAt)),
+        .orderBy(asc(Schema.planSectionExerciseInstructions.position)),
     ]);
 
     const editable = Plans.Invariants.PlanIsEditable.passes({ status: plan.status });
