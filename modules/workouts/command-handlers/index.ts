@@ -2,6 +2,7 @@ export * from "./handleWorkoutCompleteCommand";
 export * from "./handleWorkoutCreateCommand";
 export * from "./handleWorkoutDiscardCommand";
 export * from "./handleWorkoutExerciseAddCommand";
+export * from "./handleWorkoutExerciseMoveCommand";
 export * from "./handleWorkoutExerciseRemoveCommand";
 export * from "./handleWorkoutExerciseSetTargetCommand";
 export * from "./handleWorkoutNoteSetCommand";
