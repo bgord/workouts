@@ -3,10 +3,11 @@ import * as v from "valibot";
 import type * as Queries from "+workouts/queries";
 import * as VO from "+workouts/value-objects";
 import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-set";
+import type { ProgressionStrategy } from "./progression-strategy";
 
 const LOAD_STEP = tools.Weight.fromKilograms(2.5).get();
 
-export class DoubleProgressionCalculator {
+export class DoubleProgressionCalculator implements ProgressionStrategy {
   constructor(
     private readonly prescription: VO.ExercisePrescriptionType,
     private readonly previous: Queries.ExercisePerformance,

@@ -256,7 +256,11 @@ describe("DoubleProgressionCalculator", () => {
 
   test("fixed rep range - progress and regress both change load", () => {
     const calculator = new Workouts.Services.DoubleProgressionCalculator(
-      v.parse(Workouts.VO.ExercisePrescription, { sets: mocks.sets, reps: mocks.anotherReps }),
+      v.parse(Workouts.VO.ExercisePrescription, {
+        sets: mocks.sets,
+        reps: mocks.anotherReps,
+        progression: mocks.progression,
+      }),
       {
         ...mocks.exercisePerformance,
         sets: [
