@@ -12,7 +12,11 @@ import type {
   BodyWeightReferenceSetEventType,
 } from "+measurements/events";
 import type { PlanEventType } from "+plans/aggregates";
-import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
+import type {
+  ProfileAvatarRemovedEventType,
+  ProfileAvatarUpdatedEventType,
+  WeeklySummarySetEventType,
+} from "+preferences/events";
 import type { WorkoutEventType } from "+workouts/aggregates";
 import { EventUpcaster } from "./event-upcaster";
 
@@ -32,6 +36,7 @@ export type AcceptedEventType =
   | bg.Preferences.Events.UserLanguageSetEventType
   | ProfileAvatarUpdatedEventType
   | ProfileAvatarRemovedEventType
+  | WeeklySummarySetEventType
   | BodyWeightMeasuredEventType
   | BodyWeightMeasurementCorrectedEventType
   | BodyWeightMeasurementRemovedEventType

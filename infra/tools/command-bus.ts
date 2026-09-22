@@ -38,6 +38,7 @@ type AcceptedCommand =
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType
   | PreferencesCommands.RemoveProfileAvatarCommandType
+  | PreferencesCommands.WeeklySummarySetCommandType
   | WorkoutsCommands.WorkoutCreateCommandType
   | WorkoutsCommands.WorkoutExerciseAddCommandType
   | WorkoutsCommands.WorkoutExerciseRemoveCommandType

@@ -1,9 +1,14 @@
 import * as bg from "@bgord/bun";
+import * as Preferences from "+preferences";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
+type AcceptedEvent =
+  | bg.Preferences.Events.UserLanguageSetEventType
+  | Preferences.Events.WeeklySummarySetEventType;
+
 type Dependencies = {
-  EventBus: bg.EventBusPort<bg.Preferences.Events.UserLanguageSetEventType>;
+  EventBus: bg.EventBusPort<AcceptedEvent>;
   EventHandler: bg.EventHandlerStrategy;
 };
 
@@ -12,6 +17,10 @@ export class PreferencesProjector {
     deps.EventBus.on(
       bg.Preferences.Events.USER_LANGUAGE_SET_EVENT,
       deps.EventHandler.handle(this.onUserLanguageSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Preferences.Events.WEEKLY_SUMMARY_SET_EVENT,
+      deps.EventHandler.handle(this.onWeeklySummarySetEvent.bind(this)),
     );
   }
 
