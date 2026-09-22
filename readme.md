@@ -60,8 +60,8 @@ modules/
 │   │   ├── user-contact.ts
 │   │   └── user-directory.ts
 │   ├── services
+│   │   ├── call-to-action-notification.ts
 │   │   ├── email-verification-notification-composer.ts
-│   │   ├── notification-layout.ts
 │   │   └── password-reset-notification-composer.ts
 │   └── value-objects
 │       ├── admin-user-id.ts

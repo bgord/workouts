@@ -1,1 +1,1 @@
-export * from "./password-reset";
+export * from "./call-to-action";

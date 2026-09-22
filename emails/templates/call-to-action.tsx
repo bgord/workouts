@@ -1,7 +1,7 @@
 import type * as Auth from "+auth";
 import { Button, Link, Note, Paragraph, Shell } from "../components";
 
-export function PasswordResetEmail(props: Auth.Services.PasswordResetNotificationContent) {
+export function CallToActionEmail(props: Auth.Services.CallToActionNotificationContent) {
   return (
     <Shell signature="— Workouts">
       <Paragraph>Hi,</Paragraph>
