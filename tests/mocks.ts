@@ -312,6 +312,7 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 
 export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");
+export const anotherWorkoutId = v.parse(Workouts.VO.WorkoutId, "3e8a1c57-4b2d-4f90-a6e1-9d0c7b2f5a18");
 export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
 export const workoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-01");
@@ -538,6 +539,92 @@ export const GenericWeeklySummaryComposeJob = {
   revision: revision.value,
   payload: { userId, weekIsoId: previousWeekIsoId },
 } satisfies Notifications.Jobs.WeeklySummaryComposeJobType;
+
+export const week = tools.Week.fromIsoId(previousWeekIsoId);
+
+export const weekCompletedWorkout: Workouts.Queries.WeekCompletedWorkout = {
+  id: workoutId,
+  planName,
+  planSectionName,
+  scheduledFor: workoutScheduledFor,
+  sets: [
+    {
+      reps: v.parse(Workouts.VO.Reps, 5),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    },
+    {
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    },
+  ],
+};
+
+export const weekCompletedWorkoutNumbers: Notifications.VO.WeeklySummaryNumbers = {
+  workouts: tools.Int.nonNegative(1),
+  sets: tools.Int.nonNegative(2),
+  volume: v.parse(tools.WeightGrams, tools.Weight.fromKilograms(1350).get()),
+};
+
+export const weekExercisePerformance: Workouts.Queries.WeekExercisePerformance = {
+  exerciseId,
+  exerciseName,
+  current: exercisePerformance,
+  previous: {
+    workoutId: anotherWorkoutId,
+    scheduledFor: pastWorkoutScheduledFor,
+    sets: [
+      {
+        setNumber: v.parse(Workouts.VO.SetNumber, 1),
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+      },
+    ],
+  },
+};
+
+export const weeklySummaryHighlight: Notifications.VO.WeeklySummaryHighlight = {
+  exerciseId,
+  exerciseName,
+  previous: v.parse(Workouts.VO.ExerciseTarget, {
+    sets: v.parse(Workouts.VO.Sets, 1),
+    reps: v.parse(Workouts.VO.Reps, 5),
+    load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+  }),
+  current: exercisePerformanceWeakestSet,
+};
+
+export const workoutDashboard: Workouts.Queries.WorkoutDashboardResponse = {
+  inProgress: null,
+  nextUp: null,
+  lastCompleted: null,
+  completed: {
+    month: tools.Int.nonNegative(3),
+    year: tools.Int.nonNegative(3),
+    total: tools.Int.nonNegative(12),
+  },
+};
+
+export const weeklySummary: Notifications.VO.WeeklySummary = {
+  weekIsoId: previousWeekIsoId,
+  numbers: {
+    current: weekCompletedWorkoutNumbers,
+    previous: {
+      workouts: tools.Int.nonNegative(0),
+      sets: tools.Int.nonNegative(0),
+      volume: v.parse(tools.WeightGrams, 0),
+    },
+    delta: {
+      workouts: v.parse(tools.Integer, 1),
+      sets: v.parse(tools.Integer, 2),
+      volume: v.parse(tools.Integer, tools.Weight.fromKilograms(1350).get()),
+    },
+  },
+  highlights: [weeklySummaryHighlight],
+  bodyWeight: undefined,
+  nextUp: null,
+  unfinished: null,
+  completed: workoutDashboard.completed,
+};
 
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
