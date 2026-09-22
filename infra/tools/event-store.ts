@@ -11,6 +11,7 @@ import type {
   BodyWeightMeasurementRemovedEventType,
   BodyWeightReferenceSetEventType,
 } from "+measurements/events";
+import type { WeeklySummarySentEventType, WeeklySummarySkippedEventType } from "+notifications/events";
 import type { PlanEventType } from "+plans/aggregates";
 import type {
   ProfileAvatarRemovedEventType,
@@ -40,7 +41,9 @@ export type AcceptedEventType =
   | BodyWeightMeasuredEventType
   | BodyWeightMeasurementCorrectedEventType
   | BodyWeightMeasurementRemovedEventType
-  | BodyWeightReferenceSetEventType;
+  | BodyWeightReferenceSetEventType
+  | WeeklySummarySentEventType
+  | WeeklySummarySkippedEventType;
 
 export function createEventStore(
   Env: EnvironmentResultType,

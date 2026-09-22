@@ -188,14 +188,22 @@ modules/
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
 ├── notifications
+│   ├── events
+│   │   ├── WEEKLY_SUMMARY_SENT_EVENT.ts
+│   │   └── WEEKLY_SUMMARY_SKIPPED_EVENT.ts
 │   ├── invariants
 │   │   └── weekly-summary-schedule.ts
 │   ├── job-handlers
 │   │   └── weekly-summary-compose-job.handler.ts
 │   ├── jobs
 │   │   └── WEEKLY_SUMMARY_COMPOSE_JOB.ts
-│   └── policies
-│       └── weekly-summary-scheduler.ts
+│   ├── policies
+│   │   └── weekly-summary-scheduler.ts
+│   ├── queries
+│   │   ├── get-weekly-summary-status.ts
+│   └── value-objects
+│       ├── weekly-summary-status.ts
+│       └── weekly-summary-stream.ts
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
@@ -597,6 +605,8 @@ infra/
 │   ├── measurements
 │   │   ├── get-body-weight-measurement.adapter.ts
 │   │   └── list-body-weight-measurements.adapter.ts
+│   ├── notifications
+│   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
@@ -660,6 +670,7 @@ infra/
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts
 │   ├── profile-avatars.projector.ts
+│   ├── weekly-summaries.projector.ts
 │   ├── workout-exercises.projector.ts
 │   ├── workout-logged-sets.projector.ts
 │   └── workouts.projector.ts
