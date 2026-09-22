@@ -593,15 +593,10 @@ export const weeklySummaryHighlight: Notifications.VO.WeeklySummaryHighlight = {
   current: exercisePerformanceWeakestSet,
 };
 
-export const workoutDashboard: Workouts.Queries.WorkoutDashboardResponse = {
-  inProgress: null,
-  nextUp: null,
-  lastCompleted: null,
-  completed: {
-    month: tools.Int.nonNegative(3),
-    year: tools.Int.nonNegative(3),
-    total: tools.Int.nonNegative(12),
-  },
+export const workoutDashboardCompleted: Workouts.Queries.WorkoutDashboardCompleted = {
+  month: tools.Int.nonNegative(3),
+  year: tools.Int.nonNegative(3),
+  total: tools.Int.nonNegative(12),
 };
 
 export const weeklySummary: Notifications.VO.WeeklySummary = {
@@ -621,9 +616,7 @@ export const weeklySummary: Notifications.VO.WeeklySummary = {
   },
   highlights: [weeklySummaryHighlight],
   bodyWeight: undefined,
-  nextUp: null,
-  unfinished: null,
-  completed: workoutDashboard.completed,
+  completed: workoutDashboardCompleted,
 };
 
 export const GenericHourHasPassedEvent = {
