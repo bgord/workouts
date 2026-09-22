@@ -12,6 +12,7 @@ export function StepperSubmit(props: React.JSX.IntrinsicElements["button"]) {
       data-cross="center"
       data-cursor="pointer"
       data-disp="flex"
+      data-focus-ring-offset="inset"
       data-hover-bg="alpha-soft"
       data-main="center"
       data-shrink="0"

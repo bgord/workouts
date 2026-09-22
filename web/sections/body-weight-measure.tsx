@@ -65,6 +65,7 @@ export function BodyWeightMeasure() {
             data-bs="none"
             data-bsr="solid"
             data-bwr="hairline"
+            data-focus-ring-offset="inset"
             data-minw="0"
             data-shrink="0"
             data-variant="transparent"
