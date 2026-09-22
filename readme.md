@@ -312,23 +312,33 @@ modules/
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
 │   │   ├── handleUpdateProfileAvatarCommand.ts
+│   │   ├── handleWeeklySummarySetCommand.ts
 │   ├── commands
 │   │   ├── REMOVE_PROFILE_AVATAR_COMMAND.ts
-│   │   └── UPDATE_PROFILE_AVATAR_COMMAND.ts
+│   │   ├── UPDATE_PROFILE_AVATAR_COMMAND.ts
+│   │   └── WEEKLY_SUMMARY_SET_COMMAND.ts
 │   ├── events
 │   │   ├── PROFILE_AVATAR_REMOVED_EVENT.ts
-│   │   └── PROFILE_AVATAR_UPDATED_EVENT.ts
+│   │   ├── PROFILE_AVATAR_UPDATED_EVENT.ts
+│   │   └── WEEKLY_SUMMARY_SET_EVENT.ts
 │   ├── invariants
-│   │   └── profile-avatar-constraints.ts
+│   │   ├── profile-avatar-constraints.ts
+│   │   └── weekly-summary-has-changed.ts
+│   ├── open-host-queries
+│   │   └── weekly-summary.ts
 │   ├── policies
 │   │   ├── profile-avatar-eraser.ts
 │   │   └── set-default-user-language.ts
+│   ├── queries
+│   │   ├── get-weekly-summary.ts
 │   └── value-objects
 │       ├── profile-avatar-key.ts
 │       ├── profile-avatar-max-side.ts
 │       ├── profile-avatar-max-size.ts
 │       ├── profile-avatar-mime-registry.ts
-│       └── profile-avatar-side.ts
+│       ├── profile-avatar-side.ts
+│       ├── weekly-summary-options.ts
+│       └── weekly-summary.ts
 ├── statistics
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
@@ -512,9 +522,11 @@ app/
 │   │   └── plan-section-warmup-set.ts
 │   ├── preferences
 │   │   ├── get-profile-avatar.ts
+│   │   ├── get-weekly-summary.ts
 │   │   ├── remove-profile-avatar.ts
 │   │   ├── update-profile-avatar.ts
-│   │   └── update-user-language.ts
+│   │   ├── update-user-language.ts
+│   │   └── update-weekly-summary.ts
 │   ├── statistics
 │   │   ├── exercise-performances-get.ts
 │   └── workouts
@@ -583,6 +595,7 @@ infra/
 │   │   ├── list-plans.adapter.ts
 │   │   └── plan-repository.adapter.ts
 │   ├── preferences
+│   │   ├── get-weekly-summary.adapter.ts
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── system
