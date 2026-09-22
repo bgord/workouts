@@ -27,7 +27,7 @@ export const handleExerciseUpdateCommand =
       incoming: { name: command.payload.name, description: command.payload.description },
     });
 
-    const count = await deps.GetExerciseNameCountQuery.execute(command.payload.name);
+    const count = await deps.GetExerciseNameCountQuery.execute(command.payload.name, command.payload.id);
 
     ExerciseNameIsUnique.enforce({ count });
 

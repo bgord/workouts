@@ -197,7 +197,7 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
-    spies
+    const getExerciseNameCount = spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseNameCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
 
@@ -212,6 +212,7 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
     );
 
     expect(response.status).toEqual(200);
+    expect(getExerciseNameCount).toHaveBeenCalledWith(mocks.exerciseName, mocks.exerciseId);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseUpdatedDescriptionEvent]);
   });
 
