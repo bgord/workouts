@@ -13,7 +13,17 @@ import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-fi
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import { WorkoutListFilterOptions } from "../modules/workouts/value-objects/workout-list-filter-options";
-import { Avatar, Exercises, I18N, Measurements, Plans, Session, Statistics, Workouts } from "./api";
+import {
+  Avatar,
+  Exercises,
+  I18N,
+  Measurements,
+  Plans,
+  Preferences,
+  Session,
+  Statistics,
+  Workouts,
+} from "./api";
 import { NotFound } from "./not-found";
 import { Shell } from "./shell";
 
@@ -188,10 +198,15 @@ export const measurementsRoute = createRoute({
   },
 });
 
-const profileRoute = createRoute({
+export const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
+  loader: async ({ context }) => {
+    const { weeklySummary } = await Preferences.getWeeklySummary(context.request);
+
+    return { weeklySummary };
+  },
 });
 
 const routeTree = rootRoute.addChildren([
