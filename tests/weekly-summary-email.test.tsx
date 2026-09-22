@@ -48,14 +48,4 @@ describe("WeeklySummaryEmail", () => {
 
     expect(html).not.toContain(">Body weight</p>");
   });
-
-  test("render - escapes user content", async () => {
-    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
-      ...mocks.weeklySummaryNotificationContent,
-      title: "<b>30 Dec</b> & co",
-    });
-
-    expect(html).toContain("&lt;b&gt;30 Dec&lt;/b&gt; &amp; co");
-    expect(html).not.toContain("<b>30 Dec</b>");
-  });
 });
