@@ -108,6 +108,8 @@ export const exerciseWithCategories: Exercises.VO.ExerciseWithCategories = {
 
 export const actionAvailable: ActionState = { available: true, enabled: true, hints: [] };
 
+export const actionUnavailable: ActionState = { available: false, enabled: false, hints: [] };
+
 export const exerciseListResponse: Exercises.Queries.ExerciseListResponse = {
   data: [exerciseWithCategories],
   actions: { add: actionAvailable },
