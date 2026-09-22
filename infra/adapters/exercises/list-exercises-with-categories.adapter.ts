@@ -21,9 +21,7 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
       categories: categoryAssignments.map((assignment) => assignment.category),
     }));
 
-    const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });
-
-    return { data, actions: { add: { available: managed, enabled: managed, hints: [] } } };
+    return { data, actions: new Exercises.Services.ExerciseListActions({ requesterId }).calculate() };
   }
 }
 

@@ -1,4 +1,3 @@
-import type * as bg from "@bgord/bun";
 import { asc, eq, notInArray } from "drizzle-orm";
 import type * as Auth from "+auth";
 import * as Exercises from "+exercises";
@@ -11,7 +10,7 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
     exerciseId: Exercises.VO.ExerciseIdType,
     requesterId: Auth.VO.UserIdType,
   ): Promise<Exercises.Queries.ExerciseGetResponse | null> {
-    const [exercise, count, assignableCategories] = await Promise.all([
+    const [exercise, usageCount, assignableCategories] = await Promise.all([
       db.query.exercises.findFirst({
         columns: { id: true, name: true, description: true, image: true, imageEtag: true },
         where: (exercise, { eq }) => eq(exercise.id, exerciseId),
@@ -44,36 +43,15 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
     const { categoryAssignments, ...rest } = exercise;
     const categories = categoryAssignments.map((assignment) => assignment.category);
 
-    const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });
-    const whenManaged = { available: managed, enabled: managed, hints: [] };
-
-    const unused = Exercises.Invariants.ExerciseIsNotUsed.passes({ count });
-    const withinLimit = Exercises.Invariants.ExerciseCategoryLimit.passes({ exerciseCategories: categories });
-    const anyLeft = assignableCategories.length > 0;
-
-    const categoryAssignHints: Array<bg.TranslationsKeyType> = [];
-
-    if (!withinLimit) categoryAssignHints.push("exercise.category.assign.blocked.limit");
-    if (!anyLeft) categoryAssignHints.push("exercise.category.assign.blocked.none_left");
-
     return {
       data: { ...rest, categories },
       assignableCategories,
-      actions: {
-        update: whenManaged,
-        imageChange: whenManaged,
-        delete: {
-          available: managed,
-          enabled: managed && unused,
-          hints: unused ? [] : ["exercise.delete.blocked.in_use"],
-        },
-        categoryAssign: {
-          available: managed,
-          enabled: managed && withinLimit && anyLeft,
-          hints: categoryAssignHints,
-        },
-        categoryUnassign: whenManaged,
-      },
+      actions: new Exercises.Services.ExerciseGetActions({
+        requesterId,
+        usageCount,
+        categories,
+        assignableCategories,
+      }).calculate(),
     };
   }
 }

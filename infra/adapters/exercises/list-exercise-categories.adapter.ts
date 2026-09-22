@@ -19,13 +19,7 @@ class ListExerciseCategoriesQueryDrizzle implements Exercises.Queries.ListExerci
         asc(Schema.exerciseCategories.name),
       );
 
-    const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });
-    const whenManaged = { available: managed, enabled: managed, hints: [] };
-
-    return {
-      data,
-      actions: { manage: whenManaged, add: whenManaged, rename: whenManaged, delete: whenManaged },
-    };
+    return { data, actions: new Exercises.Services.ExerciseCategoryListActions({ requesterId }).calculate() };
   }
 }
 
