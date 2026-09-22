@@ -14,6 +14,7 @@ const body = JSON.stringify({
   exerciseId: mocks.exerciseId,
   sets: mocks.exercisePrescription.sets,
   reps: mocks.exercisePrescription.reps,
+  progression: mocks.exercisePrescription.progression,
 });
 
 const draft = [mocks.GenericWorkoutCreatedEvent] as const;

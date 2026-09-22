@@ -304,6 +304,8 @@ modules/
 │       ├── plan-status.ts
 │       ├── plan-summary.ts
 │       ├── plan.ts
+│       ├── progression-method-options.ts
+│       ├── progression-method.ts
 │       ├── reps.ts
 │       └── sets.ts
 ├── preferences
@@ -418,9 +420,13 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
-    │   ├── double-progression-calculator.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
+    │   ├── progression-method-double-progression.strategy.ts
+    │   ├── progression-method-factory.strategy.ts
+    │   ├── progression-method-linear-progression.strategy.ts
+    │   ├── progression-method-load-step.ts
+    │   ├── progression-method.strategy.ts
     │   └── workout-export-file-csv.ts
     └── value-objects
         ├── exercise-prescription.ts
@@ -645,6 +651,7 @@ infra/
 │   ├── event-bus.ts
 │   ├── event-handler.ts
 │   ├── event-store.ts
+│   ├── event-upcaster.ts
 │   ├── hash-content.strategy.ts
 │   ├── prerequisites.ts
 │   ├── shield-auth.strategy.ts

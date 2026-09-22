@@ -1088,6 +1088,7 @@ describe("Plan", async () => {
       id: mocks.exerciseInstructionId,
       reps: mocks.reps,
       sets: mocks.anotherSets,
+      progression: mocks.progression,
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -1134,6 +1135,7 @@ describe("Plan", async () => {
       id: mocks.exerciseInstructionId,
       reps: v.parse(Plans.VO.Reps, { min: mocks.reps.min - 1, max: mocks.reps.max }),
       sets: mocks.sets,
+      progression: mocks.progression,
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
@@ -1165,6 +1167,39 @@ describe("Plan", async () => {
       id: mocks.exerciseInstructionId,
       reps: v.parse(Plans.VO.Reps, { min: mocks.reps.min, max: mocks.reps.max + 1 }),
       sets: mocks.sets,
+      progression: mocks.progression,
+    };
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
+          exerciseInstruction,
+        },
+      },
+    ]);
+  });
+
+  test("updateSectionExerciseInstruction - only the progression changed", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      deps,
+    );
+    const exerciseInstruction = {
+      id: mocks.exerciseInstructionId,
+      reps: mocks.reps,
+      sets: mocks.sets,
+      progression: Plans.VO.ProgressionMethodOptions.linear_progression,
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>

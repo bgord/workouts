@@ -14,5 +14,7 @@ export * from "./plan-section-name";
 export * from "./plan-section-warmup";
 export * from "./plan-status";
 export * from "./plan-summary";
+export * from "./progression-method";
+export * from "./progression-method-options";
 export * from "./reps";
 export * from "./sets";

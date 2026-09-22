@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import type { ProgressionMethodType } from "../../modules/plans/value-objects/progression-method";
 import type { ExerciseTargetType } from "../../modules/workouts/value-objects/exercise-target";
 import type { ExerciseTargetProgression } from "../../modules/workouts/value-objects/exercise-target-progression";
 import * as ui from "../components";
@@ -12,9 +13,13 @@ type Fields = {
 };
 
 export function WorkoutExerciseTargetProgression(
-  props: { progression: ExerciseTargetProgression; disabled: boolean } & Fields,
+  props: {
+    progression: ExerciseTargetProgression;
+    method: ProgressionMethodType;
+    disabled: boolean;
+  } & Fields,
 ) {
-  const { progression, disabled, sets, reps, load } = props;
+  const { progression, method, disabled, sets, reps, load } = props;
   const t = bg.useTranslations();
   const label = useTargetDiffLabel();
 
@@ -43,7 +48,7 @@ export function WorkoutExerciseTargetProgression(
       data-stack="x"
       data-transform="font-variant-numeric"
       data-wrap="wrap"
-      title={t("workout.target.progression.title")}
+      title={`${t("workout.target.progression.title")} · ${t(`progression.method.${method}`)}`}
       {...ui.Gap.cluster}
     >
       {progression.regress && (

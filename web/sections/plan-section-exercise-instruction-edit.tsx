@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { ArrowLeftRight, Pencil } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
+import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
 import { Plans } from "../api";
 import * as ui from "../components";
 import { planRoute } from "../router";
@@ -47,9 +48,15 @@ export function PlanSectionExerciseInstructionEdit(props: {
     defaultValue: exerciseInstruction.reps.max,
   });
 
+  const progression = bg.useTextField<ProgressionMethodOptions>({
+    name: `${Form.progression.field.name}-${exerciseInstruction.id}`,
+    defaultValue: exerciseInstruction.progression,
+  });
+
   const exercise = exercises.data.find((candidate) => candidate.id === exerciseId.value);
 
-  const instructionUnchanged = sets.unchanged && repsMin.unchanged && repsMax.unchanged;
+  const instructionUnchanged =
+    sets.unchanged && repsMin.unchanged && repsMax.unchanged && progression.unchanged;
 
   const base = `/api/plans/${plan.data.id}/section/${props.section.id}/exercise-instruction/${exerciseInstruction.id}`;
 
@@ -75,7 +82,11 @@ export function PlanSectionExerciseInstructionEdit(props: {
         method: "PATCH",
         credentials: "include",
         headers: bg.WeakETag.fromRevision(revision),
-        body: JSON.stringify({ sets: sets.value, reps: { min: repsMin.value, max: repsMax.value } }),
+        body: JSON.stringify({
+          sets: sets.value,
+          reps: { min: repsMin.value, max: repsMax.value },
+          progression: progression.value,
+        }),
       });
     },
     onSuccess: async () => {
@@ -91,6 +102,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     sets.clear,
     repsMin.clear,
     repsMax.clear,
+    progression.clear,
     mutation.reset,
   ]);
   const close = bg.exec([
@@ -208,6 +220,10 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 min={repsMin.value ?? Form.repsMax.pattern.min}
               />
             </ui.Prescription>
+          )}
+
+          {actions.update.available && (
+            <ui.ProgressionMethodSelect disabled={!actions.update.enabled} field={progression} />
           )}
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}

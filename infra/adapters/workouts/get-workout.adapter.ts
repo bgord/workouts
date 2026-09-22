@@ -100,6 +100,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         const prescription = v.parse(Workouts.VO.ExercisePrescription, {
           sets: exercise.prescriptionSets,
           reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },
+          progression: exercise.prescriptionProgression,
         });
 
         const previous = previousPerformances[index];
@@ -128,7 +129,8 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             diff: target && new Workouts.Services.ExerciseTargetDiffCalculator(target, previous).calculate(),
           },
           targetProgression:
-            previous && new Workouts.Services.DoubleProgressionCalculator(prescription, previous).calculate(),
+            previous &&
+            Workouts.Services.ProgressionMethodStrategyFactory.for(prescription, previous).calculate(),
           actions: {
             targetSet: {
               available: draft || (inProgress && exercise.targetSets === null),

@@ -14,6 +14,7 @@ import type {
 import type { PlanEventType } from "+plans/aggregates";
 import type { ProfileAvatarRemovedEventType, ProfileAvatarUpdatedEventType } from "+preferences/events";
 import type { WorkoutEventType } from "+workouts/aggregates";
+import { EventUpcaster } from "./event-upcaster";
 
 type Dependencies = {
   EventBus: bg.EventBusPort<AcceptedEventType>;
@@ -103,6 +104,7 @@ export function createEventStore(
     finderLast,
     inserter,
     serializer,
+    upcaster: EventUpcaster,
   });
 
   const EventStoreDispatching = new bg.EventStoreDispatchingAdapter<AcceptedEventType>({
@@ -122,6 +124,7 @@ export function createEventStore(
       finderLast,
       inserter: new bg.EventInserterNoopAdapter(),
       serializer,
+      upcaster: EventUpcaster,
     }),
     [bg.NodeEnvironmentEnum.staging]: EventStoreWithLogger,
     [bg.NodeEnvironmentEnum.production]: EventStoreWithLogger,

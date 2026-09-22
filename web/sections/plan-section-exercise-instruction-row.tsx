@@ -45,8 +45,9 @@ export function PlanSectionExerciseInstructionRow(props: {
           {exerciseInstruction.exercise.name}
         </ui.ExerciseLink>
 
-        <div data-color="neutral-300" data-fs="sm">
+        <div data-color="neutral-300" data-cross="center" data-fs="sm" data-stack="x" {...ui.Gap.inline}>
           <ui.SetsReps {...exerciseInstruction} />
+          <ui.ProgressionMethodBadge method={exerciseInstruction.progression} />
         </div>
       </div>
 

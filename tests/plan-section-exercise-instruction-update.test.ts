@@ -143,6 +143,24 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(json).toEqual({ message: "reps.range" });
   });
 
+  test("validation - progression - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(),
+        body: JSON.stringify({ sets: mocks.sets, reps: mocks.reps, progression: "linear" }),
+      },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(400);
+    expect(json).toEqual({ message: "progression.method.invalid" });
+  });
+
   test("PlanExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);

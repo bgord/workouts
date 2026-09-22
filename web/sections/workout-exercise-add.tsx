@@ -17,6 +17,7 @@ export function WorkoutExerciseAdd() {
   const sets = bg.useNumberField(Form.sets.field);
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
+  const progression = bg.useTextField(Form.progression.field);
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -28,12 +29,13 @@ export function WorkoutExerciseAdd() {
           exerciseId: exerciseId.value,
           sets: sets.value,
           reps: { min: repsMin.value, max: repsMax.value },
+          progression: progression.value,
         }),
       }),
     onSuccess: async (_, context) => {
       workoutExerciseAdd.disable();
       await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
-      bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax]);
+      bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax, progression]);
       context.form?.reset();
     },
   });
@@ -44,6 +46,7 @@ export function WorkoutExerciseAdd() {
     sets.clear,
     repsMin.clear,
     repsMax.clear,
+    progression.clear,
     mutation.reset,
   ]);
 
@@ -122,6 +125,8 @@ export function WorkoutExerciseAdd() {
             />
           </ui.Prescription>
 
+          <ui.ProgressionMethodSelect field={progression} />
+
           {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 
           <ui.DialogFooter
@@ -130,7 +135,12 @@ export function WorkoutExerciseAdd() {
           >
             <ui.ButtonClear
               disabled={
-                exerciseId.empty && query.empty && sets.unchanged && repsMin.unchanged && repsMax.unchanged
+                exerciseId.empty &&
+                query.empty &&
+                sets.unchanged &&
+                repsMin.unchanged &&
+                repsMax.unchanged &&
+                progression.unchanged
               }
               onClick={clear}
             />
