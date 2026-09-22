@@ -181,7 +181,7 @@
   "measurements.body_weight.history.less": "Pokaż mniej",
   "notifications.weekly_summary.body_weight.caption": "średnio, {{count}} {{noun}}",
   "notifications.weekly_summary.body_weight.header": "Masa ciała",
-  "notifications.weekly_summary.body_weight.note": "{{delta}} · {{goal}}",
+  "notifications.weekly_summary.body_weight.note": "{{delta}}",
   "notifications.weekly_summary.body_weight.unchanged": "bez zmian vs poprzedni",
   "notifications.weekly_summary.body_weight.value": "{{value}} kg",
   "notifications.weekly_summary.completed.noun.genitive": "treningów ukończonych",

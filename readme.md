@@ -208,6 +208,7 @@ modules/
 │   │   ├── weekly-summary-notification-composer.ts
 │   │   └── weekly-summary-notification.ts
 │   └── value-objects
+│       ├── comparison.ts
 │       ├── weekly-summary-status.ts
 │       ├── weekly-summary-stream.ts
 │       └── weekly-summary.ts
