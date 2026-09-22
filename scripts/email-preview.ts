@@ -5,7 +5,7 @@ import * as Emails from "+emails";
 import * as mocks from "../tests/mocks";
 
 const BETTER_AUTH_URL = v.parse(tools.UrlWithoutSlash, "http://localhost:3000");
-const url = v.parse(tools.UrlWithoutSlash, `${BETTER_AUTH_URL}/auth/verify?token=abcdef123456`);
+const url = v.parse(tools.UrlWithoutSlash, `${BETTER_AUTH_URL}/auth/verify?xxx=yyy`);
 
 const templates = {
   "password-reset": () =>

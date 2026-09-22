@@ -102,6 +102,9 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     );
     spies.use(spyOn(di.Adapters.Auth.UserContactOHQ, "getPrimary").mockResolvedValue(mocks.emailContact));
     spies.use(spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockResolvedValue([]));
+    spies.use(
+      spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
+    );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
