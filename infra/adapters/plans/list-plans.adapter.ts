@@ -7,27 +7,26 @@ import * as Schema from "+infra/schema";
 
 class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
   async execute(userId: Auth.VO.UserIdType): Promise<Plans.Queries.PlanListResponse> {
-    const [plans, sections] = await Promise.all([
-      db
-        .select()
-        .from(Schema.plans)
-        .where(eq(Schema.plans.userId, userId))
-        .orderBy(desc(Schema.plans.updatedAt)),
-      db
-        .select({ planId: Schema.planSections.planId, count: count() })
-        .from(Schema.planSections)
-        .where(eq(Schema.planSections.userId, userId))
-        .groupBy(Schema.planSections.planId),
-    ]);
+    const plans = await db
+      .select({
+        id: Schema.plans.id,
+        name: Schema.plans.name,
+        description: Schema.plans.description,
+        status: Schema.plans.status,
+        revision: Schema.plans.revision,
+        updatedAt: Schema.plans.updatedAt,
+        sections: count(Schema.planSections.id),
+      })
+      .from(Schema.plans)
+      .leftJoin(Schema.planSections, eq(Schema.planSections.planId, Schema.plans.id))
+      .where(eq(Schema.plans.userId, userId))
+      .groupBy(Schema.plans.id)
+      .orderBy(desc(Schema.plans.updatedAt));
 
     const summaries = plans.map((plan) => ({
-      id: plan.id,
-      name: plan.name,
+      ...plan,
       description: plan.description ?? undefined,
-      status: plan.status,
-      revision: plan.revision,
-      updatedAt: plan.updatedAt,
-      sections: tools.Int.nonNegative(sections.find((section) => section.planId === plan.id)?.count ?? 0),
+      sections: tools.Int.nonNegative(plan.sections),
     }));
 
     const active = summaries.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
