@@ -13,16 +13,13 @@ describe("PasswordResetNotificationComposer", () => {
 
     expect(notification).toEqual({
       subject: v.parse(bg.MailerSubject, "Reset your Workouts password"),
-      html: v.parse(
-        bg.MailerContentHtml,
-        Auth.Services.NotificationLayout.render({
-          intro:
-            "We received a request to reset the password for this account. Choose a new one using the button below.",
-          cta: "Reset password",
-          url,
-          note: "The link expires in 1 hour. If you didn't ask for a reset, ignore this email — your password stays the same.",
-        }),
-      ),
+      content: {
+        intro:
+          "We received a request to reset the password for this account. Choose a new one using the button below.",
+        cta: "Reset password",
+        url,
+        note: "The link expires in 1 hour. If you didn't ask for a reset, ignore this email — your password stays the same.",
+      },
     });
   });
 });
