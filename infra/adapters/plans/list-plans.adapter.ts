@@ -15,7 +15,7 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
         status: Schema.plans.status,
         revision: Schema.plans.revision,
         updatedAt: Schema.plans.updatedAt,
-        sections: count(Schema.planSections.id),
+        sections: count(Schema.planSections.id).mapWith(tools.Int.nonNegative),
       })
       .from(Schema.plans)
       .leftJoin(Schema.planSections, eq(Schema.planSections.planId, Schema.plans.id))
@@ -26,7 +26,6 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
     const summaries = plans.map((plan) => ({
       ...plan,
       description: plan.description ?? undefined,
-      sections: tools.Int.nonNegative(plan.sections),
     }));
 
     const active = summaries.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
