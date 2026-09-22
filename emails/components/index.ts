@@ -8,5 +8,6 @@ export * from "./note";
 export * from "./paragraph";
 export * from "./rule";
 export * from "./shell";
+export * from "./stat";
 export * from "./tiles";
 export * from "./title";
