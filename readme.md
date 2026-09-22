@@ -178,6 +178,7 @@ modules/
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
+│   │   ├── body-weight-week-average.ts
 │   └── value-objects
 │       ├── body-weight-goal-options.ts
 │       ├── body-weight-goal.ts
@@ -203,6 +204,7 @@ modules/
 │   ├── queries
 │   │   ├── get-weekly-summary-status.ts
 │   ├── services
+│   │   ├── weekly-summary-body-weight.ts
 │   │   ├── weekly-summary-locales.ts
 │   │   ├── weekly-summary-notification.ts
 │   │   ├── weekly-summary-range.ts

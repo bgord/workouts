@@ -2,12 +2,14 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Auth from "+auth";
+import type * as Measurements from "+measurements";
 import type * as Notifications from "+notifications";
 import * as Preferences from "+preferences";
 import type { SupportedLanguages } from "+supported-languages";
 import type * as Workouts from "+workouts";
 import { WeeklySummarySentEvent } from "../events/WEEKLY_SUMMARY_SENT_EVENT";
 import { WeeklySummarySkippedEvent } from "../events/WEEKLY_SUMMARY_SKIPPED_EVENT";
+import { WeeklySummaryBodyWeight } from "../services/weekly-summary-body-weight";
 import { WeeklySummaryRange } from "../services/weekly-summary-range";
 import { WeeklySummaryTotals } from "../services/weekly-summary-totals";
 import { WeeklySummaryStream } from "../value-objects/weekly-summary-stream";
@@ -15,7 +17,8 @@ import { WeeklySummaryStream } from "../value-objects/weekly-summary-stream";
 type LanguagesType = (typeof SupportedLanguages)[number];
 
 type AcceptedEvent =
-  Notifications.Events.WeeklySummarySentEventType | Notifications.Events.WeeklySummarySkippedEventType;
+  | Notifications.Events.WeeklySummarySentEventType
+  | Notifications.Events.WeeklySummarySkippedEventType;
 
 type Config = { EMAIL_FROM: tools.EmailType; BETTER_AUTH_URL: tools.UrlWithoutSlashType };
 
@@ -31,6 +34,7 @@ type Dependencies = {
   UserContactOHQ: Auth.OHQ.UserContactOHQ;
   UserLanguageOHQ: bg.Preferences.OHQ.UserLanguagePort<LanguagesType>;
   ListWeekCompletedWorkoutsOHQ: Workouts.OHQ.ListWeekCompletedWorkoutsOHQ;
+  ListBodyWeightMeasurementsOHQ: Measurements.OHQ.ListBodyWeightMeasurementsOHQ;
   WeeklySummaryEmailRenderer: Notifications.Services.WeeklySummaryEmailRenderer;
 };
 
@@ -48,9 +52,10 @@ export const WeeklySummaryComposeJobHandler =
 
     const week = tools.Week.fromIsoId(job.payload.weekIsoId);
 
-    const [workouts, previousWorkouts] = await Promise.all([
+    const [workouts, previousWorkouts, measurements] = await Promise.all([
       deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week),
       deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week.previous()),
+      deps.ListBodyWeightMeasurementsOHQ.execute(job.payload.userId),
     ]);
 
     const stream = WeeklySummaryStream.of(job.payload.userId, job.payload.weekIsoId);
@@ -69,6 +74,7 @@ export const WeeklySummaryComposeJobHandler =
     const html = await deps.WeeklySummaryEmailRenderer.render({
       title: range,
       totals: new WeeklySummaryTotals(workouts, previousWorkouts, t, language).tiles(),
+      bodyWeight: new WeeklySummaryBodyWeight(measurements, week, t, language).stat(),
       footer: {
         before: t("notifications.weekly_summary.footer.before"),
         link: t("notifications.weekly_summary.footer.link"),

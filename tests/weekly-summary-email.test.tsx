@@ -21,6 +21,39 @@ describe("WeeklySummaryEmail", () => {
     expect(html).toContain(">— Workouts</p>");
   });
 
+  test("render - body weight", async () => {
+    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
+      ...mocks.weeklySummaryNotificationContent,
+      bodyWeight: {
+        heading: "Body weight",
+        value: "80.5 kg",
+        caption: "average, 4 measurements",
+        note: "-0.3 vs last week",
+      },
+    });
+
+    expect(html).toContain(">Body weight</p>");
+    expect(html).toContain(">80.5 kg</span>");
+    expect(html).toContain("> average, 4 measurements</span>");
+    expect(html).toContain(">-0.3 vs last week</p>");
+  });
+
+  test("render - body weight without a note", async () => {
+    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
+      ...mocks.weeklySummaryNotificationContent,
+      bodyWeight: { heading: "Body weight", value: "80.5 kg", caption: "average, 4 measurements" },
+    });
+
+    expect(html).toContain(">80.5 kg</span>");
+    expect(html).not.toContain("vs last week</p>");
+  });
+
+  test("render - without body weight", async () => {
+    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, mocks.weeklySummaryNotificationContent);
+
+    expect(html).not.toContain(">Body weight</p>");
+  });
+
   test("render - escapes user content", async () => {
     const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
       ...mocks.weeklySummaryNotificationContent,

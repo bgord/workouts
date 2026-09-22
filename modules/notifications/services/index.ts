@@ -1,3 +1,4 @@
+export * from "./weekly-summary-body-weight";
 export * from "./weekly-summary-locales";
 export * from "./weekly-summary-notification";
 export * from "./weekly-summary-range";

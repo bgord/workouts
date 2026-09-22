@@ -24,6 +24,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       UserContactOHQ: di.Adapters.Auth.UserContactOHQ,
       UserLanguageOHQ: di.Adapters.Preferences.UserLanguageOHQ,
       ListWeekCompletedWorkoutsOHQ: di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery,
+      ListBodyWeightMeasurementsOHQ: di.Adapters.Measurements.ListBodyWeightMeasurementsQuery,
       WeeklySummaryEmailRenderer,
     },
   );
@@ -128,6 +129,9 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockImplementation(
         async (_, week) => (week.equals(mocks.week) ? [mocks.weekCompletedWorkout] : []),
       ),
+    );
+    spies.use(
+      spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
     );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
