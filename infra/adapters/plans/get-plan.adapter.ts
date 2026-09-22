@@ -4,6 +4,7 @@ import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
+import { GetPlanEditableForOwnerCountQuery } from "./get-plan-editable-for-owner-count.adapter";
 
 class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
   async execute(
@@ -18,7 +19,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
 
     if (!plan) return null;
 
-    const [sections, exerciseInstructions] = await Promise.all([
+    const [sections, exerciseInstructions, activeCount] = await Promise.all([
       db
         .select()
         .from(Schema.planSections)
@@ -54,6 +55,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           ),
         )
         .orderBy(asc(Schema.planSectionExerciseInstructions.position)),
+      GetPlanEditableForOwnerCountQuery.execute(userId),
     ]);
 
     const exerciseInstructionActions = new Plans.Services.PlanGetExerciseInstructionActions({
@@ -100,6 +102,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       actions: new Plans.Services.PlanGetActions({
         status: plan.status,
         sections: data.sections,
+        activeCount,
       }).calculate(),
     };
   }

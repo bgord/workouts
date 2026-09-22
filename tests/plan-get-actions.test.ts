@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import * as tools from "@bgord/tools";
 import * as Plans from "+plans";
 import * as mocks from "./mocks";
 
@@ -7,6 +8,7 @@ describe("PlanGetActions", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.draft,
       sections: mocks.plan.sections,
+      activeCount: tools.Int.nonNegative(0),
     });
 
     expect(actions.calculate()).toEqual({
@@ -29,6 +31,7 @@ describe("PlanGetActions", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.draft,
       sections: [],
+      activeCount: tools.Int.nonNegative(0),
     });
 
     expect(actions.calculate().finalize).toEqual({
@@ -42,6 +45,7 @@ describe("PlanGetActions", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.draft,
       sections: [mocks.planSectionEmpty],
+      activeCount: tools.Int.nonNegative(0),
     });
 
     expect(actions.calculate().finalize).toEqual({
@@ -55,6 +59,7 @@ describe("PlanGetActions", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.draft,
       sections: mocks.planSectionsAtLimit,
+      activeCount: tools.Int.nonNegative(0),
     });
 
     expect(actions.calculate().sectionCreate).toEqual({
@@ -68,6 +73,7 @@ describe("PlanGetActions", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.finalized,
       sections: [],
+      activeCount: tools.Int.nonNegative(0),
     });
 
     expect(actions.calculate()).toEqual({
@@ -90,6 +96,7 @@ describe("PlanGetActions", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.archived,
       sections: mocks.plan.sections,
+      activeCount: tools.Int.nonNegative(0),
     });
 
     expect(actions.calculate()).toEqual({
@@ -105,6 +112,20 @@ describe("PlanGetActions", () => {
       sectionWarmupSet: mocks.actionUnavailable,
       sectionCooldownSet: mocks.actionUnavailable,
       sectionRemove: mocks.actionUnavailable,
+    });
+  });
+
+  test("archived - plan limit for owner", () => {
+    const actions = new Plans.Services.PlanGetActions({
+      status: Plans.VO.PlanStatusEnum.archived,
+      sections: mocks.plan.sections,
+      activeCount: tools.Int.nonNegative(1),
+    });
+
+    expect(actions.calculate().restore).toEqual({
+      available: true,
+      enabled: false,
+      hints: ["plan.limit.for.owner"],
     });
   });
 });

@@ -226,7 +226,7 @@
   "plan.list.empty.active": "Brak aktywnego planu",
   "plan.list.empty.active.hint": "Utwórz nowy plan lub przywróć zarchiwizowany",
   "plan.list.header": "Plany",
-  "plan.limit.for.owner": "Zarchiwizuj bieżący plan, aby utworzyć nowy",
+  "plan.limit.for.owner": "Najpierw zarchiwizuj bieżący plan",
   "plan.not_found": "Nie znaleziono planu",
   "plan.not_found.cta": "Przejdź do planów",
   "plan.not_found.hint": "Mógł zostać usunięty lub link jest błędny",

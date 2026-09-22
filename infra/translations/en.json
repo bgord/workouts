@@ -226,7 +226,7 @@
   "plan.list.empty.active.hint": "Create a new plan or restore an archived one",
   "plan.list.empty.hint": "Create a plan to schedule your workouts",
   "plan.list.header": "Plans",
-  "plan.limit.for.owner": "Archive the current plan to create a new one",
+  "plan.limit.for.owner": "Archive the current plan first",
   "plan.not_found": "Plan not found",
   "plan.not_found.cta": "Go to plans",
   "plan.not_found.hint": "It may have been deleted, or the link is wrong",

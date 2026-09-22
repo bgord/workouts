@@ -9,11 +9,13 @@ import { PlanIsEditable } from "../invariants/plan-is-editable";
 import { PlanIsFinalized } from "../invariants/plan-is-finalized";
 import { PlanIsRemovable } from "../invariants/plan-is-removable";
 import { PlanIsRestorable } from "../invariants/plan-is-restorable";
+import { PlanLimitForOwner } from "../invariants/plan-limit-for-owner";
 import { PlanSectionLimitForPlan } from "../invariants/plan-section-limit-for-plan";
 
 type PlanGetActionsFacts = {
   status: VO.PlanStatusEnum;
   sections: ReadonlyArray<VO.PlanSectionWithExercises>;
+  activeCount: tools.IntegerNonNegativeType;
 };
 
 export class PlanGetActions {
@@ -31,7 +33,9 @@ export class PlanGetActions {
       descriptionSet: ActionState.of(editable),
       editingEnable: ActionState.of(PlanIsFinalized.passes({ status: this.facts.status })),
       archive: ActionState.of(PlanIsArchivable.passes({ status: this.facts.status })),
-      restore: ActionState.of(PlanIsRestorable.passes({ status: this.facts.status })),
+      restore: ActionState.of(PlanIsRestorable.passes({ status: this.facts.status }), [
+        ActionBlocker.from(PlanLimitForOwner, { count: this.facts.activeCount }),
+      ]),
       remove: ActionState.of(PlanIsRemovable.passes({ status: this.facts.status })),
       sectionCreate: ActionState.of(editable, [
         ActionBlocker.from(PlanSectionLimitForPlan, {
