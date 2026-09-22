@@ -1,4 +1,3 @@
-import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import { db } from "+infra/db";
@@ -19,7 +18,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
             orderBy: (section, { asc }) => asc(section.createdAt),
             with: {
               exerciseInstructions: {
-                columns: { id: true, sets: true, repsMin: true, repsMax: true, progression: true },
+                columns: { id: true, sets: true, reps: true, progression: true },
                 orderBy: (exerciseInstruction, { asc }) => asc(exerciseInstruction.position),
                 with: {
                   exercise: {
@@ -38,28 +37,18 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
 
     const data = {
       ...plan,
-      sections: plan.sections.map(({ exerciseInstructions, ...rest }) => {
-        const section = {
-          ...rest,
-          exerciseInstructions: exerciseInstructions.map(({ repsMin, repsMax, ...exerciseInstruction }) => ({
-            ...exerciseInstruction,
-            reps: v.parse(Plans.VO.Reps, { min: repsMin, max: repsMax }),
-          })),
-        };
-
-        return {
-          ...section,
-          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
-            ...exerciseInstruction,
-            actions: new Plans.Services.PlanGetExerciseInstructionActions({
-              status: plan.status,
-              section,
-              exerciseInstructionId: exerciseInstruction.id,
-            }).calculate(),
-          })),
-          actions: new Plans.Services.PlanGetSectionActions({ status: plan.status, section }).calculate(),
-        };
-      }),
+      sections: plan.sections.map((section) => ({
+        ...section,
+        exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
+          ...exerciseInstruction,
+          actions: new Plans.Services.PlanGetExerciseInstructionActions({
+            status: plan.status,
+            section,
+            exerciseInstructionId: exerciseInstruction.id,
+          }).calculate(),
+        })),
+        actions: new Plans.Services.PlanGetSectionActions({ status: plan.status, section }).calculate(),
+      })),
     };
 
     return {

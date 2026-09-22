@@ -68,8 +68,7 @@ export class PlanSectionExerciseInstructionProjector {
       planSectionId: event.payload.planSectionId,
       exerciseId: event.payload.exerciseInstruction.exerciseId,
       sets: event.payload.exerciseInstruction.sets,
-      repsMin: event.payload.exerciseInstruction.reps.min,
-      repsMax: event.payload.exerciseInstruction.reps.max,
+      reps: event.payload.exerciseInstruction.reps,
       progression: event.payload.exerciseInstruction.progression,
       position: v.parse(Plans.VO.ExerciseInstructionPosition, siblings.length),
       userId: event.payload.requesterId,
@@ -97,8 +96,7 @@ export class PlanSectionExerciseInstructionProjector {
       .update(Schema.planSectionExerciseInstructions)
       .set({
         sets: event.payload.exerciseInstruction.sets,
-        repsMin: event.payload.exerciseInstruction.reps.min,
-        repsMax: event.payload.exerciseInstruction.reps.max,
+        reps: event.payload.exerciseInstruction.reps,
         progression: event.payload.exerciseInstruction.progression,
         updatedAt: event.createdAt,
       })
