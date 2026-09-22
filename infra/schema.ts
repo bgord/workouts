@@ -275,6 +275,29 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
   updatedAt: timestamp("updatedAt").notNull(),
 });
 
+export const plansRelations = relations(plans, ({ many }) => ({
+  sections: many(planSections),
+}));
+
+export const planSectionsRelations = relations(planSections, ({ one, many }) => ({
+  plan: one(plans, { fields: [planSections.planId], references: [plans.id] }),
+  exerciseInstructions: many(planSectionExerciseInstructions),
+}));
+
+export const planSectionExerciseInstructionsRelations = relations(
+  planSectionExerciseInstructions,
+  ({ one }) => ({
+    planSection: one(planSections, {
+      fields: [planSectionExerciseInstructions.planSectionId],
+      references: [planSections.id],
+    }),
+    exercise: one(exercises, {
+      fields: [planSectionExerciseInstructions.exerciseId],
+      references: [exercises.id],
+    }),
+  }),
+);
+
 export const workouts = sqliteTable("workouts", {
   id: identifier<WorkoutIdType>(),
   planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),

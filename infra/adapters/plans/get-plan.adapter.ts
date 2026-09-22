@@ -1,9 +1,7 @@
-import { and, asc, eq } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import { db } from "+infra/db";
-import * as Schema from "+infra/schema";
 import { GetPlanEditableForOwnerCountQuery } from "./get-plan-editable-for-owner-count.adapter";
 
 class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
@@ -11,52 +9,32 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     planId: Plans.VO.PlanIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Plans.Queries.PlanGetResponse | null> {
-    const plan = await db
-      .select()
-      .from(Schema.plans)
-      .where(and(eq(Schema.plans.id, planId), eq(Schema.plans.userId, userId)))
-      .get();
-
-    if (!plan) return null;
-
-    const [sections, exerciseInstructions, activeCount] = await Promise.all([
-      db
-        .select()
-        .from(Schema.planSections)
-        .where(and(eq(Schema.planSections.planId, planId), eq(Schema.planSections.userId, userId)))
-        .orderBy(asc(Schema.planSections.createdAt)),
-      db
-        .select({
-          id: Schema.planSectionExerciseInstructions.id,
-          planSectionId: Schema.planSectionExerciseInstructions.planSectionId,
-          sets: Schema.planSectionExerciseInstructions.sets,
-          reps: {
-            min: Schema.planSectionExerciseInstructions.repsMin,
-            max: Schema.planSectionExerciseInstructions.repsMax,
+    const [plan, activeCount] = await Promise.all([
+      db.query.plans.findFirst({
+        columns: { id: true, name: true, description: true, status: true, revision: true, updatedAt: true },
+        where: (plan, { and, eq }) => and(eq(plan.id, planId), eq(plan.userId, userId)),
+        with: {
+          sections: {
+            columns: { id: true, name: true, warmup: true, cooldown: true },
+            orderBy: (section, { asc }) => asc(section.createdAt),
+            with: {
+              exerciseInstructions: {
+                columns: { id: true, sets: true, repsMin: true, repsMax: true, progression: true },
+                orderBy: (exerciseInstruction, { asc }) => asc(exerciseInstruction.position),
+                with: {
+                  exercise: {
+                    columns: { id: true, name: true, description: true, image: true, imageEtag: true },
+                  },
+                },
+              },
+            },
           },
-          progression: Schema.planSectionExerciseInstructions.progression,
-          exercise: {
-            id: Schema.exercises.id,
-            name: Schema.exercises.name,
-            description: Schema.exercises.description,
-            image: Schema.exercises.image,
-            imageEtag: Schema.exercises.imageEtag,
-          },
-        })
-        .from(Schema.planSectionExerciseInstructions)
-        .innerJoin(
-          Schema.exercises,
-          eq(Schema.planSectionExerciseInstructions.exerciseId, Schema.exercises.id),
-        )
-        .where(
-          and(
-            eq(Schema.planSectionExerciseInstructions.planId, planId),
-            eq(Schema.planSectionExerciseInstructions.userId, userId),
-          ),
-        )
-        .orderBy(asc(Schema.planSectionExerciseInstructions.position)),
+        },
+      }),
       GetPlanEditableForOwnerCountQuery.execute(userId),
     ]);
+
+    if (!plan) return null;
 
     const data = {
       id: plan.id,
@@ -65,21 +43,22 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       status: plan.status,
       revision: plan.revision,
       updatedAt: plan.updatedAt,
-      sections: sections.map((section) => {
+      sections: plan.sections.map((section) => {
         const planSection = {
           id: section.id,
           name: section.name,
           warmup: section.warmup ?? undefined,
           cooldown: section.cooldown ?? undefined,
-          exerciseInstructions: exerciseInstructions
-            .filter((exerciseInstruction) => exerciseInstruction.planSectionId === section.id)
-            .map((exerciseInstruction) => ({
-              id: exerciseInstruction.id,
-              exercise: exerciseInstruction.exercise,
-              sets: exerciseInstruction.sets,
-              reps: v.parse(Plans.VO.Reps, exerciseInstruction.reps),
-              progression: exerciseInstruction.progression,
-            })),
+          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
+            id: exerciseInstruction.id,
+            exercise: exerciseInstruction.exercise,
+            sets: exerciseInstruction.sets,
+            reps: v.parse(Plans.VO.Reps, {
+              min: exerciseInstruction.repsMin,
+              max: exerciseInstruction.repsMax,
+            }),
+            progression: exerciseInstruction.progression,
+          })),
         };
 
         return {
