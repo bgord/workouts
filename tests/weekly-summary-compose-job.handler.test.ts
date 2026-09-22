@@ -125,9 +125,9 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     spies.use(spyOn(di.Adapters.Auth.UserContactOHQ, "getPrimary").mockResolvedValue(mocks.emailContact));
     spies.use(spyOn(di.Adapters.Preferences.UserLanguageOHQ, "get").mockResolvedValue("en"));
     spies.use(
-      spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockResolvedValue([
-        mocks.weekCompletedWorkout,
-      ]),
+      spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockImplementation(
+        async (_, week) => (week.equals(mocks.week) ? [mocks.weekCompletedWorkout] : []),
+      ),
     );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

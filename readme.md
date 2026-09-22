@@ -203,7 +203,9 @@ modules/
 │   ├── queries
 │   │   ├── get-weekly-summary-status.ts
 │   ├── services
+│   │   ├── weekly-summary-locales.ts
 │   │   ├── weekly-summary-notification.ts
+│   │   ├── weekly-summary-numbers.ts
 │   │   └── weekly-summary-range.ts
 │   └── value-objects
 │       ├── weekly-summary-status.ts

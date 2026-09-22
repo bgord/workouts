@@ -1,9 +1,8 @@
 import type * as tools from "@bgord/tools";
 import type { SupportedLanguages } from "+supported-languages";
+import { locales } from "./weekly-summary-locales";
 
 type LanguagesType = (typeof SupportedLanguages)[number];
-
-const locales: Record<LanguagesType, string> = { en: "en-GB", pl: "pl-PL" };
 
 export class WeeklySummaryRange {
   static of(week: tools.Week, language: LanguagesType): string {

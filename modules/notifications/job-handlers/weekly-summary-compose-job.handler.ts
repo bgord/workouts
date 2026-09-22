@@ -8,6 +8,7 @@ import type { SupportedLanguages } from "+supported-languages";
 import type * as Workouts from "+workouts";
 import { WeeklySummarySentEvent } from "../events/WEEKLY_SUMMARY_SENT_EVENT";
 import { WeeklySummarySkippedEvent } from "../events/WEEKLY_SUMMARY_SKIPPED_EVENT";
+import { WeeklySummaryTotals } from "../services/weekly-summary-totals";
 import { WeeklySummaryRange } from "../services/weekly-summary-range";
 import { WeeklySummaryStream } from "../value-objects/weekly-summary-stream";
 
@@ -46,7 +47,11 @@ export const WeeklySummaryComposeJobHandler =
     if (!contact?.address) return;
 
     const week = tools.Week.fromIsoId(job.payload.weekIsoId);
-    const workouts = await deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week);
+
+    const [workouts, previousWorkouts] = await Promise.all([
+      deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week),
+      deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week.previous()),
+    ]);
 
     const stream = WeeklySummaryStream.of(job.payload.userId, job.payload.weekIsoId);
 
@@ -63,6 +68,7 @@ export const WeeklySummaryComposeJobHandler =
 
     const html = await deps.WeeklySummaryEmailRenderer.render({
       title: range,
+      totals: new WeeklySummaryTotals(workouts, previousWorkouts, t, language).tiles(),
       footer: {
         before: t("notifications.weekly_summary.footer.before"),
         link: t("notifications.weekly_summary.footer.link"),

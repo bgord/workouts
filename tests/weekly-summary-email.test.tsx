@@ -8,6 +8,14 @@ describe("WeeklySummaryEmail", () => {
 
     expect(html).toContain(">30 Dec – 5 Jan<");
     expect(html).toContain(">30 Dec – 5 Jan</p>");
+    expect(html).toContain(">1</div>");
+    expect(html).toContain(">workout</div>");
+    expect(html).toContain(">+1 vs last week</div>");
+    expect(html).toContain(">2</div>");
+    expect(html).toContain(">sets</div>");
+    expect(html).toContain(">1,350</div>");
+    expect(html).toContain(">volume (kg)</div>");
+    expect(html).toContain(">+1,350 vs last week</div>");
     expect(html).toContain('href="http://localhost:3000/profile"');
     expect(html).toContain(">profile</a>");
     expect(html).toContain(">— Workouts</p>");

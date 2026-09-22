@@ -587,6 +587,11 @@ export const weekCompletedWorkout: Workouts.Queries.WeekCompletedWorkout = {
 
 export const weeklySummaryNotificationContent: Notifications.Services.WeeklySummaryNotificationContent = {
   title: "30 Dec – 5 Jan",
+  totals: [
+    { value: "1", label: "workout", delta: "+1 vs last week" },
+    { value: "2", label: "sets", delta: "+2 vs last week" },
+    { value: "1,350", label: "volume (kg)", delta: "+1,350 vs last week" },
+  ],
   footer: {
     before: "You get this every Monday. Turn it off in your ",
     link: "profile",
