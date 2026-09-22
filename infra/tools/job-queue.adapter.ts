@@ -1,6 +1,7 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type * as Auth from "+auth";
+import * as Emails from "+emails";
 import type * as Measurements from "+measurements";
 import * as Notifications from "+notifications";
 import type * as Preferences from "+preferences";
@@ -36,6 +37,10 @@ const retry = new bg.JobRetryPolicyCompositeStrategy([
   new bg.JobRetryPolicyBackoffStrategy(new bg.RetryBackoffLinearStrategy(tools.Duration.Minutes(1))),
 ]);
 
+const WeeklySummaryEmailRenderer: Notifications.Services.WeeklySummaryEmailRenderer = {
+  render: (content) => Emails.renderEmail(Emails.WeeklySummaryEmail, content),
+};
+
 export async function createJobQueue(
   Env: EnvironmentResultType,
   deps: Dependencies,
@@ -59,7 +64,7 @@ export async function createJobQueue(
       retry,
       handler: Notifications.JobHandlers.WeeklySummaryComposeJobHandler(
         { EMAIL_FROM: Env.EMAIL_FROM, BETTER_AUTH_URL: Env.BETTER_AUTH_URL },
-        { ...deps, JobDispatcher },
+        { ...deps, JobDispatcher, WeeklySummaryEmailRenderer },
       ),
     },
   });

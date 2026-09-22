@@ -5,7 +5,10 @@ import * as Measurements from "+measurements";
 import type { SupportedLanguages } from "+supported-languages";
 import type * as VO from "+notifications/value-objects";
 import { WeeklySummaryFormatter } from "./weekly-summary-formatter";
-import { WeeklySummaryLayout, type WeeklySummaryLayoutConfig } from "./weekly-summary-layout";
+import type {
+  WeeklySummaryNotification,
+  WeeklySummaryNotificationContent,
+} from "./weekly-summary-notification";
 
 type LanguagesType = (typeof SupportedLanguages)[number];
 type Translate = ReturnType<typeof bg.TranslatorService.use>;
@@ -26,37 +29,34 @@ export class WeeklySummaryNotificationComposer {
     this.format = new WeeklySummaryFormatter(language);
   }
 
-  compose(summary: VO.WeeklySummary): bg.MailerTemplateMessage {
+  compose(summary: VO.WeeklySummary): WeeklySummaryNotification {
     const range = this.format.range(tools.Week.fromIsoId(summary.weekIsoId));
 
     return {
       subject: v.parse(bg.MailerSubject, this.t("notifications.weekly_summary.subject", { range })),
-      html: v.parse(
-        bg.MailerContentHtml,
-        WeeklySummaryLayout.render({
-          eyebrow: this.t("notifications.weekly_summary.eyebrow"),
-          title: range,
-          numbers: this.numbers(summary.numbers),
-          highlights: this.highlights(summary.highlights),
-          bodyWeight: this.bodyWeight(summary.bodyWeight),
-          consistency: this.t("notifications.weekly_summary.consistency", {
-            month: summary.completed.month,
-            noun: this.format.noun(summary.completed.month, this.forms("completed")),
-            year: summary.completed.year,
-          }),
-          footer: {
-            before: this.t("notifications.weekly_summary.footer.before"),
-            link: this.t("notifications.weekly_summary.footer.link"),
-            after: this.t("notifications.weekly_summary.footer.after"),
-            url: `${this.BETTER_AUTH_URL}/profile`,
-          },
-          signature: this.t("notifications.weekly_summary.signature"),
+      content: {
+        eyebrow: this.t("notifications.weekly_summary.eyebrow"),
+        title: range,
+        numbers: this.numbers(summary.numbers),
+        highlights: this.highlights(summary.highlights),
+        bodyWeight: this.bodyWeight(summary.bodyWeight),
+        consistency: this.t("notifications.weekly_summary.consistency", {
+          month: summary.completed.month,
+          noun: this.format.noun(summary.completed.month, this.forms("completed")),
+          year: summary.completed.year,
         }),
-      ),
+        footer: {
+          before: this.t("notifications.weekly_summary.footer.before"),
+          link: this.t("notifications.weekly_summary.footer.link"),
+          after: this.t("notifications.weekly_summary.footer.after"),
+          url: `${this.BETTER_AUTH_URL}/profile`,
+        },
+        signature: this.t("notifications.weekly_summary.signature"),
+      },
     };
   }
 
-  private numbers(numbers: VO.WeeklySummary["numbers"]): WeeklySummaryLayoutConfig["numbers"] {
+  private numbers(numbers: VO.WeeklySummary["numbers"]): WeeklySummaryNotificationContent["numbers"] {
     const { current, delta } = numbers;
 
     if (current.workouts === 0) return { empty: this.t("notifications.weekly_summary.empty") };
@@ -82,7 +82,9 @@ export class WeeklySummaryNotificationComposer {
     };
   }
 
-  private highlights(highlights: VO.WeeklySummary["highlights"]): WeeklySummaryLayoutConfig["highlights"] {
+  private highlights(
+    highlights: VO.WeeklySummary["highlights"],
+  ): WeeklySummaryNotificationContent["highlights"] {
     return {
       heading: this.t("notifications.weekly_summary.highlights.header"),
       rows: highlights.map((highlight) => ({
@@ -93,7 +95,9 @@ export class WeeklySummaryNotificationComposer {
     };
   }
 
-  private bodyWeight(bodyWeight: VO.WeeklySummary["bodyWeight"]): WeeklySummaryLayoutConfig["bodyWeight"] {
+  private bodyWeight(
+    bodyWeight: VO.WeeklySummary["bodyWeight"],
+  ): WeeklySummaryNotificationContent["bodyWeight"] {
     if (!bodyWeight) return undefined;
 
     return {

@@ -645,6 +645,36 @@ export const weeklySummary: Notifications.VO.WeeklySummary = {
   completed: workoutDashboardCompleted,
 };
 
+export const weeklySummaryNotificationContent: Notifications.Services.WeeklySummaryNotificationContent = {
+  eyebrow: "Weekly summary",
+  title: "30 Dec – 5 Jan",
+  numbers: {
+    tiles: [
+      { value: "1", label: "workout", delta: "+1 vs last week" },
+      { value: "2", label: "sets", delta: "+2 vs last week" },
+      { value: "1,350", label: "volume (kg)", delta: "+1,350 kg vs last week" },
+    ],
+  },
+  highlights: {
+    heading: "Progress",
+    rows: [{ name: exerciseName, previous: "1 × 5 × 80 kg", current: "2 × 5 × 90 kg" }],
+  },
+  bodyWeight: {
+    heading: "Body weight",
+    value: "80.5 kg",
+    caption: "average, 4 measurements",
+    note: "-0.3 kg vs last week · on track for cut",
+  },
+  consistency: "3 workouts completed this month, 3 this year.",
+  footer: {
+    before: "You get this every Monday. Turn it off in your ",
+    link: "profile",
+    after: ".",
+    url: "http://localhost:3000/profile",
+  },
+  signature: "— Workouts",
+};
+
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
   correlationId,

@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as v from "valibot";
 import * as Notifications from "+notifications";
 import * as Preferences from "+preferences";
 import { bootstrap } from "+infra/bootstrap";
@@ -7,6 +8,10 @@ import * as mocks from "./mocks";
 
 describe("WeeklySummaryComposeJobHandler", async () => {
   const di = await bootstrap();
+
+  const WeeklySummaryEmailRenderer: Notifications.Services.WeeklySummaryEmailRenderer = {
+    render: async () => v.parse(bg.MailerContentHtml, "<html></html>"),
+  };
 
   const handler = Notifications.JobHandlers.WeeklySummaryComposeJobHandler(
     { EMAIL_FROM: di.Env.EMAIL_FROM, BETTER_AUTH_URL: di.Env.BETTER_AUTH_URL },
@@ -22,6 +27,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       ListWeekExercisePerformancesOHQ: di.Adapters.Workouts.ListWeekExercisePerformancesQuery,
       GetWorkoutDashboardOHQ: di.Adapters.Workouts.GetWorkoutDashboardQuery,
       ListBodyWeightMeasurementsOHQ: di.Adapters.Measurements.ListBodyWeightMeasurementsQuery,
+      WeeklySummaryEmailRenderer,
     },
   );
 
@@ -156,6 +162,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using render = spyOn(WeeklySummaryEmailRenderer, "render");
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
       handler(mocks.GenericWeeklySummaryComposeJob),
@@ -173,8 +180,14 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       createdAt: mocks.T0.ms,
       name: bg.System.Jobs.SEND_EMAIL_JOB,
       revision: mocks.revision.value,
-      payload: { from: di.Env.EMAIL_FROM, to: mocks.email, ...composer.compose(mocks.weeklySummary) },
+      payload: {
+        from: di.Env.EMAIL_FROM,
+        to: mocks.email,
+        subject: composer.compose(mocks.weeklySummary).subject,
+        html: v.parse(bg.MailerContentHtml, "<html></html>"),
+      },
     });
+    expect(render).toHaveBeenCalledWith(composer.compose(mocks.weeklySummary).content);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWeeklySummarySentEvent]);
     expect(eventStoreSave.mock.invocationCallOrder[0]).toBeLessThan(enqueue.mock.invocationCallOrder[0]!);
   });

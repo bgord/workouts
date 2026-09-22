@@ -203,11 +203,10 @@ modules/
 │   ├── queries
 │   │   ├── get-weekly-summary-status.ts
 │   ├── services
-│   │   ├── notification-shell.ts
 │   │   ├── weekly-summary-calculator.ts
 │   │   ├── weekly-summary-formatter.ts
-│   │   ├── weekly-summary-layout.ts
-│   │   └── weekly-summary-notification-composer.ts
+│   │   ├── weekly-summary-notification-composer.ts
+│   │   └── weekly-summary-notification.ts
 │   └── value-objects
 │       ├── weekly-summary-status.ts
 │       ├── weekly-summary-stream.ts

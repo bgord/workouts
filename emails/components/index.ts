@@ -1,4 +1,5 @@
 export * from "./button";
+export * from "./changes";
 export * from "./eyebrow";
 export * from "./heading";
 export * from "./link";
@@ -7,4 +8,5 @@ export * from "./note";
 export * from "./paragraph";
 export * from "./rule";
 export * from "./shell";
+export * from "./tiles";
 export * from "./title";

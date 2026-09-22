@@ -2,6 +2,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import * as Emails from "+emails";
+import * as mocks from "../tests/mocks";
 
 const BETTER_AUTH_URL = v.parse(tools.UrlWithoutSlash, "http://localhost:3000");
 const url = v.parse(tools.UrlWithoutSlash, `${BETTER_AUTH_URL}/auth/verify?token=abcdef123456`);
@@ -17,6 +18,8 @@ const templates = {
       Emails.CallToActionEmail,
       new Auth.Services.EmailVerificationNotificationComposer(BETTER_AUTH_URL).compose(url).content,
     ),
+  "weekly-summary": () =>
+    Emails.renderEmail(Emails.WeeklySummaryEmail, mocks.weeklySummaryNotificationContent),
 };
 
 type TemplateName = keyof typeof templates;

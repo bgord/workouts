@@ -35,6 +35,7 @@ type Dependencies = {
   ListWeekExercisePerformancesOHQ: Workouts.OHQ.ListWeekExercisePerformancesOHQ;
   GetWorkoutDashboardOHQ: Workouts.OHQ.GetWorkoutDashboardOHQ;
   ListBodyWeightMeasurementsOHQ: Measurements.OHQ.ListBodyWeightMeasurementsOHQ;
+  WeeklySummaryEmailRenderer: Notifications.Services.WeeklySummaryEmailRenderer;
 };
 
 export const WeeklySummaryComposeJobHandler =
@@ -80,10 +81,11 @@ export const WeeklySummaryComposeJobHandler =
 
     const composer = new WeeklySummaryNotificationComposer(config.BETTER_AUTH_URL, translations, language);
     const notification = composer.compose(summary);
+    const html = await deps.WeeklySummaryEmailRenderer.render(notification.content);
 
     const email = bg.job(
       bg.System.Jobs.SendEmailJobSchema,
-      { from: config.EMAIL_FROM, to: contact.address, ...notification },
+      { from: config.EMAIL_FROM, to: contact.address, subject: notification.subject, html },
       deps,
     );
 
