@@ -156,6 +156,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     });
     expect(render).toHaveBeenCalledWith({
       ...mocks.weeklySummaryNotificationContent,
+      bodyWeight: undefined,
       footer: {
         ...mocks.weeklySummaryNotificationContent.footer,
         url: `${di.Env.BETTER_AUTH_URL}/profile`,

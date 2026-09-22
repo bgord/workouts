@@ -1,7 +1,15 @@
-import type * as tools from "@bgord/tools";
+import * as tools from "@bgord/tools";
 import type * as VO from "+measurements/value-objects";
 
 export class BodyWeightAverage {
+  static forWeek(measurements: ReadonlyArray<VO.BodyWeightMeasurement>, week: tools.Week) {
+    return new BodyWeightAverage(
+      measurements,
+      tools.Day.fromTimestamp(week.getStart()).toIsoId(),
+      tools.Day.fromTimestamp(week.getEnd()).toIsoId(),
+    );
+  }
+
   constructor(
     private readonly measurements: ReadonlyArray<VO.BodyWeightMeasurement>,
     private readonly from: tools.DayIsoIdType,
@@ -17,6 +25,6 @@ export class BodyWeightAverage {
 
     const total = within.reduce((sum, measurement) => sum + measurement.weight, 0);
 
-    return { average: total / within.length, count: within.length };
+    return { average: Math.round(total / within.length), count: within.length };
   }
 }

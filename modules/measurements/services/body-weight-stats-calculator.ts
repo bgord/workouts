@@ -1,9 +1,9 @@
+import * as tools from "@bgord/tools";
+import * as v from "valibot";
 import type * as VO from "+measurements/value-objects";
+import { BodyWeightAverage } from "./body-weight-average";
 
 const ROLLING_WINDOW_DAYS = 7;
-
-const average = (measurements: ReadonlyArray<VO.BodyWeightMeasurement>) =>
-  measurements.reduce((sum, measurement) => sum + measurement.weight, 0) / measurements.length;
 
 export class BodyWeightStatsCalculator {
   constructor(private readonly measurements: ReadonlyArray<VO.BodyWeightMeasurement>) {}
@@ -16,21 +16,26 @@ export class BodyWeightStatsCalculator {
     if (!(latest && baseline)) return null;
 
     const anchor = Temporal.PlainDate.from(latest.measuredOn);
-    const windowStart = anchor.subtract({ days: ROLLING_WINDOW_DAYS - 1 }).toString();
-    const previousWindowStart = anchor.subtract({ days: ROLLING_WINDOW_DAYS * 2 - 1 }).toString();
 
-    const window = this.measurements.filter((measurement) => measurement.measuredOn >= windowStart);
-    const previousWindow = this.measurements.filter(
-      (measurement) => measurement.measuredOn >= previousWindowStart && measurement.measuredOn < windowStart,
-    );
+    const week = new BodyWeightAverage(
+      this.measurements,
+      v.parse(tools.DayIsoId, anchor.subtract({ days: ROLLING_WINDOW_DAYS - 1 }).toString()),
+      latest.measuredOn,
+    ).calculate();
+
+    const previousWeek = new BodyWeightAverage(
+      this.measurements,
+      v.parse(tools.DayIsoId, anchor.subtract({ days: ROLLING_WINDOW_DAYS * 2 - 1 }).toString()),
+      v.parse(tools.DayIsoId, anchor.subtract({ days: ROLLING_WINDOW_DAYS }).toString()),
+    ).calculate();
 
     return {
       latest,
       previous: this.measurements[1],
       reference,
       baseline,
-      week: { average: average(window), count: window.length },
-      previousWeek: previousWindow.length > 0 ? { average: average(previousWindow) } : undefined,
+      week: week ?? { average: latest.weight, count: 1 },
+      previousWeek: previousWeek ? { average: previousWeek.average } : undefined,
     };
   }
 }

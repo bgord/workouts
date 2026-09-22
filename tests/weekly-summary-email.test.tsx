@@ -22,15 +22,7 @@ describe("WeeklySummaryEmail", () => {
   });
 
   test("render - body weight", async () => {
-    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
-      ...mocks.weeklySummaryNotificationContent,
-      bodyWeight: {
-        heading: "Body weight",
-        value: "80.5 kg",
-        caption: "average, 4 measurements",
-        note: "-0.3 vs last week",
-      },
-    });
+    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, mocks.weeklySummaryNotificationContent);
 
     expect(html).toContain(">Body weight</p>");
     expect(html).toContain(">80.5 kg</span>");
@@ -49,7 +41,10 @@ describe("WeeklySummaryEmail", () => {
   });
 
   test("render - without body weight", async () => {
-    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, mocks.weeklySummaryNotificationContent);
+    const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
+      ...mocks.weeklySummaryNotificationContent,
+      bodyWeight: undefined,
+    });
 
     expect(html).not.toContain(">Body weight</p>");
   });

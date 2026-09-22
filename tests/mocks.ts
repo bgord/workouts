@@ -592,6 +592,12 @@ export const weeklySummaryNotificationContent: Notifications.Services.WeeklySumm
     { value: "2", label: "sets", delta: "+2 vs last week" },
     { value: "1,350", label: "volume (kg)", delta: "+1,350 vs last week" },
   ],
+  bodyWeight: {
+    heading: "Body weight",
+    value: "80.5 kg",
+    caption: "average, 4 measurements",
+    note: "-0.3 vs last week",
+  },
   footer: {
     before: "You get this every Monday. Turn it off in your ",
     link: "profile",
