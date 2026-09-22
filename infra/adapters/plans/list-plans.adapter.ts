@@ -33,15 +33,11 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
     const active = summaries.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
     const archived = summaries.filter((plan) => plan.status === Plans.VO.PlanStatusEnum.archived);
 
-    const creatable = Plans.Invariants.PlanLimitForOwner.passes({
-      count: tools.Int.nonNegative(active.length),
-    });
-
     return {
       data: { active, archived },
-      actions: {
-        create: { available: true, enabled: creatable, hints: creatable ? [] : ["plan.list.limit.hint"] },
-      },
+      actions: new Plans.Services.PlanListActions({
+        activeCount: tools.Int.nonNegative(active.length),
+      }).calculate(),
     };
   }
 }
