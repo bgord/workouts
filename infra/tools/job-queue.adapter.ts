@@ -25,8 +25,6 @@ type Dependencies = {
   UserContactOHQ: Auth.OHQ.UserContactOHQ;
   UserLanguageOHQ: bg.Preferences.OHQ.UserLanguagePort<LanguagesType>;
   ListWeekCompletedWorkoutsOHQ: Workouts.OHQ.ListWeekCompletedWorkoutsOHQ;
-  ListWeekExercisePerformancesOHQ: Workouts.OHQ.ListWeekExercisePerformancesOHQ;
-  GetWorkoutDashboardOHQ: Workouts.OHQ.GetWorkoutDashboardOHQ;
   ListBodyWeightMeasurementsOHQ: Measurements.OHQ.ListBodyWeightMeasurementsOHQ;
 };
 

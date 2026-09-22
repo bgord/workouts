@@ -454,7 +454,6 @@ modules/
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
     │   ├── list-week-completed-workouts.ts
-    │   ├── list-week-exercise-performances.ts
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
@@ -662,7 +661,6 @@ infra/
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts
 │       ├── list-week-completed-workouts.adapter.ts
-│       ├── list-week-exercise-performances.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       ├── to-workout-summary.ts

@@ -33,8 +33,6 @@ export async function bootstrap() {
     UserContactOHQ: Auth.UserContactOHQ,
     UserLanguageOHQ: Preferences.UserLanguageOHQ,
     ListWeekCompletedWorkoutsOHQ: Workouts.ListWeekCompletedWorkoutsQuery,
-    ListWeekExercisePerformancesOHQ: Workouts.ListWeekExercisePerformancesQuery,
-    GetWorkoutDashboardOHQ: Workouts.GetWorkoutDashboardQuery,
     ListBodyWeightMeasurementsOHQ: Measurements.ListBodyWeightMeasurementsQuery,
   });
 

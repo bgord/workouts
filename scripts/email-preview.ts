@@ -28,7 +28,7 @@ void (async function main() {
   const name = process.argv[2] as TemplateName | undefined;
 
   if (!(name && name in templates)) {
-    console.error(`Usage: bun run scripts/email-preview.ts <${Object.keys(templates).join("|")}>`);
+    console.log(`Usage: bun run scripts/email-preview.ts <${Object.keys(templates).join("|")}>`);
     process.exit(1);
   }
 
