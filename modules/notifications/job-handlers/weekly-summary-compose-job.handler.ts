@@ -8,8 +8,8 @@ import type { SupportedLanguages } from "+supported-languages";
 import type * as Workouts from "+workouts";
 import { WeeklySummarySentEvent } from "../events/WEEKLY_SUMMARY_SENT_EVENT";
 import { WeeklySummarySkippedEvent } from "../events/WEEKLY_SUMMARY_SKIPPED_EVENT";
-import { WeeklySummaryTotals } from "../services/weekly-summary-totals";
 import { WeeklySummaryRange } from "../services/weekly-summary-range";
+import { WeeklySummaryTotals } from "../services/weekly-summary-totals";
 import { WeeklySummaryStream } from "../value-objects/weekly-summary-stream";
 
 type LanguagesType = (typeof SupportedLanguages)[number];

@@ -1,8 +1,6 @@
-import * as tools from "@bgord/tools";
-import * as v from "valibot";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
-import type * as Workouts from "+workouts";
+import * as Workouts from "+workouts";
 import type * as Ports from "+statistics/ports";
 import type * as VO from "+statistics/value-objects";
 
@@ -31,10 +29,7 @@ export class ExercisePerformanceCalculator {
       return {
         ...performance,
         sets,
-        volume: v.parse(
-          tools.WeightGrams,
-          sets.reduce((total, set) => total + set.reps * set.load, 0),
-        ),
+        volume: new Workouts.Services.LoggedSetsVolume(sets).calculate().get(),
         bestSet,
         bestEstimate: bestSet.estimate,
       };

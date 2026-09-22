@@ -1,12 +1,12 @@
 import type * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import type { SupportedLanguages } from "+supported-languages";
-import type * as Workouts from "+workouts";
+import * as Workouts from "+workouts";
 import { locales } from "./weekly-summary-locales";
 
 type LanguagesType = (typeof SupportedLanguages)[number];
 type Translate = ReturnType<typeof bg.TranslatorService.use>;
 type CompletedWorkouts = ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>;
+type LoggedSets = Workouts.Queries.WeekCompletedWorkout["sets"];
 
 export type WeeklySummaryTile = { value: string; label: string; delta: string };
 
@@ -14,6 +14,8 @@ export class WeeklySummaryTotals {
   private readonly number: Intl.NumberFormat;
   private readonly signed: Intl.NumberFormat;
   private readonly plural: Intl.PluralRules;
+  private readonly sets: LoggedSets;
+  private readonly previousSets: LoggedSets;
 
   constructor(
     private readonly workouts: CompletedWorkouts,
@@ -30,6 +32,9 @@ export class WeeklySummaryTotals {
       signDisplay: "always",
     });
     this.plural = new Intl.PluralRules(locale);
+
+    this.sets = workouts.flatMap((workout) => workout.sets);
+    this.previousSets = previousWorkouts.flatMap((workout) => workout.sets);
   }
 
   tiles(): Array<WeeklySummaryTile> {
@@ -43,44 +48,35 @@ export class WeeklySummaryTotals {
     return {
       value: this.number.format(current),
       label: this.t(`notifications.weekly_summary.workouts.${this.plural.select(current)}`),
-      delta: this.delta(current - previous),
+      delta: this.t("notifications.weekly_summary.delta", {
+        value: this.signed.format(current - previous),
+      }),
     };
   }
 
   private setsTile(): WeeklySummaryTile {
-    const current = this.sets(this.workouts).length;
-    const previous = this.sets(this.previousWorkouts).length;
+    const current = this.sets.length;
+    const previous = this.previousSets.length;
 
     return {
       value: this.number.format(current),
       label: this.t("notifications.weekly_summary.sets.label"),
-      delta: this.delta(current - previous),
+      delta: this.t("notifications.weekly_summary.delta", {
+        value: this.signed.format(current - previous),
+      }),
     };
   }
 
   private volumeTile(): WeeklySummaryTile {
-    const current = this.volume(this.workouts).toKilograms();
-    const previous = this.volume(this.previousWorkouts).toKilograms();
+    const current = new Workouts.Services.LoggedSetsVolume(this.sets).calculate().toKilograms();
+    const previous = new Workouts.Services.LoggedSetsVolume(this.previousSets).calculate().toKilograms();
 
     return {
       value: this.number.format(current),
       label: this.t("notifications.weekly_summary.volume.label"),
-      delta: this.delta(current - previous),
+      delta: this.t("notifications.weekly_summary.delta", {
+        value: this.signed.format(current - previous),
+      }),
     };
-  }
-
-  private sets(workouts: CompletedWorkouts) {
-    return workouts.flatMap((workout) => workout.sets);
-  }
-
-  private volume(workouts: CompletedWorkouts): tools.Weight {
-    return this.sets(workouts).reduce(
-      (total, set) => total.add(tools.Weight.fromGrams(set.reps * set.load)),
-      tools.Weight.zero(),
-    );
-  }
-
-  private delta(value: number) {
-    return this.t("notifications.weekly_summary.delta", { value: this.signed.format(value) });
   }
 }

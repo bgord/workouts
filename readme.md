@@ -205,8 +205,8 @@ modules/
 │   ├── services
 │   │   ├── weekly-summary-locales.ts
 │   │   ├── weekly-summary-notification.ts
-│   │   ├── weekly-summary-numbers.ts
-│   │   └── weekly-summary-range.ts
+│   │   ├── weekly-summary-range.ts
+│   │   └── weekly-summary-totals.ts
 │   └── value-objects
 │       ├── weekly-summary-status.ts
 │       └── weekly-summary-stream.ts
@@ -458,6 +458,7 @@ modules/
     ├── services
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
+    │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts

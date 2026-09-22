@@ -15,12 +15,7 @@ describe("WeeklySummaryTotals", async () => {
   const pl = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("pl"));
 
   test("tiles - en", () => {
-    const totals = new Notifications.Services.WeeklySummaryTotals(
-      [mocks.weekCompletedWorkout],
-      [],
-      en,
-      "en",
-    );
+    const totals = new Notifications.Services.WeeklySummaryTotals([mocks.weekCompletedWorkout], [], en, "en");
 
     expect(totals.tiles()).toEqual([
       { value: "1", label: "workout", delta: "+1 vs last week" },
@@ -30,12 +25,7 @@ describe("WeeklySummaryTotals", async () => {
   });
 
   test("tiles - pl", () => {
-    const totals = new Notifications.Services.WeeklySummaryTotals(
-      [mocks.weekCompletedWorkout],
-      [],
-      pl,
-      "pl",
-    );
+    const totals = new Notifications.Services.WeeklySummaryTotals([mocks.weekCompletedWorkout], [], pl, "pl");
 
     expect(totals.tiles()).toEqual([
       { value: "1", label: "trening", delta: "+1 vs poprzedni" },
