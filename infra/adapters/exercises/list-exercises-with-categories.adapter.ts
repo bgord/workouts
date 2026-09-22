@@ -1,31 +1,24 @@
-import { asc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { db } from "+infra/db";
-import * as Schema from "+infra/schema";
 
 class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListExercisesWithCategories {
   async execute(requesterId: Auth.VO.UserIdType): Promise<Exercises.Queries.ExerciseListResponse> {
-    const exercises = await db.select().from(Schema.exercises).orderBy(asc(Schema.exercises.name));
+    const exercises = await db.query.exercises.findMany({
+      columns: { id: true, name: true, description: true, image: true, imageEtag: true },
+      orderBy: (exercise, { asc }) => asc(exercise.name),
+      with: {
+        categoryAssignments: {
+          columns: {},
+          orderBy: (assignment, { asc }) => asc(assignment.createdAt),
+          with: { category: { columns: { id: true, name: true } } },
+        },
+      },
+    });
 
-    const assignments = await db
-      .select({
-        exerciseId: Schema.exerciseCategoryAssignments.exerciseId,
-        id: Schema.exerciseCategories.id,
-        name: Schema.exerciseCategories.name,
-      })
-      .from(Schema.exerciseCategoryAssignments)
-      .innerJoin(
-        Schema.exerciseCategories,
-        eq(Schema.exerciseCategoryAssignments.exerciseCategoryId, Schema.exerciseCategories.id),
-      )
-      .orderBy(asc(Schema.exerciseCategoryAssignments.createdAt));
-
-    const data = exercises.map((exercise) => ({
+    const data = exercises.map(({ categoryAssignments, ...exercise }) => ({
       ...exercise,
-      categories: assignments
-        .filter((assignment) => assignment.exerciseId === exercise.id)
-        .map((assignment) => ({ id: assignment.id, name: assignment.name })),
+      categories: categoryAssignments.map((assignment) => assignment.category),
     }));
 
     const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });

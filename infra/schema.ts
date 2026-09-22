@@ -220,6 +220,18 @@ export const exerciseCategoryAssignments = sqliteTable(
   (table) => [primaryKey({ columns: [table.exerciseId, table.exerciseCategoryId] })],
 );
 
+export const exercisesRelations = relations(exercises, ({ many }) => ({
+  categoryAssignments: many(exerciseCategoryAssignments),
+}));
+
+export const exerciseCategoryAssignmentsRelations = relations(exerciseCategoryAssignments, ({ one }) => ({
+  exercise: one(exercises, { fields: [exerciseCategoryAssignments.exerciseId], references: [exercises.id] }),
+  category: one(exerciseCategories, {
+    fields: [exerciseCategoryAssignments.exerciseCategoryId],
+    references: [exerciseCategories.id],
+  }),
+}));
+
 export const plans = sqliteTable("plans", {
   id: identifier<PlanIdType>(),
   name: text("name").notNull().$type<PlanNameType>(),

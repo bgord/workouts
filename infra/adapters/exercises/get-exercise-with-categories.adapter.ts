@@ -1,22 +1,32 @@
 import type * as Auth from "+auth";
 import * as Exercises from "+exercises";
-import { GetExerciseQuery } from "./get-exercise.adapter";
+import { db } from "+infra/db";
 import { GetExerciseUsageCountQuery } from "./get-exercise-usage-count.adapter";
-import { ListCategoriesAssignedToExerciseQuery } from "./list-categories-assigned-to-exercise.adapter";
 
-class GetExerciseWithCategoriesQueryComposed implements Exercises.Queries.GetExerciseWithCategories {
+class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExerciseWithCategories {
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
     requesterId: Auth.VO.UserIdType,
   ): Promise<Exercises.Queries.ExerciseGetResponse | null> {
-    const exercise = await GetExerciseQuery.execute(exerciseId);
+    const [exercise, count] = await Promise.all([
+      db.query.exercises.findFirst({
+        columns: { id: true, name: true, description: true, image: true, imageEtag: true },
+        where: (exercise, { eq }) => eq(exercise.id, exerciseId),
+        with: {
+          categoryAssignments: {
+            columns: {},
+            orderBy: (assignment, { asc }) => asc(assignment.createdAt),
+            with: { category: { columns: { id: true, name: true } } },
+          },
+        },
+      }),
+      GetExerciseUsageCountQuery.execute(exerciseId),
+    ]);
 
     if (!exercise) return null;
 
-    const [categories, count] = await Promise.all([
-      ListCategoriesAssignedToExerciseQuery.execute(exerciseId),
-      GetExerciseUsageCountQuery.execute(exerciseId),
-    ]);
+    const { categoryAssignments, ...rest } = exercise;
+    const categories = categoryAssignments.map((assignment) => assignment.category);
 
     const managed = Exercises.Invariants.CatalogIsManagedByAdmin.passes({ requesterId });
     const whenManaged = { available: managed, enabled: managed, hints: [] };
@@ -25,7 +35,7 @@ class GetExerciseWithCategoriesQueryComposed implements Exercises.Queries.GetExe
     const assignable = Exercises.Invariants.ExerciseCategoryLimit.passes({ exerciseCategories: categories });
 
     return {
-      data: { ...exercise, categories },
+      data: { ...rest, categories },
       actions: {
         update: whenManaged,
         imageChange: whenManaged,
@@ -45,4 +55,4 @@ class GetExerciseWithCategoriesQueryComposed implements Exercises.Queries.GetExe
   }
 }
 
-export const GetExerciseWithCategoriesQuery = new GetExerciseWithCategoriesQueryComposed();
+export const GetExerciseWithCategoriesQuery = new GetExerciseWithCategoriesQueryDrizzle();
