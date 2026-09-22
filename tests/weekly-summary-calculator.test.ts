@@ -12,7 +12,7 @@ const empty = {
   previousWorkouts: [],
   performances: [],
   measurements: [],
-  dashboard: mocks.workoutDashboard,
+  completed: mocks.workoutDashboardCompleted,
 };
 
 describe("WeeklySummaryCalculator", () => {
@@ -200,46 +200,5 @@ describe("WeeklySummaryCalculator", () => {
     });
 
     expect(calculator.calculate()).toEqual(null);
-  });
-
-  test("unfinished - in progress workout scheduled within the week", () => {
-    const inProgress = { ...mocks.workoutSummary, status: Workouts.VO.WorkoutStatusEnum.in_progress };
-
-    const calculator = new Notifications.Services.WeeklySummaryCalculator({
-      ...empty,
-      workouts: [mocks.weekCompletedWorkout],
-      dashboard: { ...mocks.workoutDashboard, inProgress },
-    });
-
-    expect(calculator.calculate()?.unfinished).toEqual(inProgress);
-  });
-
-  test("unfinished - in progress workout scheduled after the week", () => {
-    const inProgress = {
-      ...mocks.workoutSummary,
-      status: Workouts.VO.WorkoutStatusEnum.in_progress,
-      scheduledFor: v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-06"),
-    };
-
-    const calculator = new Notifications.Services.WeeklySummaryCalculator({
-      ...empty,
-      workouts: [mocks.weekCompletedWorkout],
-      dashboard: { ...mocks.workoutDashboard, inProgress },
-    });
-
-    expect(calculator.calculate()?.unfinished).toEqual(null);
-  });
-
-  test("next up and completed are passed through", () => {
-    const calculator = new Notifications.Services.WeeklySummaryCalculator({
-      ...empty,
-      workouts: [mocks.weekCompletedWorkout],
-      dashboard: { ...mocks.workoutDashboard, nextUp: mocks.workoutSummary },
-    });
-
-    const summary = calculator.calculate();
-
-    expect(summary?.nextUp).toEqual(mocks.workoutSummary);
-    expect(summary?.completed).toEqual(mocks.workoutDashboard.completed);
   });
 });

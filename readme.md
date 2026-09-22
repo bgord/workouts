@@ -203,7 +203,9 @@ modules/
 │   ├── queries
 │   │   ├── get-weekly-summary-status.ts
 │   ├── services
-│   │   └── weekly-summary-calculator.ts
+│   │   ├── weekly-summary-calculator.ts
+│   │   ├── weekly-summary-layout.ts
+│   │   └── weekly-summary-notification-composer.ts
 │   └── value-objects
 │       ├── weekly-summary-status.ts
 │       ├── weekly-summary-stream.ts

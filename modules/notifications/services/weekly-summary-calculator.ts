@@ -10,7 +10,7 @@ type Config = {
   previousWorkouts: ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>;
   performances: ReadonlyArray<Workouts.Queries.WeekExercisePerformance>;
   measurements: ReadonlyArray<Measurements.VO.BodyWeightMeasurement>;
-  dashboard: Workouts.Queries.WorkoutDashboardResponse;
+  completed: Workouts.Queries.WorkoutDashboardCompleted;
 };
 
 const numbers = (workouts: ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>): VO.WeeklySummaryNumbers => {
@@ -60,9 +60,7 @@ export class WeeklySummaryCalculator {
       },
       highlights: this.highlights(),
       bodyWeight,
-      nextUp: this.config.dashboard.nextUp,
-      unfinished: this.unfinished(),
-      completed: this.config.dashboard.completed,
+      completed: this.config.completed,
     };
   }
 
@@ -101,15 +99,5 @@ export class WeeklySummaryCalculator {
       previousAverage: inPreviousWeek.length > 0 ? average(inPreviousWeek) : undefined,
       goal: this.config.measurements.find((measurement) => measurement.reference)?.goal,
     };
-  }
-
-  private unfinished(): Workouts.VO.WorkoutSummary | null {
-    const inProgress = this.config.dashboard.inProgress;
-
-    if (!inProgress) return null;
-
-    const end = tools.Day.fromTimestamp(this.config.week.getEnd()).toIsoId();
-
-    return inProgress.scheduledFor <= end ? inProgress : null;
   }
 }

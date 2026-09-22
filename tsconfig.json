@@ -19,6 +19,7 @@
       "+app/*": ["./app/*"],
       "+action-state": ["./modules/action-state.ts"],
       "+languages": ["./modules/languages.ts"],
+      "+supported-languages": ["./modules/supported-languages.ts"],
       "+auth": ["./modules/auth/index"],
       "+auth/*": ["./modules/auth/*"],
       "+measurements": ["./modules/measurements/index"],
