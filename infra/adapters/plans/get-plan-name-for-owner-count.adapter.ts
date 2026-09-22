@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { and, eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Plans from "+plans";
 import { db } from "+infra/db";
@@ -9,10 +9,15 @@ class GetPlanNameForOwnerCountQueryDrizzle implements Plans.Queries.GetPlanNameF
   async execute(
     planName: Plans.VO.PlanNameType,
     userId: Auth.VO.UserIdType,
+    excludedPlanId?: Plans.VO.PlanIdType,
   ): Promise<tools.IntegerNonNegativeType> {
     const count = await db.$count(
       Schema.plans,
-      and(eq(Schema.plans.name, planName), eq(Schema.plans.userId, userId)),
+      and(
+        eq(Schema.plans.name, planName),
+        eq(Schema.plans.userId, userId),
+        excludedPlanId ? ne(Schema.plans.id, excludedPlanId) : undefined,
+      ),
     );
 
     return tools.Int.nonNegative(count);

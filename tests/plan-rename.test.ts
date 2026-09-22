@@ -245,7 +245,7 @@ describe("POST /api/plans/:planId/rename", async () => {
     spies
       .use(spyOn(di.Adapters.System.IdProvider, "generate"))
       .mockReturnValueOnce(mocks.anotherPlanSectionId);
-    spies
+    const getPlanNameForOwnerCount = spies
       .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
       .mockResolvedValue(tools.Int.nonNegative(0));
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
@@ -261,6 +261,7 @@ describe("POST /api/plans/:planId/rename", async () => {
     );
 
     expect(response.status).toEqual(200);
+    expect(getPlanNameForOwnerCount).toHaveBeenCalledWith(mocks.anotherPlanName, mocks.userId, mocks.planId);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanRenamedEvent]);
   });
 });

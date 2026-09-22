@@ -14,6 +14,7 @@ export const handlePlanRenameCommand =
     const count = await deps.GetPlanNameForOwnerCountQuery.execute(
       command.payload.planName,
       command.payload.requesterId,
+      command.payload.planId,
     );
 
     PlanNameIsUniqueForOwner.enforce({ count });
