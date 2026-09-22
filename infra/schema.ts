@@ -28,6 +28,7 @@ import type { PlanSectionWarmupType } from "../modules/plans/value-objects/plan-
 import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { ProgressionMethodType } from "../modules/plans/value-objects/progression-method";
 import { ProgressionMethodOptions } from "../modules/plans/value-objects/progression-method-options";
+import type { RepsType as PlanRepsType } from "../modules/plans/value-objects/reps";
 import type { SetsType } from "../modules/plans/value-objects/sets";
 import type { LoadType } from "../modules/workouts/value-objects/load";
 import type { LoggedSetIdType } from "../modules/workouts/value-objects/logged-set-id";
@@ -260,8 +261,7 @@ export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseI
   planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
   exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
   sets: integer("sets", { mode: "number" }).notNull().$type<SetsType>(),
-  repsMin: integer("repsMin", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
-  repsMax: integer("repsMax", { mode: "number" }).notNull().$type<tools.IntegerPositiveType>(),
+  reps: text("reps", { mode: "json" }).notNull().$type<PlanRepsType>(),
   progression: text("progression", toEnumList(ProgressionMethodOptions))
     .notNull()
     .default(ProgressionMethodOptions.double_progression)
