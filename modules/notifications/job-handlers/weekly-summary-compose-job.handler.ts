@@ -87,6 +87,6 @@ export const WeeklySummaryComposeJobHandler =
       deps,
     );
 
-    await deps.JobDispatcher.enqueue(email);
     await deps.EventStore.save([bg.event(WeeklySummarySentEvent, stream, job.payload, deps)]);
+    await deps.JobDispatcher.enqueue(email);
   };
