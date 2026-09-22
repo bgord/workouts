@@ -175,10 +175,10 @@ modules/
 │   │   ├── get-body-weight-measurement.ts
 │   │   └── list-body-weight-measurements.ts
 │   ├── services
+│   │   ├── body-weight-average.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
-│   │   ├── body-weight-week-average.ts
 │   └── value-objects
 │       ├── body-weight-goal-options.ts
 │       ├── body-weight-goal.ts
