@@ -1,6 +1,5 @@
 import type * as tools from "@bgord/tools";
 import type * as Exercises from "+exercises";
-import type * as Measurements from "+measurements";
 import type * as Workouts from "+workouts";
 
 export type WeeklySummaryNumbers = {
@@ -26,7 +25,6 @@ export type WeeklySummaryBodyWeight = {
   average: number;
   count: tools.IntegerPositiveType;
   previousAverage?: number;
-  goal?: Measurements.VO.BodyWeightGoalType;
 };
 
 export type WeeklySummary = {

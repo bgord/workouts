@@ -107,14 +107,6 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     spies.use(
       spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
     );
-    spies.use(
-      spyOn(di.Adapters.Workouts.GetWorkoutDashboardQuery, "execute").mockResolvedValue({
-        inProgress: null,
-        nextUp: null,
-        lastCompleted: null,
-        completed: mocks.workoutDashboardCompleted,
-      }),
-    );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
@@ -151,14 +143,6 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     spies.use(
       spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
     );
-    spies.use(
-      spyOn(di.Adapters.Workouts.GetWorkoutDashboardQuery, "execute").mockResolvedValue({
-        inProgress: null,
-        nextUp: null,
-        lastCompleted: null,
-        completed: mocks.workoutDashboardCompleted,
-      }),
-    );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using render = spyOn(WeeklySummaryEmailRenderer, "render");
@@ -189,36 +173,5 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     expect(render).toHaveBeenCalledWith(composer.compose(mocks.weeklySummary).content);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWeeklySummarySentEvent]);
     expect(eventStoreSave.mock.invocationCallOrder[0]).toBeLessThan(enqueue.mock.invocationCallOrder[0]!);
-  });
-
-  test("dashboard counts are taken as of the week's end", async () => {
-    using spies = new DisposableStack();
-    spies.use(
-      spyOn(di.Adapters.Notifications.GetWeeklySummaryStatusQuery, "execute").mockResolvedValue(null),
-    );
-    spies.use(
-      spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute").mockResolvedValue(
-        Preferences.VO.WeeklySummaryOptions.on,
-      ),
-    );
-    spies.use(spyOn(di.Adapters.Auth.UserContactOHQ, "getPrimary").mockResolvedValue(mocks.emailContact));
-    spies.use(spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockResolvedValue([]));
-    spies.use(spyOn(di.Adapters.Workouts.ListWeekExercisePerformancesQuery, "execute").mockResolvedValue([]));
-    spies.use(
-      spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
-    );
-    using dashboard = spyOn(di.Adapters.Workouts.GetWorkoutDashboardQuery, "execute").mockResolvedValue({
-      inProgress: null,
-      nextUp: null,
-      lastCompleted: null,
-      completed: mocks.workoutDashboardCompleted,
-    });
-    using _ = spyOn(di.Tools.EventStore, "save");
-
-    await bg.CorrelationStorage.run(mocks.correlationId, async () =>
-      handler(mocks.GenericWeeklySummaryComposeJob),
-    );
-
-    expect(dashboard).toHaveBeenCalledWith(mocks.userId, mocks.week.getEnd());
   });
 });

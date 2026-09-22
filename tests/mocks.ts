@@ -662,7 +662,7 @@ export const weeklySummaryNotificationContent: Notifications.Services.WeeklySumm
     heading: "Body weight",
     value: "80.5 kg",
     caption: "average, 4 measurements",
-    note: "-0.3 kg vs last week · on track for cut",
+    note: "-0.3 kg vs last week",
   },
   footer: {
     before: "You get this every Monday. Turn it off in your ",

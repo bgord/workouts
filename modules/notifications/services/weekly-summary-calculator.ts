@@ -95,7 +95,6 @@ export class WeeklySummaryCalculator {
       average: average(inWeek),
       count: tools.Int.positive(inWeek.length),
       previousAverage: inPreviousWeek.length > 0 ? average(inPreviousWeek) : undefined,
-      goal: this.config.measurements.find((measurement) => measurement.reference)?.goal,
     };
   }
 }

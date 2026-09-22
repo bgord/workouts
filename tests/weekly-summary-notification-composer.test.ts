@@ -3,7 +3,6 @@ import { describe, expect, test } from "bun:test";
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-import * as Measurements from "+measurements";
 import * as Notifications from "+notifications";
 import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
@@ -89,58 +88,6 @@ describe("WeeklySummaryNotificationComposer", async () => {
 
     expect(notification.content.numbers).toEqual({ empty: "No workouts completed this week." });
     expect(notification.content.highlights).toEqual({ heading: "Progress", rows: [] });
-  });
-
-  test("compose - body weight on track for cut", () => {
-    const notification = en.compose({
-      ...mocks.weeklySummary,
-      bodyWeight: {
-        average: 80500,
-        count: tools.Int.positive(4),
-        previousAverage: 80800,
-        goal: Measurements.VO.BodyWeightGoalOptions.cut,
-      },
-    });
-
-    expect(notification.content.bodyWeight).toEqual({
-      heading: "Body weight",
-      value: "80.5 kg",
-      caption: "average, 4 measurements",
-      note: "-0.3 kg vs last week · on track for cut",
-    });
-  });
-
-  test("compose - body weight drifting from bulk", () => {
-    const notification = en.compose({
-      ...mocks.weeklySummary,
-      bodyWeight: {
-        average: 80500,
-        count: tools.Int.positive(1),
-        previousAverage: 80800,
-        goal: Measurements.VO.BodyWeightGoalOptions.bulk,
-      },
-    });
-
-    expect(notification.content.bodyWeight).toEqual({
-      heading: "Body weight",
-      value: "80.5 kg",
-      caption: "average, 1 measurement",
-      note: "-0.3 kg vs last week · drifting from bulk",
-    });
-  });
-
-  test("compose - body weight unchanged, maintain goal", () => {
-    const notification = en.compose({
-      ...mocks.weeklySummary,
-      bodyWeight: {
-        average: 80500,
-        count: tools.Int.positive(2),
-        previousAverage: 80520,
-        goal: Measurements.VO.BodyWeightGoalOptions.maintain,
-      },
-    });
-
-    expect(notification.content.bodyWeight?.note).toEqual("unchanged vs last week");
   });
 
   test("compose - body weight without previous week or goal", () => {

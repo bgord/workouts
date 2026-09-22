@@ -149,12 +149,7 @@ describe("WeeklySummaryCalculator", () => {
         },
       },
       highlights: [],
-      bodyWeight: {
-        average: mocks.bodyWeight,
-        count: tools.Int.positive(1),
-        previousAverage: undefined,
-        goal: undefined,
-      },
+      bodyWeight: { average: mocks.bodyWeight, count: tools.Int.positive(1), previousAverage: undefined },
     });
   });
 
@@ -184,7 +179,6 @@ describe("WeeklySummaryCalculator", () => {
       average: (mocks.bodyWeight + heavier) / 2,
       count: tools.Int.positive(2),
       previousAverage: heavier,
-      goal: Measurements.VO.BodyWeightGoalOptions.cut,
     });
   });
 

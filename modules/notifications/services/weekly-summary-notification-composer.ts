@@ -1,7 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-import * as Measurements from "+measurements";
 import type { SupportedLanguages } from "+supported-languages";
 import type * as VO from "+notifications/value-objects";
 import { WeeklySummaryFormatter } from "./weekly-summary-formatter";
@@ -13,8 +12,6 @@ import type {
 type LanguagesType = (typeof SupportedLanguages)[number];
 type Translate = ReturnType<typeof bg.TranslatorService.use>;
 type NounForms = { singular: string; plural: string; genitive: string };
-
-const BODY_WEIGHT_UNCHANGED_THRESHOLD_GRAMS = 50;
 
 export class WeeklySummaryNotificationComposer {
   private readonly t: Translate;
@@ -113,20 +110,13 @@ export class WeeklySummaryNotificationComposer {
 
     const difference = bodyWeight.average - bodyWeight.previousAverage;
 
-    if (Math.abs(difference) < BODY_WEIGHT_UNCHANGED_THRESHOLD_GRAMS) {
+    if (bodyWeight.average - bodyWeight.previousAverage === 0) {
       return this.t("notifications.weekly_summary.body_weight.unchanged");
     }
 
     const delta = this.delta(`${this.format.signedWeight(difference)} kg`);
 
-    if (!bodyWeight.goal || bodyWeight.goal === Measurements.VO.BodyWeightGoalOptions.maintain) return delta;
-
-    const direction = difference > 0 ? "up" : "down";
-
-    return this.t("notifications.weekly_summary.body_weight.note", {
-      delta,
-      goal: this.t(`notifications.weekly_summary.body_weight.goal.${bodyWeight.goal}.${direction}`),
-    });
+    return this.t("notifications.weekly_summary.body_weight.note", { delta });
   }
 
   private set(target: VO.WeeklySummaryHighlight["current"]) {

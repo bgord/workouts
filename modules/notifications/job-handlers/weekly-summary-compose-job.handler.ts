@@ -15,7 +15,8 @@ import { WeeklySummaryStream } from "../value-objects/weekly-summary-stream";
 type LanguagesType = (typeof SupportedLanguages)[number];
 
 type AcceptedEvent =
-  Notifications.Events.WeeklySummarySentEventType | Notifications.Events.WeeklySummarySkippedEventType;
+  | Notifications.Events.WeeklySummarySentEventType
+  | Notifications.Events.WeeklySummarySkippedEventType;
 
 type Config = { EMAIL_FROM: tools.EmailType; BETTER_AUTH_URL: tools.UrlWithoutSlashType };
 

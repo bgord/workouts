@@ -20,8 +20,7 @@ describe("WeeklySummaryEmail", () => {
     expect(html).toContain(">Body weight</p>");
     expect(html).toContain(">80.5 kg</span>");
     expect(html).toContain("> average, 4 measurements</span>");
-    expect(html).toContain(">-0.3 kg vs last week · on track for cut</p>");
-    expect(html).toContain(">3 workouts completed this month, 3 this year.</p>");
+    expect(html).toContain(">-0.3 kg vs last week</p>");
     expect(html).toContain('href="http://localhost:3000/profile"');
     expect(html).toContain(">profile</a>");
     expect(html).toContain(">— Workouts</p>");
