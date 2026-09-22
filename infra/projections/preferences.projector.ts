@@ -38,4 +38,19 @@ export class PreferencesProjector {
         set: { value: event.payload.language, updatedAt: event.createdAt },
       });
   }
+
+  async onWeeklySummarySetEvent(event: Preferences.Events.WeeklySummarySetEventType) {
+    await db
+      .insert(Schema.userPreferences)
+      .values({
+        userId: event.payload.userId,
+        preference: "weekly_summary",
+        value: event.payload.weeklySummary,
+        updatedAt: event.createdAt,
+      })
+      .onConflictDoUpdate({
+        target: [Schema.userPreferences.userId, Schema.userPreferences.preference],
+        set: { value: event.payload.weeklySummary, updatedAt: event.createdAt },
+      });
+  }
 }
