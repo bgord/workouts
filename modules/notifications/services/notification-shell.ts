@@ -22,7 +22,7 @@ const logo = `
     </tr></table>
     <div style="${styles.rule}">&nbsp;</div>`;
 
-export const escape = (value: string) =>
+export const escapeHtml = (value: string) =>
   value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -46,7 +46,7 @@ export class NotificationShell {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="${styles.card}">
   <tr><td style="${styles.content}">${logo}${config.body}
     <div style="${styles.rule}">&nbsp;</div>
-    <p style="${styles.signature}">${escape(config.signature)}</p>
+    <p style="${styles.signature}">${escapeHtml(config.signature)}</p>
   </td></tr>
   </table>
 </td></tr>

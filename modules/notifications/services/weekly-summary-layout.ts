@@ -1,4 +1,4 @@
-import { escape, NotificationShell } from "./notification-shell";
+import { escapeHtml, NotificationShell } from "./notification-shell";
 
 export type WeeklySummaryLayoutTile = { value: string; label: string; delta: string };
 
@@ -49,7 +49,7 @@ const styles = {
 };
 
 const heading = (text: string) => `
-    <p style="${styles.heading}">${escape(text)}</p>`;
+    <p style="${styles.heading}">${escapeHtml(text)}</p>`;
 
 const tile = (
   tile: WeeklySummaryLayoutTile,
@@ -61,16 +61,16 @@ const tile = (
 
   return `
       <td width="${width}%" style="${styles.tile.cell}${last ? "" : styles.tile.divider}">
-        <div style="${styles.tile.value}">${escape(tile.value)}</div>
-        <div style="${styles.tile.label}">${escape(tile.label)}</div>
-        <div style="${styles.tile.delta}">${escape(tile.delta)}</div>
+        <div style="${styles.tile.value}">${escapeHtml(tile.value)}</div>
+        <div style="${styles.tile.label}">${escapeHtml(tile.label)}</div>
+        <div style="${styles.tile.delta}">${escapeHtml(tile.delta)}</div>
       </td>`;
 };
 
 const numbers = (config: WeeklySummaryLayoutConfig["numbers"]) => {
   if ("empty" in config)
     return `
-    <p style="${styles.paragraph}">${escape(config.empty)}</p>`;
+    <p style="${styles.paragraph}">${escapeHtml(config.empty)}</p>`;
 
   return `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="${styles.tiles}">
@@ -85,8 +85,8 @@ const highlights = (config: WeeklySummaryLayoutConfig["highlights"]) => {
   const rows = config.rows.map(
     (row) => `
     <tr>
-      <td style="${styles.row.name}">${escape(row.name)}</td>
-      <td align="right" style="${styles.row.change}">${escape(row.previous)} <span style="${styles.row.arrow}">→</span> <span style="${styles.row.current}">${escape(row.current)}</span></td>
+      <td style="${styles.row.name}">${escapeHtml(row.name)}</td>
+      <td align="right" style="${styles.row.change}">${escapeHtml(row.previous)} <span style="${styles.row.arrow}">→</span> <span style="${styles.row.current}">${escapeHtml(row.current)}</span></td>
     </tr>`,
   );
 
@@ -100,22 +100,22 @@ const bodyWeight = (config: WeeklySummaryLayoutConfig["bodyWeight"]) => {
 
   const note = config.note
     ? `
-    <p style="${styles.bodyWeight.note}">${escape(config.note)}</p>`
+    <p style="${styles.bodyWeight.note}">${escapeHtml(config.note)}</p>`
     : "";
 
   return `${heading(config.heading)}
-    <p style="${styles.bodyWeight.line}"><span style="${styles.bodyWeight.value}">${escape(config.value)}</span><span style="${styles.bodyWeight.caption}"> ${escape(config.caption)}</span></p>${note}`;
+    <p style="${styles.bodyWeight.line}"><span style="${styles.bodyWeight.value}">${escapeHtml(config.value)}</span><span style="${styles.bodyWeight.caption}"> ${escapeHtml(config.caption)}</span></p>${note}`;
 };
 
 const footer = (config: WeeklySummaryLayoutConfig["footer"]) => `
-    <p style="${styles.footer}">${escape(config.before)}<a href="${escape(config.url)}" style="${styles.link}">${escape(config.link)}</a>${escape(config.after)}</p>`;
+    <p style="${styles.footer}">${escapeHtml(config.before)}<a href="${escapeHtml(config.url)}" style="${styles.link}">${escapeHtml(config.link)}</a>${escapeHtml(config.after)}</p>`;
 
 export class WeeklySummaryLayout {
   static render(config: WeeklySummaryLayoutConfig): string {
     const body = `
-    <p style="${styles.eyebrow}">${escape(config.eyebrow)}</p>
-    <p style="${styles.title}">${escape(config.title)}</p>${numbers(config.numbers)}${highlights(config.highlights)}${bodyWeight(config.bodyWeight)}
-    <p style="${styles.consistency}">${escape(config.consistency)}</p>${footer(config.footer)}`;
+    <p style="${styles.eyebrow}">${escapeHtml(config.eyebrow)}</p>
+    <p style="${styles.title}">${escapeHtml(config.title)}</p>${numbers(config.numbers)}${highlights(config.highlights)}${bodyWeight(config.bodyWeight)}
+    <p style="${styles.consistency}">${escapeHtml(config.consistency)}</p>${footer(config.footer)}`;
 
     return NotificationShell.render({ body, signature: config.signature });
   }
