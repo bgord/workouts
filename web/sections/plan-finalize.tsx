@@ -37,8 +37,6 @@ export function PlanFinalize() {
         {t("plan.finalize.cta")}
       </button>
 
-      <ui.ActionHint {...plan.actions.finalize} />
-
       {mutation.isError && <ui.Output>{t("plan.finalize.error")}</ui.Output>}
     </form>
   );

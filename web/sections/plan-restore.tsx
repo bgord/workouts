@@ -37,8 +37,6 @@ export function PlanRestore() {
         {t("plan.restore.cta")}
       </button>
 
-      <ui.ActionHint {...plan.actions.restore} />
-
       {mutation.isError && <ui.Output>{t("plan.restore.error")}</ui.Output>}
     </form>
   );

@@ -70,6 +70,7 @@ export function Plan() {
           <PlanDescription />
 
           {plan.actions.finalize.available && <ui.ActionHint {...plan.actions.finalize} />}
+          {plan.actions.restore.available && <ui.ActionHint {...plan.actions.restore} />}
         </div>
       </div>
 
