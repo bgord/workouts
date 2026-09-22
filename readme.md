@@ -123,6 +123,10 @@ modules/
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
 │   │   └── list-exercises-with-categories.ts
+│   ├── services
+│   │   ├── exercise-category-list-actions.ts
+│   │   ├── exercise-get-actions.ts
+│   │   ├── exercise-list-actions.ts
 │   └── value-objects
 │       ├── exercise-catalog-entry.ts
 │       ├── exercise-catalog.ts
