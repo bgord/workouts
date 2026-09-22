@@ -10,7 +10,7 @@ import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Measurements from "+measurements";
 import * as Plans from "+plans";
-import type * as Preferences from "+preferences";
+import * as Preferences from "+preferences";
 import * as Statistics from "+statistics";
 import * as Workouts from "+workouts";
 
@@ -569,6 +569,17 @@ export const GenericUserLanguageSetPLEvent = {
   name: "USER_LANGUAGE_SET_EVENT",
   payload: { userId, language: languages.supported.pl },
 } satisfies bg.Preferences.Events.UserLanguageSetEventType;
+
+export const GenericWeeklySummarySetOffEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: preferencesStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SET_EVENT",
+  payload: { userId, weeklySummary: Preferences.VO.WeeklySummaryOptions.off },
+} satisfies Preferences.Events.WeeklySummarySetEventType;
 
 export const GenericProfileAvatarUpdatedEvent = {
   id: expectAnyId,
