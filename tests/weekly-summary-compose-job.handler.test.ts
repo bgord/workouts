@@ -25,7 +25,6 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       UserLanguageOHQ: di.Adapters.Preferences.UserLanguageOHQ,
       ListWeekCompletedWorkoutsOHQ: di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery,
       ListWeekExercisePerformancesOHQ: di.Adapters.Workouts.ListWeekExercisePerformancesQuery,
-      GetWorkoutDashboardOHQ: di.Adapters.Workouts.GetWorkoutDashboardQuery,
       ListBodyWeightMeasurementsOHQ: di.Adapters.Measurements.ListBodyWeightMeasurementsQuery,
       WeeklySummaryEmailRenderer,
     },

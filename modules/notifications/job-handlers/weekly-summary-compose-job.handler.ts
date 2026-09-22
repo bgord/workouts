@@ -15,8 +15,7 @@ import { WeeklySummaryStream } from "../value-objects/weekly-summary-stream";
 type LanguagesType = (typeof SupportedLanguages)[number];
 
 type AcceptedEvent =
-  | Notifications.Events.WeeklySummarySentEventType
-  | Notifications.Events.WeeklySummarySkippedEventType;
+  Notifications.Events.WeeklySummarySentEventType | Notifications.Events.WeeklySummarySkippedEventType;
 
 type Config = { EMAIL_FROM: tools.EmailType; BETTER_AUTH_URL: tools.UrlWithoutSlashType };
 
@@ -33,7 +32,6 @@ type Dependencies = {
   UserLanguageOHQ: bg.Preferences.OHQ.UserLanguagePort<LanguagesType>;
   ListWeekCompletedWorkoutsOHQ: Workouts.OHQ.ListWeekCompletedWorkoutsOHQ;
   ListWeekExercisePerformancesOHQ: Workouts.OHQ.ListWeekExercisePerformancesOHQ;
-  GetWorkoutDashboardOHQ: Workouts.OHQ.GetWorkoutDashboardOHQ;
   ListBodyWeightMeasurementsOHQ: Measurements.OHQ.ListBodyWeightMeasurementsOHQ;
   WeeklySummaryEmailRenderer: Notifications.Services.WeeklySummaryEmailRenderer;
 };
@@ -52,12 +50,11 @@ export const WeeklySummaryComposeJobHandler =
 
     const week = tools.Week.fromIsoId(job.payload.weekIsoId);
 
-    const [workouts, previousWorkouts, performances, measurements, dashboard] = await Promise.all([
+    const [workouts, previousWorkouts, performances, measurements] = await Promise.all([
       deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week),
       deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week.previous()),
       deps.ListWeekExercisePerformancesOHQ.execute(job.payload.userId, week),
       deps.ListBodyWeightMeasurementsOHQ.execute(job.payload.userId),
-      deps.GetWorkoutDashboardOHQ.execute(job.payload.userId, week.getEnd()),
     ]);
 
     const summary = new WeeklySummaryCalculator({
@@ -66,7 +63,6 @@ export const WeeklySummaryComposeJobHandler =
       previousWorkouts,
       performances,
       measurements,
-      completed: dashboard.completed,
     }).calculate();
 
     const stream = WeeklySummaryStream.of(job.payload.userId, job.payload.weekIsoId);

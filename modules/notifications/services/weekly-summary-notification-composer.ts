@@ -40,11 +40,6 @@ export class WeeklySummaryNotificationComposer {
         numbers: this.numbers(summary.numbers),
         highlights: this.highlights(summary.highlights),
         bodyWeight: this.bodyWeight(summary.bodyWeight),
-        consistency: this.t("notifications.weekly_summary.consistency", {
-          month: summary.completed.month,
-          noun: this.format.noun(summary.completed.month, this.forms("completed")),
-          year: summary.completed.year,
-        }),
         footer: {
           before: this.t("notifications.weekly_summary.footer.before"),
           link: this.t("notifications.weekly_summary.footer.link"),

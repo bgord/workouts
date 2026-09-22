@@ -40,7 +40,6 @@ describe("WeeklySummaryNotificationComposer", async () => {
           rows: [{ name: mocks.exerciseName, previous: "1 × 5 × 80 kg", current: "2 × 5 × 90 kg" }],
         },
         bodyWeight: undefined,
-        consistency: "3 workouts completed this month, 3 this year.",
         footer: {
           before: "You get this every Monday. Turn it off in your ",
           link: "profile",
@@ -70,7 +69,6 @@ describe("WeeklySummaryNotificationComposer", async () => {
           rows: [{ name: mocks.exerciseName, previous: "1 × 5 × 80 kg", current: "2 × 5 × 90 kg" }],
         },
         bodyWeight: undefined,
-        consistency: "3 treningi ukończone w tym miesiącu, 3 w tym roku.",
         footer: {
           before: "Dostajesz to w każdy poniedziałek. Wyłącz w swoim ",
           link: "profilu",
@@ -167,13 +165,11 @@ describe("WeeklySummaryNotificationComposer", async () => {
         current: { ...mocks.weeklySummary.numbers.current, workouts: tools.Int.nonNegative(5) },
       },
       bodyWeight: { average: 80500, count: tools.Int.positive(3) },
-      completed: { ...mocks.workoutDashboardCompleted, month: tools.Int.nonNegative(1) },
     });
 
     expect(notification.content.numbers).toMatchObject({
       tiles: [{ value: "5", label: "treningów" }, { label: "serie" }, { label: "objętość (kg)" }],
     });
     expect(notification.content.bodyWeight?.caption).toEqual("średnio, 3 pomiary");
-    expect(notification.content.consistency).toEqual("1 trening ukończony w tym miesiącu, 3 w tym roku.");
   });
 });

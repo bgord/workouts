@@ -10,7 +10,6 @@ type Config = {
   previousWorkouts: ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>;
   performances: ReadonlyArray<Workouts.Queries.WeekExercisePerformance>;
   measurements: ReadonlyArray<Measurements.VO.BodyWeightMeasurement>;
-  completed: Workouts.Queries.WorkoutDashboardCompleted;
 };
 
 const numbers = (workouts: ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>): VO.WeeklySummaryNumbers => {
@@ -60,7 +59,6 @@ export class WeeklySummaryCalculator {
       },
       highlights: this.highlights(),
       bodyWeight,
-      completed: this.config.completed,
     };
   }
 

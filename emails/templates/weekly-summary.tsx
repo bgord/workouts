@@ -16,14 +16,7 @@ const styles = {
     color: theme.color.textSecondary,
     fontVariantNumeric: theme.font.tabular,
   },
-  consistency: {
-    margin: "28px 0 0",
-    fontSize: "13px",
-    lineHeight: 1.6,
-    color: theme.color.textSecondary,
-    fontVariantNumeric: theme.font.tabular,
-  },
-  footer: { margin: "16px 0 0", fontSize: "12px", lineHeight: 1.6, color: theme.color.textMuted },
+  footer: { margin: "36px 0 0", fontSize: "12px", lineHeight: 1.6, color: theme.color.textMuted },
 } satisfies Record<string, React.CSSProperties>;
 
 export function WeeklySummaryEmail(props: Notifications.Services.WeeklySummaryNotificationContent) {
@@ -55,8 +48,6 @@ export function WeeklySummaryEmail(props: Notifications.Services.WeeklySummaryNo
           {props.bodyWeight.note && <Text style={styles.bodyWeightNote}>{props.bodyWeight.note}</Text>}
         </>
       )}
-
-      <Text style={styles.consistency}>{props.consistency}</Text>
 
       <Text style={styles.footer}>
         {props.footer.before}

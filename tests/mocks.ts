@@ -642,7 +642,6 @@ export const weeklySummary: Notifications.VO.WeeklySummary = {
   },
   highlights: [weeklySummaryHighlight],
   bodyWeight: undefined,
-  completed: workoutDashboardCompleted,
 };
 
 export const weeklySummaryNotificationContent: Notifications.Services.WeeklySummaryNotificationContent = {
@@ -665,7 +664,6 @@ export const weeklySummaryNotificationContent: Notifications.Services.WeeklySumm
     caption: "average, 4 measurements",
     note: "-0.3 kg vs last week · on track for cut",
   },
-  consistency: "3 workouts completed this month, 3 this year.",
   footer: {
     before: "You get this every Monday. Turn it off in your ",
     link: "profile",

@@ -191,7 +191,6 @@
   "notifications.weekly_summary.completed.noun.genitive": "treningów ukończonych",
   "notifications.weekly_summary.completed.noun.plural": "treningi ukończone",
   "notifications.weekly_summary.completed.noun.singular": "trening ukończony",
-  "notifications.weekly_summary.consistency": "{{month}} {{noun}} w tym miesiącu, {{year}} w tym roku.",
   "notifications.weekly_summary.delta": "{{value}} vs poprzedni",
   "notifications.weekly_summary.empty": "Brak ukończonych treningów w tym tygodniu.",
   "notifications.weekly_summary.eyebrow": "Tygodniowe podsumowanie",

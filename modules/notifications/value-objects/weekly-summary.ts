@@ -38,5 +38,4 @@ export type WeeklySummary = {
   };
   highlights: Array<WeeklySummaryHighlight>;
   bodyWeight?: WeeklySummaryBodyWeight;
-  completed: Workouts.Queries.WorkoutDashboardCompleted;
 };
