@@ -27,7 +27,7 @@ export function ExerciseName() {
     },
   });
 
-  if (!exercise.actions.update.enabled) {
+  if (!exercise.actions.update.available) {
     return (
       <ui.Header data-grow="1" data-minw="0">
         {exercise.data.name}

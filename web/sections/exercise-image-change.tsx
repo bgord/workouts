@@ -35,7 +35,7 @@ export function ExerciseImageChange() {
     },
   });
 
-  if (!exercise.actions.imageChange.enabled) {
+  if (!exercise.actions.imageChange.available) {
     return <ui.ExerciseImage size={ui.ExerciseImageSize.lg} {...exercise.data} />;
   }
 
