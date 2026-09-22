@@ -24,15 +24,15 @@ export type ExerciseInstructionWithExercise = {
 export type PlanSectionWithExercises = {
   id: PlanSectionIdType;
   name: PlanSectionNameType;
-  warmup?: PlanSectionWarmupType;
-  cooldown?: PlanSectionCooldownType;
+  warmup: PlanSectionWarmupType | null;
+  cooldown: PlanSectionCooldownType | null;
   exerciseInstructions: Array<ExerciseInstructionWithExercise>;
 };
 
 export type Plan = {
   id: PlanIdType;
   name: PlanNameType;
-  description?: PlanDescriptionType;
+  description: PlanDescriptionType | null;
   status: PlanStatusEnum;
   revision: tools.RevisionValueType;
   updatedAt: tools.TimestampValueType;

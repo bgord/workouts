@@ -7,7 +7,7 @@ import type { PlanStatusEnum } from "./plan-status";
 export type PlanSummary = {
   id: PlanIdType;
   name: PlanNameType;
-  description?: PlanDescriptionType;
+  description: PlanDescriptionType | null;
   status: PlanStatusEnum;
   revision: tools.RevisionValueType;
   updatedAt: tools.TimestampValueType;

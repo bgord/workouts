@@ -37,44 +37,27 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     if (!plan) return null;
 
     const data = {
-      id: plan.id,
-      name: plan.name,
-      description: plan.description ?? undefined,
-      status: plan.status,
-      revision: plan.revision,
-      updatedAt: plan.updatedAt,
-      sections: plan.sections.map((section) => {
-        const planSection = {
-          id: section.id,
-          name: section.name,
-          warmup: section.warmup ?? undefined,
-          cooldown: section.cooldown ?? undefined,
-          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
-            id: exerciseInstruction.id,
-            exercise: exerciseInstruction.exercise,
-            sets: exerciseInstruction.sets,
-            reps: v.parse(Plans.VO.Reps, {
-              min: exerciseInstruction.repsMin,
-              max: exerciseInstruction.repsMax,
-            }),
-            progression: exerciseInstruction.progression,
+      ...plan,
+      sections: plan.sections.map(({ exerciseInstructions, ...rest }) => {
+        const section = {
+          ...rest,
+          exerciseInstructions: exerciseInstructions.map(({ repsMin, repsMax, ...exerciseInstruction }) => ({
+            ...exerciseInstruction,
+            reps: v.parse(Plans.VO.Reps, { min: repsMin, max: repsMax }),
           })),
         };
 
         return {
-          ...planSection,
-          exerciseInstructions: planSection.exerciseInstructions.map((exerciseInstruction) => ({
+          ...section,
+          exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
             ...exerciseInstruction,
             actions: new Plans.Services.PlanGetExerciseInstructionActions({
               status: plan.status,
-              section: planSection,
+              section,
               exerciseInstructionId: exerciseInstruction.id,
             }).calculate(),
           })),
-          actions: new Plans.Services.PlanGetSectionActions({
-            status: plan.status,
-            section: planSection,
-          }).calculate(),
+          actions: new Plans.Services.PlanGetSectionActions({ status: plan.status, section }).calculate(),
         };
       }),
     };

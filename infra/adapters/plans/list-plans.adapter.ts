@@ -23,13 +23,8 @@ class ListPlansQueryDrizzle implements Plans.Queries.ListPlans {
       .groupBy(Schema.plans.id)
       .orderBy(desc(Schema.plans.updatedAt));
 
-    const summaries = plans.map((plan) => ({
-      ...plan,
-      description: plan.description ?? undefined,
-    }));
-
-    const active = summaries.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
-    const archived = summaries.filter((plan) => plan.status === Plans.VO.PlanStatusEnum.archived);
+    const active = plans.filter((plan) => plan.status !== Plans.VO.PlanStatusEnum.archived);
+    const archived = plans.filter((plan) => plan.status === Plans.VO.PlanStatusEnum.archived);
 
     return {
       data: { active, archived },

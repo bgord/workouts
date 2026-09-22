@@ -240,6 +240,7 @@ export const exerciseCategoryStream = v.parse(bg.EventStream, `exercise_category
 export const planSummary: Plans.VO.PlanSummary = {
   id: planId,
   name: planName,
+  description: null,
   status: Plans.VO.PlanStatusEnum.draft,
   revision: revision.value,
   updatedAt: T0.ms,
@@ -263,6 +264,8 @@ const planSection: Plans.VO.PlanSectionWithExercises = {
 const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
   id: anotherPlanSectionId,
   name: anotherPlanSectionName,
+  warmup: null,
+  cooldown: null,
   exerciseInstructions: [
     {
       id: anotherExerciseInstructionAndId.id,
@@ -277,6 +280,8 @@ const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
 export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = {
   id: planSectionId,
   name: planSectionName,
+  warmup: null,
+  cooldown: null,
   exerciseInstructions: Array.from({ length: Plans.VO.PlanSectionExerciseInstructionLimitMax }, () => ({
     id: v.parse(Plans.VO.ExerciseInstructionId, crypto.randomUUID()),
     exercise,
@@ -289,12 +294,16 @@ export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = 
 export const planSectionWithTwoExerciseInstructions: Plans.VO.PlanSectionWithExercises = {
   id: planSectionId,
   name: planSectionName,
+  warmup: null,
+  cooldown: null,
   exerciseInstructions: [...planSection.exerciseInstructions, ...anotherPlanSection.exerciseInstructions],
 };
 
 export const planSectionEmpty: Plans.VO.PlanSectionWithExercises = {
   id: anotherPlanSectionId,
   name: anotherPlanSectionName,
+  warmup: null,
+  cooldown: null,
   exerciseInstructions: [],
 };
 
@@ -306,6 +315,7 @@ export const planSectionsAtLimit: ReadonlyArray<Plans.VO.PlanSectionWithExercise
 export const plan: Plans.VO.Plan = {
   id: planId,
   name: planName,
+  description: null,
   status: Plans.VO.PlanStatusEnum.draft,
   revision: revision.value,
   updatedAt: T0.ms,
