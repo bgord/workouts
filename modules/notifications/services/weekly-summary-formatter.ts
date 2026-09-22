@@ -7,12 +7,35 @@ const GRAMS_IN_KILOGRAM = 1000;
 
 const locales: Record<LanguagesType, string> = { en: "en-GB", pl: "pl-PL" };
 
+export enum WeightFormats {
+  load = "load",
+  volume = "volume",
+  bodyWeight = "body_weight",
+}
+
+const precisions: Record<WeightFormats, Intl.NumberFormatOptions> = {
+  [WeightFormats.load]: { maximumFractionDigits: 2 },
+  [WeightFormats.volume]: { maximumFractionDigits: 0, useGrouping: "always" },
+  [WeightFormats.bodyWeight]: { minimumFractionDigits: 1, maximumFractionDigits: 1 },
+};
+
+const weightFormats = (
+  locale: string,
+  signDisplay?: Intl.NumberFormatOptions["signDisplay"],
+): Record<WeightFormats, Intl.NumberFormat> => ({
+  [WeightFormats.load]: new Intl.NumberFormat(locale, { ...precisions[WeightFormats.load], signDisplay }),
+  [WeightFormats.volume]: new Intl.NumberFormat(locale, { ...precisions[WeightFormats.volume], signDisplay }),
+  [WeightFormats.bodyWeight]: new Intl.NumberFormat(locale, {
+    ...precisions[WeightFormats.bodyWeight],
+    signDisplay,
+  }),
+});
+
 export class WeeklySummaryFormatter {
   private readonly integerFormat: Intl.NumberFormat;
   private readonly signedFormat: Intl.NumberFormat;
-  private readonly loadFormat: Intl.NumberFormat;
-  private readonly weightFormat: Intl.NumberFormat;
-  private readonly signedWeightFormat: Intl.NumberFormat;
+  private readonly weightFormats: Record<WeightFormats, Intl.NumberFormat>;
+  private readonly signedWeightFormats: Record<WeightFormats, Intl.NumberFormat>;
   private readonly dayFormat: Intl.DateTimeFormat;
   private readonly plural: Intl.PluralRules;
 
@@ -25,13 +48,8 @@ export class WeeklySummaryFormatter {
       useGrouping: "always",
       signDisplay: "always",
     });
-    this.loadFormat = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 });
-    this.weightFormat = new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-    this.signedWeightFormat = new Intl.NumberFormat(locale, {
-      minimumFractionDigits: 1,
-      maximumFractionDigits: 1,
-      signDisplay: "always",
-    });
+    this.weightFormats = weightFormats(locale);
+    this.signedWeightFormats = weightFormats(locale, "always");
     this.dayFormat = new Intl.DateTimeFormat(locale, { timeZone: "UTC", day: "numeric", month: "short" });
     this.plural = new Intl.PluralRules(locale);
   }
@@ -44,24 +62,12 @@ export class WeeklySummaryFormatter {
     return this.signedFormat.format(value);
   }
 
-  load(grams: number) {
-    return this.loadFormat.format(grams / GRAMS_IN_KILOGRAM);
+  weight(grams: number, format: WeightFormats) {
+    return this.weightFormats[format].format(grams / GRAMS_IN_KILOGRAM);
   }
 
-  kilograms(grams: number) {
-    return this.integerFormat.format(grams / GRAMS_IN_KILOGRAM);
-  }
-
-  signedKilograms(grams: number) {
-    return this.signedFormat.format(grams / GRAMS_IN_KILOGRAM);
-  }
-
-  weight(grams: number) {
-    return this.weightFormat.format(grams / GRAMS_IN_KILOGRAM);
-  }
-
-  signedWeight(grams: number) {
-    return this.signedWeightFormat.format(grams / GRAMS_IN_KILOGRAM);
+  signedWeight(grams: number, format: WeightFormats) {
+    return this.signedWeightFormats[format].format(grams / GRAMS_IN_KILOGRAM);
   }
 
   range(week: tools.Week) {

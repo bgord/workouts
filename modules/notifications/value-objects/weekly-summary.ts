@@ -3,16 +3,16 @@ import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import type { Comparison } from "./comparison";
 
+export enum WeeklySummarySectionKinds {
+  numbers = "numbers",
+  highlights = "highlights",
+  bodyWeight = "body_weight",
+}
+
 export type WeeklySummaryNumbers = {
   workouts: tools.IntegerNonNegativeType;
   sets: tools.IntegerNonNegativeType;
   volume: tools.WeightGramsType;
-};
-
-export type WeeklySummaryNumbersComparison = {
-  workouts: Comparison<tools.IntegerNonNegativeType>;
-  sets: Comparison<tools.IntegerNonNegativeType>;
-  volume: Comparison<tools.WeightGramsType>;
 };
 
 export type WeeklySummaryHighlight = {
@@ -22,14 +22,30 @@ export type WeeklySummaryHighlight = {
   current: Workouts.VO.ExerciseTargetType;
 };
 
-export type WeeklySummaryBodyWeight = {
+export type WeeklySummaryNumbersSection = {
+  kind: WeeklySummarySectionKinds.numbers;
+  workouts: Comparison<tools.IntegerNonNegativeType>;
+  sets: Comparison<tools.IntegerNonNegativeType>;
+  volume: Comparison<tools.WeightGramsType>;
+};
+
+export type WeeklySummaryHighlightsSection = {
+  kind: WeeklySummarySectionKinds.highlights;
+  rows: ReadonlyArray<WeeklySummaryHighlight>;
+};
+
+export type WeeklySummaryBodyWeightSection = {
+  kind: WeeklySummarySectionKinds.bodyWeight;
   average: Comparison;
   count: tools.IntegerPositiveType;
 };
 
+export type WeeklySummarySection =
+  | WeeklySummaryNumbersSection
+  | WeeklySummaryHighlightsSection
+  | WeeklySummaryBodyWeightSection;
+
 export type WeeklySummary = {
   weekIsoId: tools.WeekIsoIdType;
-  numbers: WeeklySummaryNumbersComparison;
-  highlights: Array<WeeklySummaryHighlight>;
-  bodyWeight?: WeeklySummaryBodyWeight;
+  sections: ReadonlyArray<WeeklySummarySection>;
 };

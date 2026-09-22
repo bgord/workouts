@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import * as Emails from "+emails";
+import * as Notifications from "+notifications";
 import * as mocks from "./mocks";
 
 describe("WeeklySummaryEmail", () => {
@@ -29,9 +30,12 @@ describe("WeeklySummaryEmail", () => {
   test("render - empty week without highlights or body weight", async () => {
     const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
       ...mocks.weeklySummaryNotificationContent,
-      numbers: { empty: "No workouts completed this week." },
-      highlights: { heading: "Progress", rows: [] },
-      bodyWeight: undefined,
+      blocks: [
+        {
+          kind: Notifications.Services.WeeklySummaryBlockKinds.text,
+          text: "No workouts completed this week.",
+        },
+      ],
     });
 
     expect(html).toContain(">No workouts completed this week.</p>");
@@ -43,10 +47,12 @@ describe("WeeklySummaryEmail", () => {
   test("render - escapes user content", async () => {
     const html = await Emails.renderEmail(Emails.WeeklySummaryEmail, {
       ...mocks.weeklySummaryNotificationContent,
-      highlights: {
-        heading: "Progress",
-        rows: [{ name: "<b>Bench</b> & co", previous: "1 × 5 × 80 kg", current: "2 × 5 × 90 kg" }],
-      },
+      blocks: [
+        {
+          kind: Notifications.Services.WeeklySummaryBlockKinds.changes,
+          rows: [{ name: "<b>Bench</b> & co", previous: "1 × 5 × 80 kg", current: "2 × 5 × 90 kg" }],
+        },
+      ],
     });
 
     expect(html).toContain("&lt;b&gt;Bench&lt;/b&gt; &amp; co");

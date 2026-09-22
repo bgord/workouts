@@ -619,52 +619,96 @@ export const workoutDashboardCompleted: Workouts.Queries.WorkoutDashboardComplet
   total: tools.Int.nonNegative(12),
 };
 
+export const weeklySummaryNumbersSection: Notifications.VO.WeeklySummaryNumbersSection = {
+  kind: Notifications.VO.WeeklySummarySectionKinds.numbers,
+  workouts: {
+    current: tools.Int.nonNegative(1),
+    previous: tools.Int.nonNegative(0),
+    delta: 1,
+    direction: Notifications.VO.ComparisonDirections.up,
+  },
+  sets: {
+    current: tools.Int.nonNegative(2),
+    previous: tools.Int.nonNegative(0),
+    delta: 2,
+    direction: Notifications.VO.ComparisonDirections.up,
+  },
+  volume: {
+    current: v.parse(tools.WeightGrams, tools.Weight.fromKilograms(1350).get()),
+    previous: v.parse(tools.WeightGrams, 0),
+    delta: tools.Weight.fromKilograms(1350).get(),
+    direction: Notifications.VO.ComparisonDirections.up,
+  },
+};
+
+export const weeklySummaryEmptyNumbersSection: Notifications.VO.WeeklySummaryNumbersSection = {
+  kind: Notifications.VO.WeeklySummarySectionKinds.numbers,
+  workouts: {
+    current: tools.Int.nonNegative(0),
+    previous: tools.Int.nonNegative(0),
+    delta: 0,
+    direction: Notifications.VO.ComparisonDirections.flat,
+  },
+  sets: {
+    current: tools.Int.nonNegative(0),
+    previous: tools.Int.nonNegative(0),
+    delta: 0,
+    direction: Notifications.VO.ComparisonDirections.flat,
+  },
+  volume: {
+    current: v.parse(tools.WeightGrams, 0),
+    previous: v.parse(tools.WeightGrams, 0),
+    delta: 0,
+    direction: Notifications.VO.ComparisonDirections.flat,
+  },
+};
+
+export const weeklySummaryHighlightsSection: Notifications.VO.WeeklySummaryHighlightsSection = {
+  kind: Notifications.VO.WeeklySummarySectionKinds.highlights,
+  rows: [weeklySummaryHighlight],
+};
+
+export const weeklySummaryBodyWeightSection: Notifications.VO.WeeklySummaryBodyWeightSection = {
+  kind: Notifications.VO.WeeklySummarySectionKinds.bodyWeight,
+  average: {
+    current: 80500,
+    previous: undefined,
+    delta: 0,
+    direction: Notifications.VO.ComparisonDirections.unknown,
+  },
+  count: tools.Int.positive(2),
+};
+
 export const weeklySummary: Notifications.VO.WeeklySummary = {
   weekIsoId: previousWeekIsoId,
-  numbers: {
-    workouts: {
-      current: tools.Int.nonNegative(1),
-      previous: tools.Int.nonNegative(0),
-      delta: 1,
-      direction: Notifications.VO.ComparisonDirections.up,
-    },
-    sets: {
-      current: tools.Int.nonNegative(2),
-      previous: tools.Int.nonNegative(0),
-      delta: 2,
-      direction: Notifications.VO.ComparisonDirections.up,
-    },
-    volume: {
-      current: v.parse(tools.WeightGrams, tools.Weight.fromKilograms(1350).get()),
-      previous: v.parse(tools.WeightGrams, 0),
-      delta: tools.Weight.fromKilograms(1350).get(),
-      direction: Notifications.VO.ComparisonDirections.up,
-    },
-  },
-  highlights: [weeklySummaryHighlight],
-  bodyWeight: undefined,
+  sections: [weeklySummaryNumbersSection, weeklySummaryHighlightsSection],
 };
 
 export const weeklySummaryNotificationContent: Notifications.Services.WeeklySummaryNotificationContent = {
   eyebrow: "Weekly summary",
   title: "30 Dec – 5 Jan",
-  numbers: {
-    tiles: [
-      { value: "1", label: "workout", delta: "+1 vs last week" },
-      { value: "2", label: "sets", delta: "+2 vs last week" },
-      { value: "1,350", label: "volume (kg)", delta: "+1,350 kg vs last week" },
-    ],
-  },
-  highlights: {
-    heading: "Progress",
-    rows: [{ name: exerciseName, previous: "1 × 5 × 80 kg", current: "2 × 5 × 90 kg" }],
-  },
-  bodyWeight: {
-    heading: "Body weight",
-    value: "80.5 kg",
-    caption: "average, 4 measurements",
-    note: "-0.3 kg vs last week",
-  },
+  blocks: [
+    {
+      kind: Notifications.Services.WeeklySummaryBlockKinds.tiles,
+      tiles: [
+        { value: "1", label: "workout", delta: "+1 vs last week" },
+        { value: "2", label: "sets", delta: "+2 vs last week" },
+        { value: "1,350", label: "volume (kg)", delta: "+1,350 kg vs last week" },
+      ],
+    },
+    { kind: Notifications.Services.WeeklySummaryBlockKinds.heading, text: "Progress" },
+    {
+      kind: Notifications.Services.WeeklySummaryBlockKinds.changes,
+      rows: [{ name: exerciseName, previous: "1 × 5 × 80 kg", current: "2 × 5 × 90 kg" }],
+    },
+    { kind: Notifications.Services.WeeklySummaryBlockKinds.heading, text: "Body weight" },
+    {
+      kind: Notifications.Services.WeeklySummaryBlockKinds.stat,
+      value: "80.5 kg",
+      caption: "average, 4 measurements",
+      note: "-0.3 kg vs last week",
+    },
+  ],
   footer: {
     before: "You get this every Monday. Turn it off in your ",
     link: "profile",

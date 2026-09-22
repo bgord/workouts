@@ -4,6 +4,7 @@ import type * as Measurements from "+measurements";
 import * as Workouts from "+workouts";
 import type * as VO from "+notifications/value-objects";
 import { Comparison } from "../value-objects/comparison";
+import { WeeklySummarySectionKinds } from "../value-objects/weekly-summary";
 
 type Config = {
   week: tools.Week;
@@ -13,7 +14,7 @@ type Config = {
   measurements: ReadonlyArray<Measurements.VO.BodyWeightMeasurement>;
 };
 
-const numbers = (workouts: ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>): VO.WeeklySummaryNumbers => {
+const tally = (workouts: ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>): VO.WeeklySummaryNumbers => {
   const sets = workouts.flatMap((workout) => workout.sets);
 
   return {
@@ -40,55 +41,60 @@ export class WeeklySummaryCalculator {
   constructor(private readonly config: Config) {}
 
   calculate(): VO.WeeklySummary | null {
-    const current = numbers(this.config.workouts);
+    const numbers = this.numbers();
     const bodyWeight = this.bodyWeight();
 
-    if (current.workouts === 0 && !bodyWeight) return null;
+    if (numbers.workouts.current === 0 && !bodyWeight) return null;
 
-    const previous = numbers(this.config.previousWorkouts);
+    const sections = [numbers, this.highlights(), bodyWeight].filter((section) => section !== null);
+
+    return { weekIsoId: this.config.week.toIsoId(), sections };
+  }
+
+  private numbers(): VO.WeeklySummaryNumbersSection {
+    const current = tally(this.config.workouts);
+    const previous = tally(this.config.previousWorkouts);
 
     return {
-      weekIsoId: this.config.week.toIsoId(),
-      numbers: {
-        workouts: Comparison.of(current.workouts, previous.workouts),
-        sets: Comparison.of(current.sets, previous.sets),
-        volume: Comparison.of(current.volume, previous.volume),
-      },
-      highlights: this.highlights(),
-      bodyWeight,
+      kind: WeeklySummarySectionKinds.numbers,
+      workouts: Comparison.of(current.workouts, previous.workouts),
+      sets: Comparison.of(current.sets, previous.sets),
+      volume: Comparison.of(current.volume, previous.volume),
     };
   }
 
-  private highlights(): Array<VO.WeeklySummaryHighlight> {
-    return this.config.performances.flatMap((performance) => {
+  private highlights(): VO.WeeklySummaryHighlightsSection | null {
+    const rows = this.config.performances.flatMap((performance) => {
       if (!performance.previous) return [];
 
       const previous = new Workouts.Services.ExercisePerformanceWeakestSet(performance.previous).calculate();
       const current = new Workouts.Services.ExercisePerformanceWeakestSet(performance.current).calculate();
 
-      const loadUp = current.load > previous.load;
-      const repsUp = current.load === previous.load && current.reps > previous.reps;
-
-      if (!(loadUp || repsUp)) return [];
+      if (!new Workouts.Services.ExerciseTargetProgression(previous, current).happened()) return [];
 
       return [
         { exerciseId: performance.exerciseId, exerciseName: performance.exerciseName, previous, current },
       ];
     });
+
+    if (rows.length === 0) return null;
+
+    return { kind: WeeklySummarySectionKinds.highlights, rows };
   }
 
-  private bodyWeight(): VO.WeeklySummaryBodyWeight | undefined {
+  private bodyWeight(): VO.WeeklySummaryBodyWeightSection | null {
     const inWeek = this.config.measurements.filter((measurement) =>
       within(this.config.week)(measurement.measuredOn),
     );
 
-    if (inWeek.length === 0) return undefined;
+    if (inWeek.length === 0) return null;
 
     const inPreviousWeek = this.config.measurements.filter((measurement) =>
       within(this.config.week.previous())(measurement.measuredOn),
     );
 
     return {
+      kind: WeeklySummarySectionKinds.bodyWeight,
       average: Comparison.of(
         average(inWeek),
         inPreviousWeek.length > 0 ? average(inPreviousWeek) : undefined,
