@@ -40,16 +40,23 @@ describe("WeeklySummaryCalculator", () => {
     });
 
     expect(calculator.calculate()?.numbers).toEqual({
-      current: mocks.weekCompletedWorkoutNumbers,
-      previous: {
-        workouts: tools.Int.nonNegative(2),
-        sets: tools.Int.nonNegative(4),
-        volume: v.parse(tools.WeightGrams, tools.Weight.fromKilograms(2700).get()),
+      workouts: {
+        current: tools.Int.nonNegative(1),
+        previous: tools.Int.nonNegative(2),
+        delta: -1,
+        direction: Notifications.VO.ComparisonDirections.down,
       },
-      delta: {
-        workouts: v.parse(tools.Integer, -1),
-        sets: v.parse(tools.Integer, -2),
-        volume: v.parse(tools.Integer, -tools.Weight.fromKilograms(1350).get()),
+      sets: {
+        current: tools.Int.nonNegative(2),
+        previous: tools.Int.nonNegative(4),
+        delta: -2,
+        direction: Notifications.VO.ComparisonDirections.down,
+      },
+      volume: {
+        current: v.parse(tools.WeightGrams, tools.Weight.fromKilograms(1350).get()),
+        previous: v.parse(tools.WeightGrams, tools.Weight.fromKilograms(2700).get()),
+        delta: -tools.Weight.fromKilograms(1350).get(),
+        direction: Notifications.VO.ComparisonDirections.down,
       },
     });
   });
@@ -140,16 +147,35 @@ describe("WeeklySummaryCalculator", () => {
     expect(calculator.calculate()).toEqual({
       ...mocks.weeklySummary,
       numbers: {
-        current: mocks.weeklySummary.numbers.previous,
-        previous: mocks.weeklySummary.numbers.previous,
-        delta: {
-          workouts: v.parse(tools.Integer, 0),
-          sets: v.parse(tools.Integer, 0),
-          volume: v.parse(tools.Integer, 0),
+        workouts: {
+          current: tools.Int.nonNegative(0),
+          previous: tools.Int.nonNegative(0),
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.flat,
+        },
+        sets: {
+          current: tools.Int.nonNegative(0),
+          previous: tools.Int.nonNegative(0),
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.flat,
+        },
+        volume: {
+          current: v.parse(tools.WeightGrams, 0),
+          previous: v.parse(tools.WeightGrams, 0),
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.flat,
         },
       },
       highlights: [],
-      bodyWeight: { average: mocks.bodyWeight, count: tools.Int.positive(1), previousAverage: undefined },
+      bodyWeight: {
+        average: {
+          current: mocks.bodyWeight,
+          previous: undefined,
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.unknown,
+        },
+        count: tools.Int.positive(1),
+      },
     });
   });
 
@@ -176,9 +202,13 @@ describe("WeeklySummaryCalculator", () => {
     });
 
     expect(calculator.calculate()?.bodyWeight).toEqual({
-      average: (mocks.bodyWeight + heavier) / 2,
+      average: {
+        current: (mocks.bodyWeight + heavier) / 2,
+        previous: heavier,
+        delta: (mocks.bodyWeight - heavier) / 2,
+        direction: Notifications.VO.ComparisonDirections.down,
+      },
       count: tools.Int.positive(2),
-      previousAverage: heavier,
     });
   });
 

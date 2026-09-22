@@ -82,7 +82,15 @@ describe("WeeklySummaryNotificationComposer", async () => {
   test("compose - no workouts", () => {
     const notification = en.compose({
       ...mocks.weeklySummary,
-      numbers: { ...mocks.weeklySummary.numbers, current: mocks.weeklySummary.numbers.previous },
+      numbers: {
+        ...mocks.weeklySummary.numbers,
+        workouts: {
+          current: tools.Int.nonNegative(0),
+          previous: tools.Int.nonNegative(0),
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.flat,
+        },
+      },
       highlights: [],
     });
 
@@ -90,10 +98,18 @@ describe("WeeklySummaryNotificationComposer", async () => {
     expect(notification.content.highlights).toEqual({ heading: "Progress", rows: [] });
   });
 
-  test("compose - body weight without previous week or goal", () => {
+  test("compose - body weight without previous week", () => {
     const notification = en.compose({
       ...mocks.weeklySummary,
-      bodyWeight: { average: 80500, count: tools.Int.positive(2) },
+      bodyWeight: {
+        average: {
+          current: 80500,
+          previous: undefined,
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.unknown,
+        },
+        count: tools.Int.positive(2),
+      },
     });
 
     expect(notification.content.bodyWeight).toEqual({
@@ -104,14 +120,56 @@ describe("WeeklySummaryNotificationComposer", async () => {
     });
   });
 
+  test("compose - body weight unchanged vs previous week", () => {
+    const notification = en.compose({
+      ...mocks.weeklySummary,
+      bodyWeight: {
+        average: {
+          current: 80500,
+          previous: 80500,
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.flat,
+        },
+        count: tools.Int.positive(2),
+      },
+    });
+
+    expect(notification.content.bodyWeight?.note).toEqual("unchanged vs last week");
+  });
+
+  test("compose - body weight down vs previous week", () => {
+    const notification = en.compose({
+      ...mocks.weeklySummary,
+      bodyWeight: {
+        average: {
+          current: 80500,
+          previous: 80800,
+          delta: -300,
+          direction: Notifications.VO.ComparisonDirections.down,
+        },
+        count: tools.Int.positive(2),
+      },
+    });
+
+    expect(notification.content.bodyWeight?.note).toEqual("-0.3 kg vs last week");
+  });
+
   test("compose - polish plural forms", () => {
     const notification = pl.compose({
       ...mocks.weeklySummary,
       numbers: {
         ...mocks.weeklySummary.numbers,
-        current: { ...mocks.weeklySummary.numbers.current, workouts: tools.Int.nonNegative(5) },
+        workouts: { ...mocks.weeklySummary.numbers.workouts, current: tools.Int.nonNegative(5) },
       },
-      bodyWeight: { average: 80500, count: tools.Int.positive(3) },
+      bodyWeight: {
+        average: {
+          current: 80500,
+          previous: undefined,
+          delta: 0,
+          direction: Notifications.VO.ComparisonDirections.unknown,
+        },
+        count: tools.Int.positive(3),
+      },
     });
 
     expect(notification.content.numbers).toMatchObject({

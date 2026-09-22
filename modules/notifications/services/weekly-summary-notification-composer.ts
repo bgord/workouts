@@ -3,6 +3,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type { SupportedLanguages } from "+supported-languages";
 import type * as VO from "+notifications/value-objects";
+import { ComparisonDirections } from "../value-objects/comparison";
 import { WeeklySummaryFormatter } from "./weekly-summary-formatter";
 import type {
   WeeklySummaryNotification,
@@ -49,26 +50,26 @@ export class WeeklySummaryNotificationComposer {
   }
 
   private numbers(numbers: VO.WeeklySummary["numbers"]): WeeklySummaryNotificationContent["numbers"] {
-    const { current, delta } = numbers;
+    const { workouts, sets, volume } = numbers;
 
-    if (current.workouts === 0) return { empty: this.t("notifications.weekly_summary.empty") };
+    if (workouts.current === 0) return { empty: this.t("notifications.weekly_summary.empty") };
 
     return {
       tiles: [
         {
-          value: this.format.integer(current.workouts),
-          label: this.format.noun(current.workouts, this.forms("workouts")),
-          delta: this.delta(this.format.signed(delta.workouts)),
+          value: this.format.integer(workouts.current),
+          label: this.format.noun(workouts.current, this.forms("workouts")),
+          delta: this.delta(this.format.signed(workouts.delta)),
         },
         {
-          value: this.format.integer(current.sets),
+          value: this.format.integer(sets.current),
           label: this.t("notifications.weekly_summary.sets.label"),
-          delta: this.delta(this.format.signed(delta.sets)),
+          delta: this.delta(this.format.signed(sets.delta)),
         },
         {
-          value: this.format.kilograms(current.volume),
+          value: this.format.kilograms(volume.current),
           label: this.t("notifications.weekly_summary.volume.label"),
-          delta: this.delta(`${this.format.signedKilograms(delta.volume)} kg`),
+          delta: this.delta(`${this.format.signedKilograms(volume.delta)} kg`),
         },
       ],
     };
@@ -95,26 +96,24 @@ export class WeeklySummaryNotificationComposer {
     return {
       heading: this.t("notifications.weekly_summary.body_weight.header"),
       value: this.t("notifications.weekly_summary.body_weight.value", {
-        value: this.format.weight(bodyWeight.average),
+        value: this.format.weight(bodyWeight.average.current),
       }),
       caption: this.t("notifications.weekly_summary.body_weight.caption", {
         count: bodyWeight.count,
         noun: this.format.noun(bodyWeight.count, this.forms("measurements")),
       }),
-      note: this.bodyWeightNote(bodyWeight),
+      note: this.bodyWeightNote(bodyWeight.average),
     };
   }
 
-  private bodyWeightNote(bodyWeight: VO.WeeklySummaryBodyWeight): string | undefined {
-    if (bodyWeight.previousAverage === undefined) return undefined;
+  private bodyWeightNote(average: VO.Comparison): string | undefined {
+    if (average.direction === ComparisonDirections.unknown) return undefined;
 
-    const difference = bodyWeight.average - bodyWeight.previousAverage;
-
-    if (bodyWeight.average - bodyWeight.previousAverage === 0) {
+    if (average.direction === ComparisonDirections.flat) {
       return this.t("notifications.weekly_summary.body_weight.unchanged");
     }
 
-    const delta = this.delta(`${this.format.signedWeight(difference)} kg`);
+    const delta = this.delta(`${this.format.signedWeight(average.delta)} kg`);
 
     return this.t("notifications.weekly_summary.body_weight.note", { delta });
   }

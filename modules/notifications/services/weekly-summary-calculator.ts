@@ -3,6 +3,7 @@ import * as v from "valibot";
 import type * as Measurements from "+measurements";
 import * as Workouts from "+workouts";
 import type * as VO from "+notifications/value-objects";
+import { Comparison } from "../value-objects/comparison";
 
 type Config = {
   week: tools.Week;
@@ -49,13 +50,9 @@ export class WeeklySummaryCalculator {
     return {
       weekIsoId: this.config.week.toIsoId(),
       numbers: {
-        current,
-        previous,
-        delta: {
-          workouts: v.parse(tools.Integer, current.workouts - previous.workouts),
-          sets: v.parse(tools.Integer, current.sets - previous.sets),
-          volume: v.parse(tools.Integer, current.volume - previous.volume),
-        },
+        workouts: Comparison.of(current.workouts, previous.workouts),
+        sets: Comparison.of(current.sets, previous.sets),
+        volume: Comparison.of(current.volume, previous.volume),
       },
       highlights: this.highlights(),
       bodyWeight,
@@ -92,9 +89,11 @@ export class WeeklySummaryCalculator {
     );
 
     return {
-      average: average(inWeek),
+      average: Comparison.of(
+        average(inWeek),
+        inPreviousWeek.length > 0 ? average(inPreviousWeek) : undefined,
+      ),
       count: tools.Int.positive(inWeek.length),
-      previousAverage: inPreviousWeek.length > 0 ? average(inPreviousWeek) : undefined,
     };
   }
 }

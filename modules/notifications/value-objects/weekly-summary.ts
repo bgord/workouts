@@ -1,6 +1,7 @@
 import type * as tools from "@bgord/tools";
 import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
+import type { Comparison } from "./comparison";
 
 export type WeeklySummaryNumbers = {
   workouts: tools.IntegerNonNegativeType;
@@ -8,10 +9,10 @@ export type WeeklySummaryNumbers = {
   volume: tools.WeightGramsType;
 };
 
-export type WeeklySummaryNumbersDelta = {
-  workouts: tools.IntegerType;
-  sets: tools.IntegerType;
-  volume: tools.IntegerType;
+export type WeeklySummaryNumbersComparison = {
+  workouts: Comparison<tools.IntegerNonNegativeType>;
+  sets: Comparison<tools.IntegerNonNegativeType>;
+  volume: Comparison<tools.WeightGramsType>;
 };
 
 export type WeeklySummaryHighlight = {
@@ -22,18 +23,13 @@ export type WeeklySummaryHighlight = {
 };
 
 export type WeeklySummaryBodyWeight = {
-  average: number;
+  average: Comparison;
   count: tools.IntegerPositiveType;
-  previousAverage?: number;
 };
 
 export type WeeklySummary = {
   weekIsoId: tools.WeekIsoIdType;
-  numbers: {
-    current: WeeklySummaryNumbers;
-    previous: WeeklySummaryNumbers;
-    delta: WeeklySummaryNumbersDelta;
-  };
+  numbers: WeeklySummaryNumbersComparison;
   highlights: Array<WeeklySummaryHighlight>;
   bodyWeight?: WeeklySummaryBodyWeight;
 };
