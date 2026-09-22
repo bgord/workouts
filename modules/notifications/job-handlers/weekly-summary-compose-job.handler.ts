@@ -1,22 +1,20 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import * as v from "valibot";
 import type * as Auth from "+auth";
-import type * as Measurements from "+measurements";
 import type * as Notifications from "+notifications";
 import * as Preferences from "+preferences";
 import type { SupportedLanguages } from "+supported-languages";
 import type * as Workouts from "+workouts";
 import { WeeklySummarySentEvent } from "../events/WEEKLY_SUMMARY_SENT_EVENT";
 import { WeeklySummarySkippedEvent } from "../events/WEEKLY_SUMMARY_SKIPPED_EVENT";
-import { WeeklySummaryCalculator } from "../services/weekly-summary-calculator";
-import { WeeklySummaryNotificationComposer } from "../services/weekly-summary-notification-composer";
+import { WeeklySummaryRange } from "../services/weekly-summary-range";
 import { WeeklySummaryStream } from "../value-objects/weekly-summary-stream";
 
 type LanguagesType = (typeof SupportedLanguages)[number];
 
 type AcceptedEvent =
-  | Notifications.Events.WeeklySummarySentEventType
-  | Notifications.Events.WeeklySummarySkippedEventType;
+  Notifications.Events.WeeklySummarySentEventType | Notifications.Events.WeeklySummarySkippedEventType;
 
 type Config = { EMAIL_FROM: tools.EmailType; BETTER_AUTH_URL: tools.UrlWithoutSlashType };
 
@@ -32,8 +30,6 @@ type Dependencies = {
   UserContactOHQ: Auth.OHQ.UserContactOHQ;
   UserLanguageOHQ: bg.Preferences.OHQ.UserLanguagePort<LanguagesType>;
   ListWeekCompletedWorkoutsOHQ: Workouts.OHQ.ListWeekCompletedWorkoutsOHQ;
-  ListWeekExercisePerformancesOHQ: Workouts.OHQ.ListWeekExercisePerformancesOHQ;
-  ListBodyWeightMeasurementsOHQ: Measurements.OHQ.ListBodyWeightMeasurementsOHQ;
   WeeklySummaryEmailRenderer: Notifications.Services.WeeklySummaryEmailRenderer;
 };
 
@@ -50,39 +46,40 @@ export const WeeklySummaryComposeJobHandler =
     if (!contact?.address) return;
 
     const week = tools.Week.fromIsoId(job.payload.weekIsoId);
-
-    const [workouts, previousWorkouts, performances, measurements] = await Promise.all([
-      deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week),
-      deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week.previous()),
-      deps.ListWeekExercisePerformancesOHQ.execute(job.payload.userId, week),
-      deps.ListBodyWeightMeasurementsOHQ.execute(job.payload.userId),
-    ]);
-
-    const summary = new WeeklySummaryCalculator({
-      week,
-      workouts,
-      previousWorkouts,
-      performances,
-      measurements,
-    }).calculate();
+    const workouts = await deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week);
 
     const stream = WeeklySummaryStream.of(job.payload.userId, job.payload.weekIsoId);
 
-    if (!summary) {
+    if (workouts.length === 0) {
       await deps.EventStore.save([bg.event(WeeklySummarySkippedEvent, stream, job.payload, deps)]);
       return;
     }
 
     const language = await deps.UserLanguageOHQ.get(job.payload.userId);
     const translations = await deps.TranslationsProvider.getTranslationsFor(language);
+    const t = bg.TranslatorService.use(translations);
 
-    const composer = new WeeklySummaryNotificationComposer(config.BETTER_AUTH_URL, translations, language);
-    const notification = composer.compose(summary);
-    const html = await deps.WeeklySummaryEmailRenderer.render(notification.content);
+    const range = WeeklySummaryRange.of(week, language);
+
+    const html = await deps.WeeklySummaryEmailRenderer.render({
+      title: range,
+      footer: {
+        before: t("notifications.weekly_summary.footer.before"),
+        link: t("notifications.weekly_summary.footer.link"),
+        after: t("notifications.weekly_summary.footer.after"),
+        url: `${config.BETTER_AUTH_URL}/profile`,
+      },
+      signature: t("notifications.weekly_summary.signature"),
+    });
 
     const email = bg.job(
       bg.System.Jobs.SendEmailJobSchema,
-      { from: config.EMAIL_FROM, to: contact.address, subject: notification.subject, html },
+      {
+        from: config.EMAIL_FROM,
+        to: contact.address,
+        subject: v.parse(bg.MailerSubject, t("notifications.weekly_summary.subject", { range })),
+        html,
+      },
       deps,
     );
 

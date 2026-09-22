@@ -24,8 +24,6 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       UserContactOHQ: di.Adapters.Auth.UserContactOHQ,
       UserLanguageOHQ: di.Adapters.Preferences.UserLanguageOHQ,
       ListWeekCompletedWorkoutsOHQ: di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery,
-      ListWeekExercisePerformancesOHQ: di.Adapters.Workouts.ListWeekExercisePerformancesQuery,
-      ListBodyWeightMeasurementsOHQ: di.Adapters.Measurements.ListBodyWeightMeasurementsQuery,
       WeeklySummaryEmailRenderer,
     },
   );
@@ -103,10 +101,6 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     );
     spies.use(spyOn(di.Adapters.Auth.UserContactOHQ, "getPrimary").mockResolvedValue(mocks.emailContact));
     spies.use(spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockResolvedValue([]));
-    spies.use(spyOn(di.Adapters.Workouts.ListWeekExercisePerformancesQuery, "execute").mockResolvedValue([]));
-    spies.use(
-      spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
-    );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
@@ -131,17 +125,9 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     spies.use(spyOn(di.Adapters.Auth.UserContactOHQ, "getPrimary").mockResolvedValue(mocks.emailContact));
     spies.use(spyOn(di.Adapters.Preferences.UserLanguageOHQ, "get").mockResolvedValue("en"));
     spies.use(
-      spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockImplementation(
-        async (_, week) => (week.equals(mocks.week) ? [mocks.weekCompletedWorkout] : []),
-      ),
-    );
-    spies.use(
-      spyOn(di.Adapters.Workouts.ListWeekExercisePerformancesQuery, "execute").mockResolvedValue([
-        mocks.weekExercisePerformance,
+      spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute").mockResolvedValue([
+        mocks.weekCompletedWorkout,
       ]),
-    );
-    spies.use(
-      spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
     );
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -149,12 +135,6 @@ describe("WeeklySummaryComposeJobHandler", async () => {
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
       handler(mocks.GenericWeeklySummaryComposeJob),
-    );
-
-    const composer = new Notifications.Services.WeeklySummaryNotificationComposer(
-      di.Env.BETTER_AUTH_URL,
-      await di.Tools.TranslationsProvider.getTranslationsFor("en"),
-      "en",
     );
 
     expect(enqueue).toHaveBeenCalledWith({
@@ -166,11 +146,17 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       payload: {
         from: di.Env.EMAIL_FROM,
         to: mocks.email,
-        subject: composer.compose(mocks.weeklySummary).subject,
+        subject: v.parse(bg.MailerSubject, "Your week in Workouts · 30 Dec – 5 Jan"),
         html: v.parse(bg.MailerContentHtml, "<html></html>"),
       },
     });
-    expect(render).toHaveBeenCalledWith(composer.compose(mocks.weeklySummary).content);
+    expect(render).toHaveBeenCalledWith({
+      ...mocks.weeklySummaryNotificationContent,
+      footer: {
+        ...mocks.weeklySummaryNotificationContent.footer,
+        url: `${di.Env.BETTER_AUTH_URL}/profile`,
+      },
+    });
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWeeklySummarySentEvent]);
     expect(eventStoreSave.mock.invocationCallOrder[0]).toBeLessThan(enqueue.mock.invocationCallOrder[0]!);
   });

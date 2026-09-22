@@ -203,15 +203,11 @@ modules/
 │   ├── queries
 │   │   ├── get-weekly-summary-status.ts
 │   ├── services
-│   │   ├── weekly-summary-calculator.ts
-│   │   ├── weekly-summary-formatter.ts
-│   │   ├── weekly-summary-notification-composer.ts
-│   │   └── weekly-summary-notification.ts
+│   │   ├── weekly-summary-notification.ts
+│   │   └── weekly-summary-range.ts
 │   └── value-objects
-│       ├── comparison.ts
 │       ├── weekly-summary-status.ts
-│       ├── weekly-summary-stream.ts
-│       └── weekly-summary.ts
+│       └── weekly-summary-stream.ts
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
