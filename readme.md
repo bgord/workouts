@@ -653,6 +653,7 @@ infra/
 │   ├── event-store.ts
 │   ├── event-upcaster.ts
 │   ├── hash-content.strategy.ts
+│   ├── job-queue.adapter.ts
 │   ├── prerequisites.ts
 │   ├── shield-auth.strategy.ts
 │   ├── shield-basic-auth.strategy.ts

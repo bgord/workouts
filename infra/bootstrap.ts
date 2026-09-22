@@ -7,6 +7,7 @@ import { createSystemAdapters } from "+infra/adapters/system";
 import { createWorkoutsAdapters } from "+infra/adapters/workouts";
 import { createEnvironmentLoader } from "+infra/env";
 import { createTools } from "+infra/tools";
+import { createJobQueue } from "+infra/tools/job-queue.adapter";
 
 export async function bootstrap() {
   const EnvironmentLoader = await createEnvironmentLoader();
@@ -22,10 +23,12 @@ export async function bootstrap() {
   const Workouts = createWorkoutsAdapters({ ...System, ...Tools });
   const Measurements = createMeasurementsAdapters();
 
+  const { JobQueue, JobQueueStatsProvider, JobPruner } = await createJobQueue(Env, { ...System, ...Tools });
+
   return {
     Env,
     Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts, Measurements },
-    Tools: { ...Tools },
+    Tools: { ...Tools, JobQueue, JobQueueStatsProvider, JobPruner },
   };
 }
 
