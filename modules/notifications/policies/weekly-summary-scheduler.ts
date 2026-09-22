@@ -14,6 +14,7 @@ type Dependencies = {
   JobDispatcher: bg.JobDispatcherPort<AcceptedJob>;
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
+  Logger: bg.LoggerPort;
   UserDirectoryOHQ: Auth.OHQ.UserDirectoryOHQ;
 };
 
@@ -37,7 +38,18 @@ export class WeeklySummaryScheduler {
     for (const userId of userIds) {
       const job = bg.job(WeeklySummaryComposeJobSchema, { userId, weekIsoId }, this.deps);
 
-      await this.deps.JobDispatcher.enqueue(job);
+      try {
+        await this.deps.JobDispatcher.enqueue(job);
+      } catch (error) {
+        this.deps.Logger.error({
+          message: "Weekly summary compose job enqueue failed",
+          component: "notifications",
+          operation: "weekly_summary_scheduler_on_hour_has_passed_event",
+          error,
+          correlationId: event.correlationId,
+          metadata: { userId, weekIsoId },
+        });
+      }
     }
   }
 }

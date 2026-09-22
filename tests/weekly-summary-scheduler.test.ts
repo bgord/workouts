@@ -36,6 +36,24 @@ describe("WeeklySummaryScheduler", async () => {
     expect(enqueue).not.toHaveBeenCalled();
   });
 
+  test("onHourHasPassedEvent - one failed enqueue does not stop the others", async () => {
+    using enqueue = spyOn(di.Tools.JobQueue, "enqueue")
+      .mockRejectedValueOnce(new Error("busy"))
+      .mockResolvedValueOnce(mocks.GenericWeeklySummaryComposeJob);
+    using loggerError = spyOn(di.Adapters.System.Logger, "error");
+    using _ = spyOn(di.Adapters.Auth.UserDirectoryOHQ, "listActiveUserIds").mockResolvedValue([
+      mocks.userId,
+      mocks.anotherUserId,
+    ]);
+
+    await bg.CorrelationStorage.run(mocks.correlationId, async () =>
+      policy.onHourHasPassedEvent(mocks.GenericHourHasPassedMondaySixAMEvent),
+    );
+
+    expect(enqueue).toHaveBeenCalledTimes(2);
+    expect(loggerError).toHaveBeenCalledTimes(1);
+  });
+
   test("onHourHasPassedEvent - one job per user", async () => {
     using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
     using _ = spyOn(di.Adapters.Auth.UserDirectoryOHQ, "listActiveUserIds").mockResolvedValue([
