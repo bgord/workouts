@@ -122,9 +122,7 @@ modules/
 │   │   ├── get-exercise.ts
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
-│   │   ├── list-exercises-with-categories.ts
-│   │   ├── search-exercise-categories.ts
-│   │   └── search-exercises.ts
+│   │   └── list-exercises-with-categories.ts
 │   └── value-objects
 │       ├── exercise-catalog-entry.ts
 │       ├── exercise-catalog.ts
@@ -510,13 +508,11 @@ app/
 │   │   ├── exercise-category-delete.ts
 │   │   ├── exercise-category-list.ts
 │   │   ├── exercise-category-rename.ts
-│   │   ├── exercise-category-search.ts
 │   │   ├── exercise-delete.ts
 │   │   ├── exercise-get.ts
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
-│   │   ├── exercise-search.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements
@@ -609,9 +605,7 @@ infra/
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-categories-assigned-to-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
-│   │   ├── list-exercises-with-categories.adapter.ts
-│   │   ├── search-exercise-categories.adapter.ts
-│   │   └── search-exercises.adapter.ts
+│   │   └── list-exercises-with-categories.adapter.ts
 │   ├── measurements
 │   │   ├── get-body-weight-measurement.adapter.ts
 │   │   └── list-body-weight-measurements.adapter.ts

@@ -7,8 +7,6 @@ import { GetExerciseWithCategoriesQuery } from "./get-exercise-with-categories.a
 import { ListCategoriesAssignedToExerciseQuery } from "./list-categories-assigned-to-exercise.adapter";
 import { ListExerciseCategoriesQuery } from "./list-exercise-categories.adapter";
 import { ListExercisesWithCategoriesQuery } from "./list-exercises-with-categories.adapter";
-import { SearchExerciseCategoriesQuery } from "./search-exercise-categories.adapter";
-import { SearchExercisesQuery } from "./search-exercises.adapter";
 
 export function createExercisesAdapters() {
   return {
@@ -21,7 +19,5 @@ export function createExercisesAdapters() {
     ListCategoriesAssignedToExerciseQuery,
     ListExerciseCategoriesQuery,
     ListExercisesWithCategoriesQuery,
-    SearchExerciseCategoriesQuery,
-    SearchExercisesQuery,
   };
 }

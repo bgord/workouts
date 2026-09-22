@@ -48,7 +48,6 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   exercises.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   exercises.get("/list", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseList(Adapters.Exercises)));
-  exercises.query("/search", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseSearch(Adapters.Exercises)));
   exercises.post(
     "/add",
     Tools.ShieldCaptcha.handle(),
@@ -93,10 +92,6 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   exercises.get(
     "/category/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryList(Adapters.Exercises)),
-  );
-  exercises.query(
-    "/category/search",
-    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategorySearch(Adapters.Exercises)),
   );
   exercises.post(
     "/category",
