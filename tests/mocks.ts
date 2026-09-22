@@ -9,8 +9,9 @@ import * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Measurements from "+measurements";
+import * as Notifications from "+notifications";
 import * as Plans from "+plans";
-import type * as Preferences from "+preferences";
+import * as Preferences from "+preferences";
 import * as Statistics from "+statistics";
 import * as Workouts from "+workouts";
 
@@ -311,6 +312,7 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 
 export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");
+export const anotherWorkoutId = v.parse(Workouts.VO.WorkoutId, "3e8a1c57-4b2d-4f90-a6e1-9d0c7b2f5a18");
 export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
 export const workoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-01");
@@ -515,6 +517,96 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
   })),
 };
 
+export const mondaySixAM = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-06T06:00:00Z"));
+export const previousWeekIsoId = tools.Week.fromTimestamp(mondaySixAM).previous().toIsoId();
+
+export const GenericHourHasPassedMondaySixAMEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: passageOfTimeStream,
+  version: 1,
+  commit,
+  name: "HOUR_HAS_PASSED_EVENT",
+  payload: { timestamp: mondaySixAM.ms },
+} satisfies bg.System.Events.HourHasPassedEventType;
+
+export const GenericWeeklySummaryComposeJob = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  name: "WEEKLY_SUMMARY_COMPOSE_JOB",
+  revision: revision.value,
+  payload: { userId, weekIsoId: previousWeekIsoId },
+} satisfies Notifications.Jobs.WeeklySummaryComposeJobType;
+
+export const week = tools.Week.fromIsoId(previousWeekIsoId);
+
+export const weeklySummaryStream = Notifications.VO.WeeklySummaryStream.of(userId, previousWeekIsoId);
+
+export const GenericWeeklySummarySentEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: weeklySummaryStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SENT_EVENT",
+  payload: { userId, weekIsoId: previousWeekIsoId },
+} satisfies Notifications.Events.WeeklySummarySentEventType;
+
+export const GenericWeeklySummarySkippedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: weeklySummaryStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SKIPPED_EVENT",
+  payload: { userId, weekIsoId: previousWeekIsoId },
+} satisfies Notifications.Events.WeeklySummarySkippedEventType;
+
+export const emailContact: Auth.OHQ.EmailContact = { type: "email", address: email };
+
+export const weekCompletedWorkout: Workouts.Queries.WeekCompletedWorkout = {
+  id: workoutId,
+  planName,
+  planSectionName,
+  scheduledFor: workoutScheduledFor,
+  sets: [
+    {
+      reps: v.parse(Workouts.VO.Reps, 5),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    },
+    {
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    },
+  ],
+};
+
+export const weeklySummaryNotificationContent: Notifications.Services.WeeklySummaryNotificationContent = {
+  title: "30 Dec – 5 Jan",
+  totals: [
+    { value: "1", label: "workout", delta: "+1 vs last week" },
+    { value: "2", label: "sets", delta: "+2 vs last week" },
+    { value: "1,350", label: "volume (kg)", delta: "+1,350 vs last week" },
+  ],
+  bodyWeight: {
+    heading: "Body weight",
+    value: "80.5 kg",
+    caption: "average, 4 measurements",
+    note: "-0.3 vs last week",
+  },
+  footer: {
+    before: "You get this every Monday. Turn it off in your ",
+    link: "profile",
+    after: ".",
+    url: "http://localhost:3000/profile",
+  },
+  signature: "— Workouts",
+};
+
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,
   correlationId,
@@ -569,6 +661,28 @@ export const GenericUserLanguageSetPLEvent = {
   name: "USER_LANGUAGE_SET_EVENT",
   payload: { userId, language: languages.supported.pl },
 } satisfies bg.Preferences.Events.UserLanguageSetEventType;
+
+export const GenericWeeklySummarySetOnEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: preferencesStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SET_EVENT",
+  payload: { userId, weeklySummary: Preferences.VO.WeeklySummaryOptions.on },
+} satisfies Preferences.Events.WeeklySummarySetEventType;
+
+export const GenericWeeklySummarySetOffEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: preferencesStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SET_EVENT",
+  payload: { userId, weeklySummary: Preferences.VO.WeeklySummaryOptions.off },
+} satisfies Preferences.Events.WeeklySummarySetEventType;
 
 export const GenericProfileAvatarUpdatedEvent = {
   id: expectAnyId,

@@ -6,6 +6,7 @@ import { ProfileAccountDelete } from "../sections/profile-account-delete";
 import { ProfileAvatarChange } from "../sections/profile-avatar-change";
 import { ProfileLanguageSelector } from "../sections/profile-language-selector";
 import { ProfilePasswordChange } from "../sections/profile-password-change";
+import { ProfileWeeklySummary } from "../sections/profile-weekly-summary";
 import { ProfileWorkoutsExport } from "../sections/profile-workouts-export";
 
 export function Profile() {
@@ -24,6 +25,8 @@ export function Profile() {
       <ProfileAvatarChange />
 
       <ProfileLanguageSelector />
+
+      <ProfileWeeklySummary />
 
       <ProfilePasswordChange />
 

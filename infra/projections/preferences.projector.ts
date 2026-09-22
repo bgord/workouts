@@ -1,9 +1,14 @@
 import * as bg from "@bgord/bun";
+import * as Preferences from "+preferences";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
+type AcceptedEvent =
+  | bg.Preferences.Events.UserLanguageSetEventType
+  | Preferences.Events.WeeklySummarySetEventType;
+
 type Dependencies = {
-  EventBus: bg.EventBusPort<bg.Preferences.Events.UserLanguageSetEventType>;
+  EventBus: bg.EventBusPort<AcceptedEvent>;
   EventHandler: bg.EventHandlerStrategy;
 };
 
@@ -12,6 +17,10 @@ export class PreferencesProjector {
     deps.EventBus.on(
       bg.Preferences.Events.USER_LANGUAGE_SET_EVENT,
       deps.EventHandler.handle(this.onUserLanguageSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Preferences.Events.WEEKLY_SUMMARY_SET_EVENT,
+      deps.EventHandler.handle(this.onWeeklySummarySetEvent.bind(this)),
     );
   }
 
@@ -27,6 +36,21 @@ export class PreferencesProjector {
       .onConflictDoUpdate({
         target: [Schema.userPreferences.userId, Schema.userPreferences.preference],
         set: { value: event.payload.language, updatedAt: event.createdAt },
+      });
+  }
+
+  async onWeeklySummarySetEvent(event: Preferences.Events.WeeklySummarySetEventType) {
+    await db
+      .insert(Schema.userPreferences)
+      .values({
+        userId: event.payload.userId,
+        preference: "weekly_summary",
+        value: event.payload.weeklySummary,
+        updatedAt: event.createdAt,
+      })
+      .onConflictDoUpdate({
+        target: [Schema.userPreferences.userId, Schema.userPreferences.preference],
+        set: { value: event.payload.weeklySummary, updatedAt: event.createdAt },
       });
   }
 }

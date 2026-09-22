@@ -215,6 +215,14 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PreferencesCommandHandlers.handleRemoveProfileAvatarCommand(deps),
   );
 
+  Tools.CommandBus.on(
+    PreferencesCommands.WEEKLY_SUMMARY_SET_COMMAND,
+    PreferencesCommandHandlers.handleWeeklySummarySetCommand({
+      ...deps,
+      GetWeeklySummaryQuery: Adapters.Preferences.GetWeeklySummaryQuery,
+    }),
+  );
+
   // Workouts ===============================================================
   Tools.CommandBus.on(
     WorkoutsCommands.WORKOUT_CREATE_COMMAND,

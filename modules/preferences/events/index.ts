@@ -1,2 +1,3 @@
 export * from "./PROFILE_AVATAR_REMOVED_EVENT";
 export * from "./PROFILE_AVATAR_UPDATED_EVENT";
+export * from "./WEEKLY_SUMMARY_SET_EVENT";

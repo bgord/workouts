@@ -1,0 +1,37 @@
+import { describe, expect, spyOn, test } from "bun:test";
+import * as bg from "@bgord/bun";
+import * as Preferences from "+preferences";
+import { bootstrap } from "+infra/bootstrap";
+import { createServer } from "../server";
+import * as mocks from "./mocks";
+
+const url = "/api/preferences/weekly-summary/get";
+
+describe(`GET ${url}`, async () => {
+  const di = await bootstrap();
+  const server = createServer(di);
+
+  test("AccessDeniedAuthShieldError", async () => {
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(401);
+    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+  });
+
+  test("happy path", async () => {
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(
+      spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute").mockResolvedValue(
+        Preferences.VO.WeeklySummaryOptions.off,
+      ),
+    );
+
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const json = await response.json();
+
+    expect(response.status).toEqual(200);
+    expect(json).toEqual({ weeklySummary: Preferences.VO.WeeklySummaryOptions.off });
+  });
+});

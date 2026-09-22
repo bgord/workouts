@@ -14,16 +14,12 @@ describe("EmailVerificationNotificationComposer", async () => {
 
     expect(notification).toEqual({
       subject: v.parse(bg.MailerSubject, "Verify your Workouts account"),
-      html: v.parse(
-        bg.MailerContentHtml,
-        Auth.Services.NotificationLayout.render({
-          intro:
-            "Thanks for signing up. Confirm this email address to finish creating your Workouts account.",
-          cta: "Verify email",
-          url: "http://example.com/?callbackURL=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Flogin",
-          note: "The link expires in 1 hour. If you didn't create an account, you can ignore this email.",
-        }),
-      ),
+      content: {
+        intro: "Thanks for signing up. Confirm this email address to finish creating your Workouts account.",
+        cta: "Verify email",
+        url: "http://example.com/?callbackURL=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Flogin",
+        note: "The link expires in 1 hour. If you didn't create an account, you can ignore this email.",
+      },
     });
   });
 });

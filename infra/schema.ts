@@ -15,6 +15,7 @@ import type { BodyWeightGoalType } from "../modules/measurements/value-objects/b
 import { BodyWeightGoalOptions } from "../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasuredOnType } from "../modules/measurements/value-objects/body-weight-measured-on";
 import type { BodyWeightMeasurementIdType } from "../modules/measurements/value-objects/body-weight-measurement-id";
+import { WeeklySummaryStatusEnum } from "../modules/notifications/value-objects/weekly-summary-status";
 import type { ExerciseInstructionIdType } from "../modules/plans/value-objects/exercise-instruction-id";
 import type { ExerciseInstructionPositionType } from "../modules/plans/value-objects/exercise-instruction-position";
 import type { PlanDescriptionType } from "../modules/plans/value-objects/plan-description";
@@ -89,7 +90,7 @@ export const userPreferences = sqliteTable(
       .references(() => users.id, { onDelete: "cascade" })
       .$type<UserIdType>(),
     // NOTE: length 2 is a legacy artifact of passing SupportedLanguages here; kept to avoid DDL drift
-    preference: text("preference", { length: 2, enum: ["language"] }).notNull(),
+    preference: text("preference", { length: 2, enum: ["language", "weekly_summary"] }).notNull(),
     value: text("value").notNull(),
     updatedAt: timestamp("updatedAt").notNull(),
   },
@@ -339,4 +340,16 @@ export const bodyWeightMeasurements = sqliteTable(
     updatedAt: timestamp("updatedAt").notNull(),
   },
   (table) => [index("bodyWeightMeasurements_userId_idx").on(table.userId)],
+);
+
+export const weeklySummaries = sqliteTable(
+  "weeklySummaries",
+  {
+    id,
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    weekIsoId: text("weekIsoId").notNull().$type<tools.WeekIsoIdType>(),
+    status: text("status", toEnumList(WeeklySummaryStatusEnum)).notNull().$type<WeeklySummaryStatusEnum>(),
+    createdAt: timestamp("createdAt").notNull(),
+  },
+  (table) => [uniqueIndex("weeklySummaries_userId_weekIsoId_uidx").on(table.userId, table.weekIsoId)],
 );

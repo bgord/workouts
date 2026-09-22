@@ -60,8 +60,8 @@ modules/
 │   │   ├── user-contact.ts
 │   │   └── user-directory.ts
 │   ├── services
+│   │   ├── call-to-action-notification.ts
 │   │   ├── email-verification-notification-composer.ts
-│   │   ├── notification-layout.ts
 │   │   └── password-reset-notification-composer.ts
 │   └── value-objects
 │       ├── admin-user-id.ts
@@ -169,11 +169,13 @@ modules/
 │   │   ├── body-weight-measurement-exists.ts
 │   │   ├── body-weight-measurement-has-changed.ts
 │   │   ├── body-weight-reference-has-changed.ts
+│   ├── open-host-queries
 │   ├── ports
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
 │   │   └── list-body-weight-measurements.ts
 │   ├── services
+│   │   ├── body-weight-average.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
@@ -187,6 +189,29 @@ modules/
 │       ├── body-weight-measurement.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+├── notifications
+│   ├── events
+│   │   ├── WEEKLY_SUMMARY_SENT_EVENT.ts
+│   │   └── WEEKLY_SUMMARY_SKIPPED_EVENT.ts
+│   ├── invariants
+│   │   └── weekly-summary-schedule.ts
+│   ├── job-handlers
+│   │   └── weekly-summary-compose-job.handler.ts
+│   ├── jobs
+│   │   └── WEEKLY_SUMMARY_COMPOSE_JOB.ts
+│   ├── policies
+│   │   └── weekly-summary-scheduler.ts
+│   ├── queries
+│   │   ├── get-weekly-summary-status.ts
+│   ├── services
+│   │   ├── weekly-summary-body-weight.ts
+│   │   ├── weekly-summary-locales.ts
+│   │   ├── weekly-summary-notification.ts
+│   │   ├── weekly-summary-range.ts
+│   │   └── weekly-summary-totals.ts
+│   └── value-objects
+│       ├── weekly-summary-status.ts
+│       └── weekly-summary-stream.ts
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
@@ -312,23 +337,34 @@ modules/
 │   ├── command-handlers
 │   │   ├── handleRemoveProfileAvatarCommand.ts
 │   │   ├── handleUpdateProfileAvatarCommand.ts
+│   │   ├── handleWeeklySummarySetCommand.ts
 │   ├── commands
 │   │   ├── REMOVE_PROFILE_AVATAR_COMMAND.ts
-│   │   └── UPDATE_PROFILE_AVATAR_COMMAND.ts
+│   │   ├── UPDATE_PROFILE_AVATAR_COMMAND.ts
+│   │   └── WEEKLY_SUMMARY_SET_COMMAND.ts
 │   ├── events
 │   │   ├── PROFILE_AVATAR_REMOVED_EVENT.ts
-│   │   └── PROFILE_AVATAR_UPDATED_EVENT.ts
+│   │   ├── PROFILE_AVATAR_UPDATED_EVENT.ts
+│   │   └── WEEKLY_SUMMARY_SET_EVENT.ts
 │   ├── invariants
-│   │   └── profile-avatar-constraints.ts
+│   │   ├── profile-avatar-constraints.ts
+│   │   └── weekly-summary-has-changed.ts
+│   ├── open-host-queries
+│   │   └── weekly-summary.ts
 │   ├── policies
 │   │   ├── profile-avatar-eraser.ts
-│   │   └── set-default-user-language.ts
+│   │   ├── set-default-user-language.ts
+│   │   └── set-default-weekly-summary.ts
+│   ├── queries
+│   │   ├── get-weekly-summary.ts
 │   └── value-objects
 │       ├── profile-avatar-key.ts
 │       ├── profile-avatar-max-side.ts
 │       ├── profile-avatar-max-size.ts
 │       ├── profile-avatar-mime-registry.ts
-│       └── profile-avatar-side.ts
+│       ├── profile-avatar-side.ts
+│       ├── weekly-summary-options.ts
+│       └── weekly-summary.ts
 ├── statistics
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
@@ -417,11 +453,13 @@ modules/
     │   ├── get-workout-status-for-owner-count.ts
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
+    │   ├── list-week-completed-workouts.ts
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
+    │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
@@ -512,9 +550,11 @@ app/
 │   │   └── plan-section-warmup-set.ts
 │   ├── preferences
 │   │   ├── get-profile-avatar.ts
+│   │   ├── get-weekly-summary.ts
 │   │   ├── remove-profile-avatar.ts
 │   │   ├── update-profile-avatar.ts
-│   │   └── update-user-language.ts
+│   │   ├── update-user-language.ts
+│   │   └── update-weekly-summary.ts
 │   ├── statistics
 │   │   ├── exercise-performances-get.ts
 │   └── workouts
@@ -575,6 +615,8 @@ infra/
 │   ├── measurements
 │   │   ├── get-body-weight-measurement.adapter.ts
 │   │   └── list-body-weight-measurements.adapter.ts
+│   ├── notifications
+│   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
@@ -583,6 +625,7 @@ infra/
 │   │   ├── list-plans.adapter.ts
 │   │   └── plan-repository.adapter.ts
 │   ├── preferences
+│   │   ├── get-weekly-summary.adapter.ts
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── system
@@ -617,6 +660,7 @@ infra/
 │       ├── get-workout-status-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts
+│       ├── list-week-completed-workouts.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts
 │       ├── list-workouts.adapter.ts
 │       ├── to-workout-summary.ts
@@ -637,6 +681,7 @@ infra/
 │   ├── plans.projector.ts
 │   ├── preferences.projector.ts
 │   ├── profile-avatars.projector.ts
+│   ├── weekly-summaries.projector.ts
 │   ├── workout-exercises.projector.ts
 │   ├── workout-logged-sets.projector.ts
 │   └── workouts.projector.ts
@@ -653,6 +698,7 @@ infra/
 │   ├── event-store.ts
 │   ├── event-upcaster.ts
 │   ├── hash-content.strategy.ts
+│   ├── job-queue.adapter.ts
 │   ├── prerequisites.ts
 │   ├── shield-auth.strategy.ts
 │   ├── shield-basic-auth.strategy.ts

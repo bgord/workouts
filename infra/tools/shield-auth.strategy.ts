@@ -5,6 +5,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { haveIBeenPwned } from "better-auth/plugins/haveibeenpwned";
 import * as v from "valibot";
 import * as Auth from "+auth";
+import * as Emails from "+emails";
 import { db } from "+infra/db";
 import type { EnvironmentResultType } from "+infra/env";
 
@@ -56,21 +57,23 @@ export function createShieldAuth(Env: EnvironmentResultType, deps: Dependencies)
       requireEmailVerification: true,
       async sendResetPassword({ user, url }) {
         const config = { to: v.parse(tools.Email, user.email), from: Env.EMAIL_FROM };
-        const message = new Auth.Services.PasswordResetNotificationComposer().compose(
+        const notification = new Auth.Services.PasswordResetNotificationComposer().compose(
           v.parse(tools.UrlWithoutSlash, url),
         );
+        const html = await Emails.renderEmail(Emails.CallToActionEmail, notification.content);
 
-        await deps.Mailer.send(new bg.MailerTemplate(config, message));
+        await deps.Mailer.send(new bg.MailerTemplate(config, { subject: notification.subject, html }));
       },
     },
     emailVerification: {
       async sendVerificationEmail({ user, url }) {
         const config = { to: v.parse(tools.Email, user.email), from: Env.EMAIL_FROM };
-        const message = new Auth.Services.EmailVerificationNotificationComposer(Env.BETTER_AUTH_URL).compose(
-          v.parse(tools.UrlWithoutSlash, url),
-        );
+        const notification = new Auth.Services.EmailVerificationNotificationComposer(
+          Env.BETTER_AUTH_URL,
+        ).compose(v.parse(tools.UrlWithoutSlash, url));
+        const html = await Emails.renderEmail(Emails.CallToActionEmail, notification.content);
 
-        await deps.Mailer.send(new bg.MailerTemplate(config, message));
+        await deps.Mailer.send(new bg.MailerTemplate(config, { subject: notification.subject, html }));
       },
       sendOnSignUp: true,
       sendOnSignIn: true,

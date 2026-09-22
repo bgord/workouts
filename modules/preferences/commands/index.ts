@@ -1,2 +1,3 @@
 export * from "./REMOVE_PROFILE_AVATAR_COMMAND";
 export * from "./UPDATE_PROFILE_AVATAR_COMMAND";
+export * from "./WEEKLY_SUMMARY_SET_COMMAND";
