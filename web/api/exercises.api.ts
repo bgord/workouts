@@ -42,7 +42,10 @@ export class Exercises {
     const response = await fetch(url, { headers, credentials: "include" });
 
     if (!response?.ok)
-      return { data: [], actions: { add: unavailable, rename: unavailable, delete: unavailable } };
+      return {
+        data: [],
+        actions: { manage: unavailable, add: unavailable, rename: unavailable, delete: unavailable },
+      };
     return response.json().catch();
   }
 }

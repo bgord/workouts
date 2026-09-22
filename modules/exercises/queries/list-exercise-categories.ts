@@ -4,7 +4,7 @@ import type * as VO from "+exercises/value-objects";
 
 export type ExerciseCategoryListResponse = {
   data: ReadonlyArray<VO.ExerciseCategory>;
-  actions: { add: ActionState; rename: ActionState; delete: ActionState };
+  actions: { manage: ActionState; add: ActionState; rename: ActionState; delete: ActionState };
 };
 
 export interface ListExerciseCategories {

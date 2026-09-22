@@ -115,7 +115,12 @@ export const exerciseListResponse: Exercises.Queries.ExerciseListResponse = {
 
 export const exerciseCategoryListResponse: Exercises.Queries.ExerciseCategoryListResponse = {
   data: [exerciseCategory],
-  actions: { add: actionAvailable, rename: actionAvailable, delete: actionAvailable },
+  actions: {
+    manage: actionAvailable,
+    add: actionAvailable,
+    rename: actionAvailable,
+    delete: actionAvailable,
+  },
 };
 
 export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {

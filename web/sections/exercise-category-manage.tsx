@@ -11,19 +11,17 @@ export function ExerciseCategoryManage() {
 
   const exerciseCategoryManage = bg.useToggle({ name: "exercise-category-manage" });
 
-  const actions = Object.values(exerciseCategories.actions);
-
-  if (!actions.some((action) => action.available)) return null;
+  if (!exerciseCategories.actions.manage.available) return null;
 
   return (
     <>
-      <ui.ActionHint {...exerciseCategories.actions.add} />
+      <ui.ActionHint {...exerciseCategories.actions.manage} />
 
       <button
         className="c-button"
         data-md-grow="1"
         data-variant="ghost"
-        disabled={!actions.some((action) => action.enabled)}
+        disabled={!exerciseCategories.actions.manage.enabled}
         onClick={exerciseCategoryManage.enable}
         type="button"
         {...exerciseCategoryManage.props.controller}
