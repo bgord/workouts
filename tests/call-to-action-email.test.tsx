@@ -5,9 +5,9 @@ import * as Emails from "+emails";
 
 const url = v.parse(tools.UrlWithoutSlash, "http://example.com/reset?token=abc&x=1");
 
-describe("PasswordResetEmail", () => {
+describe("CallToActionEmail", () => {
   test("render", async () => {
-    const html = await Emails.renderEmail(Emails.PasswordResetEmail, {
+    const html = await Emails.renderEmail(Emails.CallToActionEmail, {
       intro: "Intro <b>bold</b>",
       cta: "Reset password",
       url,

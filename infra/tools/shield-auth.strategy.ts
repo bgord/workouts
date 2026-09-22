@@ -60,7 +60,7 @@ export function createShieldAuth(Env: EnvironmentResultType, deps: Dependencies)
         const notification = new Auth.Services.PasswordResetNotificationComposer().compose(
           v.parse(tools.UrlWithoutSlash, url),
         );
-        const html = await Emails.renderEmail(Emails.PasswordResetEmail, notification.content);
+        const html = await Emails.renderEmail(Emails.CallToActionEmail, notification.content);
 
         await deps.Mailer.send(new bg.MailerTemplate(config, { subject: notification.subject, html }));
       },
@@ -68,11 +68,12 @@ export function createShieldAuth(Env: EnvironmentResultType, deps: Dependencies)
     emailVerification: {
       async sendVerificationEmail({ user, url }) {
         const config = { to: v.parse(tools.Email, user.email), from: Env.EMAIL_FROM };
-        const message = new Auth.Services.EmailVerificationNotificationComposer(Env.BETTER_AUTH_URL).compose(
-          v.parse(tools.UrlWithoutSlash, url),
-        );
+        const notification = new Auth.Services.EmailVerificationNotificationComposer(
+          Env.BETTER_AUTH_URL,
+        ).compose(v.parse(tools.UrlWithoutSlash, url));
+        const html = await Emails.renderEmail(Emails.CallToActionEmail, notification.content);
 
-        await deps.Mailer.send(new bg.MailerTemplate(config, message));
+        await deps.Mailer.send(new bg.MailerTemplate(config, { subject: notification.subject, html }));
       },
       sendOnSignUp: true,
       sendOnSignIn: true,
