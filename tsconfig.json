@@ -25,6 +25,8 @@
       "+measurements/*": ["./modules/measurements/*"],
       "+exercises": ["./modules/exercises/index"],
       "+exercises/*": ["./modules/exercises/*"],
+      "+notifications": ["./modules/notifications/index"],
+      "+notifications/*": ["./modules/notifications/*"],
       "+plans": ["./modules/plans/index"],
       "+plans/*": ["./modules/plans/*"],
       "+statistics": ["./modules/statistics/index"],

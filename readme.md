@@ -187,6 +187,15 @@ modules/
 │       ├── body-weight-measurement.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+├── notifications
+│   ├── invariants
+│   │   └── weekly-summary-schedule.ts
+│   ├── job-handlers
+│   │   └── weekly-summary-compose-job.handler.ts
+│   ├── jobs
+│   │   └── WEEKLY_SUMMARY_COMPOSE_JOB.ts
+│   └── policies
+│       └── weekly-summary-scheduler.ts
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
