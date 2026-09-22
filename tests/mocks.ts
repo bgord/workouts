@@ -286,6 +286,17 @@ export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = 
   })),
 };
 
+export const planSectionEmpty: Plans.VO.PlanSectionWithExercises = {
+  id: anotherPlanSectionId,
+  name: anotherPlanSectionName,
+  exerciseInstructions: [],
+};
+
+export const planSectionsAtLimit: ReadonlyArray<Plans.VO.PlanSectionWithExercises> = Array.from(
+  { length: Plans.VO.PlanSectionLimitForPlanMax },
+  () => planSection,
+);
+
 export const plan: Plans.VO.Plan = {
   id: planId,
   name: planName,
