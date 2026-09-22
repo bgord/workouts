@@ -3,18 +3,22 @@ import * as Emails from "+emails";
 
 describe("Emails.Shell", () => {
   test("renders the shell around the content", async () => {
-    const html = await Emails.renderEmail(
-      <Emails.Shell preview="Preview" signature="— Workouts">
-        <Emails.Eyebrow>Eyebrow</Emails.Eyebrow>
-        <Emails.Title>Title</Emails.Title>
-        <Emails.Paragraph>Intro &lt;b&gt;bold&lt;/b&gt;</Emails.Paragraph>
-        <Emails.Button href="http://example.com/?token=abc&x=1">Go</Emails.Button>
-        <Emails.Heading>Heading</Emails.Heading>
-        <Emails.Note>
-          Note <Emails.Link href="http://example.com/?token=abc&x=1">link</Emails.Link>
-        </Emails.Note>
-      </Emails.Shell>,
-    );
+    const html = await Emails.renderEmail(Emails.Shell, {
+      preview: "Preview",
+      signature: "— Workouts",
+      children: (
+        <>
+          <Emails.Eyebrow>Eyebrow</Emails.Eyebrow>
+          <Emails.Title>Title</Emails.Title>
+          <Emails.Paragraph>Intro &lt;b&gt;bold&lt;/b&gt;</Emails.Paragraph>
+          <Emails.Button href="http://example.com/?token=abc&x=1">Go</Emails.Button>
+          <Emails.Heading>Heading</Emails.Heading>
+          <Emails.Note>
+            Note <Emails.Link href="http://example.com/?token=abc&x=1">link</Emails.Link>
+          </Emails.Note>
+        </>
+      ),
+    });
 
     expect(html).toStartWith("<!DOCTYPE html");
     expect(html).toContain('<html dir="ltr" lang="en">');
@@ -33,11 +37,10 @@ describe("Emails.Shell", () => {
   });
 
   test("style overrides merge with the defaults", async () => {
-    const html = await Emails.renderEmail(
-      <Emails.Shell signature="— Workouts">
-        <Emails.Paragraph style={{ color: "#000000" }}>Intro</Emails.Paragraph>
-      </Emails.Shell>,
-    );
+    const html = await Emails.renderEmail(Emails.Shell, {
+      signature: "— Workouts",
+      children: <Emails.Paragraph style={{ color: "#000000" }}>Intro</Emails.Paragraph>,
+    });
 
     expect(html).toContain("font-size:15px");
     expect(html).toContain("color:#000000");
