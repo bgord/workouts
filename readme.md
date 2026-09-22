@@ -328,7 +328,8 @@ modules/
 │   │   └── weekly-summary.ts
 │   ├── policies
 │   │   ├── profile-avatar-eraser.ts
-│   │   └── set-default-user-language.ts
+│   │   ├── set-default-user-language.ts
+│   │   └── set-default-weekly-summary.ts
 │   ├── queries
 │   │   ├── get-weekly-summary.ts
 │   └── value-objects

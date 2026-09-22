@@ -24,6 +24,7 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
 
   // Policies
   new Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
+  new Preferences.Policies.SetDefaultWeeklySummary(deps);
   new Preferences.Policies.ProfileAvatarEraser(deps);
   new Exercises.Policies.ExerciseDeleter(deps);
 }

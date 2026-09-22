@@ -570,6 +570,17 @@ export const GenericUserLanguageSetPLEvent = {
   payload: { userId, language: languages.supported.pl },
 } satisfies bg.Preferences.Events.UserLanguageSetEventType;
 
+export const GenericWeeklySummarySetOnEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: preferencesStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SET_EVENT",
+  payload: { userId, weeklySummary: Preferences.VO.WeeklySummaryOptions.on },
+} satisfies Preferences.Events.WeeklySummarySetEventType;
+
 export const GenericWeeklySummarySetOffEvent = {
   id: expectAnyId,
   correlationId,
