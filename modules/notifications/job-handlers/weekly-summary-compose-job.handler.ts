@@ -40,25 +40,23 @@ type Dependencies = {
 export const WeeklySummaryComposeJobHandler =
   (config: Config, deps: Dependencies) =>
   async (job: Notifications.Jobs.WeeklySummaryComposeJobType): Promise<void> => {
-    const { userId, weekIsoId } = job.payload;
-
-    const status = await deps.GetWeeklySummaryStatusQuery.execute(userId, weekIsoId);
+    const status = await deps.GetWeeklySummaryStatusQuery.execute(job.payload.userId, job.payload.weekIsoId);
     if (status) return;
 
-    const preference = await deps.WeeklySummaryOHQ.execute(userId);
+    const preference = await deps.WeeklySummaryOHQ.execute(job.payload.userId);
     if (preference === Preferences.VO.WeeklySummaryOptions.off) return;
 
-    const contact = await deps.UserContactOHQ.getPrimary(userId);
+    const contact = await deps.UserContactOHQ.getPrimary(job.payload.userId);
     if (!contact?.address) return;
 
-    const week = tools.Week.fromIsoId(weekIsoId);
+    const week = tools.Week.fromIsoId(job.payload.weekIsoId);
 
     const [workouts, previousWorkouts, performances, measurements, dashboard] = await Promise.all([
-      deps.ListWeekCompletedWorkoutsOHQ.execute(userId, week),
-      deps.ListWeekCompletedWorkoutsOHQ.execute(userId, week.previous()),
-      deps.ListWeekExercisePerformancesOHQ.execute(userId, week),
-      deps.ListBodyWeightMeasurementsOHQ.execute(userId),
-      deps.GetWorkoutDashboardOHQ.execute(userId, deps.Clock.now()),
+      deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week),
+      deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week.previous()),
+      deps.ListWeekExercisePerformancesOHQ.execute(job.payload.userId, week),
+      deps.ListBodyWeightMeasurementsOHQ.execute(job.payload.userId),
+      deps.GetWorkoutDashboardOHQ.execute(job.payload.userId, deps.Clock.now()),
     ]);
 
     const summary = new WeeklySummaryCalculator({
@@ -70,14 +68,14 @@ export const WeeklySummaryComposeJobHandler =
       completed: dashboard.completed,
     }).calculate();
 
-    const stream = WeeklySummaryStream.of(userId, weekIsoId);
+    const stream = WeeklySummaryStream.of(job.payload.userId, job.payload.weekIsoId);
 
     if (!summary) {
-      await deps.EventStore.save([bg.event(WeeklySummarySkippedEvent, stream, { userId, weekIsoId }, deps)]);
+      await deps.EventStore.save([bg.event(WeeklySummarySkippedEvent, stream, job.payload, deps)]);
       return;
     }
 
-    const language = await deps.UserLanguageOHQ.get(userId);
+    const language = await deps.UserLanguageOHQ.get(job.payload.userId);
     const translations = await deps.TranslationsProvider.getTranslationsFor(language);
 
     const composer = new WeeklySummaryNotificationComposer(config.BETTER_AUTH_URL, translations, language);
@@ -90,5 +88,5 @@ export const WeeklySummaryComposeJobHandler =
     );
 
     await deps.JobDispatcher.enqueue(email);
-    await deps.EventStore.save([bg.event(WeeklySummarySentEvent, stream, { userId, weekIsoId }, deps)]);
+    await deps.EventStore.save([bg.event(WeeklySummarySentEvent, stream, job.payload, deps)]);
   };
