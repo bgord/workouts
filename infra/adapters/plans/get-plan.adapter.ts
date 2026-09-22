@@ -1,5 +1,3 @@
-import type * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import { and, asc, eq } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
@@ -58,8 +56,9 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         .orderBy(asc(Schema.planSectionExerciseInstructions.position)),
     ]);
 
-    const editable = Plans.Invariants.PlanIsEditable.passes({ status: plan.status });
-    const whenEditable = { available: editable, enabled: editable, hints: [] };
+    const exerciseInstructionActions = new Plans.Services.PlanGetExerciseInstructionActions({
+      status: plan.status,
+    }).calculate();
 
     const data = {
       id: plan.id,
@@ -82,75 +81,26 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
               sets: exerciseInstruction.sets,
               reps: v.parse(Plans.VO.Reps, exerciseInstruction.reps),
               progression: exerciseInstruction.progression,
-              actions: {
-                update: whenEditable,
-                exerciseChange: whenEditable,
-                move: whenEditable,
-                remove: whenEditable,
-              },
+              actions: exerciseInstructionActions,
             })),
         };
 
-        const instructionsAvailable = Plans.Invariants.PlanSectionExerciseInstructionLimit.passes({
-          planSection,
-        });
-
         return {
           ...planSection,
-          actions: {
-            exerciseInstructionAdd: {
-              available: editable,
-              enabled: editable && instructionsAvailable,
-              hints: instructionsAvailable ? [] : ["plan.section.exercise.list.limit.hint"],
-            },
-          },
+          actions: new Plans.Services.PlanGetSectionActions({
+            status: plan.status,
+            section: planSection,
+          }).calculate(),
         };
       }),
     };
 
-    const hasSections = Plans.Invariants.PlanHasSections.passes({ planSections: data.sections });
-    const hasNoEmptySections = Plans.Invariants.PlanHasNoEmptySections.passes({
-      planSections: data.sections,
-    });
-
-    const finalizeBlockers: Array<bg.TranslationsKeyType> = [];
-
-    if (!hasSections) finalizeBlockers.push("plan.finalize.blocked.no_sections");
-    if (!hasNoEmptySections) finalizeBlockers.push("plan.finalize.blocked.empty_sections");
-
-    const sectionsAvailable = Plans.Invariants.PlanSectionLimitForPlan.passes({
-      count: tools.Int.nonNegative(data.sections.length),
-    });
-
-    const finalized = Plans.Invariants.PlanIsFinalized.passes({ status: plan.status });
-    const archivable = Plans.Invariants.PlanIsArchivable.passes({ status: plan.status });
-    const restorable = Plans.Invariants.PlanIsRestorable.passes({ status: plan.status });
-    const removable = Plans.Invariants.PlanIsRemovable.passes({ status: plan.status });
-
     return {
       data,
-      actions: {
-        finalize: {
-          available: editable,
-          enabled: editable && finalizeBlockers.length === 0,
-          hints: finalizeBlockers,
-        },
-        rename: whenEditable,
-        descriptionSet: whenEditable,
-        editingEnable: { available: finalized, enabled: finalized, hints: [] },
-        archive: { available: archivable, enabled: archivable, hints: [] },
-        restore: { available: restorable, enabled: restorable, hints: [] },
-        remove: { available: removable, enabled: removable, hints: [] },
-        sectionCreate: {
-          available: editable,
-          enabled: editable && sectionsAvailable,
-          hints: sectionsAvailable ? [] : ["plan.section.list.limit.hint"],
-        },
-        sectionRename: whenEditable,
-        sectionWarmupSet: whenEditable,
-        sectionCooldownSet: whenEditable,
-        sectionRemove: whenEditable,
-      },
+      actions: new Plans.Services.PlanGetActions({
+        status: plan.status,
+        sections: data.sections,
+      }).calculate(),
     };
   }
 }
