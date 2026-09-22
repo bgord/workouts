@@ -17,6 +17,8 @@
       "+infra/*": ["./infra/*"],
       "+app": ["./app/index"],
       "+app/*": ["./app/*"],
+      "+emails": ["./emails/index"],
+      "+emails/*": ["./emails/*"],
       "+action-state": ["./modules/action-state.ts"],
       "+languages": ["./modules/languages.ts"],
       "+supported-languages": ["./modules/supported-languages.ts"],

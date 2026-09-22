@@ -1,28 +1,27 @@
 import { describe, expect, test } from "bun:test";
-import * as Notifications from "+notifications";
+import * as Emails from "+emails";
 
-describe("Notifications.Email.Shell", () => {
+describe("Emails.Shell", () => {
   test("renders the shell around the content", async () => {
-    const html = await Notifications.Email.renderEmail(
-      <Notifications.Email.Shell preview="Preview" signature="— Workouts">
-        <Notifications.Email.Eyebrow>Eyebrow</Notifications.Email.Eyebrow>
-        <Notifications.Email.Title>Title</Notifications.Email.Title>
-        <Notifications.Email.Paragraph>Intro &lt;b&gt;bold&lt;/b&gt;</Notifications.Email.Paragraph>
-        <Notifications.Email.Button href="http://example.com/?token=abc&x=1">Go</Notifications.Email.Button>
-        <Notifications.Email.Heading>Heading</Notifications.Email.Heading>
-        <Notifications.Email.Note>
-          Note{" "}
-          <Notifications.Email.Link href="http://example.com/?token=abc&x=1">link</Notifications.Email.Link>
-        </Notifications.Email.Note>
-      </Notifications.Email.Shell>,
+    const html = await Emails.renderEmail(
+      <Emails.Shell preview="Preview" signature="— Workouts">
+        <Emails.Eyebrow>Eyebrow</Emails.Eyebrow>
+        <Emails.Title>Title</Emails.Title>
+        <Emails.Paragraph>Intro &lt;b&gt;bold&lt;/b&gt;</Emails.Paragraph>
+        <Emails.Button href="http://example.com/?token=abc&x=1">Go</Emails.Button>
+        <Emails.Heading>Heading</Emails.Heading>
+        <Emails.Note>
+          Note <Emails.Link href="http://example.com/?token=abc&x=1">link</Emails.Link>
+        </Emails.Note>
+      </Emails.Shell>,
     );
 
     expect(html).toStartWith("<!DOCTYPE html");
     expect(html).toContain('<html dir="ltr" lang="en">');
     expect(html).toContain(">Preview<");
-    expect(html).toContain(`background:${Notifications.Email.theme.color.accent}`);
+    expect(html).toContain(`background:${Emails.theme.color.accent}`);
     expect(html).toContain(">Workouts</td>");
-    expect(html).toContain(`max-width:${Notifications.Email.theme.width.card}`);
+    expect(html).toContain(`max-width:${Emails.theme.width.card}`);
     expect(html).toContain(">Eyebrow</p>");
     expect(html).toContain(">Title</p>");
     expect(html).toContain(">Intro &lt;b&gt;bold&lt;/b&gt;</p>");
@@ -34,14 +33,14 @@ describe("Notifications.Email.Shell", () => {
   });
 
   test("style overrides merge with the defaults", async () => {
-    const html = await Notifications.Email.renderEmail(
-      <Notifications.Email.Shell signature="— Workouts">
-        <Notifications.Email.Paragraph style={{ color: "#000000" }}>Intro</Notifications.Email.Paragraph>
-      </Notifications.Email.Shell>,
+    const html = await Emails.renderEmail(
+      <Emails.Shell signature="— Workouts">
+        <Emails.Paragraph style={{ color: "#000000" }}>Intro</Emails.Paragraph>
+      </Emails.Shell>,
     );
 
     expect(html).toContain("font-size:15px");
     expect(html).toContain("color:#000000");
-    expect(html).not.toContain(`color:${Notifications.Email.theme.color.textPrimary}`);
+    expect(html).not.toContain(`color:${Emails.theme.color.textPrimary}`);
   });
 });

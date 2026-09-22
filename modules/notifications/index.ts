@@ -1,4 +1,3 @@
-export * as Email from "./email";
 export * as Events from "./events";
 export * as Invariants from "./invariants";
 export * as JobHandlers from "./job-handlers";

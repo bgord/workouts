@@ -189,20 +189,6 @@ modules/
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
 ├── notifications
-│   ├── email
-│   │   ├── components
-│   │   │   ├── button.tsx
-│   │   │   ├── eyebrow.tsx
-│   │   │   ├── heading.tsx
-│   │   │   ├── link.tsx
-│   │   │   ├── logo.tsx
-│   │   │   ├── note.tsx
-│   │   │   ├── paragraph.tsx
-│   │   │   ├── rule.tsx
-│   │   │   ├── shell.tsx
-│   │   │   └── title.tsx
-│   │   ├── render.ts
-│   │   └── theme.ts
 │   ├── events
 │   │   ├── WEEKLY_SUMMARY_SENT_EVENT.ts
 │   │   └── WEEKLY_SUMMARY_SKIPPED_EVENT.ts

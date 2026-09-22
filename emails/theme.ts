@@ -1,3 +1,4 @@
+/* cSpell:disable */
 export const theme = {
   color: {
     page: "#f4f4f5",
