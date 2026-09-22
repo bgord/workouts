@@ -1,11 +1,32 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import type * as Auth from "+auth";
+import type * as Measurements from "+measurements";
 import * as Notifications from "+notifications";
+import type * as Preferences from "+preferences";
+import type { SupportedLanguages } from "+supported-languages";
+import type * as Workouts from "+workouts";
 import type { EnvironmentResultType } from "+infra/env";
+
+type LanguagesType = (typeof SupportedLanguages)[number];
 
 type Dependencies = {
   Clock: bg.ClockPort;
+  IdProvider: bg.IdProviderPort;
+  CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   Mailer: bg.MailerPort;
+  TranslationsProvider: bg.TranslationsProviderPort;
+  EventStore: bg.EventStorePort<
+    Notifications.Events.WeeklySummarySentEventType | Notifications.Events.WeeklySummarySkippedEventType
+  >;
+  GetWeeklySummaryStatusQuery: Notifications.Queries.GetWeeklySummaryStatus;
+  WeeklySummaryOHQ: Preferences.OHQ.WeeklySummaryOHQ;
+  UserContactOHQ: Auth.OHQ.UserContactOHQ;
+  UserLanguageOHQ: bg.Preferences.OHQ.UserLanguagePort<LanguagesType>;
+  ListWeekCompletedWorkoutsOHQ: Workouts.OHQ.ListWeekCompletedWorkoutsOHQ;
+  ListWeekExercisePerformancesOHQ: Workouts.OHQ.ListWeekExercisePerformancesOHQ;
+  GetWorkoutDashboardOHQ: Workouts.OHQ.GetWorkoutDashboardOHQ;
+  ListBodyWeightMeasurementsOHQ: Measurements.OHQ.ListBodyWeightMeasurementsOHQ;
 };
 
 type AcceptedJob = bg.System.Jobs.SendEmailJobType | Notifications.Jobs.WeeklySummaryComposeJobType;
@@ -25,6 +46,8 @@ export async function createJobQueue(
 }> {
   const store = new bg.JobQueueSqliteStore({ database: "jobs.db" });
 
+  const JobDispatcher: bg.JobDispatcherPort<AcceptedJob> = { enqueue: (job) => JobQueue.enqueue(job) };
+
   const registry = new bg.JobRegistryAdapter<AcceptedJob>({
     [bg.System.Jobs.SEND_EMAIL_JOB]: {
       schema: bg.System.Jobs.SendEmailJobSchema,
@@ -34,7 +57,10 @@ export async function createJobQueue(
     [Notifications.Jobs.WEEKLY_SUMMARY_COMPOSE_JOB]: {
       schema: Notifications.Jobs.WeeklySummaryComposeJobSchema,
       retry,
-      handler: Notifications.JobHandlers.WeeklySummaryComposeJobHandler(),
+      handler: Notifications.JobHandlers.WeeklySummaryComposeJobHandler(
+        { EMAIL_FROM: Env.EMAIL_FROM, BETTER_AUTH_URL: Env.BETTER_AUTH_URL },
+        { ...deps, JobDispatcher },
+      ),
     },
   });
 

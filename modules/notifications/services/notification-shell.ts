@@ -1,3 +1,4 @@
+/* cSpell:disable */
 const styles = {
   page: "margin:0;padding:0;background:#f4f4f5;",
   canvas: "background:#f4f4f5;margin:0;padding:0;",

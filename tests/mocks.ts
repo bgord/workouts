@@ -9,7 +9,7 @@ import * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Measurements from "+measurements";
-import type * as Notifications from "+notifications";
+import * as Notifications from "+notifications";
 import * as Plans from "+plans";
 import * as Preferences from "+preferences";
 import * as Statistics from "+statistics";
@@ -541,6 +541,32 @@ export const GenericWeeklySummaryComposeJob = {
 } satisfies Notifications.Jobs.WeeklySummaryComposeJobType;
 
 export const week = tools.Week.fromIsoId(previousWeekIsoId);
+
+export const weeklySummaryStream = Notifications.VO.WeeklySummaryStream.of(userId, previousWeekIsoId);
+
+export const GenericWeeklySummarySentEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: weeklySummaryStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SENT_EVENT",
+  payload: { userId, weekIsoId: previousWeekIsoId },
+} satisfies Notifications.Events.WeeklySummarySentEventType;
+
+export const GenericWeeklySummarySkippedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: weeklySummaryStream,
+  version: 1,
+  commit,
+  name: "WEEKLY_SUMMARY_SKIPPED_EVENT",
+  payload: { userId, weekIsoId: previousWeekIsoId },
+} satisfies Notifications.Events.WeeklySummarySkippedEventType;
+
+export const emailContact: Auth.OHQ.EmailContact = { type: "email", address: email };
 
 export const weekCompletedWorkout: Workouts.Queries.WeekCompletedWorkout = {
   id: workoutId,

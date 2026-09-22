@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import { escapeHtml, NotificationShell } from "./notification-shell";
 
 export type WeeklySummaryLayoutTile = { value: string; label: string; delta: string };

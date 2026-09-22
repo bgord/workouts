@@ -25,7 +25,18 @@ export async function bootstrap() {
   const Measurements = createMeasurementsAdapters();
   const Notifications = createNotificationsAdapters();
 
-  const { JobQueue, JobQueueStatsProvider, JobPruner } = await createJobQueue(Env, { ...System, ...Tools });
+  const { JobQueue, JobQueueStatsProvider, JobPruner } = await createJobQueue(Env, {
+    ...System,
+    ...Tools,
+    GetWeeklySummaryStatusQuery: Notifications.GetWeeklySummaryStatusQuery,
+    WeeklySummaryOHQ: Preferences.GetWeeklySummaryQuery,
+    UserContactOHQ: Auth.UserContactOHQ,
+    UserLanguageOHQ: Preferences.UserLanguageOHQ,
+    ListWeekCompletedWorkoutsOHQ: Workouts.ListWeekCompletedWorkoutsQuery,
+    ListWeekExercisePerformancesOHQ: Workouts.ListWeekExercisePerformancesQuery,
+    GetWorkoutDashboardOHQ: Workouts.GetWorkoutDashboardQuery,
+    ListBodyWeightMeasurementsOHQ: Measurements.ListBodyWeightMeasurementsQuery,
+  });
 
   return {
     Env,
