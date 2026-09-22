@@ -12,7 +12,7 @@ class WeeklySummaryScheduleFactory extends bg.Invariant<WeeklySummaryScheduleCon
     const sixAM = tools.Hour.fromNumber(6);
     const hour = tools.Hour.fromTimestampValue(config.timestamp);
 
-    return hour.equals(sixAM);
+    return hour.equals(sixAM) || hour.isAfter(sixAM);
   }
 
   // Stryker disable next-line StringLiteral

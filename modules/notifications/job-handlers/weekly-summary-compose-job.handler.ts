@@ -56,7 +56,7 @@ export const WeeklySummaryComposeJobHandler =
       deps.ListWeekCompletedWorkoutsOHQ.execute(job.payload.userId, week.previous()),
       deps.ListWeekExercisePerformancesOHQ.execute(job.payload.userId, week),
       deps.ListBodyWeightMeasurementsOHQ.execute(job.payload.userId),
-      deps.GetWorkoutDashboardOHQ.execute(job.payload.userId, deps.Clock.now()),
+      deps.GetWorkoutDashboardOHQ.execute(job.payload.userId, week.getEnd()),
     ]);
 
     const summary = new WeeklySummaryCalculator({

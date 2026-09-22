@@ -17,8 +17,12 @@ describe("WeeklySummarySchedule", () => {
     expect(Notifications.Invariants.WeeklySummarySchedule.passes(at("2025-01-06T05:00:00Z"))).toEqual(false);
   });
 
-  test("fails - monday 07:00 UTC", () => {
-    expect(Notifications.Invariants.WeeklySummarySchedule.passes(at("2025-01-06T07:00:00Z"))).toEqual(false);
+  test("passes - monday 07:00 UTC", () => {
+    expect(Notifications.Invariants.WeeklySummarySchedule.passes(at("2025-01-06T07:00:00Z"))).toEqual(true);
+  });
+
+  test("passes - monday 23:00 UTC", () => {
+    expect(Notifications.Invariants.WeeklySummarySchedule.passes(at("2025-01-06T23:00:00Z"))).toEqual(true);
   });
 
   test("fails - tuesday 06:00 UTC", () => {
