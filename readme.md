@@ -202,9 +202,12 @@ modules/
 │   │   └── weekly-summary-scheduler.ts
 │   ├── queries
 │   │   ├── get-weekly-summary-status.ts
+│   ├── services
+│   │   └── weekly-summary-calculator.ts
 │   └── value-objects
 │       ├── weekly-summary-status.ts
-│       └── weekly-summary-stream.ts
+│       ├── weekly-summary-stream.ts
+│       └── weekly-summary.ts
 ├── plans
 │   ├── aggregates
 │   │   └── plan.ts
