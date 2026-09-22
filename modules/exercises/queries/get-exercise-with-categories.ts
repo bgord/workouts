@@ -4,6 +4,7 @@ import type * as VO from "+exercises/value-objects";
 
 export type ExerciseGetResponse = {
   data: VO.ExerciseWithCategories;
+  assignableCategories: ReadonlyArray<VO.ExerciseCategory>;
   actions: {
     update: ActionState;
     imageChange: ActionState;

@@ -120,6 +120,7 @@ export const exerciseCategoryListResponse: Exercises.Queries.ExerciseCategoryLis
 
 export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
   data: exerciseWithCategories,
+  assignableCategories: [anotherExerciseCategory],
   actions: {
     update: actionAvailable,
     imageChange: actionAvailable,

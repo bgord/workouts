@@ -9,19 +9,16 @@ import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 export function ExerciseCategories() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { exercise, exerciseCategories } = exerciseRoute.useLoaderData();
+  const { exercise } = exerciseRoute.useLoaderData();
   const action = exercise.actions.categoryAssign;
 
   const assignment = bg.useToggle({ name: "exercise-category-assign" });
 
   const assigned = exercise.data.categories;
-  const assignable = exerciseCategories.data.filter(
-    (category) => !assigned.some((current) => current.id === category.id),
-  );
 
   const exerciseCategoryId = bg.useTextField({
     name: "exercise-category-id",
-    defaultValue: assignable[0]?.id ?? "",
+    defaultValue: exercise.assignableCategories[0]?.id ?? "",
   });
 
   const refresh = () => router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
@@ -57,8 +54,6 @@ export function ExerciseCategories() {
     );
   }
 
-  const hasAssignable = assignable.length > 0;
-
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
       <div
@@ -71,7 +66,7 @@ export function ExerciseCategories() {
       >
         <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
-        {hasAssignable && assignment.off && (
+        {assignment.off && (
           <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
             <ui.ActionHint {...action} />
 
@@ -90,7 +85,7 @@ export function ExerciseCategories() {
         )}
       </div>
 
-      {hasAssignable && assignment.on && (
+      {action.enabled && assignment.on && (
         <form
           aria-busy={assign.isLoading}
           data-cross="center"
@@ -105,7 +100,7 @@ export function ExerciseCategories() {
               disabled={!action.enabled}
               {...exerciseCategoryId.input.props}
             >
-              {assignable.map((category) => (
+              {exercise.assignableCategories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>

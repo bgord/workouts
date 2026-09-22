@@ -1,6 +1,9 @@
+import type * as bg from "@bgord/bun";
+import { asc, eq, notInArray } from "drizzle-orm";
 import type * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { db } from "+infra/db";
+import * as Schema from "+infra/schema";
 import { GetExerciseUsageCountQuery } from "./get-exercise-usage-count.adapter";
 
 class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExerciseWithCategories {
@@ -8,7 +11,7 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
     exerciseId: Exercises.VO.ExerciseIdType,
     requesterId: Auth.VO.UserIdType,
   ): Promise<Exercises.Queries.ExerciseGetResponse | null> {
-    const [exercise, count] = await Promise.all([
+    const [exercise, count, assignableCategories] = await Promise.all([
       db.query.exercises.findFirst({
         columns: { id: true, name: true, description: true, image: true, imageEtag: true },
         where: (exercise, { eq }) => eq(exercise.id, exerciseId),
@@ -21,6 +24,19 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
         },
       }),
       GetExerciseUsageCountQuery.execute(exerciseId),
+      db
+        .select({ id: Schema.exerciseCategories.id, name: Schema.exerciseCategories.name })
+        .from(Schema.exerciseCategories)
+        .where(
+          notInArray(
+            Schema.exerciseCategories.id,
+            db
+              .select({ id: Schema.exerciseCategoryAssignments.exerciseCategoryId })
+              .from(Schema.exerciseCategoryAssignments)
+              .where(eq(Schema.exerciseCategoryAssignments.exerciseId, exerciseId)),
+          ),
+        )
+        .orderBy(asc(Schema.exerciseCategories.name)),
     ]);
 
     if (!exercise) return null;
@@ -32,10 +48,17 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
     const whenManaged = { available: managed, enabled: managed, hints: [] };
 
     const unused = Exercises.Invariants.ExerciseIsNotUsed.passes({ count });
-    const assignable = Exercises.Invariants.ExerciseCategoryLimit.passes({ exerciseCategories: categories });
+    const withinLimit = Exercises.Invariants.ExerciseCategoryLimit.passes({ exerciseCategories: categories });
+    const anyLeft = assignableCategories.length > 0;
+
+    const categoryAssignHints: Array<bg.TranslationsKeyType> = [];
+
+    if (!withinLimit) categoryAssignHints.push("exercise.category.assign.blocked.limit");
+    if (!anyLeft) categoryAssignHints.push("exercise.category.assign.blocked.none_left");
 
     return {
       data: { ...rest, categories },
+      assignableCategories,
       actions: {
         update: whenManaged,
         imageChange: whenManaged,
@@ -46,8 +69,8 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
         },
         categoryAssign: {
           available: managed,
-          enabled: managed && assignable,
-          hints: assignable ? [] : ["exercise.category.assign.blocked.limit"],
+          enabled: managed && withinLimit && anyLeft,
+          hints: categoryAssignHints,
         },
         categoryUnassign: whenManaged,
       },

@@ -101,6 +101,7 @@
   "exercise.category.add.name.placeholder": "Klatka piersiowa",
   "exercise.category.add.submit.cta": "Dodaj",
   "exercise.category.assign.blocked.limit": "Odłącz kategorię, aby dodać kolejną",
+  "exercise.category.assign.blocked.none_left": "Brak kategorii do przypisania",
   "exercise.category.assign.cta": "Przypisz",
   "exercise.category.assign.error": "Nie udało się zmienić kategorii",
   "exercise.category.assign.label": "Kategoria do przypisania",

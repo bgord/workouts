@@ -131,7 +131,6 @@ export const exerciseRoute = createRoute({
 
     return {
       exercise,
-      exerciseCategories: await Exercises.listCategories(context.request),
       performances: await Statistics.getExercisePerformances(context.request, params),
     };
   },
