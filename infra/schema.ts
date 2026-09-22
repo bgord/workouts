@@ -89,7 +89,7 @@ export const userPreferences = sqliteTable(
       .references(() => users.id, { onDelete: "cascade" })
       .$type<UserIdType>(),
     // NOTE: length 2 is a legacy artifact of passing SupportedLanguages here; kept to avoid DDL drift
-    preference: text("preference", { length: 2, enum: ["language"] }).notNull(),
+    preference: text("preference", { length: 2, enum: ["language", "weekly_summary"] }).notNull(),
     value: text("value").notNull(),
     updatedAt: timestamp("updatedAt").notNull(),
   },
