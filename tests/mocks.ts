@@ -9,6 +9,7 @@ import * as Auth from "+auth";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Measurements from "+measurements";
+import type * as Notifications from "+notifications";
 import * as Plans from "+plans";
 import * as Preferences from "+preferences";
 import * as Statistics from "+statistics";
@@ -514,6 +515,29 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     },
   })),
 };
+
+export const mondaySixAM = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-06T06:00:00Z"));
+export const previousWeekIsoId = tools.Week.fromTimestamp(mondaySixAM).previous().toIsoId();
+
+export const GenericHourHasPassedMondaySixAMEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: passageOfTimeStream,
+  version: 1,
+  commit,
+  name: "HOUR_HAS_PASSED_EVENT",
+  payload: { timestamp: mondaySixAM.ms },
+} satisfies bg.System.Events.HourHasPassedEventType;
+
+export const GenericWeeklySummaryComposeJob = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  name: "WEEKLY_SUMMARY_COMPOSE_JOB",
+  revision: revision.value,
+  payload: { userId, weekIsoId: previousWeekIsoId },
+} satisfies Notifications.Jobs.WeeklySummaryComposeJobType;
 
 export const GenericHourHasPassedEvent = {
   id: expectAnyId,

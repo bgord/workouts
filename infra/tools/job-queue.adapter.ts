@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import * as Notifications from "+notifications";
 import type { EnvironmentResultType } from "+infra/env";
 
 type Dependencies = {
@@ -7,7 +8,7 @@ type Dependencies = {
   Mailer: bg.MailerPort;
 };
 
-type AcceptedJob = bg.System.Jobs.SendEmailJobType;
+type AcceptedJob = bg.System.Jobs.SendEmailJobType | Notifications.Jobs.WeeklySummaryComposeJobType;
 
 const retry = new bg.JobRetryPolicyCompositeStrategy([
   new bg.JobRetryPolicyLimitStrategy(tools.Int.nonNegative(3)),
@@ -29,6 +30,11 @@ export async function createJobQueue(
       schema: bg.System.Jobs.SendEmailJobSchema,
       retry,
       handler: bg.System.JobHandlers.SendEmailJobHandler(deps),
+    },
+    [Notifications.Jobs.WEEKLY_SUMMARY_COMPOSE_JOB]: {
+      schema: Notifications.Jobs.WeeklySummaryComposeJobSchema,
+      retry,
+      handler: Notifications.JobHandlers.WeeklySummaryComposeJobHandler(),
     },
   });
 
