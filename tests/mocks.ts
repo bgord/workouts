@@ -286,6 +286,12 @@ export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = 
   })),
 };
 
+export const planSectionWithTwoExerciseInstructions: Plans.VO.PlanSectionWithExercises = {
+  id: planSectionId,
+  name: planSectionName,
+  exerciseInstructions: [...planSection.exerciseInstructions, ...anotherPlanSection.exerciseInstructions],
+};
+
 export const planSectionEmpty: Plans.VO.PlanSectionWithExercises = {
   id: anotherPlanSectionId,
   name: anotherPlanSectionName,
@@ -320,7 +326,8 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
       actions: {
         update: { available: true, enabled: true, hints: [] },
         exerciseChange: { available: true, enabled: true, hints: [] },
-        move: { available: true, enabled: true, hints: [] },
+        moveUp: { available: true, enabled: true, hints: [] },
+        moveDown: { available: true, enabled: true, hints: [] },
         remove: { available: true, enabled: true, hints: [] },
       },
     })),

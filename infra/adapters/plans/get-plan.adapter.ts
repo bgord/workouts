@@ -58,10 +58,6 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       GetPlanEditableForOwnerCountQuery.execute(userId),
     ]);
 
-    const exerciseInstructionActions = new Plans.Services.PlanGetExerciseInstructionActions({
-      status: plan.status,
-    }).calculate();
-
     const data = {
       id: plan.id,
       name: plan.name,
@@ -83,12 +79,19 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
               sets: exerciseInstruction.sets,
               reps: v.parse(Plans.VO.Reps, exerciseInstruction.reps),
               progression: exerciseInstruction.progression,
-              actions: exerciseInstructionActions,
             })),
         };
 
         return {
           ...planSection,
+          exerciseInstructions: planSection.exerciseInstructions.map((exerciseInstruction) => ({
+            ...exerciseInstruction,
+            actions: new Plans.Services.PlanGetExerciseInstructionActions({
+              status: plan.status,
+              section: planSection,
+              exerciseInstructionId: exerciseInstruction.id,
+            }).calculate(),
+          })),
           actions: new Plans.Services.PlanGetSectionActions({
             status: plan.status,
             section: planSection,

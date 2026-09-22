@@ -34,7 +34,7 @@ export function PlanSectionExerciseInstructionMove(props: {
     onSuccess: () => router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true }),
   });
 
-  if (!props.exerciseInstruction.actions.move.available) {
+  if (!props.exerciseInstruction.actions.moveUp.available) {
     return <ui.RowIndex>{props.position + 1}</ui.RowIndex>;
   }
 
@@ -46,7 +46,7 @@ export function PlanSectionExerciseInstructionMove(props: {
         aria-label={t("plan.section.exercise.move.up.title", {
           name: props.exerciseInstruction.exercise.name,
         })}
-        disabled={!props.exerciseInstruction.actions.move.enabled || props.position === 0 || busy}
+        disabled={!props.exerciseInstruction.actions.moveUp.enabled || busy}
         onClick={() => up.mutate()}
         title={t("plan.section.exercise.move.up.title", { name: props.exerciseInstruction.exercise.name })}
         {...bg.Rhythm().times(2).style.height}
@@ -60,11 +60,7 @@ export function PlanSectionExerciseInstructionMove(props: {
         aria-label={t("plan.section.exercise.move.down.title", {
           name: props.exerciseInstruction.exercise.name,
         })}
-        disabled={
-          !props.exerciseInstruction.actions.move.enabled ||
-          props.position === props.section.exerciseInstructions.length - 1 ||
-          busy
-        }
+        disabled={!props.exerciseInstruction.actions.moveDown.enabled || busy}
         onClick={() => down.mutate()}
         title={t("plan.section.exercise.move.down.title", { name: props.exerciseInstruction.exercise.name })}
         {...bg.Rhythm().times(2).style.height}
