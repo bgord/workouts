@@ -12,105 +12,97 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     workoutId: Workouts.VO.WorkoutIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Workouts.Queries.WorkoutGetResponse | null> {
-    const workout = await db
-      .select()
-      .from(Schema.workouts)
-      .where(and(eq(Schema.workouts.id, workoutId), eq(Schema.workouts.userId, userId)))
-      .get();
-
-    if (!workout) return null;
-
-    const [exercises, loggedSets, inProgressCount] = await Promise.all([
-      db
-        .select()
-        .from(Schema.workoutExercises)
-        .where(
-          and(eq(Schema.workoutExercises.workoutId, workoutId), eq(Schema.workoutExercises.userId, userId)),
-        )
-        .orderBy(asc(Schema.workoutExercises.position)),
-      db
-        .select()
-        .from(Schema.workoutLoggedSets)
-        .where(
-          and(eq(Schema.workoutLoggedSets.workoutId, workoutId), eq(Schema.workoutLoggedSets.userId, userId)),
-        )
-        .orderBy(asc(Schema.workoutLoggedSets.setNumber)),
+    const [workout, inProgressCount] = await Promise.all([
+      db.query.workouts.findFirst({
+        columns: {
+          id: true,
+          planId: true,
+          planName: true,
+          planSectionId: true,
+          planSectionName: true,
+          planSectionWarmup: true,
+          planSectionCooldown: true,
+          scheduledFor: true,
+          status: true,
+          completedAt: true,
+          note: true,
+          revision: true,
+        },
+        where: and(eq(Schema.workouts.id, workoutId), eq(Schema.workouts.userId, userId)),
+        with: {
+          exercises: {
+            columns: {
+              id: true,
+              exerciseId: true,
+              exerciseName: true,
+              exerciseImageEtag: true,
+              exerciseDescription: true,
+              prescription: true,
+              target: true,
+            },
+            orderBy: asc(Schema.workoutExercises.position),
+            with: {
+              loggedSets: {
+                columns: { id: true, setNumber: true, reps: true, load: true, rir: true },
+                orderBy: asc(Schema.workoutLoggedSets.setNumber),
+              },
+            },
+          },
+        },
+      }),
       GetWorkoutStatusForOwnerCountQuery.execute(userId, Workouts.VO.WorkoutStatusEnum.in_progress),
     ]);
 
+    if (!workout) return null;
+
     const previousPerformances = await Promise.all(
-      exercises.map((exercise) =>
+      workout.exercises.map((exercise) =>
         GetExercisePreviousPerformanceQuery.execute(userId, exercise.exerciseId, workout),
       ),
     );
 
-    const status = workout.status;
-    const loggedSetActions = new Workouts.Services.WorkoutGetLoggedSetActions({
-      status,
-      loggedSetCount: tools.Int.nonNegative(loggedSets.length),
-    }).calculate();
-
-    const workoutExercises = exercises.map((exercise, index) => {
-      const previous = previousPerformances[index];
-
-      return {
-        id: exercise.id,
-        exerciseId: exercise.exerciseId,
-        exerciseName: exercise.exerciseName,
-        exerciseImageEtag: exercise.exerciseImageEtag,
-        exerciseDescription: exercise.exerciseDescription,
-        prescription: exercise.prescription,
-        target: exercise.target,
-        loggedSets: loggedSets
-          .filter((loggedSet) => loggedSet.workoutExerciseId === exercise.id)
-          .map((loggedSet) => ({
-            id: loggedSet.id,
-            setNumber: loggedSet.setNumber,
-            reps: loggedSet.reps,
-            load: loggedSet.load,
-            rir: loggedSet.rir,
-            actions: loggedSetActions,
-          })),
-        previousPerformance: previous && {
-          scheduledFor: previous.scheduledFor,
-          sets: previous.sets,
-          diff:
-            exercise.target &&
-            new Workouts.Services.ExerciseTargetDiffCalculator(exercise.target, previous).calculate(),
-        },
-        targetProgression:
-          previous &&
-          Workouts.Services.ProgressionMethodStrategyFactory.for(exercise.prescription, previous).calculate(),
-      };
-    });
-
     const data = {
-      id: workout.id,
-      planId: workout.planId,
-      planName: workout.planName,
-      planSectionId: workout.planSectionId,
-      planSectionName: workout.planSectionName,
-      planSectionWarmup: workout.planSectionWarmup,
-      planSectionCooldown: workout.planSectionCooldown,
-      scheduledFor: workout.scheduledFor,
-      status,
-      completedAt: workout.completedAt,
-      note: workout.note,
-      revision: workout.revision,
-      exercises: workoutExercises.map((exercise) => ({
-        ...exercise,
-        actions: new Workouts.Services.WorkoutGetExerciseActions({
-          status,
-          exercises: workoutExercises,
-          exercise,
-        }).calculate(),
-      })),
+      ...workout,
+      exercises: workout.exercises.map((exercise, index) => {
+        const previous = previousPerformances[index];
+
+        return {
+          ...exercise,
+          loggedSets: exercise.loggedSets.map((loggedSet) => ({
+            ...loggedSet,
+            actions: new Workouts.Services.WorkoutGetLoggedSetActions({
+              status: workout.status,
+              loggedSetCount: tools.Int.nonNegative(
+                workout.exercises.flatMap((exercise) => exercise.loggedSets).length,
+              ),
+            }).calculate(),
+          })),
+          previousPerformance: previous && {
+            scheduledFor: previous.scheduledFor,
+            sets: previous.sets,
+            diff:
+              exercise.target &&
+              new Workouts.Services.ExerciseTargetDiffCalculator(exercise.target, previous).calculate(),
+          },
+          targetProgression:
+            previous &&
+            Workouts.Services.ProgressionMethodStrategyFactory.for(
+              exercise.prescription,
+              previous,
+            ).calculate(),
+          actions: new Workouts.Services.WorkoutGetExerciseActions({
+            status: workout.status,
+            exercises: workout.exercises,
+            exercise,
+          }).calculate(),
+        };
+      }),
     };
 
     return {
       data,
       actions: new Workouts.Services.WorkoutGetActions({
-        status,
+        status: workout.status,
         exercises: data.exercises,
         inProgressCount,
       }).calculate(),
