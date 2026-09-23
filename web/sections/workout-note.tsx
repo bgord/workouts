@@ -37,9 +37,8 @@ export function WorkoutNote() {
         <>
           <button
             className="c-prose"
-            data-color={workout.data.note ? "neutral-200" : "neutral-500"}
+            data-color={workout.data.note ? undefined : "neutral-500"}
             data-cursor="pointer"
-            data-fs="sm"
             data-self="start"
             data-ta="start"
             disabled={!workout.actions.noteSet.enabled}

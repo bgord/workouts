@@ -35,18 +35,12 @@ export function ExerciseDescription() {
     <div data-stack="y" {...ui.Gap.cluster}>
       <ui.Eyebrow>{t("exercise.add.description.label")}</ui.Eyebrow>
 
-      {!exercise.actions.update.available && (
-        <p className="c-prose" data-color="neutral-200" data-fs="sm">
-          {exercise.data.description}
-        </p>
-      )}
+      {!exercise.actions.update.available && <p className="c-prose">{exercise.data.description}</p>}
 
       {exercise.actions.update.available && exerciseDescriptionUpdate.off && (
         <button
           className="c-prose"
-          data-color="neutral-200"
           data-cursor="pointer"
-          data-fs="sm"
           data-self="start"
           data-ta="start"
           onClick={exerciseDescriptionUpdate.enable}

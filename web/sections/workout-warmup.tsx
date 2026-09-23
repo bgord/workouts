@@ -49,7 +49,7 @@ export function WorkoutWarmup() {
         </div>
 
         {workoutWarmupExpanded.on && (
-          <span className="c-prose" data-color="neutral-200" data-fs="sm" data-pl="8" data-ws="pre-line">
+          <span className="c-prose" data-pl="8" data-ws="pre-line">
             {workout.data.planSectionWarmup}
           </span>
         )}

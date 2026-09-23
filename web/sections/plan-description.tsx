@@ -35,11 +35,7 @@ export function PlanDescription() {
   if (!plan.actions.descriptionSet.available) {
     if (!plan.data.description) return null;
 
-    return (
-      <p className="c-prose" data-color="neutral-200" data-fs="sm">
-        {plan.data.description}
-      </p>
-    );
+    return <p className="c-prose">{plan.data.description}</p>;
   }
 
   return (
@@ -48,9 +44,8 @@ export function PlanDescription() {
         <>
           <button
             className="c-prose"
-            data-color={plan.data.description ? "neutral-200" : "neutral-500"}
+            data-color={plan.data.description ? undefined : "neutral-500"}
             data-cursor="pointer"
-            data-fs="sm"
             data-self="start"
             data-ta="start"
             disabled={!plan.actions.descriptionSet.enabled}

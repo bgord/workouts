@@ -123,7 +123,6 @@ export function WorkoutExerciseRow(props: {
         <div
           className="c-prose"
           data-color="neutral-300"
-          data-fs="sm"
           {...ui.Spacing.inset}
           {...workoutExerciseDescription.props.target}
         >
