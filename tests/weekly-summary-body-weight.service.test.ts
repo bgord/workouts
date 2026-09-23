@@ -71,10 +71,7 @@ describe("WeeklySummaryBodyWeight", async () => {
 
   test("stat - averages the measurements within the week", () => {
     const bodyWeight = new Notifications.Services.WeeklySummaryBodyWeight(
-      [
-        mocks.bodyWeightMeasurement,
-        { ...mocks.bodyWeightMeasurement, weight: heavier, measuredOn: mocks.anotherBodyWeightMeasuredOn },
-      ],
+      [mocks.bodyWeightMeasurement, mocks.heavierBodyWeightMeasurement],
       mocks.week,
       en,
       "en",
@@ -90,10 +87,7 @@ describe("WeeklySummaryBodyWeight", async () => {
 
   test("stat - pl", () => {
     const bodyWeight = new Notifications.Services.WeeklySummaryBodyWeight(
-      [
-        mocks.bodyWeightMeasurement,
-        { ...mocks.bodyWeightMeasurement, weight: heavier, measuredOn: mocks.anotherBodyWeightMeasuredOn },
-      ],
+      [mocks.bodyWeightMeasurement, mocks.heavierBodyWeightMeasurement],
       mocks.week,
       pl,
       "pl",

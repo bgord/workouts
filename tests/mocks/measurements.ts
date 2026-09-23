@@ -26,6 +26,7 @@ export const anotherBodyWeightMeasurementStream = v.parse(
 
 export const bodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(80).get());
 export const anotherBodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(81).get());
+export const heavierBodyWeight = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(82).get());
 
 export const bodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-01");
 export const anotherBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2024-12-31");
@@ -38,6 +39,12 @@ export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   userId,
   reference: false,
   goal: Measurements.VO.BodyWeightGoalOptions.maintain,
+};
+
+export const heavierBodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
+  ...bodyWeightMeasurement,
+  weight: heavierBodyWeight,
+  measuredOn: anotherBodyWeightMeasuredOn,
 };
 
 export const bodyWeightReferenceMeasurement: Measurements.VO.BodyWeightMeasurement = {

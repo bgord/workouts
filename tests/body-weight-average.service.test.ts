@@ -21,18 +21,16 @@ describe("BodyWeightAverage", () => {
   });
 
   test("calculate - averages the measurements in range", () => {
-    const heavier = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(82).get());
-
     const average = new Measurements.Services.BodyWeightAverage(
-      [
-        mocks.bodyWeightMeasurement,
-        { ...mocks.bodyWeightMeasurement, weight: heavier, measuredOn: mocks.anotherBodyWeightMeasuredOn },
-      ],
+      [mocks.bodyWeightMeasurement, mocks.heavierBodyWeightMeasurement],
       from,
       to,
     );
 
-    expect(average.calculate()).toEqual({ average: (mocks.bodyWeight + heavier) / 2, count: 2 });
+    expect(average.calculate()).toEqual({
+      average: (mocks.bodyWeight + mocks.heavierBodyWeight) / 2,
+      count: 2,
+    });
   });
 
   test("calculate - the average is a whole number of grams", () => {
