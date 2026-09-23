@@ -7,7 +7,7 @@ export function ProfileWorkoutsExport() {
 
   return (
     <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
-      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+      <div data-stack="x" {...ui.Gap.cluster}>
         <Download data-color="neutral-400" data-size="sm" />
         <ui.SectionHeading>{t("profile.export_workouts.header")}</ui.SectionHeading>
       </div>

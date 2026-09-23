@@ -24,13 +24,7 @@ export function BodyWeightMeasurementRow(props: {
   const open = bodyWeightMeasurementCorrect.on || bodyWeightReference.on;
 
   return (
-    <ui.HairlineRow
-      data-cross="center"
-      data-md-gap="2"
-      data-stack="x"
-      first={props.first}
-      {...ui.Spacing.rowCompact}
-    >
+    <ui.HairlineRow data-md-gap="2" data-stack="x" first={props.first} {...ui.Spacing.rowCompact}>
       {open && (
         <>
           <BodyWeightMeasurementCorrect measurement={props.measurement} {...bodyWeightMeasurementCorrect} />
@@ -42,6 +36,7 @@ export function BodyWeightMeasurementRow(props: {
         <>
           <button
             data-color="neutral-300"
+            data-cross="stretch"
             data-cursor="pointer"
             data-fs="sm"
             data-grow="1"
@@ -94,7 +89,7 @@ export function BodyWeightMeasurementRow(props: {
             />
           </div>
 
-          <div data-cross="center" data-shrink="0" data-stack="x" {...ui.Gap.inline}>
+          <div data-shrink="0" data-stack="x" {...ui.Gap.inline}>
             <ui.IconButton
               onClick={bodyWeightReference.enable}
               title={t("measurements.body_weight.reference.title")}

@@ -10,7 +10,7 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
   const language = bg.useLanguage();
 
   return (
-    <ul data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+    <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
       <ui.Tile>
         <ui.TileHeader>
           <Scale data-size="xs" />

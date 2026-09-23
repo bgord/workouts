@@ -12,7 +12,6 @@ function EyebrowAnchor(props: React.JSX.IntrinsicElements["a"]) {
   return (
     <a
       data-color="neutral-500"
-      data-cross="center"
       data-fs="xs"
       data-hover-color="brand-300"
       data-ls="wide"

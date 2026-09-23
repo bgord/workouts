@@ -3,7 +3,6 @@ import { Gap } from "./gap";
 const style = {
   className: "c-link",
   "data-color": "neutral-400",
-  "data-cross": "center",
   "data-cursor": "pointer",
   "data-fs": "xs",
   "data-stack": "x",

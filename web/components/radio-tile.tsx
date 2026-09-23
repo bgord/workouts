@@ -11,7 +11,6 @@ export function RadioTile(props: React.JSX.IntrinsicElements["label"] & { select
       data-br="md"
       data-bs="solid"
       data-bw="hairline"
-      data-cross="center"
       data-cursor="pointer"
       data-hover-bc={selected ? "brand-500" : "neutral-600"}
       data-stack="x"

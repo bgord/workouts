@@ -43,7 +43,6 @@ export function BodyWeightMeasure() {
   return (
     <form
       aria-busy={mutation.isLoading}
-      data-cross="center"
       data-stack="x"
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}

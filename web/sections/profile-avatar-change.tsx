@@ -35,7 +35,7 @@ export function ProfileAvatarChange() {
 
   return (
     <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
-      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+      <div data-stack="x" {...ui.Gap.cluster}>
         <CircleUser data-color="neutral-400" data-size="sm" />
         <ui.SectionHeading>{t("profile.avatar.header")}</ui.SectionHeading>
       </div>
@@ -67,7 +67,7 @@ export function ProfileAvatarChange() {
             {...ui.Gap.cluster}
             {...profileAvatarChange.props.target}
           >
-            <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+            <div data-stack="x" {...ui.Gap.inline}>
               <ui.FileButton data-md-grow="1" file={avatar}>
                 {avatar.isSelected ? (
                   <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />

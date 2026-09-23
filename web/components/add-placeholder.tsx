@@ -9,7 +9,6 @@ export function AddPlaceholder(props: React.JSX.IntrinsicElements["div"]) {
       data-bs="dashed"
       data-bw="hairline"
       data-color="neutral-500"
-      data-cross="center"
       data-main="center"
       data-shrink="0"
       data-stack="x"

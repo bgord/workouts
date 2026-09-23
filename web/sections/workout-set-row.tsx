@@ -9,7 +9,7 @@ export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: Log
 
   return (
     <ui.HairlineRow data-stack="y" tone="subtle" {...ui.Spacing.rowCompact} {...ui.Gap.inline}>
-      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+      <div data-stack="x" {...ui.Gap.related}>
         <ui.RowIndex data-md-disp={workoutSetCorrect.on ? "none" : undefined}>
           {props.loggedSet.setNumber}
         </ui.RowIndex>
@@ -27,7 +27,6 @@ export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: Log
         )}
 
         <div
-          data-cross="center"
           data-grow={workoutSetCorrect.on ? "1" : undefined}
           data-shrink="0"
           data-stack="x"

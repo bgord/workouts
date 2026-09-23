@@ -26,7 +26,7 @@ export function Dialog(props: bg.DialogPropsType) {
 
 export function DialogHeader(props: { disabled?: boolean; onClose: () => void; children: React.ReactNode }) {
   return (
-    <div data-cross="center" data-main="between" data-stack="x" {...Gap.related}>
+    <div data-main="between" data-stack="x" {...Gap.related}>
       <strong data-color="neutral-100" data-transform="truncate">
         {props.children}
       </strong>
@@ -56,7 +56,6 @@ export function DialogStatus(
   return (
     <div
       data-color={variant === "irreversible" ? "danger-400" : "positive-400"}
-      data-cross="center"
       data-fs="sm"
       data-stack="x"
       {...Gap.cluster}
@@ -71,14 +70,7 @@ export function DialogStatus(
 
 export function DialogError(props: { children: React.ReactNode }) {
   return (
-    <output
-      aria-live="assertive"
-      data-color="danger-400"
-      data-cross="center"
-      data-fs="sm"
-      data-stack="x"
-      {...Gap.cluster}
-    >
+    <output aria-live="assertive" data-color="danger-400" data-fs="sm" data-stack="x" {...Gap.cluster}>
       <CircleAlert data-shrink="0" data-size="md" />
       <span>{props.children}</span>
     </output>

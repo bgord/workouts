@@ -42,7 +42,6 @@ function NavigationDesktop() {
       }}
     >
       <div
-        data-cross="center"
         data-height="100%"
         data-maxw="md"
         data-mx="auto"
@@ -95,6 +94,7 @@ function NavigationMobileDrawer() {
       data-bottom="0"
       data-bst="solid"
       data-bwt="hairline"
+      data-cross="stretch"
       data-left="0"
       data-main="around"
       data-position="fixed"
@@ -145,7 +145,7 @@ function NavigationMobileDrawer() {
 }
 
 function NavigationAnchor(props: React.JSX.IntrinsicElements["a"]) {
-  return <a data-cross="center" data-main="center" data-stack="x" {...link} {...props} />;
+  return <a data-main="center" data-stack="x" {...link} {...props} />;
 }
 
 const NavigationAnchorLink = createLink(NavigationAnchor);
@@ -162,7 +162,6 @@ function NavigationShell() {
   return (
     <nav {...bg.Rhythm(70).times(1).style.height}>
       <div
-        data-cross="center"
         data-height="100%"
         data-maxw="md"
         data-mx="auto"

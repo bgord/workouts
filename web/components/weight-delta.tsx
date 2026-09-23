@@ -28,14 +28,7 @@ export function WeightDelta(
   const positive = difference > 0;
 
   return (
-    <span
-      data-color={color(positive, goal)}
-      data-cross="center"
-      data-stack="x"
-      data-transform="nowrap"
-      {...Gap.inline}
-      {...rest}
-    >
+    <span data-color={color(positive, goal)} data-stack="x" data-transform="nowrap" {...Gap.inline} {...rest}>
       <Triangle
         data-mt={positive ? "0" : "0-5"}
         data-rotate={positive ? "0" : "180"}

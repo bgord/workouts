@@ -20,6 +20,7 @@ export function RirSubmit(props: {
       data-br="sm"
       data-bs="solid"
       data-bw="hairline"
+      data-cross="stretch"
       data-overflow="hidden"
       data-rir={props.variant ?? "default"}
       data-shrink="0"

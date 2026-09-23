@@ -11,7 +11,7 @@ export function WorkoutNotFound() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+        <div data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack search={search} to="/workouts" />
 
           <ui.Header>{t("workout.not_found")}</ui.Header>

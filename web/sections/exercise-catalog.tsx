@@ -33,7 +33,7 @@ export function ExerciseCatalog() {
 
       <ExerciseCatalogEmpty matching={matching} />
 
-      <ul data-md-main="center" data-stack="x" data-wrap="wrap" {...ui.Gap.block}>
+      <ul data-cross="stretch" data-md-main="center" data-stack="x" data-wrap="wrap" {...ui.Gap.block}>
         {matching.map((exercise) => (
           <ui.ExerciseCard key={exercise.id} {...exercise} />
         ))}

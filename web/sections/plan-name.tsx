@@ -61,7 +61,7 @@ export function PlanName() {
       {...ui.Gap.cluster}
       {...planRename.props.target}
     >
-      <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+      <div data-stack="x" {...ui.Gap.inline}>
         <input
           aria-label={t("plan.rename.label")}
           className="c-input"

@@ -20,10 +20,10 @@ export function ExerciseProgressChart() {
 
   return (
     <div data-stack="y" data-variant="flat" {...ui.Gap.related}>
-      <div data-cross="center" data-main="between" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+      <div data-main="between" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
         <ui.SectionHeading>{t("statistics.exercise.progress")}</ui.SectionHeading>
 
-        <ui.Eyebrow data-cross="center" data-stack="x">
+        <ui.Eyebrow data-stack="x">
           <EqualApproximately data-color="neutral-600" data-size="xs" />
           {t("statistics.exercise.one_rep_max_estimate")}
         </ui.Eyebrow>

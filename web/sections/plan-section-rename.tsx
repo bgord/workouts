@@ -65,7 +65,7 @@ export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggle
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
-      <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+      <div data-stack="x" {...ui.Gap.inline}>
         <input
           aria-label={t("plan.section.rename.label")}
           className="c-input"

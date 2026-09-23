@@ -76,7 +76,7 @@ export function ExerciseImageChange() {
           {...ui.Gap.cluster}
           {...exerciseImageChange.props.target}
         >
-          <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+          <div data-stack="x" {...ui.Gap.inline}>
             <ui.FileButton data-grow="1" file={image}>
               {image.isSelected ? (
                 <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />

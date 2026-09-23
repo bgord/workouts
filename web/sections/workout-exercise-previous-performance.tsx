@@ -14,7 +14,6 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
 
   return (
     <ui.Meta
-      data-cross="center"
       data-stack="x"
       data-wrap="wrap"
       title={t("workout.previous_performance.title")}

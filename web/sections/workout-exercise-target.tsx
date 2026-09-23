@@ -14,7 +14,6 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
     return (
       <div
         data-color="neutral-300"
-        data-cross="center"
         data-fs="xs"
         data-fw="medium"
         data-shrink="0"
@@ -35,7 +34,6 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       data-bs={target ? undefined : "dashed"}
       data-bw={target ? undefined : "hairline"}
       data-color={target ? "neutral-300" : "neutral-400"}
-      data-cross="center"
       data-cursor="pointer"
       data-fs="xs"
       data-fw={target ? "medium" : undefined}

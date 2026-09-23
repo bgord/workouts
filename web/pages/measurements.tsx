@@ -12,10 +12,10 @@ export function Measurements() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+      <div data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("measurements.body_weight.header")}</ui.Header>
 
-        <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+        <div data-stack="x" {...ui.Gap.inline}>
           <BodyWeightMeasurementImport />
 
           <BodyWeightMeasurementExport />

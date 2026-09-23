@@ -11,10 +11,10 @@ export function Catalog() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+      <div data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("exercise.catalog.header")}</ui.Header>
 
-        <div data-cross="center" data-md-width="100%" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+        <div data-md-width="100%" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           <ExerciseCategoryManage />
 
           <ExerciseAdd />

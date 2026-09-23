@@ -24,7 +24,7 @@ export function DashboardWorkoutsFastCall() {
   });
 
   return (
-    <div data-md-stack="y" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+    <div data-cross="stretch" data-md-stack="y" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
       {upcoming && (
         <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.cluster}>
           <ui.Eyebrow>

@@ -8,7 +8,6 @@ export function RirBadge(props: { rir: number }) {
   return (
     <span
       data-color={RirColor(props.rir)}
-      data-cross="center"
       data-fs="xs"
       data-fw="medium"
       data-stack="x"

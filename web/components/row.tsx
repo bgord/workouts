@@ -14,7 +14,6 @@ function RowAnchor(props: { variant?: RowVariant } & React.JSX.IntrinsicElements
     <li>
       <a
         className="c-card"
-        data-cross="center"
         data-hover-bc="brand-500"
         data-opacity={opacity[variant]}
         data-stack="x"

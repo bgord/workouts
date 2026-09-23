@@ -35,7 +35,6 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
     <>
       <form
         aria-busy={mutation.isLoading}
-        data-cross="center"
         data-stack="x"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
         {...ui.Gap.related}

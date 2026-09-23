@@ -145,7 +145,6 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-br="md"
               data-bw="hairline"
               data-color="neutral-100"
-              data-cross="center"
               data-cursor={actions.exerciseChange.enabled ? "pointer" : undefined}
               data-fs="sm"
               data-hover-bc={actions.exerciseChange.enabled ? "brand-500" : undefined}

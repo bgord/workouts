@@ -22,7 +22,7 @@ export function ExerciseDelete() {
   if (!exercise.actions.delete.available) return null;
 
   return (
-    <div data-cross="center" data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
+    <div data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
       <ui.ActionHint {...exercise.actions.delete} data-md-disp="none" />
 
       <ui.IconButton

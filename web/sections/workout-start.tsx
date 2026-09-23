@@ -22,13 +22,7 @@ export function WorkoutStart() {
   if (!workout.actions.start.available) return null;
 
   return (
-    <form
-      aria-busy={mutation.isLoading}
-      data-cross="center"
-      data-stack="x"
-      onSubmit={mutation.handleSubmit}
-      {...ui.Gap.related}
-    >
+    <form aria-busy={mutation.isLoading} data-stack="x" onSubmit={mutation.handleSubmit} {...ui.Gap.related}>
       <button
         className="c-button"
         data-variant="primary"

@@ -13,13 +13,7 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
   const search = workoutsRoute.useSearch();
 
   return (
-    <div
-      data-cross="center"
-      data-stack="x"
-      data-wrap="wrap"
-      {...bg.Rhythm(36).times(1).style.minHeight}
-      {...ui.Gap.cluster}
-    >
+    <div data-stack="x" data-wrap="wrap" {...bg.Rhythm(36).times(1).style.minHeight} {...ui.Gap.cluster}>
       <ui.Select
         aria-label={t("workout.list.filter.label")}
         id={WorkoutHistoryFiltersForm.Form.filter.field.name}
@@ -44,14 +38,8 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
         ))}
       </ui.Select>
 
-      <div
-        data-cross="center"
-        data-stack="x"
-        data-wrap="wrap"
-        {...bg.Rhythm(36).times(1).style.minHeight}
-        {...ui.Gap.cluster}
-      >
-        <ul data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+      <div data-stack="x" data-wrap="wrap" {...bg.Rhythm(36).times(1).style.minHeight} {...ui.Gap.cluster}>
+        <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           {workouts.sections.map((section) => (
             <li key={section.id}>
               <ui.ChipButton

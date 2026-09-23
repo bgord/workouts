@@ -60,7 +60,7 @@ export function Shortcuts() {
 
       <ui.Dialog {...shortcuts}>
         <ui.DialogHeader onClose={shortcuts.disable}>
-          <span data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+          <span data-stack="x" {...ui.Gap.cluster}>
             <Keyboard data-size="sm" />
             {t("app.shortcuts.header")}
           </span>

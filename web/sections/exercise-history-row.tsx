@@ -19,12 +19,11 @@ export function ExerciseHistoryRow(props: {
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
-      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+      <div data-stack="x" {...ui.Gap.related}>
         <ui.ChevronToggle {...open} />
 
         <Link
           data-color="neutral-100"
-          data-cross="center"
           data-fs="sm"
           data-fw="medium"
           data-hover-color="brand-300"
@@ -103,7 +102,6 @@ export function ExerciseHistoryRow(props: {
         <ul data-stack="y" {...ui.Spacing.inset} {...open.props.target}>
           {props.performance.sets.map((set) => (
             <ui.HairlineRow
-              data-cross="center"
               data-stack="x"
               data-wrap="wrap"
               key={set.setNumber}
@@ -118,7 +116,7 @@ export function ExerciseHistoryRow(props: {
 
               <div data-grow="1">{set.rir !== null && <ui.RirBadge rir={set.rir} />}</div>
 
-              <ui.Meta data-cross="center" data-stack="x" {...ui.Gap.inline}>
+              <ui.Meta data-stack="x" {...ui.Gap.inline}>
                 <EqualApproximately data-color="neutral-600" data-size="xs" />
                 {t("statistics.exercise.one_rep_max_estimate.value", {
                   load: WeightFormat.kilograms(set.estimate),

@@ -9,7 +9,6 @@ export function ExerciseCategoryRow(props: ExerciseCategory) {
 
   return (
     <li
-      data-cross="center"
       data-hover-bg={exerciseCategoryRename.off ? "alpha-subtle" : undefined}
       data-main="between"
       data-px={exerciseCategoryRename.off ? "3" : undefined}

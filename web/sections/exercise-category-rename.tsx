@@ -58,7 +58,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
-      <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+      <div data-stack="x" {...ui.Gap.inline}>
         <input
           aria-label={t("exercise.category.rename.label")}
           className="c-input"

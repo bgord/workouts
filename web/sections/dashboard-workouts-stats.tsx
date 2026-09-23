@@ -16,7 +16,14 @@ export function DashboardWorkoutStats() {
     <section data-stack="y" {...ui.Gap.cluster}>
       <ui.Eyebrow>{t("dashboard.completed.header")}</ui.Eyebrow>
 
-      <ul className="c-card" data-stack="x" data-variant="sunken" data-wrap="wrap" {...ui.Spacing.surface}>
+      <ul
+        className="c-card"
+        data-cross="stretch"
+        data-stack="x"
+        data-variant="sunken"
+        data-wrap="wrap"
+        {...ui.Spacing.surface}
+      >
         {tiles.map((tile, index) => (
           <li
             data-basis="0"

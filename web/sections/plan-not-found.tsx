@@ -9,7 +9,7 @@ export function PlanNotFound() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+        <div data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack to="/plans" />
 
           <ui.Header>{t("plan.not_found")}</ui.Header>

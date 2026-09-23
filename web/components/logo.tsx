@@ -3,7 +3,7 @@ import { Gap } from "./gap";
 
 function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
   return (
-    <a data-cross="center" data-main="center" data-stack="x" {...props}>
+    <a data-main="center" data-stack="x" {...props}>
       <div
         className="logo"
         data-color="brand-500"

@@ -10,7 +10,7 @@ export function ExerciseNotFound() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+        <div data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack search={Form.default} to="/catalog" />
 
           <ui.Header>{t("exercise.not_found")}</ui.Header>

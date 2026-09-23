@@ -23,8 +23,8 @@ export function ExercisePicker(props: {
 
   return (
     <div data-minh="0" data-stack="y" data-wrap="nowrap" {...Gap.cluster}>
-      <div data-cross="center" data-stack="x" {...Gap.inline}>
-        <div data-cross="center" data-grow="1" data-position="relative" data-stack="x">
+      <div data-stack="x" {...Gap.inline}>
+        <div data-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
           <input
@@ -63,7 +63,6 @@ export function ExercisePicker(props: {
             <label
               data-bg={props.value === exercise.id ? "alpha-subtle" : undefined}
               data-color={props.value === exercise.id ? "neutral-0" : "neutral-200"}
-              data-cross="center"
               data-cursor="pointer"
               data-fs="sm"
               data-hover-bg="alpha-subtle"

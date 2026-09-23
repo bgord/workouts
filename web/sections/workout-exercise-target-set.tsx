@@ -63,7 +63,6 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
     <>
       <form
         aria-busy={mutation.isLoading}
-        data-cross="center"
         data-md-ml="1"
         data-md-pl="8"
         data-pl="12"
@@ -73,7 +72,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         {...ui.Gap.related}
         {...toggle.props.target}
       >
-        <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+        <div data-stack="x" {...ui.Gap.cluster}>
           <ui.Stepper
             disabled={mutation.isLoading}
             field={sets}
@@ -107,7 +106,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           />
         </div>
 
-        <div data-cross="center" data-ml="auto" data-shrink="0" data-stack="x" {...ui.Gap.inline}>
+        <div data-ml="auto" data-shrink="0" data-stack="x" {...ui.Gap.inline}>
           <ui.IconButton
             aria-label={t("app.save")}
             disabled={

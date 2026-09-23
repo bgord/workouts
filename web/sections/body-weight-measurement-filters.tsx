@@ -15,7 +15,7 @@ export function BodyWeightMeasurementFilters() {
   const months = [...new Set(measurements.map((measurement) => measurement.measuredOn.slice(0, 7)))];
 
   return (
-    <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+    <div data-stack="x" {...ui.Gap.cluster}>
       <div data-md-grow="1">
         <ui.Select
           aria-label={t("measurements.body_weight.history.month.label")}

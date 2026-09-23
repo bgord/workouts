@@ -38,7 +38,7 @@ export function WorkoutCooldown() {
         {...ui.Gap.cluster}
         {...workoutCooldownExpanded.props.controller}
       >
-        <div data-cross="center" data-stack="x" {...ui.Gap.block}>
+        <div data-stack="x" {...ui.Gap.block}>
           <Snowflake data-color="neutral-600" data-shrink="0" data-size="sm" />
 
           <ui.Eyebrow data-grow="1">{t("workout.cooldown.label")}</ui.Eyebrow>

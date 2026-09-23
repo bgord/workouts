@@ -23,7 +23,6 @@ export function ProfileAccountDelete() {
   return (
     <section
       className="c-card"
-      data-cross="center"
       data-main="between"
       data-stack="x"
       data-tone="danger"
@@ -31,7 +30,7 @@ export function ProfileAccountDelete() {
       {...ui.Spacing.surface}
       {...ui.Gap.related}
     >
-      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+      <div data-stack="x" {...ui.Gap.cluster}>
         <UserX data-color="danger-400" data-size="sm" />
         <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
       </div>

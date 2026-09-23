@@ -56,17 +56,11 @@ export function ExerciseCategories() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <div
-        data-cross="center"
-        data-main="between"
-        data-stack="x"
-        {...bg.Rhythm().times(3).style.minHeight}
-        {...ui.Gap.related}
-      >
+      <div data-main="between" data-stack="x" {...bg.Rhythm().times(3).style.minHeight} {...ui.Gap.related}>
         <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
         {assignment.off && (
-          <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+          <div data-stack="x" {...ui.Gap.related}>
             <ui.ActionHint {...action} />
 
             <button
@@ -87,7 +81,6 @@ export function ExerciseCategories() {
       {action.enabled && assignment.on && (
         <form
           aria-busy={assign.isLoading}
-          data-cross="center"
           data-stack="x"
           data-wrap="wrap"
           onSubmit={assign.handleSubmit}

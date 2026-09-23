@@ -31,7 +31,7 @@ export function ProfileWeeklySummary() {
 
   return (
     <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
-      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+      <div data-stack="x" {...ui.Gap.cluster}>
         <Mail data-color="neutral-400" data-size="sm" />
         <ui.SectionHeading>{t("profile.weekly_summary.header")}</ui.SectionHeading>
       </div>
@@ -42,7 +42,6 @@ export function ProfileWeeklySummary() {
 
       <form
         aria-busy={mutation.isLoading}
-        data-cross="center"
         data-stack="x"
         data-wrap="wrap"
         onSubmit={mutation.handleSubmit}

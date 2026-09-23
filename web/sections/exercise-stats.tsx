@@ -16,7 +16,7 @@ export function ExerciseStats() {
   if (!(best && heaviest && latest)) return null;
 
   return (
-    <ul data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+    <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
       <ui.TileLink
         data-hover-bc="brand-500"
         params={{ workoutId: best.workoutId }}
@@ -25,7 +25,7 @@ export function ExerciseStats() {
       >
         <ui.TileHeader>
           <Trophy data-color="brand-400" data-size="xs" />
-          <div data-cross="center" data-stack="x">
+          <div data-stack="x">
             <EqualApproximately data-color="neutral-600" data-size="xs" />
             {t("statistics.exercise.one_rep_max_estimate")}
           </div>

@@ -19,7 +19,6 @@ export function SetDots(props: { sets: Array<{ rir: number | null }>; target: nu
   return (
     <div
       aria-label={t("workout.set.progress", { done: props.sets.length, target: props.target })}
-      data-cross="center"
       data-shrink="0"
       data-stack="x"
       role="img"

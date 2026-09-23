@@ -57,13 +57,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
 
   return (
     <>
-      <ui.HairlineBlock
-        data-cross="center"
-        data-ml="1-5"
-        data-stack="x"
-        tone="subtle"
-        {...ui.Spacing.rowCompact}
-      >
+      <ui.HairlineBlock data-ml="1-5" data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
         <ui.AddButton
           disabled={!props.actions.exerciseInstructionAdd.enabled}
           onClick={planSectionExerciseInstructionAdd.enable}

@@ -47,7 +47,6 @@ export function TileHeader(props: React.JSX.IntrinsicElements["div"]) {
   return (
     <div
       data-color="neutral-600"
-      data-cross="center"
       data-fs="xs"
       data-md-width="100%"
       data-stack="x"
@@ -62,7 +61,6 @@ export function TileValue(props: React.JSX.IntrinsicElements["div"]) {
   return (
     <div
       data-color="neutral-0"
-      data-cross="center"
       data-fs="xl"
       data-fw="semibold"
       data-lh="tight"

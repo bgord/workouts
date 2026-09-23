@@ -98,13 +98,7 @@ export function ExerciseAdd() {
               <ui.DropzoneInput file={image} />
             </ui.Dropzone>
 
-            <output
-              data-color="neutral-500"
-              data-cross="center"
-              data-fs="xs"
-              data-stack="x"
-              {...ui.Gap.cluster}
-            >
+            <output data-color="neutral-500" data-fs="xs" data-stack="x" {...ui.Gap.cluster}>
               {image.isSelected && (
                 <>
                   <span data-transform="truncate">

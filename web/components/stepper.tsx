@@ -32,7 +32,6 @@ export function Stepper(props: {
       data-br="md"
       data-bs="solid"
       data-bw="hairline"
-      data-cross="center"
       data-grow={variant === "fill" ? "1" : undefined}
       data-md-grow={variant === "compact" ? undefined : "1"}
       data-overflow="hidden"
