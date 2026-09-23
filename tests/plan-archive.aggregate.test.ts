@@ -9,11 +9,7 @@ describe("Plan.archive", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("PlanIsArchivable - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     expect(() => plan.archive(mocks.userId)).toThrow(Plans.Invariants.PlanIsArchivable.error);
   });
@@ -33,11 +29,7 @@ describe("Plan.archive", async () => {
   });
 
   test("happy path - finalized", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.archive(mocks.userId));
 

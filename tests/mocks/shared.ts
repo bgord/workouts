@@ -27,6 +27,8 @@ export const revisionHeaders = (revision = 0) => ({
 });
 export const correlationIdHeaders = { "correlation-id": correlationId };
 
+export const headers = (revision = 0) => ({ ...revisionHeaders(revision), ...correlationIdHeaders });
+
 export const actionAvailable: bg.ActionState = { available: true, enabled: true, hints: [] };
 
 export const actionUnavailable: bg.ActionState = { available: false, enabled: false, hints: [] };

@@ -15,31 +15,19 @@ describe("Plan.enableEditing", async () => {
   });
 
   test("PlanIsFinalized - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     expect(() => plan.enableEditing(mocks.userId)).toThrow(Plans.Invariants.PlanIsFinalized.error);
   });
 
   test("PlanBelongsToUser", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     expect(() => plan.enableEditing(mocks.anotherUserId)).toThrow(Plans.Invariants.PlanBelongsToUser.error);
   });
 
   test("happy path", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.enableEditing(mocks.userId));
 

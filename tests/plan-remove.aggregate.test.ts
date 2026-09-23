@@ -9,11 +9,7 @@ describe("Plan.remove", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("PlanIsRemovable - finalized", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     expect(() => plan.remove(mocks.userId)).toThrow(Plans.Invariants.PlanIsRemovable.error);
   });
@@ -33,11 +29,7 @@ describe("Plan.remove", async () => {
   });
 
   test("happy path - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () => plan.remove(mocks.userId));
 

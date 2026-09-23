@@ -1,4 +1,4 @@
-import * as bg from "@bgord/bun";
+import type * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as VO from "+plans/value-objects";
 

@@ -9,21 +9,13 @@ describe("Plan.finalize", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("PlanIsEditable - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     expect(() => plan.finalize(mocks.userId)).toThrow(Plans.Invariants.PlanIsEditable.error);
   });

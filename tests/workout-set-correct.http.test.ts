@@ -132,7 +132,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
       {
         method: "PATCH",
         body,
-        headers: { ...mocks.revisionHeaders(logged.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(logged.length),
       },
       mocks.ip,
     );
@@ -153,7 +153,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
       {
         method: "PATCH",
         body,
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -173,7 +173,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify(mocks.correctedLoggedSetWithRir),
       },
       mocks.ip,

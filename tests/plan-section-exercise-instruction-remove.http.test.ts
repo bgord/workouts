@@ -135,7 +135,7 @@ describe("DELETE /api/plans/:planSectionId/exercise-instruction/:exerciseInstruc
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -155,7 +155,7 @@ describe("DELETE /api/plans/:planSectionId/exercise-instruction/:exerciseInstruc
       `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}`,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -170,11 +170,7 @@ describe("DELETE /api/plans/:planSectionId/exercise-instruction/:exerciseInstruc
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
-    const response = await server.request(
-      url,
-      { method: "DELETE", headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders } },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "DELETE", headers: mocks.headers(99) }, mocks.ip);
 
     await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
@@ -190,7 +186,7 @@ describe("DELETE /api/plans/:planSectionId/exercise-instruction/:exerciseInstruc
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );

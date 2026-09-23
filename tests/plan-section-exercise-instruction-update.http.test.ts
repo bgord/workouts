@@ -236,7 +236,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -257,7 +257,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -278,7 +278,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         body: JSON.stringify(mocks.exerciseInstruction),
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -297,7 +297,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(99),
         body: JSON.stringify(mocks.anotherExerciseInstruction),
       },
       mocks.ip,
@@ -317,7 +317,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify(mocks.anotherExerciseInstruction),
       },
       mocks.ip,

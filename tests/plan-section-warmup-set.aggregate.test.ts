@@ -9,11 +9,7 @@ describe("Plan.setSectionWarmup", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("PlanIsEditable - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     expect(() => plan.setSectionWarmup(mocks.planSectionId, mocks.planSectionWarmup, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
@@ -21,11 +17,7 @@ describe("Plan.setSectionWarmup", async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     expect(() => plan.setSectionWarmup(mocks.planSectionId, mocks.planSectionWarmup, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,

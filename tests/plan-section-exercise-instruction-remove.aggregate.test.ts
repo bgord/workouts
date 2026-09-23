@@ -9,11 +9,7 @@ describe("Plan.removeSectionExerciseInstruction", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("PlanIsEditable - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     expect(() =>
       plan.removeSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstructionId, mocks.userId),
@@ -21,11 +17,7 @@ describe("Plan.removeSectionExerciseInstruction", async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     expect(() =>
       plan.removeSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstructionId, mocks.userId),

@@ -1,5 +1,5 @@
-import * as tools from "@bgord/tools";
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import type * as Queries from "+plans/queries";
 import type * as VO from "+plans/value-objects";
 import { PlanHasNoEmptySections } from "../invariants/plan-has-no-empty-sections";

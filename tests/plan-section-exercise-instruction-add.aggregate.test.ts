@@ -10,11 +10,7 @@ describe("Plan.addSectionExerciseInstruction", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("PlanIsEditable - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     expect(() =>
       plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
@@ -22,11 +18,7 @@ describe("Plan.addSectionExerciseInstruction", async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     expect(() =>
       plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),

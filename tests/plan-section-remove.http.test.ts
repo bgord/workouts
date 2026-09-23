@@ -123,7 +123,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -141,11 +141,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       .mockReturnValueOnce(mocks.anotherPlanSectionId);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
-    const response = await server.request(
-      url,
-      { method: "DELETE", headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders } },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "DELETE", headers: mocks.headers(99) }, mocks.ip);
 
     await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
@@ -164,7 +160,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );

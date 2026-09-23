@@ -10,11 +10,7 @@ describe("Plan.createSection", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("PlanIsEditable - archived", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planArchivedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planArchivedHistory, deps);
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,
@@ -22,11 +18,7 @@ describe("Plan.createSection", async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const plan = Plans.Aggregates.Plan.build(
-      mocks.planId,
-      mocks.planFinalizedHistory,
-      deps,
-    );
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planFinalizedHistory, deps);
 
     expect(() => plan.createSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
       Plans.Invariants.PlanIsEditable.error,

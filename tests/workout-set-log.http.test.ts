@@ -228,7 +228,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       url,
       {
         method: "POST",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify(mocks.loggedSet),
       },
       mocks.ip,
@@ -250,7 +250,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       url,
       {
         method: "POST",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify(mocks.loggedSetWithRir),
       },
       mocks.ip,

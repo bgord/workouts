@@ -1,5 +1,5 @@
-import * as v from "valibot";
 import * as bg from "@bgord/bun";
+import * as v from "valibot";
 import type * as Queries from "+plans/queries";
 import * as VO from "+plans/value-objects";
 import { PlanIsEditable } from "../invariants/plan-is-editable";

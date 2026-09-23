@@ -226,7 +226,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify(mocks.exerciseTarget),
       },
       mocks.ip,
@@ -247,7 +247,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify(mocks.exerciseTarget),
       },
       mocks.ip,

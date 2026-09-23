@@ -176,7 +176,7 @@ describe(`POST ${url}`, async () => {
       url,
       {
         method: "POST",
-        headers: { ...mocks.revisionHeaders(draft.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(draft.length),
         body,
       },
       mocks.ip,
@@ -201,7 +201,7 @@ describe(`POST ${url}`, async () => {
       url,
       {
         method: "POST",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body,
       },
       mocks.ip,

@@ -122,7 +122,7 @@ describe("PATCH /api/workouts/:workoutId/complete", async () => {
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );

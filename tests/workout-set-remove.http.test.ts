@@ -143,7 +143,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logge
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(logged.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(logged.length),
       },
       mocks.ip,
     );

@@ -219,7 +219,7 @@ describe("POST /api/plans/:planId/rename", async () => {
       url,
       {
         method: "POST",
-        headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(99),
         body: JSON.stringify({ planName: mocks.anotherPlanName }),
       },
       mocks.ip,
@@ -245,7 +245,7 @@ describe("POST /api/plans/:planId/rename", async () => {
       url,
       {
         method: "POST",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify({ planName: mocks.anotherPlanName }),
       },
       mocks.ip,

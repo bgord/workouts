@@ -1,5 +1,5 @@
+import type * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
-import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";

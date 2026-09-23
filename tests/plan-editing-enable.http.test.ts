@@ -103,11 +103,7 @@ describe("POST /api/plans/:planId/editing/enable", async () => {
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planSectionId);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
-    const response = await server.request(
-      url,
-      { method: "POST", headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders } },
-      mocks.ip,
-    );
+    const response = await server.request(url, { method: "POST", headers: mocks.headers(99) }, mocks.ip);
 
     await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
@@ -122,7 +118,7 @@ describe("POST /api/plans/:planId/editing/enable", async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders } },
+      { method: "POST", headers: mocks.headers(events.length) },
       mocks.ip,
     );
 

@@ -137,7 +137,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(draft.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(draft.length),
       },
       mocks.ip,
     );
@@ -157,7 +157,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );
@@ -177,7 +177,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       url,
       {
         method: "DELETE",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
       },
       mocks.ip,
     );

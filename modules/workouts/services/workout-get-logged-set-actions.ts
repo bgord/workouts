@@ -1,5 +1,5 @@
-import type * as tools from "@bgord/tools";
 import * as bg from "@bgord/bun";
+import type * as tools from "@bgord/tools";
 import type * as Queries from "+workouts/queries";
 import type * as VO from "+workouts/value-objects";
 import { WorkoutIsCorrectable } from "../invariants/workout-is-correctable";

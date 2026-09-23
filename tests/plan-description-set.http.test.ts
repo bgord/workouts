@@ -212,7 +212,7 @@ describe("PATCH /api/plans/:planId/description", async () => {
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify({ description: mocks.planDescription }),
       },
       mocks.ip,
@@ -233,7 +233,7 @@ describe("PATCH /api/plans/:planId/description", async () => {
       url,
       {
         method: "PATCH",
-        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        headers: mocks.headers(events.length),
         body: JSON.stringify({ description: null }),
       },
       mocks.ip,
