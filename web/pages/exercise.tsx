@@ -17,7 +17,7 @@ export function Exercise() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack search={Form.default} to="/catalog" />
 
           <ExerciseName />

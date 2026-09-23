@@ -42,7 +42,7 @@ export function WorkoutExerciseRow(props: {
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <WorkoutExerciseMove
           active={isDraft || props.reordering}
           exercise={props.exercise}
@@ -87,7 +87,7 @@ export function WorkoutExerciseRow(props: {
             {props.exercise.exerciseName}
           </ui.ExerciseLink>
 
-          <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+          <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
             <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />
 
             <ui.Meta data-md-disp={hasTarget ? "none" : undefined}>

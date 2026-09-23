@@ -63,7 +63,7 @@ export function ExerciseName() {
       {...ui.Gap.cluster}
       {...exerciseNameUpdate.props.target}
     >
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
         <input
           aria-label={t("exercise.update.name.label")}
           className="c-input"

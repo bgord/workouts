@@ -61,7 +61,6 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
         data-cross="center"
         data-ml="1-5"
         data-stack="x"
-        data-wrap="nowrap"
         tone="subtle"
         {...ui.Spacing.rowCompact}
       >

@@ -28,7 +28,7 @@ export function Workout() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+        <div data-cross="center" data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack search={search} to="/workouts" />
 
           <div
@@ -37,7 +37,6 @@ export function Workout() {
             data-grow="1"
             data-minw="0"
             data-stack="x"
-            data-wrap="nowrap"
             {...ui.Gap.related}
           >
             <ui.Header>
@@ -52,14 +51,13 @@ export function Workout() {
             data-md-width={primary ? "100%" : undefined}
             data-shrink="0"
             data-stack="x"
-            data-wrap="nowrap"
             {...ui.Gap.cluster}
           >
             <WorkoutStart />
 
             <WorkoutComplete />
 
-            <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
+            <div data-cross="center" data-ml="auto" data-stack="x">
               <WorkoutReorder {...workoutReorder} />
 
               <WorkoutCopy />

@@ -50,7 +50,7 @@ export function BodyWeightReferenceSet(
         <ui.BodyWeightValue weight={props.measurement.weight} />
       </div>
 
-      <div data-ml="auto" data-stack="x" {...ui.Gap.inline}>
+      <div data-ml="auto" data-stack="x" data-wrap="wrap" {...ui.Gap.inline}>
         {goals.map((option) => (
           <ui.ChipButton key={option} onClick={() => goal.set(option)} pressed={option === goal.value}>
             <ui.BodyWeightGoalIcon goal={option} size="xs" />

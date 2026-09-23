@@ -151,7 +151,6 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-hover-bc={actions.exerciseChange.enabled ? "brand-500" : undefined}
               data-px="3"
               data-stack="x"
-              data-wrap="nowrap"
               disabled={!actions.exerciseChange.enabled}
               onClick={planSectionExerciseInstructionPick.enable}
               title={t("plan.section.exercise.edit.change")}

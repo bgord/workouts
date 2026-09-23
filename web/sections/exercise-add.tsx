@@ -103,7 +103,6 @@ export function ExerciseAdd() {
               data-cross="center"
               data-fs="xs"
               data-stack="x"
-              data-wrap="nowrap"
               {...ui.Gap.cluster}
             >
               {image.isSelected && (

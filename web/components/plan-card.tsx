@@ -22,7 +22,7 @@ export function PlanCard(props: PlanSummary) {
           </Meta>
         )}
 
-        <Meta data-cross="center" data-stack="x" truncate {...Gap.related}>
+        <Meta data-cross="center" data-stack="x" data-wrap="wrap" truncate {...Gap.related}>
           <div data-cross="center" data-stack="x" title={t("plan.sections")} {...Gap.inline}>
             <Layers data-size="xs" />
             {props.sections}

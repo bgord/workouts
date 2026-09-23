@@ -67,7 +67,7 @@ export function ProfileAvatarChange() {
             {...ui.Gap.cluster}
             {...profileAvatarChange.props.target}
           >
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+            <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
               <ui.FileButton data-md-grow="1" file={avatar}>
                 {avatar.isSelected ? (
                   <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />

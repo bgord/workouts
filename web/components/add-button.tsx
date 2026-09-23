@@ -11,7 +11,6 @@ export function AddButton(props: React.JSX.IntrinsicElements["button"]) {
       data-grow="1"
       data-hover-color="neutral-0"
       data-stack="x"
-      data-wrap="nowrap"
       type="button"
       {...Gap.related}
       {...props}

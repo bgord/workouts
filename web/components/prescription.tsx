@@ -6,7 +6,6 @@ export function Prescription(props: React.JSX.IntrinsicElements["div"]) {
     <div
       data-cross="center"
       data-stack="x"
-      data-wrap="nowrap"
       {...bg.Rhythm(336).times(1).style.maxWidth}
       {...Gap.cluster}
       {...props}

@@ -20,7 +20,6 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
         data-shrink="0"
         data-stack="x"
         data-transform="font-variant-numeric"
-        data-wrap="nowrap"
         {...ui.Gap.inline}
       >
         <Target data-color="neutral-500" data-size="xs" />
@@ -45,7 +44,6 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       data-shrink="0"
       data-stack="x"
       data-transform="font-variant-numeric"
-      data-wrap="nowrap"
       disabled={!actions.targetSet.enabled}
       onClick={toggle.toggle}
       title={t("workout.target.cta")}

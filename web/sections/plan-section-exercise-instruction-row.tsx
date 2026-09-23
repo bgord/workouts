@@ -13,13 +13,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   const { exerciseInstruction } = props;
 
   return (
-    <ui.HairlineRow
-      data-cross="center"
-      data-stack="x"
-      data-wrap="nowrap"
-      tone="subtle"
-      {...ui.Spacing.rowCompact}
-    >
+    <ui.HairlineRow data-cross="center" data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
       <PlanSectionExerciseInstructionMove
         exerciseInstruction={exerciseInstruction}
         position={props.position}
@@ -45,13 +39,20 @@ export function PlanSectionExerciseInstructionRow(props: {
           {exerciseInstruction.exercise.name}
         </ui.ExerciseLink>
 
-        <div data-color="neutral-300" data-cross="center" data-fs="sm" data-stack="x" {...ui.Gap.inline}>
+        <div
+          data-color="neutral-300"
+          data-cross="center"
+          data-fs="sm"
+          data-stack="x"
+          data-wrap="wrap"
+          {...ui.Gap.inline}
+        >
           <ui.SetsReps {...exerciseInstruction} />
           <ui.ProgressionMethodBadge method={exerciseInstruction.progression} />
         </div>
       </div>
 
-      <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+      <div data-cross="center" data-shrink="0" data-stack="x" {...ui.Gap.inline}>
         <PlanSectionExerciseInstructionEdit
           exerciseInstruction={exerciseInstruction}
           section={props.section}

@@ -78,7 +78,7 @@ export function BodyWeightMeasurementImport() {
               <ui.DropzoneInput file={file} />
             </ui.Dropzone>
 
-            <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+            <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
               <ui.TextLinkAnchor
                 data-shrink="0"
                 download

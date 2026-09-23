@@ -28,11 +28,10 @@ export function ProfileAccountDelete() {
       data-stack="x"
       data-tone="danger"
       data-variant="flat"
-      data-wrap="nowrap"
       {...ui.Spacing.surface}
       {...ui.Gap.related}
     >
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
         <UserX data-color="danger-400" data-size="sm" />
         <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
       </div>

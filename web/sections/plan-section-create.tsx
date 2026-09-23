@@ -35,7 +35,7 @@ export function PlanSectionCreate() {
   return (
     <ui.HairlineBlock data-stack="y" first={plan.data.sections.length === 0} last {...ui.Spacing.row}>
       {planSectionCreate.off && (
-        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
           <ui.AddButton
             disabled={!plan.actions.sectionCreate.enabled}
             onClick={planSectionCreate.enable}
@@ -58,7 +58,7 @@ export function PlanSectionCreate() {
           {...ui.Gap.cluster}
           {...planSectionCreate.props.target}
         >
-          <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+          <div data-cross="center" data-stack="x" {...ui.Gap.related}>
             <ui.AddPlaceholder />
 
             <input
@@ -71,7 +71,7 @@ export function PlanSectionCreate() {
               {...planSectionName.input.props}
             />
 
-            <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+            <div data-cross="center" data-shrink="0" data-stack="x" {...ui.Gap.inline}>
               <ui.IconButton
                 aria-label={t("app.save")}
                 disabled={planSectionName.empty || mutation.isLoading}

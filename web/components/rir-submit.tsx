@@ -24,7 +24,6 @@ export function RirSubmit(props: {
       data-rir={props.variant ?? "default"}
       data-shrink="0"
       data-stack="x"
-      data-wrap="nowrap"
       title={t("workout.set.rir.title")}
     >
       {options.map((option, index) => (

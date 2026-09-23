@@ -18,7 +18,6 @@ function RowAnchor(props: { variant?: RowVariant } & React.JSX.IntrinsicElements
         data-hover-bc="brand-500"
         data-opacity={opacity[variant]}
         data-stack="x"
-        data-wrap="nowrap"
         {...Spacing.surface}
         {...Gap.related}
         {...rest}

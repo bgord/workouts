@@ -20,7 +20,7 @@ export function ExerciseProgressChart() {
 
   return (
     <div data-stack="y" data-variant="flat" {...ui.Gap.related}>
-      <div data-cross="center" data-main="between" data-stack="x" {...ui.Gap.related}>
+      <div data-cross="center" data-main="between" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
         <ui.SectionHeading>{t("statistics.exercise.progress")}</ui.SectionHeading>
 
         <ui.Eyebrow data-cross="center" data-stack="x">

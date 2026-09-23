@@ -106,7 +106,7 @@ export function PlanSectionCooldown(props: PlanSection) {
             {...metaEnterSubmit}
           />
 
-          <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+          <div data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.inline}>
             <button
               className="c-button"
               data-variant="secondary"

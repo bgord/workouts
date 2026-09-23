@@ -9,7 +9,7 @@ export function NotFound() {
   return (
     <ui.Main>
       <div data-cross="center" data-mt="8" data-stack="y" data-transform="center" {...ui.Gap.related}>
-        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
           <div className="logo" data-color="brand-500" data-disp="flex" data-fs="6xl" />
 
           <div
@@ -20,7 +20,6 @@ export function NotFound() {
             data-lh="none"
             data-stack="x"
             data-transform="font-variant-numeric"
-            data-wrap="nowrap"
             {...ui.Gap.inline}
           >
             404

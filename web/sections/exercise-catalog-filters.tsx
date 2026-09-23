@@ -32,7 +32,7 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
 
   return (
     <>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
         <div data-cross="center" data-md-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 

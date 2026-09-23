@@ -22,7 +22,6 @@ export function SetDots(props: { sets: Array<{ rir: number | null }>; target: nu
       data-cross="center"
       data-shrink="0"
       data-stack="x"
-      data-wrap="nowrap"
       role="img"
       {...Gap.inline}
       title={t("workout.set.progress", { done: props.sets.length, target: props.target })}

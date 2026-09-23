@@ -21,7 +21,7 @@ export function Plan() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-cross="center" data-md-wrap="wrap" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+        <div data-cross="center" data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack to="/plans" />
 
           <div
@@ -30,7 +30,6 @@ export function Plan() {
             data-grow="1"
             data-minw="0"
             data-stack="x"
-            data-wrap="nowrap"
             {...ui.Gap.related}
           >
             <PlanName />
@@ -38,21 +37,14 @@ export function Plan() {
             <ui.PlanStatusBadge status={plan.data.status} />
           </div>
 
-          <div
-            data-cross="center"
-            data-md-width="100%"
-            data-shrink="0"
-            data-stack="x"
-            data-wrap="nowrap"
-            {...ui.Gap.cluster}
-          >
+          <div data-cross="center" data-md-width="100%" data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
             <PlanFinalize />
 
             <PlanEditingEnable />
 
             <PlanRestore />
 
-            <div data-cross="center" data-ml="auto" data-stack="x" data-wrap="nowrap">
+            <div data-cross="center" data-ml="auto" data-stack="x">
               <PlanArchive />
 
               <PlanRemove />

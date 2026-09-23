@@ -51,7 +51,7 @@ export function WorkoutSetCorrect(
 
   if (toggle.off) {
     return (
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.IconButton
           aria-label={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
           disabled={!action.enabled}
@@ -77,12 +77,11 @@ export function WorkoutSetCorrect(
       data-md-main="end"
       data-md-wrap="wrap"
       data-stack="x"
-      data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
-      <div data-cross="center" data-md-width="100%" data-stack="x" data-wrap="nowrap" {...ui.Gap.cluster}>
+      <div data-cross="center" data-md-width="100%" data-stack="x" {...ui.Gap.cluster}>
         <ui.Stepper
           disabled={mutation.isLoading}
           field={reps}

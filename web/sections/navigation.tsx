@@ -48,6 +48,7 @@ function NavigationDesktop() {
         data-mx="auto"
         data-stack="x"
         data-width="100%"
+        data-wrap="wrap"
         {...ui.Spacing.gutter}
         {...ui.Gap.section}
       >
@@ -100,7 +101,6 @@ function NavigationMobileDrawer() {
       data-right="0"
       data-safe-area="bottom"
       data-stack="x"
-      data-wrap="nowrap"
       data-z="3"
       {...ui.Spacing.gutter}
     >

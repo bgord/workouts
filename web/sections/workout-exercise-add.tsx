@@ -56,14 +56,7 @@ export function WorkoutExerciseAdd() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <ui.HairlineBlock
-        data-cross="center"
-        data-stack="x"
-        data-wrap="nowrap"
-        first={first}
-        last
-        {...ui.Spacing.row}
-      >
+      <ui.HairlineBlock data-cross="center" data-stack="x" first={first} last {...ui.Spacing.row}>
         <ui.AddButton
           disabled={!workout.actions.exerciseAdd.enabled}
           onClick={workoutExerciseAdd.enable}

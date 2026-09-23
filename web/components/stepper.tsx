@@ -39,7 +39,6 @@ export function Stepper(props: {
       data-shrink={variant === "fill" ? undefined : "0"}
       data-stack="x"
       data-stepper={variant}
-      data-wrap="nowrap"
       style={width(props.width)}
     >
       {props.leading}

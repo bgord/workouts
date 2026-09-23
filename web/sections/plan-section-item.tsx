@@ -18,13 +18,7 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
-      <div
-        data-cross="center"
-        data-stack="x"
-        data-wrap="nowrap"
-        {...bg.Rhythm().times(3).style.minHeight}
-        {...ui.Gap.related}
-      >
+      <div data-cross="center" data-stack="x" {...bg.Rhythm().times(3).style.minHeight} {...ui.Gap.related}>
         <ui.ChevronToggle {...planSectionVisibility} />
 
         <div data-grow="1" data-minw="0">

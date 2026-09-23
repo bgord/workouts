@@ -15,7 +15,7 @@ export function Measurements() {
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.Header data-grow="1">{t("measurements.body_weight.header")}</ui.Header>
 
-        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+        <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
           <BodyWeightMeasurementImport />
 
           <BodyWeightMeasurementExport />

@@ -24,7 +24,6 @@ export function TargetDiffPills(props: { diff: ExerciseTargetDiff } & React.JSX.
       data-cross="center"
       data-stack="x"
       data-transform="font-variant-numeric"
-      data-wrap="nowrap"
       title={t("workout.previous_performance.diff.title")}
       {...Gap.inline}
       {...rest}

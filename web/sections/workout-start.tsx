@@ -26,7 +26,6 @@ export function WorkoutStart() {
       aria-busy={mutation.isLoading}
       data-cross="center"
       data-stack="x"
-      data-wrap="nowrap"
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.related}
     >

@@ -13,7 +13,6 @@ export function RirBadge(props: { rir: number }) {
       data-fw="medium"
       data-stack="x"
       data-transform="font-variant-numeric"
-      data-wrap="nowrap"
       title={t("workout.set.rir.title")}
       {...Gap.inline}
     >

@@ -36,7 +36,7 @@ export function WorkoutWarmup() {
         {...ui.Gap.cluster}
         {...workoutWarmupExpanded.props.controller}
       >
-        <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.block}>
+        <div data-cross="center" data-stack="x" {...ui.Gap.block}>
           <Flame data-color="neutral-600" data-shrink="0" data-size="sm" />
 
           <ui.Eyebrow data-grow="1">{t("workout.warmup.label")}</ui.Eyebrow>

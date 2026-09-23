@@ -37,7 +37,6 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
         aria-busy={mutation.isLoading}
         data-cross="center"
         data-stack="x"
-        data-wrap="nowrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
         {...ui.Gap.related}
       >

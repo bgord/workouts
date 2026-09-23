@@ -26,7 +26,7 @@ export function Dialog(props: bg.DialogPropsType) {
 
 export function DialogHeader(props: { disabled?: boolean; onClose: () => void; children: React.ReactNode }) {
   return (
-    <div data-cross="center" data-main="between" data-stack="x" data-wrap="nowrap" {...Gap.related}>
+    <div data-cross="center" data-main="between" data-stack="x" {...Gap.related}>
       <strong data-color="neutral-100" data-transform="truncate">
         {props.children}
       </strong>
@@ -59,7 +59,6 @@ export function DialogStatus(
       data-cross="center"
       data-fs="sm"
       data-stack="x"
-      data-wrap="nowrap"
       {...Gap.cluster}
       {...rest}
     >
@@ -78,7 +77,6 @@ export function DialogError(props: { children: React.ReactNode }) {
       data-cross="center"
       data-fs="sm"
       data-stack="x"
-      data-wrap="nowrap"
       {...Gap.cluster}
     >
       <CircleAlert data-shrink="0" data-size="md" />
@@ -89,7 +87,7 @@ export function DialogError(props: { children: React.ReactNode }) {
 
 export function DialogFooter(props: { disabled?: boolean; onCancel: () => void; children: React.ReactNode }) {
   return (
-    <div data-main="end" data-stack="x" {...Gap.inline}>
+    <div data-main="end" data-stack="x" data-wrap="wrap" {...Gap.inline}>
       <ButtonCancel disabled={props.disabled} onClick={props.onCancel} />
       {props.children}
     </div>

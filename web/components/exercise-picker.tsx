@@ -23,7 +23,7 @@ export function ExercisePicker(props: {
 
   return (
     <div data-minh="0" data-stack="y" data-wrap="nowrap" {...Gap.cluster}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...Gap.inline}>
+      <div data-cross="center" data-stack="x" {...Gap.inline}>
         <div data-cross="center" data-grow="1" data-position="relative" data-stack="x">
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
@@ -70,7 +70,6 @@ export function ExercisePicker(props: {
               data-position="relative"
               data-px="3"
               data-stack="x"
-              data-wrap="nowrap"
               {...Spacing.rowCompact}
             >
               <input

@@ -19,7 +19,7 @@ export function ExerciseHistoryRow(props: {
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
-      <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.ChevronToggle {...open} />
 
         <Link
@@ -30,7 +30,6 @@ export function ExerciseHistoryRow(props: {
           data-hover-color="brand-300"
           data-stack="x"
           data-transform="font-variant-numeric"
-          data-wrap="nowrap"
           params={{ workoutId: props.performance.workoutId }}
           search={WorkoutHistoryFilters.default}
           to="/workouts/$workoutId"
@@ -54,10 +53,9 @@ export function ExerciseHistoryRow(props: {
           data-ml="auto"
           data-shrink="0"
           data-stack="x"
-          data-wrap="nowrap"
           {...ui.Gap.related}
         >
-          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.field}>
+          <div data-cross="baseline" data-stack="x" {...ui.Gap.field}>
             <EqualApproximately data-color="neutral-600" data-self="center" data-size="xs" />
 
             <span
@@ -78,7 +76,7 @@ export function ExerciseHistoryRow(props: {
             />
           </div>
 
-          <div data-cross="baseline" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+          <div data-cross="baseline" data-stack="x" {...ui.Gap.inline}>
             <Sigma data-color="neutral-600" data-self="center" data-size="xs" />
 
             <span
@@ -107,6 +105,7 @@ export function ExerciseHistoryRow(props: {
             <ui.HairlineRow
               data-cross="center"
               data-stack="x"
+              data-wrap="wrap"
               key={set.setNumber}
               tone="subtle"
               {...ui.Spacing.rowCompact}

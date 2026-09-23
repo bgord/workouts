@@ -33,7 +33,6 @@ export function WeightDelta(
       data-cross="center"
       data-stack="x"
       data-transform="nowrap"
-      data-wrap="nowrap"
       {...Gap.inline}
       {...rest}
     >

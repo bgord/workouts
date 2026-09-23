@@ -28,7 +28,6 @@ export function BodyWeightMeasurementRow(props: {
       data-cross="center"
       data-md-gap="2"
       data-stack="x"
-      data-wrap="nowrap"
       first={props.first}
       {...ui.Spacing.rowCompact}
     >
@@ -50,6 +49,7 @@ export function BodyWeightMeasurementRow(props: {
             data-minw="0"
             data-stack="x"
             data-transform="nowrap"
+            data-wrap="wrap"
             onClick={bodyWeightMeasurementCorrect.enable}
             type="button"
             {...ui.Gap.inline}
@@ -94,7 +94,7 @@ export function BodyWeightMeasurementRow(props: {
             />
           </div>
 
-          <div data-cross="center" data-shrink="0" data-stack="x" data-wrap="nowrap" {...ui.Gap.inline}>
+          <div data-cross="center" data-shrink="0" data-stack="x" {...ui.Gap.inline}>
             <ui.IconButton
               onClick={bodyWeightReference.enable}
               title={t("measurements.body_weight.reference.title")}

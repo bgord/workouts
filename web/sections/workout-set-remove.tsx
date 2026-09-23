@@ -39,6 +39,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
         aria-busy={mutation.isLoading}
         data-cross="center"
         data-stack="x"
+        data-wrap="wrap"
         onSubmit={guarded ? confirm : mutation.handleSubmit}
         {...ui.Gap.cluster}
       >

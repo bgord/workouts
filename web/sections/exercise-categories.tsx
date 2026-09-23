@@ -60,14 +60,13 @@ export function ExerciseCategories() {
         data-cross="center"
         data-main="between"
         data-stack="x"
-        data-wrap="nowrap"
         {...bg.Rhythm().times(3).style.minHeight}
         {...ui.Gap.related}
       >
         <ui.Eyebrow>{t("exercise.categories.header")}</ui.Eyebrow>
 
         {assignment.off && (
-          <div data-cross="center" data-stack="x" data-wrap="nowrap" {...ui.Gap.related}>
+          <div data-cross="center" data-stack="x" {...ui.Gap.related}>
             <ui.ActionHint {...action} />
 
             <button
@@ -90,6 +89,7 @@ export function ExerciseCategories() {
           aria-busy={assign.isLoading}
           data-cross="center"
           data-stack="x"
+          data-wrap="wrap"
           onSubmit={assign.handleSubmit}
           {...ui.Gap.inline}
           {...assignment.props.target}

@@ -32,7 +32,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
           {props.name}
         </div>
 
-        <ul data-mt="auto" data-overflow="hidden" data-stack="x" data-wrap="nowrap" {...Gap.cluster}>
+        <ul data-mt="auto" data-overflow="hidden" data-stack="x" {...Gap.cluster}>
           {visible.map((category) => (
             <li key={category.id}>
               <Chip data-transform="truncate">{category.name}</Chip>

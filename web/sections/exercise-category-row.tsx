@@ -14,7 +14,6 @@ export function ExerciseCategoryRow(props: ExerciseCategory) {
       data-main="between"
       data-px={exerciseCategoryRename.off ? "3" : undefined}
       data-stack="x"
-      data-wrap="nowrap"
       {...ui.Spacing.rowCompact}
     >
       <ExerciseCategoryRename {...props} {...exerciseCategoryRename} />

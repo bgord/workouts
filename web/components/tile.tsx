@@ -51,6 +51,7 @@ export function TileHeader(props: React.JSX.IntrinsicElements["div"]) {
       data-fs="xs"
       data-md-width="100%"
       data-stack="x"
+      data-wrap="wrap"
       {...Gap.inline}
       {...props}
     />
@@ -66,6 +67,7 @@ export function TileValue(props: React.JSX.IntrinsicElements["div"]) {
       data-fw="semibold"
       data-lh="tight"
       data-stack="x"
+      data-wrap="wrap"
       {...Gap.cluster}
       {...props}
     />
