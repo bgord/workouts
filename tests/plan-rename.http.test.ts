@@ -29,10 +29,8 @@ describe("POST /api/plans/:planId/rename", async () => {
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - planName - missing", async () => {
@@ -43,10 +41,8 @@ describe("POST /api/plans/:planId/rename", async () => {
       { method: "POST", body: JSON.stringify({}), headers: mocks.revisionHeaders() },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.name.type" });
+    await testcases.assertErrorResponse(response, 400, "plan.name.type");
   });
 
   test("validation - planName - invalid", async () => {
@@ -61,10 +57,8 @@ describe("POST /api/plans/:planId/rename", async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.name.invalid" });
+    await testcases.assertErrorResponse(response, 400, "plan.name.invalid");
   });
 
   test("PlanNameIsUniqueForOwner", async () => {

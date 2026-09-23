@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
@@ -27,7 +26,8 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    await testcases.assertErrorResponse(response, 400, bg.UUIDError.Type);
+
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - planSectionId - missing", async () => {
@@ -38,7 +38,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ planId: mocks.planId }) },
       mocks.ip,
     );
-    await testcases.assertErrorResponse(response, 400, bg.UUIDError.Type);
+
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - scheduledFor - missing", async () => {
@@ -52,6 +53,7 @@ describe(`POST ${url}`, async () => {
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
   });
 
@@ -70,6 +72,7 @@ describe(`POST ${url}`, async () => {
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 

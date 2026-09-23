@@ -25,10 +25,8 @@ describe("POST /api/plans/:planId/restore", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request("/api/plans/id/finalize", { method: "POST" }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("PlanExists", async () => {

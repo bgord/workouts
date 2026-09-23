@@ -28,10 +28,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -42,10 +40,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect exercise instruction id", async () => {
@@ -56,10 +52,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - sets - missing", async () => {
@@ -70,10 +64,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.type" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
   test("validation - sets - invalid", async () => {
@@ -84,10 +76,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: 0 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
   test("validation - reps - missing", async () => {
@@ -98,10 +88,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: mocks.sets }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.type" });
+    await testcases.assertErrorResponse(response, 400, "reps.type");
   });
 
   test("validation - sets - invalid", async () => {
@@ -116,10 +104,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
   test("validation - sets - range", async () => {
@@ -134,10 +120,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.range" });
+    await testcases.assertErrorResponse(response, 400, "reps.range");
   });
 
   test("validation - progression - invalid", async () => {
@@ -152,10 +136,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "progression.method.invalid" });
+    await testcases.assertErrorResponse(response, 400, "progression.method.invalid");
   });
 
   test("PlanExists", async () => {

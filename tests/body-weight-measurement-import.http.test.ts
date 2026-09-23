@@ -26,10 +26,8 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: new FormData() }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: bg.FileUploaderError.MissingFile });
+    await testcases.assertErrorResponse(response, 400, bg.FileUploaderError.MissingFile);
   });
 
   test("validation - file - invalid mime", async () => {
@@ -39,10 +37,8 @@ describe(`POST ${url}`, async () => {
     form.append("file", mocks.png);
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: bg.FileUploaderError.InvalidMime });
+    await testcases.assertErrorResponse(response, 400, bg.FileUploaderError.InvalidMime);
   });
 
   test("validation - weight - missing", async () => {
@@ -56,10 +52,8 @@ describe(`POST ${url}`, async () => {
     );
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.WeightGramsError.Type });
+    await testcases.assertErrorResponse(response, 400, tools.WeightGramsError.Type);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -74,10 +68,8 @@ describe(`POST ${url}`, async () => {
     );
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.WeightGramsError.Invalid });
+    await testcases.assertErrorResponse(response, 400, tools.WeightGramsError.Invalid);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -89,10 +81,8 @@ describe(`POST ${url}`, async () => {
     form.append("file", mocks.bodyWeightMeasurementCsvFile(`id,weight,measuredOn\n,${mocks.bodyWeight},`));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -107,10 +97,8 @@ describe(`POST ${url}`, async () => {
     );
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

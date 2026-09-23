@@ -26,6 +26,7 @@ describe(`QUERY ${url}`, async () => {
       { method: "QUERY", body: JSON.stringify({ filter: "ok" }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "workout.list.filter.invalid");
   });
 

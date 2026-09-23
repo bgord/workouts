@@ -28,10 +28,8 @@ describe("PATCH /api/plans/:planId/description", async () => {
       { method: "PATCH", body: JSON.stringify({ description: mocks.planDescription }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - description - wrong type", async () => {
@@ -42,10 +40,8 @@ describe("PATCH /api/plans/:planId/description", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ description: 2024 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.description.type" });
+    await testcases.assertErrorResponse(response, 400, "plan.description.type");
   });
 
   test("validation - description - empty", async () => {
@@ -56,10 +52,8 @@ describe("PATCH /api/plans/:planId/description", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ description: "" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.description.invalid" });
+    await testcases.assertErrorResponse(response, 400, "plan.description.invalid");
   });
 
   test("PlanExists", async () => {

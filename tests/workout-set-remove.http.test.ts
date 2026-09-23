@@ -31,6 +31,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logge
       { method: "DELETE" },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 

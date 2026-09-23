@@ -17,8 +17,8 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-;
-    await testcases.assertAuthResponse(response)
+
+    await testcases.assertAuthResponse(response);
   });
 
   test("validation - incorrect workout id", async () => {
@@ -29,6 +29,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
@@ -40,6 +41,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
@@ -51,6 +53,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
@@ -62,6 +65,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", headers: mocks.revisionHeaders(), body: JSON.stringify({ reps: 0 }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
@@ -77,6 +81,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "weight.grams.type");
   });
 
@@ -92,6 +97,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "weight.grams.invalid");
   });
 
@@ -107,6 +113,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, Workouts.VO.RirError.Range);
   });
 

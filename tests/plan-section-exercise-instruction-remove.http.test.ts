@@ -28,10 +28,8 @@ describe("DELETE /api/plans/:planSectionId/exercise-instruction/:exerciseInstruc
       { method: "DELETE" },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -42,10 +40,8 @@ describe("DELETE /api/plans/:planSectionId/exercise-instruction/:exerciseInstruc
       { method: "DELETE" },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect exercise instruction id", async () => {
@@ -56,10 +52,8 @@ describe("DELETE /api/plans/:planSectionId/exercise-instruction/:exerciseInstruc
       { method: "DELETE" },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("PlanExists", async () => {

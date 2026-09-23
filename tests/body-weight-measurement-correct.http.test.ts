@@ -29,20 +29,16 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - weight - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "PATCH", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.WeightGramsError.Type });
+    await testcases.assertErrorResponse(response, 400, tools.WeightGramsError.Type);
   });
 
   test("validation - weight - invalid", async () => {
@@ -53,10 +49,8 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       { method: "PATCH", body: JSON.stringify({ weight: -1 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.WeightGramsError.Invalid });
+    await testcases.assertErrorResponse(response, 400, tools.WeightGramsError.Invalid);
   });
 
   test("validation - measuredOn - missing", async () => {
@@ -67,10 +61,8 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       { method: "PATCH", body: JSON.stringify({ weight: mocks.bodyWeight }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.Type });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
   });
 
   test("validation - measuredOn - invalid", async () => {
@@ -81,10 +73,8 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       { method: "PATCH", body: JSON.stringify({ weight: mocks.bodyWeight, measuredOn: "01-01-2025" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 
   test("BodyWeightMeasurementExists", async () => {

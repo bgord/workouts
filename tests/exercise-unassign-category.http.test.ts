@@ -26,10 +26,8 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - exerciseId - invalid", async () => {
@@ -40,10 +38,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ exerciseId: "a" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - exerciseCategoryId - missing", async () => {
@@ -54,10 +50,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ exerciseId: mocks.exerciseId }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - exerciseCategoryId - invalid", async () => {
@@ -71,10 +65,8 @@ describe(`POST ${url}`, async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("ExerciseExists", async () => {

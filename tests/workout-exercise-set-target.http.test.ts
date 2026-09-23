@@ -28,6 +28,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
@@ -39,6 +40,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
@@ -50,6 +52,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
@@ -61,6 +64,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: 0 }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
@@ -76,6 +80,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
@@ -91,6 +96,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "weight.grams.type");
   });
 
@@ -106,6 +112,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "weight.grams.invalid");
   });
 

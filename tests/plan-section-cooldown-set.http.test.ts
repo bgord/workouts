@@ -28,10 +28,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/cooldown", async () =>
       { method: "PATCH", body: JSON.stringify({ cooldown: mocks.planSectionCooldown }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -42,10 +40,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/cooldown", async () =>
       { method: "PATCH", body: JSON.stringify({ cooldown: mocks.planSectionCooldown }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - cooldown - wrong type", async () => {
@@ -56,10 +52,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/cooldown", async () =>
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ cooldown: 2024 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.cooldown.type" });
+    await testcases.assertErrorResponse(response, 400, "plan.section.cooldown.type");
   });
 
   test("validation - cooldown - empty", async () => {
@@ -70,10 +64,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/cooldown", async () =>
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ cooldown: "" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.cooldown.invalid" });
+    await testcases.assertErrorResponse(response, 400, "plan.section.cooldown.invalid");
   });
 
   test("PlanExists", async () => {

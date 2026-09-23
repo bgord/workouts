@@ -28,10 +28,8 @@ describe("DELETE /api/measurements/body-weight/measurement/:bodyWeightMeasuremen
       { method: "DELETE" },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("BodyWeightMeasurementExists", async () => {

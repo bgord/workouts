@@ -28,10 +28,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -42,20 +40,16 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - name - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.name.type" });
+    await testcases.assertErrorResponse(response, 400, "plan.section.name.type");
   });
 
   test("validation - name - invalid", async () => {
@@ -66,10 +60,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       { method: "POST", body: JSON.stringify({ planSectionName: "a".repeat(129) }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.name.invalid" });
+    await testcases.assertErrorResponse(response, 400, "plan.section.name.invalid");
   });
 
   test("PlanExists", async () => {

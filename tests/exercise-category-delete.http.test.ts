@@ -24,10 +24,8 @@ describe("DELETE /api/exercises/category/:exerciseCategoryId", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request("/api/exercises/category/id", { method: "DELETE" }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("ExerciseCategoryExists", async () => {
@@ -36,6 +34,7 @@ describe("DELETE /api/exercises/category/:exerciseCategoryId", async () => {
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
+
     await testcases.assertErrorResponse(response, 403, "exercise.category.exists");
   });
 

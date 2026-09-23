@@ -28,6 +28,7 @@ describe("PATCH /api/workouts/:workoutId/note", async () => {
       { method: "PATCH", body: JSON.stringify({ note: mocks.workoutNote }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
@@ -39,6 +40,7 @@ describe("PATCH /api/workouts/:workoutId/note", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ note: 2024 }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "workout.note.type");
   });
 
@@ -50,6 +52,7 @@ describe("PATCH /api/workouts/:workoutId/note", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ note: "" }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "workout.note.invalid");
   });
 

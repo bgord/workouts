@@ -25,6 +25,7 @@ describe("DELETE /api/workouts/:workoutId", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request("/api/workouts/id", { method: "DELETE" }, mocks.ip);
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 

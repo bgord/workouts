@@ -25,6 +25,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request("/api/workouts/id/start", { method: "PATCH" }, mocks.ip);
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 

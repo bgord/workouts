@@ -29,6 +29,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       { method: "PATCH", body: JSON.stringify({ scheduledFor: mocks.anotherWorkoutScheduledFor }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
@@ -40,6 +41,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
   });
 
@@ -55,6 +57,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 

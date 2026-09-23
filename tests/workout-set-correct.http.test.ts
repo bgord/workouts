@@ -36,6 +36,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
       { method: "PATCH", body },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 

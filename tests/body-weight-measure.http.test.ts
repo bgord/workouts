@@ -25,10 +25,8 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.WeightGramsError.Type });
+    await testcases.assertErrorResponse(response, 400, tools.WeightGramsError.Type);
   });
 
   test("validation - weight - invalid", async () => {
@@ -39,10 +37,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ weight: -1 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.WeightGramsError.Invalid });
+    await testcases.assertErrorResponse(response, 400, tools.WeightGramsError.Invalid);
   });
 
   test("validation - measuredOn - missing", async () => {
@@ -53,10 +49,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ weight: mocks.bodyWeight }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.Type });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
   });
 
   test("validation - measuredOn - invalid", async () => {
@@ -67,10 +61,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ weight: mocks.bodyWeight, measuredOn: "01-01-2025" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 
   test("BodyWeightMeasuredOnIsNotInFuture", async () => {

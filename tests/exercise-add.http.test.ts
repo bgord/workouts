@@ -45,10 +45,8 @@ describe(`POST ${url}`, async () => {
     form.append("file", mocks.png);
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.type" });
+    await testcases.assertErrorResponse(response, 400, "exercise.name.type");
   });
 
   test("validation - name - invalid", async () => {
@@ -59,10 +57,8 @@ describe(`POST ${url}`, async () => {
     form.append("name", "a".repeat(129));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.invalid" });
+    await testcases.assertErrorResponse(response, 400, "exercise.name.invalid");
   });
 
   test("validation - description - missing", async () => {
@@ -73,10 +69,8 @@ describe(`POST ${url}`, async () => {
     form.append("name", mocks.exerciseName);
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.description.type" });
+    await testcases.assertErrorResponse(response, 400, "exercise.description.type");
   });
 
   test("validation - description - invalid", async () => {
@@ -88,10 +82,8 @@ describe(`POST ${url}`, async () => {
     form.append("description", "a".repeat(257));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.description.invalid" });
+    await testcases.assertErrorResponse(response, 400, "exercise.description.invalid");
   });
 
   test("CatalogIsManagedByAdmin", async () => {

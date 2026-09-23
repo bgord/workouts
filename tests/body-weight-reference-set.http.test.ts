@@ -29,20 +29,16 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       { method: "POST" },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - goal - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: Measurements.VO.BodyWeightGoalError.invalid });
+    await testcases.assertErrorResponse(response, 400, Measurements.VO.BodyWeightGoalError.invalid);
   });
 
   test("validation - goal - invalid", async () => {
@@ -53,10 +49,8 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       { method: "POST", body: JSON.stringify({ goal: "recomposition" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: Measurements.VO.BodyWeightGoalError.invalid });
+    await testcases.assertErrorResponse(response, 400, Measurements.VO.BodyWeightGoalError.invalid);
   });
 
   test("BodyWeightMeasurementExists", async () => {

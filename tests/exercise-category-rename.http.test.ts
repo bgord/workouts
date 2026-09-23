@@ -25,20 +25,16 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request("/api/exercises/category/id", { method: "PATCH" }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - name - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request(url, { method: "PATCH", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.category.name.type" });
+    await testcases.assertErrorResponse(response, 400, "exercise.category.name.type");
   });
 
   test("validation - name - invalid", async () => {
@@ -49,10 +45,8 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: "a".repeat(129) }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.category.name.invalid" });
+    await testcases.assertErrorResponse(response, 400, "exercise.category.name.invalid");
   });
 
   test("ExerciseCategoryExists", async () => {
@@ -65,6 +59,7 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: mocks.anotherExerciseCategoryName }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 403, "exercise.category.exists");
   });
 
@@ -101,6 +96,7 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: mocks.anotherExerciseCategoryName }) },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 403, "exercise.category.name.is.unique");
   });
 

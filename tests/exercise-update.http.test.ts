@@ -29,20 +29,16 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - name - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request(url, { method: "PATCH", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.type" });
+    await testcases.assertErrorResponse(response, 400, "exercise.name.type");
   });
 
   test("validation - name - invalid", async () => {
@@ -53,10 +49,8 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: "a".repeat(129) }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.name.invalid" });
+    await testcases.assertErrorResponse(response, 400, "exercise.name.invalid");
   });
 
   test("validation - description - missing", async () => {
@@ -67,10 +61,8 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: mocks.exerciseName }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.description.type" });
+    await testcases.assertErrorResponse(response, 400, "exercise.description.type");
   });
 
   test("validation - description - invalid", async () => {
@@ -81,10 +73,8 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: mocks.exerciseName, description: "a".repeat(257) }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "exercise.description.invalid" });
+    await testcases.assertErrorResponse(response, 400, "exercise.description.invalid");
   });
 
   test("ExerciseExists", async () => {

@@ -28,10 +28,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
       { method: "PATCH", body: JSON.stringify({ warmup: mocks.planSectionWarmup }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -42,10 +40,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
       { method: "PATCH", body: JSON.stringify({ warmup: mocks.planSectionWarmup }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - warmup - wrong type", async () => {
@@ -56,10 +52,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ warmup: 2024 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.warmup.type" });
+    await testcases.assertErrorResponse(response, 400, "plan.section.warmup.type");
   });
 
   test("validation - warmup - empty", async () => {
@@ -70,10 +64,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ warmup: "" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "plan.section.warmup.invalid" });
+    await testcases.assertErrorResponse(response, 400, "plan.section.warmup.invalid");
   });
 
   test("PlanExists", async () => {

@@ -30,6 +30,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       { method: "DELETE" },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
@@ -41,6 +42,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       { method: "DELETE" },
       mocks.ip,
     );
+
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 

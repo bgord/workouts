@@ -25,10 +25,8 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: Preferences.VO.WeeklySummaryError.invalid });
+    await testcases.assertErrorResponse(response, 400, Preferences.VO.WeeklySummaryError.invalid);
   });
 
   test("validation - invalid value", async () => {
@@ -39,10 +37,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ weeklySummary: "maybe" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: Preferences.VO.WeeklySummaryError.invalid });
+    await testcases.assertErrorResponse(response, 400, Preferences.VO.WeeklySummaryError.invalid);
   });
 
   test("WeeklySummaryHasChanged", async () => {

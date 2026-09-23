@@ -25,10 +25,8 @@ describe(`POST ${url}`, async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "language.type" });
+    await testcases.assertErrorResponse(response, 400, "language.type");
   });
 
   test("validation - unsupported", async () => {
@@ -39,10 +37,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ language: "es" }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "unsupported.language" });
+    await testcases.assertErrorResponse(response, 400, "unsupported.language");
   });
 
   test("UserLanguageHasChanged", async () => {

@@ -29,10 +29,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -43,20 +41,16 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - exerciseId - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - exerciseId - invalid", async () => {
@@ -67,10 +61,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       { method: "POST", body: JSON.stringify({ exerciseId: "a".repeat(129) }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - sets - missing", async () => {
@@ -81,10 +73,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       { method: "POST", body: JSON.stringify({ exerciseId: mocks.exerciseId }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.type" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
   test("validation - sets - invalid", async () => {
@@ -95,10 +85,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       { method: "POST", body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: 0 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
   test("validation - reps - missing", async () => {
@@ -109,10 +97,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       { method: "POST", body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.type" });
+    await testcases.assertErrorResponse(response, 400, "reps.type");
   });
 
   test("validation - sets - invalid", async () => {
@@ -126,10 +112,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
   test("validation - sets - range", async () => {
@@ -143,10 +127,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "reps.range" });
+    await testcases.assertErrorResponse(response, 400, "reps.range");
   });
 
   test("validation - progression - invalid", async () => {
@@ -165,10 +147,8 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "progression.method.invalid" });
+    await testcases.assertErrorResponse(response, 400, "progression.method.invalid");
   });
 
   test("PlanSectionExerciseExists", async () => {

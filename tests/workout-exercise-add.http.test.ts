@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
@@ -40,7 +39,8 @@ describe(`POST ${url}`, async () => {
       { method: "POST", headers: mocks.revisionHeaders(draft.length), body: JSON.stringify({}) },
       mocks.ip,
     );
-    await testcases.assertErrorResponse(response, 400, bg.UUIDError.Type);
+
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - sets - missing", async () => {
@@ -56,7 +56,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    expect(response.status).toEqual(400);
+    await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
   test("WorkoutCatalogExerciseExists", async () => {

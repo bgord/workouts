@@ -28,10 +28,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect plan section id", async () => {
@@ -42,10 +40,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect exercise instruction id", async () => {
@@ -56,10 +52,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - exerciseId - missing", async () => {
@@ -70,10 +64,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - exerciseId - invalid", async () => {
@@ -84,10 +76,8 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ exerciseId: 0 }) },
       mocks.ip,
     );
-    const json = await response.json();
 
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("PlanSectionExerciseExists", async () => {
