@@ -14,13 +14,13 @@ describe("BodyWeightAverage", () => {
     expect(average.calculate()).toEqual(null);
   });
 
-  test("calculate - a single measurement", () => {
+  test("calculate - one", () => {
     const average = new Measurements.Services.BodyWeightAverage([mocks.bodyWeightMeasurement], from, to);
 
     expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: 1 });
   });
 
-  test("calculate - averages the measurements in range", () => {
+  test("calculate - two", () => {
     const average = new Measurements.Services.BodyWeightAverage(
       [mocks.bodyWeightMeasurement, mocks.heavierBodyWeightMeasurement],
       from,
@@ -33,7 +33,7 @@ describe("BodyWeightAverage", () => {
     });
   });
 
-  test("calculate - the average is a whole number of grams", () => {
+  test("calculate - whole grams", () => {
     const heavier = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(81).get());
 
     const average = new Measurements.Services.BodyWeightAverage(
@@ -49,7 +49,7 @@ describe("BodyWeightAverage", () => {
     expect(average.calculate()).toEqual({ average: 80333, count: 3 });
   });
 
-  test("calculate - the range is inclusive on both ends", () => {
+  test("calculate - range is inclusive", () => {
     const average = new Measurements.Services.BodyWeightAverage(
       [
         { ...mocks.bodyWeightMeasurement, measuredOn: v.parse(Measurements.VO.BodyWeightMeasuredOn, from) },
@@ -62,7 +62,7 @@ describe("BodyWeightAverage", () => {
     expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: 2 });
   });
 
-  test("calculate - measurements outside the range are ignored", () => {
+  test("calculate - outside the range", () => {
     const average = new Measurements.Services.BodyWeightAverage(
       [
         mocks.bodyWeightMeasurement,
