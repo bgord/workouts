@@ -25,8 +25,7 @@ export function ProfileAccountDelete() {
       className="c-card"
       data-main="between"
       data-stack="x"
-      data-tone="danger"
-      data-variant="flat"
+      data-variant="danger"
       {...ui.Spacing.surface}
       {...ui.Gap.related}
     >

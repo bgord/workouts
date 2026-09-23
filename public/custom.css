@@ -111,10 +111,6 @@ g:hover > .chart-point {
   }
 }
 
-.c-card[data-tone="danger"] {
-  border-color: var(--color-danger-900);
-  background-color: color-mix(in oklch, var(--color-danger-900) 18%, transparent);
-}
 .c-button[data-tone="danger"] {
   color: var(--color-danger-400);
 }
