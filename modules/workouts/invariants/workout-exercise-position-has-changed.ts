@@ -5,7 +5,7 @@ class WorkoutExercisePositionHasChangedError extends Error {}
 
 type WorkoutExercisePositionHasChangedConfigType = {
   workoutExerciseId: VO.WorkoutExerciseIdType;
-  workoutExercises: Array<VO.WorkoutExercise>;
+  workoutExercises: Array<Pick<VO.WorkoutExercise, "id">>;
   position: VO.WorkoutExercisePositionType;
 };
 

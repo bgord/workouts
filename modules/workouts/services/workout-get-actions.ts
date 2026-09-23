@@ -14,7 +14,7 @@ import { WorkoutIsInProgress } from "../invariants/workout-is-in-progress";
 
 type WorkoutGetActionsFacts = {
   status: VO.WorkoutStatusEnum;
-  exercises: Array<VO.WorkoutExercise>;
+  exercises: Array<Pick<VO.WorkoutExercise, "id" | "target"> & { loggedSets: ReadonlyArray<unknown> }>;
   inProgressCount: tools.IntegerNonNegativeType;
 };
 

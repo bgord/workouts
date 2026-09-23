@@ -3,7 +3,7 @@ import type * as VO from "+workouts/value-objects";
 
 class WorkoutHasExercisesError extends Error {}
 
-type WorkoutHasExercisesConfigType = { workoutExercises: Array<VO.WorkoutExercise> };
+type WorkoutHasExercisesConfigType = { workoutExercises: Array<Pick<VO.WorkoutExercise, "id">> };
 
 class WorkoutHasExercisesFactory extends bg.Invariant<WorkoutHasExercisesConfigType> {
   passes(config: WorkoutHasExercisesConfigType) {

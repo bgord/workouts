@@ -3,7 +3,7 @@ import * as VO from "+workouts/value-objects";
 
 class WorkoutExerciseLimitError extends Error {}
 
-type WorkoutExerciseLimitConfigType = { workoutExercises: Array<VO.WorkoutExercise> };
+type WorkoutExerciseLimitConfigType = { workoutExercises: Array<Pick<VO.WorkoutExercise, "id">> };
 
 class WorkoutExerciseLimitFactory extends bg.Invariant<WorkoutExerciseLimitConfigType> {
   passes(config: WorkoutExerciseLimitConfigType) {

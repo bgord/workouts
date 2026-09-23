@@ -4,7 +4,7 @@ import type * as VO from "+workouts/value-objects";
 class WorkoutExercisePositionInRangeError extends Error {}
 
 type WorkoutExercisePositionInRangeConfigType = {
-  workoutExercises: Array<VO.WorkoutExercise>;
+  workoutExercises: Array<Pick<VO.WorkoutExercise, "id">>;
   position: VO.WorkoutExercisePositionType;
 };
 
