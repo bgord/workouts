@@ -55,48 +55,48 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     if (!workout) return null;
 
-    const previousPerformances = await Promise.all(
-      workout.exercises.map((exercise) =>
-        GetExercisePreviousPerformanceQuery.execute(userId, exercise.exerciseId, workout),
-      ),
-    );
-
     const data = {
       ...workout,
-      exercises: workout.exercises.map((exercise, index) => {
-        const previous = previousPerformances[index];
+      exercises: await Promise.all(
+        workout.exercises.map(async (exercise) => {
+          const previous = await GetExercisePreviousPerformanceQuery.execute(
+            userId,
+            exercise.exerciseId,
+            workout,
+          );
 
-        return {
-          ...exercise,
-          loggedSets: exercise.loggedSets.map((loggedSet) => ({
-            ...loggedSet,
-            actions: new Workouts.Services.WorkoutGetLoggedSetActions({
+          return {
+            ...exercise,
+            loggedSets: exercise.loggedSets.map((loggedSet) => ({
+              ...loggedSet,
+              actions: new Workouts.Services.WorkoutGetLoggedSetActions({
+                status: workout.status,
+                loggedSetCount: tools.Int.nonNegative(
+                  workout.exercises.flatMap((exercise) => exercise.loggedSets).length,
+                ),
+              }).calculate(),
+            })),
+            previousPerformance: previous && {
+              scheduledFor: previous.scheduledFor,
+              sets: previous.sets,
+              diff:
+                exercise.target &&
+                new Workouts.Services.ExerciseTargetDiffCalculator(exercise.target, previous).calculate(),
+            },
+            targetProgression:
+              previous &&
+              Workouts.Services.ProgressionMethodStrategyFactory.for(
+                exercise.prescription,
+                previous,
+              ).calculate(),
+            actions: new Workouts.Services.WorkoutGetExerciseActions({
               status: workout.status,
-              loggedSetCount: tools.Int.nonNegative(
-                workout.exercises.flatMap((exercise) => exercise.loggedSets).length,
-              ),
+              exercises: workout.exercises,
+              exercise,
             }).calculate(),
-          })),
-          previousPerformance: previous && {
-            scheduledFor: previous.scheduledFor,
-            sets: previous.sets,
-            diff:
-              exercise.target &&
-              new Workouts.Services.ExerciseTargetDiffCalculator(exercise.target, previous).calculate(),
-          },
-          targetProgression:
-            previous &&
-            Workouts.Services.ProgressionMethodStrategyFactory.for(
-              exercise.prescription,
-              previous,
-            ).calculate(),
-          actions: new Workouts.Services.WorkoutGetExerciseActions({
-            status: workout.status,
-            exercises: workout.exercises,
-            exercise,
-          }).calculate(),
-        };
-      }),
+          };
+        }),
+      ),
     };
 
     return {

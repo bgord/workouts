@@ -25,8 +25,8 @@ export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> 
   exerciseImageEtag: Exercises.VO.Exercise["imageEtag"];
   exerciseDescription: Exercises.VO.Exercise["description"];
   loggedSets: Array<LoggedSet>;
-  previousPerformance?: ExercisePreviousPerformance;
-  targetProgression?: VO.ExerciseTargetProgression;
+  previousPerformance: ExercisePreviousPerformance | null;
+  targetProgression: VO.ExerciseTargetProgression | null;
   actions: WorkoutExerciseActions;
 };
 

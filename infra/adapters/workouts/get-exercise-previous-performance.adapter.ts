@@ -10,7 +10,7 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
     workout: Workouts.Queries.ExercisePreviousPerformanceReference,
-  ): Promise<Pick<Workouts.Queries.ExercisePerformance, "scheduledFor" | "sets"> | undefined> {
+  ): Promise<Pick<Workouts.Queries.ExercisePerformance, "scheduledFor" | "sets"> | null> {
     const previous = await db
       .select({ scheduledFor: Schema.workouts.scheduledFor, workoutExerciseId: Schema.workoutExercises.id })
       .from(Schema.workouts)
@@ -40,7 +40,7 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
       )
       .get();
 
-    if (!previous) return undefined;
+    if (!previous) return null;
 
     const sets = await db
       .select({

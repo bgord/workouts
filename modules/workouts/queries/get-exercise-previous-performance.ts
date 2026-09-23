@@ -10,5 +10,5 @@ export interface GetExercisePreviousPerformance {
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
     reference: ExercisePreviousPerformanceReference,
-  ): Promise<Pick<ExercisePerformance, "scheduledFor" | "sets"> | undefined>;
+  ): Promise<Pick<ExercisePerformance, "scheduledFor" | "sets"> | null>;
 }
