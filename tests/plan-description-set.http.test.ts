@@ -87,7 +87,7 @@ describe("PATCH /api/plans/:planId/description", async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
+    const events = mocks.planArchivedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -108,7 +108,7 @@ describe("PATCH /api/plans/:planId/description", async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
+    const events = mocks.planFinalizedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

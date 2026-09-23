@@ -68,7 +68,7 @@ describe("POST /api/plans/:planId/editing/enable", async () => {
   });
 
   test("PlanIsFinalized - archived", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
+    const events = mocks.planArchivedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -85,7 +85,7 @@ describe("POST /api/plans/:planId/editing/enable", async () => {
   });
 
   test("PlanBelongsToUser", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
+    const events = mocks.planFinalizedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -102,7 +102,7 @@ describe("POST /api/plans/:planId/editing/enable", async () => {
   });
 
   test("validation - revision mismatch", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
+    const events = mocks.planFinalizedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.planSectionId);
@@ -118,7 +118,7 @@ describe("POST /api/plans/:planId/editing/enable", async () => {
   });
 
   test("happy path", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
+    const events = mocks.planFinalizedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

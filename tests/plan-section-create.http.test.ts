@@ -84,7 +84,7 @@ describe("POST /api/plans/:planId/section", async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
+    const events = mocks.planArchivedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -105,7 +105,7 @@ describe("POST /api/plans/:planId/section", async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
+    const events = mocks.planFinalizedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -168,7 +168,7 @@ describe("POST /api/plans/:planId/section", async () => {
   });
 
   test("PlanSectionNameIsUniqueForPlan", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
+    const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

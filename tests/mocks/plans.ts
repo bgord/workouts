@@ -529,3 +529,14 @@ export const GenericPlanSectionExerciseInstructionMovedEvent = {
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionMovedEventType;
+
+export const planWithSectionHistory = [GenericPlanCreatedEvent, GenericPlanSectionCreatedEvent];
+
+export const planWithExerciseInstructionHistory = [
+  ...planWithSectionHistory,
+  GenericPlanSectionExerciseInstructionAddedEvent,
+];
+
+export const planArchivedHistory = [GenericPlanCreatedEvent, GenericPlanArchivedEvent];
+
+export const planFinalizedHistory = [GenericPlanCreatedEvent, GenericPlanFinalizedEvent];

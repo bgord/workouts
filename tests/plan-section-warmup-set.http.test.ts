@@ -101,7 +101,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
   });
 
   test("PlanIsEditable - archived", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent];
+    const events = mocks.planArchivedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -122,7 +122,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
   });
 
   test("PlanIsEditable - finalized", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent];
+    const events = mocks.planFinalizedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -210,7 +210,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
   });
 
   test("PlanSectionWarmupHasChanged - clearing an absent warmup", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
+    const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -231,7 +231,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
   });
 
   test("revision mismatch", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
+    const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
@@ -250,7 +250,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/warmup", async () => {
   });
 
   test("happy path", async () => {
-    const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent];
+    const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
