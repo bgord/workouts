@@ -40,6 +40,7 @@ export function WorkoutExerciseMove(props: {
     <div data-cross="center" data-shrink="0" data-stack="y">
       <ui.IconButton
         aria-label={t("workout.exercise.move.up.title", { name: props.exercise.exerciseName })}
+        data-width="auto"
         disabled={!props.exercise.actions.moveUp.enabled || busy}
         onClick={() => up.mutate()}
         title={t("workout.exercise.move.up.title", { name: props.exercise.exerciseName })}
@@ -52,6 +53,7 @@ export function WorkoutExerciseMove(props: {
 
       <ui.IconButton
         aria-label={t("workout.exercise.move.down.title", { name: props.exercise.exerciseName })}
+        data-width="auto"
         disabled={!props.exercise.actions.moveDown.enabled || busy}
         onClick={() => down.mutate()}
         title={t("workout.exercise.move.down.title", { name: props.exercise.exerciseName })}

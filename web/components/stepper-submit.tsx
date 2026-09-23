@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 export function StepperSubmit(props: React.JSX.IntrinsicElements["button"]) {
   return (
     <button
-      data-bcl="alpha-medium"
+      data-bcl="alpha-soft"
       data-bg="alpha-subtle"
       data-bsl="solid"
       data-bwl="hairline"

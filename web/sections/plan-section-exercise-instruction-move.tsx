@@ -46,6 +46,7 @@ export function PlanSectionExerciseInstructionMove(props: {
         aria-label={t("plan.section.exercise.move.up.title", {
           name: props.exerciseInstruction.exercise.name,
         })}
+        data-width="auto"
         disabled={!props.exerciseInstruction.actions.moveUp.enabled || busy}
         onClick={() => up.mutate()}
         title={t("plan.section.exercise.move.up.title", { name: props.exerciseInstruction.exercise.name })}
@@ -60,6 +61,7 @@ export function PlanSectionExerciseInstructionMove(props: {
         aria-label={t("plan.section.exercise.move.down.title", {
           name: props.exerciseInstruction.exercise.name,
         })}
+        data-width="auto"
         disabled={!props.exerciseInstruction.actions.moveDown.enabled || busy}
         onClick={() => down.mutate()}
         title={t("plan.section.exercise.move.down.title", { name: props.exerciseInstruction.exercise.name })}

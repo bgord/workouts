@@ -10,7 +10,7 @@ export function Workouts() {
 
   return (
     <ui.Main>
-      <div data-stack="x" {...ui.Gap.related}>
+      <div data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
         <h1 data-grow="1">{t("workout.list.header")}</h1>
 
         <WorkoutCreate />
