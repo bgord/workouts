@@ -1,5 +1,3 @@
-import * as bg from "@bgord/ui";
-
 const tones = {
   brand: { "data-color": "brand-400", "data-hover-color": "brand-300" },
   danger: { "data-color": "neutral-400", "data-hover-color": "danger-400" },
@@ -15,12 +13,10 @@ export function IconButton(props: React.JSX.IntrinsicElements["button"] & { tone
   return (
     <button
       className="c-button"
-      data-px="0"
       data-shrink="0"
-      data-variant="ghost"
+      data-variant="icon"
       type="button"
       {...tones[tone]}
-      {...bg.Rhythm().times(3).style.width}
       {...rest}
     />
   );
