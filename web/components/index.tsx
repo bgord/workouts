@@ -22,7 +22,6 @@ export * from "./eyebrow";
 export * from "./gap";
 export * from "./hairline";
 export * from "./icon-button";
-export * from "./kbd";
 export * from "./language-selector";
 export * from "./line-chart";
 export * from "./logo";
