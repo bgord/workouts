@@ -25,7 +25,7 @@ export function BodyWeightProgressChart() {
 
   return (
     <div data-stack="y" data-variant="flat" {...ui.Gap.related}>
-      <ui.SectionHeading>{t("measurements.body_weight.progress")}</ui.SectionHeading>
+      <h2>{t("measurements.body_weight.progress")}</h2>
 
       <ui.LineChart aria-label={t("measurements.body_weight.progress")}>
         <ui.LineChartGrid

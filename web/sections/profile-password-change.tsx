@@ -23,7 +23,7 @@ export function ProfilePasswordChange() {
     <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
       <div data-stack="x" {...ui.Gap.cluster}>
         <KeyRound data-color="neutral-400" data-size="sm" />
-        <ui.SectionHeading>{t("auth.change_password.header")}</ui.SectionHeading>
+        <h2>{t("auth.change_password.header")}</h2>
       </div>
 
       <div data-color="neutral-500" data-fs="sm">

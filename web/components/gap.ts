@@ -11,7 +11,7 @@ export const Gap = {
   // (ActionHint, Logo, profile card headings, DialogStatus/DialogError), inline form → Output
   cluster: { "data-gap": "2" },
   // Row items (index + image + body + controls), header rows (ButtonBack + Header + actions),
-  // SectionHeading → content, card content (profile cards, ExerciseCard, DialogHeader),
+  // h2 → content, card content (profile cards, ExerciseCard, DialogHeader),
   // stats tiles (BodyWeightStats, ExerciseStats), dialog info + status, chart header
   related: { "data-gap": "3" },
   // Toolbar → list (WorkoutHistory, ExerciseCatalog, BodyWeightMeasurementList),

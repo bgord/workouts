@@ -18,7 +18,7 @@ export function ExercisePerformanceHistory() {
       <ExerciseProgressChart />
 
       <div data-stack="y" {...ui.Gap.related}>
-        <ui.SectionHeading>{t("statistics.exercise.history")}</ui.SectionHeading>
+        <h2>{t("statistics.exercise.history")}</h2>
 
         <ExerciseHistory />
       </div>

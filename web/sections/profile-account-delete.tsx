@@ -31,7 +31,7 @@ export function ProfileAccountDelete() {
     >
       <div data-stack="x" {...ui.Gap.cluster}>
         <UserX data-color="danger-400" data-size="sm" />
-        <ui.SectionHeading>{t("profile.delete_account.header")}</ui.SectionHeading>
+        <h2>{t("profile.delete_account.header")}</h2>
       </div>
 
       <button
