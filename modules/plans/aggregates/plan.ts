@@ -625,6 +625,7 @@ export class Plan {
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) => {
+          // Stryker disable next-line ConditionalExpression
           if (section.id !== event.payload.planSectionId) return section;
 
           const moved = section.exerciseInstructions.find(

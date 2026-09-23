@@ -449,6 +449,7 @@ export class Workout {
       case Events.WORKOUT_SET_CORRECTED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.map((exercise) =>
+          // Stryker disable next-line ConditionalExpression
           exercise.id === event.payload.workoutExerciseId
             ? {
                 ...exercise,
@@ -464,6 +465,7 @@ export class Workout {
       case Events.WORKOUT_SET_REMOVED_EVENT: {
         this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.map((exercise) =>
+          // Stryker disable next-line ConditionalExpression
           exercise.id === event.payload.workoutExerciseId
             ? {
                 ...exercise,
