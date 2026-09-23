@@ -94,6 +94,34 @@ describe("Workout.removeSet", async () => {
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutSetRemovedEvent]);
   });
 
+  test("happy path - matches the targeted exercise, not the first one", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
+        mocks.GenericWorkoutStartedEvent,
+        {
+          ...mocks.GenericWorkoutSetLoggedEvent,
+          payload: {
+            ...mocks.GenericWorkoutSetLoggedEvent.payload,
+            workoutExerciseId: mocks.anotherWorkoutExerciseId,
+          },
+        },
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.removeSet(mocks.anotherWorkoutExerciseId, mocks.loggedSetId, mocks.userId),
+    );
+
+    expect(
+      workout.exercises.find((exercise) => exercise.id === mocks.anotherWorkoutExerciseId)?.loggedSets,
+    ).toEqual([]);
+  });
+
   test("happy path - renumbers the surviving sets", () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

@@ -99,6 +99,31 @@ describe("Plan.setSectionCooldown", async () => {
     ]);
   });
 
+  test("happy path - matches the targeted section, not the first one", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventThird,
+        mocks.GenericPlanSectionCreatedEvent,
+        {
+          ...mocks.GenericPlanSectionCooldownSetEvent,
+          payload: {
+            ...mocks.GenericPlanSectionCooldownSetEvent.payload,
+            planSectionId: mocks.anotherPlanSectionId,
+          },
+        },
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.setSectionCooldown(mocks.planSectionId, mocks.planSectionCooldown, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCooldownSetEvent]);
+  });
+
   test("happy path - clears an existing cooldown", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,

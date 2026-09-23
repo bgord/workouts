@@ -86,6 +86,24 @@ describe("Workout.removeExercise", async () => {
     expect(workout.exercises).toEqual([]);
   });
 
+  test("happy path - keeps the other exercises", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.removeExercise(mocks.workoutExerciseId, mocks.userId),
+    );
+
+    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([mocks.anotherWorkoutExerciseId]);
+  });
+
   test("happy path - drops the logged sets along with the exercise", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

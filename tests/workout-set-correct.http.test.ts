@@ -121,6 +121,20 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
     await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
+  test("revision missing", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(logged);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", body, headers: mocks.correlationIdHeaders },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 428, "revision.missing");
+  });
+
   test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

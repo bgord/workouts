@@ -33,6 +33,21 @@ describe("BodyWeightStatsCalculator", () => {
     });
   });
 
+  test("happy path - outside previous week window", () => {
+    const outside: Measurements.VO.BodyWeightMeasurement = {
+      ...mocks.bodyWeightMeasurement,
+      weight: mocks.heavierBodyWeight,
+      measuredOn: v.parse(Measurements.VO.BodyWeightMeasuredOn, "2024-12-18"),
+    };
+
+    const calculator = new Measurements.Services.BodyWeightStatsCalculator([
+      mocks.bodyWeightMeasurement,
+      outside,
+    ]);
+
+    expect(calculator.calculate()?.previousWeek).toEqual(undefined);
+  });
+
   test("no measurements", () => {
     const calculator = new Measurements.Services.BodyWeightStatsCalculator([]);
 

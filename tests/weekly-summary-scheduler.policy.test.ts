@@ -52,6 +52,14 @@ describe("WeeklySummaryScheduler", async () => {
 
     expect(enqueue).toHaveBeenCalledTimes(2);
     expect(loggerError).toHaveBeenCalledTimes(1);
+    expect(loggerError).toHaveBeenCalledWith({
+      message: "Weekly summary compose job enqueue failed",
+      component: "notifications",
+      operation: "weekly_summary_scheduler_on_hour_has_passed_event",
+      error: new Error("busy"),
+      correlationId: mocks.correlationId,
+      metadata: { userId: mocks.userId, weekIsoId: mocks.previousWeekIsoId },
+    });
   });
 
   test("onHourHasPassedEvent - one job per user", async () => {

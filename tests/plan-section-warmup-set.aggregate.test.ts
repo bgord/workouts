@@ -99,6 +99,31 @@ describe("Plan.setSectionWarmup", async () => {
     ]);
   });
 
+  test("happy path - matches the targeted section, not the first one", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventThird,
+        mocks.GenericPlanSectionCreatedEvent,
+        {
+          ...mocks.GenericPlanSectionWarmupSetEvent,
+          payload: {
+            ...mocks.GenericPlanSectionWarmupSetEvent.payload,
+            planSectionId: mocks.anotherPlanSectionId,
+          },
+        },
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.setSectionWarmup(mocks.planSectionId, mocks.planSectionWarmup, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionWarmupSetEvent]);
+  });
+
   test("happy path - clears an existing warmup", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
