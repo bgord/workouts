@@ -177,7 +177,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/position", 
   });
 
   test("WorkoutExercisePositionInRange", async () => {
-    const events = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent];
+    const events = mocks.workoutWithExerciseHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

@@ -9,7 +9,7 @@ import * as testcases from "./testcases";
 
 const url = `/api/workouts/${mocks.workoutId}/exercise/${mocks.workoutExerciseId}`;
 
-const draft = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent] as const;
+const draft = mocks.workoutWithExerciseHistory;
 
 describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async () => {
   const di = await bootstrap();
@@ -71,14 +71,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
   });
 
   test("WorkoutIsEditable - completed", async () => {
-    const events = [
-      mocks.GenericWorkoutCreatedEvent,
-      mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.GenericWorkoutExerciseTargetSetEvent,
-      mocks.GenericWorkoutStartedEvent,
-      mocks.GenericWorkoutSetLoggedEvent,
-      mocks.GenericWorkoutCompletedEvent,
-    ];
+    const events = mocks.workoutCompletedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -161,12 +154,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
   });
 
   test("happy path - in progress", async () => {
-    const events = [
-      mocks.GenericWorkoutCreatedEvent,
-      mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.GenericWorkoutExerciseTargetSetEvent,
-      mocks.GenericWorkoutStartedEvent,
-    ];
+    const events = mocks.workoutInProgressHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -186,13 +174,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
   });
 
   test("happy path - in progress with logged sets", async () => {
-    const events = [
-      mocks.GenericWorkoutCreatedEvent,
-      mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.GenericWorkoutExerciseTargetSetEvent,
-      mocks.GenericWorkoutStartedEvent,
-      mocks.GenericWorkoutSetLoggedEvent,
-    ];
+    const events = mocks.workoutWithLoggedSetHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

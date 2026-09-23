@@ -1,7 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
@@ -25,13 +24,9 @@ describe(`GET ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Workouts.GetWorkoutDashboardQuery, "execute").mockResolvedValue({
-        inProgress: { ...mocks.workoutSummary, status: Workouts.VO.WorkoutStatusEnum.in_progress },
+        inProgress: mocks.workoutSummaryInProgress,
         nextUp: mocks.workoutSummary,
-        lastCompleted: {
-          ...mocks.workoutSummary,
-          status: Workouts.VO.WorkoutStatusEnum.completed,
-          completedAt: mocks.T0.ms,
-        },
+        lastCompleted: mocks.workoutSummaryCompleted,
         completed: {
           month: tools.Int.nonNegative(1),
           year: tools.Int.nonNegative(2),
@@ -45,13 +40,9 @@ describe(`GET ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(json).toEqual({
-      inProgress: { ...mocks.workoutSummary, status: Workouts.VO.WorkoutStatusEnum.in_progress },
+      inProgress: mocks.workoutSummaryInProgress,
       nextUp: mocks.workoutSummary,
-      lastCompleted: {
-        ...mocks.workoutSummary,
-        status: Workouts.VO.WorkoutStatusEnum.completed,
-        completedAt: mocks.T0.ms,
-      },
+      lastCompleted: mocks.workoutSummaryCompleted,
       completed: { month: 1, year: 2, total: 3 },
     });
   });

@@ -124,12 +124,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
   });
 
   test("WorkoutIsDraft", async () => {
-    const events = [
-      mocks.GenericWorkoutCreatedEvent,
-      mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.GenericWorkoutExerciseTargetSetEvent,
-      mocks.GenericWorkoutStartedEvent,
-    ];
+    const events = mocks.workoutInProgressHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

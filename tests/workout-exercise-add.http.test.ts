@@ -99,14 +99,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("WorkoutIsEditable - completed", async () => {
-    const events = [
-      mocks.GenericWorkoutCreatedEvent,
-      mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.GenericWorkoutExerciseTargetSetEvent,
-      mocks.GenericWorkoutStartedEvent,
-      mocks.GenericWorkoutSetLoggedEvent,
-      mocks.GenericWorkoutCompletedEvent,
-    ];
+    const events = mocks.workoutCompletedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
@@ -199,12 +192,7 @@ describe(`POST ${url}`, async () => {
   });
 
   test("happy path - in progress", async () => {
-    const events = [
-      mocks.GenericWorkoutCreatedEvent,
-      mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.GenericWorkoutExerciseTargetSetEvent,
-      mocks.GenericWorkoutStartedEvent,
-    ];
+    const events = mocks.workoutInProgressHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

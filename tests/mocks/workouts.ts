@@ -50,6 +50,17 @@ export const workoutSummary: Workouts.VO.WorkoutSummary = {
   revision: revision.value,
 };
 
+export const workoutSummaryInProgress: Workouts.VO.WorkoutSummary = {
+  ...workoutSummary,
+  status: Workouts.VO.WorkoutStatusEnum.in_progress,
+};
+
+export const workoutSummaryCompleted: Workouts.VO.WorkoutSummary = {
+  ...workoutSummary,
+  status: Workouts.VO.WorkoutStatusEnum.completed,
+  completedAt: T0.ms,
+};
+
 export const workoutListPlan: Workouts.Queries.WorkoutListPlan = {
   id: planId,
   name: planName,
@@ -511,3 +522,13 @@ export const GenericWorkoutSetLoggedEventAnother = {
   name: "WORKOUT_SET_LOGGED_EVENT",
   payload: { workoutId, workoutExerciseId, loggedSet: anotherLoggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
+
+export const workoutWithExerciseHistory = [GenericWorkoutCreatedEvent, GenericWorkoutExerciseAddedEvent];
+
+export const workoutWithTargetHistory = [...workoutWithExerciseHistory, GenericWorkoutExerciseTargetSetEvent];
+
+export const workoutInProgressHistory = [...workoutWithTargetHistory, GenericWorkoutStartedEvent];
+
+export const workoutWithLoggedSetHistory = [...workoutInProgressHistory, GenericWorkoutSetLoggedEvent];
+
+export const workoutCompletedHistory = [...workoutWithLoggedSetHistory, GenericWorkoutCompletedEvent];
