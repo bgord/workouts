@@ -51,7 +51,6 @@ bun run bgord-scripts/secrets-encrypt.ts --master-key /run/master-key.txt --inpu
 
 ```
 modules/
-├── action-state.ts
 ├── auth
 │   ├── events
 │   │   ├── ACCOUNT_CREATED_EVENT.ts
