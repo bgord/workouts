@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, isNotNull, lte, ne } from "drizzle-orm";
+import { and, asc, desc, eq, isNotNull, lt, or } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import * as Workouts from "+workouts";
@@ -29,8 +29,13 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
           eq(Schema.workoutExercises.exerciseId, exerciseId),
           eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
           isNotNull(Schema.workouts.completedAt),
-          ne(Schema.workouts.id, workout.id),
-          lte(Schema.workouts.scheduledFor, workout.scheduledFor),
+          or(
+            lt(Schema.workouts.scheduledFor, workout.scheduledFor),
+            and(
+              eq(Schema.workouts.scheduledFor, workout.scheduledFor),
+              workout.completedAt === null ? undefined : lt(Schema.workouts.completedAt, workout.completedAt),
+            ),
+          ),
         ),
       )
       .orderBy(
