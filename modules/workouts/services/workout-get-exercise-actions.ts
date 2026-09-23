@@ -11,7 +11,7 @@ import { WorkoutIsInProgress } from "../invariants/workout-is-in-progress";
 type WorkoutGetExerciseActionsFacts = {
   status: VO.WorkoutStatusEnum;
   exercises: Array<Pick<VO.WorkoutExercise, "id">>;
-  exercise: Pick<VO.WorkoutExercise, "id" | "target">;
+  exercise: Pick<VO.WorkoutExercise, "id"> & { target?: VO.ExerciseTargetType | null };
 };
 
 export class WorkoutGetExerciseActions {
@@ -25,7 +25,7 @@ export class WorkoutGetExerciseActions {
     const current = this.facts.exercises.findIndex((exercise) => exercise.id === this.facts.exercise.id);
 
     return {
-      targetSet: ActionState.of(draft || (inProgress && this.facts.exercise.target === undefined)),
+      targetSet: ActionState.of(draft || (inProgress && !this.facts.exercise.target)),
       remove: ActionState.of(editable),
       moveUp: ActionState.of(editable, [
         ActionBlocker.from(WorkoutExercisePositionHasChanged, {

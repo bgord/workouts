@@ -55,10 +55,7 @@ export class WorkoutExercisesProjector {
       exerciseName: event.payload.exerciseName,
       exerciseImageEtag: event.payload.exerciseImageEtag,
       exerciseDescription: event.payload.exerciseDescription,
-      prescriptionSets: event.payload.prescription.sets,
-      prescriptionRepsMin: event.payload.prescription.reps.min,
-      prescriptionRepsMax: event.payload.prescription.reps.max,
-      prescriptionProgression: event.payload.prescription.progression,
+      prescription: event.payload.prescription,
       position: sql`(SELECT COUNT(*) FROM ${Schema.workoutExercises} WHERE ${Schema.workoutExercises.workoutId} = ${event.payload.workoutId})`,
       userId: event.payload.requesterId,
       createdAt: event.createdAt,
@@ -88,12 +85,7 @@ export class WorkoutExercisesProjector {
   async onWorkoutExerciseTargetSetEvent(event: Workouts.Events.WorkoutExerciseTargetSetEventType) {
     await db
       .update(Schema.workoutExercises)
-      .set({
-        targetSets: event.payload.target.sets,
-        targetReps: event.payload.target.reps,
-        targetLoad: event.payload.target.load,
-        updatedAt: event.createdAt,
-      })
+      .set({ target: event.payload.target, updatedAt: event.createdAt })
       .where(eq(Schema.workoutExercises.id, event.payload.workoutExerciseId));
   }
 

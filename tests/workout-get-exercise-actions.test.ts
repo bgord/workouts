@@ -61,6 +61,16 @@ describe("WorkoutGetExerciseActions", () => {
     expect(actions.calculate().targetSet).toEqual(mocks.actionAvailable);
   });
 
+  test("in progress - exercise with a null target", () => {
+    const actions = new Workouts.Services.WorkoutGetExerciseActions({
+      status: Workouts.VO.WorkoutStatusEnum.in_progress,
+      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
+      exercise: { id: mocks.anotherWorkoutExerciseId, target: null },
+    });
+
+    expect(actions.calculate().targetSet).toEqual(mocks.actionAvailable);
+  });
+
   test("completed", () => {
     const actions = new Workouts.Services.WorkoutGetExerciseActions({
       status: Workouts.VO.WorkoutStatusEnum.completed,

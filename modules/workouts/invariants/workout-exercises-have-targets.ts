@@ -3,11 +3,13 @@ import type * as VO from "+workouts/value-objects";
 
 class WorkoutExercisesHaveTargetsError extends Error {}
 
-type WorkoutExercisesHaveTargetsConfigType = { workoutExercises: Array<Pick<VO.WorkoutExercise, "target">> };
+type WorkoutExercisesHaveTargetsConfigType = {
+  workoutExercises: Array<{ target?: VO.ExerciseTargetType | null }>;
+};
 
 class WorkoutExercisesHaveTargetsFactory extends bg.Invariant<WorkoutExercisesHaveTargetsConfigType> {
   passes(config: WorkoutExercisesHaveTargetsConfigType) {
-    return config.workoutExercises.every((exercise) => exercise.target !== undefined);
+    return config.workoutExercises.every((exercise) => Boolean(exercise.target));
   }
 
   // Stryker disable next-line StringLiteral

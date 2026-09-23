@@ -554,6 +554,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
   ...workout,
   exercises: workout.exercises.map((exercise) => ({
     ...exercise,
+    target: exerciseTarget,
     exerciseImageEtag,
     exerciseDescription,
     loggedSets: exercise.loggedSets.map((set) => ({

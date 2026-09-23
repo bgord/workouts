@@ -50,6 +50,20 @@ describe("WorkoutGetActions", () => {
     });
   });
 
+  test("draft - exercise with a null target", () => {
+    const actions = new Workouts.Services.WorkoutGetActions({
+      status: Workouts.VO.WorkoutStatusEnum.draft,
+      exercises: [{ id: mocks.workoutExerciseId, target: null, loggedSets: [] }],
+      inProgressCount: tools.Int.nonNegative(0),
+    });
+
+    expect(actions.calculate().start).toEqual({
+      available: true,
+      enabled: false,
+      hints: ["workout.exercises.have.targets"],
+    });
+  });
+
   test("draft - in progress limit for owner", () => {
     const actions = new Workouts.Services.WorkoutGetActions({
       status: Workouts.VO.WorkoutStatusEnum.draft,

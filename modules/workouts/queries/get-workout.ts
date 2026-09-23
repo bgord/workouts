@@ -17,10 +17,11 @@ export type LoggedSetActions = { correct: ActionState; remove: ActionState };
 export type LoggedSet = Omit<VO.LoggedSetType, "rir"> & { rir: VO.RirType | null; actions: LoggedSetActions };
 
 export type ExercisePreviousPerformance = Pick<ExercisePerformance, "scheduledFor" | "sets"> & {
-  diff?: VO.ExerciseTargetDiff;
+  diff: VO.ExerciseTargetDiff | null;
 };
 
-export type WorkoutExercise = Omit<VO.WorkoutExercise, "loggedSets"> & {
+export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> & {
+  target: VO.ExerciseTargetType | null;
   exerciseImageEtag: Exercises.VO.Exercise["imageEtag"];
   exerciseDescription: Exercises.VO.Exercise["description"];
   loggedSets: Array<LoggedSet>;

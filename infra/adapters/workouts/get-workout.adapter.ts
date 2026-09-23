@@ -1,6 +1,5 @@
 import * as tools from "@bgord/tools";
 import { and, asc, eq } from "drizzle-orm";
-import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
@@ -52,21 +51,6 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     }).calculate();
 
     const workoutExercises = exercises.map((exercise, index) => {
-      const target =
-        exercise.targetSets === null
-          ? undefined
-          : v.parse(Workouts.VO.ExerciseTarget, {
-              sets: exercise.targetSets,
-              reps: exercise.targetReps,
-              load: exercise.targetLoad,
-            });
-
-      const prescription = v.parse(Workouts.VO.ExercisePrescription, {
-        sets: exercise.prescriptionSets,
-        reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },
-        progression: exercise.prescriptionProgression,
-      });
-
       const previous = previousPerformances[index];
 
       return {
@@ -75,8 +59,8 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         exerciseName: exercise.exerciseName,
         exerciseImageEtag: exercise.exerciseImageEtag,
         exerciseDescription: exercise.exerciseDescription,
-        prescription,
-        target,
+        prescription: exercise.prescription,
+        target: exercise.target,
         loggedSets: loggedSets
           .filter((loggedSet) => loggedSet.workoutExerciseId === exercise.id)
           .map((loggedSet) => ({
@@ -90,11 +74,13 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
         previousPerformance: previous && {
           scheduledFor: previous.scheduledFor,
           sets: previous.sets,
-          diff: target && new Workouts.Services.ExerciseTargetDiffCalculator(target, previous).calculate(),
+          diff:
+            exercise.target &&
+            new Workouts.Services.ExerciseTargetDiffCalculator(exercise.target, previous).calculate(),
         },
         targetProgression:
           previous &&
-          Workouts.Services.ProgressionMethodStrategyFactory.for(prescription, previous).calculate(),
+          Workouts.Services.ProgressionMethodStrategyFactory.for(exercise.prescription, previous).calculate(),
       };
     });
 
