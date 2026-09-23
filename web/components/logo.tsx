@@ -8,7 +8,6 @@ function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
         className="logo"
         data-color="brand-500"
         data-cross="center"
-        data-disp="flex"
         data-fs="2xl"
         data-fw="bold"
         data-lh="none"

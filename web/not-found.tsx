@@ -10,7 +10,7 @@ export function NotFound() {
     <ui.Main>
       <div data-cross="center" data-mt="8" data-stack="y" data-transform="center" {...ui.Gap.related}>
         <div data-stack="x" {...ui.Gap.related}>
-          <div className="logo" data-color="brand-500" data-disp="flex" data-fs="6xl" />
+          <div className="logo" data-color="brand-500" data-fs="6xl" />
 
           <div
             data-color="neutral-0"

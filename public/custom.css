@@ -28,6 +28,10 @@
     background-repeat: no-repeat;
   }
 
+  .logo {
+    display: flex;
+  }
+
   .logo::before {
     content: "";
     inline-size: 0.55em;
