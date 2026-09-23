@@ -27,10 +27,9 @@ export function ExerciseCategoryUnassign(props: ExerciseCategory) {
   return (
     <button
       data-color="neutral-400"
-      data-cross="center"
       data-cursor="pointer"
-      data-disp="flex"
       data-hover-color="danger-400"
+      data-stack="x"
       disabled={!exercise.actions.categoryUnassign.enabled || mutation.isLoading}
       onClick={() => mutation.mutate()}
       title={t("exercise.category.unassign.cta", { name: props.name })}

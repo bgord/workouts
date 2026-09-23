@@ -35,13 +35,12 @@ export function RirSubmit(props: {
           data-bsl={index === 0 ? undefined : "solid"}
           data-bwl={index === 0 ? undefined : "hairline"}
           data-color={option === undefined ? "positive-400" : RirColor(option)}
-          data-cross="center"
           data-cursor="pointer"
-          data-disp="flex"
           data-fs="xs"
           data-fw="medium"
           data-hover-bg="alpha-subtle"
           data-main="center"
+          data-stack="x"
           data-transform="font-variant-numeric"
           disabled={props.disabled}
           key={String(option)}

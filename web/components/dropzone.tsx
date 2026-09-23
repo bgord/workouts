@@ -36,12 +36,10 @@ export function FileButton(props: React.JSX.IntrinsicElements["label"] & Dropzon
   return (
     <label
       className="c-button"
-      data-cross="center"
-      data-disp="flex"
       data-main="center"
       data-minw="0"
+      data-stack="x"
       data-variant="secondary"
-      data-wrap="nowrap"
       tabIndex={0}
       {...Gap.cluster}
       {...file.label.props}

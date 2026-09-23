@@ -45,14 +45,13 @@ export function Stepper(props: {
       <button
         aria-label={`${props.label} −${props.step}`}
         data-color="neutral-400"
-        data-cross="center"
         data-cursor="pointer"
-        data-disp="flex"
         data-focus-ring-offset="inset"
         data-hover-color="neutral-0"
         data-main="center"
         data-md-disp={variant === "compact" ? "none" : undefined}
         data-shrink="0"
+        data-stack="x"
         disabled={props.disabled || value <= props.min}
         onClick={decrement}
         style={control}
@@ -91,14 +90,13 @@ export function Stepper(props: {
       <button
         aria-label={`${props.label} +${props.step}`}
         data-color="neutral-400"
-        data-cross="center"
         data-cursor="pointer"
-        data-disp="flex"
         data-focus-ring-offset="inset"
         data-hover-color="neutral-0"
         data-main="center"
         data-md-disp={variant === "compact" ? "none" : undefined}
         data-shrink="0"
+        data-stack="x"
         disabled={props.disabled || value >= props.max}
         onClick={increment}
         style={control}
