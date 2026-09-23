@@ -5,7 +5,18 @@ import type * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
-import { toWorkoutSummary } from "./to-workout-summary";
+
+const columns = {
+  id: true,
+  planId: true,
+  planName: true,
+  planSectionId: true,
+  planSectionName: true,
+  scheduledFor: true,
+  status: true,
+  completedAt: true,
+  revision: true,
+} as const;
 
 class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDashboard {
   async execute(
@@ -13,6 +24,10 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
     now: tools.Timestamp,
   ): Promise<Workouts.Queries.WorkoutDashboardResponse> {
     const today = now.toZonedDateTimeUTC().startOfDay();
+    const monthStart = v.parse(
+      Workouts.VO.WorkoutScheduledFor,
+      tools.Day.fromTimestamp(tools.Timestamp.fromInstant(today.with({ day: 1 }).toInstant())).toIsoId(),
+    );
     const yearStart = v.parse(
       Workouts.VO.WorkoutScheduledFor,
       tools.Day.fromTimestamp(
@@ -20,41 +35,59 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
       ).toIsoId(),
     );
 
-    const withStatus = (status: Workouts.VO.WorkoutStatusEnum) =>
-      and(eq(Schema.workouts.userId, userId), eq(Schema.workouts.status, status));
-
-    const completed = withStatus(Workouts.VO.WorkoutStatusEnum.completed);
-
     const [inProgress, nextUp, lastCompleted, month, year, total] = await Promise.all([
-      db.select().from(Schema.workouts).where(withStatus(Workouts.VO.WorkoutStatusEnum.in_progress)).get(),
-      db
-        .select()
-        .from(Schema.workouts)
-        .where(withStatus(Workouts.VO.WorkoutStatusEnum.draft))
-        .orderBy(asc(Schema.workouts.scheduledFor), asc(Schema.workouts.createdAt))
-        .get(),
-      db.select().from(Schema.workouts).where(completed).orderBy(desc(Schema.workouts.scheduledFor)).get(),
+      db.query.workouts.findFirst({
+        columns,
+        where: and(
+          eq(Schema.workouts.userId, userId),
+          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.in_progress),
+        ),
+      }),
+      db.query.workouts.findFirst({
+        columns,
+        where: and(
+          eq(Schema.workouts.userId, userId),
+          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.draft),
+        ),
+        orderBy: [asc(Schema.workouts.scheduledFor), asc(Schema.workouts.createdAt)],
+      }),
+      db.query.workouts.findFirst({
+        columns,
+        where: and(
+          eq(Schema.workouts.userId, userId),
+          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
+        ),
+        orderBy: desc(Schema.workouts.scheduledFor),
+      }),
       db.$count(
         Schema.workouts,
         and(
-          completed,
-          gte(
-            // @ts-expect-error
-            Schema.workouts.scheduledFor,
-            tools.Day.fromTimestamp(
-              tools.Timestamp.fromInstant(today.with({ day: 1 }).toInstant()),
-            ).toIsoId(),
-          ),
+          eq(Schema.workouts.userId, userId),
+          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
+          gte(Schema.workouts.scheduledFor, monthStart),
         ),
       ),
-      db.$count(Schema.workouts, and(completed, gte(Schema.workouts.scheduledFor, yearStart))),
-      db.$count(Schema.workouts, completed),
+      db.$count(
+        Schema.workouts,
+        and(
+          eq(Schema.workouts.userId, userId),
+          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
+          gte(Schema.workouts.scheduledFor, yearStart),
+        ),
+      ),
+      db.$count(
+        Schema.workouts,
+        and(
+          eq(Schema.workouts.userId, userId),
+          eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
+        ),
+      ),
     ]);
 
     return {
-      inProgress: inProgress ? toWorkoutSummary(inProgress) : null,
-      nextUp: nextUp ? toWorkoutSummary(nextUp) : null,
-      lastCompleted: lastCompleted ? toWorkoutSummary(lastCompleted) : null,
+      inProgress: inProgress ?? null,
+      nextUp: nextUp ?? null,
+      lastCompleted: lastCompleted ?? null,
       completed: {
         month: tools.Int.nonNegative(month),
         year: tools.Int.nonNegative(year),

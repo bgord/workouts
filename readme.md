@@ -671,7 +671,6 @@ infra/
 │       ├── list-week-completed-workouts.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts
 │       ├── list-workouts.adapter.ts
-│       ├── to-workout-summary.ts
 │       └── workout-repository.adapter.ts
 ├── bootstrap.ts
 ├── config.ts

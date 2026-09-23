@@ -1,12 +1,12 @@
 import * as tools from "@bgord/tools";
 import { and, desc, eq, gte, max, sql } from "drizzle-orm";
+import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
-import { toWorkoutSummary } from "./to-workout-summary";
 
 class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
   async execute(
@@ -21,17 +21,31 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       [Workouts.VO.WorkoutListFilterOptions.all_time]: null,
     }[filter];
     const since = range
-      ? tools.Day.fromTimestamp(tools.Timestamp.fromInstant(range.toInstant())).toIsoId()
+      ? v.parse(
+          Workouts.VO.WorkoutScheduledFor,
+          tools.Day.fromTimestamp(tools.Timestamp.fromInstant(range.toInstant())).toIsoId(),
+        )
       : null;
 
-    const scope = and(
-      eq(Schema.workouts.userId, userId),
-      // @ts-expect-error
-      since ? gte(Schema.workouts.scheduledFor, since) : undefined,
-    );
-
     const [workouts, finalizedPlan, drafts] = await Promise.all([
-      db.select().from(Schema.workouts).where(scope).orderBy(desc(Schema.workouts.scheduledFor)),
+      db.query.workouts.findMany({
+        columns: {
+          id: true,
+          planId: true,
+          planName: true,
+          planSectionId: true,
+          planSectionName: true,
+          scheduledFor: true,
+          status: true,
+          completedAt: true,
+          revision: true,
+        },
+        where: and(
+          eq(Schema.workouts.userId, userId),
+          since ? gte(Schema.workouts.scheduledFor, since) : undefined,
+        ),
+        orderBy: desc(Schema.workouts.scheduledFor),
+      }),
       db
         .select({
           id: Schema.plans.id,
@@ -62,12 +76,14 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
           finalizedPlan ? eq(Schema.planSections.planId, finalizedPlan.id) : sql`0`,
         ),
       )
-      .where(scope)
+      .where(
+        and(eq(Schema.workouts.userId, userId), since ? gte(Schema.workouts.scheduledFor, since) : undefined),
+      )
       .groupBy(Schema.workouts.planSectionId)
       .orderBy(desc(max(Schema.workouts.createdAt)));
 
     return {
-      data: workouts.map(toWorkoutSummary),
+      data: workouts,
       sections: sections.map((section) => ({ id: section.id, name: section.name })),
       actions: new Workouts.Services.WorkoutListActions({
         plan: finalizedPlan ?? null,
