@@ -9,8 +9,8 @@ export function WorkoutSectionPicker(props: {
   const t = bg.useTranslations();
 
   return (
-    <div data-stack="y" {...ui.Gap.field}>
-      <div className="c-label">{t("workout.create.section.label")}</div>
+    <fieldset>
+      <legend>{t("workout.create.section.label")}</legend>
 
       <ul data-stack="y" {...ui.Gap.cluster}>
         {props.sections.map((option) => {
@@ -46,6 +46,6 @@ export function WorkoutSectionPicker(props: {
           );
         })}
       </ul>
-    </div>
+    </fieldset>
   );
 }
