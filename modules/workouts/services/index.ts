@@ -7,3 +7,7 @@ export * from "./progression-method-factory.strategy";
 export * from "./progression-method-linear-progression.strategy";
 export * from "./progression-method-load-step";
 export * from "./workout-export-file-csv";
+export * from "./workout-get-actions";
+export * from "./workout-get-exercise-actions";
+export * from "./workout-get-logged-set-actions";
+export * from "./workout-list-actions";

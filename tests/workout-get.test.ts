@@ -45,7 +45,7 @@ describe("GET /api/workouts/:workoutId", async () => {
       spyOn(di.Adapters.Workouts.GetWorkoutQuery, "execute").mockResolvedValue({
         data: mocks.workoutWithExerciseActions,
         actions: {
-          start: { available: true, enabled: false, hints: ["workout.start.blocked.missing_target"] },
+          start: { available: true, enabled: false, hints: ["workout.exercises.have.targets"] },
           complete: { available: true, enabled: true, hints: [] },
           discard: { available: true, enabled: true, hints: [] },
           exerciseAdd: { available: true, enabled: true, hints: [] },
@@ -62,7 +62,7 @@ describe("GET /api/workouts/:workoutId", async () => {
     expect(json).toEqual({
       data: mocks.workoutWithExerciseActions,
       actions: {
-        start: { available: true, enabled: false, hints: ["workout.start.blocked.missing_target"] },
+        start: { available: true, enabled: false, hints: ["workout.exercises.have.targets"] },
         complete: { available: true, enabled: true, hints: [] },
         discard: { available: true, enabled: true, hints: [] },
         exerciseAdd: { available: true, enabled: true, hints: [] },

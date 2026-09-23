@@ -474,6 +474,28 @@ export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
 });
 
+export const workoutExercise: Workouts.VO.WorkoutExercise = {
+  id: workoutExerciseId,
+  exerciseId,
+  exerciseName,
+  prescription: exercisePrescription,
+  target: exerciseTarget,
+  loggedSets: [loggedSet],
+};
+
+export const workoutExerciseWithoutTarget: Workouts.VO.WorkoutExercise = {
+  id: anotherWorkoutExerciseId,
+  exerciseId: anotherExerciseId,
+  exerciseName: anotherExerciseName,
+  prescription: exercisePrescription,
+  loggedSets: [],
+};
+
+export const workoutExercisesAtLimit: Array<Workouts.VO.WorkoutExercise> = Array.from(
+  { length: Workouts.VO.WorkoutExerciseLimitMax },
+  () => workoutExercise,
+);
+
 export const workout: Workouts.VO.Workout = {
   id: workoutId,
   planId,
@@ -485,16 +507,7 @@ export const workout: Workouts.VO.Workout = {
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.in_progress,
   revision: revision.value,
-  exercises: [
-    {
-      id: workoutExerciseId,
-      exerciseId,
-      exerciseName,
-      prescription: exercisePrescription,
-      target: exerciseTarget,
-      loggedSets: [loggedSet],
-    },
-  ],
+  exercises: [workoutExercise],
 };
 
 export const exercisePerformanceWeakestSet = v.parse(Workouts.VO.ExerciseTarget, {

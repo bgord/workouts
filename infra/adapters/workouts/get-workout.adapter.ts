@@ -1,4 +1,3 @@
-import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import { and, asc, eq } from "drizzle-orm";
 import * as v from "valibot";
@@ -47,32 +46,10 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     );
 
     const status = workout.status;
-
-    const draft = Workouts.Invariants.WorkoutIsDraft.passes({ status });
-    const editable = Workouts.Invariants.WorkoutIsEditable.passes({ status });
-    const inProgress = Workouts.Invariants.WorkoutIsInProgress.passes({ status });
-    const correctable = Workouts.Invariants.WorkoutIsCorrectable.passes({ status });
-    const exists = Workouts.Invariants.WorkoutExists.passes({ status });
-    const retainsLoggedSets = Workouts.Invariants.WorkoutRetainsLoggedSets.passes({
+    const loggedSetActions = new Workouts.Services.WorkoutGetLoggedSetActions({
       status,
-      count: tools.Int.nonNegative(loggedSets.length),
-    });
-    const inProgressAvailable = Workouts.Invariants.WorkoutInProgressLimitForOwner.passes({
-      count: inProgressCount,
-    });
-
-    const setRemoveBlockers: Array<bg.TranslationsKeyType> = [];
-
-    if (correctable && !retainsLoggedSets) setRemoveBlockers.push("workout.set.remove.blocked.last_set");
-
-    const whenEditable = { available: editable, enabled: editable, hints: [] };
-    const whenInProgress = { available: inProgress, enabled: inProgress, hints: [] };
-    const whenCorrectable = { available: correctable, enabled: correctable, hints: [] };
-    const setRemove = {
-      available: correctable,
-      enabled: correctable && retainsLoggedSets,
-      hints: setRemoveBlockers,
-    };
+      loggedSetCount: tools.Int.nonNegative(loggedSets.length),
+    }).calculate();
 
     const data = {
       id: workout.id,
@@ -121,7 +98,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               reps: loggedSet.reps,
               load: loggedSet.load,
               rir: loggedSet.rir ?? undefined,
-              actions: { correct: whenCorrectable, remove: setRemove },
+              actions: loggedSetActions,
             })),
           previousPerformance: previous && {
             scheduledFor: previous.scheduledFor,
@@ -131,55 +108,21 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
           targetProgression:
             previous &&
             Workouts.Services.ProgressionMethodStrategyFactory.for(prescription, previous).calculate(),
-          actions: {
-            targetSet: {
-              available: draft || (inProgress && exercise.targetSets === null),
-              enabled: editable,
-              hints: [],
-            },
-            remove: whenEditable,
-            move: whenEditable,
-            setLog: whenInProgress,
-          },
+          actions: new Workouts.Services.WorkoutGetExerciseActions({
+            status,
+            exercise: { target },
+          }).calculate(),
         };
       }),
     };
 
-    const workoutExercises = data.exercises;
-
-    const hasExercises = workoutExercises.length > 0;
-    const readyToStart = Workouts.Invariants.WorkoutIsReadyToStart.passes({ workoutExercises });
-    const hasLoggedSets = Workouts.Invariants.WorkoutHasLoggedSets.passes({ workoutExercises });
-    const exercisesAvailable = Workouts.Invariants.WorkoutExerciseLimit.passes({ workoutExercises });
-
-    const startBlockers: Array<bg.TranslationsKeyType> = [];
-    const completeBlockers: Array<bg.TranslationsKeyType> = [];
-    const exerciseAddBlockers: Array<bg.TranslationsKeyType> = [];
-
-    if (draft && !hasExercises) startBlockers.push("workout.start.blocked.no_exercises");
-    if (draft && hasExercises && !readyToStart) startBlockers.push("workout.start.blocked.missing_target");
-    if (draft && !inProgressAvailable) startBlockers.push("workout.start.blocked.in_progress_limit");
-    if (inProgress && !hasLoggedSets) completeBlockers.push("workout.complete.blocked.no_logged_sets");
-    if (editable && !exercisesAvailable) exerciseAddBlockers.push("workout.exercise.add.blocked.limit");
-
     return {
       data,
-      actions: {
-        start: {
-          available: draft,
-          enabled: draft && readyToStart && inProgressAvailable,
-          hints: startBlockers,
-        },
-        complete: { available: inProgress, enabled: inProgress && hasLoggedSets, hints: completeBlockers },
-        discard: { available: exists, enabled: exists, hints: [] },
-        exerciseAdd: {
-          available: editable,
-          enabled: editable && exercisesAvailable,
-          hints: exerciseAddBlockers,
-        },
-        noteSet: { available: exists, enabled: exists, hints: [] },
-        reschedule: { available: draft, enabled: draft, hints: [] },
-      },
+      actions: new Workouts.Services.WorkoutGetActions({
+        status,
+        exercises: data.exercises,
+        inProgressCount,
+      }).calculate(),
     };
   }
 }

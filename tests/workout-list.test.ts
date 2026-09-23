@@ -42,7 +42,7 @@ describe(`QUERY ${url}`, async () => {
         data: [mocks.workoutSummary],
         sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
         actions: {
-          create: { available: true, enabled: false, hints: ["workout.create.blocked.draft_limit"] },
+          create: { available: true, enabled: false, hints: ["workout.draft.limit.for.owner"] },
         },
       }),
     );
@@ -61,7 +61,7 @@ describe(`QUERY ${url}`, async () => {
     expect(json).toEqual({
       data: [mocks.workoutSummary],
       sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
-      actions: { create: { available: true, enabled: false, hints: ["workout.create.blocked.draft_limit"] } },
+      actions: { create: { available: true, enabled: false, hints: ["workout.draft.limit.for.owner"] } },
     });
   });
 

@@ -1,4 +1,3 @@
-import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import { and, desc, eq, gte, max, sql } from "drizzle-orm";
 import type * as Auth from "+auth";
@@ -67,18 +66,13 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       .groupBy(Schema.workouts.planSectionId)
       .orderBy(desc(max(Schema.workouts.createdAt)));
 
-    const planReady = Workouts.Invariants.WorkoutPlanReady.passes({ plan: finalizedPlan ?? null });
-    const draftsAvailable = Workouts.Invariants.WorkoutDraftLimitForOwner.passes({ count: drafts });
-
-    const hints: Array<bg.TranslationsKeyType> = [];
-
-    if (!planReady) hints.push("workout.create.blocked.no_finalized_plan");
-    if (!draftsAvailable) hints.push("workout.create.blocked.draft_limit");
-
     return {
       data: workouts.map(toWorkoutSummary),
       sections: sections.map((section) => ({ id: section.id, name: section.name })),
-      actions: { create: { available: true, enabled: planReady && draftsAvailable, hints } },
+      actions: new Workouts.Services.WorkoutListActions({
+        plan: finalizedPlan ?? null,
+        draftCount: drafts,
+      }).calculate(),
     };
   }
 }
