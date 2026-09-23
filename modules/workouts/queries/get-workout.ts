@@ -38,6 +38,7 @@ export type WorkoutGetResponse = {
     exerciseAdd: ActionState;
     noteSet: ActionState;
     reschedule: ActionState;
+    reorder: ActionState;
   };
 };
 

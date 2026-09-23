@@ -24,6 +24,7 @@ export class WorkoutGetActions {
   calculate(): Queries.WorkoutGetResponse["actions"] {
     const draft = WorkoutIsDraft.passes({ status: this.facts.status });
     const exists = WorkoutExists.passes({ status: this.facts.status });
+    const inProgress = WorkoutIsInProgress.passes({ status: this.facts.status });
 
     return {
       start: ActionState.of(draft, [
@@ -31,7 +32,7 @@ export class WorkoutGetActions {
         ActionBlocker.from(WorkoutExercisesHaveTargets, { workoutExercises: this.facts.exercises }),
         ActionBlocker.from(WorkoutInProgressLimitForOwner, { count: this.facts.inProgressCount }),
       ]),
-      complete: ActionState.of(WorkoutIsInProgress.passes({ status: this.facts.status }), [
+      complete: ActionState.of(inProgress, [
         ActionBlocker.from(WorkoutHasLoggedSets, { workoutExercises: this.facts.exercises }),
       ]),
       discard: ActionState.of(exists),
@@ -40,6 +41,7 @@ export class WorkoutGetActions {
       ]),
       noteSet: ActionState.of(exists),
       reschedule: ActionState.of(draft),
+      reorder: ActionState.of(inProgress && this.facts.exercises.length > 1),
     };
   }
 }

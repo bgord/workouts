@@ -18,6 +18,7 @@ describe("WorkoutGetActions", () => {
       exerciseAdd: mocks.actionAvailable,
       noteSet: mocks.actionAvailable,
       reschedule: mocks.actionAvailable,
+      reorder: mocks.actionUnavailable,
     });
   });
 
@@ -94,7 +95,7 @@ describe("WorkoutGetActions", () => {
   test("in progress", () => {
     const actions = new Workouts.Services.WorkoutGetActions({
       status: Workouts.VO.WorkoutStatusEnum.in_progress,
-      exercises: [mocks.workoutExercise],
+      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       inProgressCount: tools.Int.nonNegative(1),
     });
 
@@ -105,7 +106,18 @@ describe("WorkoutGetActions", () => {
       exerciseAdd: mocks.actionAvailable,
       noteSet: mocks.actionAvailable,
       reschedule: mocks.actionUnavailable,
+      reorder: mocks.actionAvailable,
     });
+  });
+
+  test("in progress - single exercise", () => {
+    const actions = new Workouts.Services.WorkoutGetActions({
+      status: Workouts.VO.WorkoutStatusEnum.in_progress,
+      exercises: [mocks.workoutExercise],
+      inProgressCount: tools.Int.nonNegative(1),
+    });
+
+    expect(actions.calculate().reorder).toEqual(mocks.actionUnavailable);
   });
 
   test("in progress - no logged sets", () => {
@@ -136,6 +148,7 @@ describe("WorkoutGetActions", () => {
       exerciseAdd: mocks.actionUnavailable,
       noteSet: mocks.actionAvailable,
       reschedule: mocks.actionUnavailable,
+      reorder: mocks.actionUnavailable,
     });
   });
 });
