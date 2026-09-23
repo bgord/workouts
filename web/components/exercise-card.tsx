@@ -28,9 +28,9 @@ export function ExerciseCard(props: ExerciseWithCategories) {
           <ExerciseImage size={ExerciseImageSize.md} {...props} />
         </span>
 
-        <div className="c-card-title" data-fs="sm" data-fw="medium" data-transform="line-clamp">
+        <h2 data-fs="sm" data-fw="medium" data-transform="line-clamp">
           {props.name}
-        </div>
+        </h2>
 
         <ul data-mt="auto" data-overflow="hidden" data-stack="x" {...Gap.cluster}>
           {visible.map((category) => (

@@ -33,27 +33,29 @@ export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggle
 
   if (!plan.actions.sectionRename.available) {
     return (
-      <div className="c-card-title" data-transform="truncate" title={props.section.name}>
+      <h2 data-transform="truncate" title={props.section.name}>
         {props.section.name}
-      </div>
+      </h2>
     );
   }
 
   if (toggle.off) {
     return (
-      <button
-        className="c-card-title"
-        data-cursor="pointer"
-        data-maxw="100%"
-        data-transform="truncate"
-        disabled={!plan.actions.sectionRename.enabled}
-        onClick={toggle.enable}
-        title={t("plan.section.rename.cta")}
-        type="button"
-        {...toggle.props.controller}
-      >
-        {props.section.name}
-      </button>
+      <h2>
+        <button
+          data-cursor="pointer"
+          data-disp="block"
+          data-maxw="100%"
+          data-transform="truncate"
+          disabled={!plan.actions.sectionRename.enabled}
+          onClick={toggle.enable}
+          title={t("plan.section.rename.cta")}
+          type="button"
+          {...toggle.props.controller}
+        >
+          {props.section.name}
+        </button>
+      </h2>
     );
   }
 

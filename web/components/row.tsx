@@ -35,8 +35,8 @@ export function RowBody(props: React.JSX.IntrinsicElements["div"]) {
   return <div data-grow="1" data-stack="y" data-transform="truncate" {...Gap.inline} {...props} />;
 }
 
-export function RowTitle(props: React.JSX.IntrinsicElements["div"]) {
-  return <div className="c-card-title" data-transform="truncate" {...props} />;
+export function RowTitle(props: React.JSX.IntrinsicElements["h2"]) {
+  return <h2 data-transform="truncate" {...props} />;
 }
 
 export function RowChevron() {
