@@ -30,6 +30,8 @@ import type { ProgressionMethodType } from "../modules/plans/value-objects/progr
 import { ProgressionMethodOptions } from "../modules/plans/value-objects/progression-method-options";
 import type { RepsType as PlanRepsType } from "../modules/plans/value-objects/reps";
 import type { SetsType } from "../modules/plans/value-objects/sets";
+import type { ExercisePrescriptionType } from "../modules/workouts/value-objects/exercise-prescription";
+import type { ExerciseTargetType } from "../modules/workouts/value-objects/exercise-target";
 import type { LoadType } from "../modules/workouts/value-objects/load";
 import type { LoggedSetIdType } from "../modules/workouts/value-objects/logged-set-id";
 import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-objects/reps";
@@ -323,20 +325,8 @@ export const workoutExercises = sqliteTable("workoutExercises", {
   exerciseName: text("exerciseName").notNull().$type<ExerciseNameType>(),
   exerciseImageEtag: text("exerciseImageEtag").notNull().$type<bg.HashValueType>(),
   exerciseDescription: text("exerciseDescription").notNull().$type<ExerciseDescriptionType>(),
-  prescriptionSets: integer("prescriptionSets", { mode: "number" }).notNull().$type<SetsType>(),
-  prescriptionRepsMin: integer("prescriptionRepsMin", { mode: "number" })
-    .notNull()
-    .$type<tools.IntegerPositiveType>(),
-  prescriptionRepsMax: integer("prescriptionRepsMax", { mode: "number" })
-    .notNull()
-    .$type<tools.IntegerPositiveType>(),
-  prescriptionProgression: text("prescriptionProgression", toEnumList(ProgressionMethodOptions))
-    .notNull()
-    .default(ProgressionMethodOptions.double_progression)
-    .$type<ProgressionMethodType>(),
-  targetSets: integer("targetSets", { mode: "number" }).$type<SetsType>(),
-  targetReps: integer("targetReps", { mode: "number" }).$type<WorkoutRepsType>(),
-  targetLoad: integer("targetLoad", { mode: "number" }).$type<LoadType>(),
+  prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
+  target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
   position: integer("position", { mode: "number" }).notNull().default(0).$type<WorkoutExercisePositionType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
   createdAt: timestamp("createdAt").notNull(),
