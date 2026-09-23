@@ -38,7 +38,7 @@ function NavigationDesktop() {
       style={{
         ...bg.Rhythm(70).times(1).height,
         backdropFilter: "blur(12px)",
-        backgroundColor: "color-mix(in oklab, var(--surface-base) 80%, transparent)",
+        backgroundColor: "color-mix(in oklab, var(--color-neutral-950) 80%, transparent)",
       }}
     >
       <div
