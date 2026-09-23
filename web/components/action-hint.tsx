@@ -11,9 +11,9 @@ export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div
   if (!hint) return null;
 
   return (
-    <div data-color="neutral-400" data-fs="xs" data-stack="x" {...Gap.cluster} {...rest}>
+    <small data-stack="x" {...Gap.cluster} {...rest}>
       <Info data-shrink="0" data-size="sm" />
       {t(hint)}
-    </div>
+    </small>
   );
 }
