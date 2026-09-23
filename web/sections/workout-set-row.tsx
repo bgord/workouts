@@ -16,7 +16,7 @@ export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: Log
 
         {workoutSetCorrect.off && (
           <>
-            <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+            <div data-color="neutral-100" data-fw="medium">
               <ui.RepsLoad load={props.loggedSet.load} reps={props.loggedSet.reps} />
             </div>
 

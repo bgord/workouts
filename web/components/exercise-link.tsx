@@ -4,7 +4,6 @@ function ExerciseAnchor(props: React.JSX.IntrinsicElements["a"]) {
   return (
     <a
       data-color="neutral-100"
-      data-fs="sm"
       data-fw="medium"
       data-hover-color="brand-300"
       data-transform="truncate"

@@ -41,7 +41,7 @@ export function DialogBody(props: React.JSX.IntrinsicElements["div"]) {
 
 export function DialogInfo(props: { children: React.ReactNode }) {
   return (
-    <p data-color="neutral-300" data-fs="sm" data-lh="loose">
+    <p data-color="neutral-300" data-lh="loose">
       {props.children}
     </p>
   );
@@ -56,7 +56,6 @@ export function DialogStatus(
   return (
     <div
       data-color={variant === "irreversible" ? "danger-400" : "positive-400"}
-      data-fs="sm"
       data-stack="x"
       {...Gap.cluster}
       {...rest}
@@ -70,7 +69,7 @@ export function DialogStatus(
 
 export function DialogError(props: { children: React.ReactNode }) {
   return (
-    <output aria-live="assertive" data-color="danger-400" data-fs="sm" data-stack="x" {...Gap.cluster}>
+    <output aria-live="assertive" data-color="danger-400" data-stack="x" {...Gap.cluster}>
       <CircleAlert data-shrink="0" data-size="md" />
       <span>{props.children}</span>
     </output>

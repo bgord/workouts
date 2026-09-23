@@ -36,9 +36,7 @@ export function ProfileWeeklySummary() {
         <h2>{t("profile.weekly_summary.header")}</h2>
       </div>
 
-      <div data-color="neutral-500" data-fs="sm">
-        {t("profile.weekly_summary.hint")}
-      </div>
+      <div data-color="neutral-500">{t("profile.weekly_summary.hint")}</div>
 
       <form
         aria-busy={mutation.isLoading}

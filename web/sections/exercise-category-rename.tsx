@@ -27,14 +27,13 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
     },
   });
 
-  if (!exerciseCategories.actions.rename.available) return <div data-fs="sm">{props.name}</div>;
+  if (!exerciseCategories.actions.rename.available) return <div>{props.name}</div>;
 
   if (toggle.off) {
     return (
       <button
         data-color="neutral-100"
         data-cursor="pointer"
-        data-fs="sm"
         data-hover-color="brand-300"
         data-transform="truncate"
         disabled={!exerciseCategories.actions.rename.enabled}

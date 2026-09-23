@@ -85,11 +85,7 @@ export function WorkoutCreate() {
       <ui.Dialog {...workoutCreate}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutCreate.disable])}>
           {t("workout.create.toggle.cta")}
-          {workouts.plan && (
-            <span data-color="neutral-500" data-fw="regular" data-ml="2">
-              · {workouts.plan.name}
-            </span>
-          )}
+          {workouts.plan && <small data-ml="2">· {workouts.plan.name}</small>}
         </ui.DialogHeader>
 
         <form

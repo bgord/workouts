@@ -24,7 +24,6 @@ export function ExerciseHistoryRow(props: {
 
         <Link
           data-color="neutral-100"
-          data-fs="sm"
           data-fw="medium"
           data-hover-color="brand-300"
           data-stack="x"
@@ -57,12 +56,7 @@ export function ExerciseHistoryRow(props: {
           <div data-cross="baseline" data-stack="x" {...ui.Gap.field}>
             <EqualApproximately data-color="neutral-600" data-self="center" data-size="xs" />
 
-            <span
-              data-color="neutral-300"
-              data-fs="sm"
-              data-fw="medium"
-              data-transform="font-variant-numeric"
-            >
+            <span data-color="neutral-300" data-fw="medium" data-transform="font-variant-numeric">
               {t("statistics.exercise.one_rep_max_estimate.value", {
                 load: WeightFormat.kilograms(props.performance.bestEstimate),
               })}
@@ -78,12 +72,7 @@ export function ExerciseHistoryRow(props: {
           <div data-cross="baseline" data-stack="x" {...ui.Gap.inline}>
             <Sigma data-color="neutral-600" data-self="center" data-size="xs" />
 
-            <span
-              data-color="neutral-300"
-              data-fs="sm"
-              data-fw="medium"
-              data-transform="font-variant-numeric"
-            >
+            <span data-color="neutral-300" data-fw="medium" data-transform="font-variant-numeric">
               {t("statistics.exercise.history.volume_load.value", {
                 load: WeightFormat.kilograms(props.performance.volume),
               })}
@@ -110,7 +99,7 @@ export function ExerciseHistoryRow(props: {
             >
               <ui.RowIndex>{set.setNumber}</ui.RowIndex>
 
-              <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+              <div data-color="neutral-100" data-fw="medium">
                 <ui.RepsLoad load={set.load} reps={set.reps} />
               </div>
 

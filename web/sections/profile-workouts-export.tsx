@@ -12,9 +12,7 @@ export function ProfileWorkoutsExport() {
         <h2>{t("profile.export_workouts.header")}</h2>
       </div>
 
-      <div data-color="neutral-500" data-fs="sm">
-        {t("profile.export_workouts.hint")}
-      </div>
+      <div data-color="neutral-500">{t("profile.export_workouts.hint")}</div>
 
       <a
         className="c-button"

@@ -79,9 +79,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
           onClose={bg.exec([clear, planSectionExerciseInstructionAdd.disable])}
         >
           {t("plan.section.exercise.add.cta")}
-          <span data-color="neutral-500" data-fw="regular" data-ml="2">
-            · {props.name}
-          </span>
+          <small data-ml="2">· {props.name}</small>
         </ui.DialogHeader>
 
         <form

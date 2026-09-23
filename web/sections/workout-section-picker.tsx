@@ -29,7 +29,7 @@ export function WorkoutSectionPicker(props: {
                 />
 
                 <div data-grow="1" data-stack="y" data-transform="truncate" {...ui.Gap.inline}>
-                  <div data-color="neutral-100" data-fs="sm" data-fw="medium">
+                  <div data-color="neutral-100" data-fw="medium">
                     {option.name}
                   </div>
 

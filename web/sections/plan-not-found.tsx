@@ -18,7 +18,7 @@ export function PlanNotFound() {
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
           <small>{t("plan.not_found.hint")}</small>
 
-          <Link className="c-link" data-fs="sm" data-mr="auto" to="/plans">
+          <Link className="c-link" data-mr="auto" to="/plans">
             {t("plan.not_found.cta")}
           </Link>
         </div>

@@ -134,11 +134,7 @@ export function ExerciseCategories() {
           </li>
         ))}
 
-        {assigned.length === 0 && (
-          <li data-color="neutral-500" data-fs="sm">
-            {t("exercise.categories.empty")}
-          </li>
-        )}
+        {assigned.length === 0 && <li data-color="neutral-500">{t("exercise.categories.empty")}</li>}
       </ul>
     </div>
   );

@@ -11,7 +11,6 @@ export function OnlineStatusBar() {
     <div
       data-bg="neutral-700"
       data-bottom="0"
-      data-fs="sm"
       data-left="0"
       data-position="fixed"
       {...Spacing.surfaceCompact}

@@ -45,7 +45,7 @@ export function BodyWeightReferenceSet(
       {...ui.Gap.inline}
       {...toggle.props.target}
     >
-      <div data-color="neutral-100" data-fs="sm" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
+      <div data-color="neutral-100" data-fw="medium" data-md-fs="xs" data-transform="nowrap">
         <ui.BodyWeightValue weight={props.measurement.weight} />
       </div>
 

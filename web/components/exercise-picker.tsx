@@ -53,7 +53,7 @@ export function ExercisePicker(props: {
         style={{ maxHeight: "40vh" }}
       >
         {matching.length === 0 && (
-          <li data-color="neutral-500" data-fs="sm" data-main="center" data-stack="x" {...Spacing.surface}>
+          <li data-color="neutral-500" data-main="center" data-stack="x" {...Spacing.surface}>
             {t("exercise.picker.empty")}
           </li>
         )}
@@ -64,7 +64,6 @@ export function ExercisePicker(props: {
               data-bg={props.value === exercise.id ? "alpha-subtle" : undefined}
               data-color={props.value === exercise.id ? "neutral-0" : "neutral-200"}
               data-cursor="pointer"
-              data-fs="sm"
               data-hover-bg="alpha-subtle"
               data-position="relative"
               data-px="3"

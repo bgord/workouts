@@ -127,9 +127,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
       <ui.Dialog {...planSectionExerciseInstructionEdit}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
           {t("plan.section.exercise.edit.cta")}
-          <span data-color="neutral-500" data-fw="regular" data-ml="2">
-            · {props.section.name}
-          </span>
+          <small data-ml="2">· {props.section.name}</small>
         </ui.DialogHeader>
 
         <form
@@ -146,7 +144,6 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-bw="hairline"
               data-color="neutral-100"
               data-cursor={actions.exerciseChange.enabled ? "pointer" : undefined}
-              data-fs="sm"
               data-hover-bc={actions.exerciseChange.enabled ? "brand-500" : undefined}
               data-px="3"
               data-stack="x"

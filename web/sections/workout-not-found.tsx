@@ -20,7 +20,7 @@ export function WorkoutNotFound() {
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
           <small>{t("workout.not_found.hint")}</small>
 
-          <Link className="c-link" data-fs="sm" data-mr="auto" search={search} to="/workouts">
+          <Link className="c-link" data-mr="auto" search={search} to="/workouts">
             {t("workout.not_found.cta")}
           </Link>
         </div>

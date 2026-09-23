@@ -26,9 +26,7 @@ export function ProfilePasswordChange() {
         <h2>{t("auth.change_password.header")}</h2>
       </div>
 
-      <div data-color="neutral-500" data-fs="sm">
-        {t("auth.change_password.desc")}
-      </div>
+      <div data-color="neutral-500">{t("auth.change_password.desc")}</div>
 
       <form
         aria-busy={mutation.isLoading}

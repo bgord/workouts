@@ -5,7 +5,6 @@ export function AddButton(props: React.JSX.IntrinsicElements["button"]) {
     <button
       data-color="neutral-400"
       data-cursor="pointer"
-      data-fs="sm"
       data-fw="medium"
       data-grow="1"
       data-hover-color="neutral-0"

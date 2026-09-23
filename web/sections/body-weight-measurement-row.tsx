@@ -38,7 +38,6 @@ export function BodyWeightMeasurementRow(props: {
             data-color="neutral-300"
             data-cross="stretch"
             data-cursor="pointer"
-            data-fs="sm"
             data-grow="1"
             data-md-fs="xs"
             data-minw="0"
@@ -63,7 +62,6 @@ export function BodyWeightMeasurementRow(props: {
           <button
             data-color="neutral-100"
             data-cursor="pointer"
-            data-fs="sm"
             data-fw="medium"
             data-md-fs="xs"
             data-shrink="0"
