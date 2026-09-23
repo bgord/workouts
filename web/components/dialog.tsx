@@ -30,7 +30,7 @@ export function DialogHeader(props: { disabled?: boolean; onClose: () => void; c
       <strong data-color="neutral-100" data-transform="truncate">
         {props.children}
       </strong>
-      <ButtonClose data-shrink="0" disabled={props.disabled} onClick={props.onClose} />
+      <ButtonClose disabled={props.disabled} onClick={props.onClose} />
     </div>
   );
 }

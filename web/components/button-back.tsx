@@ -12,7 +12,6 @@ function ButtonBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
       className="c-button"
       data-interaction="subtle-scale"
       data-self="start"
-      data-shrink="0"
       data-variant="icon"
       href={href}
       title={t("app.back")}

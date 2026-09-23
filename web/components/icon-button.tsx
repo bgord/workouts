@@ -10,14 +10,5 @@ export type IconButtonTone = keyof typeof tones;
 export function IconButton(props: React.JSX.IntrinsicElements["button"] & { tone?: IconButtonTone }) {
   const { tone = "neutral", ...rest } = props;
 
-  return (
-    <button
-      className="c-button"
-      data-shrink="0"
-      data-variant="icon"
-      type="button"
-      {...tones[tone]}
-      {...rest}
-    />
-  );
+  return <button className="c-button" data-variant="icon" type="button" {...tones[tone]} {...rest} />;
 }
