@@ -111,10 +111,10 @@ g:hover > .chart-point {
   }
 }
 
-.c-button[data-tone="danger"] {
+.c-button[data-variant="ghost"][data-tone="danger"] {
   color: var(--color-danger-400);
 }
-.c-button[data-tone="danger"]:hover:not(:disabled) {
+.c-button[data-variant="ghost"][data-tone="danger"]:hover:not(:disabled) {
   color: var(--color-danger-200);
   background-color: var(--color-danger-900);
 }
