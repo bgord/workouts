@@ -24,6 +24,7 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
     now: tools.Timestamp,
   ): Promise<Workouts.Queries.WorkoutDashboardResponse> {
     const today = now.toZonedDateTimeUTC().startOfDay();
+
     const monthStart = v.parse(
       Workouts.VO.WorkoutScheduledFor,
       tools.Day.fromTimestamp(tools.Timestamp.fromInstant(today.with({ day: 1 }).toInstant())).toIsoId(),

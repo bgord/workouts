@@ -3,7 +3,7 @@ import type * as Queries from "+workouts/queries";
 import * as VO from "+workouts/value-objects";
 
 export class ExercisePerformanceWeakestSet {
-  constructor(private readonly performance: Queries.ExercisePerformance) {}
+  constructor(private readonly performance: Pick<Queries.ExercisePerformance, "sets">) {}
 
   calculate(): VO.ExerciseTargetType {
     return v.parse(VO.ExerciseTarget, {

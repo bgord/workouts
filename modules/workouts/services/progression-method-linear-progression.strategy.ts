@@ -6,7 +6,7 @@ import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 import { PROGRESSION_METHOD_LOAD_STEP } from "./progression-method-load-step";
 
 export class ProgressionMethodLinearProgressionStrategy implements ProgressionMethodStrategy {
-  constructor(private readonly previous: Queries.ExercisePerformance) {}
+  constructor(private readonly previous: Pick<Queries.ExercisePerformance, "sets">) {}
 
   calculate(): VO.ExerciseTargetProgression {
     const last = new ExercisePerformanceWeakestSet(this.previous).calculate();

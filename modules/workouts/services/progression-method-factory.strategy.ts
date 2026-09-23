@@ -8,7 +8,7 @@ import { ProgressionMethodLinearProgressionStrategy } from "./progression-method
 export class ProgressionMethodStrategyFactory {
   static for(
     prescription: VO.ExercisePrescriptionType,
-    previous: Queries.ExercisePerformance,
+    previous: Pick<Queries.ExercisePerformance, "sets">,
   ): ProgressionMethodStrategy {
     switch (prescription.progression) {
       case Plans.VO.ProgressionMethodOptions.double_progression:

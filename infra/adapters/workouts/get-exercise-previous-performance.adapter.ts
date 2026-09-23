@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, isNotNull, lt, or } from "drizzle-orm";
+import { and, asc, desc, eq, lt, or } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import * as Workouts from "+workouts";
@@ -10,13 +10,9 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
     workout: Workouts.Queries.ExercisePreviousPerformanceReference,
-  ): Promise<Workouts.Queries.ExercisePerformance | undefined> {
+  ): Promise<Pick<Workouts.Queries.ExercisePerformance, "scheduledFor" | "sets"> | undefined> {
     const previous = await db
-      .select({
-        id: Schema.workouts.id,
-        scheduledFor: Schema.workouts.scheduledFor,
-        workoutExerciseId: Schema.workoutExercises.id,
-      })
+      .select({ scheduledFor: Schema.workouts.scheduledFor, workoutExerciseId: Schema.workoutExercises.id })
       .from(Schema.workouts)
       .innerJoin(Schema.workoutExercises, eq(Schema.workoutExercises.workoutId, Schema.workouts.id))
       .innerJoin(
@@ -28,7 +24,6 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
           eq(Schema.workouts.userId, userId),
           eq(Schema.workoutExercises.exerciseId, exerciseId),
           eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
-          isNotNull(Schema.workouts.completedAt),
           or(
             lt(Schema.workouts.scheduledFor, workout.scheduledFor),
             and(
@@ -55,15 +50,10 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
         rir: Schema.workoutLoggedSets.rir,
       })
       .from(Schema.workoutLoggedSets)
-      .where(
-        and(
-          eq(Schema.workoutLoggedSets.userId, userId),
-          eq(Schema.workoutLoggedSets.workoutExerciseId, previous.workoutExerciseId),
-        ),
-      )
+      .where(eq(Schema.workoutLoggedSets.workoutExerciseId, previous.workoutExerciseId))
       .orderBy(asc(Schema.workoutLoggedSets.setNumber));
 
-    return { workoutId: previous.id, scheduledFor: previous.scheduledFor, sets };
+    return { scheduledFor: previous.scheduledFor, sets };
   }
 }
 

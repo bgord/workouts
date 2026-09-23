@@ -1,4 +1,4 @@
-import { and, asc, eq, isNotNull } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import * as Workouts from "+workouts";
@@ -30,7 +30,6 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
           eq(Schema.workoutLoggedSets.userId, userId),
           eq(Schema.workoutExercises.exerciseId, exerciseId),
           eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
-          isNotNull(Schema.workouts.completedAt),
         ),
       )
       .orderBy(

@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { and, asc, between, eq, isNotNull } from "drizzle-orm";
+import { and, asc, between, eq } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Workouts from "+workouts";
@@ -22,7 +22,6 @@ class ListWeekCompletedWorkoutsQueryDrizzle implements Workouts.Queries.ListWeek
       where: and(
         eq(Schema.workouts.userId, userId),
         eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
-        isNotNull(Schema.workouts.completedAt),
         between(Schema.workouts.scheduledFor, start, end),
       ),
       orderBy: [asc(Schema.workouts.scheduledFor), asc(Schema.workouts.completedAt)],

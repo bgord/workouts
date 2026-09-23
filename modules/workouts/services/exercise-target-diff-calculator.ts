@@ -7,7 +7,7 @@ import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-se
 export class ExerciseTargetDiffCalculator {
   constructor(
     private readonly target: VO.ExerciseTargetType,
-    private readonly previous: Queries.ExercisePerformance,
+    private readonly previous: Pick<Queries.ExercisePerformance, "sets">,
   ) {}
 
   calculate(): VO.ExerciseTargetDiff {

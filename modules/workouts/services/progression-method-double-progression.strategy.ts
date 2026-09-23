@@ -8,7 +8,7 @@ import { PROGRESSION_METHOD_LOAD_STEP } from "./progression-method-load-step";
 export class ProgressionMethodDoubleProgressionStrategy implements ProgressionMethodStrategy {
   constructor(
     private readonly prescription: VO.ExercisePrescriptionType,
-    private readonly previous: Queries.ExercisePerformance,
+    private readonly previous: Pick<Queries.ExercisePerformance, "sets">,
   ) {}
 
   calculate(): VO.ExerciseTargetProgression {
