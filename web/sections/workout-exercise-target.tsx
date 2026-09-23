@@ -29,7 +29,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
 
   return (
     <button
-      data-bc={target ? undefined : "alpha-medium"}
+      data-bc={target ? undefined : "alpha-strong"}
       data-br="sm"
       data-bs={target ? undefined : "dashed"}
       data-bw={target ? undefined : "hairline"}
