@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { and, desc, eq, gte, max } from "drizzle-orm";
+import { and, asc, desc, eq, gte, max } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
@@ -29,7 +29,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
         )
       : null;
 
-    const [workouts, finalizedPlan, drafts, sections] = await Promise.all([
+    const [workouts, plan, drafts, sections] = await Promise.all([
       db.query.workouts.findMany({
         columns: {
           id: true,
@@ -48,18 +48,26 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
         ),
         orderBy: desc(Schema.workouts.scheduledFor),
       }),
-      db
-        .select({
-          id: Schema.plans.id,
-          name: Schema.plans.name,
-          status: Schema.plans.status,
-          revision: Schema.plans.revision,
-        })
-        .from(Schema.plans)
-        .where(
-          and(eq(Schema.plans.userId, userId), eq(Schema.plans.status, Plans.VO.PlanStatusEnum.finalized)),
-        )
-        .get(),
+      db.query.plans.findFirst({
+        columns: { id: true, name: true },
+        where: and(
+          eq(Schema.plans.userId, userId),
+          eq(Schema.plans.status, Plans.VO.PlanStatusEnum.finalized),
+        ),
+        with: {
+          sections: {
+            columns: { id: true, name: true },
+            orderBy: asc(Schema.planSections.createdAt),
+            with: {
+              exerciseInstructions: {
+                columns: { id: true },
+                orderBy: asc(Schema.planSectionExerciseInstructions.position),
+                with: { exercise: { columns: { name: true } } },
+              },
+            },
+          },
+        },
+      }),
       GetWorkoutStatusForOwnerCountQuery.execute(userId, Workouts.VO.WorkoutStatusEnum.draft),
       db
         .select({
@@ -81,8 +89,9 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
     return {
       data: workouts,
       sections,
+      plan: plan ?? null,
       actions: new Workouts.Services.WorkoutListActions({
-        plan: finalizedPlan ?? null,
+        plan: plan ?? null,
         draftCount: drafts,
       }).calculate(),
     };

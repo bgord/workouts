@@ -3,7 +3,7 @@ import type * as Plans from "+plans";
 
 class WorkoutPlanReadyError extends Error {}
 
-type WorkoutPlanReadyConfigType = { plan: Pick<Plans.VO.PlanSummary, "id" | "status"> | null };
+type WorkoutPlanReadyConfigType = { plan: Pick<Plans.VO.PlanSummary, "id"> | null };
 
 class WorkoutPlanReadyFactory extends bg.Invariant<WorkoutPlanReadyConfigType> {
   passes(config: WorkoutPlanReadyConfigType) {

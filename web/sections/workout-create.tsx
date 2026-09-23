@@ -12,7 +12,7 @@ export function WorkoutCreate() {
   const t = bg.useTranslations();
   const router = useRouter();
   const navigate = workoutsRoute.useNavigate();
-  const { plan, workouts } = workoutsRoute.useLoaderData();
+  const { workouts } = workoutsRoute.useLoaderData();
 
   const workoutCreate = bg.useToggle({ name: "workout-create" });
   const workoutCreateCustomDate = bg.useToggle({ name: "workout-create-custom-date" });
@@ -21,7 +21,10 @@ export function WorkoutCreate() {
     name: "scheduledFor",
     defaultValue: DateFormat.addDays(DateFormat.todayISO(), 3),
   });
-  const planSectionId = bg.useTextField({ name: "planSectionId", defaultValue: plan?.sections[0]?.id ?? "" });
+  const planSectionId = bg.useTextField({
+    name: "planSectionId",
+    defaultValue: workouts.plan?.sections[0]?.id ?? "",
+  });
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -29,7 +32,7 @@ export function WorkoutCreate() {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({
-          planId: plan?.id,
+          planId: workouts.plan?.id,
           planSectionId: planSectionId.value,
           scheduledFor: scheduledFor.value,
         }),
@@ -82,9 +85,9 @@ export function WorkoutCreate() {
       <ui.Dialog {...workoutCreate}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutCreate.disable])}>
           {t("workout.create.toggle.cta")}
-          {plan && (
+          {workouts.plan && (
             <span data-color="neutral-500" data-fw="regular" data-ml="2">
-              · {plan.name}
+              · {workouts.plan.name}
             </span>
           )}
         </ui.DialogHeader>
@@ -95,7 +98,7 @@ export function WorkoutCreate() {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.section}
         >
-          {plan && <WorkoutSectionPicker field={planSectionId} sections={plan.sections} />}
+          {workouts.plan && <WorkoutSectionPicker field={planSectionId} sections={workouts.plan.sections} />}
 
           <WorkoutDatePicker field={scheduledFor} {...workoutCreateCustomDate} />
 

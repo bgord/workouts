@@ -11,7 +11,6 @@ import {
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
-import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import { WorkoutListFilterOptions } from "../modules/workouts/value-objects/workout-list-filter-options";
 import {
   Avatar,
@@ -88,14 +87,7 @@ export const workoutsRoute = createRoute({
   }),
   loaderDeps: ({ search }) => search,
   loader: async ({ context, deps }) => {
-    const plans = await Plans.list(context.request);
-    const finalized = plans.data.active.find((plan) => plan.status === PlanStatusEnum.finalized);
-    const plan = finalized ? await Plans.get(context.request, { planId: finalized.id }) : null;
-
-    return {
-      workouts: await Workouts.list(context.request, deps),
-      plan: plan?.data ?? null,
-    };
+    return { workouts: await Workouts.list(context.request, deps) };
   },
 });
 

@@ -372,6 +372,18 @@ export const workoutSummary: Workouts.VO.WorkoutSummary = {
   revision: revision.value,
 };
 
+export const workoutListPlan: Workouts.Queries.WorkoutListPlan = {
+  id: planId,
+  name: planName,
+  sections: [
+    {
+      id: planSectionId,
+      name: planSectionName,
+      exerciseInstructions: [{ id: exerciseInstructionId, exercise: { name: exerciseName } }],
+    },
+  ],
+};
+
 export const anotherWorkoutExerciseId = v.parse(
   Workouts.VO.WorkoutExerciseId,
   "6b2e4a17-9c05-4d3f-8a61-0e7d2f4b5c93",

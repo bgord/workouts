@@ -23,7 +23,12 @@ export class Workouts {
     });
 
     if (!response?.ok)
-      return { data: [], sections: [], actions: { create: { available: true, enabled: false, hints: [] } } };
+      return {
+        data: [],
+        sections: [],
+        plan: null,
+        actions: { create: { available: true, enabled: false, hints: [] } },
+      };
     return response.json().catch();
   }
 

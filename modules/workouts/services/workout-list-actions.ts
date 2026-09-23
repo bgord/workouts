@@ -6,7 +6,7 @@ import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 
 type WorkoutListActionsFacts = {
-  plan: Pick<Plans.VO.PlanSummary, "id" | "status"> | null;
+  plan: Pick<Plans.VO.PlanSummary, "id"> | null;
   draftCount: tools.IntegerNonNegativeType;
 };
 

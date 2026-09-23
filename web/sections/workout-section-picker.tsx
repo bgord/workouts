@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
-import type { PlanSection } from "../../modules/plans/queries/get-plan";
+import type { WorkoutListPlanSection } from "../../modules/workouts/queries/list-workouts";
 import * as ui from "../components";
 
 export function WorkoutSectionPicker(props: {
-  sections: Array<PlanSection>;
-  field: bg.UseTextFieldReturnType<PlanSection["id"] | "">;
+  sections: ReadonlyArray<WorkoutListPlanSection>;
+  field: bg.UseTextFieldReturnType<WorkoutListPlanSection["id"] | "">;
 }) {
   const t = bg.useTranslations();
 

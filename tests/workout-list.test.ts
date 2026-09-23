@@ -41,6 +41,7 @@ describe(`QUERY ${url}`, async () => {
       spyOn(di.Adapters.Workouts.ListWorkoutsQuery, "execute").mockResolvedValue({
         data: [mocks.workoutSummary],
         sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
+        plan: mocks.workoutListPlan,
         actions: {
           create: { available: true, enabled: false, hints: ["workout.draft.limit.for.owner"] },
         },
@@ -61,6 +62,7 @@ describe(`QUERY ${url}`, async () => {
     expect(json).toEqual({
       data: [mocks.workoutSummary],
       sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
+      plan: mocks.workoutListPlan,
       actions: { create: { available: true, enabled: false, hints: ["workout.draft.limit.for.owner"] } },
     });
   });
@@ -72,6 +74,7 @@ describe(`QUERY ${url}`, async () => {
       spyOn(di.Adapters.Workouts.ListWorkoutsQuery, "execute").mockResolvedValue({
         data: [],
         sections: [],
+        plan: null,
         actions: { create: { available: true, enabled: true, hints: [] } },
       }),
     );
@@ -90,6 +93,7 @@ describe(`QUERY ${url}`, async () => {
     expect(json).toEqual({
       data: [],
       sections: [],
+      plan: null,
       actions: { create: { available: true, enabled: true, hints: [] } },
     });
   });
