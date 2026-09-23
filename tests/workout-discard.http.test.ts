@@ -1,6 +1,5 @@
 /* cSpell:disable */
 import { describe, expect, spyOn, test } from "bun:test";
-import * as bg from "@bgord/bun";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -18,7 +17,8 @@ describe("DELETE /api/workouts/:workoutId", async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
-    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
+
+    await testcases.assertAuthResponse(response);
   });
 
   test("validation - incorrect workout id", async () => {

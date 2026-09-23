@@ -19,7 +19,8 @@ describe(`POST ${url}`, async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
+
+    await testcases.assertAuthResponse(response);
   });
 
   test("validation - planId - missing", async () => {

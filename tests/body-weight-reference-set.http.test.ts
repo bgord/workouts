@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as bg from "@bgord/bun";
 import * as Measurements from "+measurements";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
@@ -18,10 +17,8 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertAuthResponse(response);
   });
 
   test("validation - incorrect body weight measurement id", async () => {

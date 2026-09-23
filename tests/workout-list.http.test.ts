@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as bg from "@bgord/bun";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
@@ -14,7 +13,8 @@ describe(`QUERY ${url}`, async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "QUERY" }, mocks.ip);
-    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
+
+    await testcases.assertAuthResponse(response);
   });
 
   test("validation - filter - invalid", async () => {

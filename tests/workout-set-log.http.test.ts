@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as bg from "@bgord/bun";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
@@ -18,7 +17,8 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
+;
+    await testcases.assertAuthResponse(response)
   });
 
   test("validation - incorrect workout id", async () => {

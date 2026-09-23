@@ -1,11 +1,11 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as bg from "@bgord/bun";
 import * as Preferences from "+preferences";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
+import * as testcases from "./testcases";
 
 const url = "/api/preferences/weekly-summary/update";
 
@@ -17,10 +17,8 @@ describe(`POST ${url}`, async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-    const json = await response.json();
 
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertAuthResponse(response);
   });
 
   test("validation - empty payload", async () => {
