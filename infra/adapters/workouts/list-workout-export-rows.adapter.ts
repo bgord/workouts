@@ -33,7 +33,7 @@ class ListWorkoutExportRowsQueryDrizzle implements Workouts.Queries.ListWorkoutE
       )
       .orderBy(
         asc(Schema.workouts.completedAt),
-        asc(Schema.workoutExercises.createdAt),
+        asc(Schema.workoutExercises.position),
         asc(Schema.workoutLoggedSets.setNumber),
       );
 
