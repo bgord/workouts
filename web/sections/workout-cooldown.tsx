@@ -53,7 +53,7 @@ export function WorkoutCooldown() {
         </div>
 
         {workoutCooldownExpanded.on && (
-          <span className="c-prose" data-pl="8" data-ws="pre-line">
+          <span className="c-prose" data-pl="8">
             {workout.data.planSectionCooldown}
           </span>
         )}

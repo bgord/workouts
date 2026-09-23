@@ -37,9 +37,7 @@ export function PlanSectionWarmup(props: PlanSection) {
       <div data-stack="y" {...ui.Gap.field} data-mb="3">
         <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
 
-        <p className="c-prose" data-ws="pre-line">
-          {props.warmup}
-        </p>
+        <p className="c-prose">{props.warmup}</p>
       </div>
     );
   }
@@ -83,9 +81,7 @@ export function PlanSectionWarmup(props: PlanSection) {
         >
           <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
 
-          <span className="c-prose" data-ws="pre-line">
-            {props.warmup}
-          </span>
+          <span className="c-prose">{props.warmup}</span>
         </button>
       )}
 

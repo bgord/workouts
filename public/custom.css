@@ -68,10 +68,6 @@ a {
   text-decoration: none;
 }
 
-[data-ws="pre-line"] {
-  white-space: pre-line;
-}
-
 .chart-point {
   visibility: hidden;
 }

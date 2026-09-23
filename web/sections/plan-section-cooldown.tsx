@@ -37,9 +37,7 @@ export function PlanSectionCooldown(props: PlanSection) {
       <div data-stack="y" {...ui.Gap.field} data-mt="3">
         <ui.Eyebrow>{t("plan.section.cooldown.label")}</ui.Eyebrow>
 
-        <p className="c-prose" data-ws="pre-line">
-          {props.cooldown}
-        </p>
+        <p className="c-prose">{props.cooldown}</p>
       </div>
     );
   }
@@ -83,9 +81,7 @@ export function PlanSectionCooldown(props: PlanSection) {
         >
           <ui.Eyebrow>{t("plan.section.cooldown.label")}</ui.Eyebrow>
 
-          <span className="c-prose" data-ws="pre-line">
-            {props.cooldown}
-          </span>
+          <span className="c-prose">{props.cooldown}</span>
         </button>
       )}
 
