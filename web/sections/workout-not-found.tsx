@@ -14,7 +14,7 @@ export function WorkoutNotFound() {
         <div data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack search={search} to="/workouts" />
 
-          <ui.Header>{t("workout.not_found")}</ui.Header>
+          <h1>{t("workout.not_found")}</h1>
         </div>
 
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>

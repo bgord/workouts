@@ -12,7 +12,7 @@ export function Catalog() {
   return (
     <ui.Main>
       <div data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
-        <ui.Header data-grow="1">{t("exercise.catalog.header")}</ui.Header>
+        <h1 data-grow="1">{t("exercise.catalog.header")}</h1>
 
         <div data-md-width="100%" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           <ExerciseCategoryManage />

@@ -13,7 +13,7 @@ export function ExerciseNotFound() {
         <div data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack search={Form.default} to="/catalog" />
 
-          <ui.Header>{t("exercise.not_found")}</ui.Header>
+          <h1>{t("exercise.not_found")}</h1>
         </div>
 
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>

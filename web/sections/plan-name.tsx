@@ -31,11 +31,11 @@ export function PlanName() {
     },
   });
 
-  if (!plan.actions.rename.available) return <ui.Header data-minw="0">{plan.data.name}</ui.Header>;
+  if (!plan.actions.rename.available) return <h1 data-minw="0">{plan.data.name}</h1>;
 
   if (planRename.off) {
     return (
-      <ui.Header data-minw="0">
+      <h1 data-minw="0">
         <button
           data-cursor="pointer"
           data-maxw="100%"
@@ -47,7 +47,7 @@ export function PlanName() {
         >
           {plan.data.name}
         </button>
-      </ui.Header>
+      </h1>
     );
   }
 

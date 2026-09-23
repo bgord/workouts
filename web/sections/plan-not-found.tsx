@@ -12,7 +12,7 @@ export function PlanNotFound() {
         <div data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack to="/plans" />
 
-          <ui.Header>{t("plan.not_found")}</ui.Header>
+          <h1>{t("plan.not_found")}</h1>
         </div>
 
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>

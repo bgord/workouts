@@ -12,7 +12,7 @@ export function Plans() {
   return (
     <ui.Main>
       <div data-stack="x" {...ui.Gap.related}>
-        <ui.Header data-grow="1">{t("plan.list.header")}</ui.Header>
+        <h1 data-grow="1">{t("plan.list.header")}</h1>
 
         <PlanCreate />
       </div>

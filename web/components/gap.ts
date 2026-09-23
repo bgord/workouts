@@ -10,7 +10,7 @@ export const Gap = {
   // (filters, search + counter), eyebrow → content (dashboard tiles), sm icon + text
   // (ActionHint, Logo, profile card headings, DialogStatus/DialogError), inline form → Output
   cluster: { "data-gap": "2" },
-  // Row items (index + image + body + controls), header rows (ButtonBack + Header + actions),
+  // Row items (index + image + body + controls), header rows (ButtonBack + h1 + actions),
   // h2 → content, card content (profile cards, ExerciseCard, DialogHeader),
   // stats tiles (BodyWeightStats, ExerciseStats), dialog info + status, chart header
   related: { "data-gap": "3" },

@@ -29,15 +29,15 @@ export function ExerciseName() {
 
   if (!exercise.actions.update.available) {
     return (
-      <ui.Header data-grow="1" data-minw="0">
+      <h1 data-grow="1" data-minw="0">
         {exercise.data.name}
-      </ui.Header>
+      </h1>
     );
   }
 
   if (exerciseNameUpdate.off) {
     return (
-      <ui.Header data-grow="1" data-minw="0">
+      <h1 data-grow="1" data-minw="0">
         <button
           data-cursor="pointer"
           data-maxw="100%"
@@ -49,7 +49,7 @@ export function ExerciseName() {
         >
           {exercise.data.name}
         </button>
-      </ui.Header>
+      </h1>
     );
   }
 

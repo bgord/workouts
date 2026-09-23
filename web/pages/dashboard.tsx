@@ -11,7 +11,7 @@ export function Dashboard() {
 
   return (
     <ui.Main>
-      <ui.Header>{t("dashboard.header")}</ui.Header>
+      <h1>{t("dashboard.header")}</h1>
 
       <DashboardEmpty />
 

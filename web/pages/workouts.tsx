@@ -11,7 +11,7 @@ export function Workouts() {
   return (
     <ui.Main>
       <div data-stack="x" {...ui.Gap.related}>
-        <ui.Header data-grow="1">{t("workout.list.header")}</ui.Header>
+        <h1 data-grow="1">{t("workout.list.header")}</h1>
 
         <WorkoutCreate />
       </div>

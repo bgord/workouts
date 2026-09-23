@@ -32,9 +32,9 @@ export function Workout() {
           <ui.ButtonBack search={search} to="/workouts" />
 
           <div data-basis="0" data-grow="1" data-minw="0" data-stack="x" {...ui.Gap.related}>
-            <ui.Header>
+            <h1>
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
-            </ui.Header>
+            </h1>
 
             <ui.WorkoutStatusBadge status={workout.data.status} />
           </div>

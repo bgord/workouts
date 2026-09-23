@@ -21,7 +21,6 @@ export * from "./exercise-picker";
 export * from "./eyebrow";
 export * from "./gap";
 export * from "./hairline";
-export * from "./header";
 export * from "./icon-button";
 export * from "./kbd";
 export * from "./language-selector";
