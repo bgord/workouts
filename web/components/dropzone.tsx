@@ -9,7 +9,7 @@ export function Dropzone(props: React.JSX.IntrinsicElements["label"] & DropzoneF
 
   return (
     <label
-      data-bc="neutral-700"
+      data-bc="alpha-medium"
       data-br="md"
       data-bs={file.isSelected ? "solid" : "dashed"}
       data-bw="hairline"

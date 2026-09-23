@@ -28,7 +28,7 @@ export function Stepper(props: {
 
   return (
     <div
-      data-bc="neutral-800"
+      data-bc="alpha-medium"
       data-br="md"
       data-bs="solid"
       data-bw="hairline"

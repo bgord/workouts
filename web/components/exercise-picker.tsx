@@ -43,7 +43,7 @@ export function ExercisePicker(props: {
 
       <ul
         aria-label={t("exercise.picker.label")}
-        data-bc="neutral-800"
+        data-bc="alpha-medium"
         data-br="md"
         data-bs="solid"
         data-bw="hairline"

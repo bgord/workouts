@@ -89,7 +89,7 @@ function NavigationMobileDrawer() {
 
   return (
     <nav
-      data-bct="neutral-800"
+      data-bct="alpha-medium"
       data-bg="neutral-950"
       data-bottom="0"
       data-bst="solid"

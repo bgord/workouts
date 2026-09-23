@@ -141,7 +141,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
         >
           {planSectionExerciseInstructionPick.off && exercise && (
             <button
-              data-bc="neutral-800"
+              data-bc="alpha-medium"
               data-br="md"
               data-bw="hairline"
               data-color="neutral-100"

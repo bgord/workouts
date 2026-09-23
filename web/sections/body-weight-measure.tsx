@@ -59,7 +59,7 @@ export function BodyWeightMeasure() {
         leading={
           <input
             className="c-input"
-            data-bcr="neutral-800"
+            data-bcr="alpha-medium"
             data-br="none"
             data-bs="none"
             data-bsr="solid"

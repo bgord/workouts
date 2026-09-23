@@ -14,7 +14,7 @@ export function WorkoutWarmup() {
 
   return (
     <div
-      data-bc="neutral-850"
+      data-bc="alpha-soft"
       data-br="md"
       data-bs="dashed"
       data-bw="hairline"
@@ -23,7 +23,7 @@ export function WorkoutWarmup() {
     >
       <button
         aria-label={t("workout.warmup.toggle")}
-        data-bc="neutral-800"
+        data-bc="alpha-medium"
         data-br="md"
         data-bw="hairline"
         data-cursor="pointer"

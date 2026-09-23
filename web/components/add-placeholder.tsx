@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 export function AddPlaceholder(props: React.JSX.IntrinsicElements["div"]) {
   return (
     <div
-      data-bc="neutral-700"
+      data-bc="alpha-medium"
       data-br="sm"
       data-bs="dashed"
       data-bw="hairline"

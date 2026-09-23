@@ -22,7 +22,7 @@ export function Avatar(props: { size: AvatarSize }) {
   return (
     <img
       alt=""
-      data-bc="neutral-700"
+      data-bc="alpha-medium"
       data-br="pill"
       data-bs="solid"
       data-bw="thin"
