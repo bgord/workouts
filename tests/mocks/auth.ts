@@ -10,7 +10,6 @@ export const userId = v.parse(bg.UUID, "592ddbc7-9d8f-4677-9f7c-14d88800eea7");
 export const anotherUserId = v.parse(bg.UUID, "c9371ccb-b4dd-4f4c-a03e-3bd9fcba816a");
 
 export const email = v.parse(tools.Email, "user@example.com");
-export const contact = { type: "email", address: email } as const;
 export const anotherEmail = "another@example.com";
 
 export const userStream = v.parse(bg.EventStream, `user_${userId}`);

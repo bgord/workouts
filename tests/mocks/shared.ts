@@ -10,7 +10,6 @@ export const correlationId = v.parse(bg.CorrelationId, "00000000-0000-0000-0000-
 export const commit = bg.CommitSha.fromString("a".repeat(40)).value;
 export const revision = new tools.Revision(0);
 
-export const historyId = v.parse(bg.UUID, "bd639ce1-155b-4a99-b423-0c41eaa0e330");
 export const temporaryFileId = v.parse(bg.UUID, "738d1d64-0828-437e-a979-3dcebafe841a");
 
 export const T0 = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-01T00:00:00Z"));
@@ -48,14 +47,6 @@ export const head = {
 };
 
 export const passageOfTimeStream = v.parse(bg.EventStream, "passage_of_time");
-
-export const IntentionalError = "intentional.error" as const;
-export const throwIntentionalError = () => {
-  throw new Error(IntentionalError);
-};
-export const throwIntentionalErrorAsync = async () => {
-  throw new Error(IntentionalError);
-};
 
 export const stream = () => new ReadableStream({ start: (controller) => controller.close() });
 

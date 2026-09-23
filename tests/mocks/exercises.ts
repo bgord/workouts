@@ -24,8 +24,6 @@ export const anotherExerciseDescription = v.parse(
   Exercises.VO.ExerciseDescription,
   "Press the barbell upwards, while lying on the bench.",
 );
-export const anotherExerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
-
 export const exercise: Exercises.VO.Exercise = {
   id: exerciseId,
   name: exerciseName,
