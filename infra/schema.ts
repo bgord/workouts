@@ -352,6 +352,22 @@ export const workoutLoggedSets = sqliteTable(
   ],
 );
 
+export const workoutsRelations = relations(workouts, ({ many }) => ({
+  exercises: many(workoutExercises),
+}));
+
+export const workoutExercisesRelations = relations(workoutExercises, ({ one, many }) => ({
+  workout: one(workouts, { fields: [workoutExercises.workoutId], references: [workouts.id] }),
+  loggedSets: many(workoutLoggedSets),
+}));
+
+export const workoutLoggedSetsRelations = relations(workoutLoggedSets, ({ one }) => ({
+  workoutExercise: one(workoutExercises, {
+    fields: [workoutLoggedSets.workoutExerciseId],
+    references: [workoutExercises.id],
+  }),
+}));
+
 export const bodyWeightMeasurements = sqliteTable(
   "bodyWeightMeasurements",
   {
