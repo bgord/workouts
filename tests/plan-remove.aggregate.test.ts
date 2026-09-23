@@ -11,7 +11,7 @@ describe("Plan.remove", async () => {
   test("PlanIsRemovable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      mocks.planFinalizedHistory,
       deps,
     );
 
@@ -35,7 +35,7 @@ describe("Plan.remove", async () => {
   test("happy path - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      mocks.planArchivedHistory,
       deps,
     );
 

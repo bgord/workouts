@@ -1,5 +1,5 @@
 import type * as tools from "@bgord/tools";
-import { ActionBlocker, ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as Queries from "+exercises/queries";
 import type * as VO from "+exercises/value-objects";
@@ -21,19 +21,19 @@ export class ExerciseGetActions {
     const managed = CatalogIsManagedByAdmin.passes({ requesterId: this.facts.requesterId });
 
     return {
-      update: ActionState.of(managed),
-      imageChange: ActionState.of(managed),
-      delete: ActionState.of(managed, [
-        ActionBlocker.from(ExerciseIsNotUsed, { count: this.facts.usageCount }),
+      update: bg.ActionState.of(managed),
+      imageChange: bg.ActionState.of(managed),
+      delete: bg.ActionState.of(managed, [
+        bg.ActionBlocker.from(ExerciseIsNotUsed, { count: this.facts.usageCount }),
       ]),
-      categoryAssign: ActionState.of(managed, [
-        ActionBlocker.from(ExerciseCategoryLimit, { exerciseCategories: this.facts.categories }),
+      categoryAssign: bg.ActionState.of(managed, [
+        bg.ActionBlocker.from(ExerciseCategoryLimit, { exerciseCategories: this.facts.categories }),
         {
           passes: this.facts.assignableCategories.length > 0,
           hint: "exercise.category.assign.blocked.none_left",
         },
       ]),
-      categoryUnassign: ActionState.of(managed),
+      categoryUnassign: bg.ActionState.of(managed),
     };
   }
 }

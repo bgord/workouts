@@ -1,4 +1,4 @@
-import { ActionBlocker, ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Queries from "+plans/queries";
 import type * as VO from "+plans/value-objects";
 import { PlanIsEditable } from "../invariants/plan-is-editable";
@@ -14,8 +14,8 @@ export class PlanGetSectionActions {
 
   calculate(): Queries.PlanSectionActions {
     return {
-      exerciseInstructionAdd: ActionState.of(PlanIsEditable.passes({ status: this.facts.status }), [
-        ActionBlocker.from(PlanSectionExerciseInstructionLimit, { planSection: this.facts.section }),
+      exerciseInstructionAdd: bg.ActionState.of(PlanIsEditable.passes({ status: this.facts.status }), [
+        bg.ActionBlocker.from(PlanSectionExerciseInstructionLimit, { planSection: this.facts.section }),
       ]),
     };
   }

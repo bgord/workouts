@@ -1,15 +1,15 @@
-import type { ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as VO from "+plans/value-objects";
 
-export type PlanSectionActions = { exerciseInstructionAdd: ActionState };
+export type PlanSectionActions = { exerciseInstructionAdd: bg.ActionState };
 
 export type ExerciseInstructionActions = {
-  update: ActionState;
-  exerciseChange: ActionState;
-  moveUp: ActionState;
-  moveDown: ActionState;
-  remove: ActionState;
+  update: bg.ActionState;
+  exerciseChange: bg.ActionState;
+  moveUp: bg.ActionState;
+  moveDown: bg.ActionState;
+  remove: bg.ActionState;
 };
 
 export type PlanExerciseInstruction = VO.ExerciseInstructionWithExercise & {
@@ -24,18 +24,18 @@ export type PlanSection = Omit<VO.PlanSectionWithExercises, "exerciseInstruction
 export type PlanGetResponse = {
   data: Omit<VO.Plan, "sections"> & { sections: Array<PlanSection> };
   actions: {
-    finalize: ActionState;
-    rename: ActionState;
-    descriptionSet: ActionState;
-    editingEnable: ActionState;
-    archive: ActionState;
-    restore: ActionState;
-    remove: ActionState;
-    sectionCreate: ActionState;
-    sectionRename: ActionState;
-    sectionWarmupSet: ActionState;
-    sectionCooldownSet: ActionState;
-    sectionRemove: ActionState;
+    finalize: bg.ActionState;
+    rename: bg.ActionState;
+    descriptionSet: bg.ActionState;
+    editingEnable: bg.ActionState;
+    archive: bg.ActionState;
+    restore: bg.ActionState;
+    remove: bg.ActionState;
+    sectionCreate: bg.ActionState;
+    sectionRename: bg.ActionState;
+    sectionWarmupSet: bg.ActionState;
+    sectionCooldownSet: bg.ActionState;
+    sectionRemove: bg.ActionState;
   };
 };
 

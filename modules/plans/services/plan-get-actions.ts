@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { ActionBlocker, ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Queries from "+plans/queries";
 import type * as VO from "+plans/value-objects";
 import { PlanHasNoEmptySections } from "../invariants/plan-has-no-empty-sections";
@@ -25,27 +25,27 @@ export class PlanGetActions {
     const editable = PlanIsEditable.passes({ status: this.facts.status });
 
     return {
-      finalize: ActionState.of(editable, [
-        ActionBlocker.from(PlanHasSections, { planSections: this.facts.sections }),
-        ActionBlocker.from(PlanHasNoEmptySections, { planSections: this.facts.sections }),
+      finalize: bg.ActionState.of(editable, [
+        bg.ActionBlocker.from(PlanHasSections, { planSections: this.facts.sections }),
+        bg.ActionBlocker.from(PlanHasNoEmptySections, { planSections: this.facts.sections }),
       ]),
-      rename: ActionState.of(editable),
-      descriptionSet: ActionState.of(editable),
-      editingEnable: ActionState.of(PlanIsFinalized.passes({ status: this.facts.status })),
-      archive: ActionState.of(PlanIsArchivable.passes({ status: this.facts.status })),
-      restore: ActionState.of(PlanIsRestorable.passes({ status: this.facts.status }), [
-        ActionBlocker.from(PlanLimitForOwner, { count: this.facts.activeCount }),
+      rename: bg.ActionState.of(editable),
+      descriptionSet: bg.ActionState.of(editable),
+      editingEnable: bg.ActionState.of(PlanIsFinalized.passes({ status: this.facts.status })),
+      archive: bg.ActionState.of(PlanIsArchivable.passes({ status: this.facts.status })),
+      restore: bg.ActionState.of(PlanIsRestorable.passes({ status: this.facts.status }), [
+        bg.ActionBlocker.from(PlanLimitForOwner, { count: this.facts.activeCount }),
       ]),
-      remove: ActionState.of(PlanIsRemovable.passes({ status: this.facts.status })),
-      sectionCreate: ActionState.of(editable, [
-        ActionBlocker.from(PlanSectionLimitForPlan, {
+      remove: bg.ActionState.of(PlanIsRemovable.passes({ status: this.facts.status })),
+      sectionCreate: bg.ActionState.of(editable, [
+        bg.ActionBlocker.from(PlanSectionLimitForPlan, {
           count: tools.Int.nonNegative(this.facts.sections.length),
         }),
       ]),
-      sectionRename: ActionState.of(editable),
-      sectionWarmupSet: ActionState.of(editable),
-      sectionCooldownSet: ActionState.of(editable),
-      sectionRemove: ActionState.of(editable),
+      sectionRename: bg.ActionState.of(editable),
+      sectionWarmupSet: bg.ActionState.of(editable),
+      sectionCooldownSet: bg.ActionState.of(editable),
+      sectionRemove: bg.ActionState.of(editable),
     };
   }
 }

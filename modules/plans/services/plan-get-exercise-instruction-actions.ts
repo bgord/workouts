@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import { ActionBlocker, ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Queries from "+plans/queries";
 import * as VO from "+plans/value-objects";
 import { PlanIsEditable } from "../invariants/plan-is-editable";
@@ -23,22 +23,22 @@ export class PlanGetExerciseInstructionActions {
     );
 
     return {
-      update: ActionState.of(editable),
-      exerciseChange: ActionState.of(editable),
-      moveUp: ActionState.of(editable, [
-        ActionBlocker.from(PlanSectionExerciseInstructionPositionHasChanged, {
+      update: bg.ActionState.of(editable),
+      exerciseChange: bg.ActionState.of(editable),
+      moveUp: bg.ActionState.of(editable, [
+        bg.ActionBlocker.from(PlanSectionExerciseInstructionPositionHasChanged, {
           planSection: this.facts.section,
           exerciseInstructionId: this.facts.exerciseInstructionId,
           position: v.parse(VO.ExerciseInstructionPosition, Math.max(current - 1, 0)),
         }),
       ]),
-      moveDown: ActionState.of(editable, [
-        ActionBlocker.from(PlanSectionExerciseInstructionPositionInRange, {
+      moveDown: bg.ActionState.of(editable, [
+        bg.ActionBlocker.from(PlanSectionExerciseInstructionPositionInRange, {
           planSection: this.facts.section,
           position: v.parse(VO.ExerciseInstructionPosition, current + 1),
         }),
       ]),
-      remove: ActionState.of(editable),
+      remove: bg.ActionState.of(editable),
     };
   }
 }

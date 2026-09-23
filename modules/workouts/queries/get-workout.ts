@@ -1,18 +1,18 @@
-import type { ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as VO from "+workouts/value-objects";
 import type { ExercisePerformance } from "./list-exercise-performances";
 
 export type WorkoutExerciseActions = {
-  targetSet: ActionState;
-  remove: ActionState;
-  moveUp: ActionState;
-  moveDown: ActionState;
-  setLog: ActionState;
+  targetSet: bg.ActionState;
+  remove: bg.ActionState;
+  moveUp: bg.ActionState;
+  moveDown: bg.ActionState;
+  setLog: bg.ActionState;
 };
 
-export type LoggedSetActions = { correct: ActionState; remove: ActionState };
+export type LoggedSetActions = { correct: bg.ActionState; remove: bg.ActionState };
 
 export type LoggedSet = Omit<VO.LoggedSetType, "rir"> & { rir: VO.RirType | null; actions: LoggedSetActions };
 
@@ -33,13 +33,13 @@ export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> 
 export type WorkoutGetResponse = {
   data: Omit<VO.Workout, "exercises"> & { exercises: Array<WorkoutExercise> };
   actions: {
-    start: ActionState;
-    complete: ActionState;
-    discard: ActionState;
-    exerciseAdd: ActionState;
-    noteSet: ActionState;
-    reschedule: ActionState;
-    reorder: ActionState;
+    start: bg.ActionState;
+    complete: bg.ActionState;
+    discard: bg.ActionState;
+    exerciseAdd: bg.ActionState;
+    noteSet: bg.ActionState;
+    reschedule: bg.ActionState;
+    reorder: bg.ActionState;
   };
 };
 

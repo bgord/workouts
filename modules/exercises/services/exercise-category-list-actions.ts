@@ -1,4 +1,4 @@
-import { ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as Queries from "+exercises/queries";
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
@@ -12,10 +12,10 @@ export class ExerciseCategoryListActions {
     const managed = CatalogIsManagedByAdmin.passes({ requesterId: this.facts.requesterId });
 
     return {
-      manage: ActionState.of(managed),
-      add: ActionState.of(managed),
-      rename: ActionState.of(managed),
-      delete: ActionState.of(managed),
+      manage: bg.ActionState.of(managed),
+      add: bg.ActionState.of(managed),
+      rename: bg.ActionState.of(managed),
+      delete: bg.ActionState.of(managed),
     };
   }
 }

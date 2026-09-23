@@ -1,10 +1,10 @@
-import type { ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as VO from "+exercises/value-objects";
 
 export type ExerciseCategoryListResponse = {
   data: ReadonlyArray<VO.ExerciseCategory>;
-  actions: { manage: ActionState; add: ActionState; rename: ActionState; delete: ActionState };
+  actions: { manage: bg.ActionState; add: bg.ActionState; rename: bg.ActionState; delete: bg.ActionState };
 };
 
 export interface ListExerciseCategories {

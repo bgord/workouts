@@ -1,5 +1,5 @@
 import type * as tools from "@bgord/tools";
-import { ActionBlocker, ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Queries from "+workouts/queries";
 import type * as VO from "+workouts/value-objects";
 import { WorkoutIsCorrectable } from "../invariants/workout-is-correctable";
@@ -17,9 +17,9 @@ export class WorkoutGetLoggedSetActions {
     const correctable = WorkoutIsCorrectable.passes({ status: this.facts.status });
 
     return {
-      correct: ActionState.of(correctable),
-      remove: ActionState.of(correctable, [
-        ActionBlocker.from(WorkoutRetainsLoggedSets, {
+      correct: bg.ActionState.of(correctable),
+      remove: bg.ActionState.of(correctable, [
+        bg.ActionBlocker.from(WorkoutRetainsLoggedSets, {
           status: this.facts.status,
           count: this.facts.loggedSetCount,
         }),

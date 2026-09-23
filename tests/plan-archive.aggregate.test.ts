@@ -11,7 +11,7 @@ describe("Plan.archive", async () => {
   test("PlanIsArchivable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      mocks.planArchivedHistory,
       deps,
     );
 
@@ -35,7 +35,7 @@ describe("Plan.archive", async () => {
   test("happy path - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      mocks.planFinalizedHistory,
       deps,
     );
 

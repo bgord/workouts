@@ -1,5 +1,5 @@
 import type * as tools from "@bgord/tools";
-import type { ActionState } from "+action-state";
+import * as bg from "@bgord/bun";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
@@ -24,7 +24,7 @@ export type WorkoutListResponse = {
   data: ReadonlyArray<VO.WorkoutSummary>;
   sections: ReadonlyArray<WorkoutSection>;
   plan: WorkoutListPlan | null;
-  actions: { create: ActionState };
+  actions: { create: bg.ActionState };
 };
 
 export interface ListWorkouts {

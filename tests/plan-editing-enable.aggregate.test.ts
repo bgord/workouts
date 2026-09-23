@@ -17,7 +17,7 @@ describe("Plan.enableEditing", async () => {
   test("PlanIsFinalized - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      mocks.planArchivedHistory,
       deps,
     );
 
@@ -27,7 +27,7 @@ describe("Plan.enableEditing", async () => {
   test("PlanBelongsToUser", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      mocks.planFinalizedHistory,
       deps,
     );
 
@@ -37,7 +37,7 @@ describe("Plan.enableEditing", async () => {
   test("happy path", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      mocks.planFinalizedHistory,
       deps,
     );
 

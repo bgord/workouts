@@ -3,7 +3,6 @@ import { expect } from "bun:test";
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-import type { ActionState } from "+action-state";
 
 export const correlationId = v.parse(bg.CorrelationId, "00000000-0000-0000-0000-000000000000");
 
@@ -28,9 +27,9 @@ export const revisionHeaders = (revision = 0) => ({
 });
 export const correlationIdHeaders = { "correlation-id": correlationId };
 
-export const actionAvailable: ActionState = { available: true, enabled: true, hints: [] };
+export const actionAvailable: bg.ActionState = { available: true, enabled: true, hints: [] };
 
-export const actionUnavailable: ActionState = { available: false, enabled: false, hints: [] };
+export const actionUnavailable: bg.ActionState = { available: false, enabled: false, hints: [] };
 
 export const etag = bg.Hash.fromString("0000000000000000000000000000000000000000000000000000000000000000");
 

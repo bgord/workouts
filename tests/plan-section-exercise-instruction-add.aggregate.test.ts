@@ -12,7 +12,7 @@ describe("Plan.addSectionExerciseInstruction", async () => {
   test("PlanIsEditable - archived", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanArchivedEvent],
+      mocks.planArchivedHistory,
       deps,
     );
 
@@ -24,7 +24,7 @@ describe("Plan.addSectionExerciseInstruction", async () => {
   test("PlanIsEditable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
-      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
+      mocks.planFinalizedHistory,
       deps,
     );
 
