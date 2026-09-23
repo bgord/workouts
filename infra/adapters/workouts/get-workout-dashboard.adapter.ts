@@ -1,5 +1,6 @@
 import * as tools from "@bgord/tools";
 import { and, asc, desc, eq, gte } from "drizzle-orm";
+import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
@@ -12,7 +13,12 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
     now: tools.Timestamp,
   ): Promise<Workouts.Queries.WorkoutDashboardResponse> {
     const today = now.toZonedDateTimeUTC().startOfDay();
-    const yearStart = tools.Timestamp.fromInstant(today.with({ month: 1, day: 1 }).toInstant()).ms;
+    const yearStart = v.parse(
+      Workouts.VO.WorkoutScheduledFor,
+      tools.Day.fromTimestamp(
+        tools.Timestamp.fromInstant(today.with({ month: 1, day: 1 }).toInstant()),
+      ).toIsoId(),
+    );
 
     const withStatus = (status: Workouts.VO.WorkoutStatusEnum) =>
       and(eq(Schema.workouts.userId, userId), eq(Schema.workouts.status, status));
@@ -41,7 +47,7 @@ class GetWorkoutDashboardQueryDrizzle implements Workouts.Queries.GetWorkoutDash
           ),
         ),
       ),
-      db.$count(Schema.workouts, and(completed, gte(Schema.workouts.completedAt, yearStart))),
+      db.$count(Schema.workouts, and(completed, gte(Schema.workouts.scheduledFor, yearStart))),
       db.$count(Schema.workouts, completed),
     ]);
 
