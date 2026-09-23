@@ -88,7 +88,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "exercise.exists");
   });
 
   test("ExerciseCategoryExists", async () => {
@@ -99,7 +99,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.category.exists");
+    await testcases.assertErrorResponse(response, 403, "exercise.category.exists");
   });
 
   test("CatalogIsManagedByAdmin", async () => {
@@ -110,7 +110,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.admin");
+    await testcases.assertErrorResponse(response, 403, "catalog.is.managed.by.admin");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -127,7 +127,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.is.not.assigned.to.category");
+    await testcases.assertErrorResponse(response, 403, "exercise.is.not.assigned.to.category");
   });
 
   test("ExerciseCategoryLimit", async () => {
@@ -143,7 +143,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.category.limit");
+    await testcases.assertErrorResponse(response, 403, "exercise.category.limit");
   });
 
   test("happy path", async () => {

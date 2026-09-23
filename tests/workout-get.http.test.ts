@@ -3,6 +3,7 @@ import * as bg from "@bgord/bun";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
+import * as testcases from "./testcases";
 
 const url = `/api/workouts/${mocks.workoutId}`;
 
@@ -12,20 +13,14 @@ describe("GET /api/workouts/:workoutId", async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "GET" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - incorrect workout id", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request("/api/workouts/id", { method: "GET" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("not found", async () => {

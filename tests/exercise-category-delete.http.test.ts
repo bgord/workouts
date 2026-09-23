@@ -39,7 +39,7 @@ describe("DELETE /api/exercises/category/:exerciseCategoryId", async () => {
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
-    await testcases.assertInvariantError(response, 403, "exercise.category.exists");
+    await testcases.assertErrorResponse(response, 403, "exercise.category.exists");
   });
 
   test("CatalogIsManagedByAdmin", async () => {
@@ -52,7 +52,7 @@ describe("DELETE /api/exercises/category/:exerciseCategoryId", async () => {
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.admin");
+    await testcases.assertErrorResponse(response, 403, "catalog.is.managed.by.admin");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

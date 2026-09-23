@@ -68,7 +68,7 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: mocks.anotherExerciseCategoryName }) },
       mocks.ip,
     );
-    await testcases.assertInvariantError(response, 403, "exercise.category.exists");
+    await testcases.assertErrorResponse(response, 403, "exercise.category.exists");
   });
 
   test("CatalogIsManagedByAdmin", async () => {
@@ -85,7 +85,7 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.admin");
+    await testcases.assertErrorResponse(response, 403, "catalog.is.managed.by.admin");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -104,7 +104,7 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
       { method: "PATCH", body: JSON.stringify({ name: mocks.anotherExerciseCategoryName }) },
       mocks.ip,
     );
-    await testcases.assertInvariantError(response, 403, "exercise.category.name.is.unique");
+    await testcases.assertErrorResponse(response, 403, "exercise.category.name.is.unique");
   });
 
   test("happy path", async () => {

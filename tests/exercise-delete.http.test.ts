@@ -41,7 +41,7 @@ describe("DELETE /api/exercises/:exerciseId", async () => {
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "exercise.exists");
   });
 
   test("CatalogIsManagedByAdmin", async () => {
@@ -52,7 +52,7 @@ describe("DELETE /api/exercises/:exerciseId", async () => {
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.admin");
+    await testcases.assertErrorResponse(response, 403, "catalog.is.managed.by.admin");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -67,7 +67,7 @@ describe("DELETE /api/exercises/:exerciseId", async () => {
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "exercise.is.not.used");
+    await testcases.assertErrorResponse(response, 403, "exercise.is.not.used");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

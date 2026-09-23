@@ -46,7 +46,7 @@ describe("POST /api/plans/:planId/finalize", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "plan.exists");
+    await testcases.assertErrorResponse(response, 404, "plan.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -63,7 +63,7 @@ describe("POST /api/plans/:planId/finalize", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    await testcases.assertErrorResponse(response, 403, "plan.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -80,7 +80,7 @@ describe("POST /api/plans/:planId/finalize", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    await testcases.assertErrorResponse(response, 403, "plan.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -97,7 +97,7 @@ describe("POST /api/plans/:planId/finalize", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "plan.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -116,7 +116,7 @@ describe("POST /api/plans/:planId/finalize", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("PlanHasSections", async () => {
@@ -132,7 +132,7 @@ describe("POST /api/plans/:planId/finalize", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.has.sections");
+    await testcases.assertErrorResponse(response, 403, "plan.has.sections");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -149,7 +149,7 @@ describe("POST /api/plans/:planId/finalize", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.has.no.empty.sections");
+    await testcases.assertErrorResponse(response, 403, "plan.has.no.empty.sections");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

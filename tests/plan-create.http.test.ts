@@ -64,7 +64,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.limit.for.owner");
+    await testcases.assertErrorResponse(response, 403, "plan.limit.for.owner");
   });
 
   test("PlanNameIsUniqueForOwner", async () => {
@@ -83,7 +83,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.name.is.unique.for.owner");
+    await testcases.assertErrorResponse(response, 403, "plan.name.is.unique.for.owner");
   });
 
   test("happy path", async () => {

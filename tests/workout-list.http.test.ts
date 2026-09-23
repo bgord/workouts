@@ -4,6 +4,7 @@ import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
+import * as testcases from "./testcases";
 
 const url = "/api/workouts/list";
 
@@ -13,10 +14,7 @@ describe(`QUERY ${url}`, async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "QUERY" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - filter - invalid", async () => {
@@ -28,10 +26,7 @@ describe(`QUERY ${url}`, async () => {
       { method: "QUERY", body: JSON.stringify({ filter: "ok" }) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "workout.list.filter.invalid" });
+    await testcases.assertErrorResponse(response, 400, "workout.list.filter.invalid");
   });
 
   test("happy path", async () => {

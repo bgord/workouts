@@ -134,7 +134,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "body.weight.measured.on.is.not.in.future");
+    await testcases.assertErrorResponse(response, 403, "body.weight.measured.on.is.not.in.future");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

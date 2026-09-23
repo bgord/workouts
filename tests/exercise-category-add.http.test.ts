@@ -61,7 +61,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.category.name.is.unique");
+    await testcases.assertErrorResponse(response, 403, "exercise.category.name.is.unique");
   });
 
   test("happy path", async () => {

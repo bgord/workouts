@@ -110,7 +110,7 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "body.weight.measurement.exists");
+    await testcases.assertErrorResponse(response, 404, "body.weight.measurement.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -134,7 +134,7 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "body.weight.measurement.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "body.weight.measurement.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -155,7 +155,7 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "body.weight.measurement.has.changed");
+    await testcases.assertErrorResponse(response, 403, "body.weight.measurement.has.changed");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -176,7 +176,7 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "body.weight.measured.on.is.not.in.future");
+    await testcases.assertErrorResponse(response, 403, "body.weight.measured.on.is.not.in.future");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

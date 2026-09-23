@@ -17,10 +17,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "PATCH" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - incorrect workout id", async () => {
@@ -31,10 +28,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect workout exercise id", async () => {
@@ -45,10 +39,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - sets - missing", async () => {
@@ -59,10 +50,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.type" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
   test("validation - sets - invalid", async () => {
@@ -73,10 +61,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: 0 }) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
   test("validation - reps - missing", async () => {
@@ -91,10 +76,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.type" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
   test("validation - load - missing", async () => {
@@ -109,10 +91,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "weight.grams.type" });
+    await testcases.assertErrorResponse(response, 400, "weight.grams.type");
   });
 
   test("validation - load - invalid", async () => {
@@ -127,10 +106,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "weight.grams.invalid" });
+    await testcases.assertErrorResponse(response, 400, "weight.grams.invalid");
   });
 
   test("WorkoutExists", async () => {
@@ -150,7 +126,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.exists");
+    await testcases.assertErrorResponse(response, 404, "workout.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -171,7 +147,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.editable");
+    await testcases.assertErrorResponse(response, 403, "workout.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -192,7 +168,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "workout.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -213,7 +189,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -229,7 +205,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("happy path", async () => {

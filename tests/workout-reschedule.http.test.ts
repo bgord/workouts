@@ -18,10 +18,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "PATCH" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - incorrect workout id", async () => {
@@ -32,10 +29,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       { method: "PATCH", body: JSON.stringify({ scheduledFor: mocks.anotherWorkoutScheduledFor }) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - scheduledFor - missing", async () => {
@@ -46,10 +40,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.Type });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
   });
 
   test("validation - scheduledFor - invalid", async () => {
@@ -64,10 +55,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 
   test("WorkoutScheduledForIsWithinHorizon", async () => {
@@ -83,7 +71,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.within.horizon");
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
   });
 
   test("WorkoutScheduledForIsWithinHorizon - past", async () => {
@@ -99,7 +87,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.within.horizon");
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
   });
 
   test("WorkoutExists", async () => {
@@ -119,7 +107,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.exists");
+    await testcases.assertErrorResponse(response, 404, "workout.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -140,7 +128,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.draft");
+    await testcases.assertErrorResponse(response, 403, "workout.is.draft");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -161,7 +149,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "workout.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -182,7 +170,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.has.changed");
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.has.changed");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -202,7 +190,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("happy path", async () => {

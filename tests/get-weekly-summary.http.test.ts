@@ -11,7 +11,7 @@ describe(`GET ${url}`, async () => {
   const di = await bootstrap();
   const server = createServer(di);
 
-  test("AccessDeniedAuthShieldError", async () => {
+  test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 

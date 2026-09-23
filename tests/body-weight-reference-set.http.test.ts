@@ -76,7 +76,7 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "body.weight.measurement.exists");
+    await testcases.assertErrorResponse(response, 404, "body.weight.measurement.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -94,7 +94,7 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "body.weight.measurement.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "body.weight.measurement.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -112,7 +112,7 @@ describe("POST /api/measurements/body-weight/measurement/:bodyWeightMeasurementI
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "body.weight.reference.has.changed");
+    await testcases.assertErrorResponse(response, 403, "body.weight.reference.has.changed");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

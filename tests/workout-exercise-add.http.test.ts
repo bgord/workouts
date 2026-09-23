@@ -28,10 +28,7 @@ describe(`POST ${url}`, async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - exerciseId - missing", async () => {
@@ -42,10 +39,7 @@ describe(`POST ${url}`, async () => {
       { method: "POST", headers: mocks.revisionHeaders(draft.length), body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: bg.UUIDError.Type });
+    await testcases.assertErrorResponse(response, 400, bg.UUIDError.Type);
   });
 
   test("validation - sets - missing", async () => {
@@ -76,7 +70,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.catalog.exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "workout.catalog.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -94,7 +88,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.exists");
+    await testcases.assertErrorResponse(response, 404, "workout.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -112,7 +106,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.editable");
+    await testcases.assertErrorResponse(response, 403, "workout.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -129,7 +123,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "workout.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -150,7 +144,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.exercise.limit");
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.limit");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -166,7 +160,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("happy path", async () => {

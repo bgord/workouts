@@ -19,20 +19,14 @@ describe(`POST ${url}`, async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - planId - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: bg.UUIDError.Type });
+    await testcases.assertErrorResponse(response, 400, bg.UUIDError.Type);
   });
 
   test("validation - planSectionId - missing", async () => {
@@ -43,10 +37,7 @@ describe(`POST ${url}`, async () => {
       { method: "POST", body: JSON.stringify({ planId: mocks.planId }) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: bg.UUIDError.Type });
+    await testcases.assertErrorResponse(response, 400, bg.UUIDError.Type);
   });
 
   test("validation - scheduledFor - missing", async () => {
@@ -60,10 +51,7 @@ describe(`POST ${url}`, async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.Type });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
   });
 
   test("validation - scheduledFor - invalid", async () => {
@@ -81,10 +69,7 @@ describe(`POST ${url}`, async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: tools.DayIsoIdError.BadChars });
+    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 
   test("WorkoutScheduledForIsWithinHorizon", async () => {
@@ -103,7 +88,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.within.horizon");
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
   });
 
   test("WorkoutScheduledForIsWithinHorizon - past", async () => {
@@ -122,7 +107,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.scheduled.for.is.within.horizon");
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
   });
 
   test("WorkoutPlanReady", async () => {
@@ -143,7 +128,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.plan.ready");
+    await testcases.assertErrorResponse(response, 404, "workout.plan.ready");
   });
 
   test("WorkoutPlanSectionReady", async () => {
@@ -164,7 +149,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.plan.section.ready");
+    await testcases.assertErrorResponse(response, 404, "workout.plan.section.ready");
   });
 
   test("WorkoutDraftLimitForOwner", async () => {
@@ -188,7 +173,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.draft.limit.for.owner");
+    await testcases.assertErrorResponse(response, 403, "workout.draft.limit.for.owner");
   });
 
   test("happy path", async () => {

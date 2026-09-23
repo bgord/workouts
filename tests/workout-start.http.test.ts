@@ -18,20 +18,14 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "PATCH" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - incorrect workout id", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request("/api/workouts/id/start", { method: "PATCH" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("WorkoutExists", async () => {
@@ -50,7 +44,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.exists");
+    await testcases.assertErrorResponse(response, 404, "workout.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -70,7 +64,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.in.progress.limit.for.owner");
+    await testcases.assertErrorResponse(response, 403, "workout.in.progress.limit.for.owner");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -90,7 +84,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.draft");
+    await testcases.assertErrorResponse(response, 403, "workout.is.draft");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -110,7 +104,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "workout.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -130,7 +124,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.has.exercises");
+    await testcases.assertErrorResponse(response, 403, "workout.has.exercises");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -150,7 +144,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.exercises.have.targets");
+    await testcases.assertErrorResponse(response, 403, "workout.exercises.have.targets");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -166,7 +160,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("happy path", async () => {

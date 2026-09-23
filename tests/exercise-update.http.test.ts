@@ -107,7 +107,7 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "exercise.exists");
   });
 
   test("CatalogIsManagedByAdmin", async () => {
@@ -128,7 +128,7 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.admin");
+    await testcases.assertErrorResponse(response, 403, "catalog.is.managed.by.admin");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -146,7 +146,7 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.has.changed");
+    await testcases.assertErrorResponse(response, 403, "exercise.has.changed");
   });
 
   test("ExerciseNameIsUnique", async () => {
@@ -166,7 +166,7 @@ describe("PATCH /api/exercises/:exerciseId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.name.is.unique");
+    await testcases.assertErrorResponse(response, 403, "exercise.name.is.unique");
   });
 
   test("happy path - name", async () => {

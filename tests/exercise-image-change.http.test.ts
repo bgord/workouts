@@ -52,7 +52,7 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "exercise.exists");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
@@ -71,7 +71,7 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "catalog.is.managed.by.admin");
+    await testcases.assertErrorResponse(response, 403, "catalog.is.managed.by.admin");
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
@@ -88,7 +88,7 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
 
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
+    await testcases.assertErrorResponse(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
@@ -105,7 +105,7 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
 
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
+    await testcases.assertErrorResponse(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
@@ -122,7 +122,7 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
 
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
+    await testcases.assertErrorResponse(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });
@@ -139,7 +139,7 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
 
     const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 400, "exercise.image.constraints");
+    await testcases.assertErrorResponse(response, 400, "exercise.image.constraints");
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
   });

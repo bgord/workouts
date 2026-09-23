@@ -19,10 +19,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - incorrect workout id", async () => {
@@ -33,10 +30,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       { method: "DELETE" },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect workout exercise id", async () => {
@@ -47,10 +41,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       { method: "DELETE" },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("WorkoutExists", async () => {
@@ -66,7 +57,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.exists");
+    await testcases.assertErrorResponse(response, 404, "workout.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -83,7 +74,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.editable");
+    await testcases.assertErrorResponse(response, 403, "workout.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -99,7 +90,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "workout.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -116,7 +107,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -131,7 +122,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("happy path", async () => {

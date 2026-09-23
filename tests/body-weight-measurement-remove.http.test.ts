@@ -47,7 +47,7 @@ describe("DELETE /api/measurements/body-weight/measurement/:bodyWeightMeasuremen
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 404, "body.weight.measurement.exists");
+    await testcases.assertErrorResponse(response, 404, "body.weight.measurement.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -61,7 +61,7 @@ describe("DELETE /api/measurements/body-weight/measurement/:bodyWeightMeasuremen
 
     const response = await server.request(url, { method: "DELETE" }, mocks.ip);
 
-    await testcases.assertInvariantError(response, 403, "body.weight.measurement.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "body.weight.measurement.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

@@ -3,6 +3,7 @@ import * as bg from "@bgord/bun";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
+import * as testcases from "./testcases";
 
 const url = "/api/workouts/export";
 
@@ -12,10 +13,7 @@ describe(`GET ${url}`, async () => {
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "GET" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("happy path", async () => {

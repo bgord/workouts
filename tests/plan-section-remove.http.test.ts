@@ -64,7 +64,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "plan.exists");
+    await testcases.assertErrorResponse(response, 404, "plan.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -81,7 +81,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    await testcases.assertErrorResponse(response, 403, "plan.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -98,7 +98,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.is.editable");
+    await testcases.assertErrorResponse(response, 403, "plan.is.editable");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -115,7 +115,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "plan.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -135,7 +135,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "plan.section.exists");
+    await testcases.assertErrorResponse(response, 403, "plan.section.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -154,7 +154,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("happy path", async () => {

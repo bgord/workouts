@@ -9,7 +9,11 @@ describe("Workout.removeSet", async () => {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   test("WorkoutIsCorrectable - draft", async () => {
-    const workout = Workouts.Aggregates.Workout.build(mocks.workoutId, mocks.workoutWithExerciseHistory, deps);
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      mocks.workoutWithExerciseHistory,
+      deps,
+    );
 
     expect(() => workout.removeSet(mocks.workoutExerciseId, mocks.loggedSetId, mocks.userId)).toThrow(
       Workouts.Invariants.WorkoutIsCorrectable.error,

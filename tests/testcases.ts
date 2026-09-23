@@ -1,6 +1,6 @@
 import { expect } from "bun:test";
 
-export async function assertInvariantError(response: Response, code: number, message: string) {
+export async function assertErrorResponse(response: Response, code: number, message: string) {
   const json = await response.json();
 
   expect(response.status).toEqual(code);

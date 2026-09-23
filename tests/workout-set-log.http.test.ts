@@ -18,10 +18,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
 
   test("validation - AccessDeniedAuthShieldError", async () => {
     const response = await server.request(url, { method: "POST" }, mocks.ip);
-    const json = await response.json();
-
-    expect(response.status).toEqual(401);
-    expect(json).toEqual({ message: bg.ShieldAuthStrategyError.Rejected });
+    await testcases.assertErrorResponse(response, 401, bg.ShieldAuthStrategyError.Rejected);
   });
 
   test("validation - incorrect workout id", async () => {
@@ -32,10 +29,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - incorrect workout exercise id", async () => {
@@ -46,10 +40,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "uuid.type" });
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("validation - reps - missing", async () => {
@@ -60,10 +51,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.type" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
   test("validation - reps - invalid", async () => {
@@ -74,10 +62,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       { method: "POST", headers: mocks.revisionHeaders(), body: JSON.stringify({ reps: 0 }) },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "integer.positive.invalid" });
+    await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
   test("validation - load - missing", async () => {
@@ -92,10 +77,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "weight.grams.type" });
+    await testcases.assertErrorResponse(response, 400, "weight.grams.type");
   });
 
   test("validation - load - invalid", async () => {
@@ -110,10 +92,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: "weight.grams.invalid" });
+    await testcases.assertErrorResponse(response, 400, "weight.grams.invalid");
   });
 
   test("validation - rir - invalid", async () => {
@@ -128,10 +107,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       },
       mocks.ip,
     );
-    const json = await response.json();
-
-    expect(response.status).toEqual(400);
-    expect(json).toEqual({ message: Workouts.VO.RirError.Range });
+    await testcases.assertErrorResponse(response, 400, Workouts.VO.RirError.Range);
   });
 
   test("WorkoutExists", async () => {
@@ -151,7 +127,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 404, "workout.exists");
+    await testcases.assertErrorResponse(response, 404, "workout.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -172,7 +148,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.in.progress");
+    await testcases.assertErrorResponse(response, 403, "workout.is.in.progress");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -193,7 +169,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    await testcases.assertErrorResponse(response, 403, "workout.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -214,7 +190,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.exercise.exists");
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -230,7 +206,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 412, "revision.mismatch");
+    await testcases.assertErrorResponse(response, 412, "revision.mismatch");
   });
 
   test("happy path", async () => {
