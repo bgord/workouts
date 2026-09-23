@@ -269,7 +269,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       url,
       {
         method: "POST",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify(mocks.loggedSet),
       },
       mocks.ip,
@@ -296,13 +296,13 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
       url,
       {
         method: "POST",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify(mocks.loggedSetWithRir),
       },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutSetLoggedWithRirEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutSetLoggedEventWithRir]);
   });
 });

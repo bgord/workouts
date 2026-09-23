@@ -260,7 +260,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/cooldown", async () =>
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ cooldown: mocks.planSectionCooldown }),
       },
       mocks.ip,
@@ -285,7 +285,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/cooldown", async () =>
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ cooldown: null }),
       },
       mocks.ip,

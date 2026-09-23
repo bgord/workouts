@@ -27,10 +27,6 @@ export const revisionHeaders = (revision = 0) => ({
   "if-match": `W/${v.parse(tools.RevisionValue, revision)}`,
 });
 export const correlationIdHeaders = { "correlation-id": correlationId };
-export const correlationIdAndRevisionHeaders = (revision = 0) => ({
-  "if-match": `W/${v.parse(tools.RevisionValue, revision)}`,
-  "correlation-id": correlationId,
-});
 
 export const actionAvailable: ActionState = { available: true, enabled: true, hints: [] };
 

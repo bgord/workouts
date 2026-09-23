@@ -145,7 +145,11 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
 
     const response = await server.request(
       url,
-      { method: "PATCH", body, headers: mocks.correlationIdAndRevisionHeaders(logged.length) },
+      {
+        method: "PATCH",
+        body,
+        headers: { ...mocks.revisionHeaders(logged.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 
@@ -162,7 +166,11 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
 
     const response = await server.request(
       url,
-      { method: "PATCH", body, headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      {
+        method: "PATCH",
+        body,
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 
@@ -187,13 +195,13 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify(mocks.correctedLoggedSetWithRir),
       },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutSetCorrectedWithRirEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutSetCorrectedEventWithRir]);
   });
 });

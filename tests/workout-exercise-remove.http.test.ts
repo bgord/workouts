@@ -149,7 +149,10 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(draft.length) },
+      {
+        method: "DELETE",
+        headers: { ...mocks.revisionHeaders(draft.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 
@@ -171,7 +174,10 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      {
+        method: "DELETE",
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 
@@ -194,7 +200,10 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId", async ()
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      {
+        method: "DELETE",
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 

@@ -30,7 +30,7 @@ describe("WeeklySummaryScheduler", async () => {
     using _ = spyOn(di.Adapters.Auth.UserDirectoryOHQ, "listActiveUserIds").mockResolvedValue([]);
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
-      policy.onHourHasPassedEvent(mocks.GenericHourHasPassedMondaySixAMEvent),
+      policy.onHourHasPassedEvent(mocks.GenericHourHasPassedEventMondaySixAM),
     );
 
     expect(enqueue).not.toHaveBeenCalled();
@@ -47,7 +47,7 @@ describe("WeeklySummaryScheduler", async () => {
     ]);
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
-      policy.onHourHasPassedEvent(mocks.GenericHourHasPassedMondaySixAMEvent),
+      policy.onHourHasPassedEvent(mocks.GenericHourHasPassedEventMondaySixAM),
     );
 
     expect(enqueue).toHaveBeenCalledTimes(2);
@@ -62,7 +62,7 @@ describe("WeeklySummaryScheduler", async () => {
     ]);
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
-      policy.onHourHasPassedEvent(mocks.GenericHourHasPassedMondaySixAMEvent),
+      policy.onHourHasPassedEvent(mocks.GenericHourHasPassedEventMondaySixAM),
     );
 
     expect(enqueue).toHaveBeenCalledTimes(2);

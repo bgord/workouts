@@ -955,7 +955,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
       ],
       deps,
     );
@@ -969,7 +969,7 @@ describe("Plan", async () => {
       {
         id: mocks.planSectionId,
         name: mocks.planSectionName,
-        exerciseInstructions: [mocks.anotherExerciseInstructionAndIdAndExercise],
+        exerciseInstructions: [mocks.otherExerciseInstructionWithAnotherExercise],
       },
       {
         id: mocks.anotherPlanSectionId,
@@ -1038,7 +1038,7 @@ describe("Plan", async () => {
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
         mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
       ],
       deps,
@@ -1080,7 +1080,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
       ],
       deps,
     );
@@ -1110,7 +1110,7 @@ describe("Plan", async () => {
         name: mocks.planSectionName,
         exerciseInstructions: [
           { ...mocks.exerciseInstruction, sets: mocks.anotherSets },
-          mocks.anotherExerciseInstructionAndId,
+          mocks.otherExerciseInstruction,
         ],
       },
       {
@@ -1284,7 +1284,7 @@ describe("Plan", async () => {
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
         mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
       ],
       deps,
@@ -1325,7 +1325,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
       ],
       deps,
     );
@@ -1345,7 +1345,7 @@ describe("Plan", async () => {
         name: mocks.planSectionName,
         exerciseInstructions: [
           { ...mocks.exerciseInstruction, exerciseId: mocks.anotherExerciseId },
-          mocks.anotherExerciseInstructionAndId,
+          mocks.otherExerciseInstruction,
         ],
       },
       {
@@ -1423,7 +1423,7 @@ describe("Plan", async () => {
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
         mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
       ],
       deps,
@@ -1468,7 +1468,7 @@ describe("Plan", async () => {
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
       ],
       deps,
     );
@@ -1487,7 +1487,7 @@ describe("Plan", async () => {
       {
         id: mocks.planSectionId,
         name: mocks.planSectionName,
-        exerciseInstructions: [mocks.anotherExerciseInstructionAndId, mocks.exerciseInstruction],
+        exerciseInstructions: [mocks.otherExerciseInstruction, mocks.exerciseInstruction],
       },
       {
         id: mocks.anotherPlanSectionId,
@@ -1532,7 +1532,7 @@ describe("Plan", async () => {
       {
         id: mocks.planSectionId,
         name: mocks.planSectionName,
-        exerciseInstructions: [mocks.exerciseInstruction, mocks.anotherExerciseInstructionAndId],
+        exerciseInstructions: [mocks.exerciseInstruction, mocks.otherExerciseInstruction],
       },
     ]);
   });
@@ -1608,7 +1608,7 @@ describe("Plan", async () => {
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEventSecond,
         mocks.GenericPlanSectionCreatedEvent,
-        mocks.GenericAnotherPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
         mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
       ],
       deps,

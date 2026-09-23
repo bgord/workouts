@@ -221,7 +221,7 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ scheduledFor: mocks.anotherWorkoutScheduledFor }),
       },
       mocks.ip,
@@ -242,13 +242,13 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ scheduledFor: mocks.pastWorkoutScheduledFor }),
       },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.PastGenericWorkoutRescheduledEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutRescheduledEventPast]);
   });
 });

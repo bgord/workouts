@@ -27,7 +27,7 @@ describe("PlanGetExerciseInstructionActions", () => {
     const actions = new Plans.Services.PlanGetExerciseInstructionActions({
       status: Plans.VO.PlanStatusEnum.draft,
       section: mocks.planSectionWithTwoExerciseInstructions,
-      exerciseInstructionId: mocks.anotherExerciseInstructionAndId.id,
+      exerciseInstructionId: mocks.otherExerciseInstruction.id,
     });
 
     expect(actions.calculate()).toEqual({

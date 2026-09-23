@@ -84,6 +84,6 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericUserLanguageSetPLEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericUserLanguageSetEventPL]);
   });
 });

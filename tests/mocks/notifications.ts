@@ -21,7 +21,7 @@ import { workoutId, workoutScheduledFor } from "./workouts";
 export const mondaySixAM = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-06T06:00:00Z"));
 export const previousWeekIsoId = tools.Week.fromTimestamp(mondaySixAM).previous().toIsoId();
 
-export const GenericHourHasPassedMondaySixAMEvent = {
+export const GenericHourHasPassedEventMondaySixAM = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,

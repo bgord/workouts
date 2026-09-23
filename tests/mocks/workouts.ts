@@ -258,7 +258,7 @@ export const GenericWorkoutCreatedEvent = {
   },
 } satisfies Workouts.Events.WorkoutCreatedEventType;
 
-export const PastGenericWorkoutCreatedEvent = {
+export const GenericWorkoutCreatedEventPast = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
@@ -299,15 +299,7 @@ export const GenericWorkoutExerciseAddedEvent = {
   },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
-export const workoutExerciseAddedEvent = (): Workouts.Events.WorkoutExerciseAddedEventType => ({
-  ...GenericWorkoutExerciseAddedEvent,
-  payload: {
-    ...GenericWorkoutExerciseAddedEvent.payload,
-    workoutExerciseId: v.parse(Workouts.VO.WorkoutExerciseId, crypto.randomUUID()),
-  },
-});
-
-export const AnotherGenericWorkoutExerciseAddedEvent = {
+export const GenericWorkoutExerciseAddedEventAnother = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
@@ -382,7 +374,7 @@ export const GenericWorkoutSetLoggedEvent = {
   payload: { workoutId, workoutExerciseId, loggedSet, requesterId: userId },
 } satisfies Workouts.Events.WorkoutSetLoggedEventType;
 
-export const GenericWorkoutSetLoggedWithRirEvent = {
+export const GenericWorkoutSetLoggedEventWithRir = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
@@ -401,7 +393,7 @@ export const correctedLoggedSetWithRir = v.parse(Workouts.VO.LoggedSet, {
   rir: v.parse(Workouts.VO.Rir, 1),
 });
 
-export const GenericWorkoutSetCorrectedWithRirEvent = {
+export const GenericWorkoutSetCorrectedEventWithRir = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
@@ -498,7 +490,7 @@ export const GenericWorkoutRescheduledEvent = {
   payload: { workoutId, scheduledFor: anotherWorkoutScheduledFor, requesterId: userId },
 } satisfies Workouts.Events.WorkoutRescheduledEventType;
 
-export const PastGenericWorkoutRescheduledEvent = {
+export const GenericWorkoutRescheduledEventPast = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
@@ -509,7 +501,7 @@ export const PastGenericWorkoutRescheduledEvent = {
   payload: { workoutId, scheduledFor: pastWorkoutScheduledFor, requesterId: userId },
 } satisfies Workouts.Events.WorkoutRescheduledEventType;
 
-export const AnotherGenericWorkoutSetLoggedEvent = {
+export const GenericWorkoutSetLoggedEventAnother = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,

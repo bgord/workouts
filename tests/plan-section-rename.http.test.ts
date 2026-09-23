@@ -171,7 +171,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       {
         method: "POST",
         body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
       },
       mocks.ip,
     );
@@ -192,7 +192,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       {
         method: "POST",
         body: JSON.stringify({ planSectionName: mocks.planSectionName }),
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
       },
       mocks.ip,
     );
@@ -212,7 +212,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       url,
       {
         method: "POST",
-        headers: mocks.correlationIdAndRevisionHeaders(99),
+        headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
       },
       mocks.ip,
@@ -233,7 +233,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       url,
       {
         method: "POST",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
       },
       mocks.ip,

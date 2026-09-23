@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
@@ -142,7 +143,7 @@ describe(`POST ${url}`, async () => {
   test("WorkoutExerciseLimit", async () => {
     const events = [
       mocks.GenericWorkoutCreatedEvent,
-      ...Array.from({ length: Workouts.VO.WorkoutExerciseLimitMax }, mocks.workoutExerciseAddedEvent),
+      ...tools.repeat(mocks.GenericWorkoutExerciseAddedEvent, Workouts.VO.WorkoutExerciseLimitMax),
     ];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -185,7 +186,11 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(draft.length), body },
+      {
+        method: "POST",
+        headers: { ...mocks.revisionHeaders(draft.length), ...mocks.correlationIdHeaders },
+        body,
+      },
       mocks.ip,
     );
 
@@ -211,11 +216,15 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(events.length), body },
+      {
+        method: "POST",
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+        body,
+      },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.AnotherGenericWorkoutExerciseAddedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseAddedEventAnother]);
   });
 });

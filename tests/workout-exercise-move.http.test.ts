@@ -12,7 +12,7 @@ const url = `/api/workouts/${mocks.workoutId}/exercise/${mocks.workoutExerciseId
 const draft = [
   mocks.GenericWorkoutCreatedEvent,
   mocks.GenericWorkoutExerciseAddedEvent,
-  mocks.AnotherGenericWorkoutExerciseAddedEvent,
+  mocks.GenericWorkoutExerciseAddedEventAnother,
 ] as const;
 
 describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/position", async () => {
@@ -110,7 +110,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/position", 
     const events = [
       mocks.GenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseAddedEventAnother,
       mocks.GenericWorkoutExerciseTargetSetEvent,
       mocks.GenericWorkoutStartedEvent,
       mocks.GenericWorkoutSetLoggedEvent,
@@ -245,7 +245,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/position", 
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(draft.length),
+        headers: { ...mocks.revisionHeaders(draft.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
       },
       mocks.ip,
@@ -259,7 +259,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/position", 
     const events = [
       mocks.GenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,
-      mocks.AnotherGenericWorkoutExerciseAddedEvent,
+      mocks.GenericWorkoutExerciseAddedEventAnother,
       mocks.GenericWorkoutExerciseTargetSetEvent,
       mocks.GenericWorkoutStartedEvent,
       mocks.GenericWorkoutSetLoggedEvent,
@@ -273,7 +273,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/position", 
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ position: mocks.anotherWorkoutExercisePosition }),
       },
       mocks.ip,

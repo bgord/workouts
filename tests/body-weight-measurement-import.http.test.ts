@@ -165,6 +165,6 @@ describe(`POST ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenNthCalledWith(1, [mocks.GenericBodyWeightMeasuredEvent]);
-    expect(eventStoreSave).toHaveBeenNthCalledWith(2, [mocks.GenericAnotherBodyWeightMeasuredEvent]);
+    expect(eventStoreSave).toHaveBeenNthCalledWith(2, [mocks.GenericBodyWeightMeasuredEventAnother]);
   });
 });

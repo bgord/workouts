@@ -146,7 +146,7 @@ describe("POST /api/plans/:planId/restore", async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(99) },
+      { method: "POST", headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders } },
       mocks.ip,
     );
 
@@ -166,7 +166,7 @@ describe("POST /api/plans/:planId/restore", async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      { method: "POST", headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders } },
       mocks.ip,
     );
 

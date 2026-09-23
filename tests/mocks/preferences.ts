@@ -22,7 +22,7 @@ export const GenericUserLanguageSetEvent = {
   payload: { userId, language: languages.supported.en },
 } satisfies bg.Preferences.Events.UserLanguageSetEventType;
 
-export const GenericUserLanguageSetPLEvent = {
+export const GenericUserLanguageSetEventPL = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,

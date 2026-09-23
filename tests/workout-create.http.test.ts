@@ -255,7 +255,7 @@ describe(`POST ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([
-      mocks.PastGenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutCreatedEventPast,
       mocks.GenericWorkoutExerciseAddedEvent,
     ]);
   });

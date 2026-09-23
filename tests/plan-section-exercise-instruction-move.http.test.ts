@@ -189,7 +189,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         body: JSON.stringify({ position: mocks.anotherExerciseInstructionPosition }),
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
       },
       mocks.ip,
     );
@@ -214,7 +214,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         body: JSON.stringify({ position: mocks.exerciseInstructionPosition }),
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
       },
       mocks.ip,
     );
@@ -239,7 +239,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         body: JSON.stringify({ position: mocks.anotherExerciseInstructionPosition }),
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
       },
       mocks.ip,
     );
@@ -269,7 +269,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         body: JSON.stringify({ position: mocks.exerciseInstructionPosition }),
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
       },
       mocks.ip,
     );
@@ -297,7 +297,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(99),
+        headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ position: mocks.anotherExerciseInstructionPosition }),
       },
       mocks.ip,
@@ -322,7 +322,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       url,
       {
         method: "PATCH",
-        headers: mocks.correlationIdAndRevisionHeaders(events.length),
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
         body: JSON.stringify({ position: mocks.anotherExerciseInstructionPosition }),
       },
       mocks.ip,

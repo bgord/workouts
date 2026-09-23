@@ -75,7 +75,7 @@ export const GenericBodyWeightMeasuredEvent = {
   payload: { id: bodyWeightMeasurementId, weight: bodyWeight, measuredOn: bodyWeightMeasuredOn, userId },
 } satisfies Measurements.Events.BodyWeightMeasuredEventType;
 
-export const GenericAnotherBodyWeightMeasuredEvent = {
+export const GenericBodyWeightMeasuredEventAnother = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,

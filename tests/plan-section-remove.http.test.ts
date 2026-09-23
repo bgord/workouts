@@ -128,7 +128,10 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      {
+        method: "DELETE",
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 
@@ -147,7 +150,7 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(99) },
+      { method: "DELETE", headers: { ...mocks.revisionHeaders(99), ...mocks.correlationIdHeaders } },
       mocks.ip,
     );
 
@@ -166,7 +169,10 @@ describe("DELETE /api/plans/:planId/section/:planSectionId", async () => {
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      {
+        method: "DELETE",
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 

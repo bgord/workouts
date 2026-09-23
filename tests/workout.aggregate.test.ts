@@ -1,6 +1,7 @@
 /* cSpell:disable */
 import { describe, expect, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
@@ -100,7 +101,7 @@ describe("Workout", async () => {
       ),
     );
 
-    expect(workout.pullEvents()).toEqual([mocks.AnotherGenericWorkoutExerciseAddedEvent]);
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseAddedEventAnother]);
   });
 
   test("addExercise - WorkoutIsEditable", async () => {
@@ -155,7 +156,7 @@ describe("Workout", async () => {
       mocks.workoutId,
       [
         mocks.GenericWorkoutCreatedEvent,
-        ...Array.from({ length: Workouts.VO.WorkoutExerciseLimitMax }, mocks.workoutExerciseAddedEvent),
+        ...tools.repeat(mocks.GenericWorkoutExerciseAddedEvent, Workouts.VO.WorkoutExerciseLimitMax),
       ],
       deps,
     );
@@ -279,7 +280,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
       ],
       deps,
     );
@@ -301,7 +302,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
         mocks.GenericWorkoutExerciseMovedEvent,
       ],
       deps,
@@ -337,7 +338,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
         mocks.GenericWorkoutExerciseTargetSetEvent,
         mocks.GenericWorkoutStartedEvent,
         mocks.GenericWorkoutSetLoggedEvent,
@@ -360,7 +361,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
         mocks.GenericWorkoutExerciseTargetSetEvent,
         mocks.GenericWorkoutStartedEvent,
         mocks.GenericWorkoutSetLoggedEvent,
@@ -380,7 +381,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
       ],
       deps,
     );
@@ -424,7 +425,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
       ],
       deps,
     );
@@ -571,7 +572,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
         mocks.GenericWorkoutExerciseTargetSetEvent,
       ],
       deps,
@@ -630,7 +631,7 @@ describe("Workout", async () => {
       ),
     );
 
-    expect(workout.pullEvents()).toEqual([mocks.AnotherGenericWorkoutSetLoggedEvent]);
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutSetLoggedEventAnother]);
   });
 
   test("logSet - the set number is counted per exercise", async () => {
@@ -639,7 +640,7 @@ describe("Workout", async () => {
       [
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
         mocks.GenericWorkoutExerciseTargetSetEvent,
         mocks.GenericWorkoutStartedEvent,
         mocks.GenericWorkoutSetLoggedEvent,
@@ -820,7 +821,7 @@ describe("Workout", async () => {
       ),
     );
 
-    expect(workout.pullEvents()).toEqual([mocks.AnotherGenericWorkoutSetLoggedEvent]);
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutSetLoggedEventAnother]);
   });
 
   test("correctSet - WorkoutIsCorrectable - draft", async () => {
@@ -920,7 +921,7 @@ describe("Workout", async () => {
         mocks.GenericWorkoutExerciseTargetSetEvent,
         mocks.GenericWorkoutStartedEvent,
         mocks.GenericWorkoutSetLoggedEvent,
-        mocks.AnotherGenericWorkoutSetLoggedEvent,
+        mocks.GenericWorkoutSetLoggedEventAnother,
         mocks.GenericWorkoutSetRemovedEvent,
       ],
       deps,
@@ -1013,7 +1014,7 @@ describe("Workout", async () => {
         mocks.GenericWorkoutCreatedEvent,
         mocks.GenericWorkoutExerciseAddedEvent,
         mocks.GenericWorkoutExerciseTargetSetEvent,
-        mocks.AnotherGenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
         mocks.GenericWorkoutStartedEvent,
         mocks.GenericWorkoutSetLoggedEvent,
       ],

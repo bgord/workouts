@@ -152,7 +152,10 @@ describe("PATCH /api/workouts/:workoutId/complete", async () => {
 
     const response = await server.request(
       url,
-      { method: "PATCH", headers: mocks.correlationIdAndRevisionHeaders(events.length) },
+      {
+        method: "PATCH",
+        headers: { ...mocks.revisionHeaders(events.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 

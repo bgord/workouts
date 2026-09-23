@@ -72,7 +72,7 @@ export const anotherExerciseInstructionAndExercise: Pick<
   "id" | "exerciseId"
 > = { id: exerciseInstructionId, exerciseId: anotherExerciseId };
 
-export const anotherExerciseInstructionAndId: Plans.VO.ExerciseInstructionType = {
+export const otherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: anotherExerciseInstructionId,
   exerciseId,
   reps: anotherReps,
@@ -80,7 +80,7 @@ export const anotherExerciseInstructionAndId: Plans.VO.ExerciseInstructionType =
   progression,
 };
 
-export const anotherExerciseInstructionAndIdAndExercise: Plans.VO.ExerciseInstructionType = {
+export const otherExerciseInstructionWithAnotherExercise: Plans.VO.ExerciseInstructionType = {
   id: anotherExerciseInstructionId,
   exerciseId: anotherExerciseId,
   reps: anotherReps,
@@ -119,10 +119,10 @@ const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
   cooldown: null,
   exerciseInstructions: [
     {
-      id: anotherExerciseInstructionAndId.id,
+      id: otherExerciseInstruction.id,
       exercise,
-      sets: anotherExerciseInstructionAndId.sets,
-      reps: anotherExerciseInstructionAndId.reps,
+      sets: otherExerciseInstruction.sets,
+      reps: otherExerciseInstruction.reps,
       progression,
     },
   ],
@@ -433,7 +433,7 @@ export const GenericPlanSectionExerciseInstructionAddedEventSecond = {
   payload: {
     planId,
     planSectionId,
-    exerciseInstruction: anotherExerciseInstructionAndIdAndExercise,
+    exerciseInstruction: otherExerciseInstructionWithAnotherExercise,
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
@@ -449,12 +449,12 @@ export const GenericPlanSectionExerciseInstructionAddedEventThird = {
   payload: {
     planId,
     planSectionId,
-    exerciseInstruction: anotherExerciseInstructionAndId,
+    exerciseInstruction: otherExerciseInstruction,
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
-export const GenericAnotherPlanSectionExerciseInstructionAddedEvent = {
+export const GenericPlanSectionExerciseInstructionAddedEventAnother = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,

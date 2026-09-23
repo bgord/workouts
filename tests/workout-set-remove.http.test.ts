@@ -157,7 +157,10 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logge
 
     const response = await server.request(
       url,
-      { method: "DELETE", headers: mocks.correlationIdAndRevisionHeaders(logged.length) },
+      {
+        method: "DELETE",
+        headers: { ...mocks.revisionHeaders(logged.length), ...mocks.correlationIdHeaders },
+      },
       mocks.ip,
     );
 
