@@ -17,7 +17,7 @@ export function PlansActiveEmpty() {
 
       <ui.EmptyStateMessage>{t("plan.list.empty.active")}</ui.EmptyStateMessage>
 
-      <ui.Meta>{t("plan.list.empty.active.hint")}</ui.Meta>
+      <small>{t("plan.list.empty.active.hint")}</small>
     </ui.EmptyState>
   );
 }

@@ -110,7 +110,7 @@ export function ExerciseImageChange() {
             </ui.IconButton>
           </div>
 
-          <ui.Meta>{t("exercise.image.change.hint")}</ui.Meta>
+          <small>{t("exercise.image.change.hint")}</small>
 
           {mutation.isError && <ui.Output>{t("exercise.image.change.error")}</ui.Output>}
         </form>

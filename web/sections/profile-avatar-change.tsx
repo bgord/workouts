@@ -101,7 +101,7 @@ export function ProfileAvatarChange() {
               </ui.IconButton>
             </div>
 
-            <ui.Meta>{t("profile.avatar.hint")}</ui.Meta>
+            <small>{t("profile.avatar.hint")}</small>
 
             {mutation.isError && <ui.Output>{t("profile.avatar.upload.error")}</ui.Output>}
           </form>

@@ -14,7 +14,7 @@ export function ExerciseCatalogEmpty(props: { matching: Array<ExerciseWithCatego
 
       <ui.EmptyStateMessage>{t("exercise.catalog.no_matches")}</ui.EmptyStateMessage>
 
-      <ui.Meta>{t("exercise.catalog.no_matches.hint")}</ui.Meta>
+      <small>{t("exercise.catalog.no_matches.hint")}</small>
     </ui.EmptyState>
   );
 }

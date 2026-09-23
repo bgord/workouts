@@ -19,7 +19,7 @@ export function DashboardEmpty() {
 
       <ui.EmptyStateMessage>{t("dashboard.empty")}</ui.EmptyStateMessage>
 
-      <ui.Meta>{t("dashboard.empty.hint")}</ui.Meta>
+      <small>{t("dashboard.empty.hint")}</small>
 
       <ui.EmptyStateLink search={WorkoutHistoryFilters.default} to="/workouts">
         {t("dashboard.empty.cta")}

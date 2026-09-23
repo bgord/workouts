@@ -36,7 +36,7 @@ export function WorkoutScheduledFor() {
   const scheduledOn = DateFormat.dayWithWeekday(language, workout.data.scheduledFor);
   const today = DateFormat.todayISO();
 
-  if (!workout.actions.reschedule.available) return <ui.Meta>{scheduledOn}</ui.Meta>;
+  if (!workout.actions.reschedule.available) return <small>{scheduledOn}</small>;
 
   if (workoutReschedule.off) {
     return (

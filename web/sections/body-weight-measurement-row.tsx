@@ -57,7 +57,7 @@ export function BodyWeightMeasurementRow(props: {
               {DateFormat.day(language, props.measurement.measuredOn)}
             </span>
 
-            <ui.Meta>{DateFormat.weekday(language, props.measurement.measuredOn)}</ui.Meta>
+            <small>{DateFormat.weekday(language, props.measurement.measuredOn)}</small>
           </button>
 
           <button

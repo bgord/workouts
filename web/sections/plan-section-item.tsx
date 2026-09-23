@@ -26,7 +26,7 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
         </div>
 
         {planSectionRename.off && (
-          <ui.Meta data-shrink="0">
+          <small data-shrink="0">
             {props.section.exerciseInstructions.length === 0
               ? t("plan.section.exercise.list.empty")
               : t("plan.section.exercise.count", {
@@ -38,7 +38,7 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
                     genitive: t("plan.section.exercise.noun.genitive"),
                   }),
                 })}
-          </ui.Meta>
+          </small>
         )}
         {planSectionRename.off && <PlanSectionRemove {...props.section} />}
       </div>

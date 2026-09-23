@@ -15,7 +15,7 @@ export function BodyWeightMeasurementsEmpty() {
 
       <ui.EmptyStateMessage>{t("measurements.body_weight.empty")}</ui.EmptyStateMessage>
 
-      <ui.Meta>{t("measurements.body_weight.empty.hint")}</ui.Meta>
+      <small>{t("measurements.body_weight.empty.hint")}</small>
     </ui.EmptyState>
   );
 }

@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { Gap } from "./gap";
-import { Meta } from "./meta";
 import { Spacing } from "./spacing";
 
 const TILE_WIDTH = 168;
@@ -72,6 +71,6 @@ export function TileValue(props: React.JSX.IntrinsicElements["div"]) {
   );
 }
 
-export function TileContext(props: React.JSX.IntrinsicElements["div"]) {
-  return <Meta data-md-ml="auto" {...props} />;
+export function TileContext(props: React.JSX.IntrinsicElements["small"]) {
+  return <small data-md-ml="auto" {...props} />;
 }

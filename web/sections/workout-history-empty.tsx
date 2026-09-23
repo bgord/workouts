@@ -14,7 +14,7 @@ export function WorkoutHistoryEmpty(props: { matching: Array<WorkoutSummary> }) 
 
       <ui.EmptyStateMessage>{t("workout.list.no_matches")}</ui.EmptyStateMessage>
 
-      <ui.Meta>{t("workout.list.no_matches.hint")}</ui.Meta>
+      <small>{t("workout.list.no_matches.hint")}</small>
     </ui.EmptyState>
   );
 }

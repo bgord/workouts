@@ -46,11 +46,11 @@ export function Plan() {
         </div>
 
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
-          <ui.Meta truncate>
+          <small data-transform="truncate">
             {t("plan.updated_at", {
               date: DateFormat.dayWithTime(language, plan.data.updatedAt),
             })}
-          </ui.Meta>
+          </small>
 
           <PlanDescription />
 

@@ -96,7 +96,7 @@ export function PlanSectionCreate() {
         </form>
       )}
 
-      {plan.data.sections.length === 0 && <ui.Meta>{t("plan.section.list.empty.hint")}</ui.Meta>}
+      {plan.data.sections.length === 0 && <small>{t("plan.section.list.empty.hint")}</small>}
     </ui.HairlineBlock>
   );
 }

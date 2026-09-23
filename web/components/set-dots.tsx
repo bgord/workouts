@@ -17,7 +17,7 @@ export function SetDots(props: { sets: Array<{ rir: number | null }>; target: nu
   };
 
   return (
-    <div
+    <span
       aria-label={t("workout.set.progress", { done: props.sets.length, target: props.target })}
       data-shrink="0"
       data-stack="x"
@@ -35,6 +35,6 @@ export function SetDots(props: { sets: Array<{ rir: number | null }>; target: nu
           style={index >= props.target ? ring(color(index)) : dot}
         />
       ))}
-    </div>
+    </span>
   );
 }

@@ -3,7 +3,6 @@ import { Layers } from "lucide-react";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
 import { DateFormat } from "../services/date-format";
 import { Gap } from "./gap";
-import { Meta } from "./meta";
 import { PlanStatusBadge } from "./plan-status-badge";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
 
@@ -17,19 +16,19 @@ export function PlanCard(props: PlanSummary) {
         <RowTitle>{props.name}</RowTitle>
 
         {props.description && (
-          <Meta data-color="neutral-300" truncate>
+          <div data-color="neutral-300" data-fs="xs" data-transform="truncate">
             {props.description}
-          </Meta>
+          </div>
         )}
 
-        <Meta data-stack="x" data-wrap="wrap" truncate {...Gap.related}>
-          <div data-stack="x" title={t("plan.sections")} {...Gap.inline}>
+        <small data-stack="x" data-transform="truncate" data-wrap="wrap" {...Gap.related}>
+          <span data-stack="x" title={t("plan.sections")} {...Gap.inline}>
             <Layers data-size="xs" />
             {props.sections}
-          </div>
+          </span>
 
           {t("plan.updated_at", { date: DateFormat.day(language, props.updatedAt) })}
-        </Meta>
+        </small>
       </RowBody>
 
       <PlanStatusBadge status={props.status} />

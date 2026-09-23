@@ -1,6 +1,5 @@
 import type * as bg from "@bgord/ui";
 import { Gap } from "./gap";
-import { Meta } from "./meta";
 import { Spacing } from "./spacing";
 
 type DropzoneFile = { file: bg.UseFileReturnType };
@@ -69,5 +68,5 @@ export function DropzoneTitle(props: React.JSX.IntrinsicElements["span"]) {
 }
 
 export function DropzoneFileName(props: React.JSX.IntrinsicElements["div"]) {
-  return <Meta data-color="neutral-100" data-maxw="100%" truncate {...props} />;
+  return <div data-color="neutral-100" data-fs="xs" data-maxw="100%" data-transform="truncate" {...props} />;
 }

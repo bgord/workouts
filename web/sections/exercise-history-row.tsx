@@ -116,12 +116,12 @@ export function ExerciseHistoryRow(props: {
 
               <div data-grow="1">{set.rir !== null && <ui.RirBadge rir={set.rir} />}</div>
 
-              <ui.Meta data-stack="x" {...ui.Gap.inline}>
+              <small data-stack="x" {...ui.Gap.inline}>
                 <EqualApproximately data-color="neutral-600" data-size="xs" />
                 {t("statistics.exercise.one_rep_max_estimate.value", {
                   load: WeightFormat.kilograms(set.estimate),
                 })}
-              </ui.Meta>
+              </small>
             </ui.HairlineRow>
           ))}
         </ul>

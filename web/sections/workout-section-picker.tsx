@@ -33,14 +33,14 @@ export function WorkoutSectionPicker(props: {
                     {option.name}
                   </div>
 
-                  <ui.Meta truncate>
+                  <small data-transform="truncate">
                     {option.exerciseInstructions.map((instruction) => instruction.exercise.name).join(" · ")}
-                  </ui.Meta>
+                  </small>
                 </div>
 
-                <ui.Meta data-shrink="0">
+                <small data-shrink="0">
                   {t("workout.create.section.exercises", { count: option.exerciseInstructions.length })}
-                </ui.Meta>
+                </small>
               </ui.RadioTile>
             </li>
           );

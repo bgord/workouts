@@ -13,7 +13,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
   const scheduledFor = DateFormat.shortDay(language, previous.scheduledFor);
 
   return (
-    <ui.Meta
+    <small
       data-stack="x"
       data-wrap="wrap"
       title={t("workout.previous_performance.title")}
@@ -31,6 +31,6 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
       )}
 
       <span data-color="neutral-600">{scheduledFor}</span>
-    </ui.Meta>
+    </small>
   );
 }

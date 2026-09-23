@@ -38,7 +38,7 @@ export function DashboardWorkoutStats() {
           >
             <ui.TileValue>{tile.value}</ui.TileValue>
 
-            <ui.Meta>{t(tile.label)}</ui.Meta>
+            <small>{t(tile.label)}</small>
           </li>
         ))}
       </ul>

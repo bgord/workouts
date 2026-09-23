@@ -60,9 +60,9 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
           ))}
         </ul>
 
-        <ui.Meta>
+        <small>
           {t("workout.list.count", { matching: props.matching.length, total: workouts.data.length })}
-        </ui.Meta>
+        </small>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
           <ui.IconButton

@@ -15,7 +15,7 @@ export function WorkoutsEmpty() {
 
       <ui.EmptyStateMessage>{t("workout.list.empty")}</ui.EmptyStateMessage>
 
-      <ui.Meta>{t("workout.list.empty.hint")}</ui.Meta>
+      <small>{t("workout.list.empty.hint")}</small>
 
       <ui.EmptyStateLink to="/plans">{t("workout.list.empty.cta")}</ui.EmptyStateLink>
     </ui.EmptyState>

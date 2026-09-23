@@ -90,9 +90,9 @@ export function WorkoutExerciseRow(props: {
           <div data-stack="x" {...ui.Gap.cluster}>
             <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />
 
-            <ui.Meta data-md-disp={hasTarget ? "none" : undefined}>
+            <small data-md-disp={hasTarget ? "none" : undefined}>
               <ui.SetsReps {...props.exercise.prescription} />
-            </ui.Meta>
+            </small>
 
             {target && (
               <div data-disp="none" data-md-disp="block" data-self="center">

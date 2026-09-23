@@ -15,7 +15,7 @@ export function ExercisePerformancesEmpty() {
 
       <ui.EmptyStateMessage>{t("statistics.exercise.history.empty")}</ui.EmptyStateMessage>
 
-      <ui.Meta>{t("statistics.exercise.history.empty.hint")}</ui.Meta>
+      <small>{t("statistics.exercise.history.empty.hint")}</small>
     </ui.EmptyState>
   );
 }

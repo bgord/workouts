@@ -41,7 +41,7 @@ export function ExerciseCategoryManage() {
           <ui.EmptyState>
             <ui.EmptyStateMessage>{t("exercise.category.list.empty")}</ui.EmptyStateMessage>
 
-            <ui.Meta>{t("exercise.category.list.empty.hint")}</ui.Meta>
+            <small>{t("exercise.category.list.empty.hint")}</small>
           </ui.EmptyState>
         )}
 
