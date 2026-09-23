@@ -12,7 +12,11 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
     workout: Workouts.Queries.ExercisePreviousPerformanceReference,
   ): Promise<Workouts.Queries.ExercisePerformance | undefined> {
     const previous = await db
-      .select({ id: Schema.workouts.id, scheduledFor: Schema.workouts.scheduledFor })
+      .select({
+        id: Schema.workouts.id,
+        scheduledFor: Schema.workouts.scheduledFor,
+        workoutExerciseId: Schema.workoutExercises.id,
+      })
       .from(Schema.workouts)
       .innerJoin(Schema.workoutExercises, eq(Schema.workoutExercises.workoutId, Schema.workouts.id))
       .innerJoin(
@@ -29,7 +33,11 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
           lte(Schema.workouts.scheduledFor, workout.scheduledFor),
         ),
       )
-      .orderBy(desc(Schema.workouts.scheduledFor), desc(Schema.workouts.completedAt))
+      .orderBy(
+        desc(Schema.workouts.scheduledFor),
+        desc(Schema.workouts.completedAt),
+        asc(Schema.workoutExercises.position),
+      )
       .get();
 
     if (!previous) return undefined;
@@ -42,15 +50,10 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
         rir: Schema.workoutLoggedSets.rir,
       })
       .from(Schema.workoutLoggedSets)
-      .innerJoin(
-        Schema.workoutExercises,
-        eq(Schema.workoutLoggedSets.workoutExerciseId, Schema.workoutExercises.id),
-      )
       .where(
         and(
           eq(Schema.workoutLoggedSets.userId, userId),
-          eq(Schema.workoutLoggedSets.workoutId, previous.id),
-          eq(Schema.workoutExercises.exerciseId, exerciseId),
+          eq(Schema.workoutLoggedSets.workoutExerciseId, previous.workoutExerciseId),
         ),
       )
       .orderBy(asc(Schema.workoutLoggedSets.setNumber));

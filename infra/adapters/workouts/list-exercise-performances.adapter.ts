@@ -33,7 +33,11 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
           isNotNull(Schema.workouts.completedAt),
         ),
       )
-      .orderBy(asc(Schema.workouts.scheduledFor), asc(Schema.workoutLoggedSets.setNumber));
+      .orderBy(
+        asc(Schema.workouts.scheduledFor),
+        asc(Schema.workoutExercises.position),
+        asc(Schema.workoutLoggedSets.setNumber),
+      );
 
     return [...Map.groupBy(rows, (row) => row.workoutId)].map(([workoutId, rows]) => ({
       workoutId,
