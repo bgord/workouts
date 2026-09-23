@@ -64,6 +64,11 @@ export const exerciseListResponse: Exercises.Queries.ExerciseListResponse = {
   actions: { add: actionAvailable },
 };
 
+export const exerciseListResponseEmpty: Exercises.Queries.ExerciseListResponse = {
+  ...exerciseListResponse,
+  data: [],
+};
+
 export const exerciseCategoryListResponse: Exercises.Queries.ExerciseCategoryListResponse = {
   data: [exerciseCategory],
   actions: {
@@ -72,6 +77,11 @@ export const exerciseCategoryListResponse: Exercises.Queries.ExerciseCategoryLis
     rename: actionAvailable,
     delete: actionAvailable,
   },
+};
+
+export const exerciseCategoryListResponseEmpty: Exercises.Queries.ExerciseCategoryListResponse = {
+  ...exerciseCategoryListResponse,
+  data: [],
 };
 
 export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
