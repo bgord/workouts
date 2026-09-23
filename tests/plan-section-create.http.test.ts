@@ -125,7 +125,7 @@ describe("POST /api/plans/:planId/section", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("PlanIsEditable", async () => {
+  test("PlanBelongsToUser", async () => {
     const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

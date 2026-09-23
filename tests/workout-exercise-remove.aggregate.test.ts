@@ -8,7 +8,7 @@ describe("Workout.removeExercise", async () => {
   const di = await bootstrap();
   const deps = { ...di.Adapters.System, ...di.Tools };
 
-  test("WorkoutIsEditable", async () => {
+  test("WorkoutIsEditable - completed", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
       [

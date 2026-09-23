@@ -14,7 +14,7 @@ describe("Plan.restore", async () => {
     expect(() => plan.restore(mocks.userId)).toThrow(Plans.Invariants.PlanIsRestorable.error);
   });
 
-  test("PlanIsArchivable - finalized", async () => {
+  test("PlanIsRestorable - finalized", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],

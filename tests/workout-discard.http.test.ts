@@ -51,7 +51,7 @@ describe("DELETE /api/workouts/:workoutId", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("WorkoutExists - already discarded", async () => {
+  test("WorkoutExists - discarded", async () => {
     const events = [
       mocks.GenericWorkoutCreatedEvent,
       mocks.GenericWorkoutExerciseAddedEvent,

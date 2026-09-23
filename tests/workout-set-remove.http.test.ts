@@ -74,6 +74,22 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logge
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutBelongsToUser", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(logged);
+
+    const response = await server.request(
+      url,
+      { method: "DELETE", headers: mocks.revisionHeaders(logged.length) },
+      mocks.ip,
+    );
+
+    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("WorkoutLoggedSetExists", async () => {
     const events = mocks.workoutInProgressHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -105,22 +121,6 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logge
     );
 
     await testcases.assertInvariantError(response, 403, "workout.retains.logged.sets");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
-  test("WorkoutBelongsToUser", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.anotherAuth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(logged);
-
-    const response = await server.request(
-      url,
-      { method: "DELETE", headers: mocks.revisionHeaders(logged.length) },
-      mocks.ip,
-    );
-
-    await testcases.assertInvariantError(response, 403, "workout.belongs.to.user");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

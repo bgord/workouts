@@ -74,7 +74,7 @@ describe("POST /api/plans/:planId/restore", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("restore - PlanIsRestorable - draft", async () => {
+  test("PlanIsRestorable - draft", async () => {
     const events = [mocks.GenericPlanCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -94,7 +94,7 @@ describe("POST /api/plans/:planId/restore", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("restore - PlanIsArchivable - finalized", async () => {
+  test("PlanIsRestorable - finalized", async () => {
     const events = mocks.planFinalizedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

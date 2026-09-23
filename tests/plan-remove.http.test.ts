@@ -51,7 +51,7 @@ describe("DELETE /api/plans/:planId", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("PlanExists - already removed", async () => {
+  test("PlanExists - removed", async () => {
     const events = [mocks.GenericPlanCreatedEvent, mocks.GenericPlanRemovedEvent];
 
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
