@@ -69,7 +69,6 @@ export function PlanCreate() {
 
             <input
               className="c-input"
-              data-variant="transparent"
               data-width="100%"
               placeholder={t("plan.create.name.placeholder")}
               {...bg.Form.input(Form.name.pattern)}

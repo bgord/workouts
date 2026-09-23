@@ -75,7 +75,6 @@ export function Stepper(props: {
         data-md-grow={variant === "compact" ? undefined : "1"}
         data-spin="none"
         data-transform="font-variant-numeric"
-        data-variant="transparent"
         disabled={props.disabled}
         max={props.max}
         min={props.min}

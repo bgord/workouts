@@ -69,7 +69,6 @@ export function ExerciseName() {
           className="c-input"
           data-grow="1"
           data-minw="0"
-          data-variant="transparent"
           {...bg.Form.input(Form.name.pattern)}
           {...name.input.props}
         />

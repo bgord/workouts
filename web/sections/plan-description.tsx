@@ -72,7 +72,6 @@ export function PlanDescription() {
           <textarea
             aria-label={t("plan.description.label")}
             className="c-textarea"
-            data-variant="transparent"
             data-width="100%"
             placeholder={t("plan.description.placeholder")}
             rows={3}

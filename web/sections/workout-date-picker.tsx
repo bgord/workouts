@@ -51,7 +51,6 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
             className="c-input"
             data-md-self="stretch"
             data-self="start"
-            data-variant="transparent"
             max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
             min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
             type="date"

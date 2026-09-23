@@ -71,7 +71,6 @@ export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggle
           className="c-input"
           data-grow="1"
           data-minw="0"
-          data-variant="transparent"
           {...bg.Form.input(Form.planSectionName.pattern)}
           {...planSectionName.input.props}
         />

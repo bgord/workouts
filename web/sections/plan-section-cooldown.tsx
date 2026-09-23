@@ -98,7 +98,6 @@ export function PlanSectionCooldown(props: PlanSection) {
           <textarea
             aria-label={t("plan.section.cooldown.label")}
             className="c-textarea"
-            data-variant="transparent"
             data-width="100%"
             placeholder={t("plan.section.cooldown.placeholder")}
             rows={3}

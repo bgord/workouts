@@ -128,7 +128,6 @@ export function ExerciseAdd() {
 
             <input
               className="c-input"
-              data-variant="transparent"
               data-width="100%"
               placeholder={t("exercise.add.name.placeholder")}
               {...bg.Form.input(Form.name.pattern)}
@@ -143,7 +142,6 @@ export function ExerciseAdd() {
 
             <textarea
               className="c-textarea"
-              data-variant="transparent"
               placeholder={t("exercise.add.description.placeholder")}
               rows={3}
               {...bg.Form.textarea(Form.description.pattern)}

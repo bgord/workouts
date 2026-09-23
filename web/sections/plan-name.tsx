@@ -67,7 +67,6 @@ export function PlanName() {
           className="c-input"
           data-grow="1"
           data-minw="0"
-          data-variant="transparent"
           {...bg.Form.input(Form.name.pattern)}
           {...planName.input.props}
         />

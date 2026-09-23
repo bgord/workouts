@@ -68,7 +68,6 @@ export function BodyWeightMeasure() {
             data-focus-ring-offset="inset"
             data-minw="0"
             data-shrink="0"
-            data-variant="transparent"
             data-width="auto"
             type="date"
             {...measuredOn.input.props}

@@ -39,7 +39,6 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
           <input
             className="c-input"
             data-pl="8"
-            data-variant="transparent"
             data-width="100%"
             id={ExerciseCatalogFiltersForm.Form.name.field.name}
             name={ExerciseCatalogFiltersForm.Form.name.field.name}

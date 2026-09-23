@@ -71,7 +71,6 @@ export function WorkoutScheduledFor() {
         className="c-input"
         data-minw="0"
         data-shrink="0"
-        data-variant="transparent"
         data-width="auto"
         disabled={!workout.actions.reschedule.enabled}
         max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}

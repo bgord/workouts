@@ -98,7 +98,6 @@ export function PlanSectionWarmup(props: PlanSection) {
           <textarea
             aria-label={t("plan.section.warmup.label")}
             className="c-textarea"
-            data-variant="transparent"
             data-width="100%"
             placeholder={t("plan.section.warmup.placeholder")}
             rows={3}

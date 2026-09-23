@@ -57,7 +57,6 @@ export function BodyWeightMeasurementCorrect(
         className="c-input"
         data-minw="0"
         data-shrink="0"
-        data-variant="transparent"
         data-width="auto"
         max={today}
         type="date"

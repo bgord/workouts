@@ -63,7 +63,6 @@ export function ExerciseDescription() {
           <textarea
             aria-label={t("exercise.update.description.label")}
             className="c-textarea"
-            data-variant="transparent"
             data-width="100%"
             rows={3}
             {...bg.Form.textarea(Form.description.pattern)}

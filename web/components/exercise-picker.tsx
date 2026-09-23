@@ -31,7 +31,6 @@ export function ExercisePicker(props: {
             aria-label={t("exercise.picker.label")}
             className="c-input"
             data-pl="8"
-            data-variant="transparent"
             data-width="100%"
             placeholder={t("exercise.picker.placeholder")}
             type="search"

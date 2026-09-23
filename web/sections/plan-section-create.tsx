@@ -66,7 +66,6 @@ export function PlanSectionCreate() {
               className="c-input"
               data-grow="1"
               data-minw="0"
-              data-variant="transparent"
               placeholder={t("plan.section.create.placeholder")}
               {...bg.Form.input(Form.planSectionName.pattern)}
               {...planSectionName.input.props}
