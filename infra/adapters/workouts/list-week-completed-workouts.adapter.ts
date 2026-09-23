@@ -17,42 +17,19 @@ class ListWeekCompletedWorkoutsQueryDrizzle implements Workouts.Queries.ListWeek
     );
     const end = v.parse(Workouts.VO.WorkoutScheduledFor, tools.Day.fromTimestamp(week.getEnd()).toIsoId());
 
-    const completed = and(
-      eq(Schema.workouts.userId, userId),
-      eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
-      isNotNull(Schema.workouts.completedAt),
-      between(Schema.workouts.scheduledFor, start, end),
-    );
-
-    const [workouts, sets] = await Promise.all([
-      db
-        .select({
-          id: Schema.workouts.id,
-          planName: Schema.workouts.planName,
-          planSectionName: Schema.workouts.planSectionName,
-          scheduledFor: Schema.workouts.scheduledFor,
-        })
-        .from(Schema.workouts)
-        .where(completed)
-        .orderBy(asc(Schema.workouts.scheduledFor), asc(Schema.workouts.completedAt)),
-      db
-        .select({
-          workoutId: Schema.workoutLoggedSets.workoutId,
-          reps: Schema.workoutLoggedSets.reps,
-          load: Schema.workoutLoggedSets.load,
-        })
-        .from(Schema.workoutLoggedSets)
-        .innerJoin(Schema.workouts, eq(Schema.workoutLoggedSets.workoutId, Schema.workouts.id))
-        .where(completed)
-        .orderBy(asc(Schema.workoutLoggedSets.createdAt)),
-    ]);
-
-    const setsByWorkout = Map.groupBy(sets, (set) => set.workoutId);
-
-    return workouts.map((workout) => ({
-      ...workout,
-      sets: (setsByWorkout.get(workout.id) ?? []).map((set) => ({ reps: set.reps, load: set.load })),
-    }));
+    return db.query.workouts.findMany({
+      columns: { id: true, planName: true, planSectionName: true, scheduledFor: true },
+      where: and(
+        eq(Schema.workouts.userId, userId),
+        eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
+        isNotNull(Schema.workouts.completedAt),
+        between(Schema.workouts.scheduledFor, start, end),
+      ),
+      orderBy: [asc(Schema.workouts.scheduledFor), asc(Schema.workouts.completedAt)],
+      with: {
+        loggedSets: { columns: { reps: true, load: true }, orderBy: asc(Schema.workoutLoggedSets.createdAt) },
+      },
+    });
   }
 }
 

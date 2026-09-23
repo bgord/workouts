@@ -633,7 +633,7 @@ export const weekCompletedWorkout: Workouts.Queries.WeekCompletedWorkout = {
   planName,
   planSectionName,
   scheduledFor: workoutScheduledFor,
-  sets: [
+  loggedSets: [
     {
       reps: v.parse(Workouts.VO.Reps, 5),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),

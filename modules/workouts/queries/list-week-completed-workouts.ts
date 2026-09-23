@@ -8,7 +8,7 @@ export type WeekCompletedWorkout = {
   planName: Plans.VO.PlanNameType;
   planSectionName: Plans.VO.PlanSectionNameType;
   scheduledFor: VO.WorkoutScheduledForType;
-  sets: Array<{ reps: VO.RepsType; load: VO.LoadType }>;
+  loggedSets: Array<{ reps: VO.RepsType; load: VO.LoadType }>;
 };
 
 export interface ListWeekCompletedWorkouts {

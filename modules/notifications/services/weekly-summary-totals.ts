@@ -6,7 +6,7 @@ import { locales } from "./weekly-summary-locales";
 type LanguagesType = (typeof SupportedLanguages)[number];
 type Translate = ReturnType<typeof bg.TranslatorService.use>;
 type CompletedWorkouts = ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>;
-type LoggedSets = Workouts.Queries.WeekCompletedWorkout["sets"];
+type LoggedSets = Workouts.Queries.WeekCompletedWorkout["loggedSets"];
 
 export type WeeklySummaryTile = { value: string; label: string; delta: string };
 
@@ -33,8 +33,8 @@ export class WeeklySummaryTotals {
     });
     this.plural = new Intl.PluralRules(locale);
 
-    this.sets = workouts.flatMap((workout) => workout.sets);
-    this.previousSets = previousWorkouts.flatMap((workout) => workout.sets);
+    this.sets = workouts.flatMap((workout) => workout.loggedSets);
+    this.previousSets = previousWorkouts.flatMap((workout) => workout.loggedSets);
   }
 
   tiles(): Array<WeeklySummaryTile> {

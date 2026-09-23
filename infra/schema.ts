@@ -354,6 +354,7 @@ export const workoutLoggedSets = sqliteTable(
 
 export const workoutsRelations = relations(workouts, ({ many }) => ({
   exercises: many(workoutExercises),
+  loggedSets: many(workoutLoggedSets),
 }));
 
 export const workoutExercisesRelations = relations(workoutExercises, ({ one, many }) => ({
@@ -362,6 +363,7 @@ export const workoutExercisesRelations = relations(workoutExercises, ({ one, man
 }));
 
 export const workoutLoggedSetsRelations = relations(workoutLoggedSets, ({ one }) => ({
+  workout: one(workouts, { fields: [workoutLoggedSets.workoutId], references: [workouts.id] }),
   workoutExercise: one(workoutExercises, {
     fields: [workoutLoggedSets.workoutExerciseId],
     references: [workoutExercises.id],

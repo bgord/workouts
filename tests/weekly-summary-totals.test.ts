@@ -86,7 +86,7 @@ describe("WeeklySummaryTotals", async () => {
       [
         {
           ...mocks.weekCompletedWorkout,
-          sets: [
+          loggedSets: [
             {
               reps: v.parse(Workouts.VO.Reps, 1),
               load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0.4).get()),

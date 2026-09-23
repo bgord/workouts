@@ -41,7 +41,7 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
 
     return [...Map.groupBy(rows, (row) => row.workoutId)].map(([workoutId, rows]) => ({
       workoutId,
-      scheduledFor: rows[0]!.scheduledFor!,
+      scheduledFor: rows[0]!.scheduledFor,
       sets: rows.map((row) => ({
         setNumber: row.setNumber,
         reps: row.reps,
