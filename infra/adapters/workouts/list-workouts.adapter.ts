@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { and, desc, eq, gte, max, sql } from "drizzle-orm";
+import { and, desc, eq, gte, max } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
@@ -15,11 +15,13 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
     now: tools.Timestamp,
   ): Promise<Workouts.Queries.WorkoutListResponse> {
     const today = now.toZonedDateTimeUTC().startOfDay();
+
     const range = {
       [Workouts.VO.WorkoutListFilterOptions.last_week]: today.subtract({ weeks: 1 }),
       [Workouts.VO.WorkoutListFilterOptions.last_month]: today.subtract({ months: 1 }),
       [Workouts.VO.WorkoutListFilterOptions.all_time]: null,
     }[filter];
+
     const since = range
       ? v.parse(
           Workouts.VO.WorkoutScheduledFor,
@@ -27,7 +29,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
         )
       : null;
 
-    const [workouts, finalizedPlan, drafts] = await Promise.all([
+    const [workouts, finalizedPlan, drafts, sections] = await Promise.all([
       db.query.workouts.findMany({
         columns: {
           id: true,
@@ -59,32 +61,26 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
         )
         .get(),
       GetWorkoutStatusForOwnerCountQuery.execute(userId, Workouts.VO.WorkoutStatusEnum.draft),
+      db
+        .select({
+          id: Schema.workouts.planSectionId,
+          name: Schema.workouts.planSectionName,
+          latest: max(Schema.workouts.createdAt),
+        })
+        .from(Schema.workouts)
+        .where(
+          and(
+            eq(Schema.workouts.userId, userId),
+            since ? gte(Schema.workouts.scheduledFor, since) : undefined,
+          ),
+        )
+        .groupBy(Schema.workouts.planSectionId)
+        .orderBy(desc(max(Schema.workouts.createdAt))),
     ]);
-
-    const sections = await db
-      .select({
-        id: Schema.workouts.planSectionId,
-        name: sql<Plans.VO.PlanSectionNameType>`coalesce(${Schema.planSections.name}, ${Schema.workouts.planSectionName})`,
-        latest: max(Schema.workouts.createdAt),
-      })
-      .from(Schema.workouts)
-      .leftJoin(
-        Schema.planSections,
-        and(
-          eq(Schema.planSections.id, Schema.workouts.planSectionId),
-          eq(Schema.planSections.userId, userId),
-          finalizedPlan ? eq(Schema.planSections.planId, finalizedPlan.id) : sql`0`,
-        ),
-      )
-      .where(
-        and(eq(Schema.workouts.userId, userId), since ? gte(Schema.workouts.scheduledFor, since) : undefined),
-      )
-      .groupBy(Schema.workouts.planSectionId)
-      .orderBy(desc(max(Schema.workouts.createdAt)));
 
     return {
       data: workouts,
-      sections: sections.map((section) => ({ id: section.id, name: section.name })),
+      sections,
       actions: new Workouts.Services.WorkoutListActions({
         plan: finalizedPlan ?? null,
         draftCount: drafts,
