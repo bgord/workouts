@@ -25,12 +25,12 @@ export type Workout = {
   planName: Plans.VO.PlanNameType;
   planSectionId: Plans.VO.PlanSectionIdType;
   planSectionName: Plans.VO.PlanSectionNameType;
-  planSectionWarmup?: Plans.VO.PlanSectionWarmupType;
-  planSectionCooldown?: Plans.VO.PlanSectionCooldownType;
+  planSectionWarmup: Plans.VO.PlanSectionWarmupType | null;
+  planSectionCooldown: Plans.VO.PlanSectionCooldownType | null;
   scheduledFor: WorkoutScheduledForType;
   status: WorkoutStatusEnum;
-  completedAt?: tools.TimestampValueType;
-  note?: WorkoutNoteType;
+  completedAt: tools.TimestampValueType | null;
+  note: WorkoutNoteType | null;
   revision: tools.RevisionValueType;
   exercises: Array<WorkoutExerciseWithSets>;
 };

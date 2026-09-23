@@ -1,9 +1,13 @@
-import type { Workout } from "../../modules/workouts/value-objects/workout";
+import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-workout";
 import { DateFormat } from "./date-format";
 import { WeightFormat } from "./weight-format";
 
 export const WorkoutReport = {
-  create: (workout: Workout & { completedAt: NonNullable<Workout["completedAt"]> }) => {
+  create: (
+    workout: WorkoutGetResponse["data"] & {
+      completedAt: NonNullable<WorkoutGetResponse["data"]["completedAt"]>;
+    },
+  ) => {
     const rows = workout.exercises.flatMap((exercise) =>
       exercise.loggedSets.map(
         (loggedSet) =>

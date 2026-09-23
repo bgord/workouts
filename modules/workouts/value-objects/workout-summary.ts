@@ -12,6 +12,6 @@ export type WorkoutSummary = {
   planSectionName: Plans.VO.PlanSectionNameType;
   scheduledFor: WorkoutScheduledForType;
   status: WorkoutStatusEnum;
-  completedAt?: tools.TimestampValueType;
+  completedAt: tools.TimestampValueType | null;
   revision: tools.RevisionValueType;
 };

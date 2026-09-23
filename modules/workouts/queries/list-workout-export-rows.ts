@@ -13,7 +13,7 @@ export type WorkoutExportRow = {
   setNumber: VO.SetNumberType;
   reps: VO.RepsType;
   load: VO.LoadType;
-  rir?: VO.RirType;
+  rir: VO.RirType | null;
 };
 
 export interface ListWorkoutExportRows {

@@ -5,7 +5,7 @@ import { RirColor } from "./rir-color";
 const dot = { width: 8, height: 8 };
 const ring = (color: RirColor) => ({ ...dot, boxShadow: `inset 0 0 0 2px var(--color-${color})` });
 
-export function SetDots(props: { sets: Array<{ rir?: number }>; target: number }) {
+export function SetDots(props: { sets: Array<{ rir: number | null }>; target: number }) {
   const t = bg.useTranslations();
 
   const dots = Array.from({ length: Math.max(props.sets.length, props.target) }, (_, index) => index);
@@ -13,7 +13,7 @@ export function SetDots(props: { sets: Array<{ rir?: number }>; target: number }
   const color = (index: number): RirColor => {
     const rir = props.sets[index]?.rir;
 
-    return rir === undefined ? "positive-400" : RirColor(rir);
+    return rir === undefined || rir === null ? "positive-400" : RirColor(rir);
   };
 
   return (

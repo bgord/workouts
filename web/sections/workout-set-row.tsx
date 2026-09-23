@@ -21,7 +21,7 @@ export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: Log
             </div>
 
             <div data-grow="1">
-              {props.loggedSet.rir !== undefined && <ui.RirBadge rir={props.loggedSet.rir} />}
+              {props.loggedSet.rir !== null && <ui.RirBadge rir={props.loggedSet.rir} />}
             </div>
           </>
         )}

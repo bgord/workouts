@@ -19,16 +19,19 @@ describe("ExercisePerformanceWeakestSet", () => {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
           reps: v.parse(Workouts.VO.Reps, 8),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 2),
           reps: v.parse(Workouts.VO.Reps, 10),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(70).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 3),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
       ],
     });

@@ -27,7 +27,7 @@ export function WorkoutSetCorrect(
     defaultValue: WeightFormat.kilograms(props.loggedSet.load),
   });
 
-  const rir = useRef<number | undefined>(props.loggedSet.rir);
+  const rir = useRef<number | undefined>(props.loggedSet.rir ?? undefined);
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -108,7 +108,7 @@ export function WorkoutSetCorrect(
         onSelect={(value) => {
           rir.current = value;
         }}
-        value={props.loggedSet.rir}
+        value={props.loggedSet.rir ?? undefined}
         variant="dense"
       />
 

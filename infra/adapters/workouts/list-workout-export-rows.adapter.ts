@@ -37,7 +37,7 @@ class ListWorkoutExportRowsQueryDrizzle implements Workouts.Queries.ListWorkoutE
         asc(Schema.workoutLoggedSets.setNumber),
       );
 
-    return rows.map((row) => ({ ...row, completedAt: row.completedAt!, rir: row.rir ?? undefined }));
+    return rows.map((row) => ({ ...row, completedAt: row.completedAt! }));
   }
 }
 

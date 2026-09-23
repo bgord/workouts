@@ -117,7 +117,7 @@ export function ExerciseHistoryRow(props: {
                 <ui.RepsLoad load={set.load} reps={set.reps} />
               </div>
 
-              <div data-grow="1">{set.rir !== undefined && <ui.RirBadge rir={set.rir} />}</div>
+              <div data-grow="1">{set.rir !== null && <ui.RirBadge rir={set.rir} />}</div>
 
               <ui.Meta data-cross="center" data-stack="x" {...ui.Gap.inline}>
                 <EqualApproximately data-color="neutral-600" data-size="xs" />

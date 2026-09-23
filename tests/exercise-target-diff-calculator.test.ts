@@ -22,16 +22,19 @@ describe("ExerciseTargetDiffCalculator", () => {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 2),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 3),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
       ],
     });
@@ -51,16 +54,19 @@ describe("ExerciseTargetDiffCalculator", () => {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 2),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 3),
           reps: v.parse(Workouts.VO.Reps, 8),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
       ],
     });
@@ -80,16 +86,19 @@ describe("ExerciseTargetDiffCalculator", () => {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 2),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(77.5).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 3),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
       ],
     });
@@ -109,21 +118,25 @@ describe("ExerciseTargetDiffCalculator", () => {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 2),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 3),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 4),
           reps: v.parse(Workouts.VO.Reps, 9),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+          rir: null,
         },
       ],
     });

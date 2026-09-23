@@ -10,7 +10,7 @@ export function toWorkoutSummary(workout: typeof Schema.workouts.$inferSelect): 
     planSectionName: workout.planSectionName,
     scheduledFor: workout.scheduledFor,
     status: workout.status,
-    completedAt: workout.completedAt ?? undefined,
+    completedAt: workout.completedAt,
     revision: workout.revision,
   };
 }

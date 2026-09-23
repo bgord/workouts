@@ -368,6 +368,7 @@ export const workoutSummary: Workouts.VO.WorkoutSummary = {
   planSectionName,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.draft,
+  completedAt: null,
   revision: revision.value,
 };
 
@@ -415,11 +416,13 @@ export const exercisePerformance = {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
       reps: v.parse(Workouts.VO.Reps, 5),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: null,
     },
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 2),
       reps: v.parse(Workouts.VO.Reps, 10),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: null,
     },
   ],
 };
@@ -449,12 +452,14 @@ export const calculatedExercisePerformance = {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
       reps: v.parse(Workouts.VO.Reps, 5),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: null,
       estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 105_000),
     },
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 2),
       reps: v.parse(Workouts.VO.Reps, 10),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: null,
       estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
     },
   ],
@@ -463,6 +468,7 @@ export const calculatedExercisePerformance = {
     setNumber: v.parse(Workouts.VO.SetNumber, 2),
     reps: v.parse(Workouts.VO.Reps, 10),
     load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    rir: null,
     estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
   },
   bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
@@ -506,6 +512,8 @@ export const workout: Workouts.VO.Workout = {
   planSectionCooldown,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.in_progress,
+  completedAt: null,
+  note: null,
   revision: revision.value,
   exercises: [workoutExercise],
 };
@@ -550,6 +558,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     exerciseDescription,
     loggedSets: exercise.loggedSets.map((set) => ({
       ...set,
+      rir: null,
       actions: {
         correct: { available: true, enabled: true, hints: [] },
         remove: { available: true, enabled: true, hints: [] },

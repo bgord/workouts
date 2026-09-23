@@ -33,6 +33,7 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
           reps: v.parse(Workouts.VO.Reps, 8),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
+          rir: null,
         },
       ],
     });
@@ -64,6 +65,7 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
           reps: v.parse(Workouts.VO.Reps, 8),
           load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+          rir: null,
         },
       ],
     });

@@ -46,7 +46,7 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
         setNumber: row.setNumber,
         reps: row.reps,
         load: row.load,
-        rir: row.rir ?? undefined,
+        rir: row.rir,
       })),
     }));
   }

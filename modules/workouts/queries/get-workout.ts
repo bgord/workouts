@@ -14,7 +14,7 @@ export type WorkoutExerciseActions = {
 
 export type LoggedSetActions = { correct: ActionState; remove: ActionState };
 
-export type LoggedSet = VO.LoggedSetType & { actions: LoggedSetActions };
+export type LoggedSet = Omit<VO.LoggedSetType, "rir"> & { rir: VO.RirType | null; actions: LoggedSetActions };
 
 export type ExercisePreviousPerformance = Pick<ExercisePerformance, "scheduledFor" | "sets"> & {
   diff?: VO.ExerciseTargetDiff;

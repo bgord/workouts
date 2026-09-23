@@ -63,16 +63,7 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
       )
       .orderBy(asc(Schema.workoutLoggedSets.setNumber));
 
-    return {
-      workoutId: previous.id,
-      scheduledFor: previous.scheduledFor,
-      sets: sets.map((set) => ({
-        setNumber: set.setNumber,
-        reps: set.reps,
-        load: set.load,
-        rir: set.rir ?? undefined,
-      })),
-    };
+    return { workoutId: previous.id, scheduledFor: previous.scheduledFor, sets };
   }
 }
 

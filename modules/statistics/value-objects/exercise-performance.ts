@@ -6,7 +6,7 @@ export type ExercisePerformanceSet = {
   setNumber: Workouts.VO.SetNumberType;
   reps: Workouts.VO.RepsType;
   load: Workouts.VO.LoadType;
-  rir?: Workouts.VO.RirType;
+  rir: Workouts.VO.RirType | null;
   estimate: VO.OneRepMaxEstimateType;
 };
 
