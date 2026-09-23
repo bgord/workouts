@@ -127,7 +127,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("WorkoutIsReadyToStart - no exercises", async () => {
+  test("WorkoutHasExercises", async () => {
     const events = [mocks.GenericWorkoutCreatedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -143,11 +143,11 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.ready.to.start");
+    await testcases.assertInvariantError(response, 403, "workout.has.exercises");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("WorkoutIsReadyToStart - exercise without a target", async () => {
+  test("WorkoutExercisesHaveTargets", async () => {
     const events = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -163,7 +163,7 @@ describe("PATCH /api/workouts/:workoutId/start", async () => {
       mocks.ip,
     );
 
-    await testcases.assertInvariantError(response, 403, "workout.is.ready.to.start");
+    await testcases.assertInvariantError(response, 403, "workout.exercises.have.targets");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

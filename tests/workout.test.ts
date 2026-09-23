@@ -555,17 +555,17 @@ describe("Workout", async () => {
     expect(() => workout.start(mocks.anotherUserId)).toThrow(Workouts.Invariants.WorkoutBelongsToUser.error);
   });
 
-  test("start - WorkoutIsReadyToStart - no exercises", async () => {
+  test("start - WorkoutHasExercises", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
       [mocks.GenericWorkoutCreatedEvent],
       deps,
     );
 
-    expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsReadyToStart.error);
+    expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutHasExercises.error);
   });
 
-  test("start - WorkoutIsReadyToStart - exercise without a target", async () => {
+  test("start - WorkoutExercisesHaveTargets", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
       [
@@ -577,7 +577,7 @@ describe("Workout", async () => {
       deps,
     );
 
-    expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutIsReadyToStart.error);
+    expect(() => workout.start(mocks.userId)).toThrow(Workouts.Invariants.WorkoutExercisesHaveTargets.error);
   });
 
   test("logSet", async () => {

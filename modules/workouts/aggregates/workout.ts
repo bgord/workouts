@@ -206,7 +206,8 @@ export class Workout {
   start(requesterId: Auth.VO.UserIdType) {
     Invariants.WorkoutIsDraft.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.WorkoutIsReadyToStart.enforce({ workoutExercises: this.exercises });
+    Invariants.WorkoutHasExercises.enforce({ workoutExercises: this.exercises });
+    Invariants.WorkoutExercisesHaveTargets.enforce({ workoutExercises: this.exercises });
 
     const event = bg.event(
       Events.WorkoutStartedEvent,

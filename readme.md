@@ -436,14 +436,15 @@ modules/
     │   ├── workout-exercise-limit.ts
     │   ├── workout-exercise-position-has-changed.ts
     │   ├── workout-exercise-position-in-range.ts
+    │   ├── workout-exercises-have-targets.ts
     │   ├── workout-exists.ts
+    │   ├── workout-has-exercises.ts
     │   ├── workout-has-logged-sets.ts
     │   ├── workout-in-progress-limit-for-owner.ts
     │   ├── workout-is-correctable.ts
     │   ├── workout-is-draft.ts
     │   ├── workout-is-editable.ts
     │   ├── workout-is-in-progress.ts
-    │   ├── workout-is-ready-to-start.ts
     │   ├── workout-logged-set-exists.ts
     │   ├── workout-note-has-changed.ts
     │   ├── workout-plan-ready.ts
@@ -472,7 +473,11 @@ modules/
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-load-step.ts
     │   ├── progression-method.strategy.ts
-    │   └── workout-export-file-csv.ts
+    │   ├── workout-export-file-csv.ts
+    │   ├── workout-get-actions.ts
+    │   ├── workout-get-exercise-actions.ts
+    │   ├── workout-get-logged-set-actions.ts
+    │   └── workout-list-actions.ts
     └── value-objects
         ├── exercise-prescription.ts
         ├── exercise-target-diff.ts
