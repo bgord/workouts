@@ -51,6 +51,53 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       loggedSetCount: tools.Int.nonNegative(loggedSets.length),
     }).calculate();
 
+    const workoutExercises = exercises.map((exercise, index) => {
+      const target =
+        exercise.targetSets === null
+          ? undefined
+          : v.parse(Workouts.VO.ExerciseTarget, {
+              sets: exercise.targetSets,
+              reps: exercise.targetReps,
+              load: exercise.targetLoad,
+            });
+
+      const prescription = v.parse(Workouts.VO.ExercisePrescription, {
+        sets: exercise.prescriptionSets,
+        reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },
+        progression: exercise.prescriptionProgression,
+      });
+
+      const previous = previousPerformances[index];
+
+      return {
+        id: exercise.id,
+        exerciseId: exercise.exerciseId,
+        exerciseName: exercise.exerciseName,
+        exerciseImageEtag: exercise.exerciseImageEtag,
+        exerciseDescription: exercise.exerciseDescription,
+        prescription,
+        target,
+        loggedSets: loggedSets
+          .filter((loggedSet) => loggedSet.workoutExerciseId === exercise.id)
+          .map((loggedSet) => ({
+            id: loggedSet.id,
+            setNumber: loggedSet.setNumber,
+            reps: loggedSet.reps,
+            load: loggedSet.load,
+            rir: loggedSet.rir ?? undefined,
+            actions: loggedSetActions,
+          })),
+        previousPerformance: previous && {
+          scheduledFor: previous.scheduledFor,
+          sets: previous.sets,
+          diff: target && new Workouts.Services.ExerciseTargetDiffCalculator(target, previous).calculate(),
+        },
+        targetProgression:
+          previous &&
+          Workouts.Services.ProgressionMethodStrategyFactory.for(prescription, previous).calculate(),
+      };
+    });
+
     const data = {
       id: workout.id,
       planId: workout.planId,
@@ -64,56 +111,14 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       completedAt: workout.completedAt ?? undefined,
       note: workout.note ?? undefined,
       revision: workout.revision,
-      exercises: exercises.map((exercise, index) => {
-        const target =
-          exercise.targetSets === null
-            ? undefined
-            : v.parse(Workouts.VO.ExerciseTarget, {
-                sets: exercise.targetSets,
-                reps: exercise.targetReps,
-                load: exercise.targetLoad,
-              });
-
-        const prescription = v.parse(Workouts.VO.ExercisePrescription, {
-          sets: exercise.prescriptionSets,
-          reps: { min: exercise.prescriptionRepsMin, max: exercise.prescriptionRepsMax },
-          progression: exercise.prescriptionProgression,
-        });
-
-        const previous = previousPerformances[index];
-
-        return {
-          id: exercise.id,
-          exerciseId: exercise.exerciseId,
-          exerciseName: exercise.exerciseName,
-          exerciseImageEtag: exercise.exerciseImageEtag,
-          exerciseDescription: exercise.exerciseDescription,
-          prescription,
-          target,
-          loggedSets: loggedSets
-            .filter((loggedSet) => loggedSet.workoutExerciseId === exercise.id)
-            .map((loggedSet) => ({
-              id: loggedSet.id,
-              setNumber: loggedSet.setNumber,
-              reps: loggedSet.reps,
-              load: loggedSet.load,
-              rir: loggedSet.rir ?? undefined,
-              actions: loggedSetActions,
-            })),
-          previousPerformance: previous && {
-            scheduledFor: previous.scheduledFor,
-            sets: previous.sets,
-            diff: target && new Workouts.Services.ExerciseTargetDiffCalculator(target, previous).calculate(),
-          },
-          targetProgression:
-            previous &&
-            Workouts.Services.ProgressionMethodStrategyFactory.for(prescription, previous).calculate(),
-          actions: new Workouts.Services.WorkoutGetExerciseActions({
-            status,
-            exercise: { target },
-          }).calculate(),
-        };
-      }),
+      exercises: workoutExercises.map((exercise) => ({
+        ...exercise,
+        actions: new Workouts.Services.WorkoutGetExerciseActions({
+          status,
+          exercises: workoutExercises,
+          exercise,
+        }).calculate(),
+      })),
     };
 
     return {

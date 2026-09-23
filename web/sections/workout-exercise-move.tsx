@@ -32,7 +32,7 @@ export function WorkoutExerciseMove(props: {
     onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
   });
 
-  if (!(props.active && props.exercise.actions.move.available)) return props.children;
+  if (!(props.active && props.exercise.actions.moveUp.available)) return props.children;
 
   const busy = up.isLoading || down.isLoading;
 
@@ -40,7 +40,7 @@ export function WorkoutExerciseMove(props: {
     <div data-cross="center" data-shrink="0" data-stack="y">
       <ui.IconButton
         aria-label={t("workout.exercise.move.up.title", { name: props.exercise.exerciseName })}
-        disabled={!props.exercise.actions.move.enabled || props.position === 0 || busy}
+        disabled={!props.exercise.actions.moveUp.enabled || busy}
         onClick={() => up.mutate()}
         title={t("workout.exercise.move.up.title", { name: props.exercise.exerciseName })}
         {...bg.Rhythm().times(2).style.height}
@@ -52,9 +52,7 @@ export function WorkoutExerciseMove(props: {
 
       <ui.IconButton
         aria-label={t("workout.exercise.move.down.title", { name: props.exercise.exerciseName })}
-        disabled={
-          !props.exercise.actions.move.enabled || props.position === workout.data.exercises.length - 1 || busy
-        }
+        disabled={!props.exercise.actions.moveDown.enabled || busy}
         onClick={() => down.mutate()}
         title={t("workout.exercise.move.down.title", { name: props.exercise.exerciseName })}
         {...bg.Rhythm().times(2).style.height}

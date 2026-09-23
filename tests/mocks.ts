@@ -560,7 +560,8 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     actions: {
       targetSet: { available: true, enabled: true, hints: [] },
       remove: { available: true, enabled: true, hints: [] },
-      move: { available: true, enabled: true, hints: [] },
+      moveUp: { available: true, enabled: true, hints: [] },
+      moveDown: { available: true, enabled: true, hints: [] },
       setLog: { available: false, enabled: false, hints: [] },
     },
   })),
