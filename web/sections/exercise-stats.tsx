@@ -25,10 +25,10 @@ export function ExerciseStats() {
       >
         <ui.TileHeader>
           <Trophy data-color="brand-400" data-size="xs" />
-          <div data-stack="x">
+          <span data-stack="x">
             <EqualApproximately data-color="neutral-600" data-size="xs" />
             {t("statistics.exercise.one_rep_max_estimate")}
-          </div>
+          </span>
         </ui.TileHeader>
 
         <ui.TileValue>

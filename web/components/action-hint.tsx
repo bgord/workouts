@@ -3,7 +3,7 @@ import * as bg from "@bgord/ui";
 import { Info } from "lucide-react";
 import { Gap } from "./gap";
 
-export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["div"]) {
+export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["small"]) {
   const { hints, ...rest } = props;
   const t = bg.useTranslations();
   const hint = hints[0];

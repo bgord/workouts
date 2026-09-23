@@ -42,11 +42,10 @@ export const TileLink: LinkComponent<typeof TileAnchor> = (props) => (
   <TileAnchorLink activeProps={{}} {...props} />
 );
 
-export function TileHeader(props: React.JSX.IntrinsicElements["div"]) {
+export function TileHeader(props: React.JSX.IntrinsicElements["small"]) {
   return (
-    <div
+    <small
       data-color="neutral-600"
-      data-fs="xs"
       data-md-width="100%"
       data-stack="x"
       data-wrap="wrap"
