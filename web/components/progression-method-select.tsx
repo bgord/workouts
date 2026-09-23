@@ -14,9 +14,7 @@ export function ProgressionMethodSelect(
 
   return (
     <div data-stack="y" {...Gap.field}>
-      <label className="c-label" {...field.label.props}>
-        {t("progression.method.label")}
-      </label>
+      <label {...field.label.props}>{t("progression.method.label")}</label>
 
       <Select {...rest} {...field.input.props}>
         {Object.values(ProgressionMethodOptions).map((option) => (

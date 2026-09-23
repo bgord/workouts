@@ -63,9 +63,7 @@ export function PlanCreate() {
           {...ui.Gap.section}
         >
           <div data-stack="y" {...ui.Gap.field}>
-            <label className="c-label" {...name.label.props}>
-              {t("plan.create.name.label")}
-            </label>
+            <label {...name.label.props}>{t("plan.create.name.label")}</label>
 
             <input
               className="c-input"

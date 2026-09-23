@@ -64,9 +64,7 @@ export function ProfileAccountDelete() {
           {...ui.Gap.stack}
         >
           <div data-cross="start" data-stack="y" {...ui.Gap.field}>
-            <label className="c-label" {...challenge.label.props}>
-              {t("profile.delete_account.challenge")}
-            </label>
+            <label {...challenge.label.props}>{t("profile.delete_account.challenge")}</label>
             <input
               className="c-input"
               pattern="delete"

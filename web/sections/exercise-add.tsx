@@ -115,9 +115,7 @@ export function ExerciseAdd() {
           </div>
 
           <div data-stack="y" {...ui.Gap.field}>
-            <label className="c-label" {...name.label.props}>
-              {t("exercise.add.name.label")}
-            </label>
+            <label {...name.label.props}>{t("exercise.add.name.label")}</label>
 
             <input
               className="c-input"
@@ -129,9 +127,7 @@ export function ExerciseAdd() {
           </div>
 
           <div data-stack="y" {...ui.Gap.field}>
-            <label className="c-label" {...description.label.props}>
-              {t("exercise.add.description.label")}
-            </label>
+            <label {...description.label.props}>{t("exercise.add.description.label")}</label>
 
             <textarea
               className="c-textarea"

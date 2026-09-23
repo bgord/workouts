@@ -21,9 +21,7 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
 
   return (
     <div data-stack="y" {...ui.Gap.field}>
-      <label className="c-label" {...field.label.props}>
-        {t("workout.create.when.label")}
-      </label>
+      <label {...field.label.props}>{t("workout.create.when.label")}</label>
 
       <div data-stack="y" {...ui.Gap.cluster}>
         <div data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
