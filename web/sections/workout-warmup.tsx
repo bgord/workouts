@@ -39,7 +39,7 @@ export function WorkoutWarmup() {
         <div data-stack="x" {...ui.Gap.block}>
           <Flame data-color="neutral-600" data-shrink="0" data-size="sm" />
 
-          <ui.Eyebrow data-grow="1">{t("workout.warmup.label")}</ui.Eyebrow>
+          <h3 data-grow="1">{t("workout.warmup.label")}</h3>
 
           {workoutWarmupExpanded.on && <ChevronUp data-color="neutral-500" data-shrink="0" data-size="sm" />}
 

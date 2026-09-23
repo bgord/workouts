@@ -10,7 +10,7 @@ export function PlansArchived() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <ui.Eyebrow>{t("plan.list.archived.header")}</ui.Eyebrow>
+      <h3>{t("plan.list.archived.header")}</h3>
 
       <ul data-opacity="high" data-stack="y" {...ui.Gap.cluster}>
         {plans.data.archived.map((plan) => (

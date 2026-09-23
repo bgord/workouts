@@ -33,7 +33,7 @@ export function ExerciseDescription() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <ui.Eyebrow>{t("exercise.add.description.label")}</ui.Eyebrow>
+      <h3>{t("exercise.add.description.label")}</h3>
 
       {!exercise.actions.update.available && <p className="c-prose">{exercise.data.description}</p>}
 

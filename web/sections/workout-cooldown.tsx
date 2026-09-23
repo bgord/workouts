@@ -41,7 +41,7 @@ export function WorkoutCooldown() {
         <div data-stack="x" {...ui.Gap.block}>
           <Snowflake data-color="neutral-600" data-shrink="0" data-size="sm" />
 
-          <ui.Eyebrow data-grow="1">{t("workout.cooldown.label")}</ui.Eyebrow>
+          <h3 data-grow="1">{t("workout.cooldown.label")}</h3>
 
           {workoutCooldownExpanded.on && (
             <ChevronUp data-color="neutral-500" data-shrink="0" data-size="sm" />

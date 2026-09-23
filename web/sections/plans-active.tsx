@@ -9,7 +9,7 @@ export function PlansActive() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <ui.Eyebrow>{t("plan.list.active.header")}</ui.Eyebrow>
+      <h3>{t("plan.list.active.header")}</h3>
 
       <PlansActiveEmpty />
 

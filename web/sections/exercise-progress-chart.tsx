@@ -23,10 +23,10 @@ export function ExerciseProgressChart() {
       <div data-main="between" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
         <h2>{t("statistics.exercise.progress")}</h2>
 
-        <ui.Eyebrow data-stack="x">
+        <h3 data-stack="x">
           <EqualApproximately data-color="neutral-600" data-size="xs" />
           {t("statistics.exercise.one_rep_max_estimate")}
-        </ui.Eyebrow>
+        </h3>
       </div>
 
       <ui.LineChart aria-label={t("statistics.exercise.progress")}>

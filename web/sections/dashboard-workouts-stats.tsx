@@ -14,7 +14,7 @@ export function DashboardWorkoutStats() {
 
   return (
     <section data-stack="y" {...ui.Gap.cluster}>
-      <ui.Eyebrow>{t("dashboard.completed.header")}</ui.Eyebrow>
+      <h3>{t("dashboard.completed.header")}</h3>
 
       <ul
         className="c-card"

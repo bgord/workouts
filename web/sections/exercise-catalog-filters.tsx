@@ -56,13 +56,16 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
           />
         </div>
 
-        <ui.Eyebrow
+        <div
+          data-color="neutral-500"
+          data-fs="xs"
+          data-ls="wide"
           data-shrink="0"
           data-transform="font-variant-numeric"
           {...bg.Rhythm(64).times(1).style.minWidth}
         >
           {t("exercise.catalog.count", { matching: props.matching.length, total: exercises.data.length })}
-        </ui.Eyebrow>
+        </div>
 
         <ui.IconButton
           aria-label={t("app.clear")}

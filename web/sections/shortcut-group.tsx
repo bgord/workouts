@@ -7,7 +7,7 @@ export function ShortcutGroup(props: { header: string; shortcuts: Array<Shortcut
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <ui.Eyebrow>{props.header}</ui.Eyebrow>
+      <h3>{props.header}</h3>
 
       <ul data-stack="y" {...ui.Gap.cluster}>
         {props.shortcuts.map((shortcut) => (

@@ -35,7 +35,7 @@ export function PlanSectionWarmup(props: PlanSection) {
 
     return (
       <div data-stack="y" {...ui.Gap.field} data-mb="3">
-        <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
+        <h3>{t("plan.section.warmup.label")}</h3>
 
         <p className="c-prose">{props.warmup}</p>
       </div>
@@ -79,7 +79,7 @@ export function PlanSectionWarmup(props: PlanSection) {
           {...ui.Gap.field}
           {...planSectionWarmupUpdate.props.controller}
         >
-          <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
+          <h3>{t("plan.section.warmup.label")}</h3>
 
           <span className="c-prose">{props.warmup}</span>
         </button>
@@ -93,7 +93,7 @@ export function PlanSectionWarmup(props: PlanSection) {
           {...ui.Gap.field}
           {...planSectionWarmupUpdate.props.target}
         >
-          <ui.Eyebrow>{t("plan.section.warmup.label")}</ui.Eyebrow>
+          <h3>{t("plan.section.warmup.label")}</h3>
 
           <textarea
             aria-label={t("plan.section.warmup.label")}
