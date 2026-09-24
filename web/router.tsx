@@ -49,9 +49,11 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: Shell,
   staleTime: Number.POSITIVE_INFINITY,
   loader: async ({ context }) => {
-    const session = await Session.get(context.request);
-    const i18n = await I18N.get(context.request);
-    const avatarEtag = await Avatar.getEtag(context.request);
+    const [session, i18n, avatarEtag] = await Promise.all([
+      Session.get(context.request),
+      I18N.get(context.request),
+      Avatar.getEtag(context.request),
+    ]);
 
     // @ts-expect-error
     if (!(session && i18n)) throw redirect({ to: "/public/login.html" });
@@ -66,9 +68,12 @@ export const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/dashboard"), "Dashboard"),
   loader: async ({ context }) => {
-    const { measurements, stats } = await Measurements.listBodyWeight(context.request);
+    const [{ measurements, stats }, dashboard] = await Promise.all([
+      Measurements.listBodyWeight(context.request),
+      Workouts.dashboard(context.request),
+    ]);
 
-    return { dashboard: await Workouts.dashboard(context.request), measurements, bodyWeightStats: stats };
+    return { dashboard, measurements, bodyWeightStats: stats };
   },
 });
 
@@ -105,10 +110,14 @@ export const catalogRoute = createRoute({
         ? value["name"]
         : ExerciseCatalogFiltersForm.Form.default.name,
   }),
-  loader: async ({ context }) => ({
-    exercises: await Exercises.list(context.request),
-    exerciseCategories: await Exercises.listCategories(context.request),
-  }),
+  loader: async ({ context }) => {
+    const [exercises, exerciseCategories] = await Promise.all([
+      Exercises.list(context.request),
+      Exercises.listCategories(context.request),
+    ]);
+
+    return { exercises, exerciseCategories };
+  },
 });
 
 export const exerciseRoute = createRoute({
@@ -117,14 +126,14 @@ export const exerciseRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/exercise"), "Exercise"),
   notFoundComponent: lazyRouteComponent(() => import("./sections/exercise-not-found"), "ExerciseNotFound"),
   loader: async ({ context, params }) => {
-    const exercise = await Exercises.get(context.request, params);
+    const [exercise, performances] = await Promise.all([
+      Exercises.get(context.request, params),
+      Statistics.getExercisePerformances(context.request, params),
+    ]);
 
     if (!exercise) throw notFound();
 
-    return {
-      exercise,
-      performances: await Statistics.getExercisePerformances(context.request, params),
-    };
+    return { exercise, performances };
   },
 });
 
@@ -141,11 +150,14 @@ export const planRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/plan"), "Plan"),
   notFoundComponent: lazyRouteComponent(() => import("./sections/plan-not-found"), "PlanNotFound"),
   loader: async ({ context, params }) => {
-    const plan = await Plans.get(context.request, params);
+    const [plan, exercises] = await Promise.all([
+      Plans.get(context.request, params),
+      Exercises.list(context.request),
+    ]);
 
     if (!plan) throw notFound();
 
-    return { plan, exercises: await Exercises.list(context.request) };
+    return { plan, exercises };
   },
 });
 
@@ -164,11 +176,14 @@ export const workoutRoute = createRoute({
   }),
   notFoundComponent: lazyRouteComponent(() => import("./sections/workout-not-found"), "WorkoutNotFound"),
   loader: async ({ context, params }) => {
-    const workout = await Workouts.get(context.request, params);
+    const [workout, exercises] = await Promise.all([
+      Workouts.get(context.request, params),
+      Exercises.list(context.request),
+    ]);
 
     if (!workout) throw notFound();
 
-    return { workout, exercises: await Exercises.list(context.request) };
+    return { workout, exercises };
   },
 });
 
