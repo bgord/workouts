@@ -9,7 +9,6 @@ infra/adapters/system/tmp/
 infra/build-info.json
 jobs.db*
 meta.json
-meta.web.json
 node_modules/
 output/
 public/*.js

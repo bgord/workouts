@@ -30,8 +30,6 @@ void (async function main() {
     di.Env.ADMIN_PASSWORD,
   );
 
-  const build = await di.Tools.BuildInfoConfig.get();
-
   const app = Bun.serve({
     port: di.Env.PORT,
     maxRequestBodySize: tools.Size.fromMB(12).toBytes(),
@@ -46,9 +44,11 @@ void (async function main() {
           : bg.StaticFileStrategyNoop,
       ),
       "/api/*": server.fetch,
-      "/*": bg.SSRBun.essentials((request, nonce) => handler(request, nonce, build), di.Adapters.System, {
-        csp: { imgSources: ["blob:"] },
-      }),
+      "/*": bg.SSRBun.essentials(
+        (request, nonce) => handler(request, nonce, String(di.Tools.CommitConfig.get())),
+        di.Adapters.System,
+        { csp: { imgSources: ["blob:"] } },
+      ),
     },
   });
 

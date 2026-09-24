@@ -729,8 +729,7 @@ infra/
 │   ├── shield-security.strategy.ts
 │   ├── shield-timeout.strategy.ts
 │   ├── static-file-immutable.strategy.ts
-│   ├── translations-provider.adapter.ts
-│   └── web-assets.vo.ts
+│   └── translations-provider.adapter.ts
 └── translations
     ├── en.json
     └── pl.json

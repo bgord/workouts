@@ -1,18 +1,10 @@
 // fallow-ignore-file circular-dependencies
 import * as bg from "@bgord/ui";
-import {
-  createRootRouteWithContext,
-  createRoute,
-  lazyRouteComponent,
-  notFound,
-  Router,
-  redirect,
-} from "@tanstack/react-router";
+import { createRootRouteWithContext, createRoute, notFound, Router, redirect } from "@tanstack/react-router";
 import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
-import type { WebAssetsType } from "../infra/tools/web-assets.vo";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import {
   Avatar,
@@ -27,14 +19,22 @@ import {
   Workouts,
 } from "./api";
 import { NotFound } from "./not-found";
+import { Catalog as CatalogPage } from "./pages/catalog";
+import { Dashboard as DashboardPage } from "./pages/dashboard";
+import { Exercise as ExercisePage } from "./pages/exercise";
+import { Measurements as MeasurementsPage } from "./pages/measurements";
+import { Plan as PlanPage } from "./pages/plan";
+import { Plans as PlansPage } from "./pages/plans";
+import { Profile as ProfilePage } from "./pages/profile";
+import { Workout as WorkoutPage } from "./pages/workout";
+import { Workouts as WorkoutsPage } from "./pages/workouts";
+import { ExerciseNotFound } from "./sections/exercise-not-found";
+import { PlanNotFound } from "./sections/plan-not-found";
+import { WorkoutNotFound } from "./sections/workout-not-found";
 import { AssetVersion } from "./services/asset-version";
 import { Shell } from "./shell";
 
-type RouterContext = {
-  request: Request | null;
-  nonce: string;
-  build: { sha: string; assets: WebAssetsType };
-};
+type RouterContext = { request: Request | null; nonce: string; assetVersion: string };
 
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   head: ({ match }: { match: { context: RouterContext } }) => ({
@@ -49,10 +49,10 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
     ],
     links: [
       { rel: "apple-touch-icon", href: "/public/apple-touch-icon.png" },
-      ...bg.CSS(AssetVersion.url("/public/main.min.css", match.context.build.sha)),
-      ...bg.CSS(AssetVersion.url("/public/custom.css", match.context.build.sha)),
+      ...bg.CSS(AssetVersion.url("/public/main.min.css", match.context.assetVersion)),
+      ...bg.CSS(AssetVersion.url("/public/custom.css", match.context.assetVersion)),
     ],
-    scripts: [bg.JS("/public/entry-client.js")],
+    scripts: [bg.JS(AssetVersion.url("/public/entry-client.js", match.context.assetVersion))],
   }),
   component: Shell,
   staleTime: Number.POSITIVE_INFINITY,
@@ -73,7 +73,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
 export const dashboardRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/dashboard"), "Dashboard"),
+  component: DashboardPage,
   loader: async ({ context }) => {
     const { workouts, bodyWeightStats } = await Dashboard.get(context.request);
 
@@ -84,7 +84,7 @@ export const dashboardRoute = createRoute({
 export const workoutsRoute = createRoute({
   path: "/workouts",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/workouts"), "Workouts"),
+  component: WorkoutsPage,
   validateSearch: WorkoutHistoryFiltersForm.Form.validate,
   loaderDeps: ({ search }) => search,
   loader: async ({ context, deps }) => {
@@ -95,7 +95,7 @@ export const workoutsRoute = createRoute({
 export const catalogRoute = createRoute({
   path: "/catalog",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/catalog"), "Catalog"),
+  component: CatalogPage,
   validateSearch: ExerciseCatalogFiltersForm.Form.validate,
   loader: async ({ context }) => {
     const [exercises, exerciseCategories] = await Promise.all([
@@ -110,8 +110,8 @@ export const catalogRoute = createRoute({
 export const exerciseRoute = createRoute({
   path: "/catalog/exercise/$exerciseId",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/exercise"), "Exercise"),
-  notFoundComponent: lazyRouteComponent(() => import("./sections/exercise-not-found"), "ExerciseNotFound"),
+  component: ExercisePage,
+  notFoundComponent: ExerciseNotFound,
   loader: async ({ context, params }) => {
     const [exercise, performances] = await Promise.all([
       Exercises.get(context.request, params),
@@ -127,15 +127,15 @@ export const exerciseRoute = createRoute({
 export const plansRoute = createRoute({
   path: "/plans",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/plans"), "Plans"),
+  component: PlansPage,
   loader: async ({ context }) => ({ plans: await Plans.list(context.request) }),
 });
 
 export const planRoute = createRoute({
   path: "/plans/$planId",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/plan"), "Plan"),
-  notFoundComponent: lazyRouteComponent(() => import("./sections/plan-not-found"), "PlanNotFound"),
+  component: PlanPage,
+  notFoundComponent: PlanNotFound,
   loader: async ({ context, params }) => {
     const plan = await Plans.get(context.request, params);
 
@@ -148,9 +148,9 @@ export const planRoute = createRoute({
 export const workoutRoute = createRoute({
   path: "/workouts/$workoutId",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/workout"), "Workout"),
+  component: WorkoutPage,
   validateSearch: WorkoutHistoryFiltersForm.Form.validate,
-  notFoundComponent: lazyRouteComponent(() => import("./sections/workout-not-found"), "WorkoutNotFound"),
+  notFoundComponent: WorkoutNotFound,
   loader: async ({ context, params }) => {
     const workout = await Workouts.get(context.request, params);
 
@@ -163,7 +163,7 @@ export const workoutRoute = createRoute({
 export const measurementsRoute = createRoute({
   path: "/measurements",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/measurements"), "Measurements"),
+  component: MeasurementsPage,
   validateSearch: (value: Record<string, unknown>) => ({
     ...BodyWeightMeasurementFiltersForm.Form.validate(value),
     ...BodyWeightChartForm.Form.validate(value),
@@ -184,7 +184,7 @@ export const measurementsRoute = createRoute({
 export const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
-  component: lazyRouteComponent(() => import("./pages/profile"), "Profile"),
+  component: ProfilePage,
   loader: async ({ context }) => {
     const { weeklySummary } = await Preferences.getWeeklySummary(context.request);
 
@@ -212,9 +212,9 @@ export function createRouter(context: RouterContext) {
     defaultViewTransition: true,
     scrollRestoration: true,
     ssr: { nonce: context.nonce },
-    dehydrate: () => ({ build: context.build }),
+    dehydrate: () => ({ assetVersion: context.assetVersion }),
     hydrate: (dehydrated) => {
-      context.build = dehydrated.build;
+      context.assetVersion = dehydrated.assetVersion;
     },
   });
 }
