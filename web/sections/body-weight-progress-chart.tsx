@@ -45,23 +45,25 @@ export function BodyWeightProgressChart() {
 
         <ui.LineChartArea layout={layout} />
 
-        <g data-color="brand-300" fill="currentColor">
+        <g
+          className="chart-points"
+          data-color="brand-300"
+          fill="currentColor"
+          stroke="transparent"
+          strokeWidth={POINT_HIT_RADIUS}
+        >
           {layout.points.map((point, index) => {
             const measurement = measurements[index]!;
 
             return (
-              <g key={measurement.id}>
+              <circle cx={point.x} cy={point.y} key={measurement.id} r="4">
                 <title>
                   {t("measurements.body_weight.progress.point", {
                     date: DateFormat.plainDay(language, measurement.measuredOn),
                     weight: WeightFormat.kilograms(measurement.weight, BodyWeightDecimals),
                   })}
                 </title>
-
-                <circle className="chart-point" cx={point.x} cy={point.y} r="4" />
-
-                <circle cx={point.x} cy={point.y} fill="transparent" r={POINT_HIT_RADIUS} />
-              </g>
+              </circle>
             );
           })}
         </g>

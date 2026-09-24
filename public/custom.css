@@ -72,11 +72,11 @@ a {
   text-decoration: none;
 }
 
-.chart-point {
-  visibility: hidden;
+.chart-points > circle {
+  fill-opacity: 0;
 }
-g:hover > .chart-point {
-  visibility: visible;
+.chart-points > circle:hover {
+  fill-opacity: 1;
 }
 
 [data-spin="none"] {
