@@ -24,7 +24,7 @@ export function BodyWeightMeasurementFilters() {
           onChange={(event) =>
             navigate({
               resetScroll: false,
-              search: { month: event.currentTarget.value || undefined },
+              search: { month: event.currentTarget.value || undefined, chart: search.chart },
               to: "/measurements",
             })
           }
@@ -47,6 +47,7 @@ export function BodyWeightMeasurementFilters() {
           onClick={() =>
             navigate({
               resetScroll: false,
+              search: { chart: search.chart },
               to: "/measurements",
             })
           }

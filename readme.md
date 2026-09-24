@@ -592,6 +592,7 @@ app/
 │       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
+    ├── body-weight-chart-form.ts
     ├── body-weight-measurement-filters-form.ts
     ├── exercise-add-form.ts
     ├── exercise-catalog-filters-form.ts

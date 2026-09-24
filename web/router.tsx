@@ -8,9 +8,11 @@ import {
   Router,
   redirect,
 } from "@tanstack/react-router";
+import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
+import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import {
   Avatar,
   Dashboard,
@@ -162,11 +164,20 @@ export const measurementsRoute = createRoute({
   path: "/measurements",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/measurements"), "Measurements"),
-  validateSearch: BodyWeightMeasurementFiltersForm.Form.validate,
-  loader: async ({ context }) => {
-    const { measurements, stats } = await Measurements.listBodyWeight(context.request);
+  validateSearch: (value: Record<string, unknown>) => ({
+    ...BodyWeightMeasurementFiltersForm.Form.validate(value),
+    ...BodyWeightChartForm.Form.validate(value),
+  }),
+  loaderDeps: ({ search }) => ({ chart: search.chart }),
+  loader: async ({ context, deps }) => {
+    const [{ measurements, stats }, { points }] = await Promise.all([
+      Measurements.listBodyWeight(context.request),
+      Measurements.bodyWeightChart(context.request, {
+        granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
+      }),
+    ]);
 
-    return { measurements, bodyWeightStats: stats };
+    return { measurements, bodyWeightStats: stats, chart: points };
   },
 });
 
