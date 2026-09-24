@@ -174,8 +174,10 @@ modules/
 │   ├── ports
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── list-body-weight-measurements-for-month.ts
 │   │   ├── list-body-weight-measurements-for-stats.ts
-│   │   └── list-body-weight-measurements.ts
+│   │   ├── list-body-weight-measurements.ts
+│   │   └── list-body-weight-months.ts
 │   ├── services
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
@@ -188,11 +190,13 @@ modules/
 │       ├── body-weight-chart-point.ts
 │       ├── body-weight-goal-options.ts
 │       ├── body-weight-goal.ts
+│       ├── body-weight-history-month.ts
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
 │       ├── body-weight-measurement-import-max-size.ts
 │       ├── body-weight-measurement-import-mime-registry.ts
 │       ├── body-weight-measurement.ts
+│       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
 ├── notifications
@@ -629,8 +633,10 @@ infra/
 │   │   └── list-exercises-with-categories.adapter.ts
 │   ├── measurements
 │   │   ├── get-body-weight-measurement.adapter.ts
+│   │   ├── list-body-weight-measurements-for-month.adapter.ts
 │   │   ├── list-body-weight-measurements-for-stats.adapter.ts
-│   │   └── list-body-weight-measurements.adapter.ts
+│   │   ├── list-body-weight-measurements.adapter.ts
+│   │   └── list-body-weight-months.adapter.ts
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
