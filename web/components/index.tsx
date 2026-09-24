@@ -27,6 +27,7 @@ export * from "./line-chart";
 export * from "./logo";
 export * from "./logout";
 export * from "./main";
+export * from "./navigation-progress";
 export * from "./online-status-bar";
 export * from "./output";
 export * from "./plan-card";

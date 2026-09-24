@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+import { NavigationProgress } from "./components/navigation-progress";
 import { OnlineStatusBar } from "./components/online-status-bar";
 import { rootRoute } from "./router";
 import { Navigation } from "./sections/navigation";
@@ -16,6 +17,7 @@ export function Shell() {
       <body data-mx="auto">
         <div id="root">
           <bg.TranslationsContext.Provider value={i18n}>
+            <NavigationProgress />
             <Navigation />
             <Outlet />
             <Shortcuts />
