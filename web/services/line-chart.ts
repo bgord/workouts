@@ -7,6 +7,9 @@ const LABEL_CHAR_WIDTH = LABEL_FONT_SIZE * 0.6;
 const SCALE_MARGIN = 1;
 const GRIDLINES_LIMIT = 5;
 const GRIDLINE_LABEL_GAP = 8;
+const COORDINATE_PRECISION = 10;
+
+const round = (coordinate: number) => Math.round(coordinate * COORDINATE_PRECISION) / COORDINATE_PRECISION;
 
 export type LineChartLayout = ReturnType<typeof LineChartMath.layout>;
 
@@ -41,12 +44,12 @@ export const LineChartMath = {
       height: HEIGHT - PADDING.top - PADDING.bottom,
     };
 
-    const toY = (value: number) => plot.bottom - ((value - floor) / (ceiling - floor)) * plot.height;
+    const toY = (value: number) => round(plot.bottom - ((value - floor) / (ceiling - floor)) * plot.height);
 
     const gridLines = labels.map((label) => ({ ...label, y: toY(label.value) }));
 
     const points = values.map((value, index) => ({
-      x: plot.left + (index * plot.width) / (values.length - 1),
+      x: round(plot.left + (index * plot.width) / (values.length - 1)),
       y: toY(value),
     }));
 
