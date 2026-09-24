@@ -6,11 +6,10 @@ import { createRouter } from "./router";
 export async function handler(
   request: Request,
   nonce: bg.NonceValueType,
-  buildInfo: BuildInfoType,
+  build: BuildInfoType,
 ): Promise<Response> {
   return createRequestHandler({
     request,
-    createRouter: () =>
-      createRouter({ request, nonce, assetVersion: buildInfo.sha, assets: buildInfo.assets }),
+    createRouter: () => createRouter({ request, nonce, build }),
   })(defaultRenderHandler);
 }

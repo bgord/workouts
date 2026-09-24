@@ -30,7 +30,7 @@ void (async function main() {
     di.Env.ADMIN_PASSWORD,
   );
 
-  const buildInfo = await di.Tools.BuildInfoConfig.get();
+  const build = await di.Tools.BuildInfoConfig.get();
 
   const app = Bun.serve({
     port: di.Env.PORT,
@@ -46,7 +46,7 @@ void (async function main() {
           : bg.StaticFileStrategyNoop,
       ),
       "/api/*": server.fetch,
-      "/*": bg.SSRBun.essentials((request, nonce) => handler(request, nonce, buildInfo), di.Adapters.System, {
+      "/*": bg.SSRBun.essentials((request, nonce) => handler(request, nonce, build), di.Adapters.System, {
         csp: { imgSources: ["blob:"] },
       }),
     },

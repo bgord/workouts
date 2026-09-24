@@ -33,8 +33,7 @@ import { Shell } from "./shell";
 type RouterContext = {
   request: Request | null;
   nonce: string;
-  assetVersion: string;
-  assets: WebAssetsType;
+  build: { sha: string; assets: WebAssetsType };
 };
 
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
@@ -50,8 +49,8 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
     ],
     links: [
       { rel: "apple-touch-icon", href: "/public/apple-touch-icon.png" },
-      ...bg.CSS(AssetVersion.url("/public/main.min.css", match.context.assetVersion)),
-      ...bg.CSS(AssetVersion.url("/public/custom.css", match.context.assetVersion)),
+      ...bg.CSS(AssetVersion.url("/public/main.min.css", match.context.build.sha)),
+      ...bg.CSS(AssetVersion.url("/public/custom.css", match.context.build.sha)),
     ],
     scripts: [bg.JS("/public/entry-client.js")],
   }),
@@ -213,10 +212,9 @@ export function createRouter(context: RouterContext) {
     defaultViewTransition: true,
     scrollRestoration: true,
     ssr: { nonce: context.nonce },
-    dehydrate: () => ({ assetVersion: context.assetVersion, assets: context.assets }),
+    dehydrate: () => ({ build: context.build }),
     hydrate: (dehydrated) => {
-      context.assetVersion = dehydrated.assetVersion;
-      context.assets = dehydrated.assets;
+      context.build = dehydrated.build;
     },
   });
 }

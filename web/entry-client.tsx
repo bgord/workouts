@@ -5,8 +5,7 @@ import { createRouter } from "./router";
 const router = createRouter({
   request: null,
   nonce: "",
-  assetVersion: "",
-  assets: { entry: "/public/entry-client.js", preloads: {} },
+  build: { sha: "", assets: { entry: "/public/entry-client.js", preloads: {} } },
 });
 
 hydrateRoot(document, <RouterClient router={router} />);
