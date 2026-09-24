@@ -47,7 +47,6 @@ export function BodyWeightMeasurementFilters() {
           onClick={() =>
             navigate({
               resetScroll: false,
-              search: BodyWeightMeasurementFiltersForm.Form.default,
               to: "/measurements",
             })
           }

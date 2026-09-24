@@ -4,7 +4,7 @@ export const Form = {
   default: { category: undefined, name: undefined },
   isDefault: (search: { category?: string; name?: string }): boolean =>
     search.category === Form.default.category && search.name === Form.default.name,
-  validate: (value: Record<string, unknown>): { category: string | undefined; name: string | undefined } => ({
+  validate: (value: Record<string, unknown>): { category?: string; name?: string } => ({
     category:
       typeof value["category"] === "string" && value["category"] !== ""
         ? value["category"]

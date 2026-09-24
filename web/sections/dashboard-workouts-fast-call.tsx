@@ -1,5 +1,4 @@
 import * as bg from "@bgord/ui";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 import { dashboardRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
@@ -16,7 +15,6 @@ export function DashboardWorkoutsFastCall() {
       if (upcoming) {
         navigate({
           params: { workoutId: upcoming.id },
-          search: WorkoutHistoryFilters.default,
           to: "/workouts/$workoutId",
         });
       }

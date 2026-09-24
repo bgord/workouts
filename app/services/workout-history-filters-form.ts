@@ -6,9 +6,7 @@ export const Form = {
   default: { section: undefined, filter: undefined },
   isDefault: (search: { section?: string; filter?: WorkoutListFilterOptions }): boolean =>
     search.section === Form.default.section && search.filter === Form.default.filter,
-  validate: (
-    value: Record<string, unknown>,
-  ): { section: string | undefined; filter: WorkoutListFilterOptions | undefined } => ({
+  validate: (value: Record<string, unknown>): { section?: string; filter?: WorkoutListFilterOptions } => ({
     section:
       typeof value["section"] === "string" && value["section"] !== ""
         ? value["section"]

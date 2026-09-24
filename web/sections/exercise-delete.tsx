@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { Trash2 } from "lucide-react";
-import { Form } from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
@@ -15,7 +14,7 @@ export function ExerciseDelete() {
     perform: () => fetch(`/api/exercises/${exercise.data.id}`, { method: "DELETE", credentials: "include" }),
     onSuccess: async () => {
       exerciseDelete.disable();
-      await navigate({ search: Form.default, to: "/catalog" });
+      await navigate({ to: "/catalog" });
     },
   });
 

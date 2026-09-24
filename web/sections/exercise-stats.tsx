@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { CalendarCheck, EqualApproximately, Sigma, Trophy } from "lucide-react";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
@@ -17,12 +16,7 @@ export function ExerciseStats() {
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
-      <ui.TileLink
-        data-hover-bc="brand-500"
-        params={{ workoutId: best.workoutId }}
-        search={WorkoutHistoryFilters.default}
-        to="/workouts/$workoutId"
-      >
+      <ui.TileLink data-hover-bc="brand-500" params={{ workoutId: best.workoutId }} to="/workouts/$workoutId">
         <ui.TileHeader>
           <Trophy data-color="brand-400" data-size="xs" />
           <span data-stack="x">

@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
-import { Form } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 import { dashboardRoute, workoutRoute } from "../router";
 
@@ -22,7 +21,7 @@ export function WorkoutDiscard() {
       }),
     onSuccess: async () => {
       workoutDiscard.disable();
-      await navigate({ search: Form.default, to: "/workouts" });
+      await navigate({ to: "/workouts" });
       await router.invalidate({ filter: (match) => match.routeId === dashboardRoute.id, sync: true });
     },
   });

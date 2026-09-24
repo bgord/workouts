@@ -65,7 +65,7 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
           data-disp={pristine ? "none" : undefined}
           data-md-disp={pristine ? "flex" : undefined}
           disabled={pristine}
-          onClick={() => navigate({ search: ExerciseCatalogFiltersForm.Form.default, to: "/catalog" })}
+          onClick={() => navigate({ to: "/catalog" })}
           title={t("app.clear")}
         >
           <X data-size="sm" />

@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Form as WorkoutHistoryFilters } from "../app/services/workout-history-filters-form";
 import * as ui from "./components";
 
 export function NotFound() {
@@ -36,13 +35,7 @@ export function NotFound() {
         <div data-color="neutral-400">{t("app.not_found.info")}</div>
       </div>
 
-      <Link
-        className="c-button"
-        data-self="center"
-        data-variant="brand"
-        search={WorkoutHistoryFilters.default}
-        to="/"
-      >
+      <Link className="c-button" data-self="center" data-variant="brand" to="/">
         {t("app.not_found.cta")}
       </Link>
     </ui.Main>

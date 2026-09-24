@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { CalendarOff } from "lucide-react";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 import { dashboardRoute } from "../router";
 
@@ -21,9 +20,7 @@ export function DashboardEmpty() {
 
       <small>{t("dashboard.empty.hint")}</small>
 
-      <ui.EmptyStateLink search={WorkoutHistoryFilters.default} to="/workouts">
-        {t("dashboard.empty.cta")}
-      </ui.EmptyStateLink>
+      <ui.EmptyStateLink to="/workouts">{t("dashboard.empty.cta")}</ui.EmptyStateLink>
     </ui.EmptyState>
   );
 }

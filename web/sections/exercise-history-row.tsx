@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { EqualApproximately, Sigma, Trophy } from "lucide-react";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
@@ -29,7 +28,6 @@ export function ExerciseHistoryRow(props: {
           data-stack="x"
           data-transform="font-variant-numeric"
           params={{ workoutId: props.performance.workoutId }}
-          search={WorkoutHistoryFilters.default}
           to="/workouts/$workoutId"
           {...ui.Gap.cluster}
         >

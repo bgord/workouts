@@ -8,7 +8,7 @@ import type { WorkoutListFilterOptions } from "../../modules/workouts/value-obje
 export class Workouts {
   static async list(
     request: Request | null,
-    params: { filter: WorkoutListFilterOptions | undefined },
+    params: { filter?: WorkoutListFilterOptions },
   ): Promise<WorkoutListResponse> {
     const BASE = "/api/workouts/list";
 

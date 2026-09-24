@@ -1,9 +1,6 @@
 import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { CalendarCheck, Dumbbell, ListChecks, Weight } from "lucide-react";
-import { Form as BodyWeightMeasurementFilters } from "../../app/services/body-weight-measurement-filters-form";
-import { Form as ExerciseCatalogFilters } from "../../app/services/exercise-catalog-filters-form";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 
 const link = {
@@ -51,30 +48,19 @@ function NavigationDesktop() {
         {...ui.Spacing.gutter}
         {...ui.Gap.section}
       >
-        <ui.Logo search={WorkoutHistoryFilters.default} to="/" />
+        <ui.Logo to="/" />
 
-        <NavigationLink
-          activeOptions={{ exact: true }}
-          data-ml="auto"
-          search={WorkoutHistoryFilters.default}
-          to="/"
-        >
+        <NavigationLink activeOptions={{ exact: true }} data-ml="auto" to="/">
           {t("app.dashboard")}
         </NavigationLink>
 
-        <NavigationLink search={WorkoutHistoryFilters.default} to="/workouts">
-          {t("app.workouts")}
-        </NavigationLink>
+        <NavigationLink to="/workouts">{t("app.workouts")}</NavigationLink>
 
-        <NavigationLink search={ExerciseCatalogFilters.default} to="/catalog">
-          {t("app.catalog")}
-        </NavigationLink>
+        <NavigationLink to="/catalog">{t("app.catalog")}</NavigationLink>
 
         <NavigationLink to="/plans">{t("app.plans")}</NavigationLink>
 
-        <NavigationLink search={BodyWeightMeasurementFilters.default} to="/measurements">
-          {t("app.measurements")}
-        </NavigationLink>
+        <NavigationLink to="/measurements">{t("app.measurements")}</NavigationLink>
 
         <NavigationLink to="/profile">
           <ui.Avatar size={ui.AvatarSize.md} />
@@ -104,23 +90,13 @@ function NavigationMobileDrawer() {
       data-z="3"
       {...ui.Spacing.gutter}
     >
-      <ui.Logo search={WorkoutHistoryFilters.default} to="/" {...drawerItem} />
+      <ui.Logo to="/" {...drawerItem} />
 
-      <NavigationLink
-        search={WorkoutHistoryFilters.default}
-        title={t("app.workouts")}
-        to="/workouts"
-        {...drawerItem}
-      >
+      <NavigationLink title={t("app.workouts")} to="/workouts" {...drawerItem}>
         <CalendarCheck data-size="md" />
       </NavigationLink>
 
-      <NavigationLink
-        search={ExerciseCatalogFilters.default}
-        title={t("app.catalog")}
-        to="/catalog"
-        {...drawerItem}
-      >
+      <NavigationLink title={t("app.catalog")} to="/catalog" {...drawerItem}>
         <Dumbbell data-size="md" />
       </NavigationLink>
 
@@ -128,12 +104,7 @@ function NavigationMobileDrawer() {
         <ListChecks data-size="md" />
       </NavigationLink>
 
-      <NavigationLink
-        search={BodyWeightMeasurementFilters.default}
-        title={t("app.measurements")}
-        to="/measurements"
-        {...drawerItem}
-      >
+      <NavigationLink title={t("app.measurements")} to="/measurements" {...drawerItem}>
         <Weight data-size="md" />
       </NavigationLink>
 
@@ -169,7 +140,7 @@ function NavigationShell() {
         data-width="100%"
         {...ui.Spacing.gutter}
       >
-        <ui.Logo search={WorkoutHistoryFilters.default} to="/" />
+        <ui.Logo to="/" />
       </div>
     </nav>
   );

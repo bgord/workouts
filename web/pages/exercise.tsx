@@ -1,6 +1,5 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
-import { Form } from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategories } from "../sections/exercise-categories";
@@ -18,7 +17,7 @@ export function Exercise() {
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
         <div data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack search={Form.default} to="/catalog" />
+          <ui.ButtonBack to="/catalog" />
 
           <ExerciseName />
 

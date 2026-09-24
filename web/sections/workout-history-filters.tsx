@@ -67,7 +67,7 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (
           <ui.IconButton
             aria-label={t("app.clear")}
-            onClick={() => navigate({ search: WorkoutHistoryFiltersForm.Form.default, to: "/workouts" })}
+            onClick={() => navigate({ to: "/workouts" })}
             title={t("app.clear")}
           >
             <X data-size="sm" />

@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
-import { Form as WorkoutHistoryFilters } from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
@@ -46,7 +45,6 @@ export function ExerciseProgressChart() {
               data-color="brand-300"
               key={performance.workoutId}
               params={{ workoutId: performance.workoutId }}
-              search={WorkoutHistoryFilters.default}
               to="/workouts/$workoutId"
             >
               <title>

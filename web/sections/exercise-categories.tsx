@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
-import { Form } from "../../app/services/exercise-catalog-filters-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
@@ -45,7 +44,7 @@ export function ExerciseCategories() {
         <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           {assigned.map((category) => (
             <li key={category.id}>
-              <ui.ChipLink search={{ category: category.id, name: Form.default.name }} to="/catalog">
+              <ui.ChipLink search={{ category: category.id }} to="/catalog">
                 {category.name}
               </ui.ChipLink>
             </li>
