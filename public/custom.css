@@ -122,3 +122,14 @@ a {
   color: var(--color-danger-200);
   background-color: var(--color-danger-900);
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 120ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
