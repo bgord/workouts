@@ -1,7 +1,6 @@
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-
-export const BodyWeightHistoryMonthAll = "all";
+import { BodyWeightHistoryMonthAll } from "./body-weight-history-month.validation";
 
 export const BodyWeightHistoryMonthError = { invalid: "body.weight.history.month.invalid" };
 

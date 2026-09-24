@@ -182,8 +182,6 @@
   "measurements.body_weight.history": "Historia",
   "measurements.body_weight.history.month.label": "Miesiąc",
   "measurements.body_weight.history.month.all": "Wszystkie miesiące",
-  "measurements.body_weight.history.more": "+{{count}} więcej",
-  "measurements.body_weight.history.less": "Pokaż mniej",
   "notifications.weekly_summary.body_weight.caption": "średnio, {{count}} {{noun}}",
   "notifications.weekly_summary.body_weight.header": "Masa ciała",
   "notifications.weekly_summary.body_weight.unchanged": "bez zmian vs poprzedni",

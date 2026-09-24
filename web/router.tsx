@@ -168,16 +168,16 @@ export const measurementsRoute = createRoute({
     ...BodyWeightMeasurementFiltersForm.Form.validate(value),
     ...BodyWeightChartForm.Form.validate(value),
   }),
-  loaderDeps: ({ search }) => ({ chart: search.chart }),
+  loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const [{ measurements, stats }, { points }] = await Promise.all([
-      Measurements.listBodyWeight(context.request),
+    const [{ month, measurements, previous, months, stats }, { points }] = await Promise.all([
+      Measurements.listBodyWeight(context.request, { month: deps.month }),
       Measurements.bodyWeightChart(context.request, {
         granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
       }),
     ]);
 
-    return { measurements, bodyWeightStats: stats, chart: points };
+    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points };
   },
 });
 

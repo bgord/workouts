@@ -5,6 +5,7 @@ export * from "./body-weight-chart-point";
 export * from "./body-weight-goal";
 export * from "./body-weight-goal-options";
 export * from "./body-weight-history-month";
+export * from "./body-weight-history-month.validation";
 export * from "./body-weight-measured-on";
 export * from "./body-weight-measurement";
 export * from "./body-weight-measurement-id";

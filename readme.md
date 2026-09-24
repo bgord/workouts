@@ -191,6 +191,7 @@ modules/
 │       ├── body-weight-goal-options.ts
 │       ├── body-weight-goal.ts
 │       ├── body-weight-history-month.ts
+│       ├── body-weight-history-month.validation.ts
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
 │       ├── body-weight-measurement-import-max-size.ts

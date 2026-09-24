@@ -1,6 +1,8 @@
 import * as bg from "@bgord/ui";
 import { X } from "lucide-react";
 import * as BodyWeightMeasurementFiltersForm from "../../app/services/body-weight-measurement-filters-form";
+import type { BodyWeightHistoryMonthType } from "../../modules/measurements/value-objects/body-weight-history-month";
+import { BodyWeightHistoryMonthAll } from "../../modules/measurements/value-objects/body-weight-history-month.validation";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
@@ -8,11 +10,9 @@ import { DateFormat } from "../services/date-format";
 export function BodyWeightMeasurementFilters() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const { measurements } = measurementsRoute.useLoaderData();
+  const { month, months } = measurementsRoute.useLoaderData();
   const navigate = measurementsRoute.useNavigate();
   const search = measurementsRoute.useSearch();
-
-  const months = [...new Set(measurements.map((measurement) => measurement.measuredOn.slice(0, 7)))];
 
   return (
     <div data-stack="x" {...ui.Gap.cluster}>
@@ -24,18 +24,20 @@ export function BodyWeightMeasurementFilters() {
           onChange={(event) =>
             navigate({
               resetScroll: false,
-              search: { month: event.currentTarget.value || undefined, chart: search.chart },
+              search: {
+                month: event.currentTarget.value as BodyWeightHistoryMonthType,
+                chart: search.chart,
+              },
               to: "/measurements",
             })
           }
-          value={search.month ?? ""}
+          value={month ?? ""}
           {...bg.Autocomplete.off}
         >
-          <option value="">{t("measurements.body_weight.history.month.all")}</option>
-          {months.map((value) => (
-            <option key={value} value={value}>
-              {DateFormat.month(language, `${value}-01`)} (
-              {measurements.filter((measurement) => measurement.measuredOn.startsWith(value)).length})
+          <option value={BodyWeightHistoryMonthAll}>{t("measurements.body_weight.history.month.all")}</option>
+          {months.map((summary) => (
+            <option key={summary.month} value={summary.month}>
+              {DateFormat.month(language, `${summary.month}-01`)} ({summary.count})
             </option>
           ))}
         </ui.Select>
