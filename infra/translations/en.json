@@ -120,6 +120,7 @@
   "exercise.category.unassign.cta": "Unassign {{name}}",
   "exercise.picker.empty": "No exercises match",
   "exercise.picker.label": "Exercise",
+  "exercise.picker.loading": "Loading exercises",
   "exercise.picker.placeholder": "Search exercises",
   "exercise.sets_reps": "{{sets}}×{{reps}}",
   "exercise.reps_load": "{{reps}}×{{load}} kg",

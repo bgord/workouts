@@ -120,6 +120,7 @@
   "exercise.category.unassign.cta": "Odłącz {{name}}",
   "exercise.picker.empty": "Brak pasujących ćwiczeń",
   "exercise.picker.label": "Ćwiczenie",
+  "exercise.picker.loading": "Ładowanie ćwiczeń",
   "exercise.picker.placeholder": "Szukaj ćwiczeń",
   "exercise.sets_reps": "{{sets}}×{{reps}}",
   "exercise.reps_load": "{{reps}}×{{load}} kg",

@@ -29,6 +29,10 @@ const style = (size: ExerciseImageSize) =>
 
 type ExerciseImageProps = Pick<Exercise, "id" | "name" | "imageEtag"> & { size: ExerciseImageSize };
 
+export function ExerciseImagePlaceholder(props: { size: ExerciseImageSize }) {
+  return <span data-bg="alpha-subtle" data-br="sm" style={style(props.size)} />;
+}
+
 export function ExerciseImage(props: ExerciseImageProps) {
   const src = props.imageEtag
     ? `/api/exercises/${props.id}/image?etag=${props.imageEtag}`

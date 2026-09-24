@@ -5,6 +5,7 @@ import type { ExerciseListResponse } from "../../modules/exercises/queries/list-
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
+import { ExercisePickerLoading } from "./exercise-picker-loading";
 import { Gap } from "./gap";
 import { HairlineRow } from "./hairline";
 import { Spacing } from "./spacing";
@@ -51,7 +52,7 @@ export function ExercisePicker(props: ExercisePickerOptionsProps & { onCancel?: 
         data-stack="y"
         style={{ maxHeight: "40vh" }}
       >
-        <Suspense fallback={<li aria-busy data-stack="x" {...Spacing.surface} />}>
+        <Suspense fallback={<ExercisePickerLoading />}>
           <ExercisePickerOptions
             exercises={props.exercises}
             name={props.name}
