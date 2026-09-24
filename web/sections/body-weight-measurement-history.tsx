@@ -7,13 +7,13 @@ import { BodyWeightStats } from "./body-weight-stats";
 
 export function BodyWeightMeasurementHistory() {
   const t = bg.useTranslations();
-  const { measurements, bodyWeightStats } = measurementsRoute.useLoaderData();
+  const { bodyWeightStats } = measurementsRoute.useLoaderData();
 
-  if (measurements.length === 0) return null;
+  if (!bodyWeightStats) return null;
 
   return (
     <div data-stack="y" {...ui.Gap.section}>
-      {bodyWeightStats && <BodyWeightStats {...bodyWeightStats} />}
+      <BodyWeightStats {...bodyWeightStats} />
 
       <BodyWeightProgressChart />
 

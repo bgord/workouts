@@ -4,9 +4,9 @@ import { measurementsRoute } from "../router";
 
 export function BodyWeightMeasurementExport() {
   const t = bg.useTranslations();
-  const { measurements } = measurementsRoute.useLoaderData();
+  const { bodyWeightStats } = measurementsRoute.useLoaderData();
 
-  if (measurements.length === 0) return null;
+  if (!bodyWeightStats) return null;
 
   return (
     <a

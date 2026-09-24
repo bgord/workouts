@@ -10,9 +10,9 @@ import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 export function BodyWeightMeasure() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { measurements } = measurementsRoute.useLoaderData();
+  const { bodyWeightStats } = measurementsRoute.useLoaderData();
 
-  const latest = measurements[0];
+  const latest = bodyWeightStats?.latest;
   const today = DateFormat.todayISO();
 
   const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
