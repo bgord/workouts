@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@bgord/bun": "1.23.8",
-    "@bgord/design": "2.0.9",
+    "@bgord/design": "2.1.0",
     "@bgord/ui": "0.10.5",
     "@react-email/components": "1.0.12",
     "@tanstack/react-router": "1.170.38",

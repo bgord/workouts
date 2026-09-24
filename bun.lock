@@ -6,7 +6,7 @@
       "name": "workouts",
       "dependencies": {
         "@bgord/bun": "1.23.8",
-        "@bgord/design": "2.0.9",
+        "@bgord/design": "2.1.0",
         "@bgord/ui": "0.10.5",
         "@react-email/components": "1.0.12",
         "@tanstack/react-router": "1.170.38",
@@ -134,7 +134,7 @@
 
     "@bgord/bun": ["@bgord/bun@1.23.8", "", { "dependencies": { "@bgord/tools": "1.6.14", "emittery": "2.0.0", "hono": "4.13.8", "node-cache": "5.1.2" }, "peerDependencies": { "better-auth": "1.7.5", "nodemailer": "10.0.10" }, "optionalPeers": ["better-auth", "nodemailer"] }, "sha512-rJz7JjQ3Uxuwv+RhI2zoOKdRkzyaunASVYcUM0PkZoG/QYpqSy1A8S5hfWPOb+N2QzpvSu4G5GJ6RuxHS7pY+w=="],
 
-    "@bgord/design": ["@bgord/design@2.0.9", "", { "bin": { "bgord-css-purge": "dist/css-purge.js" } }, "sha512-1Q/9UgTXnruF6SagoPtuIZdRD1+CFs0sP+3iw94AWkHkfguCqACEpm2eQfvvNQYLZFH5HmgN/VL2fDTKlFD+fQ=="],
+    "@bgord/design": ["@bgord/design@2.1.0", "", { "bin": { "bgord-css-purge": "dist/css-purge.js" } }, "sha512-jpfOPBUNH4cJd0B3dtT7Vh+4feHvdYuOG8ngrpx8sNMeHZYMzIjLM35zuUof7tZZsuzZAGxyf/00xZxhP/1dOA=="],
 
     "@bgord/tools": ["@bgord/tools@1.6.14", "", { "dependencies": { "valibot": "1.5.0" } }, "sha512-oXUOJLm6bYl1UNH7WMS7926wauTYi87a2ZYOajzMXlfAHMFfH4DWDUaTYt4OAcE4YDqqJxRuLXwgkj9LQYmYCw=="],
 
