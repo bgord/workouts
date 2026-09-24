@@ -12,6 +12,7 @@ import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
+import type { WebAssetsType } from "../infra/tools/web-assets.vo";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import {
   Avatar,
@@ -29,7 +30,12 @@ import { NotFound } from "./not-found";
 import { AssetVersion } from "./services/asset-version";
 import { Shell } from "./shell";
 
-type RouterContext = { request: Request | null; nonce: string; assetVersion: string };
+type RouterContext = {
+  request: Request | null;
+  nonce: string;
+  assetVersion: string;
+  assets: WebAssetsType;
+};
 
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
   head: ({ match }: { match: { context: RouterContext } }) => ({
@@ -207,9 +213,10 @@ export function createRouter(context: RouterContext) {
     defaultViewTransition: true,
     scrollRestoration: true,
     ssr: { nonce: context.nonce },
-    dehydrate: () => ({ assetVersion: context.assetVersion }),
+    dehydrate: () => ({ assetVersion: context.assetVersion, assets: context.assets }),
     hydrate: (dehydrated) => {
       context.assetVersion = dehydrated.assetVersion;
+      context.assets = dehydrated.assets;
     },
   });
 }

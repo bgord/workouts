@@ -8,7 +8,7 @@ type Dependencies = { Clock: bg.ClockPort; FileReaderJson: bg.FileReaderJsonPort
 
 const BuildInfo = v.object({ ...bg.BuildInfo.entries, assets: WebAssets });
 
-type BuildInfoType = v.InferOutput<typeof BuildInfo>;
+export type BuildInfoType = v.InferOutput<typeof BuildInfo>;
 
 export function createBuildInfoConfig(
   Env: EnvironmentResultType,
