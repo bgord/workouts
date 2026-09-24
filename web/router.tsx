@@ -131,14 +131,11 @@ export const planRoute = createRoute({
   component: lazyRouteComponent(() => import("./pages/plan"), "Plan"),
   notFoundComponent: lazyRouteComponent(() => import("./sections/plan-not-found"), "PlanNotFound"),
   loader: async ({ context, params }) => {
-    const [plan, exercises] = await Promise.all([
-      Plans.get(context.request, params),
-      Exercises.list(context.request),
-    ]);
+    const plan = await Plans.get(context.request, params);
 
     if (!plan) throw notFound();
 
-    return { plan, exercises };
+    return { plan };
   },
 });
 
@@ -149,14 +146,11 @@ export const workoutRoute = createRoute({
   validateSearch: WorkoutHistoryFiltersForm.Form.validate,
   notFoundComponent: lazyRouteComponent(() => import("./sections/workout-not-found"), "WorkoutNotFound"),
   loader: async ({ context, params }) => {
-    const [workout, exercises] = await Promise.all([
-      Workouts.get(context.request, params),
-      Exercises.list(context.request),
-    ]);
+    const workout = await Workouts.get(context.request, params);
 
     if (!workout) throw notFound();
 
-    return { workout, exercises };
+    return { workout };
   },
 });
 

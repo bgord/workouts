@@ -4,12 +4,14 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
+import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { plan, exercises } = planRoute.useLoaderData();
+  const { plan } = planRoute.useLoaderData();
+  const catalog = useExerciseCatalog();
 
   const planSectionExerciseInstructionAdd = bg.useToggle({
     name: `plan-section-exercise-instruction-add-${props.id}`,
@@ -60,7 +62,9 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
       <ui.HairlineBlock data-ml="1-5" data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
         <ui.AddButton
           disabled={!props.actions.exerciseInstructionAdd.enabled}
-          onClick={planSectionExerciseInstructionAdd.enable}
+          onClick={bg.exec([catalog.load, planSectionExerciseInstructionAdd.enable])}
+          onFocus={catalog.load}
+          onPointerEnter={catalog.load}
           {...planSectionExerciseInstructionAdd.props.controller}
         >
           <ui.RowIndex aria-hidden>{props.exerciseInstructions.length + 1}</ui.RowIndex>
@@ -89,13 +93,15 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.section}
         >
-          <ui.ExercisePicker
-            exercises={exercises.data}
-            name={exerciseId.input.props.name}
-            onChange={exerciseId.set}
-            query={query}
-            value={exerciseId.value}
-          />
+          {catalog.exercises && (
+            <ui.ExercisePicker
+              exercises={catalog.exercises}
+              name={exerciseId.input.props.name}
+              onChange={(exercise) => exerciseId.set(exercise.id)}
+              query={query}
+              value={exerciseId.value}
+            />
+          )}
 
           <ui.Prescription>
             <ui.Stepper

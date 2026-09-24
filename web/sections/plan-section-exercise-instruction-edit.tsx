@@ -1,11 +1,14 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ArrowLeftRight, Pencil } from "lucide-react";
+import { useState } from "react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
+import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
 import { Plans } from "../api";
 import * as ui from "../components";
+import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionEdit(props: {
@@ -14,7 +17,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
 }) {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { plan, exercises } = planRoute.useLoaderData();
+  const { plan } = planRoute.useLoaderData();
+  const catalog = useExerciseCatalog();
+  const [picked, setPicked] = useState<ExerciseWithCategories | null>(null);
   const { exerciseInstruction } = props;
   const { actions } = exerciseInstruction;
   const editable = actions.update.available || actions.exerciseChange.available;
@@ -53,7 +58,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
     defaultValue: exerciseInstruction.progression,
   });
 
-  const exercise = exercises.data.find((candidate) => candidate.id === exerciseId.value);
+  const exercise = [exerciseInstruction.exercise, picked].find(
+    (candidate) => candidate?.id === exerciseId.value,
+  );
 
   const instructionUnchanged =
     sets.unchanged && repsMin.unchanged && repsMax.unchanged && progression.unchanged;
@@ -148,7 +155,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-px="3"
               data-stack="x"
               disabled={!actions.exerciseChange.enabled}
-              onClick={planSectionExerciseInstructionPick.enable}
+              onClick={bg.exec([catalog.load, planSectionExerciseInstructionPick.enable])}
+              onFocus={catalog.load}
+              onPointerEnter={catalog.load}
               title={t("plan.section.exercise.edit.change")}
               type="button"
               {...ui.Spacing.rowCompact}
@@ -168,14 +177,15 @@ export function PlanSectionExerciseInstructionEdit(props: {
             </button>
           )}
 
-          {planSectionExerciseInstructionPick.on && (
+          {planSectionExerciseInstructionPick.on && catalog.exercises && (
             <div data-minh="0" {...planSectionExerciseInstructionPick.props.target}>
               <ui.ExercisePicker
-                exercises={exercises.data}
+                exercises={catalog.exercises}
                 name={exerciseId.input.props.name}
                 onCancel={bg.exec([query.clear, planSectionExerciseInstructionPick.disable])}
-                onChange={(id) => {
-                  exerciseId.set(id);
+                onChange={(exercise) => {
+                  setPicked(exercise);
+                  exerciseId.set(exercise.id);
                   planSectionExerciseInstructionPick.disable();
                 }}
                 query={query}

@@ -3,12 +3,14 @@ import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import * as ui from "../components";
+import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { workoutRoute } from "../router";
 
 export function WorkoutExerciseAdd() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { workout, exercises } = workoutRoute.useLoaderData();
+  const { workout } = workoutRoute.useLoaderData();
+  const catalog = useExerciseCatalog();
 
   const workoutExerciseAdd = bg.useToggle({ name: `workout-exercise-add-${workout.data.id}` });
 
@@ -59,7 +61,9 @@ export function WorkoutExerciseAdd() {
       <ui.HairlineBlock data-stack="x" first={first} last {...ui.Spacing.row}>
         <ui.AddButton
           disabled={!workout.actions.exerciseAdd.enabled}
-          onClick={workoutExerciseAdd.enable}
+          onClick={bg.exec([catalog.load, workoutExerciseAdd.enable])}
+          onFocus={catalog.load}
+          onPointerEnter={catalog.load}
           {...workoutExerciseAdd.props.controller}
         >
           <ui.AddPlaceholder />
@@ -82,13 +86,15 @@ export function WorkoutExerciseAdd() {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.section}
         >
-          <ui.ExercisePicker
-            exercises={exercises.data}
-            name={exerciseId.input.props.name}
-            onChange={exerciseId.set}
-            query={query}
-            value={exerciseId.value}
-          />
+          {catalog.exercises && (
+            <ui.ExercisePicker
+              exercises={catalog.exercises}
+              name={exerciseId.input.props.name}
+              onChange={(exercise) => exerciseId.set(exercise.id)}
+              query={query}
+              value={exerciseId.value}
+            />
+          )}
 
           <ui.Prescription>
             <ui.Stepper
