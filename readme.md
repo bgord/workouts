@@ -178,6 +178,7 @@ modules/
 │   │   └── list-body-weight-measurements.ts
 │   ├── services
 │   │   ├── body-weight-average.ts
+│   │   ├── body-weight-chart.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
