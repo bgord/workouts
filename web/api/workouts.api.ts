@@ -1,6 +1,4 @@
-import * as tools from "@bgord/tools";
 import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-workout";
-import type { WorkoutDashboardResponse } from "../../modules/workouts/queries/get-workout-dashboard";
 import type { WorkoutListResponse } from "../../modules/workouts/queries/list-workouts";
 import type { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
 import { ApiClient } from "./api-client";
@@ -23,18 +21,6 @@ export class Workouts {
         actions: { create: { available: true, enabled: false, hints: [] } },
       };
     return response.json();
-  }
-
-  static async dashboard(request: Request | null): Promise<WorkoutDashboardResponse> {
-    const zero = tools.Int.nonNegative(0);
-    const completed = { month: zero, year: zero, total: zero };
-
-    return ApiClient.get<WorkoutDashboardResponse>("/api/workouts/dashboard", request, {
-      inProgress: null,
-      nextUp: null,
-      lastCompleted: null,
-      completed,
-    });
   }
 
   static async get(

@@ -1,3 +1,4 @@
+export * as Dashboard from "./dashboard";
 export * from "./error-handler";
 export * as Exercises from "./exercises";
 export * as Measurements from "./measurements";

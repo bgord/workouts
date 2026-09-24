@@ -13,6 +13,7 @@ import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-fi
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import {
   Avatar,
+  Dashboard,
   Exercises,
   I18N,
   Measurements,
@@ -66,12 +67,9 @@ export const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/dashboard"), "Dashboard"),
   loader: async ({ context }) => {
-    const [{ measurements, stats }, dashboard] = await Promise.all([
-      Measurements.listBodyWeight(context.request),
-      Workouts.dashboard(context.request),
-    ]);
+    const { workouts, bodyWeightStats } = await Dashboard.get(context.request);
 
-    return { dashboard, measurements, bodyWeightStats: stats };
+    return { dashboard: workouts, bodyWeightStats };
   },
 });
 

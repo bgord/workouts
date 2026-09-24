@@ -220,6 +220,19 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   server.route("/plans", plans);
 
+  // Dashboard ==============
+  const dashboard = new Hono<infra.Config>();
+
+  dashboard.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  dashboard.get(
+    "/",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Dashboard.DashboardGet({ ...deps, ...Adapters.Workouts, ...Adapters.Measurements }),
+    ),
+  );
+
+  server.route("/dashboard", dashboard);
+
   // Statistics =============
   const statistics = new Hono<infra.Config>();
 
@@ -245,10 +258,6 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   workouts.query(
     "/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutList({ ...deps, ...Adapters.Workouts })),
-  );
-  workouts.get(
-    "/dashboard",
-    bg.EndpointHonoAdapter.adapt(HTTP.Workouts.WorkoutDashboard({ ...deps, ...Adapters.Workouts })),
   );
   workouts.get(
     "/export",

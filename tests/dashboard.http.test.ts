@@ -5,7 +5,7 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = "/api/workouts/dashboard";
+const url = "/api/dashboard";
 
 describe(`GET ${url}`, async () => {
   const di = await bootstrap();
@@ -32,16 +32,24 @@ describe(`GET ${url}`, async () => {
         },
       }),
     );
+    spies.use(
+      spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsForStatsQuery, "execute").mockResolvedValue([
+        mocks.bodyWeightMeasurement,
+      ]),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
     expect(json).toEqual({
-      inProgress: mocks.workoutSummaryInProgress,
-      nextUp: mocks.workoutSummary,
-      lastCompleted: mocks.workoutSummaryCompleted,
-      completed: { month: 1, year: 2, total: 3 },
+      workouts: {
+        inProgress: mocks.workoutSummaryInProgress,
+        nextUp: mocks.workoutSummary,
+        lastCompleted: mocks.workoutSummaryCompleted,
+        completed: { month: 1, year: 2, total: 3 },
+      },
+      bodyWeightStats: mocks.bodyWeightStats,
     });
   });
 
@@ -60,16 +68,24 @@ describe(`GET ${url}`, async () => {
         },
       }),
     );
+    spies.use(
+      spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsForStatsQuery, "execute").mockResolvedValue(
+        [],
+      ),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
     expect(json).toEqual({
-      inProgress: null,
-      nextUp: null,
-      lastCompleted: null,
-      completed: { month: 0, year: 0, total: 0 },
+      workouts: {
+        inProgress: null,
+        nextUp: null,
+        lastCompleted: null,
+        completed: { month: 0, year: 0, total: 0 },
+      },
+      bodyWeightStats: null,
     });
   });
 });

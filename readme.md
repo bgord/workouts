@@ -174,6 +174,7 @@ modules/
 │   ├── ports
 │   ├── queries
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── list-body-weight-measurements-for-stats.ts
 │   │   └── list-body-weight-measurements.ts
 │   ├── services
 │   │   ├── body-weight-average.ts
@@ -513,6 +514,8 @@ modules/
 ```
 app/
 ├── http
+│   ├── dashboard
+│   │   ├── dashboard-get.ts
 │   ├── error-handler.ts
 │   ├── exercises
 │   │   ├── exercise-add.ts
@@ -569,7 +572,6 @@ app/
 │   └── workouts
 │       ├── workout-complete.ts
 │       ├── workout-create.ts
-│       ├── workout-dashboard.ts
 │       ├── workout-discard.ts
 │       ├── workout-exercise-add.ts
 │       ├── workout-exercise-move.ts
@@ -621,6 +623,7 @@ infra/
 │   │   └── list-exercises-with-categories.adapter.ts
 │   ├── measurements
 │   │   ├── get-body-weight-measurement.adapter.ts
+│   │   ├── list-body-weight-measurements-for-stats.adapter.ts
 │   │   └── list-body-weight-measurements.adapter.ts
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts

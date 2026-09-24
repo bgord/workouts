@@ -1,5 +1,6 @@
 export * from "./auth.api";
 export * from "./avatar.api";
+export * from "./dashboard.api";
 export * from "./exercises.api";
 export * from "./i18n.api";
 export * from "./measurements.api";
