@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
+import { BodyWeightMeasurementFilters } from "./body-weight-measurement-filters";
 import { BodyWeightMeasurementList } from "./body-weight-measurement-list";
 import { BodyWeightProgressChart } from "./body-weight-progress-chart";
 import { BodyWeightStats } from "./body-weight-stats";
@@ -18,7 +19,10 @@ export function BodyWeightMeasurementHistory() {
       <BodyWeightProgressChart />
 
       <div data-stack="y" {...ui.Gap.related}>
-        <h2>{t("measurements.body_weight.history")}</h2>
+        <div data-main="between" data-stack="x">
+          <h2>{t("measurements.body_weight.history")}</h2>
+          <BodyWeightMeasurementFilters />
+        </div>
 
         <BodyWeightMeasurementList />
       </div>
