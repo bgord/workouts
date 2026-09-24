@@ -26,12 +26,13 @@ import {
   Workouts,
 } from "./api";
 import { NotFound } from "./not-found";
+import { AssetVersion } from "./services/asset-version";
 import { Shell } from "./shell";
 
-type RouterContext = { request: Request | null; nonce: string };
+type RouterContext = { request: Request | null; nonce: string; assetVersion: string };
 
 export const rootRoute = createRootRouteWithContext<RouterContext>()({
-  head: () => ({
+  head: ({ match }: { match: { context: RouterContext } }) => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
@@ -43,8 +44,8 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
     ],
     links: [
       { rel: "apple-touch-icon", href: "/public/apple-touch-icon.png" },
-      ...bg.CSS("/public/main.min.css"),
-      ...bg.CSS("/public/custom.css"),
+      ...bg.CSS(AssetVersion.url("/public/main.min.css", match.context.assetVersion)),
+      ...bg.CSS(AssetVersion.url("/public/custom.css", match.context.assetVersion)),
     ],
     scripts: [bg.JS("/public/entry-client.js")],
   }),
@@ -206,6 +207,10 @@ export function createRouter(context: RouterContext) {
     defaultViewTransition: true,
     scrollRestoration: true,
     ssr: { nonce: context.nonce },
+    dehydrate: () => ({ assetVersion: context.assetVersion }),
+    hydrate: (dehydrated) => {
+      context.assetVersion = dehydrated.assetVersion;
+    },
   });
 }
 

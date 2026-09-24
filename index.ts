@@ -6,6 +6,7 @@ import { db } from "+infra/db";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerCronTasks } from "+infra/register-cron-tasks";
 import { registerEventHandlers } from "+infra/register-event-handlers";
+import { StaticFileStrategyImmutable } from "+infra/tools/static-file-immutable.strategy";
 import { AdminAccountCreator } from "./scripts/admin-account-creator";
 import { createServer } from "./server";
 import { ApiClient } from "./web/api/api-client";
@@ -39,11 +40,15 @@ void (async function main() {
       ...bg.StaticFilesHono.handle(
         "/public/*",
         di.Env.type === bg.NodeEnvironmentEnum.production
-          ? bg.StaticFileStrategyMustRevalidate(tools.Duration.Minutes(5))
+          ? StaticFileStrategyImmutable
           : bg.StaticFileStrategyNoop,
       ),
       "/api/*": server.fetch,
-      "/*": bg.SSRBun.essentials(handler, di.Adapters.System, { csp: { imgSources: ["blob:"] } }),
+      "/*": bg.SSRBun.essentials(
+        (request, nonce) => handler(request, nonce, String(di.Tools.CommitConfig.get())),
+        di.Adapters.System,
+        { csp: { imgSources: ["blob:"] } },
+      ),
     },
   });
 
