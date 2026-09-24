@@ -8,6 +8,7 @@ import { registerCronTasks } from "+infra/register-cron-tasks";
 import { registerEventHandlers } from "+infra/register-event-handlers";
 import { AdminAccountCreator } from "./scripts/admin-account-creator";
 import { createServer } from "./server";
+import { ApiClient } from "./web/api/api-client";
 import { handler } from "./web/entry-server";
 
 void (async function main() {
@@ -45,6 +46,8 @@ void (async function main() {
       "/*": bg.SSRBun.essentials(handler, di.Adapters.System, { csp: { imgSources: ["blob:"] } }),
     },
   });
+
+  ApiClient.useServer((request) => server.fetch(request, app));
 
   new bg.GracefulShutdown(di.Adapters.System).applyTo(app);
 
