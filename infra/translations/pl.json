@@ -267,7 +267,6 @@
   "plan.section.exercise.remove.error": "Nie udało się usunąć ćwiczenia",
   "plan.section.exercise.remove.title": "Usuń {{name}}",
   "plan.section.exercises": "Ćwiczenia",
-  "plan.section.list.empty.hint": "Pogrupuj ćwiczenia dnia treningowego w sekcję",
   "plan.section.limit.for.plan": "Usuń sekcję, aby dodać nową",
   "plan.section.remove.cta": "Usuń",
   "plan.section.remove.error": "Nie udało się usunąć sekcji",

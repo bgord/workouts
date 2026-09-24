@@ -267,7 +267,6 @@
   "plan.section.exercise.remove.error": "Could not remove the exercise",
   "plan.section.exercise.remove.title": "Remove {{name}}",
   "plan.section.exercises": "Exercises",
-  "plan.section.list.empty.hint": "Group the exercises of a training day into a section",
   "plan.section.limit.for.plan": "Remove a section to add a new one",
   "plan.section.remove.cta": "Remove",
   "plan.section.remove.error": "Could not remove the section",

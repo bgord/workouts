@@ -9,16 +9,17 @@ export function PlansActive() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <h3>{t("plan.list.active.header")}</h3>
-
       <PlansActiveEmpty />
 
       {plans.data.active.length > 0 && (
-        <ul data-stack="y" {...ui.Gap.cluster}>
-          {plans.data.active.map((plan) => (
-            <ui.PlanCard key={plan.id} {...plan} />
-          ))}
-        </ul>
+        <>
+          <h3>{t("plan.list.active.header")}</h3>
+          <ul data-stack="y" {...ui.Gap.cluster}>
+            {plans.data.active.map((plan) => (
+              <ui.PlanCard key={plan.id} {...plan} />
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );

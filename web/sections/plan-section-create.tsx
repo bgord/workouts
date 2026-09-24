@@ -95,8 +95,6 @@ export function PlanSectionCreate() {
           {mutation.isError && <ui.Output>{t("plan.section.create.error")}</ui.Output>}
         </form>
       )}
-
-      {plan.data.sections.length === 0 && <small>{t("plan.section.list.empty.hint")}</small>}
     </ui.HairlineBlock>
   );
 }
