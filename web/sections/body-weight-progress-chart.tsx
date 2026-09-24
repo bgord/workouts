@@ -30,35 +30,35 @@ export function BodyWeightProgressChart() {
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <h2 data-grow="1">{t("measurements.body_weight.progress")}</h2>
 
-        <ui.Select
-          aria-label={t("measurements.body_weight.progress.granularity.label")}
-          data-md-width="auto"
-          data-width="auto"
-          id={BodyWeightChartForm.Form.chart.field.name}
-          name={BodyWeightChartForm.Form.chart.field.name}
-          onChange={(event) => {
-            const granularity = event.currentTarget.value as BodyWeightChartGranularityOptions;
+        <div>
+          <ui.Select
+            aria-label={t("measurements.body_weight.progress.granularity.label")}
+            id={BodyWeightChartForm.Form.chart.field.name}
+            name={BodyWeightChartForm.Form.chart.field.name}
+            onChange={(event) => {
+              const granularity = event.currentTarget.value as BodyWeightChartGranularityOptions;
 
-            navigate({
-              resetScroll: false,
-              search: {
-                month: search.month,
-                chart: granularity === BodyWeightChartGranularityOptions.weekly ? undefined : granularity,
-              },
-              to: "/measurements",
-            });
-          }}
-          value={search.chart ?? BodyWeightChartGranularityOptions.weekly}
-          {...bg.Autocomplete.off}
-        >
-          <option value={BodyWeightChartGranularityOptions.weekly}>
-            {t("measurements.body_weight.progress.granularity.weekly")}
-          </option>
+              navigate({
+                resetScroll: false,
+                search: {
+                  month: search.month,
+                  chart: granularity === BodyWeightChartGranularityOptions.weekly ? undefined : granularity,
+                },
+                to: "/measurements",
+              });
+            }}
+            value={search.chart ?? BodyWeightChartGranularityOptions.weekly}
+            {...bg.Autocomplete.off}
+          >
+            <option value={BodyWeightChartGranularityOptions.weekly}>
+              {t("measurements.body_weight.progress.granularity.weekly")}
+            </option>
 
-          <option value={BodyWeightChartGranularityOptions.daily}>
-            {t("measurements.body_weight.progress.granularity.daily")}
-          </option>
-        </ui.Select>
+            <option value={BodyWeightChartGranularityOptions.daily}>
+              {t("measurements.body_weight.progress.granularity.daily")}
+            </option>
+          </ui.Select>
+        </div>
       </div>
 
       <ui.LineChart aria-label={t("measurements.body_weight.progress")}>
