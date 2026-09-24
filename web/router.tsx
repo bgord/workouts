@@ -11,7 +11,6 @@ import {
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
-import { WorkoutListFilterOptions } from "../modules/workouts/value-objects/workout-list-filter-options";
 import {
   Avatar,
   Exercises,
@@ -80,15 +79,7 @@ export const workoutsRoute = createRoute({
   path: "/workouts",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/workouts"), "Workouts"),
-  validateSearch: (value) => ({
-    section:
-      typeof value["section"] === "string" && value["section"] !== ""
-        ? value["section"]
-        : WorkoutHistoryFiltersForm.Form.default.section,
-    filter: Object.values(WorkoutListFilterOptions).includes(value["filter"] as WorkoutListFilterOptions)
-      ? (value["filter"] as WorkoutListFilterOptions)
-      : WorkoutHistoryFiltersForm.Form.default.filter,
-  }),
+  validateSearch: WorkoutHistoryFiltersForm.Form.validate,
   loaderDeps: ({ search }) => search,
   loader: async ({ context, deps }) => {
     return { workouts: await Workouts.list(context.request, deps) };
@@ -99,16 +90,7 @@ export const catalogRoute = createRoute({
   path: "/catalog",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/catalog"), "Catalog"),
-  validateSearch: (value) => ({
-    category:
-      typeof value["category"] === "string" && value["category"] !== ""
-        ? value["category"]
-        : ExerciseCatalogFiltersForm.Form.default.category,
-    name:
-      typeof value["name"] === "string" && value["name"] !== ""
-        ? value["name"]
-        : ExerciseCatalogFiltersForm.Form.default.name,
-  }),
+  validateSearch: ExerciseCatalogFiltersForm.Form.validate,
   loader: async ({ context }) => {
     const [exercises, exerciseCategories] = await Promise.all([
       Exercises.list(context.request),
@@ -164,15 +146,7 @@ export const workoutRoute = createRoute({
   path: "/workouts/$workoutId",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/workout"), "Workout"),
-  validateSearch: (value) => ({
-    section:
-      typeof value["section"] === "string" && value["section"] !== ""
-        ? value["section"]
-        : WorkoutHistoryFiltersForm.Form.default.section,
-    filter: Object.values(WorkoutListFilterOptions).includes(value["filter"] as WorkoutListFilterOptions)
-      ? (value["filter"] as WorkoutListFilterOptions)
-      : WorkoutHistoryFiltersForm.Form.default.filter,
-  }),
+  validateSearch: WorkoutHistoryFiltersForm.Form.validate,
   notFoundComponent: lazyRouteComponent(() => import("./sections/workout-not-found"), "WorkoutNotFound"),
   loader: async ({ context, params }) => {
     const [workout, exercises] = await Promise.all([
@@ -190,12 +164,7 @@ export const measurementsRoute = createRoute({
   path: "/measurements",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("./pages/measurements"), "Measurements"),
-  validateSearch: (value) => ({
-    month:
-      typeof value["month"] === "string" && /^\d{4}-\d{2}$/.test(value["month"])
-        ? value["month"]
-        : BodyWeightMeasurementFiltersForm.Form.default.month,
-  }),
+  validateSearch: BodyWeightMeasurementFiltersForm.Form.validate,
   loader: async ({ context }) => {
     const { measurements, stats } = await Measurements.listBodyWeight(context.request);
 
