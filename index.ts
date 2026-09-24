@@ -40,7 +40,7 @@ void (async function main() {
       ...bg.StaticFilesHono.handle(
         "/public/*",
         di.Env.type === bg.NodeEnvironmentEnum.production
-          ? StaticFileStrategyImmutable
+          ? StaticFileStrategyImmutable(bg.StaticFileStrategyMustRevalidate(tools.Duration.Minutes(5)))
           : bg.StaticFileStrategyNoop,
       ),
       "/api/*": server.fetch,

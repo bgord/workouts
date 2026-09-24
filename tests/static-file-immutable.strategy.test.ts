@@ -1,10 +1,16 @@
+/* cSpell:disable */
 import { describe, expect, test } from "bun:test";
+import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import { Hono } from "hono";
 import { StaticFileStrategyImmutable } from "+infra/tools/static-file-immutable.strategy";
 
 describe("StaticFileStrategyImmutable", () => {
   const app = new Hono().get("*", (c) => {
-    StaticFileStrategyImmutable(`./${c.req.path}`, c);
+    StaticFileStrategyImmutable(bg.StaticFileStrategyMustRevalidate(tools.Duration.Minutes(5)))(
+      `./${c.req.path}`,
+      c,
+    );
     return c.text("");
   });
 
