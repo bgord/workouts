@@ -13,10 +13,13 @@ type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
 
 export class Measurements {
   static async listBodyWeight(request: Request | null): Promise<BodyWeightListResponse> {
-    return ApiClient.get<BodyWeightListResponse>("/api/measurements/body-weight/list", request, {
-      measurements: [],
-      stats: null,
+    const response = await ApiClient.fetch("/api/measurements/body-weight/list", request, {
+      method: "QUERY",
+      body: JSON.stringify({ month: "all" }),
     });
+
+    if (!response.ok) return { measurements: [], stats: null };
+    return response.json();
   }
 
   static async bodyWeightChart(

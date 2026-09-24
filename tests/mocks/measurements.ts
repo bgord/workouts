@@ -61,6 +61,11 @@ export const bodyWeightStats: Measurements.VO.BodyWeightStats = {
   previousWeek: undefined,
 };
 
+export const bodyWeightMonthSummary: Measurements.VO.BodyWeightMonthSummary = {
+  month: v.parse(tools.MonthIsoId, "2025-01"),
+  count: 1,
+};
+
 export const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
 
 export const bodyWeightMeasurementCsv = [

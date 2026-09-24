@@ -9,7 +9,13 @@ import * as Schema from "+infra/schema";
 class ListBodyWeightMeasurementsForMonthQueryDrizzle
   implements Measurements.Queries.ListBodyWeightMeasurementsForMonth
 {
-  async execute(userId: Auth.VO.UserIdType, month: tools.MonthIsoIdType) {
+  async execute(
+    userId: Auth.VO.UserIdType,
+    month: tools.MonthIsoIdType,
+  ): Promise<{
+    measurements: ReadonlyArray<Measurements.VO.BodyWeightMeasurement>;
+    previous: Measurements.VO.BodyWeightMeasurement | null;
+  }> {
     const [measurements, [previous]] = await Promise.all([
       db
         .select()
