@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
-import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
+import { useOptimistic } from "react";
+import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { usePersistedToggle } from "../hooks/use-persisted-toggle";
@@ -27,9 +28,16 @@ export function WorkoutExerciseRow(props: {
     name: `workout-exercise-description-${props.exercise.id}`,
   });
 
+  const [optimisticSet, setPendingSet] = useOptimistic<LoggedSet | null>(null);
+  const pendingSet =
+    optimisticSet && props.exercise.loggedSets.length < optimisticSet.setNumber ? optimisticSet : null;
+  const exercise = pendingSet
+    ? { ...props.exercise, loggedSets: [...props.exercise.loggedSets, pendingSet] }
+    : props.exercise;
+
   const isDraft = workout.data.status === WorkoutStatusEnum.draft;
   const isCompleted = workout.data.status === WorkoutStatusEnum.completed;
-  const hasLoggedSets = props.exercise.loggedSets.length > 0;
+  const hasLoggedSets = exercise.loggedSets.length > 0;
   const hasTarget = props.exercise.target;
 
   const isSkipped = isCompleted && !hasLoggedSets;
@@ -96,7 +104,7 @@ export function WorkoutExerciseRow(props: {
 
             {target && (
               <div data-disp="none" data-md-disp="block" data-self="center">
-                <ui.SetDots sets={props.exercise.loggedSets} target={target.sets} />
+                <ui.SetDots sets={exercise.loggedSets} target={target.sets} />
               </div>
             )}
           </div>
@@ -112,7 +120,7 @@ export function WorkoutExerciseRow(props: {
 
         {target && (
           <div data-md-disp="none">
-            <ui.SetDots sets={props.exercise.loggedSets} target={target.sets} />
+            <ui.SetDots sets={exercise.loggedSets} target={target.sets} />
           </div>
         )}
 
@@ -134,9 +142,9 @@ export function WorkoutExerciseRow(props: {
 
       {isExpandable && workoutExerciseVisibility.on && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
-          <WorkoutSetList {...props.exercise} />
+          <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
 
-          <WorkoutSetLog {...props.exercise} />
+          <WorkoutSetLog exercise={exercise} onPending={setPendingSet} />
         </div>
       )}
     </ui.HairlineRow>

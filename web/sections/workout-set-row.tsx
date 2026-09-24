@@ -4,11 +4,18 @@ import * as ui from "../components";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
-export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: LoggedSet }) {
+export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: LoggedSet; pending: boolean }) {
   const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
-    <ui.HairlineRow data-stack="y" tone="subtle" {...ui.Spacing.rowCompact} {...ui.Gap.inline}>
+    <ui.HairlineRow
+      aria-busy={props.pending}
+      data-opacity={props.pending ? "high" : undefined}
+      data-stack="y"
+      tone="subtle"
+      {...ui.Spacing.rowCompact}
+      {...ui.Gap.inline}
+    >
       <div data-stack="x" {...ui.Gap.related}>
         <ui.RowIndex data-md-disp={workoutSetCorrect.on ? "none" : undefined}>
           {props.loggedSet.setNumber}
