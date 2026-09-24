@@ -1,19 +1,17 @@
-import * as bg from "@bgord/ui";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import { ApiClient } from "./api-client";
 
 export class Statistics {
   static async getExercisePerformances(
     request: Request | null,
     params: { exerciseId: string },
   ): Promise<Array<ExercisePerformance>> {
-    const BASE = `/api/statistics/exercises/${params.exerciseId}/performances`;
+    const response = await ApiClient.fetch(
+      `/api/statistics/exercises/${params.exerciseId}/performances`,
+      request,
+    );
 
-    const url = bg.absoluteUrl(BASE, request);
-    const headers = request ? { cookie: bg.Cookies.extractFrom(request) } : undefined;
-
-    const response = await fetch(url, { headers, credentials: "include" });
-
-    if (!response?.ok) return [];
+    if (!response.ok) return [];
 
     const result = await response.json().catch(() => null);
 
