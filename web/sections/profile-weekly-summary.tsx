@@ -25,7 +25,7 @@ export function ProfileWeeklySummary() {
         body: JSON.stringify({ weeklySummary: field.value }),
       }),
     onSuccess: async () => {
-      await router.invalidate({ filter: (route) => route.id === profileRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === profileRoute.id, sync: true });
     },
   });
 

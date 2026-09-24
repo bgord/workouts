@@ -16,7 +16,7 @@ export function WorkoutComplete() {
         credentials: "include",
         headers: bg.WeakETag.fromRevision(workout.data.revision),
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true }),
   });
 
   if (!workout.actions.complete.available) return null;

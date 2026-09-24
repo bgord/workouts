@@ -37,7 +37,7 @@ export function WorkoutSetLog(props: WorkoutExercise) {
           rir: rir.current,
         }),
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true }),
   });
 
   if (!action.available) return null;

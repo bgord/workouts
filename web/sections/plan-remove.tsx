@@ -22,7 +22,7 @@ export function PlanRemove() {
     onSuccess: async () => {
       planRemove.disable();
       await navigate({ to: "/plans" });
-      await router.invalidate({ filter: (route) => route.id === plansRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === plansRoute.id, sync: true });
     },
   });
 

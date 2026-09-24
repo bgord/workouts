@@ -33,7 +33,7 @@ export function ExerciseAdd() {
     },
     onSuccess: async (_, context) => {
       exerciseAdd.disable();
-      await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
       bg.Fields.clearAll([name, description]);
       image.actions.clearFile();
       context.form?.reset();

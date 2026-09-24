@@ -16,7 +16,7 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
     perform: () => fetch(`/api/exercises/category/${props.id}`, { method: "DELETE", credentials: "include" }),
     onSuccess: async () => {
       exerciseCategoryDelete.disable();
-      await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
     },
   });
 

@@ -27,11 +27,11 @@ export function PlanSectionExerciseInstructionMove(props: {
 
   const up = bg.useMutation({
     perform: () => move(props.position - 1),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === planRoute.id, sync: true }),
   });
   const down = bg.useMutation({
     perform: () => move(props.position + 1),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === planRoute.id, sync: true }),
   });
 
   if (!props.exerciseInstruction.actions.moveUp.available) {

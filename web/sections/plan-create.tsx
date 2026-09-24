@@ -30,7 +30,7 @@ export function PlanCreate() {
       context.form?.reset();
 
       await navigate({ params: { planId: id }, to: "/plans/$planId" });
-      await router.invalidate({ filter: (route) => route.id === plansRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === plansRoute.id, sync: true });
     },
   });
 

@@ -21,7 +21,8 @@ export function ExerciseCategories() {
     defaultValue: exercise.assignableCategories[0]?.id ?? "",
   });
 
-  const refresh = () => router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
+  const refresh = () =>
+    router.invalidate({ filter: (match) => match.routeId === exerciseRoute.id, sync: true });
 
   const assign = bg.useMutation({
     perform: () =>

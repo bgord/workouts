@@ -36,7 +36,7 @@ export function BodyWeightMeasure() {
         body: JSON.stringify({ measuredOn: measuredOn.value, weight: WeightFormat.grams(weight.value ?? 0) }),
       }),
     onSuccess: async () => {
-      await router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
     },
   });
 

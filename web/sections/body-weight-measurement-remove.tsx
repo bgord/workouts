@@ -15,7 +15,8 @@ export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeas
         method: "DELETE",
         credentials: "include",
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === measurementsRoute.id, sync: true }),
+    onSuccess: () =>
+      router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true }),
   });
 
   return (

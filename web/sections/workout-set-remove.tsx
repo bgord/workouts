@@ -28,7 +28,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
         credentials: "include",
         headers: bg.WeakETag.fromRevision(workout.data.revision),
       }),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true }),
   });
 
   if (!action.available) return null;

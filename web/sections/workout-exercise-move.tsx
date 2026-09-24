@@ -25,11 +25,11 @@ export function WorkoutExerciseMove(props: {
 
   const up = bg.useMutation({
     perform: () => move(props.position - 1),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true }),
   });
   const down = bg.useMutation({
     perform: () => move(props.position + 1),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true }),
   });
 
   if (!(props.active && props.exercise.actions.moveUp.available)) return props.children;

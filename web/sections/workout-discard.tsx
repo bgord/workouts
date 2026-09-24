@@ -23,7 +23,7 @@ export function WorkoutDiscard() {
     onSuccess: async () => {
       workoutDiscard.disable();
       await navigate({ search: Form.default, to: "/workouts" });
-      await router.invalidate({ filter: (route) => route.id === dashboardRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === dashboardRoute.id, sync: true });
     },
   });
 

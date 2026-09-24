@@ -48,7 +48,7 @@ export function WorkoutCreate() {
         search: (prev) => prev,
         to: "/workouts/$workoutId",
       });
-      await router.invalidate({ filter: (route) => route.id === workoutsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === workoutsRoute.id, sync: true });
     },
   });
 

@@ -23,7 +23,7 @@ export function PlanSectionExerciseInstructionRemove(props: {
           headers: bg.WeakETag.fromRevision(plan.data.revision),
         },
       ),
-    onSuccess: () => router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true }),
+    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === planRoute.id, sync: true }),
   });
 
   if (!props.exerciseInstruction.actions.remove.available) return null;

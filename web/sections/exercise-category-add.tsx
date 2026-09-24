@@ -20,7 +20,7 @@ export function ExerciseCategoryAdd() {
         body: JSON.stringify({ name: name.value }),
       }),
     onSuccess: async (_, context) => {
-      await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
       bg.Fields.clearAll([name]);
       context.form?.reset();
     },

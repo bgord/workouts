@@ -18,7 +18,7 @@ export function PlanFinalize() {
       }),
     onSuccess: () =>
       router.invalidate({
-        filter: (route) => route.id === planRoute.id || route.id === plansRoute.id,
+        filter: (match) => match.routeId === planRoute.id || match.routeId === plansRoute.id,
         sync: true,
       }),
   });

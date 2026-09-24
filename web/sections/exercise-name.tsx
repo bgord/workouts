@@ -23,7 +23,7 @@ export function ExerciseName() {
       }),
     onSuccess: async () => {
       exerciseNameUpdate.disable();
-      await router.invalidate({ filter: (route) => route.id === exerciseRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === exerciseRoute.id, sync: true });
     },
   });
 

@@ -43,7 +43,7 @@ export function WorkoutSetCorrect(
       }),
     onSuccess: async () => {
       toggle.disable();
-      await router.invalidate({ filter: (route) => route.id === workoutRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true });
     },
   });
 

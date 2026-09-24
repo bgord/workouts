@@ -23,7 +23,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
       }),
     onSuccess: async () => {
       toggle.disable();
-      await router.invalidate({ filter: (route) => route.id === catalogRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
     },
   });
 

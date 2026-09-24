@@ -28,7 +28,7 @@ export function PlanDescription() {
       }),
     onSuccess: async () => {
       planDescriptionUpdate.disable();
-      await router.invalidate({ filter: (route) => route.id === planRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === planRoute.id, sync: true });
     },
   });
 
