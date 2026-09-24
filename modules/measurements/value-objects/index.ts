@@ -1,4 +1,7 @@
 export * from "./body-weight";
+export * from "./body-weight-chart-granularity";
+export * from "./body-weight-chart-granularity-options";
+export * from "./body-weight-chart-point";
 export * from "./body-weight-goal";
 export * from "./body-weight-goal-options";
 export * from "./body-weight-measured-on";
