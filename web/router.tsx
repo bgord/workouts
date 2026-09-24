@@ -55,8 +55,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       Avatar.getEtag(context.request),
     ]);
 
-    // @ts-expect-error
-    if (!(session && i18n)) throw redirect({ to: "/public/login.html" });
+    if (!(session && i18n)) throw redirect({ href: "/public/login.html", reloadDocument: true });
 
     return { session, i18n, avatarEtag };
   },
