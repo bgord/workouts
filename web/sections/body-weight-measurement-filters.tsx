@@ -43,21 +43,22 @@ export function BodyWeightMeasurementFilters() {
         ))}
       </ui.Select>
 
-      {!pristine && (
-        <ui.IconButton
-          aria-label={t("app.clear")}
-          onClick={() =>
-            navigate({
-              resetScroll: false,
-              search: { chart: search.chart },
-              to: "/measurements",
-            })
-          }
-          title={t("app.clear")}
-        >
-          <X data-size="sm" />
-        </ui.IconButton>
-      )}
+      <ui.IconButton
+        aria-label={t("app.clear")}
+        data-disp={pristine ? "none" : "flex"}
+        data-md-disp="flex"
+        disabled={pristine}
+        onClick={() =>
+          navigate({
+            resetScroll: false,
+            search: { chart: search.chart },
+            to: "/measurements",
+          })
+        }
+        title={t("app.clear")}
+      >
+        <X data-size="sm" />
+      </ui.IconButton>
     </div>
   );
 }

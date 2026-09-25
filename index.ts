@@ -29,6 +29,10 @@ void (async function main() {
     di.Env.ADMIN_PASSWORD,
   );
 
+  const cache = new bg.CacheControlImmutableStrategy(
+    new bg.CacheControlMustRevalidateStrategy(tools.Duration.Minutes(5)),
+  );
+
   const app = Bun.serve({
     port: di.Env.PORT,
     maxRequestBodySize: tools.Size.fromMB(12).toBytes(),
@@ -38,11 +42,7 @@ void (async function main() {
       "/robots.txt": Bun.file("public/robots.txt"),
       ...bg.StaticFilesHono.handle(
         "/public/*",
-        di.Env.type === bg.NodeEnvironmentEnum.production
-          ? new bg.CacheControlImmutableStrategy(
-              new bg.CacheControlMustRevalidateStrategy(tools.Duration.Minutes(5)),
-            )
-          : new bg.CacheControlNoopStrategy(),
+        di.Env.type === bg.NodeEnvironmentEnum.production ? cache : new bg.CacheControlNoopStrategy(),
       ),
       "/api/*": server.fetch,
       "/*": bg.SSRBun.essentials(

@@ -61,17 +61,18 @@ export function BodyWeightProgressChart() {
           </option>
         </ui.Select>
 
-        {!pristine && (
-          <ui.IconButton
-            aria-label={t("app.clear")}
-            onClick={() =>
-              navigate({ resetScroll: false, search: { month: search.month }, to: "/measurements" })
-            }
-            title={t("app.clear")}
-          >
-            <X data-size="sm" />
-          </ui.IconButton>
-        )}
+        <ui.IconButton
+          aria-label={t("app.clear")}
+          data-disp={pristine ? "none" : "flex"}
+          data-md-disp="flex"
+          disabled={pristine}
+          onClick={() =>
+            navigate({ resetScroll: false, search: { month: search.month }, to: "/measurements" })
+          }
+          title={t("app.clear")}
+        >
+          <X data-size="sm" />
+        </ui.IconButton>
       </div>
 
       <ui.LineChart aria-label={t("measurements.body_weight.progress")}>
