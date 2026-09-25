@@ -21,25 +21,23 @@ export class Measurements {
     request: Request | null,
     params: { month?: BodyWeightHistoryMonthType },
   ): Promise<BodyWeightListResponse> {
-    const response = await ApiClient.fetch("/api/measurements/body-weight/list", request, {
-      method: "QUERY",
-      body: JSON.stringify(params),
-    });
-
-    if (!response.ok) return { month: null, measurements: [], previous: null, months: [], stats: null };
-    return response.json();
+    return ApiClient.json<BodyWeightListResponse>(
+      "/api/measurements/body-weight/list",
+      request,
+      { month: null, measurements: [], previous: null, months: [], stats: null },
+      { method: "QUERY", body: JSON.stringify(params) },
+    );
   }
 
   static async bodyWeightChart(
     request: Request | null,
     params: { granularity: BodyWeightChartGranularityOptions },
   ): Promise<BodyWeightChartResponse> {
-    const response = await ApiClient.fetch("/api/measurements/body-weight/chart", request, {
-      method: "QUERY",
-      body: JSON.stringify(params),
-    });
-
-    if (!response.ok) return { points: [] };
-    return response.json();
+    return ApiClient.json<BodyWeightChartResponse>(
+      "/api/measurements/body-weight/chart",
+      request,
+      { points: [] },
+      { method: "QUERY", body: JSON.stringify(params) },
+    );
   }
 }

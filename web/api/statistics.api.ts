@@ -6,15 +6,12 @@ export class Statistics {
     request: Request | null,
     params: { exerciseId: string },
   ): Promise<Array<ExercisePerformance>> {
-    const response = await ApiClient.fetch(
+    const result = await ApiClient.json<{ performances: Array<ExercisePerformance> }>(
       `/api/statistics/exercises/${params.exerciseId}/performances`,
       request,
+      { performances: [] },
     );
 
-    if (!response.ok) return [];
-
-    const result = await response.json().catch(() => null);
-
-    return result?.performances ?? [];
+    return result.performances;
   }
 }

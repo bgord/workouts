@@ -6,7 +6,7 @@ type WeeklySummaryResponse = { weeklySummary: WeeklySummaryType };
 
 export class Preferences {
   static async getWeeklySummary(request: Request | null): Promise<WeeklySummaryResponse> {
-    return ApiClient.get<WeeklySummaryResponse>("/api/preferences/weekly-summary/get", request, {
+    return ApiClient.json<WeeklySummaryResponse>("/api/preferences/weekly-summary/get", request, {
       weeklySummary: WeeklySummaryDefault,
     });
   }

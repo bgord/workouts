@@ -10,7 +10,7 @@ export class Dashboard {
     const zero = tools.Int.nonNegative(0);
     const completed = { month: zero, year: zero, total: zero };
 
-    return ApiClient.get<DashboardResponse>("/api/dashboard", request, {
+    return ApiClient.json<DashboardResponse>("/api/dashboard", request, {
       workouts: { inProgress: null, nextUp: null, lastCompleted: null, completed },
       bodyWeightStats: null,
     });

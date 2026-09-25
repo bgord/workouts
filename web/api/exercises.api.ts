@@ -7,7 +7,7 @@ const unavailable = { available: false, enabled: false, hints: [] };
 
 export class Exercises {
   static async list(request: Request | null): Promise<ExerciseListResponse> {
-    return ApiClient.get<ExerciseListResponse>("/api/exercises/list", request, {
+    return ApiClient.json<ExerciseListResponse>("/api/exercises/list", request, {
       data: [],
       actions: { add: unavailable },
     });
@@ -17,11 +17,11 @@ export class Exercises {
     request: Request | null,
     params: { exerciseId: string },
   ): Promise<ExerciseGetResponse | null> {
-    return ApiClient.get<ExerciseGetResponse | null>(`/api/exercises/${params.exerciseId}`, request, null);
+    return ApiClient.json<ExerciseGetResponse | null>(`/api/exercises/${params.exerciseId}`, request, null);
   }
 
   static async listCategories(request: Request | null): Promise<ExerciseCategoryListResponse> {
-    return ApiClient.get<ExerciseCategoryListResponse>("/api/exercises/category/list", request, {
+    return ApiClient.json<ExerciseCategoryListResponse>("/api/exercises/category/list", request, {
       data: [],
       actions: { manage: unavailable, add: unavailable, rename: unavailable, delete: unavailable },
     });
