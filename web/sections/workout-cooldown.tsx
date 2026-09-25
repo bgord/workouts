@@ -1,14 +1,13 @@
 import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Snowflake } from "lucide-react";
 import * as ui from "../components";
-import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { workoutRoute } from "../router";
 
 export function WorkoutCooldown() {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
 
-  const workoutCooldownExpanded = usePersistedToggle({
+  const workoutCooldownExpanded = bg.usePersistedToggle({
     name: `workout-cooldown-expanded-${workout.data.id}`,
   });
 

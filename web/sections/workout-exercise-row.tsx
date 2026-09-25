@@ -3,7 +3,6 @@ import { useOptimistic } from "react";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
-import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
@@ -22,7 +21,7 @@ export function WorkoutExerciseRow(props: {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
 
-  const workoutExerciseVisibility = usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
+  const workoutExerciseVisibility = bg.usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
   const workoutExerciseTarget = bg.useToggle({ name: `workout-exercise-target-${props.exercise.id}` });
   const workoutExerciseDescription = bg.useToggle({
     name: `workout-exercise-description-${props.exercise.id}`,

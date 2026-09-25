@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately, Sigma, Trophy } from "lucide-react";
 import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
 import * as ui from "../components";
-import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseHistoryRow(props: {
@@ -14,7 +13,7 @@ export function ExerciseHistoryRow(props: {
   last: boolean;
 }) {
   const t = bg.useTranslations();
-  const open = usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
+  const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>

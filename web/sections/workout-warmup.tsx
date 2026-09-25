@@ -1,14 +1,13 @@
 import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronUp, Flame } from "lucide-react";
 import * as ui from "../components";
-import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { workoutRoute } from "../router";
 
 export function WorkoutWarmup() {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
 
-  const workoutWarmupExpanded = usePersistedToggle({ name: `workout-warmup-expanded-${workout.data.id}` });
+  const workoutWarmupExpanded = bg.usePersistedToggle({ name: `workout-warmup-expanded-${workout.data.id}` });
 
   if (!workout.data.planSectionWarmup) return null;
 

@@ -31,7 +31,6 @@ import { Workouts as WorkoutsPage } from "./pages/workouts";
 import { ExerciseNotFound } from "./sections/exercise-not-found";
 import { PlanNotFound } from "./sections/plan-not-found";
 import { WorkoutNotFound } from "./sections/workout-not-found";
-import { AssetVersion } from "./services/asset-version";
 import { Shell } from "./shell";
 
 type RouterContext = { request: Request | null; nonce: string; assetVersion: string };
@@ -49,10 +48,10 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
     ],
     links: [
       { rel: "apple-touch-icon", href: "/public/apple-touch-icon.png" },
-      ...bg.CSS(AssetVersion.url("/public/main.min.css", match.context.assetVersion)),
-      ...bg.CSS(AssetVersion.url("/public/custom.css", match.context.assetVersion)),
+      ...bg.CSS(bg.AssetVersion.url("/public/main.min.css", match.context.assetVersion)),
+      ...bg.CSS(bg.AssetVersion.url("/public/custom.css", match.context.assetVersion)),
     ],
-    scripts: [bg.JS(AssetVersion.url("/public/entry-client.js", match.context.assetVersion))],
+    scripts: [bg.JS(bg.AssetVersion.url("/public/entry-client.js", match.context.assetVersion))],
   }),
   component: Shell,
   staleTime: Number.POSITIVE_INFINITY,

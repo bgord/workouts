@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
-import { usePersistedToggle } from "../hooks/use-persisted-toggle";
 import { PlanSectionCooldown } from "./plan-section-cooldown";
 import { PlanSectionExerciseInstructionAdd } from "./plan-section-exercise-instruction-add";
 import { PlanSectionExerciseInstructionList } from "./plan-section-exercise-instruction-list";
@@ -13,7 +12,7 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
   const t = bg.useTranslations();
   const pluralize = bg.usePluralize();
 
-  const planSectionVisibility = usePersistedToggle({ name: `plan-section-${props.section.id}` });
+  const planSectionVisibility = bg.usePersistedToggle({ name: `plan-section-${props.section.id}` });
   const planSectionRename = bg.useToggle({ name: `plan-section-rename-${props.section.id}` });
 
   return (
