@@ -19,10 +19,9 @@ export function BodyWeightMeasurementHistory() {
       <BodyWeightProgressChart />
 
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-main="between" data-stack="x">
-          <h2>{t("measurements.body_weight.history")}</h2>
-          <BodyWeightMeasurementFilters />
-        </div>
+        <h2>{t("measurements.body_weight.history")}</h2>
+
+        <BodyWeightMeasurementFilters />
 
         <BodyWeightMeasurementList />
       </div>

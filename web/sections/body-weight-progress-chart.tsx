@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { X } from "lucide-react";
 import * as BodyWeightChartForm from "../../app/services/body-weight-chart-form";
 import { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import * as ui from "../components";
@@ -25,40 +26,52 @@ export function BodyWeightProgressChart() {
 
   const reference = layout.points[chart.findIndex((point) => point.reference)];
 
+  const pristine = BodyWeightChartForm.Form.isDefault(search);
+
   return (
     <div data-stack="y" data-variant="flat" {...ui.Gap.related}>
-      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
-        <h2 data-grow="1">{t("measurements.body_weight.progress")}</h2>
+      <h2>{t("measurements.body_weight.progress")}</h2>
 
-        <div>
-          <ui.Select
-            aria-label={t("measurements.body_weight.progress.granularity.label")}
-            id={BodyWeightChartForm.Form.chart.field.name}
-            name={BodyWeightChartForm.Form.chart.field.name}
-            onChange={(event) => {
-              const granularity = event.currentTarget.value as BodyWeightChartGranularityOptions;
+      <div data-stack="x" {...ui.Gap.cluster}>
+        <ui.Select
+          aria-label={t("measurements.body_weight.progress.granularity.label")}
+          id={BodyWeightChartForm.Form.chart.field.name}
+          name={BodyWeightChartForm.Form.chart.field.name}
+          onChange={(event) => {
+            const granularity = event.currentTarget.value as BodyWeightChartGranularityOptions;
 
-              navigate({
-                resetScroll: false,
-                search: {
-                  month: search.month,
-                  chart: granularity === BodyWeightChartGranularityOptions.weekly ? undefined : granularity,
-                },
-                to: "/measurements",
-              });
-            }}
-            value={search.chart ?? BodyWeightChartGranularityOptions.weekly}
-            {...bg.Autocomplete.off}
+            navigate({
+              resetScroll: false,
+              search: {
+                month: search.month,
+                chart: granularity === BodyWeightChartGranularityOptions.weekly ? undefined : granularity,
+              },
+              to: "/measurements",
+            });
+          }}
+          value={search.chart ?? BodyWeightChartGranularityOptions.weekly}
+          {...bg.Autocomplete.off}
+        >
+          <option value={BodyWeightChartGranularityOptions.weekly}>
+            {t("measurements.body_weight.progress.granularity.weekly")}
+          </option>
+
+          <option value={BodyWeightChartGranularityOptions.daily}>
+            {t("measurements.body_weight.progress.granularity.daily")}
+          </option>
+        </ui.Select>
+
+        {!pristine && (
+          <ui.IconButton
+            aria-label={t("app.clear")}
+            onClick={() =>
+              navigate({ resetScroll: false, search: { month: search.month }, to: "/measurements" })
+            }
+            title={t("app.clear")}
           >
-            <option value={BodyWeightChartGranularityOptions.weekly}>
-              {t("measurements.body_weight.progress.granularity.weekly")}
-            </option>
-
-            <option value={BodyWeightChartGranularityOptions.daily}>
-              {t("measurements.body_weight.progress.granularity.daily")}
-            </option>
-          </ui.Select>
-        </div>
+            <X data-size="sm" />
+          </ui.IconButton>
+        )}
       </div>
 
       <ui.LineChart aria-label={t("measurements.body_weight.progress")}>

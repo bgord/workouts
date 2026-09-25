@@ -14,36 +14,36 @@ export function BodyWeightMeasurementFilters() {
   const navigate = measurementsRoute.useNavigate();
   const search = measurementsRoute.useSearch();
 
+  const pristine = BodyWeightMeasurementFiltersForm.Form.isDefault(search);
+
   return (
     <div data-stack="x" {...ui.Gap.cluster}>
-      <div data-md-grow="1">
-        <ui.Select
-          aria-label={t("measurements.body_weight.history.month.label")}
-          id={BodyWeightMeasurementFiltersForm.Form.month.field.name}
-          name={BodyWeightMeasurementFiltersForm.Form.month.field.name}
-          onChange={(event) =>
-            navigate({
-              resetScroll: false,
-              search: {
-                month: event.currentTarget.value as BodyWeightHistoryMonthType,
-                chart: search.chart,
-              },
-              to: "/measurements",
-            })
-          }
-          value={month ?? ""}
-          {...bg.Autocomplete.off}
-        >
-          <option value={BodyWeightHistoryMonthAll}>{t("measurements.body_weight.history.month.all")}</option>
-          {months.map((summary) => (
-            <option key={summary.month} value={summary.month}>
-              {DateFormat.month(language, `${summary.month}-01`)} ({summary.count})
-            </option>
-          ))}
-        </ui.Select>
-      </div>
+      <ui.Select
+        aria-label={t("measurements.body_weight.history.month.label")}
+        id={BodyWeightMeasurementFiltersForm.Form.month.field.name}
+        name={BodyWeightMeasurementFiltersForm.Form.month.field.name}
+        onChange={(event) =>
+          navigate({
+            resetScroll: false,
+            search: {
+              month: event.currentTarget.value as BodyWeightHistoryMonthType,
+              chart: search.chart,
+            },
+            to: "/measurements",
+          })
+        }
+        value={month ?? ""}
+        {...bg.Autocomplete.off}
+      >
+        <option value={BodyWeightHistoryMonthAll}>{t("measurements.body_weight.history.month.all")}</option>
+        {months.map((summary) => (
+          <option key={summary.month} value={summary.month}>
+            {DateFormat.month(language, `${summary.month}-01`)} ({summary.count})
+          </option>
+        ))}
+      </ui.Select>
 
-      {!BodyWeightMeasurementFiltersForm.Form.isDefault(search) && (
+      {!pristine && (
         <ui.IconButton
           aria-label={t("app.clear")}
           onClick={() =>
