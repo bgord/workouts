@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import { ApiClient } from "@bgord/ui";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import { bootstrap } from "+infra/bootstrap";
 import { db } from "+infra/db";
@@ -8,7 +9,6 @@ import { registerCronTasks } from "+infra/register-cron-tasks";
 import { registerEventHandlers } from "+infra/register-event-handlers";
 import { AdminAccountCreator } from "./scripts/admin-account-creator";
 import { createServer } from "./server";
-import { ApiClient } from "./web/api/api-client";
 import { handler } from "./web/entry-server";
 
 void (async function main() {

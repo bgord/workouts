@@ -7,7 +7,7 @@
       "dependencies": {
         "@bgord/bun": "1.23.9",
         "@bgord/design": "2.1.1",
-        "@bgord/ui": "0.10.6",
+        "@bgord/ui": "0.10.8",
         "@react-email/components": "1.0.12",
         "@tanstack/react-router": "1.170.38",
         "better-auth": "1.7.5",
@@ -138,7 +138,7 @@
 
     "@bgord/tools": ["@bgord/tools@1.6.14", "", { "dependencies": { "valibot": "1.5.0" } }, "sha512-oXUOJLm6bYl1UNH7WMS7926wauTYi87a2ZYOajzMXlfAHMFfH4DWDUaTYt4OAcE4YDqqJxRuLXwgkj9LQYmYCw=="],
 
-    "@bgord/ui": ["@bgord/ui@0.10.6", "", { "dependencies": { "polish-plurals": "1.1.0", "tinykeys": "4.0.0" }, "peerDependencies": { "react": "19.3.0", "react-dom": "19.3.0" } }, "sha512-dBmp8ctCdmDfgy0MLuIC/hp7nn8lHN/ouxUcLyQKVo6dOssnBJnEAnynsuV4AMDCb4x2JKLKAE0c3NcxsGhUKQ=="],
+    "@bgord/ui": ["@bgord/ui@0.10.8", "", { "dependencies": { "polish-plurals": "1.1.0", "tinykeys": "4.0.0" }, "peerDependencies": { "react": "19.3.0", "react-dom": "19.3.0" } }, "sha512-H1Ftxla6tRbxD+OQicMtpqpLS1sLvGoIwSy3PTrqG9zXWLRj4hBPSIL2z5S6fyNRXQX1e/YsZSg8lqHRVCMWTA=="],
 
     "@biomejs/biome": ["@biomejs/biome@2.5.14", "", { "optionalDependencies": { "@biomejs/cli-darwin-arm64": "2.5.14", "@biomejs/cli-darwin-x64": "2.5.14", "@biomejs/cli-linux-arm64": "2.5.14", "@biomejs/cli-linux-arm64-musl": "2.5.14", "@biomejs/cli-linux-x64": "2.5.14", "@biomejs/cli-linux-x64-musl": "2.5.14", "@biomejs/cli-win32-arm64": "2.5.14", "@biomejs/cli-win32-x64": "2.5.14" }, "bin": { "biome": "bin/biome" } }, "sha512-0FabLIjd4M/dm8VFI86RMaLLdgepzbdfiAL2R8cr7V81OYYrP1w7Z73KfAwPK5h9SrEBXTzNG2y+mBwPo9xRnw=="],
 

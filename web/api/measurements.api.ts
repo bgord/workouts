@@ -1,10 +1,10 @@
+import * as bg from "@bgord/ui";
 import type { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import type { BodyWeightChartPoint } from "../../modules/measurements/value-objects/body-weight-chart-point";
 import type { BodyWeightHistoryMonthType } from "../../modules/measurements/value-objects/body-weight-history-month";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import type { BodyWeightMonthSummary } from "../../modules/measurements/value-objects/body-weight-month-summary";
 import type { BodyWeightStats } from "../../modules/measurements/value-objects/body-weight-stats";
-import { ApiClient } from "./api-client";
 
 type BodyWeightListResponse = {
   month: BodyWeightHistoryMonthType | null;
@@ -21,7 +21,7 @@ export class Measurements {
     request: Request | null,
     params: { month?: BodyWeightHistoryMonthType },
   ): Promise<BodyWeightListResponse> {
-    return ApiClient.json<BodyWeightListResponse>(
+    return bg.ApiClient.json<BodyWeightListResponse>(
       "/api/measurements/body-weight/list",
       request,
       { month: null, measurements: [], previous: null, months: [], stats: null },
@@ -33,7 +33,7 @@ export class Measurements {
     request: Request | null,
     params: { granularity: BodyWeightChartGranularityOptions },
   ): Promise<BodyWeightChartResponse> {
-    return ApiClient.json<BodyWeightChartResponse>(
+    return bg.ApiClient.json<BodyWeightChartResponse>(
       "/api/measurements/body-weight/chart",
       request,
       { points: [] },

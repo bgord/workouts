@@ -1,8 +1,7 @@
-import type * as bg from "@bgord/ui";
-import { ApiClient } from "./api-client";
+import * as bg from "@bgord/ui";
 
 export class I18N {
   static async get(request: Request | null): Promise<bg.TranslationsContextValueType | null> {
-    return ApiClient.json<bg.TranslationsContextValueType | null>("/api/translations", request, null);
+    return bg.ApiClient.json<bg.TranslationsContextValueType | null>("/api/translations", request, null);
   }
 }
