@@ -121,7 +121,11 @@ export function PlanSectionCooldown(props: PlanSection) {
             />
           </div>
 
-          {mutation.isError && <ui.Output>{t("plan.section.cooldown.error")}</ui.Output>}
+          {mutation.isError && (
+            <output aria-live="assertive" data-tone="danger">
+              {t("plan.section.cooldown.error")}
+            </output>
+          )}
         </form>
       )}
     </div>

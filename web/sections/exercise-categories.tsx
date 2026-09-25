@@ -119,7 +119,11 @@ export function ExerciseCategories() {
             <X data-size="sm" />
           </ui.IconButton>
 
-          {assign.isError && <ui.Output data-width="100%">{t("exercise.category.assign.error")}</ui.Output>}
+          {assign.isError && (
+            <output aria-live="assertive" data-tone="danger" data-width="100%">
+              {t("exercise.category.assign.error")}
+            </output>
+          )}
         </form>
       )}
 

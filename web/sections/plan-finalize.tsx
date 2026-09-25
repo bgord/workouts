@@ -37,7 +37,11 @@ export function PlanFinalize() {
         {t("plan.finalize.cta")}
       </button>
 
-      {mutation.isError && <ui.Output>{t("plan.finalize.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("plan.finalize.error")}
+        </output>
+      )}
     </form>
   );
 }

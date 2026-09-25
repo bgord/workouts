@@ -92,7 +92,11 @@ export function PlanSectionCreate() {
             </div>
           </div>
 
-          {mutation.isError && <ui.Output>{t("plan.section.create.error")}</ui.Output>}
+          {mutation.isError && (
+            <output aria-live="assertive" data-tone="danger">
+              {t("plan.section.create.error")}
+            </output>
+          )}
         </form>
       )}
     </ui.HairlineBlock>

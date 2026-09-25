@@ -112,7 +112,11 @@ export function ExerciseImageChange() {
 
           <small>{t("exercise.image.change.hint")}</small>
 
-          {mutation.isError && <ui.Output>{t("exercise.image.change.error")}</ui.Output>}
+          {mutation.isError && (
+            <output aria-live="assertive" data-tone="danger">
+              {t("exercise.image.change.error")}
+            </output>
+          )}
         </form>
       )}
     </div>

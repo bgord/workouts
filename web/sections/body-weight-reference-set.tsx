@@ -77,7 +77,9 @@ export function BodyWeightReferenceSet(
       </ui.IconButton>
 
       {mutation.isError && (
-        <ui.Output data-width="100%">{t("measurements.body_weight.reference.error")}</ui.Output>
+        <output aria-live="assertive" data-tone="danger" data-width="100%">
+          {t("measurements.body_weight.reference.error")}
+        </output>
       )}
     </form>
   );

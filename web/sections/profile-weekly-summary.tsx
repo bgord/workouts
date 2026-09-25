@@ -64,7 +64,11 @@ export function ProfileWeeklySummary() {
         </ui.IconButton>
       </form>
 
-      {mutation.isError && <ui.Output>{t("profile.weekly_summary.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("profile.weekly_summary.error")}
+        </output>
+      )}
     </section>
   );
 }

@@ -53,7 +53,11 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
           <X data-size="sm" />
         </ui.IconButton>
 
-        {mutation.isError && <ui.Output>{t("workout.set.remove.error")}</ui.Output>}
+        {mutation.isError && (
+          <output aria-live="assertive" data-tone="danger">
+            {t("workout.set.remove.error")}
+          </output>
+        )}
       </form>
 
       <ui.Dialog {...workoutSetRemove}>

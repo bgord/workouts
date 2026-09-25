@@ -62,7 +62,11 @@ export function WorkoutExerciseMove(props: {
         <ChevronDown data-size="sm" />
       </ui.IconButton>
 
-      {(up.isError || down.isError) && <ui.Output>{t("workout.exercise.move.error")}</ui.Output>}
+      {(up.isError || down.isError) && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("workout.exercise.move.error")}
+        </output>
+      )}
     </div>
   );
 }

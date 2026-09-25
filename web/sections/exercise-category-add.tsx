@@ -64,7 +64,11 @@ export function ExerciseCategoryAdd() {
         </ui.IconButton>
       </div>
 
-      {mutation.isError && <ui.Output>{t("exercise.category.add.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("exercise.category.add.error")}
+        </output>
+      )}
     </form>
   );
 }

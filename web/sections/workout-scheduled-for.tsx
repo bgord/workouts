@@ -98,7 +98,11 @@ export function WorkoutScheduledFor() {
 
       <ui.ActionHint {...workout.actions.reschedule} data-ml="2" />
 
-      {mutation.isError && <ui.Output data-width="100%">{t("workout.reschedule.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger" data-width="100%">
+          {t("workout.reschedule.error")}
+        </output>
+      )}
     </form>
   );
 }

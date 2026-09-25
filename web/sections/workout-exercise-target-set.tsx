@@ -126,7 +126,11 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
 
         <ui.ActionHint {...action} />
 
-        {mutation.isError && <ui.Output data-width="100%">{t("workout.target.error")}</ui.Output>}
+        {mutation.isError && (
+          <output aria-live="assertive" data-tone="danger" data-width="100%">
+            {t("workout.target.error")}
+          </output>
+        )}
       </form>
 
       {progression && (

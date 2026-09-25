@@ -95,7 +95,11 @@ export function PlanDescription() {
             />
           </div>
 
-          {mutation.isError && <ui.Output>{t("plan.description.error")}</ui.Output>}
+          {mutation.isError && (
+            <output aria-live="assertive" data-tone="danger">
+              {t("plan.description.error")}
+            </output>
+          )}
         </form>
       )}
     </div>

@@ -92,7 +92,9 @@ export function BodyWeightMeasurementCorrect(
       </ui.IconButton>
 
       {mutation.isError && (
-        <ui.Output data-width="100%">{t("measurements.body_weight.correct.error")}</ui.Output>
+        <output aria-live="assertive" data-tone="danger" data-width="100%">
+          {t("measurements.body_weight.correct.error")}
+        </output>
       )}
     </form>
   );

@@ -109,7 +109,11 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
 
       <ui.ActionHint {...action} />
 
-      {mutation.isError && <ui.Output>{t("workout.set.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("workout.set.error")}
+        </output>
+      )}
     </form>
   );
 }

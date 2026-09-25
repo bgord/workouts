@@ -52,7 +52,11 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
 
         <ui.ActionHint {...action} />
 
-        {mutation.isError && <ui.Output>{t("workout.exercise.remove.error")}</ui.Output>}
+        {mutation.isError && (
+          <output aria-live="assertive" data-tone="danger">
+            {t("workout.exercise.remove.error")}
+          </output>
+        )}
       </form>
 
       <ui.Dialog {...workoutExerciseRemove}>

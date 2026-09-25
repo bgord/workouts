@@ -29,7 +29,6 @@ export * from "./logout";
 export * from "./main";
 export * from "./navigation-progress";
 export * from "./online-status-bar";
-export * from "./output";
 export * from "./plan-card";
 export * from "./plan-status-badge";
 export * from "./prescription";

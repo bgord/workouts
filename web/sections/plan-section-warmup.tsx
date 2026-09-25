@@ -121,7 +121,11 @@ export function PlanSectionWarmup(props: PlanSection) {
             />
           </div>
 
-          {mutation.isError && <ui.Output>{t("plan.section.warmup.error")}</ui.Output>}
+          {mutation.isError && (
+            <output aria-live="assertive" data-tone="danger">
+              {t("plan.section.warmup.error")}
+            </output>
+          )}
         </form>
       )}
     </div>

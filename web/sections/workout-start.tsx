@@ -33,7 +33,11 @@ export function WorkoutStart() {
         {t("workout.start.cta")}
       </button>
 
-      {mutation.isError && <ui.Output>{t("workout.start.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("workout.start.error")}
+        </output>
+      )}
     </form>
   );
 }

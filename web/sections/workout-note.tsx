@@ -86,7 +86,11 @@ export function WorkoutNote() {
             <ui.ButtonCancel onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])} />
           </div>
 
-          {mutation.isError && <ui.Output>{t("workout.note.error")}</ui.Output>}
+          {mutation.isError && (
+            <output aria-live="assertive" data-tone="danger">
+              {t("workout.note.error")}
+            </output>
+          )}
         </form>
       )}
     </div>

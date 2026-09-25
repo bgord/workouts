@@ -85,7 +85,11 @@ export function ExerciseDescription() {
             />
           </div>
 
-          {mutation.isError && <ui.Output>{t("exercise.update.error")}</ui.Output>}
+          {mutation.isError && (
+            <output aria-live="assertive" data-tone="danger">
+              {t("exercise.update.error")}
+            </output>
+          )}
         </form>
       )}
     </div>

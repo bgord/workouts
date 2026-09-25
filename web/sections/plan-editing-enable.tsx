@@ -37,7 +37,11 @@ export function PlanEditingEnable() {
         {t("plan.editing.enable.cta")}
       </button>
 
-      {mutation.isError && <ui.Output>{t("plan.editing.enable.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("plan.editing.enable.error")}
+        </output>
+      )}
     </form>
   );
 }

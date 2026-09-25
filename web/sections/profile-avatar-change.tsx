@@ -107,7 +107,11 @@ export function ProfileAvatarChange() {
 
             <small>{t("profile.avatar.hint")}</small>
 
-            {mutation.isError && <ui.Output>{t("profile.avatar.upload.error")}</ui.Output>}
+            {mutation.isError && (
+              <output aria-live="assertive" data-tone="danger">
+                {t("profile.avatar.upload.error")}
+              </output>
+            )}
           </form>
         )}
       </div>

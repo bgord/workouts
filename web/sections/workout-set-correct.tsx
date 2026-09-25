@@ -114,7 +114,11 @@ export function WorkoutSetCorrect(
         <X data-size="sm" />
       </ui.IconButton>
 
-      {mutation.isError && <ui.Output data-width="100%">{t("workout.set.correct.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger" data-width="100%">
+          {t("workout.set.correct.error")}
+        </output>
+      )}
     </form>
   );
 }

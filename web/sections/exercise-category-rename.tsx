@@ -86,7 +86,11 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
         </ui.IconButton>
       </div>
 
-      {mutation.isError && <ui.Output>{t("exercise.category.rename.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("exercise.category.rename.error")}
+        </output>
+      )}
     </form>
   );
 }

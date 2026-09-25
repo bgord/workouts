@@ -45,9 +45,13 @@ export function ProfilePasswordChange() {
           {mutation.isLoading ? t("auth.change_password.sending") : t("auth.change_password.send_cta")}
         </button>
 
-        {mutation.isDone && <ui.Output tone="positive">{t("auth.change_password.sent")}</ui.Output>}
+        {mutation.isDone && <output data-tone="positive">{t("auth.change_password.sent")}</output>}
 
-        {mutation.isError && <ui.Output>{t("auth.change_password.error")}</ui.Output>}
+        {mutation.isError && (
+          <output aria-live="assertive" data-tone="danger">
+            {t("auth.change_password.error")}
+          </output>
+        )}
       </form>
     </section>
   );

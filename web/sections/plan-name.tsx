@@ -90,7 +90,11 @@ export function PlanName() {
         </ui.IconButton>
       </div>
 
-      {mutation.isError && <ui.Output>{t("plan.rename.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("plan.rename.error")}
+        </output>
+      )}
     </form>
   );
 }

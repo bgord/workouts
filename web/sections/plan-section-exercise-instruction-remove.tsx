@@ -48,7 +48,11 @@ export function PlanSectionExerciseInstructionRemove(props: {
         <X data-size="sm" />
       </ui.IconButton>
 
-      {mutation.isError && <ui.Output>{t("plan.section.exercise.remove.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("plan.section.exercise.remove.error")}
+        </output>
+      )}
     </form>
   );
 }

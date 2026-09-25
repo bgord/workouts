@@ -37,7 +37,11 @@ export function PlanRestore() {
         {t("plan.restore.cta")}
       </button>
 
-      {mutation.isError && <ui.Output>{t("plan.restore.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("plan.restore.error")}
+        </output>
+      )}
     </form>
   );
 }

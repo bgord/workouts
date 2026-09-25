@@ -96,7 +96,11 @@ export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggle
         </ui.IconButton>
       </div>
 
-      {mutation.isError && <ui.Output>{t("plan.section.rename.error")}</ui.Output>}
+      {mutation.isError && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("plan.section.rename.error")}
+        </output>
+      )}
     </form>
   );
 }
