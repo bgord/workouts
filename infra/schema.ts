@@ -300,38 +300,51 @@ export const planSectionExerciseInstructionsRelations = relations(
   }),
 );
 
-export const workouts = sqliteTable("workouts", {
-  id: identifier<WorkoutIdType>(),
-  planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
-  planName: text("planName").notNull().$type<PlanNameType>(),
-  planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
-  planSectionName: text("planSectionName").notNull().$type<PlanSectionNameType>(),
-  planSectionWarmup: text("planSectionWarmup").$type<PlanSectionWarmupType>(),
-  planSectionCooldown: text("planSectionCooldown").$type<PlanSectionCooldownType>(),
-  scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
-  status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
-  completedAt: timestamp("completedAt"),
-  note: text("note").$type<WorkoutNoteType>(),
-  revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
-  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
-  createdAt: timestamp("createdAt").notNull(),
-  updatedAt: timestamp("updatedAt").notNull(),
-});
+export const workouts = sqliteTable(
+  "workouts",
+  {
+    id: identifier<WorkoutIdType>(),
+    planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
+    planName: text("planName").notNull().$type<PlanNameType>(),
+    planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
+    planSectionName: text("planSectionName").notNull().$type<PlanSectionNameType>(),
+    planSectionWarmup: text("planSectionWarmup").$type<PlanSectionWarmupType>(),
+    planSectionCooldown: text("planSectionCooldown").$type<PlanSectionCooldownType>(),
+    scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
+    status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
+    completedAt: timestamp("completedAt"),
+    note: text("note").$type<WorkoutNoteType>(),
+    revision: integer("revision").notNull().default(0).$type<tools.RevisionValueType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [
+    index("workouts_userId_status_scheduledFor_idx").on(table.userId, table.status, table.scheduledFor),
+  ],
+);
 
-export const workoutExercises = sqliteTable("workoutExercises", {
-  id: identifier<WorkoutExerciseIdType>(),
-  workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
-  exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
-  exerciseName: text("exerciseName").notNull().$type<ExerciseNameType>(),
-  exerciseImageEtag: text("exerciseImageEtag").notNull().$type<bg.HashValueType>(),
-  exerciseDescription: text("exerciseDescription").notNull().$type<ExerciseDescriptionType>(),
-  prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
-  target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
-  position: integer("position", { mode: "number" }).notNull().default(0).$type<WorkoutExercisePositionType>(),
-  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
-  createdAt: timestamp("createdAt").notNull(),
-  updatedAt: timestamp("updatedAt").notNull(),
-});
+export const workoutExercises = sqliteTable(
+  "workoutExercises",
+  {
+    id: identifier<WorkoutExerciseIdType>(),
+    workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
+    exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
+    exerciseName: text("exerciseName").notNull().$type<ExerciseNameType>(),
+    exerciseImageEtag: text("exerciseImageEtag").notNull().$type<bg.HashValueType>(),
+    exerciseDescription: text("exerciseDescription").notNull().$type<ExerciseDescriptionType>(),
+    prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
+    target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
+    position: integer("position", { mode: "number" })
+      .notNull()
+      .default(0)
+      .$type<WorkoutExercisePositionType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [index("workoutExercises_userId_exerciseId_idx").on(table.userId, table.exerciseId)],
+);
 
 export const workoutLoggedSets = sqliteTable(
   "workoutLoggedSets",

@@ -22,6 +22,7 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
       .where(
         and(
           eq(Schema.workouts.userId, userId),
+          eq(Schema.workoutExercises.userId, userId),
           eq(Schema.workoutExercises.exerciseId, exerciseId),
           eq(Schema.workouts.status, Workouts.VO.WorkoutStatusEnum.completed),
           or(

@@ -1,0 +1,2 @@
+CREATE INDEX `workoutExercises_userId_exerciseId_idx` ON `workoutExercises` (`userId`,`exerciseId`);--> statement-breakpoint
+CREATE INDEX `workouts_userId_status_scheduledFor_idx` ON `workouts` (`userId`,`status`,`scheduledFor`);
