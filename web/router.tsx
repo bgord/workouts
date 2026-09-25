@@ -209,7 +209,7 @@ export function createRouter(context: RouterContext) {
     routeTree,
     context,
     defaultPreload: "intent",
-    defaultViewTransition: true,
+    defaultViewTransition: { types: ({ pathChanged }) => (pathChanged ? [] : false) },
     scrollRestoration: true,
     ssr: { nonce: context.nonce },
     dehydrate: () => ({ assetVersion: context.assetVersion }),
