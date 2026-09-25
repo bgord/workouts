@@ -23,10 +23,11 @@ export const LineChartMath = {
 
   layout: (values: Array<number>, format: (value: number) => string) => {
     const floor = Math.max(Math.floor(Math.min(...values)) - SCALE_MARGIN, 0);
-    const ceiling = Math.ceil(Math.max(...values)) + SCALE_MARGIN;
-    const step = Math.ceil((ceiling - floor) / GRIDLINES_LIMIT);
+    const roughCeiling = Math.ceil(Math.max(...values)) + SCALE_MARGIN;
+    const step = Math.ceil((roughCeiling - floor) / GRIDLINES_LIMIT);
+    const ceiling = floor + Math.ceil((roughCeiling - floor) / step) * step;
 
-    const labels = Array.from({ length: Math.floor((ceiling - floor) / step) + 1 }, (_, index) => {
+    const labels = Array.from({ length: (ceiling - floor) / step + 1 }, (_, index) => {
       const value = floor + index * step;
 
       return { value, text: format(value) };
