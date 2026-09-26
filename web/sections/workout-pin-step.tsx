@@ -1,17 +1,12 @@
 import * as bg from "@bgord/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { usePinnedExercise } from "../hooks/use-pinned-exercise";
-import { workoutRoute } from "../router";
 
-export function WorkoutPinStep(props: { exercise: WorkoutExercise; direction: "previous" | "next" }) {
+export function WorkoutPinStep(props: { direction: "previous" | "next" }) {
   const t = bg.useTranslations();
-  const { pin } = usePinnedExercise();
-  const { workout } = workoutRoute.useLoaderData();
+  const pinnedExercise = usePinnedExercise();
 
-  const exercises = workout.data.exercises.filter((exercise) => exercise.actions.setLog.available);
-  const index = exercises.findIndex((exercise) => exercise.id === props.exercise.id);
-  const sibling = exercises[props.direction === "previous" ? index - 1 : index + 1];
+  const sibling = pinnedExercise[props.direction];
 
   const title = sibling
     ? t(`workout.pin.${props.direction}.title`, { name: sibling.exerciseName })
@@ -28,7 +23,7 @@ export function WorkoutPinStep(props: { exercise: WorkoutExercise; direction: "p
       data-shrink="0"
       data-stack="x"
       disabled={!sibling}
-      onClick={() => sibling && pin(sibling.id)}
+      onClick={() => sibling && pinnedExercise.pin(sibling.id)}
       title={title}
       type="button"
     >

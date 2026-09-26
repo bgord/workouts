@@ -6,7 +6,7 @@ import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
-import { WorkoutExercisePin } from "./workout-exercise-pin";
+import { WorkoutExercisePin, WorkoutExerciseUnpin } from "./workout-exercise-pin";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTarget } from "./workout-exercise-target";
@@ -41,6 +41,7 @@ export function WorkoutExerciseRow(props: {
 
   const target = !(isSkipped || isDraft) ? hasTarget : undefined;
   const isExpandable = !props.reordering && (hasLoggedSets || props.exercise.actions.setLog.available);
+  const isPinned = pinned?.id === props.exercise.id;
 
   const { width } = bg.useWindowDimensions();
   const mobile = width !== undefined && width <= 768;
@@ -53,10 +54,14 @@ export function WorkoutExerciseRow(props: {
           exercise={props.exercise}
           position={props.index}
         >
-          {isExpandable && (
-            <WorkoutExercisePin exercise={props.exercise}>
+          {isExpandable && isPinned && <WorkoutExerciseUnpin exercise={props.exercise} />}
+
+          {isExpandable && !isPinned && (
+            <div data-cross="center" data-shrink="0" data-stack="y">
               <ui.ChevronToggle {...workoutExerciseVisibility} />
-            </WorkoutExercisePin>
+
+              {props.exercise.actions.setLog.available && <WorkoutExercisePin exercise={props.exercise} />}
+            </div>
           )}
 
           {!isExpandable && (
@@ -141,7 +146,7 @@ export function WorkoutExerciseRow(props: {
 
       <WorkoutExerciseTargetSet exercise={props.exercise} {...workoutExerciseTarget} />
 
-      {isExpandable && workoutExerciseVisibility.on && pinned?.id !== props.exercise.id && (
+      {isExpandable && workoutExerciseVisibility.on && !isPinned && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
 

@@ -4,7 +4,7 @@ import { WorkoutSetRow } from "./workout-set-row";
 export function WorkoutSetList(props: {
   exercise: WorkoutExercise;
   pendingSet: LoggedSet | null;
-  flush?: boolean;
+  flushTop?: boolean;
 }) {
   if (props.exercise.loggedSets.length === 0) return null;
 
@@ -13,7 +13,7 @@ export function WorkoutSetList(props: {
       {props.exercise.loggedSets.map((loggedSet, index) => (
         <WorkoutSetRow
           exercise={props.exercise}
-          first={props.flush && index === 0}
+          first={props.flushTop && index === 0}
           key={loggedSet.id}
           loggedSet={loggedSet}
           pending={loggedSet === props.pendingSet}

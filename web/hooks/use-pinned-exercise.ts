@@ -43,9 +43,12 @@ export function usePinnedExercise() {
   const { workout } = workoutRoute.useLoaderData();
   const id = useSyncExternalStore(subscribe, snapshot, () => null);
 
-  const pinned = workout.data.exercises.find(
-    (exercise) => exercise.id === id && exercise.actions.setLog.available,
-  );
+  const loggable = workout.data.exercises.filter((exercise) => exercise.actions.setLog.available);
+  const index = loggable.findIndex((exercise) => exercise.id === id);
 
-  return { pinned, pin: write, unpin: () => write(null) };
+  const pinned = loggable[index];
+  const previous = pinned && loggable[index - 1];
+  const next = pinned && loggable[index + 1];
+
+  return { pinned, previous, next, pin: write, unpin: () => write(null) };
 }
