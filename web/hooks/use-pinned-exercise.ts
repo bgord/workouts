@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
+import { workoutRoute } from "../router";
 
 type PinnedExerciseId = WorkoutExercise["id"];
 
@@ -39,13 +40,12 @@ const write = (id: PinnedExerciseId | null) => {
 };
 
 export function usePinnedExercise() {
+  const { workout } = workoutRoute.useLoaderData();
   const id = useSyncExternalStore(subscribe, snapshot, () => null);
 
-  const pin = (next: PinnedExerciseId) => write(next);
+  const pinned = workout.data.exercises.find(
+    (exercise) => exercise.id === id && exercise.actions.setLog.available,
+  );
 
-  const unpin = () => write(null);
-
-  const isPinned = (exercise: WorkoutExercise) => exercise.id === id && exercise.actions.setLog.available;
-
-  return { id, pin, unpin, isPinned };
+  return { pinned, pin: write, unpin: () => write(null) };
 }

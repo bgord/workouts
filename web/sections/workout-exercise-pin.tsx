@@ -5,11 +5,11 @@ import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 
 export function WorkoutExercisePin(props: { exercise: WorkoutExercise; children: React.ReactNode }) {
   const t = bg.useTranslations();
-  const pinnedExercise = usePinnedExercise();
+  const { pinned, pin, unpin } = usePinnedExercise();
 
   if (!props.exercise.actions.setLog.available) return props.children;
 
-  if (pinnedExercise.isPinned(props.exercise)) {
+  if (pinned?.id === props.exercise.id) {
     const title = t("workout.exercise.unpin.title", { name: props.exercise.exerciseName });
 
     return (
@@ -23,7 +23,7 @@ export function WorkoutExercisePin(props: { exercise: WorkoutExercise; children:
         data-p="2-5"
         data-shrink="0"
         data-stack="x"
-        onClick={pinnedExercise.unpin}
+        onClick={unpin}
         title={title}
         type="button"
       >
@@ -47,7 +47,7 @@ export function WorkoutExercisePin(props: { exercise: WorkoutExercise; children:
         data-p="1-5"
         data-shrink="0"
         data-stack="x"
-        onClick={() => pinnedExercise.pin(props.exercise.id)}
+        onClick={() => pin(props.exercise.id)}
         title={title}
         type="button"
       >

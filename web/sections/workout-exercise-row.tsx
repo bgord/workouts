@@ -30,7 +30,7 @@ export function WorkoutExerciseRow(props: {
   });
 
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
-  const pinnedExercise = usePinnedExercise();
+  const { pinned } = usePinnedExercise();
 
   const isDraft = workout.data.status === WorkoutStatusEnum.draft;
   const isCompleted = workout.data.status === WorkoutStatusEnum.completed;
@@ -141,7 +141,7 @@ export function WorkoutExerciseRow(props: {
 
       <WorkoutExerciseTargetSet exercise={props.exercise} {...workoutExerciseTarget} />
 
-      {isExpandable && workoutExerciseVisibility.on && !pinnedExercise.isPinned(props.exercise) && (
+      {isExpandable && workoutExerciseVisibility.on && pinned?.id !== props.exercise.id && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
 

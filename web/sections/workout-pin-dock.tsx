@@ -3,25 +3,21 @@ import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout
 import * as ui from "../components";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import { usePinnedExercise } from "../hooks/use-pinned-exercise";
-import { workoutRoute } from "../router";
 import { WorkoutPinStep } from "./workout-pin-step";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
 export function WorkoutPinDock() {
-  const { workout } = workoutRoute.useLoaderData();
-  const pinnedExercise = usePinnedExercise();
+  const { pinned } = usePinnedExercise();
 
-  const exercise = workout.data.exercises.find(pinnedExercise.isPinned);
+  if (!pinned) return null;
 
-  if (!exercise) return null;
-
-  return <WorkoutPinDockPanel exercise={exercise} key={exercise.id} />;
+  return <WorkoutPinDockPanel exercise={pinned} key={pinned.id} />;
 }
 
 function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
   const t = bg.useTranslations();
-  const pinnedExercise = usePinnedExercise();
+  const { unpin } = usePinnedExercise();
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
 
   return (
@@ -95,7 +91,7 @@ function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
               <WorkoutPinStep direction="next" exercise={exercise} />
             </div>
 
-            <ui.ButtonClose onClick={pinnedExercise.unpin} />
+            <ui.ButtonClose onClick={unpin} />
           </div>
         </div>
       </aside>

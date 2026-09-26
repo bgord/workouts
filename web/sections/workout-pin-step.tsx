@@ -6,7 +6,7 @@ import { workoutRoute } from "../router";
 
 export function WorkoutPinStep(props: { exercise: WorkoutExercise; direction: "previous" | "next" }) {
   const t = bg.useTranslations();
-  const pinnedExercise = usePinnedExercise();
+  const { pin } = usePinnedExercise();
   const { workout } = workoutRoute.useLoaderData();
 
   const exercises = workout.data.exercises.filter((exercise) => exercise.actions.setLog.available);
@@ -28,7 +28,7 @@ export function WorkoutPinStep(props: { exercise: WorkoutExercise; direction: "p
       data-shrink="0"
       data-stack="x"
       disabled={!sibling}
-      onClick={() => sibling && pinnedExercise.pin(sibling.id)}
+      onClick={() => sibling && pin(sibling.id)}
       title={title}
       type="button"
     >
