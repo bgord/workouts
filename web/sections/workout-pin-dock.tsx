@@ -43,7 +43,23 @@ function WorkoutPinDockPanel(props: {
         data-stack="y"
         {...ui.Gap.related}
       >
-        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+        {exercise.loggedSets.length > 0 && (
+          <div data-overflow="auto" {...bg.Rhythm().times(18).style.maxHeight}>
+            <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
+          </div>
+        )}
+
+        <WorkoutSetLog exercise={exercise} onPending={setPendingSet} />
+
+        <div
+          data-bct="alpha-subtle"
+          data-bst="solid"
+          data-bwt="hairline"
+          data-cross="center"
+          data-pt="3"
+          data-stack="x"
+          {...ui.Gap.related}
+        >
           <ui.ExerciseImage
             id={exercise.exerciseId}
             imageEtag={exercise.exerciseImageEtag}
@@ -67,14 +83,6 @@ function WorkoutPinDockPanel(props: {
 
           <ui.ButtonClose onClick={props.onClose} />
         </div>
-
-        {exercise.loggedSets.length > 0 && (
-          <div data-overflow="auto" {...bg.Rhythm().times(18).style.maxHeight}>
-            <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
-          </div>
-        )}
-
-        <WorkoutSetLog exercise={exercise} onPending={setPendingSet} />
       </div>
     </aside>
   );
