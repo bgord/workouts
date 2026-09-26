@@ -6,7 +6,7 @@ import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
-import { WorkoutExercisePin, WorkoutExerciseUnpin } from "./workout-exercise-pin";
+import { WorkoutExercisePin } from "./workout-exercise-pin";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTarget } from "./workout-exercise-target";
@@ -54,9 +54,7 @@ export function WorkoutExerciseRow(props: {
           exercise={props.exercise}
           position={props.index}
         >
-          {isExpandable && isPinned && <WorkoutExerciseUnpin exercise={props.exercise} />}
-
-          {isExpandable && !isPinned && (
+          {isExpandable && (
             <div data-cross="center" data-shrink="0" data-stack="y">
               <ui.ChevronToggle {...workoutExerciseVisibility} />
 

@@ -5,51 +5,29 @@ import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 
 export function WorkoutExercisePin(props: { exercise: WorkoutExercise }) {
   const t = bg.useTranslations();
-  const { pin } = usePinnedExercise();
+  const { pinned, pin, unpin } = usePinnedExercise();
 
-  const title = t("workout.exercise.pin.title", { name: props.exercise.exerciseName });
+  const isPinned = pinned?.id === props.exercise.id;
+
+  const title = isPinned
+    ? t("workout.exercise.unpin.title", { name: props.exercise.exerciseName })
+    : t("workout.exercise.pin.title", { name: props.exercise.exerciseName });
 
   return (
     <button
       aria-label={title}
-      aria-pressed={false}
-      data-color="neutral-600"
+      aria-pressed={isPinned}
+      data-color={isPinned ? "brand-400" : "neutral-600"}
       data-cursor="pointer"
-      data-hover-color="neutral-200"
+      data-hover-color={isPinned ? "brand-300" : "neutral-200"}
       data-p="1-5"
       data-shrink="0"
       data-stack="x"
-      onClick={() => pin(props.exercise.id)}
+      onClick={isPinned ? unpin : () => pin(props.exercise.id)}
       title={title}
       type="button"
     >
-      <PanelBottomOpen data-size="xs" />
-    </button>
-  );
-}
-
-export function WorkoutExerciseUnpin(props: { exercise: WorkoutExercise }) {
-  const t = bg.useTranslations();
-  const { unpin } = usePinnedExercise();
-
-  const title = t("workout.exercise.unpin.title", { name: props.exercise.exerciseName });
-
-  return (
-    <button
-      aria-label={title}
-      aria-pressed
-      data-color="brand-400"
-      data-cursor="pointer"
-      data-hover-color="brand-300"
-      data-md-p="1"
-      data-p="2-5"
-      data-shrink="0"
-      data-stack="x"
-      onClick={unpin}
-      title={title}
-      type="button"
-    >
-      <PanelBottomClose data-size="sm" />
+      {isPinned ? <PanelBottomClose data-size="xs" /> : <PanelBottomOpen data-size="xs" />}
     </button>
   );
 }
