@@ -39,13 +39,14 @@ function WorkoutPinDockPanel(props: {
         data-md-bwb="none"
         data-md-bwx="none"
         data-p="3"
+        data-pb="4"
         data-shadow="lg"
         data-stack="y"
         {...ui.Gap.related}
       >
         {exercise.loggedSets.length > 0 && (
           <div data-overflow="auto" {...bg.Rhythm().times(18).style.maxHeight}>
-            <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
+            <WorkoutSetList exercise={exercise} flush pendingSet={pendingSet} />
           </div>
         )}
 
