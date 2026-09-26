@@ -2,11 +2,11 @@ import { useSyncExternalStore } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { workoutRoute } from "../router";
 
-type PinnedExerciseId = WorkoutExercise["id"];
+type ExerciseId = WorkoutExercise["id"];
 
-const key = "workout-pin";
+const key = "workout-log-panel";
 
-let current: PinnedExerciseId | null | undefined;
+let current: ExerciseId | null | undefined;
 
 const listeners = new Set<VoidFunction>();
 
@@ -15,9 +15,9 @@ const subscribe = (listener: VoidFunction) => {
   return () => listeners.delete(listener);
 };
 
-const read = (): PinnedExerciseId | null => {
+const read = (): ExerciseId | null => {
   try {
-    return localStorage.getItem(key) as PinnedExerciseId | null;
+    return localStorage.getItem(key) as ExerciseId | null;
   } catch {
     return null;
   }
@@ -28,7 +28,7 @@ const snapshot = () => {
   return current;
 };
 
-const write = (id: PinnedExerciseId | null) => {
+const write = (id: ExerciseId | null) => {
   current = id;
 
   try {
@@ -39,16 +39,16 @@ const write = (id: PinnedExerciseId | null) => {
   for (const listener of listeners) listener();
 };
 
-export function usePinnedExercise() {
+export function useLogPanel() {
   const { workout } = workoutRoute.useLoaderData();
   const id = useSyncExternalStore(subscribe, snapshot, () => null);
 
   const available = workout.data.exercises.filter((exercise) => exercise.actions.setLog.available);
   const index = available.findIndex((exercise) => exercise.id === id);
 
-  const pinned = available[index];
-  const previous = pinned && available[index - 1];
-  const next = pinned && available[index + 1];
+  const active = available[index];
+  const previous = active && available[index - 1];
+  const next = active && available[index + 1];
 
-  return { pinned, previous, next, pin: write, unpin: () => write(null) };
+  return { active, previous, next, open: write, close: () => write(null) };
 }

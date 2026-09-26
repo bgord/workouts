@@ -115,14 +115,14 @@ a {
   }
 }
 
-[data-pin-dock] {
+[data-log-panel] {
   width: calc(100% - var(--spacing-3) * 2);
   max-width: calc(768px - var(--spacing-3) * 2);
   max-height: calc(100dvh - var(--spacing-4) * 2);
 }
 
 @media (width <= 768px) {
-  [data-pin-dock] {
+  [data-log-panel] {
     width: 100%;
     max-width: none;
     max-height: calc(100dvh - var(--spacing-4) - env(safe-area-inset-top));

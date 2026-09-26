@@ -1,23 +1,23 @@
 import * as bg from "@bgord/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as ui from "../components";
-import { usePinnedExercise } from "../hooks/use-pinned-exercise";
+import { useLogPanel } from "../hooks/use-log-panel";
 
-export function WorkoutPinStep(props: { direction: "previous" | "next" }) {
+export function WorkoutLogPanelStep(props: { direction: "previous" | "next" }) {
   const t = bg.useTranslations();
-  const pinnedExercise = usePinnedExercise();
+  const logPanel = useLogPanel();
 
-  const sibling = pinnedExercise[props.direction];
+  const sibling = logPanel[props.direction];
 
   const title = sibling
-    ? t(`workout.pin.${props.direction}.title`, { name: sibling.exerciseName })
-    : t(`workout.pin.${props.direction}`);
+    ? t(`workout.log_panel.${props.direction}.title`, { name: sibling.exerciseName })
+    : t(`workout.log_panel.${props.direction}`);
 
   return (
     <ui.IconButton
       aria-label={title}
       disabled={!sibling}
-      onClick={() => sibling && pinnedExercise.pin(sibling.id)}
+      onClick={() => sibling && logPanel.open(sibling.id)}
       title={title}
     >
       {props.direction === "previous" ? <ChevronLeft data-size="sm" /> : <ChevronRight data-size="sm" />}

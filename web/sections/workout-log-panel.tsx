@@ -3,27 +3,27 @@ import { PanelBottomClose } from "lucide-react";
 import { useLayoutEffect, useRef } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { useLogPanel } from "../hooks/use-log-panel";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
-import { usePinnedExercise } from "../hooks/use-pinned-exercise";
-import { WorkoutPinStep } from "./workout-pin-step";
+import { WorkoutLogPanelStep } from "./workout-log-panel-step";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-export function WorkoutPinDock() {
-  const { pinned } = usePinnedExercise();
+export function WorkoutLogPanel() {
+  const { active } = useLogPanel();
 
-  if (!pinned) return null;
+  if (!active) return null;
 
   return (
-    <WorkoutPinDockDialog>
-      <WorkoutPinDockPanel exercise={pinned} key={pinned.id} />
-    </WorkoutPinDockDialog>
+    <WorkoutLogPanelDialog>
+      <WorkoutLogPanelContent exercise={active} key={active.id} />
+    </WorkoutLogPanelDialog>
   );
 }
 
-function WorkoutPinDockDialog(props: { children: React.ReactNode }) {
+function WorkoutLogPanelDialog(props: { children: React.ReactNode }) {
   const t = bg.useTranslations();
-  const { unpin } = usePinnedExercise();
+  const { close } = useLogPanel();
   const ref = useRef<HTMLDialogElement>(null);
 
   useLayoutEffect(() => {
@@ -32,11 +32,11 @@ function WorkoutPinDockDialog(props: { children: React.ReactNode }) {
   }, []);
 
   bg.useScrollLock();
-  bg.useClickOutside(ref, unpin);
+  bg.useClickOutside(ref, close);
 
   return (
     <dialog
-      aria-label={t("workout.pin.dock.label")}
+      aria-label={t("workout.log_panel.label")}
       data-backdrop="medium"
       data-bc="alpha-medium"
       data-bg="neutral-900"
@@ -44,6 +44,7 @@ function WorkoutPinDockDialog(props: { children: React.ReactNode }) {
       data-br="lg"
       data-bs="solid"
       data-bw="hairline"
+      data-log-panel
       data-mb="0"
       data-md-bottom="0"
       data-md-br="none"
@@ -52,11 +53,10 @@ function WorkoutPinDockDialog(props: { children: React.ReactNode }) {
       data-mx="auto"
       data-overflow="hidden"
       data-pb="4"
-      data-pin-dock
       data-shadow="lg"
       data-stack="y"
       data-top="auto"
-      onClose={unpin}
+      onClose={close}
       ref={ref}
       style={{ outline: "none" }}
       tabIndex={-1}
@@ -67,12 +67,12 @@ function WorkoutPinDockDialog(props: { children: React.ReactNode }) {
   );
 }
 
-function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
+function WorkoutLogPanelContent(props: { exercise: WorkoutExercise }) {
   const t = bg.useTranslations();
-  const { unpin } = usePinnedExercise();
+  const { close } = useLogPanel();
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
 
-  const title = t("workout.exercise.unpin.title", { name: exercise.exerciseName });
+  const title = t("workout.exercise.log_panel.close.title", { name: exercise.exerciseName });
 
   return (
     <>
@@ -101,12 +101,12 @@ function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
         </div>
 
         <div data-shrink="0" data-stack="x">
-          <WorkoutPinStep direction="previous" />
+          <WorkoutLogPanelStep direction="previous" />
 
-          <WorkoutPinStep direction="next" />
+          <WorkoutLogPanelStep direction="next" />
         </div>
 
-        <ui.IconButton aria-label={title} onClick={unpin} title={title}>
+        <ui.IconButton aria-label={title} onClick={close} title={title}>
           <PanelBottomClose data-size="sm" />
         </ui.IconButton>
       </div>
