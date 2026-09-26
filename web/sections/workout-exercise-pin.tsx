@@ -10,10 +10,30 @@ export function WorkoutExercisePin(
 
   if (!props.exercise.actions.setLog.available) return props.children;
 
-  const pinned = props.id === props.exercise.id;
-  const title = pinned
-    ? t("workout.exercise.unpin.title", { name: props.exercise.exerciseName })
-    : t("workout.exercise.pin.title", { name: props.exercise.exerciseName });
+  if (props.isPinned(props.exercise)) {
+    const title = t("workout.exercise.unpin.title", { name: props.exercise.exerciseName });
+
+    return (
+      <button
+        aria-label={title}
+        aria-pressed
+        data-color="brand-400"
+        data-cursor="pointer"
+        data-hover-color="brand-300"
+        data-md-p="1"
+        data-p="2-5"
+        data-shrink="0"
+        data-stack="x"
+        onClick={props.unpin}
+        title={title}
+        type="button"
+      >
+        <Pin data-size="sm" fill="currentColor" />
+      </button>
+    );
+  }
+
+  const title = t("workout.exercise.pin.title", { name: props.exercise.exerciseName });
 
   return (
     <div data-cross="center" data-shrink="0" data-stack="y">
@@ -21,18 +41,18 @@ export function WorkoutExercisePin(
 
       <button
         aria-label={title}
-        aria-pressed={pinned}
-        data-color={pinned ? "brand-400" : "neutral-600"}
+        aria-pressed={false}
+        data-color="neutral-600"
         data-cursor="pointer"
-        data-hover-color={pinned ? "brand-300" : "neutral-200"}
+        data-hover-color="neutral-200"
         data-p="1-5"
         data-shrink="0"
         data-stack="x"
-        onClick={() => (pinned ? props.unpin() : props.pin(props.exercise.id))}
+        onClick={() => props.pin(props.exercise.id)}
         title={title}
         type="button"
       >
-        <Pin data-size="xs" fill={pinned ? "currentColor" : "none"} />
+        <Pin data-size="xs" />
       </button>
     </div>
   );

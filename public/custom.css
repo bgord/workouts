@@ -118,6 +118,7 @@ a {
 @media (width <= 768px) {
   [data-pin-dock] {
     bottom: calc(63px + max(0px, calc(env(safe-area-inset-bottom) - 16px)));
+    margin-inline: calc(var(--spacing-2) * -1);
   }
 }
 
