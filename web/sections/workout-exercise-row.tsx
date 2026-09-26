@@ -1,9 +1,11 @@
 import * as bg from "@bgord/ui";
-import { useOptimistic } from "react";
-import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
+import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
+import { useLogPanel } from "../hooks/use-log-panel";
+import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import { workoutRoute } from "../router";
+import { WorkoutExerciseLogPanel } from "./workout-exercise-log-panel";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
@@ -27,12 +29,8 @@ export function WorkoutExerciseRow(props: {
     name: `workout-exercise-description-${props.exercise.id}`,
   });
 
-  const [optimisticSet, setPendingSet] = useOptimistic<LoggedSet | null>(null);
-  const pendingSet =
-    optimisticSet && props.exercise.loggedSets.length < optimisticSet.setNumber ? optimisticSet : null;
-  const exercise = pendingSet
-    ? { ...props.exercise, loggedSets: [...props.exercise.loggedSets, pendingSet] }
-    : props.exercise;
+  const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
+  const { active } = useLogPanel();
 
   const isDraft = workout.data.status === WorkoutStatusEnum.draft;
   const isCompleted = workout.data.status === WorkoutStatusEnum.completed;
@@ -43,6 +41,7 @@ export function WorkoutExerciseRow(props: {
 
   const target = !(isSkipped || isDraft) ? hasTarget : undefined;
   const isExpandable = !props.reordering && (hasLoggedSets || props.exercise.actions.setLog.available);
+  const isInLogPanel = active?.id === props.exercise.id;
 
   const { width } = bg.useWindowDimensions();
   const mobile = width !== undefined && width <= 768;
@@ -55,7 +54,15 @@ export function WorkoutExerciseRow(props: {
           exercise={props.exercise}
           position={props.index}
         >
-          {isExpandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
+          {isExpandable && (
+            <div data-cross="center" data-shrink="0" data-stack="y">
+              <ui.ChevronToggle {...workoutExerciseVisibility} />
+
+              {props.exercise.actions.setLog.available && (
+                <WorkoutExerciseLogPanel exercise={props.exercise} />
+              )}
+            </div>
+          )}
 
           {!isExpandable && (
             <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
@@ -139,7 +146,7 @@ export function WorkoutExerciseRow(props: {
 
       <WorkoutExerciseTargetSet exercise={props.exercise} {...workoutExerciseTarget} />
 
-      {isExpandable && workoutExerciseVisibility.on && (
+      {isExpandable && workoutExerciseVisibility.on && !isInLogPanel && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
 

@@ -4,7 +4,12 @@ import * as ui from "../components";
 import { WorkoutSetCorrect } from "./workout-set-correct";
 import { WorkoutSetRemove } from "./workout-set-remove";
 
-export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: LoggedSet; pending: boolean }) {
+export function WorkoutSetRow(props: {
+  exercise: WorkoutExercise;
+  loggedSet: LoggedSet;
+  pending: boolean;
+  first?: boolean;
+}) {
   const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
 
   return (
@@ -12,6 +17,7 @@ export function WorkoutSetRow(props: { exercise: WorkoutExercise; loggedSet: Log
       aria-busy={props.pending}
       data-opacity={props.pending ? "high" : undefined}
       data-stack="y"
+      first={props.first}
       tone="subtle"
       {...ui.Spacing.rowCompact}
       {...ui.Gap.inline}

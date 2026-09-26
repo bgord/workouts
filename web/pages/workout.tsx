@@ -10,6 +10,7 @@ import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
+import { WorkoutLogPanel } from "../sections/workout-log-panel";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutReorder } from "../sections/workout-reorder";
 import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
@@ -90,6 +91,8 @@ export function Workout() {
       </div>
 
       <WorkoutCooldown />
+
+      <WorkoutLogPanel />
     </ui.Main>
   );
 }
