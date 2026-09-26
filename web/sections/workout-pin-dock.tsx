@@ -49,6 +49,7 @@ function WorkoutPinDockDialog(props: { children: React.ReactNode }) {
       data-md-bwb="none"
       data-md-bwx="none"
       data-mx="auto"
+      data-overflow="hidden"
       data-pb="4"
       data-pin-dock
       data-shadow="lg"
@@ -72,7 +73,7 @@ function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
   return (
     <>
       {exercise.loggedSets.length > 0 && (
-        <div data-overflow="auto" {...bg.Rhythm().times(18).style.maxHeight}>
+        <div data-minh="0" data-overflow="auto">
           <WorkoutSetList exercise={exercise} flushTop pendingSet={pendingSet} />
         </div>
       )}
