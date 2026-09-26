@@ -1,16 +1,15 @@
 import * as bg from "@bgord/ui";
 import { Pin } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
-import type { UsePinnedExerciseReturnType } from "../hooks/use-pinned-exercise";
+import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 
-export function WorkoutExercisePin(
-  props: UsePinnedExerciseReturnType & { exercise: WorkoutExercise; children: React.ReactNode },
-) {
+export function WorkoutExercisePin(props: { exercise: WorkoutExercise; children: React.ReactNode }) {
   const t = bg.useTranslations();
+  const pinnedExercise = usePinnedExercise();
 
   if (!props.exercise.actions.setLog.available) return props.children;
 
-  if (props.isPinned(props.exercise)) {
+  if (pinnedExercise.isPinned(props.exercise)) {
     const title = t("workout.exercise.unpin.title", { name: props.exercise.exerciseName });
 
     return (
@@ -24,7 +23,7 @@ export function WorkoutExercisePin(
         data-p="2-5"
         data-shrink="0"
         data-stack="x"
-        onClick={props.unpin}
+        onClick={pinnedExercise.unpin}
         title={title}
         type="button"
       >
@@ -48,7 +47,7 @@ export function WorkoutExercisePin(
         data-p="1-5"
         data-shrink="0"
         data-stack="x"
-        onClick={() => props.pin(props.exercise.id)}
+        onClick={() => pinnedExercise.pin(props.exercise.id)}
         title={title}
         type="button"
       >

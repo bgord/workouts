@@ -2,30 +2,26 @@ import * as bg from "@bgord/ui";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
-import type { UsePinnedExerciseReturnType } from "../hooks/use-pinned-exercise";
+import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutPinStep } from "./workout-pin-step";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
-export function WorkoutPinDock(props: UsePinnedExerciseReturnType) {
+export function WorkoutPinDock() {
   const { workout } = workoutRoute.useLoaderData();
+  const pinnedExercise = usePinnedExercise();
 
-  const exercise = workout.data.exercises.find(props.isPinned);
+  const exercise = workout.data.exercises.find(pinnedExercise.isPinned);
 
   if (!exercise) return null;
 
-  return (
-    <WorkoutPinDockPanel exercise={exercise} key={exercise.id} onClose={props.unpin} onPin={props.pin} />
-  );
+  return <WorkoutPinDockPanel exercise={exercise} key={exercise.id} />;
 }
 
-function WorkoutPinDockPanel(props: {
-  exercise: WorkoutExercise;
-  onClose: VoidFunction;
-  onPin: UsePinnedExerciseReturnType["pin"];
-}) {
+function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
   const t = bg.useTranslations();
+  const pinnedExercise = usePinnedExercise();
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
 
   return (
@@ -94,12 +90,12 @@ function WorkoutPinDockPanel(props: {
             </div>
 
             <div data-shrink="0" data-stack="x">
-              <WorkoutPinStep direction="previous" exercise={exercise} onPin={props.onPin} />
+              <WorkoutPinStep direction="previous" exercise={exercise} />
 
-              <WorkoutPinStep direction="next" exercise={exercise} onPin={props.onPin} />
+              <WorkoutPinStep direction="next" exercise={exercise} />
             </div>
 
-            <ui.ButtonClose onClick={props.onClose} />
+            <ui.ButtonClose onClick={pinnedExercise.unpin} />
           </div>
         </div>
       </aside>

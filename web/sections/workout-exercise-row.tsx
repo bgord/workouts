@@ -3,7 +3,7 @@ import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
-import type { UsePinnedExerciseReturnType } from "../hooks/use-pinned-exercise";
+import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
 import { WorkoutExercisePin } from "./workout-exercise-pin";
@@ -18,7 +18,6 @@ export function WorkoutExerciseRow(props: {
   exercise: WorkoutExercise;
   index: number;
   last: boolean;
-  pin: UsePinnedExerciseReturnType;
   reordering: boolean;
 }) {
   const t = bg.useTranslations();
@@ -31,6 +30,7 @@ export function WorkoutExerciseRow(props: {
   });
 
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
+  const pinnedExercise = usePinnedExercise();
 
   const isDraft = workout.data.status === WorkoutStatusEnum.draft;
   const isCompleted = workout.data.status === WorkoutStatusEnum.completed;
@@ -54,7 +54,7 @@ export function WorkoutExerciseRow(props: {
           position={props.index}
         >
           {isExpandable && (
-            <WorkoutExercisePin exercise={props.exercise} {...props.pin}>
+            <WorkoutExercisePin exercise={props.exercise}>
               <ui.ChevronToggle {...workoutExerciseVisibility} />
             </WorkoutExercisePin>
           )}
@@ -141,7 +141,7 @@ export function WorkoutExerciseRow(props: {
 
       <WorkoutExerciseTargetSet exercise={props.exercise} {...workoutExerciseTarget} />
 
-      {isExpandable && workoutExerciseVisibility.on && !props.pin.isPinned(props.exercise) && (
+      {isExpandable && workoutExerciseVisibility.on && !pinnedExercise.isPinned(props.exercise) && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
 

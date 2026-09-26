@@ -1,9 +1,18 @@
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 
 type PinnedExerciseId = WorkoutExercise["id"];
 
 const key = "workout-pin";
+
+let current: PinnedExerciseId | null | undefined;
+
+const listeners = new Set<VoidFunction>();
+
+const subscribe = (listener: VoidFunction) => {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+};
 
 const read = (): PinnedExerciseId | null => {
   try {
@@ -13,31 +22,30 @@ const read = (): PinnedExerciseId | null => {
   }
 };
 
+const snapshot = () => {
+  if (current === undefined) current = read();
+  return current;
+};
+
 const write = (id: PinnedExerciseId | null) => {
+  current = id;
+
   try {
     if (id === null) localStorage.removeItem(key);
     else localStorage.setItem(key, id);
   } catch {}
+
+  for (const listener of listeners) listener();
 };
 
 export function usePinnedExercise() {
-  const [id, setId] = useState<PinnedExerciseId | null>(null);
+  const id = useSyncExternalStore(subscribe, snapshot, () => null);
 
-  useEffect(() => setId(read()), []);
+  const pin = (next: PinnedExerciseId) => write(next);
 
-  const pin = (next: PinnedExerciseId) => {
-    write(next);
-    setId(next);
-  };
-
-  const unpin = () => {
-    write(null);
-    setId(null);
-  };
+  const unpin = () => write(null);
 
   const isPinned = (exercise: WorkoutExercise) => exercise.id === id && exercise.actions.setLog.available;
 
   return { id, pin, unpin, isPinned };
 }
-
-export type UsePinnedExerciseReturnType = ReturnType<typeof usePinnedExercise>;

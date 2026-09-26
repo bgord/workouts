@@ -2,7 +2,6 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCooldown } from "../sections/workout-cooldown";
@@ -24,7 +23,6 @@ export function Workout() {
   const search = workoutRoute.useSearch();
 
   const workoutReorder = bg.useToggle({ name: `workout-reorder-${workout.data.id}` });
-  const pinnedExercise = usePinnedExercise();
 
   const primary = workout.actions.start.available || workout.actions.complete.available;
 
@@ -84,7 +82,6 @@ export function Workout() {
               index={index}
               key={exercise.id}
               last={index === workout.data.exercises.length - 1 && !workout.actions.exerciseAdd.available}
-              pin={pinnedExercise}
               reordering={workoutReorder.on}
             />
           ))}
@@ -95,7 +92,7 @@ export function Workout() {
 
       <WorkoutCooldown />
 
-      <WorkoutPinDock {...pinnedExercise} />
+      <WorkoutPinDock />
     </ui.Main>
   );
 }
