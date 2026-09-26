@@ -115,6 +115,12 @@ a {
   }
 }
 
+@media (width <= 768px) {
+  [data-pin-dock] {
+    bottom: calc(63px + max(0px, calc(env(safe-area-inset-bottom) - 16px)));
+  }
+}
+
 .c-button[data-variant="ghost"][data-tone="danger"] {
   color: var(--color-danger-400);
 }
