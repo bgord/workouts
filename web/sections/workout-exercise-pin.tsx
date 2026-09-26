@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Pin } from "lucide-react";
+import { PanelBottomClose, PanelBottomOpen } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 
@@ -23,7 +23,7 @@ export function WorkoutExercisePin(props: { exercise: WorkoutExercise }) {
       title={title}
       type="button"
     >
-      <Pin data-size="xs" />
+      <PanelBottomOpen data-size="xs" />
     </button>
   );
 }
@@ -49,7 +49,7 @@ export function WorkoutExerciseUnpin(props: { exercise: WorkoutExercise }) {
       title={title}
       type="button"
     >
-      <Pin data-size="sm" fill="currentColor" />
+      <PanelBottomClose data-size="sm" />
     </button>
   );
 }
