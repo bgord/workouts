@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
-import { useOptimistic } from "react";
-import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
+import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
+import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import type { UsePinnedExerciseReturnType } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
@@ -30,12 +30,7 @@ export function WorkoutExerciseRow(props: {
     name: `workout-exercise-description-${props.exercise.id}`,
   });
 
-  const [optimisticSet, setPendingSet] = useOptimistic<LoggedSet | null>(null);
-  const pendingSet =
-    optimisticSet && props.exercise.loggedSets.length < optimisticSet.setNumber ? optimisticSet : null;
-  const exercise = pendingSet
-    ? { ...props.exercise, loggedSets: [...props.exercise.loggedSets, pendingSet] }
-    : props.exercise;
+  const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
 
   const isDraft = workout.data.status === WorkoutStatusEnum.draft;
   const isCompleted = workout.data.status === WorkoutStatusEnum.completed;
@@ -146,7 +141,7 @@ export function WorkoutExerciseRow(props: {
 
       <WorkoutExerciseTargetSet exercise={props.exercise} {...workoutExerciseTarget} />
 
-      {isExpandable && workoutExerciseVisibility.on && (
+      {isExpandable && workoutExerciseVisibility.on && !props.pin.isPinned(props.exercise) && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
           <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
 
