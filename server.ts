@@ -337,6 +337,49 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const measurements = new Hono<infra.Config>();
 
   measurements.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  measurements.get(
+    "/body-parts/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartList(Adapters.Measurements)),
+  );
+  measurements.post(
+    "/body-parts",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartAdd(deps)),
+  );
+  measurements.patch(
+    "/body-parts/:bodyPartId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartRename(deps)),
+  );
+  measurements.post(
+    "/body-parts/:bodyPartId/archive",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartArchive(deps)),
+  );
+  measurements.get(
+    "/body-parts/:bodyPartId/measurements",
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Measurements.BodyPartMeasurementList({
+        GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+        ListBodyPartMeasurementsQuery: Adapters.Measurements.ListBodyPartMeasurementsQuery,
+      }),
+    ),
+  );
+  measurements.post(
+    "/body-parts/:bodyPartId/measurements",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementRecord(deps)),
+  );
+  measurements.patch(
+    "/body-part-measurements/:bodyPartMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementCorrect(deps)),
+  );
+  measurements.delete(
+    "/body-part-measurements/:bodyPartMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementRemove(deps)),
+  );
   measurements.query(
     "/body-weight/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementList(Adapters.Measurements)),

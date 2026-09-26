@@ -320,6 +320,53 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
 
+  // Body-part measurements =================================================
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_ADD_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartAddCommand({
+      ...deps,
+      GetBodyPartNameCountQuery: Adapters.Measurements.GetBodyPartNameCountQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_RENAME_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartRenameCommand({
+      ...deps,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+      GetBodyPartNameCountQuery: Adapters.Measurements.GetBodyPartNameCountQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_ARCHIVE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartArchiveCommand({
+      ...deps,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_MEASUREMENT_RECORD_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartMeasurementRecordCommand({
+      ...deps,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+      GetBodyPartMeasurementDateCountQuery: Adapters.Measurements.GetBodyPartMeasurementDateCountQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_MEASUREMENT_CORRECT_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartMeasurementCorrectCommand({
+      ...deps,
+      GetBodyPartMeasurementQuery: Adapters.Measurements.GetBodyPartMeasurementQuery,
+      GetBodyPartMeasurementDateCountQuery: Adapters.Measurements.GetBodyPartMeasurementDateCountQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_MEASUREMENT_REMOVE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartMeasurementRemoveCommand({
+      ...deps,
+      GetBodyPartMeasurementQuery: Adapters.Measurements.GetBodyPartMeasurementQuery,
+    }),
+  );
+
   // Body weight ============================================================
   Tools.CommandBus.on(
     MeasurementsCommands.BODY_WEIGHT_MEASURE_COMMAND,

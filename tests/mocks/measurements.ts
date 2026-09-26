@@ -3,7 +3,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
-import { userId } from "./auth";
+import { anotherUserId, userId } from "./auth";
 import { commit, correlationId, expectAnyId, T0 } from "./shared";
 
 export const bodyWeightMeasurementId = v.parse(
@@ -67,6 +67,97 @@ export const bodyWeightMonthSummary: Measurements.VO.BodyWeightMonthSummary = {
 };
 
 export const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
+
+export const bodyPartId = v.parse(Measurements.VO.BodyPartId, "d7e6f5a4-b3c2-41d0-9e8f-7a6b5c4d3e2f");
+export const bodyPartStream = v.parse(bg.EventStream, `body_part_${bodyPartId}`);
+export const bodyPartName = v.parse(Measurements.VO.BodyPartName, "Waist");
+export const anotherBodyPartName = v.parse(Measurements.VO.BodyPartName, "Chest");
+export const bodyPart: Measurements.VO.BodyPart = {
+  id: bodyPartId,
+  userId,
+  name: bodyPartName,
+  archived: false,
+};
+export const otherUsersBodyPart: Measurements.VO.BodyPart = {
+  ...bodyPart,
+  userId: anotherUserId,
+};
+export const GenericBodyPartAddedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyPartStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_ADDED_EVENT",
+  payload: { id: bodyPartId, name: bodyPartName, userId },
+} satisfies Measurements.Events.BodyPartAddedEventType;
+export const GenericBodyPartRenamedEvent = {
+  ...GenericBodyPartAddedEvent,
+  name: "BODY_PART_RENAMED_EVENT",
+  payload: { id: bodyPartId, name: anotherBodyPartName, userId },
+} satisfies Measurements.Events.BodyPartRenamedEventType;
+export const GenericBodyPartArchivedEvent = {
+  ...GenericBodyPartAddedEvent,
+  name: "BODY_PART_ARCHIVED_EVENT",
+  payload: { id: bodyPartId, userId },
+} satisfies Measurements.Events.BodyPartArchivedEventType;
+
+export const bodyPartMeasurementId = v.parse(
+  Measurements.VO.BodyPartMeasurementId,
+  "e8f7a6b5-c4d3-42e1-af90-8b7c6d5e4f3a",
+);
+export const bodyPartMeasurementStream = v.parse(
+  bg.EventStream,
+  `body_part_measurement_${bodyPartMeasurementId}`,
+);
+export const bodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2025-01-01");
+export const anotherBodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2024-12-31");
+export const futureBodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2999-01-01");
+export const bodyPartMeasurementValue = v.parse(Measurements.VO.BodyPartMeasurementValue, 900);
+export const correctedBodyPartMeasurementValue = v.parse(Measurements.VO.BodyPartMeasurementValue, 950);
+export const bodyPartMeasurement: Measurements.VO.BodyPartMeasurement = {
+  id: bodyPartMeasurementId,
+  bodyPartId,
+  userId,
+  valueMm: bodyPartMeasurementValue,
+  measuredOn: bodyPartMeasuredOn,
+};
+export const otherUsersBodyPartMeasurement: Measurements.VO.BodyPartMeasurement = {
+  ...bodyPartMeasurement,
+  userId: anotherUserId,
+};
+export const GenericBodyPartMeasurementRecordedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyPartMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_MEASUREMENT_RECORDED_EVENT",
+  payload: {
+    id: bodyPartMeasurementId,
+    bodyPartId,
+    valueMm: bodyPartMeasurementValue,
+    measuredOn: bodyPartMeasuredOn,
+    userId,
+  },
+} satisfies Measurements.Events.BodyPartMeasurementRecordedEventType;
+export const GenericBodyPartMeasurementCorrectedEvent = {
+  ...GenericBodyPartMeasurementRecordedEvent,
+  name: "BODY_PART_MEASUREMENT_CORRECTED_EVENT",
+  payload: {
+    id: bodyPartMeasurementId,
+    valueMm: correctedBodyPartMeasurementValue,
+    measuredOn: anotherBodyPartMeasuredOn,
+    userId,
+  },
+} satisfies Measurements.Events.BodyPartMeasurementCorrectedEventType;
+export const GenericBodyPartMeasurementRemovedEvent = {
+  ...GenericBodyPartMeasurementRecordedEvent,
+  name: "BODY_PART_MEASUREMENT_REMOVED_EVENT",
+  payload: { id: bodyPartMeasurementId, userId },
+} satisfies Measurements.Events.BodyPartMeasurementRemovedEventType;
 
 export const bodyWeightMeasurementCsv = [
   "id,weight,measuredOn",

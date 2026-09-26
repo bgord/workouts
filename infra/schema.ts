@@ -10,6 +10,11 @@ import type { ExerciseCategoryNameType } from "../modules/exercises/value-object
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
+import type { BodyPartIdType } from "../modules/measurements/value-objects/body-part-id";
+import type { BodyPartMeasuredOnType } from "../modules/measurements/value-objects/body-part-measured-on";
+import type { BodyPartMeasurementIdType } from "../modules/measurements/value-objects/body-part-measurement-id";
+import type { BodyPartMeasurementValueType } from "../modules/measurements/value-objects/body-part-measurement-value";
+import type { BodyPartNameType } from "../modules/measurements/value-objects/body-part-name";
 import type { BodyWeightType } from "../modules/measurements/value-objects/body-weight";
 import type { BodyWeightGoalType } from "../modules/measurements/value-objects/body-weight-goal";
 import { BodyWeightGoalOptions } from "../modules/measurements/value-objects/body-weight-goal-options";
@@ -396,6 +401,50 @@ export const bodyWeightMeasurements = sqliteTable(
     updatedAt: timestamp("updatedAt").notNull(),
   },
   (table) => [index("bodyWeightMeasurements_userId_idx").on(table.userId)],
+);
+
+export const bodyParts = sqliteTable(
+  "bodyParts",
+  {
+    id: identifier<BodyPartIdType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    name: text("name").notNull().$type<BodyPartNameType>(),
+    normalizedName: text("normalizedName").notNull(),
+    archived: integer("archived", { mode: "boolean" }).notNull().default(false),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [
+    index("bodyParts_userId_idx").on(table.userId),
+    uniqueIndex("bodyParts_userId_normalizedName_uidx")
+      .on(table.userId, table.normalizedName)
+      .where(sql`${table.archived} = 0`),
+  ],
+);
+
+export const bodyPartMeasurements = sqliteTable(
+  "bodyPartMeasurements",
+  {
+    id: identifier<BodyPartMeasurementIdType>(),
+    bodyPartId: text("bodyPartId", { length: 36 }).notNull().$type<BodyPartIdType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    valueMm: integer("valueMm").notNull().$type<BodyPartMeasurementValueType>(),
+    measuredOn: text("measuredOn").notNull().$type<BodyPartMeasuredOnType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [
+    index("bodyPartMeasurements_userId_bodyPartId_measuredOn_idx").on(
+      table.userId,
+      table.bodyPartId,
+      table.measuredOn,
+    ),
+    uniqueIndex("bodyPartMeasurements_userId_bodyPartId_measuredOn_uidx").on(
+      table.userId,
+      table.bodyPartId,
+      table.measuredOn,
+    ),
+  ],
 );
 
 export const weeklySummaries = sqliteTable(
