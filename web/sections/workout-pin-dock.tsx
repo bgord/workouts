@@ -25,10 +25,17 @@ function WorkoutPinDockPanel(props: {
   onClose: VoidFunction;
   onPin: UsePinnedExerciseReturnType["pin"];
 }) {
+  const t = bg.useTranslations();
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
 
   return (
-    <aside data-bottom="4" data-pin-dock data-position="sticky" data-z="2">
+    <aside
+      aria-label={t("workout.pin.dock.label")}
+      data-bottom="4"
+      data-pin-dock
+      data-position="sticky"
+      data-z="2"
+    >
       <div
         data-bc="alpha-medium"
         data-bg="neutral-900"

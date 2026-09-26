@@ -389,6 +389,7 @@
   "workout.note.error": "Nie udało się zapisać notatki",
   "workout.note.label": "Notatka",
   "workout.note.placeholder": "Jak poszło?",
+  "workout.pin.dock.label": "Przypięte ćwiczenie",
   "workout.pin.next": "Następne ćwiczenie",
   "workout.pin.next.title": "Następne: {{name}}",
   "workout.pin.previous": "Poprzednie ćwiczenie",

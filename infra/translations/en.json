@@ -389,6 +389,7 @@
   "workout.note.error": "Could not save the note",
   "workout.note.label": "Note",
   "workout.note.placeholder": "Description...",
+  "workout.pin.dock.label": "Pinned exercise",
   "workout.pin.next": "Next exercise",
   "workout.pin.next.title": "Next: {{name}}",
   "workout.pin.previous": "Previous exercise",
