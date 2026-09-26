@@ -35,7 +35,9 @@ export function usePinnedExercise() {
     setId(null);
   };
 
-  return { id, pin, unpin };
+  const isPinned = (exercise: WorkoutExercise) => exercise.id === id && exercise.actions.setLog.available;
+
+  return { id, pin, unpin, isPinned };
 }
 
 export type UsePinnedExerciseReturnType = ReturnType<typeof usePinnedExercise>;
