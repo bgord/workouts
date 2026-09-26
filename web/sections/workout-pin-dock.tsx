@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { PanelBottomClose } from "lucide-react";
 import { useLayoutEffect, useRef } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
@@ -67,8 +68,11 @@ function WorkoutPinDockDialog(props: { children: React.ReactNode }) {
 }
 
 function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
+  const t = bg.useTranslations();
   const { unpin } = usePinnedExercise();
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
+
+  const title = t("workout.exercise.unpin.title", { name: exercise.exerciseName });
 
   return (
     <>
@@ -102,7 +106,9 @@ function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
           <WorkoutPinStep direction="next" />
         </div>
 
-        <ui.ButtonClose onClick={unpin} />
+        <ui.IconButton aria-label={title} onClick={unpin} title={title}>
+          <PanelBottomClose data-size="sm" />
+        </ui.IconButton>
       </div>
     </>
   );
