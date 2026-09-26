@@ -42,14 +42,13 @@ function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
         data-md-br="none"
         data-md-bwb="none"
         data-md-bwx="none"
-        data-p="3"
         data-pb="4"
         data-pin-dock
         data-position="sticky"
         data-shadow="lg"
         data-stack="y"
         data-z="2"
-        {...ui.Gap.related}
+        {...ui.Spacing.surfaceCompact}
       >
         {exercise.loggedSets.length > 0 && (
           <div data-overflow="auto" {...bg.Rhythm().times(18).style.maxHeight}>
@@ -59,15 +58,7 @@ function WorkoutPinDockPanel(props: { exercise: WorkoutExercise }) {
 
         <WorkoutSetLog exercise={exercise} onPending={setPendingSet} />
 
-        <div
-          data-bct="alpha-subtle"
-          data-bst="solid"
-          data-bwt="hairline"
-          data-cross="center"
-          data-pt="3"
-          data-stack="x"
-          {...ui.Gap.related}
-        >
+        <div data-cross="center" data-pt="3" data-stack="x" {...ui.Gap.related}>
           <ui.ExerciseImage
             id={exercise.exerciseId}
             imageEtag={exercise.exerciseImageEtag}

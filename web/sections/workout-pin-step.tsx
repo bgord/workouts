@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import * as ui from "../components";
 import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 
 export function WorkoutPinStep(props: { direction: "previous" | "next" }) {
@@ -13,21 +14,13 @@ export function WorkoutPinStep(props: { direction: "previous" | "next" }) {
     : t(`workout.pin.${props.direction}`);
 
   return (
-    <button
+    <ui.IconButton
       aria-label={title}
-      data-color={sibling ? "neutral-400" : "neutral-700"}
-      data-cursor={sibling ? "pointer" : undefined}
-      data-hover-color={sibling ? "neutral-0" : undefined}
-      data-md-p="1"
-      data-p="2-5"
-      data-shrink="0"
-      data-stack="x"
       disabled={!sibling}
       onClick={() => sibling && pinnedExercise.pin(sibling.id)}
       title={title}
-      type="button"
     >
       {props.direction === "previous" ? <ChevronLeft data-size="sm" /> : <ChevronRight data-size="sm" />}
-    </button>
+    </ui.IconButton>
   );
 }
