@@ -52,6 +52,13 @@ type AcceptedCommand =
   | WorkoutsCommands.WorkoutSetRemoveCommandType
   | WorkoutsCommands.WorkoutNoteSetCommandType
   | WorkoutsCommands.WorkoutRescheduleCommandType
+  | MeasurementsCommands.BodyPartAddCommandType
+  | MeasurementsCommands.BodyPartRenameCommandType
+  | MeasurementsCommands.BodyPartRemoveCommandType
+  | MeasurementsCommands.BodyPartMeasureCommandType
+  | MeasurementsCommands.BodyPartMeasurementCorrectCommandType
+  | MeasurementsCommands.BodyPartMeasurementRemoveCommandType
+  | MeasurementsCommands.BodyPartMeasurementsImportCommandType
   | MeasurementsCommands.BodyWeightMeasureCommandType
   | MeasurementsCommands.BodyWeightMeasurementsImportCommandType
   | MeasurementsCommands.BodyWeightMeasurementCorrectCommandType

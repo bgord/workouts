@@ -22,6 +22,8 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
   new Projections.WorkoutExercisesProjector(deps);
   new Projections.WorkoutLoggedSetsProjector(deps);
   new Projections.BodyWeightMeasurementsProjector(deps);
+  new Projections.BodyPartsProjector(deps);
+  new Projections.BodyPartMeasurementsProjector(deps);
   new Projections.WeeklySummariesProjector(deps);
 
   // Policies

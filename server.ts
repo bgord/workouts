@@ -388,6 +388,76 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightReferenceSet(deps)),
   );
 
+  // Body parts =================
+  measurements.post(
+    "/body-part",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartAdd(deps)),
+  );
+  measurements.query(
+    "/body-part/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartList(Adapters.Measurements)),
+  );
+  measurements.patch(
+    "/body-part/:bodyPartId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartRename(deps)),
+  );
+  measurements.delete(
+    "/body-part/:bodyPartId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartRemove(deps)),
+  );
+  measurements.post(
+    "/body-part/measure",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasure(deps)),
+  );
+  measurements.query(
+    "/body-part/measurement/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementList(Adapters.Measurements)),
+  );
+  measurements.query(
+    "/body-part/chart",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartChartGet(Adapters.Measurements)),
+  );
+  measurements.patch(
+    "/body-part/measurement/:bodyPartMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementCorrect(deps)),
+  );
+  measurements.delete(
+    "/body-part/measurement/:bodyPartMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementRemove(deps)),
+  );
+  measurements.get(
+    "/body-part/export",
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Measurements.BodyPartMeasurementExport({ ...deps, ...Adapters.Measurements }),
+    ),
+  );
+  measurements.post(
+    "/body-part/import",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Measurements.VO.BodyPartMeasurementImportMaxSize,
+        MimeRegistry: Measurements.VO.BodyPartMeasurementImportMimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorTextStrategy(tools.Mimes.csv.mime) },
+    ).handle(),
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Measurements.BodyPartMeasurementImport({
+        ...deps,
+        ListBodyPartsQuery: Adapters.Measurements.ListBodyPartsQuery,
+      }),
+    ),
+  );
+
   server.route("/measurements", measurements);
 
   // Probes =================
