@@ -2,6 +2,7 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
+import { usePinnedExercise } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCooldown } from "../sections/workout-cooldown";
@@ -11,6 +12,7 @@ import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
 import { WorkoutNote } from "../sections/workout-note";
+import { WorkoutPinDock } from "../sections/workout-pin-dock";
 import { WorkoutReorder } from "../sections/workout-reorder";
 import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
 import { WorkoutStart } from "../sections/workout-start";
@@ -22,6 +24,7 @@ export function Workout() {
   const search = workoutRoute.useSearch();
 
   const workoutReorder = bg.useToggle({ name: `workout-reorder-${workout.data.id}` });
+  const pinnedExercise = usePinnedExercise();
 
   const primary = workout.actions.start.available || workout.actions.complete.available;
 
@@ -81,6 +84,7 @@ export function Workout() {
               index={index}
               key={exercise.id}
               last={index === workout.data.exercises.length - 1 && !workout.actions.exerciseAdd.available}
+              pin={pinnedExercise}
               reordering={workoutReorder.on}
             />
           ))}
@@ -90,6 +94,8 @@ export function Workout() {
       </div>
 
       <WorkoutCooldown />
+
+      <WorkoutPinDock {...pinnedExercise} />
     </ui.Main>
   );
 }

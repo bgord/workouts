@@ -3,8 +3,10 @@ import { useOptimistic } from "react";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
+import type { UsePinnedExerciseReturnType } from "../hooks/use-pinned-exercise";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
+import { WorkoutExercisePin } from "./workout-exercise-pin";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
 import { WorkoutExerciseTarget } from "./workout-exercise-target";
@@ -16,6 +18,7 @@ export function WorkoutExerciseRow(props: {
   exercise: WorkoutExercise;
   index: number;
   last: boolean;
+  pin: UsePinnedExerciseReturnType;
   reordering: boolean;
 }) {
   const t = bg.useTranslations();
@@ -55,7 +58,11 @@ export function WorkoutExerciseRow(props: {
           exercise={props.exercise}
           position={props.index}
         >
-          {isExpandable && <ui.ChevronToggle {...workoutExerciseVisibility} />}
+          {isExpandable && (
+            <WorkoutExercisePin exercise={props.exercise} {...props.pin}>
+              <ui.ChevronToggle {...workoutExerciseVisibility} />
+            </WorkoutExercisePin>
+          )}
 
           {!isExpandable && (
             <ui.RowIndex aria-hidden data-md-p="1" data-p="2-5" data-shrink="0" data-stack="x">
