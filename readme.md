@@ -177,8 +177,10 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
 │   ├── invariants
+│   │   ├── body-part-belongs-to-user.ts
 │   │   ├── body-part-exists.ts
 │   │   ├── body-part-measured-on-is-not-in-future.ts
+│   │   ├── body-part-name-is-unique.ts
 │   │   ├── body-weight-measured-on-is-not-in-future.ts
 │   │   ├── body-weight-measurement-belongs-to-user.ts
 │   │   ├── body-weight-measurement-exists.ts
