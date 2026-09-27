@@ -1,6 +1,7 @@
 export * from "./body-part-archive";
 export * from "./body-part-define";
 export * from "./body-part-measure";
+export * from "./body-part-measurement-correct";
 export * from "./body-part-rename";
 export * from "./body-weight-chart-get";
 export * from "./body-weight-measure";

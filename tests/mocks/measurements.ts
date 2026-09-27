@@ -237,3 +237,20 @@ export const GenericBodyPartMeasuredEvent = {
     userId,
   },
 } satisfies Measurements.Events.BodyPartMeasuredEventType;
+
+export const GenericBodyPartMeasurementCorrectedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyPartMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_MEASUREMENT_CORRECTED_EVENT",
+  payload: {
+    id: bodyPartMeasurementId,
+    bodyPartId,
+    value: anotherBodyPartCircumference,
+    measuredOn: anotherBodyPartMeasuredOn,
+    requesterId: userId,
+  },
+} satisfies Measurements.Events.BodyPartMeasurementCorrectedEventType;
