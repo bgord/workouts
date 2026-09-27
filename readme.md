@@ -160,6 +160,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
 │   ├── events
+│   │   ├── BODY_PART_ARCHIVED_EVENT.ts
 │   │   ├── BODY_PART_DEFINED_EVENT.ts
 │   │   ├── BODY_PART_RENAMED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASURED_EVENT.ts
