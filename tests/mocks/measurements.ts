@@ -144,3 +144,27 @@ export const GenericBodyWeightMeasurementRemovedEvent = {
   name: "BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT",
   payload: { id: bodyWeightMeasurementId, requesterId: userId },
 } satisfies Measurements.Events.BodyWeightMeasurementRemovedEventType;
+
+export const bodyPartId = v.parse(Measurements.VO.BodyPartId, "1f0a3d7c-2b6e-4a9d-8c5f-3e7b1a0d9c42");
+export const bodyPartStream = v.parse(bg.EventStream, `body_part_${bodyPartId}`);
+
+export const bodyPartName = v.parse(Measurements.VO.BodyPartName, "Left Bicep");
+export const anotherBodyPartName = v.parse(Measurements.VO.BodyPartName, "Right Bicep");
+
+export const bodyPart: Measurements.VO.BodyPart = {
+  id: bodyPartId,
+  name: bodyPartName,
+  userId,
+  archivedAt: null,
+};
+
+export const GenericBodyPartDefinedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyPartStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_DEFINED_EVENT",
+  payload: { id: bodyPartId, name: bodyPartName, userId },
+} satisfies Measurements.Events.BodyPartDefinedEventType;

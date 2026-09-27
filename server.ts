@@ -337,6 +337,13 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const measurements = new Hono<infra.Config>();
 
   measurements.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  // Body parts =================
+  measurements.post(
+    "/body-part",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartDefine(deps)),
+  );
+  // Body weight =================
   measurements.query(
     "/body-weight/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementList(Adapters.Measurements)),
