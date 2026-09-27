@@ -185,6 +185,7 @@ modules/
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
 │   └── value-objects
+│       ├── body-part-circumference.ts
 │       ├── body-part-id.ts
 │       ├── body-part-measured-on.ts
 │       ├── body-part-name.ts
