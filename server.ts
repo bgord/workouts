@@ -353,6 +353,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartArchive(deps)),
   );
+  measurements.post(
+    "/body-part/measure",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasure(deps)),
+  );
   // Body weight =================
   measurements.query(
     "/body-weight/list",

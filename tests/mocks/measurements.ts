@@ -190,3 +190,50 @@ export const GenericBodyPartArchivedEvent = {
   name: "BODY_PART_ARCHIVED_EVENT",
   payload: { id: bodyPartId, requesterId: userId },
 } satisfies Measurements.Events.BodyPartArchivedEventType;
+
+export const bodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2025-01-01");
+export const anotherBodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2024-12-31");
+export const futureBodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2025-01-02");
+
+export const bodyPartCircumference = v.parse(
+  Measurements.VO.BodyPartCircumference,
+  tools.Height.fromCentimeters(40).get(),
+);
+export const anotherBodyPartCircumference = v.parse(
+  Measurements.VO.BodyPartCircumference,
+  tools.Height.fromCentimeters(41).get(),
+);
+
+export const bodyPartMeasurementId = v.parse(
+  Measurements.VO.BodyPartMeasurementId,
+  "7c4e1a9b-3d5f-4e8a-9b2c-6f0d3a7e1b54",
+);
+export const bodyPartMeasurementStream = v.parse(
+  bg.EventStream,
+  `body_part_measurement_${bodyPartMeasurementId}`,
+);
+
+export const bodyPartMeasurement: Measurements.VO.BodyPartMeasurement = {
+  id: bodyPartMeasurementId,
+  bodyPartId,
+  value: bodyPartCircumference,
+  measuredOn: bodyPartMeasuredOn,
+  userId,
+};
+
+export const GenericBodyPartMeasuredEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyPartMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_MEASURED_EVENT",
+  payload: {
+    id: bodyPartMeasurementId,
+    bodyPartId,
+    value: bodyPartCircumference,
+    measuredOn: bodyPartMeasuredOn,
+    userId,
+  },
+} satisfies Measurements.Events.BodyPartMeasuredEventType;

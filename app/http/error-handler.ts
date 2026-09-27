@@ -42,6 +42,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
   bg.HashValueError,
   bg.UUIDError,
   tools.DayIsoIdError,
+  tools.HeightMillimetersError,
   tools.IntegerNonNegativeError,
   tools.IntegerPositiveError,
   tools.LanguageError,
