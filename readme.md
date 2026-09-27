@@ -737,6 +737,8 @@ infra/
 │   └── home.spec.ts
 ├── env.ts
 ├── projections
+│   ├── body-part-measurements.projector.ts
+│   ├── body-parts.projector.ts
 │   ├── body-weight-measurements.projector.ts
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts
