@@ -192,7 +192,12 @@ modules/
 │   ├── open-host-queries
 │   ├── ports
 │   ├── queries
+│   │   ├── get-body-part-measurement.ts
+│   │   ├── get-body-part-name-count.ts
+│   │   ├── get-body-part.ts
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── list-body-part-measurements.ts
+│   │   ├── list-body-parts.ts
 │   │   ├── list-body-weight-measurements-for-month.ts
 │   │   ├── list-body-weight-measurements-for-stats.ts
 │   │   ├── list-body-weight-measurements.ts
