@@ -320,6 +320,51 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
 
+  // Body parts ============================================================
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_DEFINE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartDefineCommand({
+      ...deps,
+      GetBodyPartNameCountQuery: Adapters.Measurements.GetBodyPartNameCountQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_RENAME_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartRenameCommand({
+      ...deps,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+      GetBodyPartNameCountQuery: Adapters.Measurements.GetBodyPartNameCountQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_ARCHIVE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartArchiveCommand({
+      ...deps,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PARTS_MEASURE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartsMeasureCommand({
+      ...deps,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_MEASUREMENT_CORRECT_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartMeasurementCorrectCommand({
+      ...deps,
+      GetBodyPartMeasurementQuery: Adapters.Measurements.GetBodyPartMeasurementQuery,
+    }),
+  );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_MEASUREMENT_REMOVE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartMeasurementRemoveCommand({
+      ...deps,
+      GetBodyPartMeasurementQuery: Adapters.Measurements.GetBodyPartMeasurementQuery,
+    }),
+  );
+
   // Body weight ============================================================
   Tools.CommandBus.on(
     MeasurementsCommands.BODY_WEIGHT_MEASURE_COMMAND,
