@@ -1,3 +1,4 @@
+export * from "./handleBodyPartArchiveCommand";
 export * from "./handleBodyPartDefineCommand";
 export * from "./handleBodyWeightMeasureCommand";
 export * from "./handleBodyWeightMeasurementCorrectCommand";

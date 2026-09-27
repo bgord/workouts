@@ -148,6 +148,7 @@ modules/
 ├── languages.ts
 ├── measurements
 │   ├── command-handlers
+│   │   ├── handleBodyPartArchiveCommand.ts
 │   │   ├── handleBodyPartDefineCommand.ts
 │   │   ├── handleBodyWeightMeasureCommand.ts
 │   │   ├── handleBodyWeightMeasurementCorrectCommand.ts
