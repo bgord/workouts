@@ -1,4 +1,5 @@
 export * from "./body-part-id";
+export * from "./body-part-measured-on";
 export * from "./body-part-name";
 export * from "./body-weight";
 export * from "./body-weight-chart-granularity";

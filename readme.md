@@ -186,6 +186,7 @@ modules/
 │   │   ├── body-weight-stats-calculator.ts
 │   └── value-objects
 │       ├── body-part-id.ts
+│       ├── body-part-measured-on.ts
 │       ├── body-part-name.ts
 │       ├── body-part-name.validation.ts
 │       ├── body-weight-chart-granularity-options.ts
