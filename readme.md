@@ -154,6 +154,12 @@ modules/
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
 │   ├── commands
+│   │   ├── BODY_PART_ARCHIVE_COMMAND.ts
+│   │   ├── BODY_PART_DEFINE_COMMAND.ts
+│   │   ├── BODY_PART_MEASUREMENT_CORRECT_COMMAND.ts
+│   │   ├── BODY_PART_MEASUREMENT_REMOVE_COMMAND.ts
+│   │   ├── BODY_PART_RENAME_COMMAND.ts
+│   │   ├── BODY_PARTS_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
