@@ -151,6 +151,7 @@ modules/
 │   │   ├── handleBodyPartArchiveCommand.ts
 │   │   ├── handleBodyPartDefineCommand.ts
 │   │   ├── handleBodyPartMeasurementCorrectCommand.ts
+│   │   ├── handleBodyPartMeasurementRemoveCommand.ts
 │   │   ├── handleBodyPartRenameCommand.ts
 │   │   ├── handleBodyPartsMeasureCommand.ts
 │   │   ├── handleBodyWeightMeasureCommand.ts
