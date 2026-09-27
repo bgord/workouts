@@ -168,3 +168,14 @@ export const GenericBodyPartDefinedEvent = {
   name: "BODY_PART_DEFINED_EVENT",
   payload: { id: bodyPartId, name: bodyPartName, userId },
 } satisfies Measurements.Events.BodyPartDefinedEventType;
+
+export const GenericBodyPartRenamedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyPartStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_RENAMED_EVENT",
+  payload: { id: bodyPartId, name: anotherBodyPartName, requesterId: userId },
+} satisfies Measurements.Events.BodyPartRenamedEventType;

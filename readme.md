@@ -580,6 +580,7 @@ app/
 │   │   ├── exercise-update.ts
 │   ├── measurements
 │   │   ├── body-part-define.ts
+│   │   ├── body-part-rename.ts
 │   │   ├── body-weight-chart-get.ts
 │   │   ├── body-weight-measure.ts
 │   │   ├── body-weight-measurement-correct.ts
