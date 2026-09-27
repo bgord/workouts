@@ -579,6 +579,7 @@ app/
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements
+│   │   ├── body-part-archive.ts
 │   │   ├── body-part-define.ts
 │   │   ├── body-part-rename.ts
 │   │   ├── body-weight-chart-get.ts
