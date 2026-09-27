@@ -1,0 +1,22 @@
+CREATE TABLE `bodyPartMeasurements` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`bodyPartId` text(36) NOT NULL,
+	`value` integer NOT NULL,
+	`measuredOn` text NOT NULL,
+	`userId` text(36) NOT NULL,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL,
+	FOREIGN KEY (`bodyPartId`) REFERENCES `bodyParts`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE INDEX `bodyPartMeasurements_userId_bodyPartId_idx` ON `bodyPartMeasurements` (`userId`,`bodyPartId`);--> statement-breakpoint
+CREATE TABLE `bodyParts` (
+	`id` text(36) PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`userId` text(36) NOT NULL,
+	`archivedAt` integer,
+	`createdAt` integer NOT NULL,
+	`updatedAt` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE INDEX `bodyParts_userId_idx` ON `bodyParts` (`userId`);
