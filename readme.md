@@ -182,6 +182,7 @@ modules/
 │   │   ├── body-part-measured-on-is-not-in-future.ts
 │   │   ├── body-part-measurement-belongs-to-user.ts
 │   │   ├── body-part-measurement-exists.ts
+│   │   ├── body-part-measurement-has-changed.ts
 │   │   ├── body-part-name-is-unique.ts
 │   │   ├── body-weight-measured-on-is-not-in-future.ts
 │   │   ├── body-weight-measurement-belongs-to-user.ts
