@@ -583,6 +583,7 @@ app/
 │   │   ├── body-part-define.ts
 │   │   ├── body-part-measure.ts
 │   │   ├── body-part-measurement-correct.ts
+│   │   ├── body-part-measurement-remove.ts
 │   │   ├── body-part-rename.ts
 │   │   ├── body-weight-chart-get.ts
 │   │   ├── body-weight-measure.ts
