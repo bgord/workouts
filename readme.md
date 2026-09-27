@@ -185,6 +185,7 @@ modules/
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
 │   └── value-objects
+│       ├── body-part-id.ts
 │       ├── body-weight-chart-granularity-options.ts
 │       ├── body-weight-chart-granularity.ts
 │       ├── body-weight-chart-point.ts
