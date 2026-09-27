@@ -360,7 +360,6 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     "/body-parts/:bodyPartId/measurements",
     bg.EndpointHonoAdapter.adapt(
       HTTP.Measurements.BodyPartMeasurementList({
-        GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
         ListBodyPartMeasurementsQuery: Adapters.Measurements.ListBodyPartMeasurementsQuery,
       }),
     ),

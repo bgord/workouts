@@ -319,11 +319,10 @@ describe(`GET ${bodyPartMeasurementsUrl}`, async () => {
   registerCommandHandlers(di);
   const server = createServer(di);
 
-  test("lists readings only after checking the part owner", async () => {
+  test("lists readings scoped to the authenticated user and part", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Measurements.GetBodyPartQuery, "execute")).mockResolvedValue(mocks.bodyPart);
-    spies
+    const listMeasurements = spies
       .use(spyOn(di.Adapters.Measurements.ListBodyPartMeasurementsQuery, "execute"))
       .mockResolvedValue([mocks.bodyPartMeasurement]);
 
@@ -332,6 +331,7 @@ describe(`GET ${bodyPartMeasurementsUrl}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(json).toEqual({ measurements: [mocks.bodyPartMeasurement] });
+    expect(listMeasurements).toHaveBeenCalledWith(mocks.userId, mocks.bodyPartId);
   });
 });
 
