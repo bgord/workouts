@@ -665,6 +665,7 @@ infra/
 │   │   ├── list-exercise-categories.adapter.ts
 │   │   └── list-exercises-with-categories.adapter.ts
 │   ├── measurements
+│   │   ├── get-body-part.adapter.ts
 │   │   ├── get-body-weight-measurement.adapter.ts
 │   │   ├── list-body-weight-measurements-for-month.adapter.ts
 │   │   ├── list-body-weight-measurements-for-stats.adapter.ts
