@@ -338,6 +338,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   measurements.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   // Body parts =================
+  measurements.query(
+    "/body-part/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartList(Adapters.Measurements)),
+  );
   measurements.post(
     "/body-part",
     Tools.ShieldCaptcha.handle(),
