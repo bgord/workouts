@@ -3,6 +3,7 @@ export * from "./body-part-define";
 export * from "./body-part-list";
 export * from "./body-part-measure";
 export * from "./body-part-measurement-correct";
+export * from "./body-part-measurement-list";
 export * from "./body-part-measurement-remove";
 export * from "./body-part-rename";
 export * from "./body-weight-chart-get";
