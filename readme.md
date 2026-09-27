@@ -188,6 +188,7 @@ modules/
 │       ├── body-part-circumference.ts
 │       ├── body-part-id.ts
 │       ├── body-part-measured-on.ts
+│       ├── body-part-measurement-id.ts
 │       ├── body-part-name.ts
 │       ├── body-part-name.validation.ts
 │       ├── body-weight-chart-granularity-options.ts
