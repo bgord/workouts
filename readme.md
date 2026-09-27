@@ -162,6 +162,7 @@ modules/
 │   ├── events
 │   │   ├── BODY_PART_ARCHIVED_EVENT.ts
 │   │   ├── BODY_PART_DEFINED_EVENT.ts
+│   │   ├── BODY_PART_MEASURED_EVENT.ts
 │   │   ├── BODY_PART_RENAMED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASURED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts

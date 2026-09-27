@@ -1,5 +1,6 @@
 export * from "./BODY_PART_ARCHIVED_EVENT";
 export * from "./BODY_PART_DEFINED_EVENT";
+export * from "./BODY_PART_MEASURED_EVENT";
 export * from "./BODY_PART_RENAMED_EVENT";
 export * from "./BODY_WEIGHT_MEASURED_EVENT";
 export * from "./BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT";
