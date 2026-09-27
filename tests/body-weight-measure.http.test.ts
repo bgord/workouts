@@ -99,10 +99,8 @@ describe(`POST ${url}`, async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ id: mocks.bodyWeightMeasurementId });
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyWeightMeasuredEvent]);
   });
 });

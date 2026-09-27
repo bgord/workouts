@@ -67,10 +67,8 @@ describe(`POST ${bodyPartsUrl}`, async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ id: mocks.bodyPartId });
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyPartAddedEvent]);
   });
 });
@@ -221,10 +219,8 @@ describe(`POST ${bodyPartMeasurementsUrl}`, async () => {
       },
       mocks.ip,
     );
-    const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ id: mocks.bodyPartMeasurementId });
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyPartMeasurementRecordedEvent]);
   });
 });

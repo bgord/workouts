@@ -26,5 +26,5 @@ export const BodyPartMeasurementRecord =
     );
     await deps.CommandBus.emit(command);
 
-    return Response.json({ id });
+    return new Response();
   };
