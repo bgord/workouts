@@ -1,3 +1,4 @@
+export * from "./body-part";
 export * from "./body-part-circumference";
 export * from "./body-part-id";
 export * from "./body-part-measured-on";
