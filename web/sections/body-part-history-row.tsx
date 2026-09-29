@@ -33,12 +33,7 @@ export function BodyPartHistoryRow(props: {
             {...ui.Gap.cluster}
             {...bodyPartMeasurementCorrect.props.controller}
           >
-            <span
-              data-color="neutral-300"
-              data-grow="1"
-              data-md-fs="xs"
-              data-transform="nowrap"
-            >
+            <span data-color="neutral-300" data-grow="1" data-md-fs="xs" data-transform="nowrap">
               {DateFormat.plainDay(language, props.measurement.measuredOn)}
             </span>
 
