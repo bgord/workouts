@@ -1,4 +1,5 @@
 import { GetBodyPartQuery } from "./get-body-part.adapter";
+import { GetBodyPartByNameQuery } from "./get-body-part-by-name.adapter";
 import { GetBodyPartMeasurementQuery } from "./get-body-part-measurement.adapter";
 import { GetBodyPartNameCountQuery } from "./get-body-part-name-count.adapter";
 import { GetBodyWeightMeasurementQuery } from "./get-body-weight-measurement.adapter";
@@ -12,6 +13,7 @@ import { ListBodyWeightMonthsQuery } from "./list-body-weight-months.adapter";
 export function createMeasurementsAdapters() {
   return {
     GetBodyPartQuery,
+    GetBodyPartByNameQuery,
     GetBodyPartMeasurementQuery,
     GetBodyPartNameCountQuery,
     GetBodyWeightMeasurementQuery,
