@@ -148,8 +148,8 @@ modules/
 ├── languages.ts
 ├── measurements
 │   ├── command-handlers
-│   │   ├── handleBodyPartArchiveCommand.ts
 │   │   ├── handleBodyPartDefineCommand.ts
+│   │   ├── handleBodyPartDeleteCommand.ts
 │   │   ├── handleBodyPartMeasureCommand.ts
 │   │   ├── handleBodyPartMeasurementCorrectCommand.ts
 │   │   ├── handleBodyPartMeasurementRemoveCommand.ts
@@ -160,8 +160,8 @@ modules/
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
 │   ├── commands
-│   │   ├── BODY_PART_ARCHIVE_COMMAND.ts
 │   │   ├── BODY_PART_DEFINE_COMMAND.ts
+│   │   ├── BODY_PART_DELETE_COMMAND.ts
 │   │   ├── BODY_PART_MEASURE_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_REMOVE_COMMAND.ts
@@ -172,8 +172,8 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
 │   ├── events
-│   │   ├── BODY_PART_ARCHIVED_EVENT.ts
 │   │   ├── BODY_PART_DEFINED_EVENT.ts
+│   │   ├── BODY_PART_DELETED_EVENT.ts
 │   │   ├── BODY_PART_MEASURED_EVENT.ts
 │   │   ├── BODY_PART_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_PART_MEASUREMENT_REMOVED_EVENT.ts
@@ -185,7 +185,6 @@ modules/
 │   ├── invariants
 │   │   ├── body-part-belongs-to-user.ts
 │   │   ├── body-part-exists.ts
-│   │   ├── body-part-is-active.ts
 │   │   ├── body-part-is-defined.ts
 │   │   ├── body-part-measured-on-is-not-in-future.ts
 │   │   ├── body-part-measurement-belongs-to-user.ts
@@ -213,8 +212,6 @@ modules/
 │   │   └── list-body-weight-months.ts
 │   ├── services
 │   │   ├── body-part-list-actions.ts
-│   │   ├── body-part-list-item-actions.ts
-│   │   ├── body-part-measurement-list-item-actions.ts
 │   │   ├── body-part-summaries.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
@@ -589,8 +586,8 @@ app/
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements
-│   │   ├── body-part-archive.ts
 │   │   ├── body-part-define.ts
+│   │   ├── body-part-delete.ts
 │   │   ├── body-part-list.ts
 │   │   ├── body-part-measure.ts
 │   │   ├── body-part-measurement-correct.ts

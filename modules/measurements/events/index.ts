@@ -1,5 +1,5 @@
-export * from "./BODY_PART_ARCHIVED_EVENT";
 export * from "./BODY_PART_DEFINED_EVENT";
+export * from "./BODY_PART_DELETED_EVENT";
 export * from "./BODY_PART_MEASURED_EVENT";
 export * from "./BODY_PART_MEASUREMENT_CORRECTED_EVENT";
 export * from "./BODY_PART_MEASUREMENT_REMOVED_EVENT";

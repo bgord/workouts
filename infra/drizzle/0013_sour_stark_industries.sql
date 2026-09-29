@@ -14,7 +14,6 @@ CREATE TABLE `bodyParts` (
 	`id` text(36) PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
 	`userId` text(36) NOT NULL,
-	`archivedAt` integer,
 	`createdAt` integer NOT NULL,
 	`updatedAt` integer NOT NULL
 );

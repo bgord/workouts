@@ -220,13 +220,6 @@
           "notNull": true,
           "autoincrement": false
         },
-        "archivedAt": {
-          "name": "archivedAt",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "createdAt": {
           "name": "createdAt",
           "type": "integer",

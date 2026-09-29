@@ -409,7 +409,6 @@ export const bodyParts = sqliteTable(
     id: identifier<BodyPartIdType>(),
     name: text("name").notNull().$type<BodyPartNameType>(),
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
-    archivedAt: timestamp("archivedAt"),
     createdAt: timestamp("createdAt").notNull(),
     updatedAt: timestamp("updatedAt").notNull(),
   },

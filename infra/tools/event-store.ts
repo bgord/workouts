@@ -6,8 +6,8 @@ import { db } from "+infra/db";
 import type { EnvironmentResultType } from "+infra/env";
 import * as schema from "+infra/schema";
 import type {
-  BodyPartArchivedEventType,
   BodyPartDefinedEventType,
+  BodyPartDeletedEventType,
   BodyPartMeasuredEventType,
   BodyPartMeasurementCorrectedEventType,
   BodyPartMeasurementRemovedEventType,
@@ -44,7 +44,7 @@ export type AcceptedEventType =
   | ProfileAvatarUpdatedEventType
   | ProfileAvatarRemovedEventType
   | WeeklySummarySetEventType
-  | BodyPartArchivedEventType
+  | BodyPartDeletedEventType
   | BodyPartDefinedEventType
   | BodyPartMeasuredEventType
   | BodyPartMeasurementCorrectedEventType

@@ -337,8 +337,8 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
-    MeasurementsCommands.BODY_PART_ARCHIVE_COMMAND,
-    MeasurementsCommandHandlers.handleBodyPartArchiveCommand({
+    MeasurementsCommands.BODY_PART_DELETE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartDeleteCommand({
       ...deps,
       GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
     }),

@@ -1,5 +1,5 @@
-export * from "./body-part-archive";
 export * from "./body-part-define";
+export * from "./body-part-delete";
 export * from "./body-part-list";
 export * from "./body-part-measure";
 export * from "./body-part-measurement-correct";

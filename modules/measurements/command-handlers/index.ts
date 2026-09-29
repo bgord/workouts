@@ -1,5 +1,5 @@
-export * from "./handleBodyPartArchiveCommand";
 export * from "./handleBodyPartDefineCommand";
+export * from "./handleBodyPartDeleteCommand";
 export * from "./handleBodyPartMeasureCommand";
 export * from "./handleBodyPartMeasurementCorrectCommand";
 export * from "./handleBodyPartMeasurementRemoveCommand";

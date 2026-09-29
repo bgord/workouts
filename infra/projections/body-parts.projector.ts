@@ -8,7 +8,7 @@ type Dependencies = {
   EventBus: bg.EventBusPort<
     | Measurements.Events.BodyPartDefinedEventType
     | Measurements.Events.BodyPartRenamedEventType
-    | Measurements.Events.BodyPartArchivedEventType
+    | Measurements.Events.BodyPartDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -24,8 +24,8 @@ export class BodyPartsProjector {
       deps.EventHandler.handle(this.onBodyPartRenamedEvent.bind(this)),
     );
     deps.EventBus.on(
-      Measurements.Events.BODY_PART_ARCHIVED_EVENT,
-      deps.EventHandler.handle(this.onBodyPartArchivedEvent.bind(this)),
+      Measurements.Events.BODY_PART_DELETED_EVENT,
+      deps.EventHandler.handle(this.onBodyPartDeletedEvent.bind(this)),
     );
   }
 
@@ -46,10 +46,7 @@ export class BodyPartsProjector {
       .where(eq(Schema.bodyParts.id, event.payload.id));
   }
 
-  async onBodyPartArchivedEvent(event: Measurements.Events.BodyPartArchivedEventType) {
-    await db
-      .update(Schema.bodyParts)
-      .set({ archivedAt: event.createdAt, updatedAt: event.createdAt })
-      .where(eq(Schema.bodyParts.id, event.payload.id));
+  async onBodyPartDeletedEvent(event: Measurements.Events.BodyPartDeletedEventType) {
+    await db.delete(Schema.bodyParts).where(eq(Schema.bodyParts.id, event.payload.id));
   }
 }

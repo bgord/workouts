@@ -1,5 +1,5 @@
-export * from "./BODY_PART_ARCHIVE_COMMAND";
 export * from "./BODY_PART_DEFINE_COMMAND";
+export * from "./BODY_PART_DELETE_COMMAND";
 export * from "./BODY_PART_MEASURE_COMMAND";
 export * from "./BODY_PART_MEASUREMENT_CORRECT_COMMAND";
 export * from "./BODY_PART_MEASUREMENT_REMOVE_COMMAND";

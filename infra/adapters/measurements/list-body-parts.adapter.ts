@@ -1,4 +1,4 @@
-import { and, asc, eq, isNotNull, isNull, lte, sql } from "drizzle-orm";
+import { asc, eq, lte, sql } from "drizzle-orm";
 import type * as Auth from "+auth";
 import * as Measurements from "+measurements";
 import { db } from "+infra/db";
@@ -21,23 +21,11 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
       .where(eq(Schema.bodyPartMeasurements.userId, userId))
       .as("ranked");
 
-    const columns = {
-      id: Schema.bodyParts.id,
-      name: Schema.bodyParts.name,
-      userId: Schema.bodyParts.userId,
-      archivedAt: Schema.bodyParts.archivedAt,
-    };
-
-    const [active, archived, measurements] = await Promise.all([
+    const [bodyParts, measurements] = await Promise.all([
       db
-        .select(columns)
+        .select({ id: Schema.bodyParts.id, name: Schema.bodyParts.name, userId: Schema.bodyParts.userId })
         .from(Schema.bodyParts)
-        .where(and(eq(Schema.bodyParts.userId, userId), isNull(Schema.bodyParts.archivedAt)))
-        .orderBy(asc(Schema.bodyParts.name)),
-      db
-        .select(columns)
-        .from(Schema.bodyParts)
-        .where(and(eq(Schema.bodyParts.userId, userId), isNotNull(Schema.bodyParts.archivedAt)))
+        .where(eq(Schema.bodyParts.userId, userId))
         .orderBy(asc(Schema.bodyParts.name)),
       db
         .select({
@@ -51,23 +39,9 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
         .orderBy(asc(ranked.bodyPartId), asc(ranked.rank)),
     ]);
 
-    const summaries = new Measurements.Services.BodyPartSummaries({
-      bodyParts: active,
-      measurements,
-    }).calculate();
-
     return {
-      data: {
-        active: summaries.map((bodyPart) => ({
-          ...bodyPart,
-          actions: new Measurements.Services.BodyPartListItemActions(bodyPart).calculate(),
-        })),
-        archived: archived.map((bodyPart) => ({
-          ...bodyPart,
-          actions: new Measurements.Services.BodyPartListItemActions(bodyPart).calculate(),
-        })),
-      },
-      actions: new Measurements.Services.BodyPartListActions({ active }).calculate(),
+      data: new Measurements.Services.BodyPartSummaries({ bodyParts, measurements }).calculate(),
+      actions: new Measurements.Services.BodyPartListActions({ bodyParts }).calculate(),
     };
   }
 }

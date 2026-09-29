@@ -5,10 +5,10 @@ import * as Measurements from "+measurements";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  CommandBus: bg.CommandBusPort<Measurements.Commands.BodyPartArchiveCommandType>;
+  CommandBus: bg.CommandBusPort<Measurements.Commands.BodyPartDeleteCommandType>;
 };
 
-export const BodyPartArchive =
+export const BodyPartDelete =
   (deps: Dependencies): bg.EndpointPort =>
   async (context) => {
     const params = context.request.params();
@@ -17,7 +17,7 @@ export const BodyPartArchive =
     const id = v.parse(Measurements.VO.BodyPartId, params["bodyPartId"]);
 
     const command = bg.command(
-      Measurements.Commands.BodyPartArchiveCommand,
+      Measurements.Commands.BodyPartDeleteCommand,
       { payload: { id, requesterId } },
       deps,
     );

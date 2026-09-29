@@ -11,8 +11,6 @@ export function BodyPartManage() {
 
   const bodyPartManage = bg.useToggle({ name: "body-part-manage" });
 
-  const { active, archived } = bodyParts.data;
-
   return (
     <>
       <button
@@ -33,7 +31,7 @@ export function BodyPartManage() {
 
         <BodyPartDefine />
 
-        {active.length === 0 && (
+        {bodyParts.data.length === 0 && (
           <ui.EmptyState>
             <ui.EmptyStateMessage>{t("measurements.body_parts.list.empty")}</ui.EmptyStateMessage>
 
@@ -41,26 +39,12 @@ export function BodyPartManage() {
           </ui.EmptyState>
         )}
 
-        {active.length > 0 && (
+        {bodyParts.data.length > 0 && (
           <ul data-md-minh="unset" data-minh="0" data-overflow="auto" data-stack="y">
-            {active.map((bodyPart) => (
+            {bodyParts.data.map((bodyPart) => (
               <BodyPartRow key={bodyPart.id} {...bodyPart} />
             ))}
           </ul>
-        )}
-
-        {archived.length > 0 && (
-          <details>
-            <summary data-color="neutral-500" data-cursor="pointer" data-fs="sm">
-              {t("measurements.body_parts.list.archived", { count: archived.length })}
-            </summary>
-
-            <ul data-stack="y">
-              {archived.map((bodyPart) => (
-                <BodyPartRow key={bodyPart.id} {...bodyPart} />
-              ))}
-            </ul>
-          </details>
         )}
       </ui.Dialog>
     </>

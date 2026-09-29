@@ -54,7 +54,7 @@ type AcceptedCommand =
   | WorkoutsCommands.WorkoutRescheduleCommandType
   | MeasurementsCommands.BodyPartDefineCommandType
   | MeasurementsCommands.BodyPartRenameCommandType
-  | MeasurementsCommands.BodyPartArchiveCommandType
+  | MeasurementsCommands.BodyPartDeleteCommandType
   | MeasurementsCommands.BodyPartMeasureCommandType
   | MeasurementsCommands.BodyPartMeasurementCorrectCommandType
   | MeasurementsCommands.BodyPartMeasurementRemoveCommandType

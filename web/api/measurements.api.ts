@@ -30,7 +30,7 @@ export const bodyWeightListEmpty: BodyWeightListResponse = {
 export const bodyWeightChartEmpty: BodyWeightChartResponse = { points: [] };
 
 export const bodyPartListEmpty: BodyPartListResponse = {
-  data: { active: [], archived: [] },
+  data: [],
   actions: { measure: unavailable },
 };
 

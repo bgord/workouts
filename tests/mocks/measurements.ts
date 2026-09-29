@@ -4,7 +4,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 import { anotherUserId, userId } from "./auth";
-import { actionAvailable, actionUnavailable, commit, correlationId, expectAnyId, T0 } from "./shared";
+import { actionAvailable, commit, correlationId, expectAnyId, T0 } from "./shared";
 
 export const bodyWeightMeasurementId = v.parse(
   Measurements.VO.BodyWeightMeasurementId,
@@ -156,28 +156,18 @@ export const bodyPart: Measurements.VO.BodyPart = {
   id: bodyPartId,
   name: bodyPartName,
   userId,
-  archivedAt: null,
-};
-
-export const archivedBodyPart: Measurements.VO.BodyPart = {
-  id: bodyPartId,
-  name: bodyPartName,
-  userId,
-  archivedAt: T0.ms,
 };
 
 export const anotherBodyPart: Measurements.VO.BodyPart = {
   id: anotherBodyPartId,
   name: anotherBodyPartName,
   userId,
-  archivedAt: null,
 };
 
 export const anotherUserBodyPart: Measurements.VO.BodyPart = {
   id: bodyPartId,
   name: bodyPartName,
   userId: anotherUserId,
-  archivedAt: null,
 };
 
 export const GenericBodyPartDefinedEvent = {
@@ -202,16 +192,16 @@ export const GenericBodyPartRenamedEvent = {
   payload: { id: bodyPartId, name: anotherBodyPartName, requesterId: userId },
 } satisfies Measurements.Events.BodyPartRenamedEventType;
 
-export const GenericBodyPartArchivedEvent = {
+export const GenericBodyPartDeletedEvent = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
   stream: bodyPartStream,
   version: 1,
   commit,
-  name: "BODY_PART_ARCHIVED_EVENT",
+  name: "BODY_PART_DELETED_EVENT",
   payload: { id: bodyPartId, requesterId: userId },
-} satisfies Measurements.Events.BodyPartArchivedEventType;
+} satisfies Measurements.Events.BodyPartDeletedEventType;
 
 export const bodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2025-01-01");
 export const anotherBodyPartMeasuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, "2024-12-31");
@@ -341,36 +331,32 @@ export const anotherBodyPartRecentMeasurement: Measurements.VO.BodyPartRecentMea
 };
 
 export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
-  data: {
-    active: [
-      {
-        ...bodyPart,
-        latest: {
-          id: bodyPartMeasurementId,
-          value: anotherBodyPartCircumference,
-          measuredOn: bodyPartMeasuredOn,
-        },
-        previous: {
-          id: anotherBodyPartMeasurementId,
-          value: bodyPartCircumference,
-          measuredOn: anotherBodyPartMeasuredOn,
-        },
-        delta: 10,
-        actions: { rename: actionAvailable, archive: actionAvailable },
+  data: [
+    {
+      ...bodyPart,
+      latest: {
+        id: bodyPartMeasurementId,
+        value: anotherBodyPartCircumference,
+        measuredOn: bodyPartMeasuredOn,
       },
-    ],
-    archived: [{ ...archivedBodyPart, actions: { rename: actionUnavailable, archive: actionUnavailable } }],
-  },
+      previous: {
+        id: anotherBodyPartMeasurementId,
+        value: bodyPartCircumference,
+        measuredOn: anotherBodyPartMeasuredOn,
+      },
+      delta: 10,
+    },
+  ],
   actions: { measure: actionAvailable },
 };
 
 export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListResponse = {
-  data: { active: [], archived: [] },
+  data: [],
   actions: { measure: { available: true, enabled: false, hints: ["body.part.is.defined"] } },
 };
 
 export const bodyPartMeasurementListResponse: Measurements.Queries.BodyPartMeasurementListResponse = {
-  data: [{ ...bodyPartMeasurement, actions: { correct: actionAvailable } }],
+  data: [bodyPartMeasurement],
 };
 
 export const bodyPartMeasurementListResponseEmpty: Measurements.Queries.BodyPartMeasurementListResponse = {

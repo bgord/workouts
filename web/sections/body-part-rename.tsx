@@ -2,11 +2,11 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/body-part-name-form";
-import type { BodyPartListItem } from "../../modules/measurements/queries/list-body-parts";
+import type { BodyPart } from "../../modules/measurements/value-objects/body-part";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 
-export function BodyPartRename(props: BodyPartListItem & bg.UseToggleReturnType) {
+export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { toggle } = bg.extractUseToggle(props);
@@ -26,8 +26,6 @@ export function BodyPartRename(props: BodyPartListItem & bg.UseToggleReturnType)
     },
   });
 
-  if (!props.actions.rename.available) return <div data-color="neutral-500">{props.name}</div>;
-
   if (toggle.off) {
     return (
       <button
@@ -35,7 +33,6 @@ export function BodyPartRename(props: BodyPartListItem & bg.UseToggleReturnType)
         data-cursor="pointer"
         data-hover-color="brand-300"
         data-transform="truncate"
-        disabled={!props.actions.rename.enabled}
         onClick={toggle.enable}
         title={t("measurements.body_parts.rename.cta")}
         type="button"
@@ -68,7 +65,7 @@ export function BodyPartRename(props: BodyPartListItem & bg.UseToggleReturnType)
 
         <ui.IconButton
           aria-label={t("app.save")}
-          disabled={!props.actions.rename.enabled || name.unchanged || mutation.isLoading}
+          disabled={name.unchanged || mutation.isLoading}
           title={t("app.save")}
           tone="positive"
           type="submit"

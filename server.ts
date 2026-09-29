@@ -359,7 +359,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   measurements.delete(
     "/body-part/:bodyPartId",
     Tools.ShieldCaptcha.handle(),
-    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartArchive(deps)),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartDelete(deps)),
   );
   measurements.post(
     "/body-part/measure",

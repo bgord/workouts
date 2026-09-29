@@ -52,20 +52,6 @@ describe("DELETE /api/measurements/body-part/:bodyPartId", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("BodyPartIsActive", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Adapters.Measurements.GetBodyPartQuery, "execute"))
-      .mockResolvedValue(mocks.archivedBodyPart);
-
-    const response = await server.request(url, { method: "DELETE" }, mocks.ip);
-
-    await testcases.assertErrorResponse(response, 403, "body.part.is.active");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
   test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -79,6 +65,6 @@ describe("DELETE /api/measurements/body-part/:bodyPartId", async () => {
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyPartArchivedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyPartDeletedEvent]);
   });
 });
