@@ -166,7 +166,6 @@
   "measurements.body_parts.manage.cta": "Manage",
   "measurements.body_parts.manage.header": "Body parts",
   "measurements.body_parts.measure.cta": "Save",
-  "measurements.body_parts.measure.cta.count": "Save {{count}}",
   "measurements.body_parts.measure.date.label": "Date",
   "measurements.body_parts.measure.error": "Could not save the measurements",
   "measurements.body_parts.measure.header": "Measure",

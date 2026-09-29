@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus } from "lucide-react";
-import { useState } from "react";
+import { useRef } from "react";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
@@ -18,23 +18,26 @@ export function BodyPartMeasure() {
   const today = DateFormat.todayISO();
 
   const measuredOn = bg.useDateField({ name: "body-part-measured-on", defaultValue: today });
-  const [values, setValues] = useState<Record<string, string>>({});
-
-  const measurements = bodyParts.data.flatMap((bodyPart) => {
-    const value = LengthFormat.parse(values[bodyPart.id] ?? "");
-
-    return value === null ? [] : [{ bodyPartId: bodyPart.id, value }];
-  });
+  const form = useRef<HTMLFormElement>(null);
 
   const mutation = bg.useMutation({
-    perform: () =>
-      fetch("/api/measurements/body-part/measure", {
+    perform: () => {
+      const values = new FormData(form.current ?? undefined);
+
+      const measurements = bodyParts.data.flatMap((bodyPart) => {
+        const [latest] = bodyPart.measurements;
+        const value = LengthFormat.parse(String(values.get(bodyPart.id)));
+
+        return value && value !== latest?.value ? [{ bodyPartId: bodyPart.id, value }] : [];
+      });
+
+      return fetch("/api/measurements/body-part/measure", {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({ measuredOn: measuredOn.value, measurements }),
-      }),
+      });
+    },
     onSuccess: async () => {
-      setValues({});
       bodyPartMeasure.disable();
       await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
     },
@@ -67,6 +70,7 @@ export function BodyPartMeasure() {
           data-minh="0"
           data-stack="y"
           onSubmit={mutation.handleSubmit}
+          ref={form}
           {...ui.Gap.related}
         >
           <div data-stack="y" {...ui.Gap.field}>
@@ -90,8 +94,6 @@ export function BodyPartMeasure() {
                 disabled={mutation.isLoading}
                 first={index === 0}
                 key={bodyPart.id}
-                onChange={(value) => setValues((current) => ({ ...current, [bodyPart.id]: value }))}
-                value={values[bodyPart.id] ?? ""}
                 {...bodyPart}
               />
             ))}
@@ -103,13 +105,11 @@ export function BodyPartMeasure() {
             <button
               className="c-button"
               data-variant="primary"
-              disabled={measurements.length === 0 || !measuredOn.value || mutation.isLoading}
+              disabled={!measuredOn.value || mutation.isLoading}
               type="submit"
             >
               <Check data-size="sm" />
-              {measurements.length === 0
-                ? t("measurements.body_parts.measure.cta")
-                : t("measurements.body_parts.measure.cta.count", { count: measurements.length })}
+              {t("measurements.body_parts.measure.cta")}
             </button>
           </ui.DialogFooter>
         </form>

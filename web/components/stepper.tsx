@@ -7,13 +7,11 @@ const width = (value?: number): React.CSSProperties | undefined =>
   value ? ({ "--stepper-input": bg.Rhythm(value).times(1).width.width } as React.CSSProperties) : undefined;
 
 export function Stepper(props: {
-  field: Pick<bg.UseNumberFieldReturnType, "value" | "set" | "input">;
+  field: bg.UseNumberFieldReturnType;
   label: string;
   min: number;
   max: number;
   step: number;
-  origin?: number;
-  placeholder?: string;
   unit?: string;
   width?: number;
   disabled?: boolean;
@@ -22,7 +20,7 @@ export function Stepper(props: {
   children?: React.ReactNode;
 }) {
   const variant = props.variant ?? "default";
-  const value = props.field.value ?? props.origin ?? props.min;
+  const value = props.field.value ?? props.min;
   const round = (next: number) => Number(next.toFixed(2));
 
   const decrement = () => props.field.set(round(Math.max(props.min, value - props.step)));
@@ -77,7 +75,6 @@ export function Stepper(props: {
         disabled={props.disabled}
         max={props.max}
         min={props.min}
-        placeholder={props.placeholder}
         step={props.step}
         type="number"
         {...props.field.input.props}
