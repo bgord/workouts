@@ -150,10 +150,10 @@ modules/
 │   ├── command-handlers
 │   │   ├── handleBodyPartArchiveCommand.ts
 │   │   ├── handleBodyPartDefineCommand.ts
+│   │   ├── handleBodyPartMeasureCommand.ts
 │   │   ├── handleBodyPartMeasurementCorrectCommand.ts
 │   │   ├── handleBodyPartMeasurementRemoveCommand.ts
 │   │   ├── handleBodyPartRenameCommand.ts
-│   │   ├── handleBodyPartsMeasureCommand.ts
 │   │   ├── handleBodyWeightMeasureCommand.ts
 │   │   ├── handleBodyWeightMeasurementCorrectCommand.ts
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
@@ -162,10 +162,10 @@ modules/
 │   ├── commands
 │   │   ├── BODY_PART_ARCHIVE_COMMAND.ts
 │   │   ├── BODY_PART_DEFINE_COMMAND.ts
+│   │   ├── BODY_PART_MEASURE_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_REMOVE_COMMAND.ts
 │   │   ├── BODY_PART_RENAME_COMMAND.ts
-│   │   ├── BODY_PARTS_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
@@ -185,10 +185,12 @@ modules/
 │   ├── invariants
 │   │   ├── body-part-belongs-to-user.ts
 │   │   ├── body-part-exists.ts
+│   │   ├── body-part-is-active.ts
 │   │   ├── body-part-measured-on-is-not-in-future.ts
 │   │   ├── body-part-measurement-belongs-to-user.ts
 │   │   ├── body-part-measurement-exists.ts
 │   │   ├── body-part-measurement-has-changed.ts
+│   │   ├── body-part-name-has-changed.ts
 │   │   ├── body-part-name-is-unique.ts
 │   │   ├── body-weight-measured-on-is-not-in-future.ts
 │   │   ├── body-weight-measurement-belongs-to-user.ts
@@ -218,6 +220,8 @@ modules/
 │       ├── body-part-circumference.ts
 │       ├── body-part-id.ts
 │       ├── body-part-measured-on.ts
+│       ├── body-part-measurement-entries.ts
+│       ├── body-part-measurement-entries.validation.ts
 │       ├── body-part-measurement-id.ts
 │       ├── body-part-measurement.ts
 │       ├── body-part-name.ts

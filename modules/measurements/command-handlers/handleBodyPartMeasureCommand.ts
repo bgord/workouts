@@ -4,6 +4,7 @@ import type * as Measurements from "+measurements";
 import { BodyPartMeasuredEvent } from "../events/BODY_PART_MEASURED_EVENT";
 import { BodyPartBelongsToUser } from "../invariants/body-part-belongs-to-user";
 import { BodyPartExists } from "../invariants/body-part-exists";
+import { BodyPartIsActive } from "../invariants/body-part-is-active";
 import { BodyPartMeasuredOnIsNotInFuture } from "../invariants/body-part-measured-on-is-not-in-future";
 
 type Dependencies = {
@@ -14,8 +15,8 @@ type Dependencies = {
   GetBodyPartQuery: Measurements.Queries.GetBodyPart;
 };
 
-export const handleBodyPartsMeasureCommand =
-  (deps: Dependencies) => async (command: Measurements.Commands.BodyPartsMeasureCommandType) => {
+export const handleBodyPartMeasureCommand =
+  (deps: Dependencies) => async (command: Measurements.Commands.BodyPartMeasureCommandType) => {
     const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
 
     BodyPartMeasuredOnIsNotInFuture.enforce({ measuredOn: command.payload.measuredOn, today });
@@ -28,6 +29,7 @@ export const handleBodyPartsMeasureCommand =
         userId: bodyPart!.userId,
         requesterId: command.payload.userId,
       });
+      BodyPartIsActive.enforce({ archivedAt: bodyPart!.archivedAt });
     }
 
     for (const measurement of command.payload.measurements) {

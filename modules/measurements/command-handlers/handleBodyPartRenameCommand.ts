@@ -3,6 +3,8 @@ import type * as Measurements from "+measurements";
 import { BodyPartRenamedEvent } from "../events/BODY_PART_RENAMED_EVENT";
 import { BodyPartBelongsToUser } from "../invariants/body-part-belongs-to-user";
 import { BodyPartExists } from "../invariants/body-part-exists";
+import { BodyPartIsActive } from "../invariants/body-part-is-active";
+import { BodyPartNameHasChanged } from "../invariants/body-part-name-has-changed";
 import { BodyPartNameIsUnique } from "../invariants/body-part-name-is-unique";
 
 type Dependencies = {
@@ -20,6 +22,8 @@ export const handleBodyPartRenameCommand =
 
     BodyPartExists.enforce({ bodyPart });
     BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.requesterId });
+    BodyPartIsActive.enforce({ archivedAt: bodyPart!.archivedAt });
+    BodyPartNameHasChanged.enforce({ current: bodyPart!.name, incoming: command.payload.name });
 
     const count = await deps.GetBodyPartNameCountQuery.execute(
       command.payload.requesterId,

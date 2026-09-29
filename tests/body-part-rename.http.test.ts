@@ -85,6 +85,40 @@ describe("PATCH /api/measurements/body-part/:bodyPartId", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("BodyPartIsActive", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetBodyPartQuery, "execute"))
+      .mockResolvedValue(mocks.archivedBodyPart);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", body: JSON.stringify({ name: mocks.anotherBodyPartName }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "body.part.is.active");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("BodyPartNameHasChanged", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Measurements.GetBodyPartQuery, "execute")).mockResolvedValue(mocks.bodyPart);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", body: JSON.stringify({ name: mocks.bodyPartName }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "body.part.name.has.changed");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("BodyPartNameIsUnique", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

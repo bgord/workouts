@@ -3,6 +3,7 @@ import type * as Measurements from "+measurements";
 import { BodyPartArchivedEvent } from "../events/BODY_PART_ARCHIVED_EVENT";
 import { BodyPartBelongsToUser } from "../invariants/body-part-belongs-to-user";
 import { BodyPartExists } from "../invariants/body-part-exists";
+import { BodyPartIsActive } from "../invariants/body-part-is-active";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -18,6 +19,7 @@ export const handleBodyPartArchiveCommand =
 
     BodyPartExists.enforce({ bodyPart });
     BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.requesterId });
+    BodyPartIsActive.enforce({ archivedAt: bodyPart!.archivedAt });
 
     const event = bg.event(
       BodyPartArchivedEvent,

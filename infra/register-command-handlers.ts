@@ -344,8 +344,8 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
-    MeasurementsCommands.BODY_PARTS_MEASURE_COMMAND,
-    MeasurementsCommandHandlers.handleBodyPartsMeasureCommand({
+    MeasurementsCommands.BODY_PART_MEASURE_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartMeasureCommand({
       ...deps,
       GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
     }),
@@ -355,6 +355,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     MeasurementsCommandHandlers.handleBodyPartMeasurementCorrectCommand({
       ...deps,
       GetBodyPartMeasurementQuery: Adapters.Measurements.GetBodyPartMeasurementQuery,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
     }),
   );
   Tools.CommandBus.on(

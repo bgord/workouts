@@ -2,6 +2,9 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type * as Measurements from "+measurements";
 import { BodyPartMeasurementCorrectedEvent } from "../events/BODY_PART_MEASUREMENT_CORRECTED_EVENT";
+import { BodyPartBelongsToUser } from "../invariants/body-part-belongs-to-user";
+import { BodyPartExists } from "../invariants/body-part-exists";
+import { BodyPartIsActive } from "../invariants/body-part-is-active";
 import { BodyPartMeasuredOnIsNotInFuture } from "../invariants/body-part-measured-on-is-not-in-future";
 import { BodyPartMeasurementBelongsToUser } from "../invariants/body-part-measurement-belongs-to-user";
 import { BodyPartMeasurementExists } from "../invariants/body-part-measurement-exists";
@@ -13,6 +16,7 @@ type Dependencies = {
   CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   EventStore: bg.EventStorePort<Measurements.Events.BodyPartMeasurementCorrectedEventType>;
   GetBodyPartMeasurementQuery: Measurements.Queries.GetBodyPartMeasurement;
+  GetBodyPartQuery: Measurements.Queries.GetBodyPart;
 };
 
 export const handleBodyPartMeasurementCorrectCommand =
@@ -32,6 +36,12 @@ export const handleBodyPartMeasurementCorrectCommand =
         measuredOn: command.payload.measuredOn,
       },
     });
+
+    const bodyPart = await deps.GetBodyPartQuery.execute(command.payload.bodyPartId);
+
+    BodyPartExists.enforce({ bodyPart });
+    BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.requesterId });
+    BodyPartIsActive.enforce({ archivedAt: bodyPart!.archivedAt });
 
     const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
 

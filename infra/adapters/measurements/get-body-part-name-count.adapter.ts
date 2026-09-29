@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Measurements from "+measurements";
 import { db } from "+infra/db";
@@ -12,7 +12,11 @@ class GetBodyPartNameCountQueryDrizzle implements Measurements.Queries.GetBodyPa
   ): Promise<tools.IntegerNonNegativeType> {
     const count = await db.$count(
       Schema.bodyParts,
-      and(eq(Schema.bodyParts.userId, userId), eq(Schema.bodyParts.name, bodyPartName)),
+      and(
+        eq(Schema.bodyParts.userId, userId),
+        eq(Schema.bodyParts.name, bodyPartName),
+        isNull(Schema.bodyParts.archivedAt),
+      ),
     );
 
     return tools.Int.nonNegative(count);

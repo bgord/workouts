@@ -3,6 +3,7 @@ export * from "./body-part-circumference";
 export * from "./body-part-id";
 export * from "./body-part-measured-on";
 export * from "./body-part-measurement";
+export * from "./body-part-measurement-entries";
 export * from "./body-part-measurement-id";
 export * from "./body-part-name";
 export * from "./body-weight";

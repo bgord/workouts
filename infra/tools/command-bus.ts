@@ -55,7 +55,7 @@ type AcceptedCommand =
   | MeasurementsCommands.BodyPartDefineCommandType
   | MeasurementsCommands.BodyPartRenameCommandType
   | MeasurementsCommands.BodyPartArchiveCommandType
-  | MeasurementsCommands.BodyPartsMeasureCommandType
+  | MeasurementsCommands.BodyPartMeasureCommandType
   | MeasurementsCommands.BodyPartMeasurementCorrectCommandType
   | MeasurementsCommands.BodyPartMeasurementRemoveCommandType
   | MeasurementsCommands.BodyWeightMeasureCommandType

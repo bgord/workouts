@@ -3,7 +3,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
-import { userId } from "./auth";
+import { anotherUserId, userId } from "./auth";
 import { commit, correlationId, expectAnyId, T0 } from "./shared";
 
 export const bodyWeightMeasurementId = v.parse(
@@ -155,6 +155,20 @@ export const bodyPart: Measurements.VO.BodyPart = {
   id: bodyPartId,
   name: bodyPartName,
   userId,
+  archivedAt: null,
+};
+
+export const archivedBodyPart: Measurements.VO.BodyPart = {
+  id: bodyPartId,
+  name: bodyPartName,
+  userId,
+  archivedAt: T0.ms,
+};
+
+export const anotherUserBodyPart: Measurements.VO.BodyPart = {
+  id: bodyPartId,
+  name: bodyPartName,
+  userId: anotherUserId,
   archivedAt: null,
 };
 

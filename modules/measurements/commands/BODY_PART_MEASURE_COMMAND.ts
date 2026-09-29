@@ -7,11 +7,11 @@ import { BodyPartMeasuredOn } from "../value-objects/body-part-measured-on";
 import { BodyPartMeasurementId } from "../value-objects/body-part-measurement-id";
 
 // Stryker disable next-line StringLiteral
-export const BODY_PARTS_MEASURE_COMMAND = "BODY_PARTS_MEASURE_COMMAND";
+export const BODY_PART_MEASURE_COMMAND = "BODY_PART_MEASURE_COMMAND";
 
-export const BodyPartsMeasureCommand = v.object({
+export const BodyPartMeasureCommand = v.object({
   ...bg.CommandEnvelopeSchema,
-  name: v.literal(BODY_PARTS_MEASURE_COMMAND),
+  name: v.literal(BODY_PART_MEASURE_COMMAND),
   payload: v.object({
     measuredOn: BodyPartMeasuredOn,
     measurements: v.array(
@@ -21,4 +21,4 @@ export const BodyPartsMeasureCommand = v.object({
   }),
 });
 
-export type BodyPartsMeasureCommandType = v.InferOutput<typeof BodyPartsMeasureCommand>;
+export type BodyPartMeasureCommandType = v.InferOutput<typeof BodyPartMeasureCommand>;
