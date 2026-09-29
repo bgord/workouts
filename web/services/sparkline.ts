@@ -1,3 +1,4 @@
+// cSpell:ignore sparkline
 const WIDTH = 72;
 const HEIGHT = 24;
 const PADDING = 3;

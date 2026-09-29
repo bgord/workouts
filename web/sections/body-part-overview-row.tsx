@@ -1,3 +1,4 @@
+// cSpell:ignore sparkline
 import * as bg from "@bgord/ui";
 import { CalendarDays, ChevronDown, ChevronUp } from "lucide-react";
 import { Suspense } from "react";

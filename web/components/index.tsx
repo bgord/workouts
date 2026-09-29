@@ -1,3 +1,4 @@
+// cSpell:ignore sparkline
 export * from "./action-hint";
 export * from "./add-button";
 export * from "./add-placeholder";

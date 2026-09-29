@@ -1,3 +1,4 @@
+// cSpell:ignore sparkline
 import { SparklineMath } from "../services/sparkline";
 
 export function Sparkline(props: { values: ReadonlyArray<number> }) {
