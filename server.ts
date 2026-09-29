@@ -458,6 +458,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   server.get("/liveness", ...new bg.LivenessHonoHandler().handle());
   server.get(
     "/readiness",
+    Tools.ShieldRateLimit.handle(),
     Tools.ShieldTimeout.handle(),
     ...new bg.ReadinessHonoHandler({ prerequisites: Tools.Prerequisites.readiness, redactor }).handle(),
   );
