@@ -1,5 +1,6 @@
 import type * as bg from "@bgord/bun";
 import { eq } from "drizzle-orm";
+import * as Auth from "+auth";
 import * as measurements from "+measurements";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -10,6 +11,7 @@ type Dependencies = {
     | measurements.Events.BodyWeightMeasurementCorrectedEventType
     | measurements.Events.BodyWeightMeasurementRemovedEventType
     | measurements.Events.BodyWeightReferenceSetEventType
+    | Auth.Events.AccountDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -31,6 +33,10 @@ export class BodyWeightMeasurementsProjector {
     deps.EventBus.on(
       measurements.Events.BODY_WEIGHT_REFERENCE_SET_EVENT,
       deps.EventHandler.handle(this.onBodyWeightReferenceSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Auth.Events.ACCOUNT_DELETED_EVENT,
+      deps.EventHandler.handle(this.onAccountDeletedEvent.bind(this)),
     );
   }
 
@@ -72,5 +78,11 @@ export class BodyWeightMeasurementsProjector {
       .update(Schema.bodyWeightMeasurements)
       .set({ reference: true, goal: event.payload.goal })
       .where(eq(Schema.bodyWeightMeasurements.id, event.payload.measurementId));
+  }
+
+  async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
+    await db
+      .delete(Schema.bodyWeightMeasurements)
+      .where(eq(Schema.bodyWeightMeasurements.userId, event.payload.userId));
   }
 }
