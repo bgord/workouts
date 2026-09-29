@@ -25,7 +25,6 @@ export * from "./hairline";
 export * from "./icon-button";
 export * from "./language-selector";
 export * from "./length-delta";
-export * from "./length-input";
 export * from "./length-value";
 export * from "./line-chart";
 export * from "./logo";

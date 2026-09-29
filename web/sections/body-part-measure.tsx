@@ -69,13 +69,14 @@ export function BodyPartMeasure() {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.related}
         >
-          <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
-            <label data-color="neutral-400" data-fs="sm" data-grow="1" {...measuredOn.label.props}>
-              {t("measurements.body_parts.measure.date.label")}
-            </label>
+          <div data-stack="y" {...ui.Gap.field}>
+            <label {...measuredOn.label.props}>{t("measurements.body_parts.measure.date.label")}</label>
 
             <input
               className="c-input"
+              data-md-width="100%"
+              data-self="start"
+              data-width="auto"
               disabled={mutation.isLoading}
               type="date"
               {...measuredOn.input.props}

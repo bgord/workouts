@@ -13,26 +13,33 @@ export function BodyParts() {
 
   return (
     <ui.Main>
-      <div data-stack="x" {...ui.Gap.related}>
+      <div data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
         <ui.ButtonBack to="/measurements" />
 
         <h1 data-grow="1">{t("measurements.body_parts.header")}</h1>
 
-        <div data-stack="x" {...ui.Gap.inline}>
-          <BodyPartMeasurementImport />
+        <div data-md-width="100%" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+          <BodyPartManage />
 
-          <BodyPartMeasurementExport />
+          <BodyPartMeasure />
         </div>
       </div>
 
-      <div data-cross="center" data-stack="x" {...ui.Gap.inline} data-ml="auto">
-        <BodyPartMeasure />
-        <BodyPartManage />
+      <div data-stack="y" {...ui.Gap.related}>
+        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+          <h2 data-grow="1">{t("measurements.body_parts.latest")}</h2>
+
+          <div data-stack="x" {...ui.Gap.inline}>
+            <BodyPartMeasurementImport />
+
+            <BodyPartMeasurementExport />
+          </div>
+        </div>
+
+        <BodyPartsEmpty />
+
+        <BodyPartsOverview />
       </div>
-
-      <BodyPartsEmpty />
-
-      <BodyPartsOverview />
     </ui.Main>
   );
 }

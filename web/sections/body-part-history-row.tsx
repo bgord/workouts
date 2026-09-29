@@ -8,20 +8,13 @@ import { BodyPartMeasurementRemove } from "./body-part-measurement-remove";
 export function BodyPartHistoryRow(props: {
   measurement: BodyPartSummaryMeasurement;
   previous: BodyPartSummaryMeasurement | undefined;
-  first: boolean;
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const bodyPartMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
 
   return (
-    <ui.HairlineRow
-      data-cross="center"
-      data-stack="x"
-      first={props.first}
-      tone="subtle"
-      {...ui.Spacing.rowCompact}
-    >
+    <ui.HairlineRow data-cross="center" data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
       {bodyPartMeasurementCorrect.on && (
         <BodyPartMeasurementCorrect measurement={props.measurement} {...bodyPartMeasurementCorrect} />
       )}

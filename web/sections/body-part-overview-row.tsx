@@ -1,6 +1,5 @@
 // cSpell:ignore sparkline
 import * as bg from "@bgord/ui";
-import { CalendarDays } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
@@ -14,7 +13,7 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
   const [latest, previous] = props.measurements;
 
   return (
-    <ui.HairlineRow data-stack="y" first={props.first} {...ui.Spacing.row}>
+    <ui.HairlineRow data-stack="y" first={props.first} {...ui.Spacing.row} {...ui.Gap.related}>
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.ChevronToggle {...bodyPartHistory} disabled={!latest} />
 
@@ -24,10 +23,7 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
           </span>
 
           {latest ? (
-            <small data-color="neutral-600" data-cross="center" data-stack="x" {...ui.Gap.inline}>
-              <CalendarDays data-size="xs" />
-              {DateFormat.daysAgo(language, latest.measuredOn)}
-            </small>
+            <small data-color="neutral-600">{DateFormat.plainDay(language, latest.measuredOn)}</small>
           ) : (
             <small data-color="neutral-600">{t("measurements.body_parts.measure.never")}</small>
           )}
@@ -54,7 +50,6 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
         <ul data-stack="y" {...ui.Spacing.inset} {...bodyPartHistory.props.target}>
           {props.measurements.map((measurement, index) => (
             <BodyPartHistoryRow
-              first={index === 0}
               key={measurement.id}
               measurement={measurement}
               previous={props.measurements[index + 1]}

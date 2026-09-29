@@ -31,34 +31,38 @@ export function BodyPartMeasureRow(props: BodyPartMeasureRowProps) {
           {props.name}
         </span>
 
-        {latest ? (
-          <small data-cross="center" data-stack="x" {...ui.Gap.cluster}>
-            <span
-              data-bg="alpha-subtle"
-              data-br="sm"
-              data-color="neutral-300"
-              data-fw="medium"
-              data-px="1-5"
-              data-transform="font-variant-numeric"
-            >
-              <ui.LengthValue millimeters={latest.value} />
-            </span>
-
-            <span data-color="neutral-600">{DateFormat.daysAgo(language, latest.measuredOn)}</span>
-          </small>
-        ) : (
-          <small data-color="neutral-600">{t("measurements.body_parts.measure.never")}</small>
-        )}
+        <small data-color="neutral-600">
+          {latest
+            ? DateFormat.plainDay(language, latest.measuredOn)
+            : t("measurements.body_parts.measure.never")}
+        </small>
       </div>
 
       {typed !== null && <ui.LengthDelta current={typed} data-fs="xs" previous={latest?.value} />}
 
-      <ui.LengthInput
-        aria-label={t("measurements.body_parts.measure.value.label", { name: props.name })}
+      <ui.Stepper
         disabled={props.disabled}
-        onChange={(event) => props.onChange(event.currentTarget.value)}
+        field={{
+          value: typed === null ? undefined : LengthFormat.centimeters(typed),
+          set: (next) => props.onChange(next === undefined ? "" : String(next)),
+          input: {
+            props: {
+              id: `body-part-measure-${props.id}`,
+              name: `body-part-measure-${props.id}`,
+              value: props.value,
+              onChange: (event) => props.onChange(event.currentTarget.value),
+            },
+          },
+        }}
+        label={t("measurements.body_parts.measure.value.label", { name: props.name })}
+        max={300}
+        min={0.1}
+        origin={latest ? LengthFormat.centimeters(latest.value) : undefined}
         placeholder={latest ? LengthFormat.centimeters(latest.value).toFixed(1) : "—"}
-        value={props.value}
+        step={0.1}
+        unit={t("measurements.body_parts.measure.unit")}
+        variant="compact"
+        width={72}
       />
     </ui.HairlineRow>
   );
