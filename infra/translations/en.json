@@ -144,6 +144,7 @@
   "exercise.update.error": "Could not update the exercise",
   "exercise.update.name.cta": "Rename the exercise",
   "exercise.update.name.label": "Exercise name",
+  "measurements.body_parts.header": "Body parts",
   "measurements.body_weight.header": "Body weight",
   "measurements.body_weight.value": "{{weight}} kg",
   "measurements.body_weight.measure.date.label": "Date",

@@ -144,6 +144,7 @@
   "exercise.update.error": "Nie udało się zaktualizować ćwiczenia",
   "exercise.update.name.cta": "Zmień nazwę ćwiczenia",
   "exercise.update.name.label": "Nazwa ćwiczenia",
+  "measurements.body_parts.header": "Obwody",
   "measurements.body_weight.header": "Masa ciała",
   "measurements.body_weight.value": "{{weight}} kg",
   "measurements.body_weight.measure.date.label": "Data",

@@ -4,6 +4,7 @@ import { createRootRouteWithContext, createRoute, notFound, Router, redirect } f
 import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
+import * as MeasurementsTabForm from "../app/services/measurements-tab-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import {
@@ -167,6 +168,7 @@ export const measurementsRoute = createRoute({
   validateSearch: (value: Record<string, unknown>) => ({
     ...BodyWeightMeasurementFiltersForm.Form.validate(value),
     ...BodyWeightChartForm.Form.validate(value),
+    ...MeasurementsTabForm.Form.validate(value),
   }),
   loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {

@@ -1,32 +1,46 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
+import { MeasurementsTabOptions } from "../../app/services/measurements-tab-form";
 import * as ui from "../components";
+import { measurementsRoute } from "../router";
 import { BodyWeightMeasure } from "../sections/body-weight-measure";
 import { BodyWeightMeasurementExport } from "../sections/body-weight-measurement-export";
 import { BodyWeightMeasurementHistory } from "../sections/body-weight-measurement-history";
 import { BodyWeightMeasurementImport } from "../sections/body-weight-measurement-import";
 import { BodyWeightMeasurementsEmpty } from "../sections/body-weight-measurements-empty";
+import { MeasurementsTabs } from "../sections/measurements-tabs";
 
 export function Measurements() {
   const t = bg.useTranslations();
+  const search = measurementsRoute.useSearch();
+
+  const bodyWeight = search.tab !== MeasurementsTabOptions.body_parts;
 
   return (
     <ui.Main>
       <div data-stack="x" {...ui.Gap.related}>
-        <h1 data-grow="1">{t("measurements.body_weight.header")}</h1>
+        <h1 data-grow="1">{t("app.measurements")}</h1>
 
-        <div data-stack="x" {...ui.Gap.inline}>
-          <BodyWeightMeasurementImport />
+        {bodyWeight && (
+          <div data-stack="x" {...ui.Gap.inline}>
+            <BodyWeightMeasurementImport />
 
-          <BodyWeightMeasurementExport />
-        </div>
+            <BodyWeightMeasurementExport />
+          </div>
+        )}
       </div>
 
-      <BodyWeightMeasure />
+      <MeasurementsTabs />
 
-      <BodyWeightMeasurementsEmpty />
+      {bodyWeight && (
+        <>
+          <BodyWeightMeasure />
 
-      <BodyWeightMeasurementHistory />
+          <BodyWeightMeasurementsEmpty />
+
+          <BodyWeightMeasurementHistory />
+        </>
+      )}
     </ui.Main>
   );
 }

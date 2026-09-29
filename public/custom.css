@@ -130,6 +130,32 @@ a {
   }
 }
 
+[data-segmented] {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  inline-size: 100%;
+  max-inline-size: 360px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-neutral-900);
+}
+[data-segmented] > a {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  block-size: 32px;
+  border-radius: var(--radius-sm);
+  color: var(--color-neutral-400);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+[data-segmented] > a[aria-selected="true"] {
+  background-color: var(--color-neutral-800);
+  color: var(--color-neutral-100);
+}
+
 .c-button[data-variant="ghost"][data-tone="danger"] {
   color: var(--color-danger-400);
 }
