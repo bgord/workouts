@@ -186,6 +186,7 @@ modules/
 │   │   ├── body-part-belongs-to-user.ts
 │   │   ├── body-part-exists.ts
 │   │   ├── body-part-is-active.ts
+│   │   ├── body-part-is-defined.ts
 │   │   ├── body-part-measured-on-is-not-in-future.ts
 │   │   ├── body-part-measurement-belongs-to-user.ts
 │   │   ├── body-part-measurement-exists.ts
@@ -211,6 +212,9 @@ modules/
 │   │   ├── list-body-weight-measurements.ts
 │   │   └── list-body-weight-months.ts
 │   ├── services
+│   │   ├── body-part-list-actions.ts
+│   │   ├── body-part-list-item-actions.ts
+│   │   ├── body-part-measurement-list-item-actions.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
