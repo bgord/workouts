@@ -153,6 +153,7 @@ modules/
 │   │   ├── handleBodyPartMeasureCommand.ts
 │   │   ├── handleBodyPartMeasurementCorrectCommand.ts
 │   │   ├── handleBodyPartMeasurementRemoveCommand.ts
+│   │   ├── handleBodyPartMeasurementsImportCommand.ts
 │   │   ├── handleBodyPartRenameCommand.ts
 │   │   ├── handleBodyWeightMeasureCommand.ts
 │   │   ├── handleBodyWeightMeasurementCorrectCommand.ts
@@ -165,6 +166,7 @@ modules/
 │   │   ├── BODY_PART_MEASURE_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_REMOVE_COMMAND.ts
+│   │   ├── BODY_PART_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_PART_RENAME_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
@@ -200,6 +202,7 @@ modules/
 │   ├── open-host-queries
 │   ├── ports
 │   ├── queries
+│   │   ├── get-body-part-by-name.ts
 │   │   ├── get-body-part-measurement.ts
 │   │   ├── get-body-part-name-count.ts
 │   │   ├── get-body-part.ts
@@ -213,6 +216,7 @@ modules/
 │   ├── services
 │   │   ├── body-part-list-actions.ts
 │   │   ├── body-part-measurement-export-file-csv.ts
+│   │   ├── body-part-measurement-import-file-csv.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
@@ -225,6 +229,8 @@ modules/
 │       ├── body-part-measurement-entries.ts
 │       ├── body-part-measurement-entries.validation.ts
 │       ├── body-part-measurement-id.ts
+│       ├── body-part-measurement-import-max-size.ts
+│       ├── body-part-measurement-import-mime-registry.ts
 │       ├── body-part-measurement.ts
 │       ├── body-part-name.ts
 │       ├── body-part-name.validation.ts
@@ -592,6 +598,7 @@ app/
 │   │   ├── body-part-measure.ts
 │   │   ├── body-part-measurement-correct.ts
 │   │   ├── body-part-measurement-export.ts
+│   │   ├── body-part-measurement-import.ts
 │   │   ├── body-part-measurement-remove.ts
 │   │   ├── body-part-rename.ts
 │   │   ├── body-weight-chart-get.ts
@@ -687,6 +694,7 @@ infra/
 │   │   ├── list-exercise-categories.adapter.ts
 │   │   └── list-exercises-with-categories.adapter.ts
 │   ├── measurements
+│   │   ├── get-body-part-by-name.adapter.ts
 │   │   ├── get-body-part-measurement.adapter.ts
 │   │   ├── get-body-part-name-count.adapter.ts
 │   │   ├── get-body-part.adapter.ts
