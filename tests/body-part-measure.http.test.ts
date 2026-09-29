@@ -85,10 +85,7 @@ describe(`POST ${url}`, async () => {
         method: "POST",
         body: JSON.stringify({
           measuredOn: mocks.bodyPartMeasuredOn,
-          measurements: [
-            { bodyPartId: mocks.bodyPartId, value: mocks.bodyPartCircumference },
-            { bodyPartId: mocks.bodyPartId, value: mocks.anotherBodyPartCircumference },
-          ],
+          measurements: mocks.duplicateBodyPartMeasurementEntries,
         }),
       },
       mocks.ip,

@@ -238,6 +238,10 @@ export const multipleBodyPartMeasurementEntries = [
   { bodyPartId, value: bodyPartCircumference },
   { bodyPartId: anotherBodyPartId, value: anotherBodyPartCircumference },
 ];
+export const duplicateBodyPartMeasurementEntries = [
+  { bodyPartId, value: bodyPartCircumference },
+  { bodyPartId, value: anotherBodyPartCircumference },
+];
 
 export const bodyPartMeasurement: Measurements.VO.BodyPartMeasurement = {
   id: bodyPartMeasurementId,
