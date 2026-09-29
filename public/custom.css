@@ -115,6 +115,16 @@ a {
   }
 }
 
+[data-tile] {
+  inline-size: 168px;
+}
+
+@media (width <= 768px) {
+  [data-tile] {
+    inline-size: 100%;
+  }
+}
+
 [data-log-panel] {
   width: calc(100% - var(--spacing-3) * 2);
   max-width: calc(768px - var(--spacing-3) * 2);

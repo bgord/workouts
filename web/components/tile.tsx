@@ -1,14 +1,10 @@
-import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { Gap } from "./gap";
 import { Spacing } from "./spacing";
 
-const TILE_WIDTH = 168;
-
 const item = {
   "data-grow": "1",
-  "data-md-width": "100%",
-  ...bg.Rhythm(TILE_WIDTH).times(1).style.width,
+  "data-tile": "",
 } as const;
 
 const card = {
