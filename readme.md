@@ -238,7 +238,6 @@ modules/
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
-│       └── measurements-tab-options.ts
 ├── notifications
 │   ├── events
 │   │   ├── WEEKLY_SUMMARY_SENT_EVENT.ts
@@ -649,7 +648,6 @@ app/
     ├── exercise-add-form.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
-    ├── measurements-tab-form.ts
     ├── plan-create-form.ts
     ├── plan-description-form.ts
     ├── plan-section-cooldown-form.ts

@@ -7,12 +7,12 @@ type Dependencies = { FileInspection: bg.FileInspectionPort };
 
 export function createHashFile(deps: Dependencies) {
   return new bg.HashFileSha256Adapter({
-    HashContent: new bg.HashContentSha256Strategy(),
+    HashBytes: new bg.HashBytesSha256Strategy(),
     MimeRegistry: new tools.MimeRegistry([
       ...Preferences.VO.ProfileAvatarMimeRegistry.entries,
       ...Exercises.VO.ExerciseImageMimeRegistry.entries,
     ]),
-    FileReaderText: new bg.FileReaderTextAdapter(),
+    FileReaderRaw: new bg.FileReaderRawAdapter(),
     ...deps,
   });
 }
