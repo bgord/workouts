@@ -4,6 +4,7 @@ import { GetBodyPartMeasurementQuery } from "./get-body-part-measurement.adapter
 import { GetBodyPartNameCountQuery } from "./get-body-part-name-count.adapter";
 import { GetBodyWeightMeasurementQuery } from "./get-body-weight-measurement.adapter";
 import { ListBodyPartMeasurementExportRowsQuery } from "./list-body-part-measurement-export-rows.adapter";
+import { ListBodyPartNamesQuery } from "./list-body-part-names.adapter";
 import { ListBodyPartsQuery } from "./list-body-parts.adapter";
 import { ListBodyWeightMeasurementsQuery } from "./list-body-weight-measurements.adapter";
 import { ListBodyWeightMeasurementsForMonthQuery } from "./list-body-weight-measurements-for-month.adapter";
@@ -18,6 +19,7 @@ export function createMeasurementsAdapters() {
     GetBodyPartNameCountQuery,
     GetBodyWeightMeasurementQuery,
     ListBodyPartMeasurementExportRowsQuery,
+    ListBodyPartNamesQuery,
     ListBodyPartsQuery,
     ListBodyWeightMeasurementsQuery,
     ListBodyWeightMeasurementsForMonthQuery,
