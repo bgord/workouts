@@ -1,4 +1,4 @@
-import type * as VO from "+measurements/value-objects";
+import * as VO from "+measurements/value-objects";
 
 type BodyPartSummariesFacts = {
   bodyParts: ReadonlyArray<VO.BodyPart>;
@@ -12,6 +12,7 @@ export class BodyPartSummaries {
     return this.facts.bodyParts.map((bodyPart) => {
       const recent = this.facts.measurements
         .filter((measurement) => measurement.bodyPartId === bodyPart.id)
+        .slice(0, VO.BodyPartSummarySeriesSize)
         .map(({ id, value, measuredOn }) => ({ id, value, measuredOn }));
 
       const [latest, previous] = recent;
