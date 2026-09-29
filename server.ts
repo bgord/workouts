@@ -350,6 +350,20 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     ),
   );
   measurements.post(
+    "/body-part/import",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Measurements.VO.BodyPartMeasurementImportMaxSize,
+        MimeRegistry: Measurements.VO.BodyPartMeasurementImportMimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorTextStrategy(tools.Mimes.csv.mime) },
+    ).handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementImport(deps)),
+  );
+  measurements.post(
     "/body-part",
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartDefine(deps)),

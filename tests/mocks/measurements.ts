@@ -263,6 +263,9 @@ export const bodyPartMeasurementCsv = [
   `${bodyPartMeasurementId},${bodyPartName},${bodyPartCircumference},${bodyPartMeasuredOn}`,
 ].join("");
 
+export const bodyPartMeasurementCsvFile = (content: string) =>
+  new File([content], "body-part.csv", { type: tools.Mimes.csv.mime.toString() });
+
 export const GenericBodyPartMeasuredEvent = {
   id: expectAnyId,
   correlationId,
