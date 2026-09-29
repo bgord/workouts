@@ -5,6 +5,8 @@ import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import { BodyPartManage } from "../sections/body-part-manage";
 import { BodyPartMeasure } from "../sections/body-part-measure";
+import { BodyPartMeasurementExport } from "../sections/body-part-measurement-export";
+import { BodyPartMeasurementImport } from "../sections/body-part-measurement-import";
 import { BodyPartsEmpty } from "../sections/body-parts-empty";
 import { BodyPartsOverview } from "../sections/body-parts-overview";
 import { BodyWeightMeasure } from "../sections/body-weight-measure";
@@ -22,11 +24,13 @@ export function Measurements() {
 
   return (
     <ui.Main>
-      <div data-stack="x" {...ui.Gap.related}>
-        <h1 data-grow="1">{t("app.measurements")}</h1>
+      <h1>{t("app.measurements")}</h1>
+
+      <div data-cross="center" data-main="between" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+        <MeasurementsTabs />
 
         {bodyWeight && (
-          <div data-stack="x" {...ui.Gap.inline}>
+          <div data-cross="center" data-ml="auto" data-stack="x" {...ui.Gap.inline}>
             <BodyWeightMeasurementImport />
 
             <BodyWeightMeasurementExport />
@@ -34,15 +38,17 @@ export function Measurements() {
         )}
 
         {!bodyWeight && (
-          <div data-stack="x" {...ui.Gap.inline}>
+          <div data-cross="center" data-ml="auto" data-stack="x" {...ui.Gap.inline}>
             <BodyPartManage />
+
+            <BodyPartMeasurementImport />
+
+            <BodyPartMeasurementExport />
 
             <BodyPartMeasure />
           </div>
         )}
       </div>
-
-      <MeasurementsTabs />
 
       {!bodyWeight && <BodyPartsEmpty />}
 

@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Ruler } from "lucide-react";
+import { Settings2 } from "lucide-react";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import { BodyPartDefine } from "./body-part-define";
@@ -13,16 +13,14 @@ export function BodyPartManage() {
 
   return (
     <>
-      <button
-        className="c-button"
-        data-variant="ghost"
+      <ui.IconButton
+        aria-label={t("measurements.body_parts.manage.cta")}
         onClick={bodyPartManage.enable}
-        type="button"
+        title={t("measurements.body_parts.manage.cta")}
         {...bodyPartManage.props.controller}
       >
-        <Ruler data-size="sm" />
-        {t("measurements.body_parts.manage.cta")}
-      </button>
+        <Settings2 data-size="sm" />
+      </ui.IconButton>
 
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...bodyPartManage}>
         <ui.DialogHeader onClose={bodyPartManage.disable}>

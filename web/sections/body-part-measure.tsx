@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Ruler } from "lucide-react";
+import { Check, Plus } from "lucide-react";
 import { useState } from "react";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
@@ -54,7 +54,7 @@ export function BodyPartMeasure() {
         type="button"
         {...bodyPartMeasure.props.controller}
       >
-        <Ruler data-size="sm" />
+        <Plus data-size="sm" />
         {t("measurements.body_parts.measure.header")}
       </button>
 

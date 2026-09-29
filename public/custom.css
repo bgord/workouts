@@ -134,8 +134,7 @@ a {
   display: flex;
   gap: 3px;
   padding: 3px;
-  inline-size: 100%;
-  max-inline-size: 360px;
+  inline-size: min(100%, 360px);
   border-radius: var(--radius-md);
   background-color: var(--color-neutral-900);
 }
