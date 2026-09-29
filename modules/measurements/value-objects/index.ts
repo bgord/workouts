@@ -5,6 +5,8 @@ export * from "./body-part-measured-on";
 export * from "./body-part-measurement";
 export * from "./body-part-measurement-entries";
 export * from "./body-part-measurement-id";
+export * from "./body-part-measurement-import-max-size";
+export * from "./body-part-measurement-import-mime-registry";
 export * from "./body-part-name";
 export * from "./body-part-summary";
 export * from "./body-weight";
