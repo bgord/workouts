@@ -5,6 +5,7 @@ export * from "./body-part-measure";
 export * from "./body-part-measurement-correct";
 export * from "./body-part-measurement-export";
 export * from "./body-part-measurement-import";
+export * from "./body-part-measurement-import-template";
 export * from "./body-part-measurement-remove";
 export * from "./body-part-rename";
 export * from "./body-weight-chart-get";

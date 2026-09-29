@@ -349,6 +349,13 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
       HTTP.Measurements.BodyPartMeasurementExport({ ...deps, ...Adapters.Measurements }),
     ),
   );
+  measurements.get(
+    "/body-part/import/template",
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(
+      HTTP.Measurements.BodyPartMeasurementImportTemplate({ ...deps, ...Adapters.Measurements }),
+    ),
+  );
   measurements.post(
     "/body-part/import",
     Tools.ShieldCaptcha.handle(),

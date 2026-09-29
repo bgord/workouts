@@ -86,7 +86,7 @@ export function BodyPartMeasurementImport() {
               <ui.TextLinkAnchor
                 data-shrink="0"
                 download
-                href="/public/body-part-measurements-template.csv"
+                href="/api/measurements/body-part/import/template"
                 rel="noopener"
                 target="_blank"
               >
