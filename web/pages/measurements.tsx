@@ -4,6 +4,8 @@ import { MeasurementsTabOptions } from "../../app/services/measurements-tab-form
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
 import { BodyPartManage } from "../sections/body-part-manage";
+import { BodyPartMeasure } from "../sections/body-part-measure";
+import { BodyPartsEmpty } from "../sections/body-parts-empty";
 import { BodyWeightMeasure } from "../sections/body-weight-measure";
 import { BodyWeightMeasurementExport } from "../sections/body-weight-measurement-export";
 import { BodyWeightMeasurementHistory } from "../sections/body-weight-measurement-history";
@@ -30,10 +32,18 @@ export function Measurements() {
           </div>
         )}
 
-        {!bodyWeight && <BodyPartManage />}
+        {!bodyWeight && (
+          <div data-stack="x" {...ui.Gap.inline}>
+            <BodyPartManage />
+
+            <BodyPartMeasure />
+          </div>
+        )}
       </div>
 
       <MeasurementsTabs />
+
+      {!bodyWeight && <BodyPartsEmpty />}
 
       {bodyWeight && (
         <>
