@@ -172,14 +172,15 @@ export const measurementsRoute = createRoute({
   }),
   loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const [{ month, measurements, previous, months, stats }, { points }] = await Promise.all([
+    const [{ month, measurements, previous, months, stats }, { points }, bodyParts] = await Promise.all([
       Measurements.listBodyWeight(context.request, { month: deps.month }),
       Measurements.bodyWeightChart(context.request, {
         granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
       }),
+      Measurements.listBodyParts(context.request),
     ]);
 
-    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points };
+    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points, bodyParts };
   },
 });
 

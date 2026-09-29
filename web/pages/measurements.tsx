@@ -3,6 +3,7 @@ import * as bg from "@bgord/ui";
 import { MeasurementsTabOptions } from "../../app/services/measurements-tab-form";
 import * as ui from "../components";
 import { measurementsRoute } from "../router";
+import { BodyPartManage } from "../sections/body-part-manage";
 import { BodyWeightMeasure } from "../sections/body-weight-measure";
 import { BodyWeightMeasurementExport } from "../sections/body-weight-measurement-export";
 import { BodyWeightMeasurementHistory } from "../sections/body-weight-measurement-history";
@@ -28,6 +29,8 @@ export function Measurements() {
             <BodyWeightMeasurementExport />
           </div>
         )}
+
+        {!bodyWeight && <BodyPartManage />}
       </div>
 
       <MeasurementsTabs />

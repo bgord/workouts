@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import type { BodyPartListResponse } from "../../modules/measurements/queries/list-body-parts";
 import type { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import type { BodyWeightChartPoint } from "../../modules/measurements/value-objects/body-weight-chart-point";
 import type { BodyWeightHistoryMonthType } from "../../modules/measurements/value-objects/body-weight-history-month";
@@ -16,7 +17,18 @@ type BodyWeightListResponse = {
 
 type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
 
+const unavailable = { available: false, enabled: false, hints: [] };
+
 export class Measurements {
+  static async listBodyParts(request: Request | null): Promise<BodyPartListResponse> {
+    return bg.ApiClient.json<BodyPartListResponse>(
+      "/api/measurements/body-part/list",
+      request,
+      { data: [], actions: { measure: unavailable } },
+      { method: "QUERY" },
+    );
+  }
+
   static async listBodyWeight(
     request: Request | null,
     params: { month?: BodyWeightHistoryMonthType },
