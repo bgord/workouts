@@ -24,7 +24,7 @@ export class Measurements {
     return bg.ApiClient.json<BodyPartListResponse>(
       "/api/measurements/body-part/list",
       request,
-      { data: [], actions: { measure: unavailable, import: unavailable } },
+      { data: [], actions: { import: unavailable } },
       { method: "QUERY" },
     );
   }

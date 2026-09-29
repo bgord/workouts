@@ -5,13 +5,13 @@ import { bodyPartsRoute } from "../router";
 export function BodyPartsEmpty() {
   const { bodyParts } = bodyPartsRoute.useLoaderData();
 
-  if (bodyParts.actions.measure.enabled) return null;
+  if (bodyParts.actions.import.enabled) return null;
 
   return (
     <ui.EmptyState>
       <ui.EmptyStateIcon icon={Ruler} />
 
-      <ui.ActionHint {...bodyParts.actions.measure} data-color="neutral-300" data-mt="2" />
+      <ui.ActionHint {...bodyParts.actions.import} data-color="neutral-300" data-mt="2" />
     </ui.EmptyState>
   );
 }

@@ -2,7 +2,6 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { BodyPartManage } from "../sections/body-part-manage";
-import { BodyPartMeasure } from "../sections/body-part-measure";
 import { BodyPartMeasurementExport } from "../sections/body-part-measurement-export";
 import { BodyPartMeasurementImport } from "../sections/body-part-measurement-import";
 import { BodyPartsEmpty } from "../sections/body-parts-empty";
@@ -18,11 +17,7 @@ export function BodyParts() {
 
         <h1 data-grow="1">{t("measurements.body_parts.header")}</h1>
 
-        <div data-md-width="100%" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
-          <BodyPartManage />
-
-          <BodyPartMeasure />
-        </div>
+        <BodyPartManage />
       </div>
 
       <div data-stack="y" {...ui.Gap.related}>

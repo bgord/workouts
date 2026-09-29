@@ -1,68 +1,151 @@
 import * as bg from "@bgord/ui";
+import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
+import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
-import { BodyPartMeasureRow } from "./body-part-measure-row";
+import { LengthFormat } from "../services/length-format";
 
-export function BodyPartMeasure() {
+export function BodyPartMeasure(props: BodyPartSummary) {
   const t = bg.useTranslations();
-  const { bodyParts } = bodyPartsRoute.useLoaderData();
+  const language = bg.useLanguage();
+  const router = useRouter();
 
-  const bodyPartMeasure = bg.useToggle({ name: "body-part-measure" });
+  const bodyPartMeasure = bg.useToggle({ name: `body-part-measure-${props.id}` });
 
+  const [latest] = props.measurements;
   const today = DateFormat.todayISO();
 
-  const measuredOn = bg.useDateField({ name: "body-part-measured-on", defaultValue: today });
+  const value = bg.useNumberField({
+    name: `body-part-measure-value-${props.id}`,
+    defaultValue: latest ? LengthFormat.centimeters(latest.value) : undefined,
+  });
+  const measuredOn = bg.useDateField({
+    name: `body-part-measure-measured-on-${props.id}`,
+    defaultValue: today,
+  });
 
-  if (!bodyParts.actions.measure.available) return null;
+  const close = bg.exec([value.clear, measuredOn.clear, bodyPartMeasure.disable]);
+
+  const mutation = bg.useMutation({
+    perform: () =>
+      fetch(`/api/measurements/body-part/${props.id}/measure`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({
+          value: LengthFormat.millimeters(value.value ?? 0),
+          measuredOn: measuredOn.value,
+        }),
+      }),
+    onSuccess: async () => {
+      close();
+      await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
+    },
+  });
 
   return (
     <>
-      <button
-        className="c-button"
-        data-md-grow="1"
-        data-variant="primary"
-        disabled={!bodyParts.actions.measure.enabled}
+      <ui.IconButton
+        aria-label={t("measurements.body_parts.measure.header", { name: props.name })}
         onClick={bodyPartMeasure.enable}
-        type="button"
+        title={t("measurements.body_parts.measure.header", { name: props.name })}
         {...bodyPartMeasure.props.controller}
       >
         <Plus data-size="sm" />
-        {t("measurements.body_parts.measure.header")}
-      </button>
+      </ui.IconButton>
 
-      <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...bodyPartMeasure}>
-        <ui.DialogHeader onClose={bodyPartMeasure.disable}>
-          {t("measurements.body_parts.measure.header")}
+      <ui.Dialog {...bodyPartMeasure}>
+        <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([mutation.reset, close])}>
+          {t("measurements.body_parts.measure.header", { name: props.name })}
         </ui.DialogHeader>
 
-        <div data-minh="0" data-stack="y" {...ui.Gap.related}>
-          <div data-stack="y" {...ui.Gap.field}>
-            <label {...measuredOn.label.props}>{t("measurements.body_parts.measure.date.label")}</label>
+        <div data-cross="start" data-stack="x" {...ui.Gap.related}>
+          <div data-grow="1" data-stack="y" {...ui.Gap.inline}>
+            <small data-color="neutral-500">{t("measurements.body_parts.measure.previous")}</small>
 
-            <input
-              className="c-input"
-              data-md-width="100%"
-              data-self="start"
-              data-width="auto"
-              type="date"
-              {...measuredOn.input.props}
-              max={today}
-            />
+            <span data-color="neutral-100" data-fw="semibold" data-transform="font-variant-numeric">
+              {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
+            </span>
+
+            <small data-color="neutral-600">
+              {latest
+                ? DateFormat.daysAgo(language, latest.measuredOn)
+                : t("measurements.body_parts.measure.never")}
+            </small>
           </div>
 
-          <ul data-md-minh="unset" data-minh="0" data-overflow="auto" data-stack="y">
-            {bodyParts.data.map((bodyPart, index) => (
-              <BodyPartMeasureRow
-                first={index === 0}
-                key={bodyPart.id}
-                measuredOn={measuredOn.value}
-                {...bodyPart}
-              />
-            ))}
-          </ul>
+          <div data-cross="end" data-grow="1" data-stack="y" {...ui.Gap.inline}>
+            <small data-color="neutral-500">{t("measurements.body_parts.measure.change")}</small>
+
+            <span data-fw="semibold" data-transform="font-variant-numeric">
+              {latest && value.changed && !value.empty ? (
+                <ui.LengthDelta
+                  current={LengthFormat.millimeters(value.value ?? 0)}
+                  previous={latest.value}
+                />
+              ) : (
+                <span data-color="neutral-600">—</span>
+              )}
+            </span>
+          </div>
         </div>
+
+        <form
+          aria-busy={mutation.isLoading}
+          data-stack="y"
+          onSubmit={mutation.handleSubmit}
+          {...ui.Gap.stack}
+        >
+          <div data-cross="end" data-md-cross="stretch" data-md-stack="y" data-stack="x" {...ui.Gap.related}>
+            <div data-stack="y" {...ui.Gap.field}>
+              <label {...value.label.props}>{t("measurements.body_parts.measure.value.label")}</label>
+
+              <ui.Stepper
+                disabled={mutation.isLoading}
+                field={value}
+                label={t("measurements.body_parts.measure.value.label")}
+                max={300}
+                min={0.1}
+                step={0.1}
+                unit={t("measurements.body_parts.measure.unit")}
+                width={72}
+              />
+            </div>
+
+            <div data-stack="y" {...ui.Gap.field}>
+              <label {...measuredOn.label.props}>{t("measurements.body_parts.measure.date.label")}</label>
+
+              <input
+                className="c-input"
+                data-md-width="100%"
+                data-width="auto"
+                disabled={mutation.isLoading}
+                type="date"
+                {...measuredOn.input.props}
+                max={today}
+              />
+            </div>
+          </div>
+
+          {mutation.isError && <ui.DialogError>{t("measurements.body_parts.measure.error")}</ui.DialogError>}
+
+          <ui.DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([mutation.reset, close])}>
+            <ui.ButtonClear
+              disabled={bg.Fields.allUnchanged([value, measuredOn])}
+              onClick={bg.exec([value.clear, measuredOn.clear, mutation.reset])}
+            />
+
+            <button
+              className="c-button"
+              data-variant="primary"
+              disabled={bg.Fields.anyEmpty([value, measuredOn]) || mutation.isLoading}
+              type="submit"
+            >
+              {t("measurements.body_parts.measure.cta")}
+            </button>
+          </ui.DialogFooter>
+        </form>
       </ui.Dialog>
     </>
   );

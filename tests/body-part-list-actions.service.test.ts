@@ -6,14 +6,13 @@ describe("BodyPartListActions", () => {
   test("active body part", () => {
     const actions = new Measurements.Services.BodyPartListActions({ bodyParts: [mocks.bodyPart] });
 
-    expect(actions.calculate()).toEqual({ measure: mocks.actionAvailable, import: mocks.actionAvailable });
+    expect(actions.calculate()).toEqual({ import: mocks.actionAvailable });
   });
 
   test("BodyPartIsDefined", () => {
     const actions = new Measurements.Services.BodyPartListActions({ bodyParts: [] });
 
     expect(actions.calculate()).toEqual({
-      measure: { available: true, enabled: false, hints: ["body.part.is.defined"] },
       import: { available: true, enabled: false, hints: ["body.part.is.defined"] },
     });
   });

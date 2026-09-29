@@ -13,7 +13,6 @@ export class BodyPartListActions {
     const activeCount = tools.Int.nonNegative(this.facts.bodyParts.length);
 
     return {
-      measure: bg.ActionState.of(true, [bg.ActionBlocker.from(BodyPartIsDefined, { activeCount })]),
       import: bg.ActionState.of(true, [bg.ActionBlocker.from(BodyPartIsDefined, { activeCount })]),
     };
   }

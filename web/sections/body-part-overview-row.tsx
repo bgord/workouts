@@ -4,6 +4,7 @@ import type { BodyPartSummary } from "../../modules/measurements/value-objects/b
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
 import { BodyPartHistoryRow } from "./body-part-history-row";
+import { BodyPartMeasure } from "./body-part-measure";
 
 export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean }) {
   const t = bg.useTranslations();
@@ -56,6 +57,8 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
         >
           {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
         </span>
+
+        <BodyPartMeasure {...props} />
       </div>
 
       {bodyPartHistory.on && (
