@@ -204,6 +204,7 @@ modules/
 │   │   ├── get-body-part-name-count.ts
 │   │   ├── get-body-part.ts
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── list-body-part-measurement-export-rows.ts
 │   │   ├── list-body-parts.ts
 │   │   ├── list-body-weight-measurements-for-month.ts
 │   │   ├── list-body-weight-measurements-for-stats.ts
@@ -211,6 +212,7 @@ modules/
 │   │   └── list-body-weight-months.ts
 │   ├── services
 │   │   ├── body-part-list-actions.ts
+│   │   ├── body-part-measurement-export-file-csv.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
@@ -589,6 +591,7 @@ app/
 │   │   ├── body-part-list.ts
 │   │   ├── body-part-measure.ts
 │   │   ├── body-part-measurement-correct.ts
+│   │   ├── body-part-measurement-export.ts
 │   │   ├── body-part-measurement-remove.ts
 │   │   ├── body-part-rename.ts
 │   │   ├── body-weight-chart-get.ts
@@ -688,6 +691,7 @@ infra/
 │   │   ├── get-body-part-name-count.adapter.ts
 │   │   ├── get-body-part.adapter.ts
 │   │   ├── get-body-weight-measurement.adapter.ts
+│   │   ├── list-body-part-measurement-export-rows.adapter.ts
 │   │   ├── list-body-parts.adapter.ts
 │   │   ├── list-body-weight-measurements-for-month.adapter.ts
 │   │   ├── list-body-weight-measurements-for-stats.adapter.ts
