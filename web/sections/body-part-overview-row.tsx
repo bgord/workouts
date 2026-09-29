@@ -12,7 +12,7 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const bodyPartHistory = bg.useToggle({ name: `body-part-history-${props.id}` });
-  const { history, load } = useBodyPartHistory(props.id);
+  const { history, load, reload } = useBodyPartHistory(props.id, props.latest?.id);
 
   const Chevron = bodyPartHistory.on ? ChevronUp : ChevronDown;
 
@@ -80,7 +80,7 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
           {...bodyPartHistory.props.target}
         >
           <Suspense fallback={<BodyPartHistoryLoading />}>
-            <BodyPartHistory history={history} />
+            <BodyPartHistory history={history} onChange={reload} />
           </Suspense>
         </ul>
       )}

@@ -55,24 +55,13 @@ export function BodyPartMeasureRow(props: BodyPartMeasureRowProps) {
 
       {delta !== null && <ui.LengthDelta data-fs="xs" millimeters={delta} />}
 
-      <input
+      <ui.LengthInput
         aria-label={t("measurements.body_parts.measure.value.label", { name: props.name })}
-        className="c-input"
-        data-shrink="0"
-        data-spin="none"
-        data-transform="font-variant-numeric"
         disabled={props.disabled}
-        inputMode="decimal"
-        min={0.1}
         onChange={(event) => props.onChange(event.currentTarget.value)}
         placeholder={latest !== null ? latest.toFixed(1) : "—"}
-        step={0.1}
-        style={{ ...bg.Rhythm(34).times(1).height, ...bg.Rhythm(88).times(1).width, textAlign: "right" }}
-        type="number"
         value={props.value}
       />
-
-      <small data-color="neutral-500">{t("measurements.body_parts.measure.unit")}</small>
     </ui.HairlineRow>
   );
 }

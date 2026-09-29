@@ -2,42 +2,21 @@ import * as bg from "@bgord/ui";
 import { use } from "react";
 import type { BodyPartMeasurementListResponse } from "../../modules/measurements/queries/list-body-part-measurements";
 import * as ui from "../components";
-import { DateFormat } from "../services/date-format";
-import { LengthFormat } from "../services/length-format";
+import { BodyPartHistoryRow } from "./body-part-history-row";
 
-export function BodyPartHistory(props: { history: Promise<BodyPartMeasurementListResponse> }) {
-  const t = bg.useTranslations();
-  const language = bg.useLanguage();
+export function BodyPartHistory(props: {
+  history: Promise<BodyPartMeasurementListResponse>;
+  onChange: () => void;
+}) {
   const history = use(props.history);
 
   return history.data.map((measurement, index) => (
-    <ui.HairlineRow
-      data-cross="center"
-      data-stack="x"
+    <BodyPartHistoryRow
       first={index === 0}
       key={measurement.id}
-      tone="subtle"
-      {...ui.Spacing.rowCompact}
-    >
-      <span data-color="neutral-300" data-fs="sm" data-grow="1">
-        {DateFormat.plainDay(language, measurement.measuredOn)}
-      </span>
-
-      <ui.LengthDelta data-fs="xs" millimeters={measurement.delta} />
-
-      <span
-        data-color="neutral-0"
-        data-fw="medium"
-        data-shrink="0"
-        data-transform="font-variant-numeric"
-        {...bg.Rhythm(72).times(1).style.minWidth}
-        style={{ textAlign: "right" }}
-      >
-        {t("measurements.body_parts.value", {
-          value: LengthFormat.centimeters(measurement.value).toFixed(1),
-        })}
-      </span>
-    </ui.HairlineRow>
+      measurement={measurement}
+      onChange={props.onChange}
+    />
   ));
 }
 

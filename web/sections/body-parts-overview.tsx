@@ -9,11 +9,7 @@ export function BodyPartsOverview() {
   return (
     <ul data-stack="y">
       {bodyParts.data.map((bodyPart, index) => (
-        <BodyPartOverviewRow
-          first={index === 0}
-          key={`${bodyPart.id}-${bodyPart.latest?.id}`}
-          {...bodyPart}
-        />
+        <BodyPartOverviewRow first={index === 0} key={bodyPart.id} {...bodyPart} />
       ))}
     </ul>
   );
