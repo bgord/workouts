@@ -61,6 +61,7 @@
   "auth.reset.error.generic": "The link is expired or invalid",
   "auth.reset.header": "Set new password",
   "auth.reset.in_progress": "Loading...",
+  "body.part.is.defined": "Define a body part first",
   "dashboard.header": "Dashboard",
   "dashboard.in_progress.header": "In progress",
   "dashboard.next_up.header": "Next up",

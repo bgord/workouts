@@ -21,24 +21,26 @@ describe(`QUERY ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
       .use(spyOn(di.Adapters.Measurements.ListBodyPartMeasurementsQuery, "execute"))
-      .mockResolvedValue([mocks.bodyPartMeasurement]);
+      .mockResolvedValue(mocks.bodyPartMeasurementListResponse);
 
     const response = await server.request(url, { method: "QUERY" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([mocks.bodyPartMeasurement]);
+    expect(json).toEqual(mocks.bodyPartMeasurementListResponse);
   });
 
   test("happy path - empty", async () => {
     const spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
-    spies.use(spyOn(di.Adapters.Measurements.ListBodyPartMeasurementsQuery, "execute")).mockResolvedValue([]);
+    spies
+      .use(spyOn(di.Adapters.Measurements.ListBodyPartMeasurementsQuery, "execute"))
+      .mockResolvedValue(mocks.bodyPartMeasurementListResponseEmpty);
 
     const response = await server.request(url, { method: "QUERY" }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([]);
+    expect(json).toEqual(mocks.bodyPartMeasurementListResponseEmpty);
   });
 });

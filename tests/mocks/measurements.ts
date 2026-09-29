@@ -4,7 +4,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 import { anotherUserId, userId } from "./auth";
-import { commit, correlationId, expectAnyId, T0 } from "./shared";
+import { actionAvailable, commit, correlationId, expectAnyId, T0 } from "./shared";
 
 export const bodyWeightMeasurementId = v.parse(
   Measurements.VO.BodyWeightMeasurementId,
@@ -318,3 +318,21 @@ export const GenericBodyPartMeasurementRemovedEvent = {
   name: "BODY_PART_MEASUREMENT_REMOVED_EVENT",
   payload: { id: bodyPartMeasurementId, requesterId: userId },
 } satisfies Measurements.Events.BodyPartMeasurementRemovedEventType;
+
+export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
+  data: [{ ...bodyPart, actions: { rename: actionAvailable, archive: actionAvailable } }],
+  actions: { measure: actionAvailable },
+};
+
+export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListResponse = {
+  data: [],
+  actions: { measure: { available: true, enabled: false, hints: ["body.part.is.defined"] } },
+};
+
+export const bodyPartMeasurementListResponse: Measurements.Queries.BodyPartMeasurementListResponse = {
+  data: [{ ...bodyPartMeasurement, actions: { correct: actionAvailable } }],
+};
+
+export const bodyPartMeasurementListResponseEmpty: Measurements.Queries.BodyPartMeasurementListResponse = {
+  data: [],
+};

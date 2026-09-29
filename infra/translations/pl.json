@@ -61,6 +61,7 @@
   "auth.reset.error.generic": "Link wygasł lub jest nieprawidłowy",
   "auth.reset.header": "Ustaw nowe hasło",
   "auth.reset.in_progress": "Ładowanie...",
+  "body.part.is.defined": "Najpierw dodaj część ciała",
   "dashboard.header": "Pulpit",
   "dashboard.in_progress.header": "W trakcie",
   "dashboard.next_up.header": "Następny",
