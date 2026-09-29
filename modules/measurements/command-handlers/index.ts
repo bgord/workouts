@@ -3,6 +3,7 @@ export * from "./handleBodyPartDeleteCommand";
 export * from "./handleBodyPartMeasureCommand";
 export * from "./handleBodyPartMeasurementCorrectCommand";
 export * from "./handleBodyPartMeasurementRemoveCommand";
+export * from "./handleBodyPartMeasurementsImportCommand";
 export * from "./handleBodyPartRenameCommand";
 export * from "./handleBodyWeightMeasureCommand";
 export * from "./handleBodyWeightMeasurementCorrectCommand";

@@ -365,6 +365,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetBodyPartMeasurementQuery: Adapters.Measurements.GetBodyPartMeasurementQuery,
     }),
   );
+  Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_MEASUREMENTS_IMPORT_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartMeasurementsImportCommand({
+      ...deps,
+      GetBodyPartByNameQuery: Adapters.Measurements.GetBodyPartByNameQuery,
+    }),
+  );
 
   // Body weight ============================================================
   Tools.CommandBus.on(
