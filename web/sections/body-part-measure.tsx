@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, Plus } from "lucide-react";
 import { useState } from "react";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { LengthFormat } from "../services/length-format";
 import { BodyPartMeasureRow } from "./body-part-measure-row";
@@ -11,7 +11,7 @@ import { BodyPartMeasureRow } from "./body-part-measure-row";
 export function BodyPartMeasure() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { bodyParts } = measurementsRoute.useLoaderData();
+  const { bodyParts } = bodyPartsRoute.useLoaderData();
 
   const bodyPartMeasure = bg.useToggle({ name: "body-part-measure" });
 
@@ -38,7 +38,7 @@ export function BodyPartMeasure() {
     onSuccess: async () => {
       setValues({});
       bodyPartMeasure.disable();
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
     },
   });
 
@@ -48,6 +48,7 @@ export function BodyPartMeasure() {
     <>
       <button
         className="c-button"
+        data-md-grow="1"
         data-variant="primary"
         disabled={!bodyParts.actions.measure.enabled}
         onClick={bodyPartMeasure.enable}

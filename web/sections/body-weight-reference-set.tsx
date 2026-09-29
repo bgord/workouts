@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 
 const goals = [BodyWeightGoalOptions.bulk, BodyWeightGoalOptions.cut, BodyWeightGoalOptions.maintain];
 
@@ -29,7 +29,7 @@ export function BodyWeightReferenceSet(
       }),
     onSuccess: async () => {
       toggle.disable();
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyWeightRoute.id, sync: true });
     },
   });
 

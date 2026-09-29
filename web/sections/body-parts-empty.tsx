@@ -1,9 +1,9 @@
 import { Ruler } from "lucide-react";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 
 export function BodyPartsEmpty() {
-  const { bodyParts } = measurementsRoute.useLoaderData();
+  const { bodyParts } = bodyPartsRoute.useLoaderData();
 
   if (bodyParts.actions.measure.enabled) return null;
 

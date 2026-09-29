@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/body-part-name-form";
 import type { BodyPart } from "../../modules/measurements/value-objects/body-part";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 
 export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
@@ -22,7 +22,7 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
       }),
     onSuccess: async () => {
       toggle.disable();
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
     },
   });
 

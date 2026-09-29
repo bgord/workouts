@@ -4,14 +4,10 @@ import { createRootRouteWithContext, createRoute, notFound, Router, redirect } f
 import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
-import * as MeasurementsTabForm from "../app/services/measurements-tab-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import {
   Avatar,
-  bodyPartListEmpty,
-  bodyWeightChartEmpty,
-  bodyWeightListEmpty,
   Dashboard,
   Exercises,
   I18N,
@@ -23,6 +19,8 @@ import {
   Workouts,
 } from "./api";
 import { NotFound } from "./not-found";
+import { BodyParts as BodyPartsPage } from "./pages/body-parts";
+import { BodyWeight as BodyWeightPage } from "./pages/body-weight";
 import { Catalog as CatalogPage } from "./pages/catalog";
 import { Dashboard as DashboardPage } from "./pages/dashboard";
 import { Exercise as ExercisePage } from "./pages/exercise";
@@ -168,35 +166,34 @@ export const measurementsRoute = createRoute({
   path: "/measurements",
   getParentRoute: () => rootRoute,
   component: MeasurementsPage,
+});
+
+export const bodyWeightRoute = createRoute({
+  path: "/measurements/body-weight",
+  getParentRoute: () => rootRoute,
+  component: BodyWeightPage,
   validateSearch: (value: Record<string, unknown>) => ({
     ...BodyWeightMeasurementFiltersForm.Form.validate(value),
     ...BodyWeightChartForm.Form.validate(value),
-    ...MeasurementsTabForm.Form.validate(value),
   }),
-  loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart, tab: search.tab }),
+  loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const bodyParts = deps.tab === MeasurementsTabForm.MeasurementsTabOptions.body_parts;
-
-    const [{ month, measurements, previous, months, stats }, { points }, bodyPartList] = await Promise.all([
-      bodyParts ? bodyWeightListEmpty : Measurements.listBodyWeight(context.request, { month: deps.month }),
-      bodyParts
-        ? bodyWeightChartEmpty
-        : Measurements.bodyWeightChart(context.request, {
-            granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
-          }),
-      bodyParts ? Measurements.listBodyParts(context.request) : bodyPartListEmpty,
+    const [{ month, measurements, previous, months, stats }, { points }] = await Promise.all([
+      Measurements.listBodyWeight(context.request, { month: deps.month }),
+      Measurements.bodyWeightChart(context.request, {
+        granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
+      }),
     ]);
 
-    return {
-      month,
-      measurements,
-      previous,
-      months,
-      bodyWeightStats: stats,
-      chart: points,
-      bodyParts: bodyPartList,
-    };
+    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points };
   },
+});
+
+export const bodyPartsRoute = createRoute({
+  path: "/measurements/body-parts",
+  getParentRoute: () => rootRoute,
+  component: BodyPartsPage,
+  loader: async ({ context }) => ({ bodyParts: await Measurements.listBodyParts(context.request) }),
 });
 
 export const profileRoute = createRoute({
@@ -219,6 +216,8 @@ const routeTree = rootRoute.addChildren([
   planRoute,
   workoutRoute,
   measurementsRoute,
+  bodyWeightRoute,
+  bodyPartsRoute,
   profileRoute,
 ]);
 

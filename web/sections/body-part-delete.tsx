@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import type { BodyPart } from "../../modules/measurements/value-objects/body-part";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 
 export function BodyPartDelete(props: BodyPart) {
   const t = bg.useTranslations();
@@ -16,7 +16,7 @@ export function BodyPartDelete(props: BodyPart) {
       fetch(`/api/measurements/body-part/${props.id}`, { method: "DELETE", credentials: "include" }),
     onSuccess: async () => {
       bodyPartDelete.disable();
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
     },
   });
 

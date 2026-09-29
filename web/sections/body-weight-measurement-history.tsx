@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 import { BodyWeightMeasurementFilters } from "./body-weight-measurement-filters";
 import { BodyWeightMeasurementList } from "./body-weight-measurement-list";
 import { BodyWeightProgressChart } from "./body-weight-progress-chart";
@@ -8,7 +8,7 @@ import { BodyWeightStats } from "./body-weight-stats";
 
 export function BodyWeightMeasurementHistory() {
   const t = bg.useTranslations();
-  const { bodyWeightStats } = measurementsRoute.useLoaderData();
+  const { bodyWeightStats } = bodyWeightRoute.useLoaderData();
 
   if (!bodyWeightStats) return null;
 

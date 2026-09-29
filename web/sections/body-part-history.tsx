@@ -4,19 +4,11 @@ import type { BodyPartMeasurementListResponse } from "../../modules/measurements
 import * as ui from "../components";
 import { BodyPartHistoryRow } from "./body-part-history-row";
 
-export function BodyPartHistory(props: {
-  history: Promise<BodyPartMeasurementListResponse>;
-  onChange: () => void;
-}) {
+export function BodyPartHistory(props: { history: Promise<BodyPartMeasurementListResponse> }) {
   const history = use(props.history);
 
   return history.data.map((measurement, index) => (
-    <BodyPartHistoryRow
-      first={index === 0}
-      key={measurement.id}
-      measurement={measurement}
-      onChange={props.onChange}
-    />
+    <BodyPartHistoryRow first={index === 0} key={measurement.id} measurement={measurement} />
   ));
 }
 

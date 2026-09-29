@@ -11,7 +11,7 @@ export function DashboardBodyWeightStats() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <ui.EyebrowLink to="/measurements">{t("measurements.body_weight.header")}</ui.EyebrowLink>
+      <ui.EyebrowLink to="/measurements/body-weight">{t("measurements.body_weight.header")}</ui.EyebrowLink>
 
       <BodyWeightStats {...bodyWeightStats} />
     </div>

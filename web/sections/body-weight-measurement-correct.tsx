@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -35,7 +35,7 @@ export function BodyWeightMeasurementCorrect(
       }),
     onSuccess: async () => {
       toggle.disable();
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyWeightRoute.id, sync: true });
     },
   });
 

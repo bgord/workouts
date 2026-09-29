@@ -657,7 +657,6 @@ app/
     ├── exercise-add-form.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
-    ├── measurements-tab-form.ts
     ├── plan-create-form.ts
     ├── plan-description-form.ts
     ├── plan-section-cooldown-form.ts

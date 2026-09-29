@@ -1,13 +1,13 @@
 import * as bg from "@bgord/ui";
 import { Settings2 } from "lucide-react";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 import { BodyPartDefine } from "./body-part-define";
 import { BodyPartRow } from "./body-part-row";
 
 export function BodyPartManage() {
   const t = bg.useTranslations();
-  const { bodyParts } = measurementsRoute.useLoaderData();
+  const { bodyParts } = bodyPartsRoute.useLoaderData();
 
   const bodyPartManage = bg.useToggle({ name: "body-part-manage" });
 

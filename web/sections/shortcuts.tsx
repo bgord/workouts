@@ -29,7 +29,10 @@ export function Shortcuts() {
     "/": { header: t("app.dashboard"), shortcuts: ShortcutDefinitions.DashboardGroup },
     "/catalog": { header: t("app.catalog"), shortcuts: ShortcutDefinitions.CatalogGroup },
     "/workouts": { header: t("app.workouts"), shortcuts: ShortcutDefinitions.WorkoutsGroup },
-    "/measurements": { header: t("app.measurements"), shortcuts: ShortcutDefinitions.MeasurementsGroup },
+    "/measurements/body-weight": {
+      header: t("app.measurements"),
+      shortcuts: ShortcutDefinitions.MeasurementsGroup,
+    },
   };
 
   const group = groups[pathname];

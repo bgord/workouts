@@ -4,12 +4,12 @@ import { Check, X } from "lucide-react";
 import { useState } from "react";
 import type { BodyPartMeasurement } from "../../modules/measurements/value-objects/body-part-measurement";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { LengthFormat } from "../services/length-format";
 
 export function BodyPartMeasurementCorrect(
-  props: { measurement: BodyPartMeasurement; onSuccess: () => void } & bg.UseToggleReturnType,
+  props: { measurement: BodyPartMeasurement } & bg.UseToggleReturnType,
 ) {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -42,8 +42,7 @@ export function BodyPartMeasurementCorrect(
       }),
     onSuccess: async () => {
       toggle.disable();
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
-      props.onSuccess();
+      await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
     },
   });
 

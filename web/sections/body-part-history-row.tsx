@@ -6,11 +6,7 @@ import { LengthFormat } from "../services/length-format";
 import { BodyPartMeasurementCorrect } from "./body-part-measurement-correct";
 import { BodyPartMeasurementRemove } from "./body-part-measurement-remove";
 
-export function BodyPartHistoryRow(props: {
-  measurement: BodyPartMeasurementWithDelta;
-  first: boolean;
-  onChange: () => void;
-}) {
+export function BodyPartHistoryRow(props: { measurement: BodyPartMeasurementWithDelta; first: boolean }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const bodyPartMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
@@ -24,11 +20,7 @@ export function BodyPartHistoryRow(props: {
       {...ui.Spacing.rowCompact}
     >
       {bodyPartMeasurementCorrect.on && (
-        <BodyPartMeasurementCorrect
-          measurement={props.measurement}
-          onSuccess={props.onChange}
-          {...bodyPartMeasurementCorrect}
-        />
+        <BodyPartMeasurementCorrect measurement={props.measurement} {...bodyPartMeasurementCorrect} />
       )}
 
       {bodyPartMeasurementCorrect.off && (
@@ -65,7 +57,7 @@ export function BodyPartHistoryRow(props: {
             </span>
           </button>
 
-          <BodyPartMeasurementRemove measurement={props.measurement} onSuccess={props.onChange} />
+          <BodyPartMeasurementRemove measurement={props.measurement} />
         </>
       )}
     </ui.HairlineRow>

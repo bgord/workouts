@@ -3,12 +3,9 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { BodyPartMeasurement } from "../../modules/measurements/value-objects/body-part-measurement";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 
-export function BodyPartMeasurementRemove(props: {
-  measurement: BodyPartMeasurement;
-  onSuccess: () => void;
-}) {
+export function BodyPartMeasurementRemove(props: { measurement: BodyPartMeasurement }) {
   const t = bg.useTranslations();
   const router = useRouter();
 
@@ -18,10 +15,8 @@ export function BodyPartMeasurementRemove(props: {
         method: "DELETE",
         credentials: "include",
       }),
-    onSuccess: async () => {
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
-      props.onSuccess();
-    },
+    onSuccess: () =>
+      router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true }),
   });
 
   return (

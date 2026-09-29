@@ -1,8 +1,8 @@
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 import { BodyPartOverviewRow } from "./body-part-overview-row";
 
 export function BodyPartsOverview() {
-  const { bodyParts } = measurementsRoute.useLoaderData();
+  const { bodyParts } = bodyPartsRoute.useLoaderData();
 
   if (bodyParts.data.length === 0) return null;
 

@@ -1,24 +1,20 @@
-import { startTransition, useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import type { BodyPartMeasurementListResponse } from "../../modules/measurements/queries/list-body-part-measurements";
 import { Measurements } from "../api";
+import { bodyPartsRoute } from "../router";
 
-export function useBodyPartHistory(bodyPartId: string, latestId: string | undefined) {
+export function useBodyPartHistory(bodyPartId: string) {
   const [history, setHistory] = useState<Promise<BodyPartMeasurementListResponse> | null>(null);
-  const seen = useRef(latestId);
+  const loadedAt = bodyPartsRoute.useMatch({ select: (match) => match.updatedAt });
 
   const load = () =>
     setHistory((current) => current ?? Measurements.listBodyPartMeasurements(null, bodyPartId));
 
-  const reload = () =>
+  useEffect(() => {
     startTransition(() =>
       setHistory((current) => current && Measurements.listBodyPartMeasurements(null, bodyPartId)),
     );
+  }, [loadedAt, bodyPartId]);
 
-  useEffect(() => {
-    if (seen.current === latestId) return;
-    seen.current = latestId;
-    reload();
-  });
-
-  return { history, load, reload };
+  return { history, load };
 }

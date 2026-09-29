@@ -1,8 +1,8 @@
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 import { BodyWeightMeasurementRow } from "./body-weight-measurement-row";
 
 export function BodyWeightMeasurementList() {
-  const { measurements, previous, bodyWeightStats } = measurementsRoute.useLoaderData();
+  const { measurements, previous, bodyWeightStats } = bodyWeightRoute.useLoaderData();
 
   return (
     <ul data-stack="y">

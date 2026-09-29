@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/body-part-name-form";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyPartsRoute } from "../router";
 
 export function BodyPartDefine() {
   const t = bg.useTranslations();
@@ -19,7 +19,7 @@ export function BodyPartDefine() {
         body: JSON.stringify({ name: name.value }),
       }),
     onSuccess: async (_, context) => {
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
       bg.Fields.clearAll([name]);
       context.form?.reset();
     },

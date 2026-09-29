@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
@@ -10,7 +10,7 @@ import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 export function BodyWeightMeasure() {
   const t = bg.useTranslations();
   const router = useRouter();
-  const { bodyWeightStats } = measurementsRoute.useLoaderData();
+  const { bodyWeightStats } = bodyWeightRoute.useLoaderData();
 
   const latest = bodyWeightStats?.latest;
   const today = DateFormat.todayISO();
@@ -36,7 +36,7 @@ export function BodyWeightMeasure() {
         body: JSON.stringify({ measuredOn: measuredOn.value, weight: WeightFormat.grams(weight.value ?? 0) }),
       }),
     onSuccess: async () => {
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyWeightRoute.id, sync: true });
     },
   });
 
