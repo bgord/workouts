@@ -20,9 +20,13 @@ export const handleBodyPartMeasureCommand =
 
     BodyPartMeasuredOnIsNotInFuture.enforce({ measuredOn: command.payload.measuredOn, today });
 
-    for (const measurement of command.payload.measurements) {
-      const bodyPart = await deps.GetBodyPartQuery.execute(measurement.bodyPartId);
+    const bodyParts = await Promise.all(
+      command.payload.measurements.map((measurement) =>
+        deps.GetBodyPartQuery.execute(measurement.bodyPartId),
+      ),
+    );
 
+    for (const bodyPart of bodyParts) {
       BodyPartExists.enforce({ bodyPart });
       BodyPartBelongsToUser.enforce({
         userId: bodyPart!.userId,
