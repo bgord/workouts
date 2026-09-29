@@ -156,31 +156,6 @@ a {
   color: var(--color-neutral-100);
 }
 
-[data-delta-pill] {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: var(--spacing-1);
-  block-size: 22px;
-  padding-inline: var(--spacing-2);
-  border-radius: var(--radius-pill);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  white-space: nowrap;
-}
-[data-delta-pill="up"] {
-  background-color: color-mix(in oklch, var(--color-brand-500) 16%, transparent);
-  color: var(--color-brand-300);
-}
-[data-delta-pill="down"] {
-  background-color: color-mix(in oklch, oklch(70% 0.12 240) 16%, transparent);
-  color: oklch(80% 0.09 240);
-}
-[data-delta-pill="same"] {
-  background-color: var(--color-alpha-subtle);
-  color: var(--color-neutral-400);
-}
-
 .c-button[data-variant="ghost"][data-tone="danger"] {
   color: var(--color-danger-400);
 }

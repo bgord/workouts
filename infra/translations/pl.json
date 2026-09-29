@@ -148,7 +148,6 @@
   "measurements.body_parts.define.name.label": "Nazwa obwodu",
   "measurements.body_parts.define.name.placeholder": "Lewe udo",
   "measurements.body_parts.define.submit.cta": "Dodaj",
-  "measurements.body_parts.delta.same": "bez zmian",
   "measurements.body_parts.delete.cta": "Usuń",
   "measurements.body_parts.delete.error": "Nie udało się usunąć obwodu",
   "measurements.body_parts.delete.header": "Usuń obwód",

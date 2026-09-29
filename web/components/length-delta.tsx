@@ -1,23 +1,34 @@
 import * as bg from "@bgord/ui";
 import { Triangle } from "lucide-react";
 import { LengthFormat } from "../services/length-format";
+import { Gap } from "./gap";
 
-export function LengthDelta(props: { millimeters: number | null }) {
+export function LengthDelta(props: { millimeters: number | null } & React.JSX.IntrinsicElements["span"]) {
   const t = bg.useTranslations();
+  const { millimeters, ...rest } = props;
 
-  if (props.millimeters === null) return null;
+  if (millimeters === null || millimeters === 0) return null;
 
-  if (props.millimeters === 0) {
-    return <span data-delta-pill="same">{t("measurements.body_parts.delta.same")}</span>;
-  }
-
-  const grew = props.millimeters > 0;
+  const positive = millimeters > 0;
 
   return (
-    <span data-delta-pill={grew ? "up" : "down"} data-transform="font-variant-numeric">
-      <Triangle data-rotate={grew ? "0" : "180"} fill="currentColor" size={8} strokeWidth={0} />
+    <span
+      data-color={positive ? "positive-400" : "danger-400"}
+      data-stack="x"
+      data-transform="nowrap"
+      {...Gap.inline}
+      {...rest}
+    >
+      <Triangle
+        data-mt={positive ? "0" : "0-5"}
+        data-rotate={positive ? "0" : "180"}
+        fill="currentColor"
+        size={9}
+        strokeWidth={0}
+      />
+
       {t("measurements.body_parts.value", {
-        value: `${grew ? "+" : "−"}${LengthFormat.centimeters(Math.abs(props.millimeters)).toFixed(1)}`,
+        value: LengthFormat.centimeters(Math.abs(millimeters)).toFixed(1),
       })}
     </span>
   );

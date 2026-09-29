@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { CalendarDays, ChevronDown, ChevronUp } from "lucide-react";
 import { Suspense } from "react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
@@ -17,13 +17,12 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
   const Chevron = bodyPartHistory.on ? ChevronUp : ChevronDown;
 
   return (
-    <ui.HairlineRow first={props.first} tone="subtle">
+    <ui.HairlineRow first={props.first}>
       <button
-        data-br="md"
         data-cross="center"
         data-cursor="pointer"
         data-hover-bg="alpha-subtle"
-        data-px="2"
+        data-px="3"
         data-stack="x"
         data-width="100%"
         disabled={!props.latest}
@@ -38,16 +37,19 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
             {props.name}
           </span>
 
-          <small data-color="neutral-600">
-            {props.latest
-              ? DateFormat.daysAgo(language, props.latest.measuredOn)
-              : t("measurements.body_parts.measure.never")}
-          </small>
+          {props.latest ? (
+            <small data-color="neutral-600" data-cross="center" data-stack="x" {...ui.Gap.inline}>
+              <CalendarDays data-size="xs" />
+              {DateFormat.daysAgo(language, props.latest.measuredOn)}
+            </small>
+          ) : (
+            <small data-color="neutral-600">{t("measurements.body_parts.measure.never")}</small>
+          )}
         </span>
 
         <ui.Sparkline values={props.series.map((point) => point.value)} />
 
-        {props.latest && <ui.LengthDelta millimeters={props.delta} />}
+        {props.latest && <ui.LengthDelta data-fs="xs" millimeters={props.delta} />}
 
         <span
           data-color={props.latest ? "neutral-0" : "neutral-600"}
@@ -68,13 +70,19 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
       </button>
 
       {bodyPartHistory.on && history && (
-        <div data-pb="2" data-px="2" {...bodyPartHistory.props.target}>
-          <ul className="c-card" data-p="3" data-stack="y" data-variant="sunken">
-            <Suspense fallback={<BodyPartHistoryLoading />}>
-              <BodyPartHistory history={history} />
-            </Suspense>
-          </ul>
-        </div>
+        <ul
+          data-pb="2"
+          data-pr="3"
+          data-pt="2"
+          data-stack="y"
+          {...ui.Spacing.inset}
+          data-md-pl="3"
+          {...bodyPartHistory.props.target}
+        >
+          <Suspense fallback={<BodyPartHistoryLoading />}>
+            <BodyPartHistory history={history} />
+          </Suspense>
+        </ul>
       )}
     </ui.HairlineRow>
   );

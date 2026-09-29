@@ -148,7 +148,6 @@
   "measurements.body_parts.define.name.label": "Body part name",
   "measurements.body_parts.define.name.placeholder": "Left thigh",
   "measurements.body_parts.define.submit.cta": "Add",
-  "measurements.body_parts.delta.same": "no change",
   "measurements.body_parts.delete.cta": "Delete",
   "measurements.body_parts.delete.error": "Could not delete the body part",
   "measurements.body_parts.delete.header": "Delete body part",

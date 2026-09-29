@@ -23,7 +23,7 @@ export function BodyPartHistory(props: { history: Promise<BodyPartMeasurementLis
         {DateFormat.plainDay(language, measurement.measuredOn)}
       </span>
 
-      <ui.LengthDelta millimeters={measurement.delta} />
+      <ui.LengthDelta data-fs="xs" millimeters={measurement.delta} />
 
       <span
         data-color="neutral-0"

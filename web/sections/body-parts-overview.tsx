@@ -7,7 +7,7 @@ export function BodyPartsOverview() {
   if (bodyParts.data.length === 0) return null;
 
   return (
-    <ul className="c-card" data-p="2" data-stack="y">
+    <ul data-stack="y">
       {bodyParts.data.map((bodyPart, index) => (
         <BodyPartOverviewRow
           first={index === 0}
