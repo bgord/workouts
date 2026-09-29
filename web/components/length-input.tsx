@@ -9,11 +9,11 @@ export function LengthInput(props: React.JSX.IntrinsicElements["input"]) {
         className="c-input"
         data-shrink="0"
         data-spin="none"
-        data-transform="font-variant-numeric"
+        data-transform="center"
         inputMode="decimal"
         min={0.1}
         step={0.1}
-        style={{ ...bg.Rhythm(34).times(1).height, ...bg.Rhythm(88).times(1).width, textAlign: "right" }}
+        style={{ ...bg.Rhythm(34).times(1).height, ...bg.Rhythm(88).times(1).width }}
         type="number"
         {...props}
       />

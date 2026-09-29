@@ -49,10 +49,11 @@ export function BodyPartHistoryRow(props: {
             <span
               data-color="neutral-0"
               data-fw="medium"
+              data-main="end"
               data-shrink="0"
+              data-stack="x"
               data-transform="font-variant-numeric"
               {...bg.Rhythm(72).times(1).style.minWidth}
-              style={{ textAlign: "right" }}
             >
               <ui.LengthValue millimeters={props.measurement.value} />
             </span>

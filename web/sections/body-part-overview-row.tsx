@@ -40,10 +40,11 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
         <span
           data-color={latest ? "neutral-0" : "neutral-600"}
           data-fw="semibold"
+          data-main="end"
           data-shrink="0"
+          data-stack="x"
           data-transform="font-variant-numeric"
           {...bg.Rhythm(72).times(1).style.minWidth}
-          style={{ textAlign: "right" }}
         >
           {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
         </span>

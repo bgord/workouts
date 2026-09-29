@@ -80,7 +80,6 @@ export function BodyPartMeasure() {
               type="date"
               {...measuredOn.input.props}
               max={today}
-              style={bg.Rhythm(34).times(1).height}
             />
           </div>
 

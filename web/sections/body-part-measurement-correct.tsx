@@ -66,7 +66,6 @@ export function BodyPartMeasurementCorrect(
         type="date"
         {...measuredOn.input.props}
         max={today}
-        style={bg.Rhythm(34).times(1).height}
       />
 
       <ui.Stepper
