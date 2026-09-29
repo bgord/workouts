@@ -2,7 +2,6 @@ export * from "./get-body-part";
 export * from "./get-body-part-measurement";
 export * from "./get-body-part-name-count";
 export * from "./get-body-weight-measurement";
-export * from "./list-body-part-measurements";
 export * from "./list-body-parts";
 export * from "./list-body-weight-measurements";
 export * from "./list-body-weight-measurements-for-month";

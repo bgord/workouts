@@ -159,7 +159,6 @@
   "measurements.body_parts.export.cta": "Export body part measurements",
   "measurements.body_parts.header": "Body parts",
   "measurements.body_parts.header.hint": "Track circumferences over time",
-  "measurements.body_parts.history.loading": "Loading history",
   "measurements.body_parts.import.cta": "Import body part measurements",
   "measurements.body_parts.list.empty": "No body parts yet",
   "measurements.body_parts.list.empty.hint": "Add one above to start measuring",

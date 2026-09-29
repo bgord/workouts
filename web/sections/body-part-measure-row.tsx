@@ -15,10 +15,12 @@ export function BodyPartMeasureRow(props: BodyPartMeasureRowProps) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
 
+  const [latestMeasurement] = props.measurements;
   const typed = Number(props.value);
   const filled = props.value !== "" && typed > 0;
-  const latest = props.latest ? LengthFormat.centimeters(props.latest.value) : null;
-  const delta = filled && props.latest ? LengthFormat.millimeters(typed) - props.latest.value : null;
+  const latest = latestMeasurement ? LengthFormat.centimeters(latestMeasurement.value) : null;
+  const delta =
+    filled && latestMeasurement ? LengthFormat.millimeters(typed) - latestMeasurement.value : null;
 
   return (
     <ui.HairlineRow
@@ -33,7 +35,7 @@ export function BodyPartMeasureRow(props: BodyPartMeasureRowProps) {
           {props.name}
         </span>
 
-        {props.latest && latest !== null ? (
+        {latestMeasurement && latest !== null ? (
           <small data-cross="center" data-stack="x" {...ui.Gap.cluster}>
             <span
               data-bg="alpha-subtle"
@@ -46,7 +48,7 @@ export function BodyPartMeasureRow(props: BodyPartMeasureRowProps) {
               {t("measurements.body_parts.value", { value: latest.toFixed(1) })}
             </span>
 
-            <span data-color="neutral-600">{DateFormat.daysAgo(language, props.latest.measuredOn)}</span>
+            <span data-color="neutral-600">{DateFormat.daysAgo(language, latestMeasurement.measuredOn)}</span>
           </small>
         ) : (
           <small data-color="neutral-600">{t("measurements.body_parts.measure.never")}</small>

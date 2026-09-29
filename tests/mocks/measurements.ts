@@ -309,45 +309,29 @@ export const GenericBodyPartMeasurementRemovedEvent = {
   payload: { id: bodyPartMeasurementId, requesterId: userId },
 } satisfies Measurements.Events.BodyPartMeasurementRemovedEventType;
 
-export const bodyPartRecentMeasurementLatest: Measurements.VO.BodyPartRecentMeasurement = {
+export const bodyPartMeasurementLatest: Measurements.VO.BodyPartMeasurement = {
   id: bodyPartMeasurementId,
   bodyPartId,
   value: anotherBodyPartCircumference,
   measuredOn: bodyPartMeasuredOn,
+  userId,
 };
 
-export const bodyPartRecentMeasurementPrevious: Measurements.VO.BodyPartRecentMeasurement = {
+export const bodyPartMeasurementPrevious: Measurements.VO.BodyPartMeasurement = {
   id: anotherBodyPartMeasurementId,
   bodyPartId,
   value: bodyPartCircumference,
   measuredOn: anotherBodyPartMeasuredOn,
-};
-
-export const anotherBodyPartRecentMeasurement: Measurements.VO.BodyPartRecentMeasurement = {
-  id: anotherBodyPartMeasurementId,
-  bodyPartId: anotherBodyPartId,
-  value: bodyPartCircumference,
-  measuredOn: bodyPartMeasuredOn,
+  userId,
 };
 
 export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
   data: [
     {
       ...bodyPart,
-      latest: {
-        id: bodyPartMeasurementId,
-        value: anotherBodyPartCircumference,
-        measuredOn: bodyPartMeasuredOn,
-      },
-      previous: {
-        id: anotherBodyPartMeasurementId,
-        value: bodyPartCircumference,
-        measuredOn: anotherBodyPartMeasuredOn,
-      },
-      delta: 10,
-      series: [
-        { value: bodyPartCircumference, measuredOn: anotherBodyPartMeasuredOn },
-        { value: anotherBodyPartCircumference, measuredOn: bodyPartMeasuredOn },
+      measurements: [
+        { ...bodyPartMeasurementLatest, delta: 10 },
+        { ...bodyPartMeasurementPrevious, delta: null },
       ],
     },
   ],
@@ -357,12 +341,4 @@ export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
 export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListResponse = {
   data: [],
   actions: { measure: { available: true, enabled: false, hints: ["body.part.is.defined"] } },
-};
-
-export const bodyPartMeasurementListResponse: Measurements.Queries.BodyPartMeasurementListResponse = {
-  data: [{ ...bodyPartMeasurement, delta: null }],
-};
-
-export const bodyPartMeasurementListResponseEmpty: Measurements.Queries.BodyPartMeasurementListResponse = {
-  data: [],
 };

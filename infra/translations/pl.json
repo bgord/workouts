@@ -159,7 +159,6 @@
   "measurements.body_parts.export.cta": "Eksportuj pomiary obwodów",
   "measurements.body_parts.header": "Obwody",
   "measurements.body_parts.header.hint": "Śledź obwody ciała w czasie",
-  "measurements.body_parts.history.loading": "Ładowanie historii",
   "measurements.body_parts.import.cta": "Importuj pomiary obwodów",
   "measurements.body_parts.list.empty": "Brak obwodów",
   "measurements.body_parts.list.empty.hint": "Dodaj obwód powyżej, aby zacząć mierzyć",

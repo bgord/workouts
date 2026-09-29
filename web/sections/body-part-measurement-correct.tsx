@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
-import { useState } from "react";
+import { X } from "lucide-react";
 import type { BodyPartMeasurement } from "../../modules/measurements/value-objects/body-part-measurement";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
@@ -17,17 +16,15 @@ export function BodyPartMeasurementCorrect(
   const { toggle } = bg.extractUseToggle(props);
 
   const today = DateFormat.todayISO();
-  const original = LengthFormat.centimeters(props.measurement.value).toFixed(1);
 
   const measuredOn = bg.useDateField({
     name: `corrected-body-part-measured-on-${props.measurement.id}`,
     defaultValue: props.measurement.measuredOn,
   });
-  const [value, setValue] = useState(original);
-
-  const typed = Number(value);
-  const filled = value !== "" && typed > 0;
-  const unchanged = measuredOn.value === props.measurement.measuredOn && value === original;
+  const length = bg.useNumberField({
+    name: `corrected-body-part-length-${props.measurement.id}`,
+    defaultValue: LengthFormat.centimeters(props.measurement.value),
+  });
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -37,7 +34,7 @@ export function BodyPartMeasurementCorrect(
         body: JSON.stringify({
           bodyPartId: props.measurement.bodyPartId,
           measuredOn: measuredOn.value,
-          value: LengthFormat.millimeters(typed),
+          value: LengthFormat.millimeters(length.value ?? 0),
         }),
       }),
     onSuccess: async () => {
@@ -72,25 +69,31 @@ export function BodyPartMeasurementCorrect(
         style={bg.Rhythm(34).times(1).height}
       />
 
-      <ui.LengthInput
-        aria-label={t("measurements.body_parts.correct.value.label")}
+      <ui.Stepper
         disabled={mutation.isLoading}
-        onChange={(event) => setValue(event.currentTarget.value)}
-        value={value}
-      />
-
-      <ui.IconButton
-        disabled={!(filled && measuredOn.value) || unchanged || mutation.isLoading}
-        title={t("app.save")}
-        tone="positive"
-        type="submit"
+        field={length}
+        label={t("measurements.body_parts.correct.value.label")}
+        max={300}
+        min={0.1}
+        step={0.1}
+        unit={t("measurements.body_parts.measure.unit")}
+        width={72}
       >
-        <Check data-size="sm" />
-      </ui.IconButton>
+        <ui.StepperSubmit
+          aria-label={t("app.save")}
+          disabled={
+            bg.Fields.anyEmpty([measuredOn, length]) ||
+            bg.Fields.allUnchanged([measuredOn, length]) ||
+            mutation.isLoading
+          }
+          title={t("app.save")}
+        />
+      </ui.Stepper>
 
       <ui.IconButton
+        aria-label={t("app.cancel")}
         disabled={mutation.isLoading}
-        onClick={bg.exec([measuredOn.clear, mutation.reset, toggle.disable])}
+        onClick={bg.exec([measuredOn.clear, length.clear, mutation.reset, toggle.disable])}
         title={t("app.cancel")}
       >
         <X data-size="sm" />

@@ -18,13 +18,21 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
           bodyPartId: Schema.bodyPartMeasurements.bodyPartId,
           value: Schema.bodyPartMeasurements.value,
           measuredOn: Schema.bodyPartMeasurements.measuredOn,
+          userId: Schema.bodyPartMeasurements.userId,
         })
         .from(Schema.bodyPartMeasurements)
         .where(eq(Schema.bodyPartMeasurements.userId, userId))
         .orderBy(desc(Schema.bodyPartMeasurements.measuredOn), desc(Schema.bodyPartMeasurements.createdAt)),
     ]);
 
-    const data = new Measurements.Services.BodyPartSummaries({ bodyParts, measurements }).calculate();
+    const grouped = Object.groupBy(measurements, (measurement) => measurement.bodyPartId);
+
+    const data = bodyParts.map((bodyPart) => ({
+      ...bodyPart,
+      measurements: new Measurements.Services.BodyPartMeasurementDeltas(
+        grouped[bodyPart.id] ?? [],
+      ).calculate(),
+    }));
 
     return {
       data,
