@@ -349,10 +349,13 @@ export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
       measurements: [bodyPartMeasurementLatest, bodyPartMeasurementPrevious],
     },
   ],
-  actions: { measure: actionAvailable },
+  actions: { measure: actionAvailable, import: actionAvailable },
 };
 
 export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListResponse = {
   data: [],
-  actions: { measure: { available: true, enabled: false, hints: ["body.part.is.defined"] } },
+  actions: {
+    measure: { available: true, enabled: false, hints: ["body.part.is.defined"] },
+    import: { available: true, enabled: false, hints: ["body.part.is.defined"] },
+  },
 };

@@ -18,7 +18,8 @@ export const Gap = {
   // ExerciseCatalog card grid, exercise page sidebar, shortcuts overlay card, history row metrics
   block: { "data-gap": "4" },
   // Main page sections (Exercise, Measurements), form fields (PlanCreate, ExerciseAdd, WorkoutCreate,
-  // BodyWeightMeasurementImport, exercise instruction add/edit, WorkoutExerciseAdd), desktop nav links
+  // BodyWeightMeasurementImport, BodyPartMeasurementImport, exercise instruction add/edit, WorkoutExerciseAdd),
+  // desktop nav links
   section: { "data-gap": "6" },
   // Dialog blocks (header → body → form), error → footer in confirmation forms
   stack: { "data-gap": "8" },

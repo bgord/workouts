@@ -6,7 +6,7 @@ describe("BodyPartListActions", () => {
   test("active body part", () => {
     const actions = new Measurements.Services.BodyPartListActions({ bodyParts: [mocks.bodyPart] });
 
-    expect(actions.calculate()).toEqual({ measure: mocks.actionAvailable });
+    expect(actions.calculate()).toEqual({ measure: mocks.actionAvailable, import: mocks.actionAvailable });
   });
 
   test("BodyPartIsDefined", () => {
@@ -14,6 +14,7 @@ describe("BodyPartListActions", () => {
 
     expect(actions.calculate()).toEqual({
       measure: { available: true, enabled: false, hints: ["body.part.is.defined"] },
+      import: { available: true, enabled: false, hints: ["body.part.is.defined"] },
     });
   });
 });
