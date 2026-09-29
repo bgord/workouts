@@ -19,9 +19,11 @@ export function BodyPartMeasureRow(
     name: props.id,
     defaultValue: latest ? LengthFormat.centimeters(latest.value) : undefined,
   });
-  const typed = value.changed && value.value !== undefined ? LengthFormat.millimeters(value.value) : null;
+  const same = latest !== undefined && value.value === LengthFormat.centimeters(latest.value);
+  const typed = !same && value.value !== undefined ? LengthFormat.millimeters(value.value) : null;
 
   const mutation = bg.useMutation({
+    autoResetDelayMs: 3000,
     perform: () =>
       fetch("/api/measurements/body-part/measure", {
         method: "POST",
@@ -73,10 +75,21 @@ export function BodyPartMeasureRow(
         >
           <ui.StepperSubmit
             aria-label={t("measurements.body_parts.measure.cta")}
-            disabled={value.unchanged || value.empty || !props.measuredOn || mutation.isLoading}
+            disabled={
+              (same && latest?.measuredOn === props.measuredOn) ||
+              value.empty ||
+              !props.measuredOn ||
+              mutation.isLoading
+            }
             title={t("measurements.body_parts.measure.cta")}
           />
         </ui.Stepper>
+
+        {mutation.isDone && (
+          <output data-main="end" data-pb="2" data-stack="x" data-tone="positive" data-width="100%">
+            {t("measurements.body_parts.measure.saved")}
+          </output>
+        )}
 
         {mutation.isError && (
           <output aria-live="assertive" data-tone="danger" data-width="100%">

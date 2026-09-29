@@ -170,6 +170,7 @@
   "measurements.body_parts.measure.error": "Could not save the measurements",
   "measurements.body_parts.measure.header": "Measure",
   "measurements.body_parts.measure.never": "Not measured yet",
+  "measurements.body_parts.measure.saved": "Saved",
   "measurements.body_parts.measure.unit": "cm",
   "measurements.body_parts.measure.value.label": "{{name}} (cm)",
   "measurements.body_parts.remove.title": "Remove the measurement",

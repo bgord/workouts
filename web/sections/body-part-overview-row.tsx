@@ -23,15 +23,27 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
           </span>
 
           {latest ? (
-            <small data-color="neutral-600">{DateFormat.plainDay(language, latest.measuredOn)}</small>
+            <small data-color="neutral-600" data-transform="nowrap">
+              {DateFormat.plainDay(language, latest.measuredOn)}
+            </small>
           ) : (
             <small data-color="neutral-600">{t("measurements.body_parts.measure.never")}</small>
           )}
         </span>
 
-        <ui.Sparkline values={props.measurements.map((measurement) => measurement.value).toReversed()} />
+        <span data-md-disp="none" data-stack="x">
+          <ui.Sparkline values={props.measurements.map((measurement) => measurement.value).toReversed()} />
+        </span>
 
-        {latest && <ui.LengthDelta current={latest.value} data-fs="xs" previous={previous?.value} />}
+        <span
+          data-fs="xs"
+          data-main="end"
+          data-shrink="0"
+          data-stack="x"
+          {...bg.Rhythm(56).times(1).style.minWidth}
+        >
+          {latest && <ui.LengthDelta current={latest.value} previous={previous?.value} />}
+        </span>
 
         <span
           data-color={latest ? "neutral-0" : "neutral-600"}

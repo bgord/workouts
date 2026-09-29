@@ -56,7 +56,7 @@ export function BodyPartMeasure() {
             {bodyParts.data.map((bodyPart, index) => (
               <BodyPartMeasureRow
                 first={index === 0}
-                key={`${bodyPart.id}-${bodyPart.measurements[0]?.id}`}
+                key={bodyPart.id}
                 measuredOn={measuredOn.value}
                 {...bodyPart}
               />

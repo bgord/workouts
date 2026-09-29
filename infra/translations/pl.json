@@ -170,6 +170,7 @@
   "measurements.body_parts.measure.error": "Nie udało się zapisać pomiarów",
   "measurements.body_parts.measure.header": "Pomiar",
   "measurements.body_parts.measure.never": "Jeszcze nie mierzono",
+  "measurements.body_parts.measure.saved": "Zapisano",
   "measurements.body_parts.measure.unit": "cm",
   "measurements.body_parts.measure.value.label": "{{name}} (cm)",
   "measurements.body_parts.remove.title": "Usuń pomiar",
