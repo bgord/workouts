@@ -9,6 +9,7 @@ type Dependencies = {
     | Measurements.Events.BodyPartMeasuredEventType
     | Measurements.Events.BodyPartMeasurementCorrectedEventType
     | Measurements.Events.BodyPartMeasurementRemovedEventType
+    | Measurements.Events.BodyPartDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -26,6 +27,10 @@ export class BodyPartMeasurementsProjector {
     deps.EventBus.on(
       Measurements.Events.BODY_PART_MEASUREMENT_REMOVED_EVENT,
       deps.EventHandler.handle(this.onBodyPartMeasurementRemovedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Measurements.Events.BODY_PART_DELETED_EVENT,
+      deps.EventHandler.handle(this.onBodyPartDeletedEvent.bind(this)),
     );
   }
 
@@ -57,5 +62,11 @@ export class BodyPartMeasurementsProjector {
 
   async onBodyPartMeasurementRemovedEvent(event: Measurements.Events.BodyPartMeasurementRemovedEventType) {
     await db.delete(Schema.bodyPartMeasurements).where(eq(Schema.bodyPartMeasurements.id, event.payload.id));
+  }
+
+  async onBodyPartDeletedEvent(event: Measurements.Events.BodyPartDeletedEventType) {
+    await db
+      .delete(Schema.bodyPartMeasurements)
+      .where(eq(Schema.bodyPartMeasurements.bodyPartId, event.payload.id));
   }
 }

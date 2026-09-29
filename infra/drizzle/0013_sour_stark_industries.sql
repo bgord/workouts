@@ -5,8 +5,7 @@ CREATE TABLE `bodyPartMeasurements` (
 	`measuredOn` text NOT NULL,
 	`userId` text(36) NOT NULL,
 	`createdAt` integer NOT NULL,
-	`updatedAt` integer NOT NULL,
-	FOREIGN KEY (`bodyPartId`) REFERENCES `bodyParts`(`id`) ON UPDATE no action ON DELETE cascade
+	`updatedAt` integer NOT NULL
 );
 --> statement-breakpoint
 CREATE INDEX `bodyPartMeasurements_userId_bodyPartId_idx` ON `bodyPartMeasurements` (`userId`,`bodyPartId`);--> statement-breakpoint

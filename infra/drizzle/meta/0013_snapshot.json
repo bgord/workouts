@@ -181,17 +181,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "bodyPartMeasurements_bodyPartId_bodyParts_id_fk": {
-          "name": "bodyPartMeasurements_bodyPartId_bodyParts_id_fk",
-          "tableFrom": "bodyPartMeasurements",
-          "tableTo": "bodyParts",
-          "columnsFrom": ["bodyPartId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}

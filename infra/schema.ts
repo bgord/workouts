@@ -419,10 +419,7 @@ export const bodyPartMeasurements = sqliteTable(
   "bodyPartMeasurements",
   {
     id: identifier<BodyPartMeasurementIdType>(),
-    bodyPartId: text("bodyPartId", { length: 36 })
-      .notNull()
-      .references(() => bodyParts.id, { onDelete: "cascade" })
-      .$type<BodyPartIdType>(),
+    bodyPartId: text("bodyPartId", { length: 36 }).notNull().$type<BodyPartIdType>(),
     value: integer("value", { mode: "number" }).notNull().$type<BodyPartCircumferenceType>(),
     measuredOn: text("measuredOn").notNull().$type<BodyPartMeasuredOnType>(),
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
