@@ -25,7 +25,7 @@ export function BodyParts() {
         </div>
       </div>
 
-      <div data-cross="center" data-stack="x" {...ui.Gap.inline}>
+      <div data-cross="center" data-stack="x" {...ui.Gap.inline} data-ml="auto">
         <BodyPartMeasure />
         <BodyPartManage />
       </div>

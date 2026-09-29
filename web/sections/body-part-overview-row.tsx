@@ -1,6 +1,6 @@
 // cSpell:ignore sparkline
 import * as bg from "@bgord/ui";
-import { CalendarDays, ChevronDown, ChevronUp } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import { Suspense } from "react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
@@ -15,24 +15,20 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
   const bodyPartHistory = bg.useToggle({ name: `body-part-history-${props.id}` });
   const { history, load } = useBodyPartHistory(props.id);
 
-  const Chevron = bodyPartHistory.on ? ChevronUp : ChevronDown;
-
   return (
-    <ui.HairlineRow first={props.first}>
-      <button
+    <ui.HairlineRow data-stack="y" first={props.first} {...ui.Spacing.row}>
+      <div
         data-cross="center"
-        data-cursor="pointer"
-        data-hover-bg="alpha-subtle"
-        data-px="3"
         data-stack="x"
-        data-width="100%"
-        disabled={!props.latest}
-        onClick={bg.exec([load, bodyPartHistory.toggle])}
         onPointerEnter={props.latest ? load : undefined}
-        type="button"
-        {...bodyPartHistory.props.controller}
-        {...ui.Spacing.rowCompact}
+        {...ui.Gap.related}
       >
+        <ui.ChevronToggle
+          {...bodyPartHistory}
+          disabled={!props.latest}
+          toggle={bg.exec([load, bodyPartHistory.toggle])}
+        />
+
         <span data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
           <span data-color="neutral-100" data-transform="truncate">
             {props.name}
@@ -66,20 +62,10 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
               })
             : "—"}
         </span>
-
-        <Chevron data-color={props.latest ? "neutral-500" : "neutral-700"} data-size="sm" />
-      </button>
+      </div>
 
       {bodyPartHistory.on && history && (
-        <ul
-          data-pb="2"
-          data-pr="3"
-          data-pt="2"
-          data-stack="y"
-          {...ui.Spacing.inset}
-          data-md-pl="3"
-          {...bodyPartHistory.props.target}
-        >
+        <ul data-stack="y" {...ui.Spacing.inset} {...bodyPartHistory.props.target}>
           <Suspense fallback={<BodyPartHistoryLoading />}>
             <BodyPartHistory history={history} />
           </Suspense>
