@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { Plus, Ruler } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
@@ -14,7 +14,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
 
   const bodyPartMeasure = bg.useToggle({ name: `body-part-measure-${props.id}` });
 
-  const [latest] = props.measurements;
+  const [latest, previous] = props.measurements;
   const today = DateFormat.todayISO();
 
   const value = bg.useNumberField({
@@ -60,36 +60,26 @@ export function BodyPartMeasure(props: BodyPartSummary) {
           {t("measurements.body_parts.measure.header", { name: props.name })}
         </ui.DialogHeader>
 
-        <div data-cross="start" data-stack="x" {...ui.Gap.related}>
-          <div data-grow="1" data-stack="y" {...ui.Gap.inline}>
-            <small data-color="neutral-500">{t("measurements.body_parts.measure.previous")}</small>
+        <ul data-stack="x">
+          <ui.Tile>
+            <ui.TileHeader>
+              <Ruler data-size="xs" />
+              {t("measurements.body_parts.measure.previous")}
+            </ui.TileHeader>
 
-            <span data-color="neutral-100" data-fw="semibold" data-transform="font-variant-numeric">
+            <ui.TileValue>
               {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
-            </span>
 
-            <small data-color="neutral-600">
+              {latest && <ui.LengthDelta current={latest.value} data-fs="xs" previous={previous?.value} />}
+            </ui.TileValue>
+
+            <ui.TileContext>
               {latest
-                ? DateFormat.daysAgo(language, latest.measuredOn)
+                ? DateFormat.dayWithWeekday(language, latest.measuredOn)
                 : t("measurements.body_parts.measure.never")}
-            </small>
-          </div>
-
-          <div data-cross="end" data-grow="1" data-stack="y" {...ui.Gap.inline}>
-            <small data-color="neutral-500">{t("measurements.body_parts.measure.change")}</small>
-
-            <span data-fw="semibold" data-transform="font-variant-numeric">
-              {latest && value.changed && !value.empty ? (
-                <ui.LengthDelta
-                  current={LengthFormat.millimeters(value.value ?? 0)}
-                  previous={latest.value}
-                />
-              ) : (
-                <span data-color="neutral-600">—</span>
-              )}
-            </span>
-          </div>
-        </div>
+            </ui.TileContext>
+          </ui.Tile>
+        </ul>
 
         <form
           aria-busy={mutation.isLoading}
@@ -97,7 +87,13 @@ export function BodyPartMeasure(props: BodyPartSummary) {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.stack}
         >
-          <div data-cross="end" data-md-cross="stretch" data-md-stack="y" data-stack="x" {...ui.Gap.related}>
+          <div
+            data-cross="start"
+            data-md-cross="stretch"
+            data-md-stack="y"
+            data-stack="x"
+            {...ui.Gap.related}
+          >
             <div data-stack="y" {...ui.Gap.field}>
               <label {...value.label.props}>{t("measurements.body_parts.measure.value.label")}</label>
 
@@ -111,6 +107,18 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                 unit={t("measurements.body_parts.measure.unit")}
                 width={72}
               />
+
+              <small data-color="neutral-600" data-cross="center" data-stack="x" {...ui.Gap.inline}>
+                {t("measurements.body_parts.measure.change")}
+                {latest && value.changed && !value.empty ? (
+                  <ui.LengthDelta
+                    current={LengthFormat.millimeters(value.value ?? 0)}
+                    previous={latest.value}
+                  />
+                ) : (
+                  <span>—</span>
+                )}
+              </small>
             </div>
 
             <div data-stack="y" {...ui.Gap.field}>
