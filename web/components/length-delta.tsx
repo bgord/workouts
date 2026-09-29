@@ -1,15 +1,19 @@
-import * as bg from "@bgord/ui";
 import { Triangle } from "lucide-react";
-import { LengthFormat } from "../services/length-format";
 import { Gap } from "./gap";
+import { LengthValue } from "./length-value";
 
-export function LengthDelta(props: { millimeters: number | null } & React.JSX.IntrinsicElements["span"]) {
-  const t = bg.useTranslations();
-  const { millimeters, ...rest } = props;
+export function LengthDelta(
+  props: { current: number; previous: number | undefined } & React.JSX.IntrinsicElements["span"],
+) {
+  const { previous, current, ...rest } = props;
 
-  if (millimeters === null || millimeters === 0) return null;
+  if (previous === undefined) return null;
 
-  const positive = millimeters > 0;
+  const difference = current - previous;
+
+  if (difference === 0) return null;
+
+  const positive = difference > 0;
 
   return (
     <span
@@ -27,9 +31,7 @@ export function LengthDelta(props: { millimeters: number | null } & React.JSX.In
         strokeWidth={0}
       />
 
-      {t("measurements.body_parts.value", {
-        value: LengthFormat.centimeters(Math.abs(millimeters)).toFixed(1),
-      })}
+      <LengthValue millimeters={Math.abs(difference)} />
     </span>
   );
 }

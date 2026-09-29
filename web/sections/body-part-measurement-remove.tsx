@@ -1,11 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import type { BodyPartMeasurement } from "../../modules/measurements/value-objects/body-part-measurement";
+import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
 
-export function BodyPartMeasurementRemove(props: { measurement: BodyPartMeasurement }) {
+export function BodyPartMeasurementRemove(props: { measurement: BodyPartSummaryMeasurement }) {
   const t = bg.useTranslations();
   const router = useRouter();
 

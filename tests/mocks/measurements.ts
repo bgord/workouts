@@ -309,30 +309,25 @@ export const GenericBodyPartMeasurementRemovedEvent = {
   payload: { id: bodyPartMeasurementId, requesterId: userId },
 } satisfies Measurements.Events.BodyPartMeasurementRemovedEventType;
 
-export const bodyPartMeasurementLatest: Measurements.VO.BodyPartMeasurement = {
+export const bodyPartMeasurementLatest: Measurements.VO.BodyPartSummaryMeasurement = {
   id: bodyPartMeasurementId,
   bodyPartId,
   value: anotherBodyPartCircumference,
   measuredOn: bodyPartMeasuredOn,
-  userId,
 };
 
-export const bodyPartMeasurementPrevious: Measurements.VO.BodyPartMeasurement = {
+export const bodyPartMeasurementPrevious: Measurements.VO.BodyPartSummaryMeasurement = {
   id: anotherBodyPartMeasurementId,
   bodyPartId,
   value: bodyPartCircumference,
   measuredOn: anotherBodyPartMeasuredOn,
-  userId,
 };
 
 export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
   data: [
     {
       ...bodyPart,
-      measurements: [
-        { ...bodyPartMeasurementLatest, delta: 10 },
-        { ...bodyPartMeasurementPrevious, delta: null },
-      ],
+      measurements: [bodyPartMeasurementLatest, bodyPartMeasurementPrevious],
     },
   ],
   actions: { measure: actionAvailable },

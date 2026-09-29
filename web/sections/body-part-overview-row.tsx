@@ -4,7 +4,6 @@ import { CalendarDays } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
-import { LengthFormat } from "../services/length-format";
 import { BodyPartHistoryRow } from "./body-part-history-row";
 
 export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean }) {
@@ -12,7 +11,7 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
   const language = bg.useLanguage();
   const bodyPartHistory = bg.useToggle({ name: `body-part-history-${props.id}` });
 
-  const [latest] = props.measurements;
+  const [latest, previous] = props.measurements;
 
   return (
     <ui.HairlineRow data-stack="y" first={props.first} {...ui.Spacing.row}>
@@ -36,7 +35,7 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
 
         <ui.Sparkline values={props.measurements.map((measurement) => measurement.value).toReversed()} />
 
-        {latest && <ui.LengthDelta data-fs="xs" millimeters={latest.delta} />}
+        {latest && <ui.LengthDelta current={latest.value} data-fs="xs" previous={previous?.value} />}
 
         <span
           data-color={latest ? "neutral-0" : "neutral-600"}
@@ -46,16 +45,19 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
           {...bg.Rhythm(72).times(1).style.minWidth}
           style={{ textAlign: "right" }}
         >
-          {latest
-            ? t("measurements.body_parts.value", { value: LengthFormat.centimeters(latest.value).toFixed(1) })
-            : "—"}
+          {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
         </span>
       </div>
 
       {bodyPartHistory.on && (
         <ul data-stack="y" {...ui.Spacing.inset} {...bodyPartHistory.props.target}>
           {props.measurements.map((measurement, index) => (
-            <BodyPartHistoryRow first={index === 0} key={measurement.id} measurement={measurement} />
+            <BodyPartHistoryRow
+              first={index === 0}
+              key={measurement.id}
+              measurement={measurement}
+              previous={props.measurements[index + 1]}
+            />
           ))}
         </ul>
       )}

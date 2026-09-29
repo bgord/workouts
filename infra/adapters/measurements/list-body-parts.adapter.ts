@@ -18,7 +18,6 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
           bodyPartId: Schema.bodyPartMeasurements.bodyPartId,
           value: Schema.bodyPartMeasurements.value,
           measuredOn: Schema.bodyPartMeasurements.measuredOn,
-          userId: Schema.bodyPartMeasurements.userId,
         })
         .from(Schema.bodyPartMeasurements)
         .where(eq(Schema.bodyPartMeasurements.userId, userId))
@@ -29,9 +28,7 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
 
     const data = bodyParts.map((bodyPart) => ({
       ...bodyPart,
-      measurements: new Measurements.Services.BodyPartMeasurementDeltas(
-        grouped[bodyPart.id] ?? [],
-      ).calculate(),
+      measurements: grouped[bodyPart.id] ?? [],
     }));
 
     return {

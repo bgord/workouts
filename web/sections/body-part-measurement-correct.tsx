@@ -1,14 +1,14 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
-import type { BodyPartMeasurement } from "../../modules/measurements/value-objects/body-part-measurement";
+import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { LengthFormat } from "../services/length-format";
 
 export function BodyPartMeasurementCorrect(
-  props: { measurement: BodyPartMeasurement } & bg.UseToggleReturnType,
+  props: { measurement: BodyPartSummaryMeasurement } & bg.UseToggleReturnType,
 ) {
   const t = bg.useTranslations();
   const router = useRouter();

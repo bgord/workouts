@@ -21,11 +21,9 @@ export function BodyPartMeasure() {
   const [values, setValues] = useState<Record<string, string>>({});
 
   const measurements = bodyParts.data.flatMap((bodyPart) => {
-    const value = Number(values[bodyPart.id]);
+    const value = LengthFormat.parse(values[bodyPart.id] ?? "");
 
-    if (!(values[bodyPart.id] && value > 0)) return [];
-
-    return [{ bodyPartId: bodyPart.id, value: LengthFormat.millimeters(value) }];
+    return value === null ? [] : [{ bodyPartId: bodyPart.id, value }];
   });
 
   const mutation = bg.useMutation({

@@ -1,12 +1,15 @@
 import * as bg from "@bgord/ui";
-import type { BodyPartMeasurementWithDelta } from "../../modules/measurements/value-objects/body-part-summary";
+import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
-import { LengthFormat } from "../services/length-format";
 import { BodyPartMeasurementCorrect } from "./body-part-measurement-correct";
 import { BodyPartMeasurementRemove } from "./body-part-measurement-remove";
 
-export function BodyPartHistoryRow(props: { measurement: BodyPartMeasurementWithDelta; first: boolean }) {
+export function BodyPartHistoryRow(props: {
+  measurement: BodyPartSummaryMeasurement;
+  previous: BodyPartSummaryMeasurement | undefined;
+  first: boolean;
+}) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const bodyPartMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
@@ -41,7 +44,7 @@ export function BodyPartHistoryRow(props: { measurement: BodyPartMeasurementWith
               {DateFormat.plainDay(language, props.measurement.measuredOn)}
             </span>
 
-            <ui.LengthDelta data-fs="xs" millimeters={props.measurement.delta} />
+            <ui.LengthDelta current={props.measurement.value} data-fs="xs" previous={props.previous?.value} />
 
             <span
               data-color="neutral-0"
@@ -51,9 +54,7 @@ export function BodyPartHistoryRow(props: { measurement: BodyPartMeasurementWith
               {...bg.Rhythm(72).times(1).style.minWidth}
               style={{ textAlign: "right" }}
             >
-              {t("measurements.body_parts.value", {
-                value: LengthFormat.centimeters(props.measurement.value).toFixed(1),
-              })}
+              <ui.LengthValue millimeters={props.measurement.value} />
             </span>
           </button>
 

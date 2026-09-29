@@ -211,7 +211,6 @@ modules/
 │   │   └── list-body-weight-months.ts
 │   ├── services
 │   │   ├── body-part-list-actions.ts
-│   │   ├── body-part-measurement-deltas.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
