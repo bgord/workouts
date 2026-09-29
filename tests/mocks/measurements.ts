@@ -251,6 +251,18 @@ export const bodyPartMeasurement: Measurements.VO.BodyPartMeasurement = {
   userId,
 };
 
+export const bodyPartMeasurementExportRow: Measurements.Queries.BodyPartMeasurementExportRow = {
+  id: bodyPartMeasurementId,
+  bodyPartName,
+  value: bodyPartCircumference,
+  measuredOn: bodyPartMeasuredOn,
+};
+
+export const bodyPartMeasurementCsv = [
+  "id,bodyPartName,value,measuredOn",
+  `${bodyPartMeasurementId},${bodyPartName},${bodyPartCircumference},${bodyPartMeasuredOn}`,
+].join("");
+
 export const GenericBodyPartMeasuredEvent = {
   id: expectAnyId,
   correlationId,
