@@ -6,6 +6,7 @@ import { measurementsRoute } from "../router";
 import { BodyPartManage } from "../sections/body-part-manage";
 import { BodyPartMeasure } from "../sections/body-part-measure";
 import { BodyPartsEmpty } from "../sections/body-parts-empty";
+import { BodyPartsOverview } from "../sections/body-parts-overview";
 import { BodyWeightMeasure } from "../sections/body-weight-measure";
 import { BodyWeightMeasurementExport } from "../sections/body-weight-measurement-export";
 import { BodyWeightMeasurementHistory } from "../sections/body-weight-measurement-history";
@@ -44,6 +45,8 @@ export function Measurements() {
       <MeasurementsTabs />
 
       {!bodyWeight && <BodyPartsEmpty />}
+
+      {!bodyWeight && <BodyPartsOverview />}
 
       {bodyWeight && (
         <>

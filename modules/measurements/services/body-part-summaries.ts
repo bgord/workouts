@@ -10,15 +10,18 @@ export class BodyPartSummaries {
 
   calculate(): ReadonlyArray<VO.BodyPartSummary> {
     return this.facts.bodyParts.map((bodyPart) => {
-      const [latest, previous] = this.facts.measurements
+      const recent = this.facts.measurements
         .filter((measurement) => measurement.bodyPartId === bodyPart.id)
         .map(({ id, value, measuredOn }) => ({ id, value, measuredOn }));
+
+      const [latest, previous] = recent;
 
       return {
         ...bodyPart,
         latest: latest ?? null,
         previous: previous ?? null,
         delta: latest && previous ? latest.value - previous.value : null,
+        series: recent.map(({ value, measuredOn }) => ({ value, measuredOn })).reverse(),
       };
     });
   }

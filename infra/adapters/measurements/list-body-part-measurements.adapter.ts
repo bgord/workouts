@@ -1,6 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
-import type * as Measurements from "+measurements";
+import * as Measurements from "+measurements";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
@@ -9,7 +9,7 @@ class ListBodyPartMeasurementsQueryDrizzle implements Measurements.Queries.ListB
     userId: Auth.VO.UserIdType,
     bodyPartId: Measurements.VO.BodyPartIdType,
   ): Promise<Measurements.Queries.BodyPartMeasurementListResponse> {
-    const data = await db
+    const measurements = await db
       .select({
         id: Schema.bodyPartMeasurements.id,
         bodyPartId: Schema.bodyPartMeasurements.bodyPartId,
@@ -26,7 +26,7 @@ class ListBodyPartMeasurementsQueryDrizzle implements Measurements.Queries.ListB
       )
       .orderBy(desc(Schema.bodyPartMeasurements.measuredOn), desc(Schema.bodyPartMeasurements.createdAt));
 
-    return { data };
+    return { data: new Measurements.Services.BodyPartMeasurementDeltas(measurements).calculate() };
   }
 }
 

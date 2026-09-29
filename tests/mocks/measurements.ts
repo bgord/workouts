@@ -345,6 +345,10 @@ export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
         measuredOn: anotherBodyPartMeasuredOn,
       },
       delta: 10,
+      series: [
+        { value: bodyPartCircumference, measuredOn: anotherBodyPartMeasuredOn },
+        { value: anotherBodyPartCircumference, measuredOn: bodyPartMeasuredOn },
+      ],
     },
   ],
   actions: { measure: actionAvailable },
@@ -356,7 +360,7 @@ export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListRespons
 };
 
 export const bodyPartMeasurementListResponse: Measurements.Queries.BodyPartMeasurementListResponse = {
-  data: [bodyPartMeasurement],
+  data: [{ ...bodyPartMeasurement, delta: null }],
 };
 
 export const bodyPartMeasurementListResponseEmpty: Measurements.Queries.BodyPartMeasurementListResponse = {

@@ -1,5 +1,4 @@
 import * as bg from "@bgord/ui";
-import { Triangle } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
@@ -19,7 +18,7 @@ export function BodyPartMeasureRow(props: BodyPartMeasureRowProps) {
   const typed = Number(props.value);
   const filled = props.value !== "" && typed > 0;
   const latest = props.latest ? LengthFormat.centimeters(props.latest.value) : null;
-  const delta = filled && latest !== null ? Number((typed - latest).toFixed(1)) : null;
+  const delta = filled && props.latest ? LengthFormat.millimeters(typed) - props.latest.value : null;
 
   return (
     <ui.HairlineRow
@@ -54,23 +53,7 @@ export function BodyPartMeasureRow(props: BodyPartMeasureRowProps) {
         )}
       </div>
 
-      {delta !== null && (
-        <span
-          data-delta-pill={delta > 0 ? "up" : delta < 0 ? "down" : "same"}
-          data-transform="font-variant-numeric"
-        >
-          {delta === 0 ? (
-            t("measurements.body_parts.measure.same")
-          ) : (
-            <>
-              <Triangle data-rotate={delta > 0 ? "0" : "180"} fill="currentColor" size={8} strokeWidth={0} />
-              {t("measurements.body_parts.value", {
-                value: `${delta > 0 ? "+" : "−"}${Math.abs(delta).toFixed(1)}`,
-              })}
-            </>
-          )}
-        </span>
-      )}
+      {delta !== null && <ui.LengthDelta millimeters={delta} />}
 
       <input
         aria-label={t("measurements.body_parts.measure.value.label", { name: props.name })}

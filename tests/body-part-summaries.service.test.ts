@@ -9,7 +9,9 @@ describe("BodyPartSummaries", () => {
       measurements: [],
     });
 
-    expect(summaries.calculate()).toEqual([{ ...mocks.bodyPart, latest: null, previous: null, delta: null }]);
+    expect(summaries.calculate()).toEqual([
+      { ...mocks.bodyPart, latest: null, previous: null, delta: null, series: [] },
+    ]);
   });
 
   test("one measurement", () => {
@@ -28,6 +30,7 @@ describe("BodyPartSummaries", () => {
         },
         previous: null,
         delta: null,
+        series: [{ value: mocks.anotherBodyPartCircumference, measuredOn: mocks.bodyPartMeasuredOn }],
       },
     ]);
   });
@@ -52,6 +55,10 @@ describe("BodyPartSummaries", () => {
           measuredOn: mocks.anotherBodyPartMeasuredOn,
         },
         delta: 10,
+        series: [
+          { value: mocks.bodyPartCircumference, measuredOn: mocks.anotherBodyPartMeasuredOn },
+          { value: mocks.anotherBodyPartCircumference, measuredOn: mocks.bodyPartMeasuredOn },
+        ],
       },
     ]);
   });
@@ -62,6 +69,8 @@ describe("BodyPartSummaries", () => {
       measurements: [mocks.anotherBodyPartRecentMeasurement],
     });
 
-    expect(summaries.calculate()).toEqual([{ ...mocks.bodyPart, latest: null, previous: null, delta: null }]);
+    expect(summaries.calculate()).toEqual([
+      { ...mocks.bodyPart, latest: null, previous: null, delta: null, series: [] },
+    ]);
   });
 });

@@ -1,7 +1,7 @@
 import type * as Auth from "+auth";
 import type * as VO from "+measurements/value-objects";
 
-export type BodyPartMeasurementListResponse = { data: ReadonlyArray<VO.BodyPartMeasurement> };
+export type BodyPartMeasurementListResponse = { data: ReadonlyArray<VO.BodyPartMeasurementWithDelta> };
 
 export interface ListBodyPartMeasurements {
   execute(

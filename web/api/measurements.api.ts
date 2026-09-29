@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import type { BodyPartMeasurementListResponse } from "../../modules/measurements/queries/list-body-part-measurements";
 import type { BodyPartListResponse } from "../../modules/measurements/queries/list-body-parts";
 import type { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import type { BodyWeightChartPoint } from "../../modules/measurements/value-objects/body-weight-chart-point";
@@ -35,6 +36,18 @@ export const bodyPartListEmpty: BodyPartListResponse = {
 };
 
 export class Measurements {
+  static async listBodyPartMeasurements(
+    request: Request | null,
+    bodyPartId: string,
+  ): Promise<BodyPartMeasurementListResponse> {
+    return bg.ApiClient.json<BodyPartMeasurementListResponse>(
+      `/api/measurements/body-part/${bodyPartId}/measurement/list`,
+      request,
+      { data: [] },
+      { method: "QUERY" },
+    );
+  }
+
   static async listBodyParts(request: Request | null): Promise<BodyPartListResponse> {
     return bg.ApiClient.json<BodyPartListResponse>(
       "/api/measurements/body-part/list",

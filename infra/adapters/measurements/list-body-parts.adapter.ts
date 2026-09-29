@@ -35,12 +35,14 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
           measuredOn: ranked.measuredOn,
         })
         .from(ranked)
-        .where(lte(ranked.rank, 2))
+        .where(lte(ranked.rank, Measurements.VO.BodyPartSummarySeriesSize))
         .orderBy(asc(ranked.bodyPartId), asc(ranked.rank)),
     ]);
 
+    const data = new Measurements.Services.BodyPartSummaries({ bodyParts, measurements }).calculate();
+
     return {
-      data: new Measurements.Services.BodyPartSummaries({ bodyParts, measurements }).calculate(),
+      data,
       actions: new Measurements.Services.BodyPartListActions({ bodyParts }).calculate(),
     };
   }
