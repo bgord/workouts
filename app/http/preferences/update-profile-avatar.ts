@@ -19,8 +19,8 @@ export const UpdateProfileAvatar =
 
     const userId = context.identity.authenticatedUserId();
 
-    const uploaded = tools.Filename.fromString(file.name);
-    const filename = uploaded.withBasename(v.parse(tools.Basename, userId));
+    const extension = v.parse(tools.Extension, file.name.match(/\.([^.]+)$/)?.[1]);
+    const filename = tools.Filename.fromParts(userId, extension);
 
     const temporary = await deps.TemporaryFile.write(filename, file);
 

@@ -20,9 +20,8 @@ export const ExerciseImageChange =
     const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
     const file = v.parse(v.instance(File), form.get("file"));
 
-    const filename = tools.Filename.fromString(file.name).withBasename(
-      v.parse(tools.Basename, deps.IdProvider.generate()),
-    );
+    const extension = v.parse(tools.Extension, file.name.match(/\.([^.]+)$/)?.[1]);
+    const filename = tools.Filename.fromParts(deps.IdProvider.generate(), extension);
 
     const temporary = await deps.TemporaryFile.write(filename, file);
 
