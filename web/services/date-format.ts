@@ -1,5 +1,6 @@
 const DAY: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" };
 const TIME: Intl.DateTimeFormatOptions = { hour: "2-digit", hour12: false, minute: "2-digit" };
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 const plain = (date: string) => {
   const [year, month, day] = date.split("-").map(Number);
@@ -55,4 +56,10 @@ export const DateFormat = {
   dayWithTime: (language: string, timestamp: number) => format(language, timestamp, { ...DAY, ...TIME }),
 
   time: (language: string, timestamp: number) => format(language, timestamp, TIME),
+
+  daysAgo: (language: string, date: string) => {
+    const days = Math.round((plain(DateFormat.todayISO()).getTime() - plain(date).getTime()) / DAY_IN_MS);
+
+    return new Intl.RelativeTimeFormat(language, { numeric: "auto" }).format(-days, "day");
+  },
 };

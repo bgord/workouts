@@ -337,6 +337,42 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   const measurements = new Hono<infra.Config>();
 
   measurements.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
+  // Body parts =================
+  measurements.query(
+    "/body-part/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartList(Adapters.Measurements)),
+  );
+  measurements.post(
+    "/body-part",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartDefine(deps)),
+  );
+  measurements.patch(
+    "/body-part/:bodyPartId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartRename(deps)),
+  );
+  measurements.delete(
+    "/body-part/:bodyPartId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartDelete(deps)),
+  );
+  measurements.post(
+    "/body-part/measure",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasure(deps)),
+  );
+  measurements.patch(
+    "/body-part/measurement/:bodyPartMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementCorrect(deps)),
+  );
+  measurements.delete(
+    "/body-part/measurement/:bodyPartMeasurementId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementRemove(deps)),
+  );
+  // Body weight =================
   measurements.query(
     "/body-weight/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightMeasurementList(Adapters.Measurements)),
@@ -399,9 +435,9 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   );
   server.get(
     "/healthcheck",
+    Tools.ShieldBasicAuth.handle(),
     Tools.ShieldRateLimit.handle(),
     Tools.ShieldTimeout.handle(),
-    Tools.ShieldBasicAuth.handle(),
     ...new bg.HealthcheckHonoHandler(
       { Env: Env.type, prerequisites: Tools.Prerequisites.healthcheck, redactor },
       { ...Adapters.System, ...Tools, LoggerStatsProvider: Adapters.System.Logger },

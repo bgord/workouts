@@ -1,32 +1,40 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
+import { Ruler, Scale } from "lucide-react";
 import * as ui from "../components";
-import { BodyWeightMeasure } from "../sections/body-weight-measure";
-import { BodyWeightMeasurementExport } from "../sections/body-weight-measurement-export";
-import { BodyWeightMeasurementHistory } from "../sections/body-weight-measurement-history";
-import { BodyWeightMeasurementImport } from "../sections/body-weight-measurement-import";
-import { BodyWeightMeasurementsEmpty } from "../sections/body-weight-measurements-empty";
 
 export function Measurements() {
   const t = bg.useTranslations();
 
   return (
     <ui.Main>
-      <div data-stack="x" {...ui.Gap.related}>
-        <h1 data-grow="1">{t("measurements.body_weight.header")}</h1>
+      <h1>{t("app.measurements")}</h1>
 
-        <div data-stack="x" {...ui.Gap.inline}>
-          <BodyWeightMeasurementImport />
+      <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+        <ui.TileLink data-hover-bc="brand-500" to="/measurements/body-weight">
+          <div data-stack="y" data-width="100%" {...ui.Gap.inline}>
+            <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+              <Scale data-color="brand-400" data-size="md" />
 
-          <BodyWeightMeasurementExport />
-        </div>
-      </div>
+              <ui.TileValue>{t("measurements.body_weight.header")}</ui.TileValue>
+            </div>
 
-      <BodyWeightMeasure />
+            <small data-color="neutral-500">{t("measurements.body_weight.header.hint")}</small>
+          </div>
+        </ui.TileLink>
 
-      <BodyWeightMeasurementsEmpty />
+        <ui.TileLink data-hover-bc="brand-500" to="/measurements/body-parts">
+          <div data-stack="y" data-width="100%" {...ui.Gap.inline}>
+            <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+              <Ruler data-color="brand-400" data-size="md" />
 
-      <BodyWeightMeasurementHistory />
+              <ui.TileValue>{t("measurements.body_parts.header")}</ui.TileValue>
+            </div>
+
+            <small data-color="neutral-500">{t("measurements.body_parts.header.hint")}</small>
+          </div>
+        </ui.TileLink>
+      </ul>
     </ui.Main>
   );
 }

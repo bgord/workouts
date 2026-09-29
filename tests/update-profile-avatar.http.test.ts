@@ -24,6 +24,17 @@ describe(`POST ${url}`, async () => {
     await testcases.assertAuthResponse(response);
   });
 
+  test("validation - file - extension", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const form = new FormData();
+    form.append("file", mocks.fileWithoutExtension);
+
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
+
+    await testcases.assertErrorResponse(response, 400, "extension.type");
+  });
+
   test("ProfileAvatarConstraints - maxSide - width", async () => {
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
@@ -195,5 +206,30 @@ describe(`POST ${url}`, async () => {
     expect(response.status);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericProfileAvatarUpdatedEvent]);
     expect(temporaryFileCleanup.mock.calls[0]?.[0].get()).toEqual(expect.stringContaining(".webp"));
+  });
+
+  test("happy path - filename with spaces", async () => {
+    using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
+    using spies = new DisposableStack();
+    spies.use(
+      spyOn(di.Adapters.System.ImageInfo, "inspect").mockResolvedValue({
+        width: v.parse(tools.ImageWidth, 100),
+        height: v.parse(tools.ImageHeight, 100),
+        mime: tools.Mimes.png.mime,
+        size: tools.Size.fromKb(100),
+      }),
+    );
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    const form = new FormData();
+    form.append("file", mocks.pngWithSpaces);
+
+    const response = await server.request(
+      url,
+      { method: "POST", body: form, headers: mocks.correlationIdHeaders },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(temporaryFileWrite.mock.calls?.[0]?.[0].get()).toEqual(`${mocks.userId}.png`);
   });
 });

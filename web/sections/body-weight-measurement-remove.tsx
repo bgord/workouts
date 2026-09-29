@@ -3,7 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 
 export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeasurement }) {
   const t = bg.useTranslations();
@@ -16,7 +16,7 @@ export function BodyWeightMeasurementRemove(props: { measurement: BodyWeightMeas
         credentials: "include",
       }),
     onSuccess: () =>
-      router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true }),
+      router.invalidate({ filter: (match) => match.routeId === bodyWeightRoute.id, sync: true }),
   });
 
   return (

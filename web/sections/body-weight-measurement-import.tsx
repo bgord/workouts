@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Download, FileSpreadsheet, FileUp, Upload } from "lucide-react";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
 const maxSizeBytes = 1_024_000;
@@ -30,7 +30,7 @@ export function BodyWeightMeasurementImport() {
     onSuccess: async () => {
       bodyWeightMeasurementImport.disable();
       file.actions.clearFile();
-      await router.invalidate({ filter: (match) => match.routeId === measurementsRoute.id, sync: true });
+      await router.invalidate({ filter: (match) => match.routeId === bodyWeightRoute.id, sync: true });
     },
   });
 

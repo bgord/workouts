@@ -3,7 +3,7 @@ import * as tools from "@bgord/tools";
 import type { BootstrapType } from "+infra/bootstrap";
 
 export function registerCronTasks({ Tools, Adapters }: BootstrapType) {
-  const CronTaskHandler = new bg.CronTaskHandlerBareStrategy(Adapters.System);
+  const CronTaskHandler = new bg.CronTaskHandlerWithLoggerStrategy(Adapters.System);
 
   const PassageOfTimeHourly = CronTaskHandler.handle(
     bg.System.CronTasks.PassageOfTimeHourlyCronTask({ ...Tools, ...Adapters.System }),

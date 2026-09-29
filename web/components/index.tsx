@@ -1,3 +1,4 @@
+// cSpell:ignore sparkline
 export * from "./action-hint";
 export * from "./add-button";
 export * from "./add-placeholder";
@@ -23,6 +24,8 @@ export * from "./gap";
 export * from "./hairline";
 export * from "./icon-button";
 export * from "./language-selector";
+export * from "./length-delta";
+export * from "./length-value";
 export * from "./line-chart";
 export * from "./logo";
 export * from "./logout";
@@ -48,6 +51,7 @@ export * from "./sets-reps";
 export * from "./sets-reps-load";
 export * from "./show-more-link";
 export * from "./spacing";
+export * from "./sparkline";
 export * from "./stepper";
 export * from "./stepper-submit";
 export * from "./target-diff-pills";

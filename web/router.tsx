@@ -19,6 +19,8 @@ import {
   Workouts,
 } from "./api";
 import { NotFound } from "./not-found";
+import { BodyParts as BodyPartsPage } from "./pages/body-parts";
+import { BodyWeight as BodyWeightPage } from "./pages/body-weight";
 import { Catalog as CatalogPage } from "./pages/catalog";
 import { Dashboard as DashboardPage } from "./pages/dashboard";
 import { Exercise as ExercisePage } from "./pages/exercise";
@@ -160,10 +162,16 @@ export const workoutRoute = createRoute({
   },
 });
 
-export const measurementsRoute = createRoute({
+const measurementsRoute = createRoute({
   path: "/measurements",
   getParentRoute: () => rootRoute,
   component: MeasurementsPage,
+});
+
+export const bodyWeightRoute = createRoute({
+  path: "/measurements/body-weight",
+  getParentRoute: () => rootRoute,
+  component: BodyWeightPage,
   validateSearch: (value: Record<string, unknown>) => ({
     ...BodyWeightMeasurementFiltersForm.Form.validate(value),
     ...BodyWeightChartForm.Form.validate(value),
@@ -179,6 +187,13 @@ export const measurementsRoute = createRoute({
 
     return { month, measurements, previous, months, bodyWeightStats: stats, chart: points };
   },
+});
+
+export const bodyPartsRoute = createRoute({
+  path: "/measurements/body-parts",
+  getParentRoute: () => rootRoute,
+  component: BodyPartsPage,
+  loader: async ({ context }) => ({ bodyParts: await Measurements.listBodyParts(context.request) }),
 });
 
 export const profileRoute = createRoute({
@@ -201,6 +216,8 @@ const routeTree = rootRoute.addChildren([
   planRoute,
   workoutRoute,
   measurementsRoute,
+  bodyWeightRoute,
+  bodyPartsRoute,
   profileRoute,
 ]);
 

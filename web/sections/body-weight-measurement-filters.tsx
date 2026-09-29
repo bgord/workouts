@@ -4,15 +4,15 @@ import * as BodyWeightMeasurementFiltersForm from "../../app/services/body-weigh
 import type { BodyWeightHistoryMonthType } from "../../modules/measurements/value-objects/body-weight-history-month";
 import { BodyWeightHistoryMonthAll } from "../../modules/measurements/value-objects/body-weight-history-month.validation";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
 export function BodyWeightMeasurementFilters() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const { month, months } = measurementsRoute.useLoaderData();
-  const navigate = measurementsRoute.useNavigate();
-  const search = measurementsRoute.useSearch();
+  const { month, months } = bodyWeightRoute.useLoaderData();
+  const navigate = bodyWeightRoute.useNavigate();
+  const search = bodyWeightRoute.useSearch();
 
   const pristine = BodyWeightMeasurementFiltersForm.Form.isDefault(search);
 

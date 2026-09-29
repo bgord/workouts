@@ -148,23 +148,50 @@ modules/
 ├── languages.ts
 ├── measurements
 │   ├── command-handlers
+│   │   ├── handleBodyPartDefineCommand.ts
+│   │   ├── handleBodyPartDeleteCommand.ts
+│   │   ├── handleBodyPartMeasureCommand.ts
+│   │   ├── handleBodyPartMeasurementCorrectCommand.ts
+│   │   ├── handleBodyPartMeasurementRemoveCommand.ts
+│   │   ├── handleBodyPartRenameCommand.ts
 │   │   ├── handleBodyWeightMeasureCommand.ts
 │   │   ├── handleBodyWeightMeasurementCorrectCommand.ts
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
 │   ├── commands
+│   │   ├── BODY_PART_DEFINE_COMMAND.ts
+│   │   ├── BODY_PART_DELETE_COMMAND.ts
+│   │   ├── BODY_PART_MEASURE_COMMAND.ts
+│   │   ├── BODY_PART_MEASUREMENT_CORRECT_COMMAND.ts
+│   │   ├── BODY_PART_MEASUREMENT_REMOVE_COMMAND.ts
+│   │   ├── BODY_PART_RENAME_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASURE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
 │   ├── events
+│   │   ├── BODY_PART_DEFINED_EVENT.ts
+│   │   ├── BODY_PART_DELETED_EVENT.ts
+│   │   ├── BODY_PART_MEASURED_EVENT.ts
+│   │   ├── BODY_PART_MEASUREMENT_CORRECTED_EVENT.ts
+│   │   ├── BODY_PART_MEASUREMENT_REMOVED_EVENT.ts
+│   │   ├── BODY_PART_RENAMED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASURED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
 │   ├── invariants
+│   │   ├── body-part-belongs-to-user.ts
+│   │   ├── body-part-exists.ts
+│   │   ├── body-part-is-defined.ts
+│   │   ├── body-part-measured-on-is-not-in-future.ts
+│   │   ├── body-part-measurement-belongs-to-user.ts
+│   │   ├── body-part-measurement-exists.ts
+│   │   ├── body-part-measurement-has-changed.ts
+│   │   ├── body-part-name-has-changed.ts
+│   │   ├── body-part-name-is-unique.ts
 │   │   ├── body-weight-measured-on-is-not-in-future.ts
 │   │   ├── body-weight-measurement-belongs-to-user.ts
 │   │   ├── body-weight-measurement-exists.ts
@@ -173,18 +200,34 @@ modules/
 │   ├── open-host-queries
 │   ├── ports
 │   ├── queries
+│   │   ├── get-body-part-measurement.ts
+│   │   ├── get-body-part-name-count.ts
+│   │   ├── get-body-part.ts
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── list-body-parts.ts
 │   │   ├── list-body-weight-measurements-for-month.ts
 │   │   ├── list-body-weight-measurements-for-stats.ts
 │   │   ├── list-body-weight-measurements.ts
 │   │   └── list-body-weight-months.ts
 │   ├── services
+│   │   ├── body-part-list-actions.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
 │   └── value-objects
+│       ├── body-part-circumference.ts
+│       ├── body-part-id.ts
+│       ├── body-part-measured-on.ts
+│       ├── body-part-measurement-entries.ts
+│       ├── body-part-measurement-entries.validation.ts
+│       ├── body-part-measurement-id.ts
+│       ├── body-part-measurement.ts
+│       ├── body-part-name.ts
+│       ├── body-part-name.validation.ts
+│       ├── body-part-summary.ts
+│       ├── body-part.ts
 │       ├── body-weight-chart-granularity-options.ts
 │       ├── body-weight-chart-granularity.ts
 │       ├── body-weight-chart-point.ts
@@ -541,6 +584,13 @@ app/
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements
+│   │   ├── body-part-define.ts
+│   │   ├── body-part-delete.ts
+│   │   ├── body-part-list.ts
+│   │   ├── body-part-measure.ts
+│   │   ├── body-part-measurement-correct.ts
+│   │   ├── body-part-measurement-remove.ts
+│   │   ├── body-part-rename.ts
 │   │   ├── body-weight-chart-get.ts
 │   │   ├── body-weight-measure.ts
 │   │   ├── body-weight-measurement-correct.ts
@@ -597,6 +647,7 @@ app/
 │       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
+    ├── body-part-name-form.ts
     ├── body-weight-chart-form.ts
     ├── body-weight-measurement-filters-form.ts
     ├── exercise-add-form.ts
@@ -633,7 +684,11 @@ infra/
 │   │   ├── list-exercise-categories.adapter.ts
 │   │   └── list-exercises-with-categories.adapter.ts
 │   ├── measurements
+│   │   ├── get-body-part-measurement.adapter.ts
+│   │   ├── get-body-part-name-count.adapter.ts
+│   │   ├── get-body-part.adapter.ts
 │   │   ├── get-body-weight-measurement.adapter.ts
+│   │   ├── list-body-parts.adapter.ts
 │   │   ├── list-body-weight-measurements-for-month.adapter.ts
 │   │   ├── list-body-weight-measurements-for-stats.adapter.ts
 │   │   ├── list-body-weight-measurements.adapter.ts
@@ -694,6 +749,8 @@ infra/
 │   └── home.spec.ts
 ├── env.ts
 ├── projections
+│   ├── body-part-measurements.projector.ts
+│   ├── body-parts.projector.ts
 │   ├── body-weight-measurements.projector.ts
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts

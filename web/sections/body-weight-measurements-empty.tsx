@@ -1,11 +1,11 @@
 import * as bg from "@bgord/ui";
 import { Scale } from "lucide-react";
 import * as ui from "../components";
-import { measurementsRoute } from "../router";
+import { bodyWeightRoute } from "../router";
 
 export function BodyWeightMeasurementsEmpty() {
   const t = bg.useTranslations();
-  const { bodyWeightStats } = measurementsRoute.useLoaderData();
+  const { bodyWeightStats } = bodyWeightRoute.useLoaderData();
 
   if (bodyWeightStats) return null;
 
