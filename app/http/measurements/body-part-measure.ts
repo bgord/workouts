@@ -11,20 +11,18 @@ type Dependencies = {
 export const BodyPartMeasure =
   (deps: Dependencies): bg.EndpointPort =>
   async (context) => {
+    const params = context.request.params();
     const body = await context.request.json();
 
     const userId = context.identity.authenticatedUserId();
+    const id = v.parse(Measurements.VO.BodyPartMeasurementId, deps.IdProvider.generate());
+    const bodyPartId = v.parse(Measurements.VO.BodyPartId, params["bodyPartId"]);
+    const value = v.parse(Measurements.VO.BodyPartCircumference, body["value"]);
     const measuredOn = v.parse(Measurements.VO.BodyPartMeasuredOn, body["measuredOn"]);
-    const entries = v.parse(Measurements.VO.BodyPartMeasurementEntries, body["measurements"]);
-
-    const measurements = entries.map((entry) => ({
-      ...entry,
-      id: v.parse(Measurements.VO.BodyPartMeasurementId, deps.IdProvider.generate()),
-    }));
 
     const command = bg.command(
       Measurements.Commands.BodyPartMeasureCommand,
-      { payload: { measuredOn, measurements, userId } },
+      { payload: { id, bodyPartId, value, measuredOn, userId } },
       deps,
     );
 

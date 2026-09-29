@@ -20,34 +20,23 @@ export const handleBodyPartMeasureCommand =
 
     BodyPartMeasuredOnIsNotInFuture.enforce({ measuredOn: command.payload.measuredOn, today });
 
-    const bodyParts = await Promise.all(
-      command.payload.measurements.map((measurement) =>
-        deps.GetBodyPartQuery.execute(measurement.bodyPartId),
-      ),
+    const bodyPart = await deps.GetBodyPartQuery.execute(command.payload.bodyPartId);
+
+    BodyPartExists.enforce({ bodyPart });
+    BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.userId });
+
+    const event = bg.event(
+      BodyPartMeasuredEvent,
+      `body_part_measurement_${command.payload.id}`,
+      {
+        id: command.payload.id,
+        bodyPartId: command.payload.bodyPartId,
+        value: command.payload.value,
+        measuredOn: command.payload.measuredOn,
+        userId: command.payload.userId,
+      },
+      deps,
     );
 
-    for (const bodyPart of bodyParts) {
-      BodyPartExists.enforce({ bodyPart });
-      BodyPartBelongsToUser.enforce({
-        userId: bodyPart!.userId,
-        requesterId: command.payload.userId,
-      });
-    }
-
-    for (const measurement of command.payload.measurements) {
-      const event = bg.event(
-        BodyPartMeasuredEvent,
-        `body_part_measurement_${measurement.id}`,
-        {
-          id: measurement.id,
-          bodyPartId: measurement.bodyPartId,
-          value: measurement.value,
-          measuredOn: command.payload.measuredOn,
-          userId: command.payload.userId,
-        },
-        deps,
-      );
-
-      await deps.EventStore.save([event]);
-    }
+    await deps.EventStore.save([event]);
   };

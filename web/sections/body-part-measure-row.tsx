@@ -25,12 +25,12 @@ export function BodyPartMeasureRow(
   const mutation = bg.useMutation({
     autoResetDelayMs: 3000,
     perform: () =>
-      fetch("/api/measurements/body-part/measure", {
+      fetch(`/api/measurements/body-part/${props.id}/measure`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({
+          value: LengthFormat.millimeters(value.value ?? 0),
           measuredOn: props.measuredOn,
-          measurements: [{ bodyPartId: props.id, value: LengthFormat.millimeters(value.value ?? 0) }],
         }),
       }),
     onSuccess: async () => {

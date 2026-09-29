@@ -233,16 +233,6 @@ export const anotherBodyPartMeasurementStream = v.parse(
   `body_part_measurement_${anotherBodyPartMeasurementId}`,
 );
 
-export const bodyPartMeasurementEntries = [{ bodyPartId, value: bodyPartCircumference }];
-export const multipleBodyPartMeasurementEntries = [
-  { bodyPartId, value: bodyPartCircumference },
-  { bodyPartId: anotherBodyPartId, value: anotherBodyPartCircumference },
-];
-export const duplicateBodyPartMeasurementEntries = [
-  { bodyPartId, value: bodyPartCircumference },
-  { bodyPartId, value: anotherBodyPartCircumference },
-];
-
 export const bodyPartMeasurement: Measurements.VO.BodyPartMeasurement = {
   id: bodyPartMeasurementId,
   bodyPartId,

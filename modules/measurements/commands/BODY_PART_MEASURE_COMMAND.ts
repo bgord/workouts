@@ -13,10 +13,10 @@ export const BodyPartMeasureCommand = v.object({
   ...bg.CommandEnvelopeSchema,
   name: v.literal(BODY_PART_MEASURE_COMMAND),
   payload: v.object({
+    id: BodyPartMeasurementId,
+    bodyPartId: BodyPartId,
+    value: BodyPartCircumference,
     measuredOn: BodyPartMeasuredOn,
-    measurements: v.array(
-      v.object({ id: BodyPartMeasurementId, bodyPartId: BodyPartId, value: BodyPartCircumference }),
-    ),
     userId: Auth.VO.UserId,
   }),
 });

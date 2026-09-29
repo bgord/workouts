@@ -228,8 +228,6 @@ modules/
 │       ├── body-part-circumference.ts
 │       ├── body-part-id.ts
 │       ├── body-part-measured-on.ts
-│       ├── body-part-measurement-entries.ts
-│       ├── body-part-measurement-entries.validation.ts
 │       ├── body-part-measurement-id.ts
 │       ├── body-part-measurement-import-max-size.ts
 │       ├── body-part-measurement-import-mime-registry.ts
