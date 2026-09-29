@@ -215,6 +215,7 @@ modules/
 │   │   ├── body-part-list-actions.ts
 │   │   ├── body-part-list-item-actions.ts
 │   │   ├── body-part-measurement-list-item-actions.ts
+│   │   ├── body-part-summaries.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
@@ -230,6 +231,7 @@ modules/
 │       ├── body-part-measurement.ts
 │       ├── body-part-name.ts
 │       ├── body-part-name.validation.ts
+│       ├── body-part-summary.ts
 │       ├── body-part.ts
 │       ├── body-weight-chart-granularity-options.ts
 │       ├── body-weight-chart-granularity.ts

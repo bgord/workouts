@@ -343,7 +343,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartList(Adapters.Measurements)),
   );
   measurements.query(
-    "/body-part/measurement/list",
+    "/body-part/:bodyPartId/measurement/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartMeasurementList(Adapters.Measurements)),
   );
   measurements.post(

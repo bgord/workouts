@@ -9,6 +9,9 @@ import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filt
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import {
   Avatar,
+  bodyPartListEmpty,
+  bodyWeightChartEmpty,
+  bodyWeightListEmpty,
   Dashboard,
   Exercises,
   I18N,
@@ -170,17 +173,29 @@ export const measurementsRoute = createRoute({
     ...BodyWeightChartForm.Form.validate(value),
     ...MeasurementsTabForm.Form.validate(value),
   }),
-  loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
+  loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart, tab: search.tab }),
   loader: async ({ context, deps }) => {
-    const [{ month, measurements, previous, months, stats }, { points }, bodyParts] = await Promise.all([
-      Measurements.listBodyWeight(context.request, { month: deps.month }),
-      Measurements.bodyWeightChart(context.request, {
-        granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
-      }),
-      Measurements.listBodyParts(context.request),
+    const bodyParts = deps.tab === MeasurementsTabForm.MeasurementsTabOptions.body_parts;
+
+    const [{ month, measurements, previous, months, stats }, { points }, bodyPartList] = await Promise.all([
+      bodyParts ? bodyWeightListEmpty : Measurements.listBodyWeight(context.request, { month: deps.month }),
+      bodyParts
+        ? bodyWeightChartEmpty
+        : Measurements.bodyWeightChart(context.request, {
+            granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
+          }),
+      bodyParts ? Measurements.listBodyParts(context.request) : bodyPartListEmpty,
     ]);
 
-    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points, bodyParts };
+    return {
+      month,
+      measurements,
+      previous,
+      months,
+      bodyWeightStats: stats,
+      chart: points,
+      bodyParts: bodyPartList,
+    };
   },
 });
 

@@ -9,5 +9,8 @@ export type BodyPartMeasurementListItem = VO.BodyPartMeasurement & { actions: Bo
 export type BodyPartMeasurementListResponse = { data: ReadonlyArray<BodyPartMeasurementListItem> };
 
 export interface ListBodyPartMeasurements {
-  execute(userId: Auth.VO.UserIdType): Promise<BodyPartMeasurementListResponse>;
+  execute(
+    userId: Auth.VO.UserIdType,
+    bodyPartId: VO.BodyPartIdType,
+  ): Promise<BodyPartMeasurementListResponse>;
 }

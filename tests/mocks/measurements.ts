@@ -4,7 +4,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 import { anotherUserId, userId } from "./auth";
-import { actionAvailable, commit, correlationId, expectAnyId, T0 } from "./shared";
+import { actionAvailable, actionUnavailable, commit, correlationId, expectAnyId, T0 } from "./shared";
 
 export const bodyWeightMeasurementId = v.parse(
   Measurements.VO.BodyWeightMeasurementId,
@@ -319,13 +319,53 @@ export const GenericBodyPartMeasurementRemovedEvent = {
   payload: { id: bodyPartMeasurementId, requesterId: userId },
 } satisfies Measurements.Events.BodyPartMeasurementRemovedEventType;
 
+export const bodyPartRecentMeasurementLatest: Measurements.VO.BodyPartRecentMeasurement = {
+  id: bodyPartMeasurementId,
+  bodyPartId,
+  value: anotherBodyPartCircumference,
+  measuredOn: bodyPartMeasuredOn,
+};
+
+export const bodyPartRecentMeasurementPrevious: Measurements.VO.BodyPartRecentMeasurement = {
+  id: anotherBodyPartMeasurementId,
+  bodyPartId,
+  value: bodyPartCircumference,
+  measuredOn: anotherBodyPartMeasuredOn,
+};
+
+export const anotherBodyPartRecentMeasurement: Measurements.VO.BodyPartRecentMeasurement = {
+  id: anotherBodyPartMeasurementId,
+  bodyPartId: anotherBodyPartId,
+  value: bodyPartCircumference,
+  measuredOn: bodyPartMeasuredOn,
+};
+
 export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
-  data: [{ ...bodyPart, actions: { rename: actionAvailable, archive: actionAvailable } }],
+  data: {
+    active: [
+      {
+        ...bodyPart,
+        latest: {
+          id: bodyPartMeasurementId,
+          value: anotherBodyPartCircumference,
+          measuredOn: bodyPartMeasuredOn,
+        },
+        previous: {
+          id: anotherBodyPartMeasurementId,
+          value: bodyPartCircumference,
+          measuredOn: anotherBodyPartMeasuredOn,
+        },
+        delta: 10,
+        actions: { rename: actionAvailable, archive: actionAvailable },
+      },
+    ],
+    archived: [{ ...archivedBodyPart, actions: { rename: actionUnavailable, archive: actionUnavailable } }],
+  },
   actions: { measure: actionAvailable },
 };
 
 export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListResponse = {
-  data: [],
+  data: { active: [], archived: [] },
   actions: { measure: { available: true, enabled: false, hints: ["body.part.is.defined"] } },
 };
 

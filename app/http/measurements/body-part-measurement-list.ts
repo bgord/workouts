@@ -1,14 +1,18 @@
 import type * as bg from "@bgord/bun";
-import type * as Measurements from "+measurements";
+import * as v from "valibot";
+import * as Measurements from "+measurements";
 
 type Dependencies = { ListBodyPartMeasurementsQuery: Measurements.Queries.ListBodyPartMeasurements };
 
 export const BodyPartMeasurementList =
   (deps: Dependencies): bg.EndpointPort =>
   async (context) => {
-    const userId = context.identity.authenticatedUserId();
+    const params = context.request.params();
 
-    const measurements = await deps.ListBodyPartMeasurementsQuery.execute(userId);
+    const userId = context.identity.authenticatedUserId();
+    const bodyPartId = v.parse(Measurements.VO.BodyPartId, params["bodyPartId"]);
+
+    const measurements = await deps.ListBodyPartMeasurementsQuery.execute(userId, bodyPartId);
 
     return Response.json(measurements);
   };

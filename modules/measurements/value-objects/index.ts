@@ -6,6 +6,7 @@ export * from "./body-part-measurement";
 export * from "./body-part-measurement-entries";
 export * from "./body-part-measurement-id";
 export * from "./body-part-name";
+export * from "./body-part-summary";
 export * from "./body-weight";
 export * from "./body-weight-chart-granularity";
 export * from "./body-weight-chart-granularity-options";

@@ -19,12 +19,27 @@ type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
 
 const unavailable = { available: false, enabled: false, hints: [] };
 
+export const bodyWeightListEmpty: BodyWeightListResponse = {
+  month: null,
+  measurements: [],
+  previous: null,
+  months: [],
+  stats: null,
+};
+
+export const bodyWeightChartEmpty: BodyWeightChartResponse = { points: [] };
+
+export const bodyPartListEmpty: BodyPartListResponse = {
+  data: { active: [], archived: [] },
+  actions: { measure: unavailable },
+};
+
 export class Measurements {
   static async listBodyParts(request: Request | null): Promise<BodyPartListResponse> {
     return bg.ApiClient.json<BodyPartListResponse>(
       "/api/measurements/body-part/list",
       request,
-      { data: [], actions: { measure: unavailable } },
+      bodyPartListEmpty,
       { method: "QUERY" },
     );
   }
@@ -36,7 +51,7 @@ export class Measurements {
     return bg.ApiClient.json<BodyWeightListResponse>(
       "/api/measurements/body-weight/list",
       request,
-      { month: null, measurements: [], previous: null, months: [], stats: null },
+      bodyWeightListEmpty,
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }
@@ -48,7 +63,7 @@ export class Measurements {
     return bg.ApiClient.json<BodyWeightChartResponse>(
       "/api/measurements/body-weight/chart",
       request,
-      { points: [] },
+      bodyWeightChartEmpty,
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }

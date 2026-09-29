@@ -6,8 +6,10 @@ export type BodyPartActions = { rename: bg.ActionState; archive: bg.ActionState 
 
 export type BodyPartListItem = VO.BodyPart & { actions: BodyPartActions };
 
+export type BodyPartSummaryItem = VO.BodyPartSummary & { actions: BodyPartActions };
+
 export type BodyPartListResponse = {
-  data: ReadonlyArray<BodyPartListItem>;
+  data: { active: ReadonlyArray<BodyPartSummaryItem>; archived: ReadonlyArray<BodyPartListItem> };
   actions: { measure: bg.ActionState };
 };
 

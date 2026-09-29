@@ -11,8 +11,7 @@ export function BodyPartManage() {
 
   const bodyPartManage = bg.useToggle({ name: "body-part-manage" });
 
-  const active = bodyParts.data.filter((bodyPart) => bodyPart.archivedAt === null);
-  const archived = bodyParts.data.filter((bodyPart) => bodyPart.archivedAt !== null);
+  const { active, archived } = bodyParts.data;
 
   return (
     <>

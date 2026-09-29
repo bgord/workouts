@@ -4,9 +4,9 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = "/api/measurements/body-part/measurement/list";
+const url = `/api/measurements/body-part/${mocks.bodyPartId}/measurement/list`;
 
-describe(`QUERY ${url}`, async () => {
+describe("QUERY /api/measurements/body-part/:bodyPartId/measurement/list", async () => {
   const di = await bootstrap();
   const server = createServer(di);
 
@@ -14,6 +14,18 @@ describe(`QUERY ${url}`, async () => {
     const response = await server.request(url, { method: "QUERY" }, mocks.ip);
 
     await testcases.assertAuthResponse(response);
+  });
+
+  test("validation - incorrect body part id", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      "/api/measurements/body-part/id/measurement/list",
+      { method: "QUERY" },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
   test("happy path", async () => {
