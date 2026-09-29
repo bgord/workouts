@@ -162,7 +162,7 @@ export const workoutRoute = createRoute({
   },
 });
 
-export const measurementsRoute = createRoute({
+const measurementsRoute = createRoute({
   path: "/measurements",
   getParentRoute: () => rootRoute,
   component: MeasurementsPage,
