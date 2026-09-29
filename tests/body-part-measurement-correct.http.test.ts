@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -41,6 +40,18 @@ describe("PATCH /api/measurements/body-part/measurement/:bodyPartMeasurementId",
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
+  test("validation - bodyPartId - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", body: JSON.stringify({ bodyPartId: "id" }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
+  });
+
   test("validation - value - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
@@ -50,7 +61,7 @@ describe("PATCH /api/measurements/body-part/measurement/:bodyPartMeasurementId",
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, tools.HeightMillimetersError.Type);
+    await testcases.assertErrorResponse(response, 400, "height.millimeters.type");
   });
 
   test("validation - value - invalid", async () => {
@@ -62,7 +73,7 @@ describe("PATCH /api/measurements/body-part/measurement/:bodyPartMeasurementId",
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, tools.HeightMillimetersError.Invalid);
+    await testcases.assertErrorResponse(response, 400, "height.millimeters.invalid");
   });
 
   test("validation - measuredOn - missing", async () => {
@@ -77,7 +88,7 @@ describe("PATCH /api/measurements/body-part/measurement/:bodyPartMeasurementId",
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
+    await testcases.assertErrorResponse(response, 400, "day.iso.id.type");
   });
 
   test("validation - measuredOn - invalid", async () => {
@@ -96,7 +107,7 @@ describe("PATCH /api/measurements/body-part/measurement/:bodyPartMeasurementId",
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
+    await testcases.assertErrorResponse(response, 400, "day.iso.id.bad.chars");
   });
 
   test("BodyPartMeasurementExists", async () => {

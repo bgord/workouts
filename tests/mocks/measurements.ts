@@ -146,6 +146,7 @@ export const GenericBodyWeightMeasurementRemovedEvent = {
 } satisfies Measurements.Events.BodyWeightMeasurementRemovedEventType;
 
 export const bodyPartId = v.parse(Measurements.VO.BodyPartId, "1f0a3d7c-2b6e-4a9d-8c5f-3e7b1a0d9c42");
+export const anotherBodyPartId = v.parse(Measurements.VO.BodyPartId, "5b8e2f14-7c3a-4d9e-b1f6-0a4c8e2d7b39");
 export const bodyPartStream = v.parse(bg.EventStream, `body_part_${bodyPartId}`);
 
 export const bodyPartName = v.parse(Measurements.VO.BodyPartName, "Left Bicep");
@@ -163,6 +164,13 @@ export const archivedBodyPart: Measurements.VO.BodyPart = {
   name: bodyPartName,
   userId,
   archivedAt: T0.ms,
+};
+
+export const anotherBodyPart: Measurements.VO.BodyPart = {
+  id: anotherBodyPartId,
+  name: anotherBodyPartName,
+  userId,
+  archivedAt: null,
 };
 
 export const anotherUserBodyPart: Measurements.VO.BodyPart = {
@@ -226,6 +234,20 @@ export const bodyPartMeasurementStream = v.parse(
   bg.EventStream,
   `body_part_measurement_${bodyPartMeasurementId}`,
 );
+export const anotherBodyPartMeasurementId = v.parse(
+  Measurements.VO.BodyPartMeasurementId,
+  "2d9f6b3e-8a1c-4f7d-a5e2-9c0b4d6f1a83",
+);
+export const anotherBodyPartMeasurementStream = v.parse(
+  bg.EventStream,
+  `body_part_measurement_${anotherBodyPartMeasurementId}`,
+);
+
+export const bodyPartMeasurementEntries = [{ bodyPartId, value: bodyPartCircumference }];
+export const multipleBodyPartMeasurementEntries = [
+  { bodyPartId, value: bodyPartCircumference },
+  { bodyPartId: anotherBodyPartId, value: anotherBodyPartCircumference },
+];
 
 export const bodyPartMeasurement: Measurements.VO.BodyPartMeasurement = {
   id: bodyPartMeasurementId,
@@ -247,6 +269,23 @@ export const GenericBodyPartMeasuredEvent = {
     id: bodyPartMeasurementId,
     bodyPartId,
     value: bodyPartCircumference,
+    measuredOn: bodyPartMeasuredOn,
+    userId,
+  },
+} satisfies Measurements.Events.BodyPartMeasuredEventType;
+
+export const GenericAnotherBodyPartMeasuredEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: anotherBodyPartMeasurementStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_MEASURED_EVENT",
+  payload: {
+    id: anotherBodyPartMeasurementId,
+    bodyPartId: anotherBodyPartId,
+    value: anotherBodyPartCircumference,
     measuredOn: bodyPartMeasuredOn,
     userId,
   },

@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -8,8 +7,6 @@ import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
 const url = "/api/measurements/body-part/measure";
-
-const measurements = [{ bodyPartId: mocks.bodyPartId, value: mocks.bodyPartCircumference }];
 
 describe(`POST ${url}`, async () => {
   const di = await bootstrap();
@@ -28,7 +25,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
 
-    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.Type);
+    await testcases.assertErrorResponse(response, 400, "day.iso.id.type");
   });
 
   test("validation - measuredOn - invalid", async () => {
@@ -40,7 +37,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
+    await testcases.assertErrorResponse(response, 400, "day.iso.id.bad.chars");
   });
 
   test("validation - measurements - missing", async () => {
@@ -133,7 +130,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, tools.HeightMillimetersError.Invalid);
+    await testcases.assertErrorResponse(response, 400, "height.millimeters.invalid");
   });
 
   test("BodyPartMeasuredOnIsNotInFuture", async () => {
@@ -144,7 +141,10 @@ describe(`POST ${url}`, async () => {
       url,
       {
         method: "POST",
-        body: JSON.stringify({ measuredOn: mocks.futureBodyPartMeasuredOn, measurements }),
+        body: JSON.stringify({
+          measuredOn: mocks.futureBodyPartMeasuredOn,
+          measurements: mocks.bodyPartMeasurementEntries,
+        }),
       },
       mocks.ip,
     );
@@ -161,7 +161,13 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ measuredOn: mocks.bodyPartMeasuredOn, measurements }) },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          measuredOn: mocks.bodyPartMeasuredOn,
+          measurements: mocks.bodyPartMeasurementEntries,
+        }),
+      },
       mocks.ip,
     );
 
@@ -177,7 +183,13 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ measuredOn: mocks.bodyPartMeasuredOn, measurements }) },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          measuredOn: mocks.bodyPartMeasuredOn,
+          measurements: mocks.bodyPartMeasurementEntries,
+        }),
+      },
       mocks.ip,
     );
 
@@ -195,7 +207,13 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ measuredOn: mocks.bodyPartMeasuredOn, measurements }) },
+      {
+        method: "POST",
+        body: JSON.stringify({
+          measuredOn: mocks.bodyPartMeasuredOn,
+          measurements: mocks.bodyPartMeasurementEntries,
+        }),
+      },
       mocks.ip,
     );
 
@@ -217,12 +235,46 @@ describe(`POST ${url}`, async () => {
       {
         method: "POST",
         headers: mocks.correlationIdHeaders,
-        body: JSON.stringify({ measuredOn: mocks.bodyPartMeasuredOn, measurements }),
+        body: JSON.stringify({
+          measuredOn: mocks.bodyPartMeasuredOn,
+          measurements: mocks.bodyPartMeasurementEntries,
+        }),
       },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyPartMeasuredEvent]);
+  });
+
+  test("happy path - multiple", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetBodyPartQuery, "execute"))
+      .mockResolvedValueOnce(mocks.bodyPart)
+      .mockResolvedValueOnce(mocks.anotherBodyPart);
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.bodyPartMeasurementId)
+      .mockReturnValueOnce(mocks.anotherBodyPartMeasurementId);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdHeaders,
+        body: JSON.stringify({
+          measuredOn: mocks.bodyPartMeasuredOn,
+          measurements: mocks.multipleBodyPartMeasurementEntries,
+        }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenNthCalledWith(1, [mocks.GenericBodyPartMeasuredEvent]);
+    expect(eventStoreSave).toHaveBeenNthCalledWith(2, [mocks.GenericAnotherBodyPartMeasuredEvent]);
   });
 });

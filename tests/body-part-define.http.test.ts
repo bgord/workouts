@@ -43,6 +43,7 @@ describe(`POST ${url}`, async () => {
 
   test("BodyPartNameIsUnique", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Measurements.GetBodyPartNameCountQuery, "execute"))
@@ -55,6 +56,7 @@ describe(`POST ${url}`, async () => {
     );
 
     await testcases.assertErrorResponse(response, 403, "body.part.name.is.unique");
+    expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
   test("happy path", async () => {
