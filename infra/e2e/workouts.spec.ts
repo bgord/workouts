@@ -64,6 +64,34 @@ test.describe("Workouts - active", () => {
       panel.getByText(fixtures.exercises.overheadPressSeatedDumbbells.name, { exact: true }),
     ).toBeHidden();
   });
+
+  test("shows the error when completing the workout fails", async ({ page }) => {
+    await page.route("**/api/workouts/*/complete", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "Complete" }).click();
+
+    await expect(page.getByText("Could not complete the workout")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("In progress", { exact: true })).toBeVisible();
+  });
+
+  test("shows the error when saving the note fails", async ({ page }) => {
+    await page.route("**/api/workouts/*/note", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "Description..." }).click();
+    await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not save the note")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Shoulder felt tight on the last set.")).toBeHidden();
+  });
 });
 
 test.describe("Workouts - athlete", () => {
@@ -156,5 +184,49 @@ test.describe("Workouts - athlete", () => {
 
     await expect(dialog.locator('input[type="date"]')).toBeVisible();
     await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  test("shows the error when scheduling the workout fails", async ({ page }) => {
+    await page.route("**/api/workouts/create", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+
+    await expect(page.getByText("Could not schedule the workout")).toBeVisible();
+    await expect(page).toHaveURL(/\/workouts$/);
+  });
+
+  test("shows the error when changing the date fails", async ({ page }) => {
+    const scheduledFor = page.getByLabel("Scheduled for");
+
+    await page.route("**/api/workouts/*/scheduled-for", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await page.getByTitle("Change the date").click();
+    await scheduledFor.fill((await scheduledFor.getAttribute("min")) ?? "");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not change the date")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByTitle("Change the date")).toBeVisible();
+  });
+
+  test("shows the error when discarding the workout fails", async ({ page }) => {
+    await page.route(`**/api/workouts/${fixtures.athlete.scheduledWorkout.id}`, (route) =>
+      route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await page.getByRole("button", { name: "Discard" }).click();
+    await page.getByRole("button", { name: "Discard", exact: true }).last().click();
+
+    await expect(page.getByText("Could not discard the workout")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Draft", { exact: true })).toBeVisible();
   });
 });
