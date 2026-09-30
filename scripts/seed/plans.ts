@@ -13,6 +13,7 @@ type PlanFixture = Pick<typeof fixtures.ppl, "name" | "description"> & {
       id: string;
       name: string;
       warmup?: string;
+      cooldown?: string;
       instructions: ReadonlyArray<(typeof fixtures.ppl.sections.push.instructions)[number]>;
     }
   >;
@@ -80,6 +81,24 @@ export async function draftPlan(di: BootstrapType, userId: Auth.VO.UserIdType, p
       );
 
       await di.Tools.CommandBus.emit(warmup);
+    }
+
+    if (section.cooldown !== undefined) {
+      const cooldown = bg.command(
+        Plans.Commands.PlanSectionCooldownSetCommand,
+        {
+          revision: (await di.Adapters.Plans.PlanRepository.load(planId)).revision,
+          payload: {
+            planId,
+            planSectionId,
+            cooldown: v.parse(Plans.VO.PlanSectionCooldown, section.cooldown),
+            requesterId: userId,
+          },
+        },
+        deps,
+      );
+
+      await di.Tools.CommandBus.emit(cooldown);
     }
 
     for (const instruction of section.instructions) {

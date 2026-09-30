@@ -299,6 +299,7 @@ export const ppl = {
       name: "Push",
       warmup:
         "10x Arm Circles forward\n10x Arm Circles backward\n10x Band Shoulder Dislocates\n15x Band Pull-Aparts\n10x Dumbbell External Rotation",
+      cooldown: "Doorway chest stretch, 2 minutes each side",
       instructions: [
         {
           exercise: exercises.superHorizontalBenchPress,
