@@ -133,6 +133,37 @@ test.describe("Measurements - empty", () => {
     await expect(page.getByText("No measurements logged yet")).toBeHidden();
   });
 
+  test("rejects an invalid body weight import", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await page.getByRole("button", { name: "Import measurements" }).click();
+    await page.locator('input[type="file"]').setInputFiles({
+      name: "body-weight.csv",
+      mimeType: "text/csv",
+      buffer: Buffer.from("id,weight,measuredOn\n,not-a-number,2025-01-01\n"),
+    });
+    await page.getByRole("button", { name: "Import", exact: true }).click();
+
+    await expect(page.getByText("Could not import the measurements")).toBeVisible();
+  });
+
+  test("imports body weight measurements", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await page.getByRole("button", { name: "Import measurements" }).click();
+    await page.locator('input[type="file"]').setInputFiles({
+      name: "body-weight.csv",
+      mimeType: "text/csv",
+      buffer: Buffer.from("id,weight,measuredOn\n,80250,2025-01-01\n,80750,2025-01-02\n"),
+    });
+    await page.getByRole("button", { name: "Import", exact: true }).click();
+    await page.reload();
+    await page.getByRole("combobox", { name: "Month" }).selectOption({ index: 0 });
+
+    await expect(page.getByRole("button", { name: "80.25 kg" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "80.75 kg" })).toBeVisible();
+  });
+
   test("defines a body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
@@ -142,6 +173,37 @@ test.describe("Measurements - empty", () => {
 
     await expect(page.getByText("Define a body part first")).toBeHidden();
     await expect(page.getByRole("button", { name: "Measure Neck" })).toBeVisible();
+  });
+
+  test("rejects a body part import with an unknown body part", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Import body part measurements" }).click();
+    await page.locator('input[type="file"]').setInputFiles({
+      name: "body-parts.csv",
+      mimeType: "text/csv",
+      buffer: Buffer.from("id,bodyPartName,value,measuredOn\n,Unknown,385,2025-01-01\n"),
+    });
+    await page.getByRole("button", { name: "Import", exact: true }).click();
+
+    await expect(page.getByText("Could not import the measurements")).toBeVisible();
+  });
+
+  test("imports body part measurements", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Import body part measurements" }).click();
+    await page.locator('input[type="file"]').setInputFiles({
+      name: "body-parts.csv",
+      mimeType: "text/csv",
+      buffer: Buffer.from("id,bodyPartName,value,measuredOn\n,Neck,385,2025-01-01\n,Neck,391,2025-01-08\n"),
+    });
+    await page.getByRole("button", { name: "Import", exact: true }).click();
+    await page.reload();
+
+    await expect(
+      page.getByRole("listitem").filter({ hasText: "Neck" }).getByText("39.1 cm").first(),
+    ).toBeVisible();
   });
 
   test("renames the body part", async ({ page }) => {

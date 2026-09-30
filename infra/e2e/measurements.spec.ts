@@ -86,6 +86,46 @@ test.describe("Measurements - athlete", () => {
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
     ).toBeVisible();
   });
+
+  test("downloads the body weight export", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    const download = page.waitForEvent("download");
+    await page.getByRole("link", { name: "Export", exact: true }).click();
+
+    expect((await download).suggestedFilename()).toMatch(/\.csv$/);
+  });
+
+  test("downloads the body weight import template", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await page.getByRole("button", { name: "Import measurements" }).click();
+
+    const download = page.waitForEvent("download");
+    await page.getByRole("link", { name: "CSV template" }).click();
+
+    expect((await download).suggestedFilename()).toMatch(/\.csv$/);
+  });
+
+  test("downloads the body part export", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    const download = page.waitForEvent("download");
+    await page.getByRole("link", { name: "Export body part measurements" }).click();
+
+    expect((await download).suggestedFilename()).toMatch(/\.csv$/);
+  });
+
+  test("downloads the body part import template", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Import body part measurements" }).click();
+
+    const download = page.waitForEvent("download");
+    await page.getByRole("link", { name: "CSV template" }).click();
+
+    expect((await download).suggestedFilename()).toMatch(/\.csv$/);
+  });
 });
 
 test.describe("Measurements - empty", () => {
