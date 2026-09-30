@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import * as fixtures from "../../scripts/seed/fixtures";
+import { expect, test } from "./test";
 
 test.describe("Catalog - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });

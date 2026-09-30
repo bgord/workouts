@@ -2,6 +2,7 @@
 
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
+import { useHydrated } from "../hooks/use-hydrated";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanDescription } from "../sections/plan-description";
@@ -16,6 +17,7 @@ import { DateFormat } from "../services/date-format";
 export function Plan() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const hydrated = useHydrated();
   const { plan } = planRoute.useLoaderData();
 
   return (
@@ -48,7 +50,7 @@ export function Plan() {
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
           <small data-transform="truncate">
             {t("plan.updated_at", {
-              date: DateFormat.dayWithTime(language, plan.data.updatedAt),
+              date: DateFormat.dayWithTime(language, plan.data.updatedAt, hydrated ? undefined : "UTC"),
             })}
           </small>
 
