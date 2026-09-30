@@ -41,6 +41,26 @@ test.describe("Workouts - athlete", () => {
     await expect(page.getByText("No exercises yet")).toBeVisible();
   });
 
+  test("reschedules the draft workout", async ({ page }) => {
+    const scheduledFor = page.getByLabel("Scheduled for");
+
+    await page.goto("/workouts");
+    await page
+      .locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
+        hasText: /Draft$/,
+      })
+      .click();
+    await page.getByTitle("Change the date").click();
+    const date = (await scheduledFor.getAttribute("max")) ?? "";
+
+    await scheduledFor.fill(date);
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.reload();
+    await page.getByTitle("Change the date").click();
+
+    await expect(scheduledFor).toHaveValue(date);
+  });
+
   test("discards the scheduled workout", async ({ page }) => {
     await page.goto("/workouts");
     await page
