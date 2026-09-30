@@ -765,6 +765,7 @@ infra/
 │   ├── catalog.spec.ts
 │   ├── dashboard.spec.ts
 │   ├── home.spec.ts
+│   ├── layout.mobile.spec.ts
 │   ├── measurements.mutation.spec.ts
 │   ├── measurements.spec.ts
 │   ├── navigation.spec.ts

@@ -11,8 +11,14 @@ export default defineConfig({
     { name: "setup", testMatch: /.*\.setup\.ts/ },
     {
       name: "chromium",
-      testIgnore: [/.*\.setup\.ts/, /.*\.mutation\.spec\.ts/],
+      testIgnore: [/.*\.setup\.ts/, /.*\.mutation\.spec\.ts/, /.*\.mobile\.spec\.ts/],
       use: { ...devices["Desktop Chrome"] },
+      dependencies: ["setup"],
+    },
+    {
+      name: "mobile",
+      testMatch: /.*\.mobile\.spec\.ts/,
+      use: { ...devices["Pixel 7"] },
       dependencies: ["setup"],
     },
     {
