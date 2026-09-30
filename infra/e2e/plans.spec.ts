@@ -394,6 +394,21 @@ test.describe("Plans - builder", () => {
       page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} up` }),
     ).toBeEnabled();
   });
+
+  test("shows the empty state when no exercise matches", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByPlaceholder("Search exercises").fill("zzz");
+
+    await expect(page.getByText("No exercises match", { exact: true })).toBeVisible();
+  });
 });
 
 test.describe("Plans - athlete", () => {
