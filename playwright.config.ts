@@ -22,7 +22,7 @@ export default defineConfig({
       dependencies: ["setup"],
     },
     {
-      name: "mutation",
+      name: "desktop-mutation",
       testMatch: /.*\.mutation\.spec\.ts/,
       testIgnore: [/.*\.mobile\.mutation\.spec\.ts/],
       use: { ...devices["Desktop Chrome"] },
@@ -32,7 +32,7 @@ export default defineConfig({
       name: "mobile-mutation",
       testMatch: /.*\.mobile\.mutation\.spec\.ts/,
       use: { ...devices["Pixel 10"] },
-      dependencies: ["mutation"],
+      dependencies: ["desktop-mutation"],
     },
   ],
   webServer: [
