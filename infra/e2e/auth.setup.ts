@@ -9,6 +9,7 @@ const personas = {
   active: fixtures.active,
   archivist: fixtures.archivist,
   polyglot: fixtures.polyglot,
+  disposable: fixtures.disposable,
 };
 
 const SIGN_IN_LIMIT = 3;

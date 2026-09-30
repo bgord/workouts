@@ -14,6 +14,7 @@ import { seedActive } from "./seed/personas/active";
 import { seedArchivist } from "./seed/personas/archivist";
 import { seedAthlete } from "./seed/personas/athlete";
 import { seedBuilder } from "./seed/personas/builder";
+import { seedDisposable } from "./seed/personas/disposable";
 import { seedEmpty } from "./seed/personas/empty";
 import { seedPolyglot } from "./seed/personas/polyglot";
 
@@ -40,6 +41,7 @@ void (async function main() {
     await seedActive(di);
     await seedArchivist(di);
     await seedPolyglot(di);
+    await seedDisposable(di);
 
     await Bun.sleep(tools.Duration.Ms(10).ms);
 
