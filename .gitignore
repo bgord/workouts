@@ -16,6 +16,7 @@ public/*.js.map
 public/main.min.css
 reports/
 sqlite.db*
+sqlite.e2e.db*
 test-results/
 tmp/
 tsconfig.tsbuildinfo
