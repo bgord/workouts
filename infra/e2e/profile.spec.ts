@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 import * as fixtures from "../../scripts/seed/fixtures";
 
 test.describe("Profile - athlete", () => {
@@ -29,7 +28,9 @@ test.describe("Profile - athlete", () => {
 
     await page.getByRole("combobox").filter({ hasText: "English" }).selectOption("pl");
 
-    await expect(page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
+    ).toBeVisible();
     await expect(page.getByRole("heading", { name: "Profile" })).toBeHidden();
   });
 
@@ -49,7 +50,9 @@ test.describe("Profile - polyglot", () => {
   test("shows the seeded language and weekly summary preferences", async ({ page }) => {
     await page.goto("/profile");
 
-    await expect(page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
+    ).toBeVisible();
     await expect(page.getByRole("combobox").filter({ hasText: "Polski" })).toHaveValue("pl");
     await expect(page.getByRole("combobox").filter({ hasText: "Wyłączone" })).toHaveValue("off");
   });

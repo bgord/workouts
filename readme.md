@@ -771,7 +771,6 @@ infra/
 │   ├── plans.spec.ts
 │   ├── profile.mutation.spec.ts
 │   ├── profile.spec.ts
-│   ├── smoke.spec.ts
 │   ├── workouts.mutation.spec.ts
 │   └── workouts.spec.ts
 ├── env.ts
