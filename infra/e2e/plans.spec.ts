@@ -472,3 +472,27 @@ test.describe("Plans - archivist", () => {
     await expect(page.getByRole("button", { name: "Restore" })).toBeDisabled();
   });
 });
+
+test.describe("Plans - hoarder", () => {
+  test.use({ storageState: ".auth/hoarder.json" });
+
+  test("blocks adding a section at the limit", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.hoarder.plan.id}`);
+
+    await expect(page.getByText("Remove a section to add a new one")).toBeVisible();
+    await expect(page.getByRole("button", { name: "New section" })).toBeDisabled();
+  });
+
+  test("blocks adding an exercise instruction at the limit", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.hoarder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Everything", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await expect(page.getByText("Remove an exercise to add a new one")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add exercise" })).toBeDisabled();
+  });
+});

@@ -437,3 +437,21 @@ test.describe("Workouts - athlete", () => {
     await expect(row.getByTitle("Set target")).toContainText("Set target");
   });
 });
+
+test.describe("Workouts - hoarder", () => {
+  test.use({ storageState: ".auth/hoarder.json" });
+
+  test("blocks adding an exercise at the limit", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.hoarder.activeWorkout.id}`);
+
+    await expect(page.getByText("Remove an exercise to add a new one")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add exercise" })).toBeDisabled();
+  });
+
+  test("blocks starting a second workout", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.hoarder.draftWorkouts.today.id}`);
+
+    await expect(page.getByText("Finish the workout in progress first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
+  });
+});

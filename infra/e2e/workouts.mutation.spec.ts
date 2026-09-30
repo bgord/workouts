@@ -306,6 +306,20 @@ test.describe("Workouts - athlete", () => {
     await expect(row.getByRole("button", { name: "Remove set 4" })).toBeHidden();
     await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
   });
+
+  test("blocks scheduling a fourth workout", async ({ page }) => {
+    for (let draft = 0; draft < 3; draft++) {
+      await page.goto("/workouts");
+      await page.getByRole("button", { name: "New workout" }).click();
+      await page.getByRole("button", { name: "Schedule", exact: true }).click();
+      await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
+    }
+
+    await page.goto("/workouts");
+
+    await expect(page.getByText("You already have 3 scheduled workouts")).toBeVisible();
+    await expect(page.getByRole("button", { name: "New workout" })).toBeDisabled();
+  });
 });
 
 test.describe("Workouts - active", () => {
