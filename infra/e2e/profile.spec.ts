@@ -43,6 +43,51 @@ test.describe("Profile - athlete", () => {
 
     expect((await download).suggestedFilename()).toMatch(/\.csv$/);
   });
+
+  test("shows the error when uploading the avatar fails", async ({ page }) => {
+    await page.route("**/api/preferences/profile-avatar/update", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/profile");
+
+    await page.getByRole("button", { name: "Change avatar" }).click();
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Avatar" }) })
+      .getByRole("button", { name: "Save" })
+      .click();
+
+    await expect(page.getByText("Could not upload the avatar, please try again")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Delete avatar" })).toBeHidden();
+  });
+
+  test("shows the error when sending the password reset link fails", async ({ page }) => {
+    await page.route("**/api/auth/request-password-reset", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/profile");
+
+    await page.getByRole("button", { name: "Send reset link" }).click();
+
+    await expect(page.getByText("Error while sending the link")).toBeVisible();
+    await expect(page.getByText("Check your inbox")).toBeHidden();
+  });
+
+  test("shows the error when saving the weekly summary fails", async ({ page }) => {
+    await page.route("**/api/preferences/weekly-summary/update", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/profile");
+
+    await page.getByRole("combobox").filter({ hasText: "On" }).selectOption("off");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not save the preference, please try again")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("combobox").filter({ hasText: "On" })).toHaveValue("on");
+  });
 });
 
 test.describe("Profile - polyglot", () => {
