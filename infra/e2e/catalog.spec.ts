@@ -70,6 +70,52 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText(fixtures.categories.triceps.name, { exact: true })).toBeVisible();
   });
 
+  test("shows the exercise stats", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    await expect(page.getByRole("listitem").filter({ hasText: "Sessions" })).toContainText("8");
+    await expect(page.getByRole("listitem").filter({ hasText: "Best volume" })).toContainText("kg");
+    await expect(page.getByRole("listitem").filter({ hasText: "1RM" })).toContainText("kg");
+  });
+
+  test("shows the exercise progress chart", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    const chart = page.getByRole("img", { name: "Progress" });
+
+    await expect(chart).toBeVisible();
+    await expect(chart.getByRole("link")).toHaveCount(8);
+  });
+
+  test("lists the exercise history with the record session", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    const history = page.getByRole("heading", { name: "History" }).locator("..");
+
+    await expect(history.getByRole("link")).toHaveCount(8);
+    await expect(history.getByRole("img", { name: "1RM" })).toHaveCount(1);
+  });
+
+  test("expands a history session to its sets", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    const history = page.getByRole("heading", { name: "History" }).locator("..");
+
+    await expect(history.getByRole("listitem")).toHaveCount(8);
+
+    await history.getByRole("button").first().click();
+
+    await expect(history.getByRole("listitem")).not.toHaveCount(8);
+  });
+
+  test("shows the empty state for an exercise that was never trained", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.bicepsCurlBarStraight.id}`);
+
+    await expect(page.getByText("No sessions logged yet")).toBeVisible();
+    await expect(page.getByRole("img", { name: "Progress" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "History" })).toBeHidden();
+  });
+
   test("hides the catalog management", async ({ page }) => {
     await page.goto("/catalog");
 
