@@ -72,6 +72,125 @@ test.describe("Plans - builder", () => {
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Finalize" })).toBeVisible();
   });
+
+  test("shows the error when renaming the plan fails", async ({ page }) => {
+    await page.route("**/api/plans/*/rename", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByLabel("Plan name").fill("PPL v2");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not rename the plan")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 1, name: fixtures.builder.plan.name })).toBeVisible();
+  });
+
+  test("shows the error when saving the plan description fails", async ({ page }) => {
+    await page.route("**/api/plans/*/description", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: fixtures.builder.plan.description }).click();
+    await page.getByLabel("Description").fill("Upper body twice, legs once.");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not save the description")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText(fixtures.builder.plan.description)).toBeVisible();
+    await expect(page.getByText("Upper body twice, legs once.")).toBeHidden();
+  });
+
+  test("shows the error when creating a section fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("Arms");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not create a section")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeHidden();
+  });
+
+  test("shows the error when renaming a section fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/rename", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("heading", { level: 2, name: "Push", exact: true }).getByRole("button").click();
+    await page.getByLabel("Section name").fill("Push A");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not rename the section")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 2, name: "Push", exact: true })).toBeVisible();
+  });
+
+  test("shows the error when removing a section fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*", (route) =>
+      route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: "Remove Push", exact: true }).click();
+    await page.getByRole("button", { name: "Remove", exact: true }).click();
+
+    await expect(page.getByText("Could not remove the section")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 2, name: "Push", exact: true })).toBeVisible();
+  });
+
+  test("shows the error when saving the warm-up fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/warmup", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByTitle("Warm-up").click();
+    await page.getByLabel("Warm-up").fill("5 minutes on the rower");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not save the warm-up")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("5 minutes on the rower")).toBeHidden();
+  });
+
+  test("shows the error when saving the cool-down fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/cooldown", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByTitle("Cool-down").click();
+    await page.getByLabel("Cool-down").fill("Chest and lat stretch, 2 minutes each");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not save the cool-down")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Chest and lat stretch, 2 minutes each")).toBeHidden();
+  });
 });
 
 test.describe("Plans - athlete", () => {
