@@ -250,6 +250,9 @@ test.describe("Workouts - active", () => {
       page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} up` }),
     ).toBeDisabled();
     await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} up` }),
+    ).toHaveAttribute("title", "Already the first exercise");
+    await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} down` }),
     ).toBeEnabled();
   });
@@ -262,6 +265,9 @@ test.describe("Workouts - active", () => {
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} down` }),
     ).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} down` }),
+    ).toHaveAttribute("title", "Already the last exercise");
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} up` }),
     ).toBeEnabled();
