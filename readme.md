@@ -761,6 +761,7 @@ infra/
 ├── db.ts
 ├── e2e
 │   ├── auth.setup.ts
+│   ├── dashboard.spec.ts
 │   ├── home.spec.ts
 │   └── smoke.spec.ts
 ├── env.ts
