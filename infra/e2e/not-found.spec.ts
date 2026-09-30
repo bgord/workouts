@@ -1,3 +1,4 @@
+import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
 test.describe("Not found - athlete", () => {
@@ -42,5 +43,18 @@ test.describe("Not found - athlete", () => {
     await page.getByRole("link", { name: "Go to workouts" }).click();
 
     await expect(page).toHaveURL(/\/workouts/);
+  });
+
+  test("hides another user's plan", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await expect(page.getByRole("heading", { level: 1, name: "Plan not found" })).toBeVisible();
+    await expect(page.getByText(fixtures.builder.plan.name)).toBeHidden();
+  });
+
+  test("hides another user's workout", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await expect(page.getByRole("heading", { level: 1, name: "Workout not found" })).toBeVisible();
   });
 });

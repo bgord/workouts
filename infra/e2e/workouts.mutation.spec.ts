@@ -75,7 +75,10 @@ test.describe("Workouts - athlete", () => {
     await page.getByRole("button", { name: "Set target" }).first().click();
 
     const last = page.getByRole("button", { name: "Last", exact: true });
-    const progress = page.getByTitle(/^Based on the previous session/).getByRole("button").last();
+    const progress = page
+      .getByTitle(/^Based on the previous session/)
+      .getByRole("button")
+      .last();
 
     await expect(last).toHaveAttribute("aria-pressed", "true");
     await expect(progress).toHaveAttribute("aria-pressed", "false");
