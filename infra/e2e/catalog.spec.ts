@@ -140,4 +140,76 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByText("Remove the exercise from plans").locator("visible=true")).toBeVisible();
     await expect(page.getByRole("button", { name: "Delete" })).toBeDisabled();
   });
+
+  test("shows the error when adding a category fails", async ({ page }) => {
+    await page.route("**/api/exercises/category", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await page.getByLabel("Category name").fill("Neck");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+
+    await expect(page.getByText("Could not add the category")).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+
+    await expect(page.getByText("Neck", { exact: true })).toBeHidden();
+  });
+
+  test("shows the error when renaming a category fails", async ({ page }) => {
+    await page.route("**/api/exercises/category/*", (route) =>
+      route.request().method() === "PATCH" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await page.getByTitle("Rename the category").filter({ hasText: /^Abs$/ }).click();
+    await page
+      .locator("form")
+      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByLabel("Category name")
+      .fill("Abs and core");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not rename the category")).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+
+    await expect(page.getByTitle("Rename the category").filter({ hasText: /^Abs$/ })).toBeVisible();
+  });
+
+  test("shows the error when deleting a category fails", async ({ page }) => {
+    await page.route("**/api/exercises/category/*", (route) =>
+      route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await page.getByRole("button", { name: "Delete Abs" }).click();
+    await page.getByRole("button", { name: "Delete", exact: true }).click();
+
+    await expect(page.getByText("Could not delete the category")).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Delete Abs" })).toBeVisible();
+  });
+
+  test("shows the error when assigning a category fails", async ({ page }) => {
+    await page.route("**/api/exercises/category/assign", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    await page.getByRole("button", { name: "Assign", exact: true }).click();
+    await page.getByLabel("Category to assign").selectOption({ label: "Abs" });
+    await page.getByRole("button", { name: "Assign", exact: true }).last().click();
+
+    await expect(page.getByText("Could not change the categories")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Abs", { exact: true })).toBeHidden();
+  });
 });
