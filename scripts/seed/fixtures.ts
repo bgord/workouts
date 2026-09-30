@@ -623,8 +623,34 @@ export const hoarder = {
   },
 };
 
+export const pocket = {
+  email: "pocket@example.com",
+  scheduledWorkout: { id: "7dd0a8b7-aea6-4811-9cb3-18be098c6189" },
+  plan: {
+    id: "249923f3-2563-46cc-8c6a-4762ea794d03",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "f5eb314c-bce0-484d-bcac-068960c072e3", ...ppl.sections.push },
+      pull: { id: "34092112-fa7c-4db7-80b9-0286dd32bc25", ...ppl.sections.pull },
+      legs: { id: "58e79dbd-6558-44ae-9880-26749217272a", ...ppl.sections.legs },
+    },
+  },
+};
+
 export const polyglot = { email: "polyglot@example.com", language: "pl" };
 
 export const disposable = { email: "disposable@example.com" };
 
-export const personas = [empty, builder, drafter, athlete, active, archivist, hoarder, polyglot, disposable];
+export const personas = [
+  empty,
+  builder,
+  drafter,
+  athlete,
+  active,
+  archivist,
+  hoarder,
+  pocket,
+  polyglot,
+  disposable,
+];

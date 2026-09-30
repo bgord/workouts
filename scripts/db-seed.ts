@@ -18,6 +18,7 @@ import { seedDisposable } from "./seed/personas/disposable";
 import { seedDrafter } from "./seed/personas/drafter";
 import { seedEmpty } from "./seed/personas/empty";
 import { seedHoarder } from "./seed/personas/hoarder";
+import { seedPocket } from "./seed/personas/pocket";
 import { seedPolyglot } from "./seed/personas/polyglot";
 
 const tables = Object.values(Schema).filter((value) => is(value, SQLiteTable));
@@ -46,6 +47,7 @@ void (async function main() {
     await seedPolyglot(di);
     await seedDisposable(di);
     await seedHoarder(di);
+    await seedPocket(di);
 
     await Bun.sleep(tools.Duration.Ms(10).ms);
 

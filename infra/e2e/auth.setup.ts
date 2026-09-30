@@ -12,6 +12,7 @@ const personas = {
   polyglot: fixtures.polyglot,
   disposable: fixtures.disposable,
   hoarder: fixtures.hoarder,
+  pocket: fixtures.pocket,
 };
 
 for (const [name, persona] of Object.entries(personas)) {

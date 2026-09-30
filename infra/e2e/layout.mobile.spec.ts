@@ -1,4 +1,4 @@
-// cSpell:ignore networkidle
+// cSpell:ignore networkidle spinbutton
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
