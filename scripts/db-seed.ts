@@ -9,6 +9,7 @@ import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
 import * as Schema from "+infra/schema";
 import { seedCatalog } from "./seed/catalog";
+import { Clock } from "./seed/clock";
 import { seedActive } from "./seed/personas/active";
 import { seedArchivist } from "./seed/personas/archivist";
 import { seedAthlete } from "./seed/personas/athlete";
@@ -22,6 +23,8 @@ void (async function main() {
   for (const table of tables) await db.delete(table);
 
   const di = await bootstrap();
+
+  di.Adapters.System.Clock.now = () => Clock.now();
 
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);

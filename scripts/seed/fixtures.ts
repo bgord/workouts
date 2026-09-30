@@ -269,6 +269,27 @@ export const exercises = {
   },
 };
 
+export const startingLoads: Record<string, number> = {
+  [exercises.superHorizontalBenchPress.id]: 60,
+  [exercises.overheadPressSeatedDumbbells.id]: 16,
+  [exercises.tricepsPushDownBar.id]: 25,
+  [exercises.pecFlyMachine.id]: 40,
+  [exercises.tricepsExtensionOverheadCable.id]: 15,
+  [exercises.lateralRaiseDumbbells.id]: 8,
+  [exercises.pullUp.id]: 0,
+  [exercises.lowRowCable.id]: 50,
+  [exercises.straightArmPulldownBar.id]: 25,
+  [exercises.concentrationCurlDumbbell.id]: 10,
+  [exercises.hammerCurlDumbbells.id]: 12,
+  [exercises.facePull.id]: 20,
+  [exercises.legPressHorizontal.id]: 120,
+  [exercises.bulgarianSplitSquatDumbbell.id]: 14,
+  [exercises.romanianDeadliftDumbbellSingleLeg.id]: 16,
+  [exercises.legCurlSeated.id]: 40,
+  [exercises.legExtensionSingleLeg.id]: 20,
+  [exercises.calfRaisesMachine.id]: 60,
+};
+
 export const ppl = {
   name: "PPL",
   description: "3x times (or more per week) - Monday Push, Wednesday Pull, Saturday Legs.",
@@ -452,6 +473,7 @@ export const builder = {
 
 export const athlete = {
   email: "athlete@example.com",
+  scheduledWorkout: { id: "84d48b25-7c52-4466-8f98-4b435b337bb0" },
   plan: {
     id: "82274685-eb24-433f-b987-6bec85ebe9b2",
     name: ppl.name,
@@ -466,6 +488,7 @@ export const athlete = {
 
 export const active = {
   email: "active@example.com",
+  workout: { id: "80422684-2d70-4d20-9622-8e2ff3126814" },
   plan: {
     id: "d38f181d-7b73-4b1e-84ad-65d806409218",
     name: ppl.name,
