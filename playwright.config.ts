@@ -24,8 +24,15 @@ export default defineConfig({
     {
       name: "mutation",
       testMatch: /.*\.mutation\.spec\.ts/,
+      testIgnore: [/.*\.mobile\.mutation\.spec\.ts/],
       use: { ...devices["Desktop Chrome"] },
       dependencies: ["chromium"],
+    },
+    {
+      name: "mobile-mutation",
+      testMatch: /.*\.mobile\.mutation\.spec\.ts/,
+      use: { ...devices["Pixel 7"] },
+      dependencies: ["mutation"],
     },
   ],
   webServer: [
