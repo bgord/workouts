@@ -530,6 +530,6 @@ export const archivist = {
   },
 };
 
-export const polyglot = { email: "polyglot@example.com" };
+export const polyglot = { email: "polyglot@example.com", language: "pl" };
 
 export const personas = [empty, builder, athlete, active, archivist, polyglot];
