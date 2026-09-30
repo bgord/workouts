@@ -245,4 +245,26 @@ test.describe("Catalog - admin", () => {
 
     await expect(page.getByText("Neck and traps")).toBeHidden();
   });
+
+  test("deletes a category assigned to an exercise", async ({ page }) => {
+    await page.goto("/catalog");
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await page.getByLabel("Category name").fill("Grip");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+    await page.goto(`/catalog/exercise/${fixtures.exercises.hammerCurlDumbbells.id}`);
+    await page.getByRole("button", { name: "Assign", exact: true }).click();
+    await page.getByLabel("Category to assign").selectOption({ label: "Grip" });
+    await page.getByRole("button", { name: "Assign", exact: true }).click();
+    await page.reload();
+
+    await page.goto("/catalog");
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await page.getByRole("button", { name: "Delete Grip" }).click();
+    await page.getByRole("button", { name: "Delete", exact: true }).click();
+    await page.goto(`/catalog/exercise/${fixtures.exercises.hammerCurlDumbbells.id}`);
+
+    await expect(page.getByText("Grip", { exact: true })).toBeHidden();
+    await expect(page.getByText("Biceps", { exact: true })).toBeVisible();
+    await expect(page.getByText("Forearms", { exact: true })).toBeVisible();
+  });
 });
