@@ -2,6 +2,7 @@ import { test as setup } from "@playwright/test";
 import * as fixtures from "../../scripts/seed/fixtures";
 
 const personas = {
+  admin: fixtures.admin,
   empty: fixtures.empty,
   builder: fixtures.builder,
   athlete: fixtures.athlete,
