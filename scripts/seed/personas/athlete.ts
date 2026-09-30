@@ -1,16 +1,14 @@
+import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
+import * as v from "valibot";
 import * as Measurements from "+measurements";
 import * as Plans from "+plans";
+import * as Workouts from "+workouts";
 import type { BootstrapType } from "+infra/bootstrap";
 import { createAccount } from "../account";
-import { advanceClockBy, moveClockTo, now } from "../clock";
+import { now, withClock } from "../clock";
 import * as fixtures from "../fixtures";
-import {
-  defineBodyPart,
-  measureBodyPart,
-  measureBodyWeight,
-  setBodyWeightReference,
-} from "../measurements";
+import { defineBodyPart, measureBodyPart, measureBodyWeight, setBodyWeightReference } from "../measurements";
 import { draftPlan, finalizePlan } from "../plans";
 import {
   completeWorkout,
@@ -45,8 +43,10 @@ const bodyPartTrends = [
 export async function seedAthlete(di: BootstrapType) {
   const userId = await createAccount(di, fixtures.athlete.email);
 
-  await draftPlan(di, userId, fixtures.athlete.plan);
-  await finalizePlan(di, userId, fixtures.athlete.plan);
+  await withClock(new bg.ClockFixedAdapter(now.subtract(tools.Duration.Weeks(9))), async () => {
+    await draftPlan(di, userId, fixtures.athlete.plan);
+    await finalizePlan(di, userId, fixtures.athlete.plan);
+  });
 
   await Bun.sleep(tools.Duration.Ms(10).ms);
 
@@ -59,45 +59,49 @@ export async function seedAthlete(di: BootstrapType) {
 
     if (section === undefined) continue;
 
-    moveClockTo(day.getStart().add(tools.Duration.Hours(18)));
+    const clock = new bg.ClockFixedAdapter(day.getStart().add(tools.Duration.Hours(18)));
+    const workoutId = v.parse(Workouts.VO.WorkoutId, di.Adapters.System.IdProvider.generate());
 
-    const workoutId = await createWorkout(di, userId, {
-      id: di.Adapters.System.IdProvider.generate(),
-      planId: fixtures.athlete.plan.id,
-      planSectionId: section.id,
-      scheduledFor: day.toIsoId(),
+    await withClock(clock, async () => {
+      await createWorkout(di, userId, {
+        id: workoutId,
+        planId: fixtures.athlete.plan.id,
+        planSectionId: section.id,
+        scheduledFor: day.toIsoId(),
+      });
+
+      await targetWorkout(di, userId, workoutId, history);
+
+      clock.advanceBy(tools.Duration.Minutes(5));
+      await startWorkout(di, userId, workoutId);
+
+      for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId)).exercises) {
+        const target = exercise.target;
+
+        if (target === undefined) continue;
+
+        const sessions = history.get(exercise.exerciseId) ?? [];
+        const stall =
+          exercise.prescription.progression === Plans.VO.ProgressionMethodOptions.double_progression &&
+          sessions.length % 4 === 3;
+
+        await logSets(
+          di,
+          userId,
+          workoutId,
+          exercise.id,
+          Array.from({ length: target.sets }, (_, index) => ({
+            reps: stall && index === target.sets - 1 ? target.reps - 1 : target.reps,
+            load: target.load,
+            rir: index < target.sets / 2 ? 2 : 1,
+          })),
+          clock,
+        );
+      }
+
+      clock.advanceBy(tools.Duration.Minutes(5));
+      await completeWorkout(di, userId, workoutId);
     });
-
-    await targetWorkout(di, userId, workoutId, history);
-
-    advanceClockBy(tools.Duration.Minutes(5));
-    await startWorkout(di, userId, workoutId);
-
-    for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId)).exercises) {
-      const target = exercise.target;
-
-      if (target === undefined) continue;
-
-      const sessions = history.get(exercise.exerciseId) ?? [];
-      const stall =
-        exercise.prescription.progression === Plans.VO.ProgressionMethodOptions.double_progression &&
-        sessions.length % 4 === 3;
-
-      await logSets(
-        di,
-        userId,
-        workoutId,
-        exercise.id,
-        Array.from({ length: target.sets }, (_, index) => ({
-          reps: stall && index === target.sets - 1 ? target.reps - 1 : target.reps,
-          load: target.load,
-          rir: index < target.sets / 2 ? 2 : 1,
-        })),
-      );
-    }
-
-    advanceClockBy(tools.Duration.Minutes(5));
-    await completeWorkout(di, userId, workoutId);
 
     for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId)).exercises) {
       const sets = exercise.loggedSets.map((set) => ({ ...set, rir: set.rir ?? null }));
@@ -109,8 +113,6 @@ export async function seedAthlete(di: BootstrapType) {
 
     await Bun.sleep(tools.Duration.Ms(10).ms);
   }
-
-  moveClockTo(now.subtract(tools.Duration.Hours(1)));
 
   const referenceId = di.Adapters.System.IdProvider.generate();
 

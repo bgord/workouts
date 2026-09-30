@@ -5,7 +5,6 @@ import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import type { BootstrapType } from "+infra/bootstrap";
-import { advanceClockBy } from "./clock";
 import * as fixtures from "./fixtures";
 
 export type ExerciseHistory = Map<string, Array<Pick<Workouts.Queries.ExercisePerformance, "sets">>>;
@@ -104,11 +103,12 @@ export async function logSets(
   workoutId: Workouts.VO.WorkoutIdType,
   workoutExerciseId: Workouts.VO.WorkoutExerciseIdType,
   sets: ReadonlyArray<{ reps: number; load: number; rir: number }>,
+  clock: bg.ClockFixedAdapter,
 ) {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   for (const set of sets) {
-    advanceClockBy(tools.Duration.Minutes(3));
+    clock.advanceBy(tools.Duration.Minutes(3));
 
     const command = bg.command(
       Workouts.Commands.WorkoutSetLogCommand,

@@ -1,16 +1,19 @@
 import * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 
-export const now = new bg.ClockSystemAdapter().now();
+const System = new bg.ClockSystemAdapter();
 
-export const Clock = new bg.ClockFixedAdapter(now.subtract(tools.Duration.Weeks(9)));
+let current: bg.ClockPort = System;
 
-export function moveClockTo(timestamp: tools.Timestamp) {
-  if (timestamp.isBefore(Clock.now())) throw new Error("Seed clock cannot move backwards");
+export const now = System.now();
 
-  Clock.advanceBy(timestamp.difference(Clock.now()));
-}
+export const Clock: bg.ClockPort = { now: () => current.now() };
 
-export function advanceClockBy(duration: tools.Duration) {
-  Clock.advanceBy(duration);
+export async function withClock(clock: bg.ClockPort, run: () => Promise<void>) {
+  current = clock;
+
+  try {
+    await run();
+  } finally {
+    current = System;
+  }
 }

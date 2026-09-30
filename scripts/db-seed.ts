@@ -9,7 +9,7 @@ import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
 import * as Schema from "+infra/schema";
 import { seedCatalog } from "./seed/catalog";
-import { Clock } from "./seed/clock";
+import { Clock, now, withClock } from "./seed/clock";
 import { seedActive } from "./seed/personas/active";
 import { seedArchivist } from "./seed/personas/archivist";
 import { seedAthlete } from "./seed/personas/athlete";
@@ -32,7 +32,7 @@ void (async function main() {
   const correlationId = v.parse(bg.CorrelationId, di.Adapters.System.IdProvider.generate());
 
   await bg.CorrelationStorage.run(correlationId, async () => {
-    await seedCatalog(di);
+    await withClock(new bg.ClockFixedAdapter(now.subtract(tools.Duration.Weeks(10))), () => seedCatalog(di));
 
     await seedEmpty(di);
     await seedBuilder(di);
