@@ -6,11 +6,53 @@ test.describe("Measurements - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });
   test.describe.configure({ mode: "serial" });
 
+  test("rejects a body weight out of range", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("501");
+
+    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "501 kg" })).toBeHidden();
+  });
+
+  test("rejects a body weight date in the future", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("81.5");
+    await page.locator('input[type="date"]').fill("2099-01-01");
+
+    await expect(page.locator('input[type="date"]:invalid')).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "81.5 kg" })).toBeHidden();
+  });
+
   test("logs a body weight measurement", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("81.5");
     await page.getByRole("button", { name: "Log", exact: true }).click();
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "81.5 kg" })).toBeVisible();
+  });
+
+  test("rejects a body weight correction out of range", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await page.getByRole("button", { name: "81.5 kg" }).click();
+    await page
+      .locator("form")
+      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByRole("spinbutton", { name: "Weight (kg)" })
+      .fill("501");
+
+    await expect(page.locator('form input[type="number"]:invalid')).toHaveCount(1);
+
     await page.reload();
 
     await expect(page.getByRole("button", { name: "81.5 kg" })).toBeVisible();
@@ -59,6 +101,25 @@ test.describe("Measurements - athlete", () => {
     await expect(page.getByText(/^Cut since /)).toBeVisible();
   });
 
+  test("rejects a body part measurement out of range", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("301");
+
+    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("Not measured yet")
+        .first(),
+    ).toBeVisible();
+  });
+
   test("measures the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
@@ -74,6 +135,32 @@ test.describe("Measurements - athlete", () => {
         .first(),
     ).toBeVisible();
   });
+
+  test("rejects a body part correction out of range", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+    await page
+      .getByRole("listitem")
+      .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByTitle("Correct the measurement").click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("0");
+
+    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("38.5 cm")
+        .first(),
+    ).toBeVisible();
+  });
+
   test("corrects the body part measurement", async ({ page }) => {
     await page.goto("/measurements/body-parts");
     await page
@@ -164,6 +251,28 @@ test.describe("Measurements - empty", () => {
     await expect(page.getByRole("button", { name: "80.75 kg" })).toBeVisible();
   });
 
+  test("rejects a too long body part name", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByLabel("Body part name").fill("a".repeat(65));
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+
+    await expect(page.getByLabel("Body part name").and(page.locator(":invalid"))).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByText("Define a body part first")).toBeVisible();
+  });
+
+  test("blocks defining a body part with an empty name", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Manage" }).click();
+
+    await expect(page.getByRole("button", { name: "Add", exact: true })).toBeDisabled();
+  });
+
   test("defines a body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
@@ -204,6 +313,30 @@ test.describe("Measurements - empty", () => {
     await expect(
       page.getByRole("listitem").filter({ hasText: "Neck" }).getByText("39.1 cm").first(),
     ).toBeVisible();
+  });
+
+  test("rejects a too long new body part name", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Neck", exact: true }).click();
+    await page
+      .locator("form")
+      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByLabel("Body part name")
+      .fill("a".repeat(65));
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(
+      page
+        .locator("form")
+        .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+        .locator("input:invalid"),
+    ).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Measure Neck", exact: true })).toBeVisible();
   });
 
   test("renames the body part", async ({ page }) => {
