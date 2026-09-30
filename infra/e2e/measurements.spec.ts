@@ -79,6 +79,18 @@ test.describe("Measurements - athlete", () => {
     ).toBeVisible();
   });
 
+  test("lists the history of a body part", async ({ page }) => {
+    const row = page.getByRole("listitem").filter({ hasText: fixtures.athlete.bodyParts.waist.name });
+
+    await page.goto("/measurements/body-parts");
+
+    await row.getByRole("button").first().click();
+
+    await expect(row.getByTitle("Correct the measurement")).toHaveCount(12);
+    await expect(row.getByTitle("Correct the measurement").first()).toContainText("81.4 cm");
+    await expect(row.getByTitle("Correct the measurement").last()).toContainText("82.0 cm");
+  });
+
   test("marks the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
