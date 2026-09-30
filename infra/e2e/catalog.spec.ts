@@ -141,6 +141,13 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByRole("button", { name: "Delete" })).toBeDisabled();
   });
 
+  test("blocks assigning a fifth category", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.latPullDownCable.id}`);
+
+    await expect(page.getByText("Up to 4 categories available")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Assign", exact: true })).toBeDisabled();
+  });
+
   test("shows the error when adding a category fails", async ({ page }) => {
     await page.route("**/api/exercises/category", (route) => route.fulfill({ status: 500 }));
     await page.goto("/catalog");
