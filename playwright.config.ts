@@ -10,7 +10,7 @@ export default defineConfig({
   projects: [
     { name: "setup", testMatch: /.*\.setup\.ts/ },
     {
-      name: "chromium",
+      name: "desktop",
       testIgnore: [/.*\.setup\.ts/, /.*\.mutation\.spec\.ts/, /.*\.mobile\.spec\.ts/],
       use: { ...devices["Desktop Chrome"] },
       dependencies: ["setup"],
@@ -26,7 +26,7 @@ export default defineConfig({
       testMatch: /.*\.mutation\.spec\.ts/,
       testIgnore: [/.*\.mobile\.mutation\.spec\.ts/],
       use: { ...devices["Desktop Chrome"] },
-      dependencies: ["chromium"],
+      dependencies: ["desktop"],
     },
     {
       name: "mobile-mutation",
