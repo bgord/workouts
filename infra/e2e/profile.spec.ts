@@ -1,3 +1,4 @@
+// cSpell:ignore Ustawienia profilu Polski Wyłączone
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 

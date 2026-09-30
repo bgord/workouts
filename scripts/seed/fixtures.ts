@@ -1,3 +1,4 @@
+// cSpell:ignore Aparts
 export const password = "1234567890";
 
 export const admin = { email: "admin@example.com" };
