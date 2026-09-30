@@ -36,6 +36,34 @@ test.describe("Workouts - active", () => {
     await expect(page.getByRole("button", { name: "Complete" })).toBeEnabled();
     await expect(page.getByRole("button", { name: "Start" })).toBeHidden();
   });
+
+  test("steps between exercises in the log panel", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
+      .click();
+
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await expect(
+      panel.getByText(fixtures.exercises.overheadPressSeatedDumbbells.name, { exact: true }),
+    ).toBeVisible();
+    await expect(
+      panel.getByRole("button", { name: `Previous: ${fixtures.exercises.superHorizontalBenchPress.name}` }),
+    ).toBeEnabled();
+
+    await panel.getByRole("button", { name: /^Next: / }).click();
+
+    await expect(
+      panel.getByRole("button", {
+        name: `Previous: ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+      }),
+    ).toBeEnabled();
+    await expect(
+      panel.getByText(fixtures.exercises.overheadPressSeatedDumbbells.name, { exact: true }),
+    ).toBeHidden();
+  });
 });
 
 test.describe("Workouts - athlete", () => {
@@ -98,5 +126,35 @@ test.describe("Workouts - athlete", () => {
 
     await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
     await expect(page.getByRole("button", { name: "Start" })).toBeVisible();
+  });
+
+  test("shows the previous session of every exercise on the scheduled workout", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await expect(page.getByTitle("Previous session").first()).toBeVisible();
+    await expect(page.getByTitle("Previous session")).toHaveCount(
+      await page.getByRole("button", { name: "Set target" }).count(),
+    );
+  });
+
+  test("offers every plan section and a date when scheduling", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+
+    const dialog = page.locator("#workout-create");
+
+    await expect(dialog.getByRole("radio")).toHaveCount(3);
+    await expect(dialog.getByRole("radio").first()).toBeChecked();
+    await expect(dialog.locator('input[type="date"]')).toBeHidden();
+
+    await dialog.getByRole("button", { name: "Tomorrow" }).click();
+
+    await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "true");
+
+    await dialog.getByRole("button", { name: "Pick" }).click();
+
+    await expect(dialog.locator('input[type="date"]')).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "false");
   });
 });

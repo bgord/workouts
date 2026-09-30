@@ -37,11 +37,71 @@ test.describe("Workouts - athlete", () => {
     ).toHaveCount(0);
   });
 
+  test("schedules a workout for a chosen section and day", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+    await page
+      .locator("#workout-create")
+      .getByText(fixtures.athlete.plan.sections.legs.name, { exact: true })
+      .click();
+    await page.getByRole("button", { name: "Tomorrow" }).click();
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+    await expect(page).toHaveURL(/\/workouts\/(?!84d48b25)[0-9a-f-]{36}/);
+    await page.reload();
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: `PPL – ${fixtures.athlete.plan.sections.legs.name}` }),
+    ).toBeVisible();
+    await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+
+    await page.getByRole("button", { name: "Discard" }).click();
+    await page.getByRole("button", { name: "Discard", exact: true }).last().click();
+
+    await expect(page).toHaveURL(/\/workouts$/);
+  });
+
   test("blocks starting until every exercise has a target", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
     await expect(page.getByText("Set a target for every exercise")).toBeVisible();
     await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
+  });
+
+  test("sets a target from the progression suggestion", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    const exercises = await page.getByRole("button", { name: "Set target" }).count();
+
+    await page.getByRole("button", { name: "Set target" }).first().click();
+
+    const last = page.getByRole("button", { name: "Last", exact: true });
+    const progress = page.getByTitle(/^Based on the previous session/).getByRole("button").last();
+
+    await expect(last).toHaveAttribute("aria-pressed", "true");
+    await expect(progress).toHaveAttribute("aria-pressed", "false");
+
+    await progress.click();
+
+    await expect(progress).toHaveAttribute("aria-pressed", "true");
+    await expect(last).toHaveAttribute("aria-pressed", "false");
+
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.reload();
+
+    await expect(page.getByText("Set target")).toHaveCount(exercises - 1);
+  });
+
+  test("edits the target with the steppers", async ({ page }) => {
+    const row = page.getByRole("listitem").first();
+
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await row.getByTitle("Set target").click();
+    await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
+    await row.getByRole("button", { name: "Save" }).click();
+    await page.reload();
+
+    await expect(row.getByTitle("Set target")).toContainText("×5 ");
   });
 
   test("starts the workout once every exercise has a target", async ({ page }) => {
@@ -110,6 +170,24 @@ test.describe("Workouts - athlete", () => {
     await expect(page.getByText("A completed workout keeps at least one set")).toBeVisible();
   });
 
+  test("copies the completed workout to the clipboard", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await page.getByRole("button", { name: "Copy workout" }).click();
+
+    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute(
+      "title",
+      "Copied to the clipboard",
+    );
+
+    const copied = await page.evaluate(() => navigator.clipboard.readText());
+
+    expect(copied).toContain(`Workout id: ${fixtures.athlete.scheduledWorkout.id}`);
+    expect(copied).toContain("Logged sets: 1");
+    expect(copied).toContain("| 1 | 7 | 30 | not recorded |");
+  });
+
   test("removes a set of a past workout", async ({ page }) => {
     const row = page.getByRole("listitem").first();
 
@@ -167,6 +245,23 @@ test.describe("Workouts - active", () => {
 
     await expect(row.getByRole("button", { name: "Remove set 4" })).toBeHidden();
     await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
+  });
+
+  test("logs a set with reps in reserve", async ({ page }) => {
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }),
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+    await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
+    await page.keyboard.press("Escape");
+    await page.reload();
+    await row.getByRole("button").first().click();
+
+    await expect(row.getByText("RIR 1")).toBeVisible();
   });
 
   test("adds a note", async ({ page }) => {
