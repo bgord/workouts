@@ -1,3 +1,4 @@
+// cSpell:ignore spinbutton
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -190,6 +191,174 @@ test.describe("Plans - builder", () => {
     await page.reload();
 
     await expect(page.getByText("Chest and lat stretch, 2 minutes each")).toBeHidden();
+  });
+
+  test("shows the error when adding an exercise instruction fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/exercise-instruction", (route) =>
+      route.fulfill({ status: 500 }),
+    );
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
+    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
+    await page
+      .locator("form")
+      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+
+    await expect(page.getByText("Could not add the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
+    ).toBeHidden();
+  });
+
+  test("shows the error when saving an exercise instruction fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/exercise-instruction/*/instruction", (route) =>
+      route.fulfill({ status: 500 }),
+    );
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page
+      .getByRole("listitem")
+      .filter({
+        has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+      })
+      .last()
+      .getByRole("button", { name: "Edit exercise" })
+      .click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("5");
+    await page
+      .locator("form")
+      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
+
+    await expect(page.getByText("Could not save the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({
+          has: page.getByRole("link", {
+            name: fixtures.exercises.superHorizontalBenchPress.name,
+            exact: true,
+          }),
+        })
+        .last(),
+    ).toContainText("4×5");
+  });
+
+  test("shows the error when changing the exercise of an instruction fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/exercise-instruction/*/exercise", (route) =>
+      route.fulfill({ status: 500 }),
+    );
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page
+      .getByRole("listitem")
+      .filter({
+        has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+      })
+      .last()
+      .getByRole("button", { name: "Edit exercise" })
+      .click();
+    await page.getByRole("img", { name: fixtures.exercises.superHorizontalBenchPress.name }).click();
+    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.pecDeck.name);
+    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
+    await page
+      .locator("form")
+      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
+
+    await expect(page.getByText("Could not save the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    ).toBeVisible();
+  });
+
+  test("shows the error when moving an exercise instruction fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/exercise-instruction/*/position", (route) =>
+      route.fulfill({ status: 500 }),
+    );
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page
+      .getByRole("button", { name: `Move ${fixtures.exercises.overheadPressSeatedDumbbells.name} up` })
+      .click();
+
+    await expect(page.getByText("Could not move the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} up` }),
+    ).toBeDisabled();
+  });
+
+  test("shows the error when removing an exercise instruction fails", async ({ page }) => {
+    await page.route("**/api/plans/*/section/*/exercise-instruction/*", (route) =>
+      route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page
+      .getByRole("button", {
+        name: `Remove ${fixtures.exercises.superHorizontalBenchPress.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(page.getByText("Could not remove the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    ).toBeVisible();
   });
 });
 
