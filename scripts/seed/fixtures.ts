@@ -2,20 +2,6 @@ export const password = "1234567890";
 
 export const admin = { email: "admin@example.com" };
 
-export const empty = { email: "empty@example.com" };
-
-export const builder = { email: "builder@example.com" };
-
-export const athlete = { email: "athlete@example.com" };
-
-export const active = { email: "active@example.com" };
-
-export const archivist = { email: "archivist@example.com" };
-
-export const polyglot = { email: "polyglot@example.com" };
-
-export const personas = [empty, builder, athlete, active, archivist, polyglot];
-
 export const categories = {
   abs: { id: "cfee8759-23b3-4ab5-92de-d4eacccf13cd", name: "Abs" },
   biceps: { id: "08f888d0-8b58-4419-808f-c9691df8fefa", name: "Biceps" },
@@ -282,3 +268,238 @@ export const exercises = {
     categories: [categories.triceps],
   },
 };
+
+export const ppl = {
+  name: "PPL",
+  description: "3x times (or more per week) - Monday Push, Wednesday Pull, Saturday Legs.",
+  sections: {
+    push: {
+      name: "Push",
+      warmup:
+        "10x Arm Circles forward\n10x Arm Circles backward\n10x Band Shoulder Dislocates\n15x Band Pull-Aparts\n10x Dumbbell External Rotation",
+      instructions: [
+        {
+          exercise: exercises.superHorizontalBenchPress,
+          sets: 4,
+          reps: { min: 5, max: 5 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.overheadPressSeatedDumbbells,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.tricepsPushDownBar,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.pecFlyMachine,
+          sets: 3,
+          reps: { min: 10, max: 12 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.tricepsExtensionOverheadCable,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.lateralRaiseDumbbells,
+          sets: 3,
+          reps: { min: 8, max: 12 },
+          progression: "double_progression",
+        },
+      ],
+    },
+    pull: {
+      name: "Pull",
+      warmup:
+        "10x Arm Circles forward\n10x Arm Circles backward\n10x Band Shoulder Dislocates\n15x Band Pull-Aparts",
+      instructions: [
+        { exercise: exercises.pullUp, sets: 4, reps: { min: 4, max: 6 }, progression: "linear_progression" },
+        {
+          exercise: exercises.lowRowCable,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.straightArmPulldownBar,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.concentrationCurlDumbbell,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.hammerCurlDumbbells,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.facePull,
+          sets: 3,
+          reps: { min: 12, max: 15 },
+          progression: "double_progression",
+        },
+      ],
+    },
+    legs: {
+      name: "Legs",
+      instructions: [
+        {
+          exercise: exercises.legPressHorizontal,
+          sets: 4,
+          reps: { min: 6, max: 8 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.bulgarianSplitSquatDumbbell,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.romanianDeadliftDumbbellSingleLeg,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.legCurlSeated,
+          sets: 3,
+          reps: { min: 10, max: 12 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.legExtensionSingleLeg,
+          sets: 3,
+          reps: { min: 10, max: 12 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.calfRaisesMachine,
+          sets: 3,
+          reps: { min: 12, max: 15 },
+          progression: "double_progression",
+        },
+      ],
+    },
+  },
+};
+
+export const fullBody = {
+  name: "Full body",
+  description: "2x per week - Monday and Thursday.",
+  sections: {
+    fullBody: {
+      name: "Full body",
+      instructions: [
+        {
+          exercise: exercises.legPressHorizontal,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.superHorizontalBenchPress,
+          sets: 3,
+          reps: { min: 8, max: 10 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.latPullDownCable,
+          sets: 3,
+          reps: { min: 10, max: 12 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.lateralRaiseDumbbells,
+          sets: 3,
+          reps: { min: 12, max: 15 },
+          progression: "double_progression",
+        },
+      ],
+    },
+  },
+};
+
+export const empty = { email: "empty@example.com" };
+
+export const builder = {
+  email: "builder@example.com",
+  plan: {
+    id: "500f8ed2-2708-4703-a6dc-534b9dc576af",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "05568f55-10b2-407b-a001-e9fac7ac5204", ...ppl.sections.push },
+      pull: { id: "949e2de0-5a92-45c7-90de-0884e599e2a2", ...ppl.sections.pull },
+      legs: { id: "e31bacbf-ff60-42a2-a617-d1cb960f98b6", ...ppl.sections.legs },
+    },
+  },
+};
+
+export const athlete = {
+  email: "athlete@example.com",
+  plan: {
+    id: "82274685-eb24-433f-b987-6bec85ebe9b2",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "4ff73632-4aa9-4e51-9365-a4b8a4335f4d", ...ppl.sections.push },
+      pull: { id: "b4a8f075-efbb-4ebf-87d5-3f591ac1c394", ...ppl.sections.pull },
+      legs: { id: "45f4d04c-41b6-434e-8d1a-6cacbdd5cc52", ...ppl.sections.legs },
+    },
+  },
+};
+
+export const active = {
+  email: "active@example.com",
+  plan: {
+    id: "d38f181d-7b73-4b1e-84ad-65d806409218",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "bda41f3e-e8c0-49fe-804d-0a033fe7671c", ...ppl.sections.push },
+      pull: { id: "332dd599-7873-4c8c-8a10-ae50976d5b88", ...ppl.sections.pull },
+      legs: { id: "162f52fe-193c-496f-9673-612a06610ff6", ...ppl.sections.legs },
+    },
+  },
+};
+
+export const archivist = {
+  email: "archivist@example.com",
+  archivedPlan: {
+    id: "b8aab91f-94c6-4021-b548-6554e9c1ec98",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "79fbe780-86b9-4cfe-abd6-be4d31378f7a", ...ppl.sections.push },
+      pull: { id: "e277c025-2bbd-484c-a4ec-719b683a0007", ...ppl.sections.pull },
+      legs: { id: "87bc13ad-b26e-453a-908f-4a1e29c0bd25", ...ppl.sections.legs },
+    },
+  },
+  plan: {
+    id: "b1bf6b7d-623a-4d34-8140-2c1b5d47b8ab",
+    name: fullBody.name,
+    description: fullBody.description,
+    sections: {
+      fullBody: { id: "0aff0b76-8bc8-431c-b41f-6557aacb96c9", ...fullBody.sections.fullBody },
+    },
+  },
+};
+
+export const polyglot = { email: "polyglot@example.com" };
+
+export const personas = [empty, builder, athlete, active, archivist, polyglot];
