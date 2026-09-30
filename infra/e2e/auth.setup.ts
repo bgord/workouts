@@ -13,13 +13,8 @@ const personas = {
   disposable: fixtures.disposable,
 };
 
-const SIGN_IN_LIMIT = 3;
-const SIGN_IN_WINDOW_MS = 10_000;
-
-for (const [index, [name, persona]] of Object.entries(personas).entries()) {
+for (const [name, persona] of Object.entries(personas)) {
   setup(`Sign in - ${name}`, async ({ page }) => {
-    if (index > 0 && index % SIGN_IN_LIMIT === 0) await page.waitForTimeout(SIGN_IN_WINDOW_MS);
-
     await page.goto("/public/login.html");
 
     await page.getByLabel("Email").fill(persona.email);
