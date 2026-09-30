@@ -769,6 +769,8 @@ infra/
 │   ├── measurements.spec.ts
 │   ├── plans.mutation.spec.ts
 │   ├── plans.spec.ts
+│   ├── profile.mutation.spec.ts
+│   ├── profile.spec.ts
 │   ├── smoke.spec.ts
 │   ├── workouts.mutation.spec.ts
 │   └── workouts.spec.ts

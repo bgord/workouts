@@ -471,6 +471,20 @@ export const builder = {
   },
 };
 
+export const drafter = {
+  email: "drafter@example.com",
+  plan: {
+    id: "062643f4-0e7c-4c38-b7ee-1d96d7a7200b",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "8eac614d-a8af-4014-b2bc-c3c7e024003a", ...ppl.sections.push },
+      pull: { id: "ca944435-2138-4039-b4bc-8905396fd173", ...ppl.sections.pull },
+      legs: { id: "a928600d-5f9a-4f72-854d-2fe7d6176a1c", ...ppl.sections.legs },
+    },
+  },
+};
+
 export const athlete = {
   email: "athlete@example.com",
   scheduledWorkout: { id: "84d48b25-7c52-4466-8f98-4b435b337bb0" },
@@ -534,4 +548,4 @@ export const polyglot = { email: "polyglot@example.com", language: "pl" };
 
 export const disposable = { email: "disposable@example.com" };
 
-export const personas = [empty, builder, athlete, active, archivist, polyglot, disposable];
+export const personas = [empty, builder, drafter, athlete, active, archivist, polyglot, disposable];

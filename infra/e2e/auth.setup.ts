@@ -5,6 +5,7 @@ const personas = {
   admin: fixtures.admin,
   empty: fixtures.empty,
   builder: fixtures.builder,
+  drafter: fixtures.drafter,
   athlete: fixtures.athlete,
   active: fixtures.active,
   archivist: fixtures.archivist,

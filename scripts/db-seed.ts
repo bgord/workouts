@@ -15,6 +15,7 @@ import { seedArchivist } from "./seed/personas/archivist";
 import { seedAthlete } from "./seed/personas/athlete";
 import { seedBuilder } from "./seed/personas/builder";
 import { seedDisposable } from "./seed/personas/disposable";
+import { seedDrafter } from "./seed/personas/drafter";
 import { seedEmpty } from "./seed/personas/empty";
 import { seedPolyglot } from "./seed/personas/polyglot";
 
@@ -37,6 +38,7 @@ void (async function main() {
 
     await seedEmpty(di);
     await seedBuilder(di);
+    await seedDrafter(di);
     await seedAthlete(di);
     await seedActive(di);
     await seedArchivist(di);
