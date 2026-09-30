@@ -767,6 +767,7 @@ infra/
 │   ├── home.spec.ts
 │   ├── measurements.mutation.spec.ts
 │   ├── measurements.spec.ts
+│   ├── navigation.spec.ts
 │   ├── not-found.spec.ts
 │   ├── plans.mutation.spec.ts
 │   ├── plans.spec.ts
