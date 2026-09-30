@@ -15,7 +15,8 @@ test.describe("Shortcuts - athlete", () => {
 
     await expect(help.getByText("Keyboard shortcuts", { exact: true })).toBeVisible();
     await expect(help.getByText("Global")).toBeVisible();
-    await expect(help.getByText("Workouts", { exact: true })).toBeVisible();
+    await expect(help.getByRole("heading", { name: "Workouts", exact: true })).toBeVisible();
+    await expect(help.getByText("g w", { exact: true })).toBeVisible();
 
     await page.keyboard.press("Escape");
 
