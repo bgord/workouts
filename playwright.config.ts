@@ -18,7 +18,7 @@ export default defineConfig({
     {
       name: "mobile",
       testMatch: /.*\.mobile\.spec\.ts/,
-      use: { ...devices["Pixel 7"] },
+      use: { ...devices["Pixel 10"] },
       dependencies: ["setup"],
     },
     {
@@ -31,7 +31,7 @@ export default defineConfig({
     {
       name: "mobile-mutation",
       testMatch: /.*\.mobile\.mutation\.spec\.ts/,
-      use: { ...devices["Pixel 7"] },
+      use: { ...devices["Pixel 10"] },
       dependencies: ["mutation"],
     },
   ],
