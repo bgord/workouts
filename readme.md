@@ -772,6 +772,7 @@ infra/
 │   ├── plans.spec.ts
 │   ├── profile.mutation.spec.ts
 │   ├── profile.spec.ts
+│   ├── shortcuts.spec.ts
 │   ├── test.ts
 │   ├── workouts.mutation.spec.ts
 │   └── workouts.spec.ts
