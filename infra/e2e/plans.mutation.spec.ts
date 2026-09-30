@@ -6,6 +6,20 @@ test.describe("Plans - builder", () => {
   test.use({ storageState: ".auth/builder.json" });
   test.describe.configure({ mode: "serial" });
 
+  test("rejects a too short plan name", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByLabel("Plan name").fill("ab");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.locator("form input:invalid")).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 1, name: fixtures.builder.plan.name })).toBeVisible();
+  });
+
   test("renames the draft plan", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
 
@@ -45,6 +59,17 @@ test.describe("Plans - builder", () => {
     await expect(page.getByRole("button", { name: "Restore" })).toBeEnabled();
   });
 
+  test("rejects a too short new plan name", async ({ page }) => {
+    await page.goto("/plans");
+
+    await page.getByRole("button", { name: "New plan" }).click();
+    await page.getByLabel("Plan name").fill("ab");
+    await page.getByRole("button", { name: "Create", exact: true }).click();
+
+    await expect(page.locator("form input:invalid")).toHaveCount(1);
+    await expect(page).toHaveURL(/\/plans$/);
+  });
+
   test("creates a new plan once the previous one is archived", async ({ page }) => {
     await page.goto("/plans");
 
@@ -62,6 +87,20 @@ test.describe("Plans - drafter", () => {
   test.use({ storageState: ".auth/drafter.json" });
   test.describe.configure({ mode: "serial" });
 
+  test("rejects a too short section name", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("heading", { level: 2, name: "Push", exact: true }).getByRole("button").click();
+    await page.getByLabel("Section name").fill("ab");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.locator("form input:invalid")).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 2, name: "Push", exact: true })).toBeVisible();
+  });
+
   test("renames a section", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
@@ -72,6 +111,20 @@ test.describe("Plans - drafter", () => {
 
     await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { level: 2, name: "Push", exact: true })).toBeHidden();
+  });
+
+  test("rejects a too short new section name", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("ab");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.locator("form input:invalid")).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 2, name: "ab", exact: true })).toBeHidden();
   });
 
   test("adds a section", async ({ page }) => {
@@ -94,6 +147,20 @@ test.describe("Plans - drafter", () => {
 
     await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeHidden();
     await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
+  });
+
+  test("rejects an empty plan description", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("button", { name: fixtures.drafter.plan.description }).click();
+    await page.getByLabel("Description").fill("");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.locator("form textarea:invalid")).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByText(fixtures.drafter.plan.description)).toBeVisible();
   });
 
   test("edits the plan description", async ({ page }) => {
@@ -143,6 +210,40 @@ test.describe("Plans - drafter", () => {
     await expect(page.getByText("Chest and lat stretch, 2 minutes each")).toBeVisible();
   });
 
+  test("rejects an exercise instruction with invalid sets and reps range", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+
+    const form = page
+      .locator("form")
+      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) });
+
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("21");
+    await form.getByRole("button", { name: "Add exercise" }).click();
+
+    await expect(form.locator('input[name="sets"]:invalid')).toHaveCount(1);
+
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
+    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
+    await form.getByRole("button", { name: "Add exercise" }).click();
+
+    await expect(form.locator('input[name="repsMax"]:invalid')).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByText("6 exercises").first()).toBeVisible();
+  });
+
   test("adds an exercise instruction", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
     await page
@@ -170,6 +271,35 @@ test.describe("Plans - drafter", () => {
       page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeVisible();
     await expect(page.getByText("7 exercises")).toBeVisible();
+  });
+
+  test("blocks saving an exercise instruction edit with no sets", async ({ page }) => {
+    const row = page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }) })
+      .last();
+
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await row.getByRole("button", { name: "Edit exercise" }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("0");
+
+    await expect(
+      page
+        .locator("form")
+        .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+        .getByRole("button", { name: "Save", exact: true }),
+    ).toBeDisabled();
+
+    await page.reload();
+
+    await expect(row).toContainText("3×12-15");
   });
 
   test("edits the exercise instruction", async ({ page }) => {
