@@ -116,4 +116,55 @@ test.describe("Navigation - athlete", () => {
 
     await expect(page).toHaveURL(/\/measurements$/);
   });
+
+  test("restores the workouts filters on browser back", async ({ page }) => {
+    await page.goto("/workouts");
+    await page.getByLabel("Period").selectOption({ label: "All time" });
+    await expect(page).toHaveURL(/filter=all_time/);
+    await page.locator('a[href^="/workouts/"]').first().click();
+    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(/\/workouts\?filter=all_time/);
+    await expect(page.getByLabel("Period")).toHaveValue("all_time");
+  });
+
+  test("restores the catalog category filter on browser back", async ({ page }) => {
+    await page.goto("/catalog");
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
+    await expect(page).toHaveURL(/category=/);
+    await page.locator('a[href^="/catalog/exercise/"]').first().click();
+    await expect(page).toHaveURL(/\/catalog\/exercise\//);
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(/\/catalog\?category=/);
+    await expect(page.getByText("6 of 32")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("opens the body weight history filtered by a deep link", async ({ page }) => {
+    await page.goto("/measurements/body-weight?month=all");
+
+    await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
+  });
+
+  test("goes forward again after going back", async ({ page }) => {
+    const card = page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`);
+
+    await page.goto("/workouts");
+    const title = (await card.getByRole("heading", { level: 2 }).textContent()) ?? "";
+    await card.click();
+    await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
+    await page.goBack();
+    await expect(page).toHaveURL(/\/workouts$/);
+
+    await page.goForward();
+
+    await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
+    await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
+  });
 });

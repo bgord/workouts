@@ -43,6 +43,7 @@ test.describe("Mobile - athlete", () => {
       "/measurements",
       "/measurements/body-weight",
       "/measurements/body-parts",
+      "/profile",
     ];
 
     for (const route of routes) {
@@ -57,11 +58,150 @@ test.describe("Mobile - athlete", () => {
     }
   });
 
+  test("keeps a completed workout within the viewport width", async ({ page }) => {
+    await page.goto("/workouts?filter=all_time");
+    await page.waitForLoadState("networkidle");
+    const href =
+      (await page
+        .locator('a[href^="/workouts/"]', { hasText: /Completed$/ })
+        .first()
+        .getAttribute("href")) ?? "";
+
+    await page.goto(href);
+    await page.waitForLoadState("networkidle");
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
   test("opens the schedule dialog on the workouts list", async ({ page }) => {
     await page.goto("/workouts");
 
     await page.getByRole("button", { name: "New workout" }).click();
 
-    await expect(page.locator("#workout-create").getByRole("button", { name: "Schedule" })).toBeVisible();
+    await expect(page.locator("#workout-create").getByRole("button", { name: "Schedule" })).toBeInViewport();
+    await expect(page.locator("#workout-create").getByRole("button", { name: "Close" })).toBeInViewport();
+    await expect(page.locator("#workout-create").getByRole("button", { name: "Cancel" })).toBeInViewport();
+
+    await page.locator("#workout-create").getByRole("button", { name: "Close" }).tap();
+
+    await expect(page.locator("#workout-create")).toBeHidden();
+  });
+
+  test("fits the body weight form on the screen", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+    await page.waitForLoadState("networkidle");
+
+    await expect(page.getByRole("spinbutton", { name: "Weight (kg)" })).toBeInViewport();
+    await expect(page.getByRole("button", { name: "Log", exact: true })).toBeInViewport();
+  });
+
+  test("fits the set target form on the screen", async ({ page }) => {
+    const row = page.getByRole("listitem").first();
+
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.waitForLoadState("networkidle");
+
+    await row.getByTitle("Set target").tap();
+
+    await expect(row.getByRole("button", { name: "Save" })).toBeInViewport();
+    await expect(row.getByRole("button", { name: "Cancel" })).toBeInViewport();
+
+    await row.getByRole("button", { name: "Cancel" }).tap();
+
+    await expect(row.getByRole("button", { name: "Save" })).toBeHidden();
+  });
+});
+
+test.describe("Mobile - active", () => {
+  test.use({ storageState: ".auth/active.json" });
+
+  test("keeps the workout within the viewport width", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.waitForLoadState("networkidle");
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test("keeps the workout with the log panel open within the viewport width", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.waitForLoadState("networkidle");
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test("fits the add exercise dialog on the screen", async ({ page }) => {
+    const dialog = page.locator(`#workout-exercise-add-${fixtures.active.workout.id}`);
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.waitForLoadState("networkidle");
+
+    await page.getByRole("button", { name: "Add exercise" }).tap();
+
+    await expect(dialog.getByRole("button", { name: "Add exercise" })).toBeInViewport();
+    await expect(dialog.getByRole("button", { name: "Close" })).toBeInViewport();
+    await expect(dialog.getByRole("button", { name: "Cancel" })).toBeInViewport();
+
+    await dialog.getByRole("button", { name: "Close" }).tap();
+
+    await expect(dialog).toBeHidden();
+  });
+
+  test("fits the set correction form on the screen", async ({ page }) => {
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.waitForLoadState("networkidle");
+    await row.getByRole("button").first().tap();
+
+    await row.getByRole("button", { name: "Correct set 1" }).tap();
+
+    const form = row.locator("form").filter({ has: page.locator('input[name^="corrected-reps-"]') });
+
+    await expect(form.getByRole("button", { name: "Log set", exact: true })).toBeInViewport();
+    await expect(form.getByRole("button", { name: "Cancel" })).toBeInViewport();
+
+    await form.getByRole("button", { name: "Cancel" }).tap();
+
+    await expect(row.locator('input[name^="corrected-reps-"]')).toBeHidden();
+  });
+});
+
+test.describe("Mobile - builder", () => {
+  test.use({ storageState: ".auth/builder.json" });
+
+  test("keeps the plan with an expanded section within the viewport width", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.waitForLoadState("networkidle");
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+    await expect(page.getByRole("button", { name: "Add exercise" })).toBeVisible();
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+
+    expect(overflow).toBeLessThanOrEqual(0);
   });
 });
