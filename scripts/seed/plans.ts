@@ -3,23 +3,17 @@ import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
 import type { BootstrapType } from "+infra/bootstrap";
+import type * as fixtures from "./fixtures";
 
-type PlanFixture = {
+type PlanFixture = Pick<typeof fixtures.ppl, "name" | "description"> & {
   id: string;
-  name: string;
-  description: string;
   sections: Record<
     string,
     {
       id: string;
       name: string;
       warmup?: string;
-      instructions: ReadonlyArray<{
-        exercise: { id: string };
-        sets: number;
-        reps: { min: number; max: number };
-        progression: string;
-      }>;
+      instructions: ReadonlyArray<(typeof fixtures.ppl.sections.push.instructions)[number]>;
     }
   >;
 };

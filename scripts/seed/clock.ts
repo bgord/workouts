@@ -8,11 +8,11 @@ export const now = System.now();
 
 export const Clock: bg.ClockPort = { now: () => current.now() };
 
-export async function withClock(clock: bg.ClockPort, run: () => Promise<void>) {
+export async function withClock<T>(clock: bg.ClockPort, run: () => Promise<T>) {
   current = clock;
 
   try {
-    await run();
+    return await run();
   } finally {
     current = System;
   }
