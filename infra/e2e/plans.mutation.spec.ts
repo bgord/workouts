@@ -81,6 +81,28 @@ test.describe("Plans - builder", () => {
     await expect(page.getByRole("heading", { level: 1, name: "Upper lower" })).toBeVisible();
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
   });
+
+  test("blocks finalizing a plan with no sections", async ({ page }) => {
+    await page.goto("/plans");
+
+    await page.getByRole("link", { name: "Upper lower" }).click();
+
+    await expect(page.getByRole("button", { name: "Finalize" })).toBeDisabled();
+    await expect(page.getByText("Add a section first")).toBeVisible();
+  });
+
+  test("blocks finalizing a plan with an empty section", async ({ page }) => {
+    await page.goto("/plans");
+
+    await page.getByRole("link", { name: "Upper lower" }).click();
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("Upper");
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Finalize" })).toBeDisabled();
+    await expect(page.getByText("Add an exercise to all sections first")).toBeVisible();
+  });
 });
 
 test.describe("Plans - drafter", () => {
