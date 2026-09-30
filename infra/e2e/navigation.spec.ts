@@ -34,6 +34,20 @@ test.describe("Navigation - athlete", () => {
     await expect(page).toHaveURL("/");
   });
 
+  test("shows the progress bar while the next page loads", async ({ page }) => {
+    await page.route("**/api/plans/list", async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await route.continue();
+    });
+    await page.goto("/");
+
+    await page.getByRole("navigation").getByRole("link", { name: "Plans" }).click();
+
+    await expect(page.getByTestId("navigation-progress")).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Plans" })).toBeVisible();
+    await expect(page.getByTestId("navigation-progress")).toBeHidden();
+  });
+
   test("marks only the current section as active", async ({ page }) => {
     await page.goto("/workouts");
 
