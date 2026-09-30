@@ -103,6 +103,28 @@ test.describe("Plans - builder", () => {
     await expect(page.getByRole("button", { name: "Finalize" })).toBeDisabled();
     await expect(page.getByText("Add an exercise to all sections first")).toBeVisible();
   });
+
+  test("blocks adding a sixth section", async ({ page }) => {
+    await page.goto("/plans");
+
+    await page.getByRole("link", { name: "Upper lower" }).click();
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("Lower");
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("Arms");
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("Core");
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("Cardio");
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "New section" })).toBeDisabled();
+    await expect(page.getByText("Remove a section to add a new one")).toBeVisible();
+  });
 });
 
 test.describe("Plans - drafter", () => {
