@@ -431,6 +431,19 @@ test.describe("Plans - archivist", () => {
     await expect(page.getByText("Archived", { exact: true })).toBeVisible();
   });
 
+  test("shows the error when restoring the plan fails", async ({ page }) => {
+    await page.route("**/api/plans/*/restore", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.archivist.archivedPlan.id}`);
+
+    await page.getByRole("button", { name: "Restore" }).click();
+
+    await expect(page.getByText("Could not restore the plan")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Archived", { exact: true })).toBeVisible();
+  });
+
   test("restores the archived plan", async ({ page }) => {
     await page.goto(`/plans/${fixtures.archivist.archivedPlan.id}`);
 
@@ -438,6 +451,22 @@ test.describe("Plans - archivist", () => {
 
     await expect(page.getByText("Archived", { exact: true })).toBeHidden();
     await expect(page.getByRole("button", { name: "Restore" })).toBeHidden();
+  });
+
+  test("shows the error when deleting the plan fails", async ({ page }) => {
+    await page.route(`**/api/plans/${fixtures.archivist.plan.id}`, (route) =>
+      route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/plans/${fixtures.archivist.plan.id}`);
+
+    await page.getByRole("button", { name: "Delete", exact: true }).click();
+    await page.getByRole("button", { name: "Delete", exact: true }).last().click();
+
+    await expect(page.getByText("Could not delete the plan")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Archived", { exact: true })).toBeVisible();
   });
 
   test("deletes the archived plan", async ({ page }) => {
