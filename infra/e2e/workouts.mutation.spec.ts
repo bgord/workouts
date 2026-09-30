@@ -130,14 +130,12 @@ test.describe("Workouts - active", () => {
   test.describe.configure({ mode: "serial" });
 
   test("corrects a logged set", async ({ page }) => {
-    const row = page
-      .getByRole("listitem")
-      .filter({
-        has: page.getByRole("link", {
-          name: fixtures.exercises.overheadPressSeatedDumbbells.name,
-          exact: true,
-        }),
-      });
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", {
+        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+        exact: true,
+      }),
+    });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await row.getByRole("button").first().click();
@@ -156,11 +154,9 @@ test.describe("Workouts - active", () => {
   });
 
   test("removes a logged set", async ({ page }) => {
-    const row = page
-      .getByRole("listitem")
-      .filter({
-        has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
-      });
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await row.getByRole("button").first().click();

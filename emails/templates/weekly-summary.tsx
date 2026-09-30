@@ -1,4 +1,6 @@
-import { Column, Row, Text } from "@react-email/components";
+import { Column } from "@react-email/column";
+import { Row } from "@react-email/row";
+import { Text } from "@react-email/text";
 import type * as Notifications from "+notifications";
 import { Heading, Link, Shell, Title } from "../components";
 import { theme } from "../theme";

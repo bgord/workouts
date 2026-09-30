@@ -1,4 +1,4 @@
-import { Hr } from "@react-email/components";
+import { Hr } from "@react-email/hr";
 import { theme } from "../theme";
 
 const styles = {

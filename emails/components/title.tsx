@@ -1,4 +1,4 @@
-import { Text } from "@react-email/components";
+import { Text } from "@react-email/text";
 import { theme } from "../theme";
 
 const styles = {
