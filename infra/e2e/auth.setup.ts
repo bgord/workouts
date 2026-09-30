@@ -24,6 +24,10 @@ for (const [index, [name, persona]] of Object.entries(personas).entries()) {
     await page.getByRole("button", { name: "Sign in" }).click();
     await page.waitForURL((url) => url.pathname === "/");
 
+    if ("language" in persona) {
+      await page.context().addCookies([{ name: "language", value: persona.language, url: page.url() }]);
+    }
+
     await page.context().storageState({ path: `.auth/${name}.json` });
   });
 }

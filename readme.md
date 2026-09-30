@@ -761,7 +761,8 @@ infra/
 ├── db.ts
 ├── e2e
 │   ├── auth.setup.ts
-│   └── home.spec.ts
+│   ├── home.spec.ts
+│   └── smoke.spec.ts
 ├── env.ts
 ├── projections
 │   ├── body-part-measurements.projector.ts
