@@ -496,6 +496,19 @@ test.describe("Workouts - active", () => {
     );
   });
 
+  test("removes an exercise without logged sets", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page
+      .getByRole("button", { name: `Remove ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
+      .click();
+    await page.reload();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.pecFlyMachine.name, exact: true }),
+    ).toBeHidden();
+  });
+
   test("removes an exercise with logged sets", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
