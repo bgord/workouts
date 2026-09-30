@@ -34,4 +34,19 @@ describe(`GET ${url}`, async () => {
     );
     expect(await response.text()).toEqualIgnoringWhitespace(mocks.bodyPartMeasurementCsv);
   });
+
+  test("happy path - formula", async () => {
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(
+      spyOn(di.Adapters.Measurements.ListBodyPartMeasurementExportRowsQuery, "execute").mockResolvedValue([
+        mocks.formulaBodyPartMeasurementExportRow,
+      ]),
+    );
+
+    const response = await server.request(url, { method: "GET" }, mocks.ip);
+
+    expect(response.status).toEqual(200);
+    expect(await response.text()).toEqualIgnoringWhitespace(mocks.formulaBodyPartMeasurementCsv);
+  });
 });

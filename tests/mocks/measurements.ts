@@ -253,6 +253,18 @@ export const bodyPartMeasurementCsv = [
   `${bodyPartMeasurementId},${bodyPartName},${bodyPartCircumference},${bodyPartMeasuredOn}`,
 ].join("");
 
+export const formulaBodyPartName = v.parse(Measurements.VO.BodyPartName, "=1+1");
+
+export const formulaBodyPartMeasurementExportRow: Measurements.Queries.BodyPartMeasurementExportRow = {
+  ...bodyPartMeasurementExportRow,
+  bodyPartName: formulaBodyPartName,
+};
+
+export const formulaBodyPartMeasurementCsv = [
+  "id,bodyPartName,value,measuredOn",
+  `${bodyPartMeasurementId},'${formulaBodyPartName},${bodyPartCircumference},${bodyPartMeasuredOn}`,
+].join("");
+
 export const bodyPartMeasurementCsvFile = (content: string) =>
   new File([content], "body-part.csv", { type: tools.Mimes.csv.mime.toString() });
 
