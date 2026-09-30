@@ -760,6 +760,7 @@ infra/
 ├── config.ts
 ├── db.ts
 ├── e2e
+│   ├── auth.setup.ts
 │   └── home.spec.ts
 ├── env.ts
 ├── projections

@@ -6,8 +6,16 @@ export default defineConfig({
   forbidOnly: Boolean(process.env["CI"]),
   retries: 0,
   workers: 1,
-  use: { baseURL: "http://127.0.0.1:3000", trace: "on-first-retry" },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  use: { baseURL: "http://localhost:3000", trace: "on-first-retry" },
+  projects: [
+    { name: "setup", testMatch: /.*\.setup\.ts/ },
+    {
+      name: "chromium",
+      testIgnore: /.*\.setup\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+      dependencies: ["setup"],
+    },
+  ],
   webServer: [
     {
       command: "bash bgord-scripts/server-start-test.sh",
