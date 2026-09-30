@@ -10,22 +10,30 @@ test.describe("Workouts - athlete", () => {
 
     await page.getByRole("button", { name: "New workout" }).click();
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
-
     await expect(page).toHaveURL(/\/workouts\/(?!84d48b25)[0-9a-f-]{36}/);
+    await page.reload();
+
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
   });
 
   test("discards the scheduled workout", async ({ page }) => {
     await page.goto("/workouts");
     await page
-      .getByRole("link", { name: /Draft$/ })
-      .first()
+      .locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
+        hasText: /Draft$/,
+      })
       .click();
 
     await page.getByRole("button", { name: "Discard" }).click();
     await page.getByRole("button", { name: "Discard", exact: true }).last().click();
-
     await expect(page).toHaveURL(/\/workouts$/);
+    await page.reload();
+
+    await expect(
+      page.locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
+        hasText: /Draft$/,
+      }),
+    ).toHaveCount(0);
   });
 
   test("blocks starting until every exercise has a target", async ({ page }) => {
@@ -37,8 +45,9 @@ test.describe("Workouts - athlete", () => {
 
   test("starts the workout once every exercise has a target", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    const exercises = await page.getByText("Set target").count();
 
-    for (let exercise = 0; exercise < 6; exercise++) {
+    for (let exercise = 0; exercise < exercises; exercise++) {
       await page.getByText("Set target").first().click();
       await page.getByRole("button", { name: "Last", exact: true }).click();
       await page.getByRole("button", { name: "Save" }).click();

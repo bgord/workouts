@@ -11,6 +11,7 @@ test.describe("Plans - builder", () => {
     await page.getByRole("heading", { level: 1 }).getByRole("button").click();
     await page.getByLabel("Plan name").fill("PPL v2");
     await page.getByRole("button", { name: "Save" }).click();
+    await page.reload();
 
     await expect(page.getByRole("heading", { level: 1, name: "PPL v2" })).toBeVisible();
   });

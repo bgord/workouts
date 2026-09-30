@@ -10,6 +10,7 @@ test.describe("Measurements - athlete", () => {
 
     await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("81.5");
     await page.getByRole("button", { name: "Log", exact: true }).click();
+    await page.reload();
 
     await expect(page.getByRole("button", { name: "81.5 kg" })).toBeVisible();
   });
