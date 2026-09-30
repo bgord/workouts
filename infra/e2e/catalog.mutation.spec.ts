@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 import * as fixtures from "../../scripts/seed/fixtures";
 
 test.describe("Catalog - admin", () => {
@@ -24,7 +23,9 @@ test.describe("Catalog - admin", () => {
       .locator('input[type="file"]')
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
     await page.getByPlaceholder("Bench Press Horizontal").fill("Neck curl");
-    await page.getByLabel("Description").fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page
+      .getByLabel("Description")
+      .fill("Lie on your back, curl the head up with a plate on the forehead.");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("33 of 33")).toBeVisible();

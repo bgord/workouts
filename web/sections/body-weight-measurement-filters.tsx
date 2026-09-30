@@ -29,7 +29,7 @@ export function BodyWeightMeasurementFilters() {
               month: event.currentTarget.value as BodyWeightHistoryMonthType,
               chart: search.chart,
             },
-            to: "/measurements",
+            to: "/measurements/body-weight",
           })
         }
         value={month ?? ""}
@@ -52,7 +52,7 @@ export function BodyWeightMeasurementFilters() {
           navigate({
             resetScroll: false,
             search: { chart: search.chart },
-            to: "/measurements",
+            to: "/measurements/body-weight",
           })
         }
         title={t("app.clear")}

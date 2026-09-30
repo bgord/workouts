@@ -761,9 +761,17 @@ infra/
 ├── db.ts
 ├── e2e
 │   ├── auth.setup.ts
+│   ├── catalog.mutation.spec.ts
+│   ├── catalog.spec.ts
 │   ├── dashboard.spec.ts
 │   ├── home.spec.ts
-│   └── smoke.spec.ts
+│   ├── measurements.mutation.spec.ts
+│   ├── measurements.spec.ts
+│   ├── plans.mutation.spec.ts
+│   ├── plans.spec.ts
+│   ├── smoke.spec.ts
+│   ├── workouts.mutation.spec.ts
+│   └── workouts.spec.ts
 ├── env.ts
 ├── projections
 │   ├── body-part-measurements.projector.ts

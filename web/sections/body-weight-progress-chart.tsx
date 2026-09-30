@@ -46,7 +46,7 @@ export function BodyWeightProgressChart() {
                 month: search.month,
                 chart: granularity === BodyWeightChartGranularityOptions.weekly ? undefined : granularity,
               },
-              to: "/measurements",
+              to: "/measurements/body-weight",
             });
           }}
           value={search.chart ?? BodyWeightChartGranularityOptions.weekly}
@@ -67,7 +67,7 @@ export function BodyWeightProgressChart() {
           data-md-disp="flex"
           disabled={pristine}
           onClick={() =>
-            navigate({ resetScroll: false, search: { month: search.month }, to: "/measurements" })
+            navigate({ resetScroll: false, search: { month: search.month }, to: "/measurements/body-weight" })
           }
           title={t("app.clear")}
         >

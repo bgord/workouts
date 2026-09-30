@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 import * as fixtures from "../../scripts/seed/fixtures";
 
 test.describe("Measurements - athlete", () => {
@@ -30,7 +29,7 @@ test.describe("Measurements - athlete", () => {
     await expect(page.getByRole("combobox", { name: "Granularity" })).toHaveValue("weekly");
   });
 
-  test.fixme("changes the chart granularity", async ({ page }) => {
+  test("changes the chart granularity", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("combobox", { name: "Granularity" }).selectOption("daily");
@@ -39,7 +38,7 @@ test.describe("Measurements - athlete", () => {
     await expect(page.getByRole("combobox", { name: "Granularity" })).toHaveValue("daily");
   });
 
-  test.fixme("filters the history by month", async ({ page }) => {
+  test("filters the history by month", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("combobox", { name: "Month" }).selectOption({ label: "All months" });
@@ -52,7 +51,9 @@ test.describe("Measurements - athlete", () => {
     await page.goto("/measurements/body-weight");
 
     await expect(page.getByRole("heading", { name: "History" })).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Month" }).getByRole("option", { name: "All months" })).toHaveCount(1);
+    await expect(
+      page.getByRole("combobox", { name: "Month" }).getByRole("option", { name: "All months" }),
+    ).toHaveCount(1);
     await expect(page.getByRole("button", { name: "Remove the measurement" }).first()).toBeVisible();
   });
 
@@ -60,18 +61,30 @@ test.describe("Measurements - athlete", () => {
     await page.goto("/measurements/body-parts");
 
     await expect(page.getByRole("heading", { level: 1, name: "Body parts" })).toBeVisible();
-    await expect(page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` })).toBeVisible();
-    await expect(page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.chest.name}` })).toBeVisible();
-    await expect(page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.armRight.name}` })).toBeVisible();
-    await expect(page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.thighRight.name}` })).toBeVisible();
-    await expect(page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.chest.name}` }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.armRight.name}` }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.thighRight.name}` }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
+    ).toBeVisible();
   });
 
   test("marks the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
     await expect(page.getByText("Not measured yet").first()).toBeVisible();
-    await expect(page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
+    ).toBeVisible();
   });
 });
 

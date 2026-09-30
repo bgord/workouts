@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 import * as fixtures from "../../scripts/seed/fixtures";
 
 test.describe("Catalog - athlete", () => {

@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 import * as fixtures from "../../scripts/seed/fixtures";
 
 test.describe("Workouts - empty", () => {
@@ -78,19 +77,17 @@ test.describe("Workouts - athlete", () => {
 
     await page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }).click();
 
-    await expect(page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name })).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
+    await expect(
+      page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }),
+    ).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByText(/^[89] of 25$/)).toBeVisible();
 
     await page.getByRole("button", { name: "Clear" }).click();
 
     await expect(page.getByLabel("Period")).toHaveValue("last_week");
-    await expect(page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name })).toHaveAttribute(
-      "aria-pressed",
-      "false",
-    );
+    await expect(
+      page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }),
+    ).toHaveAttribute("aria-pressed", "false");
     await expect(page.getByRole("button", { name: "Clear" })).toBeHidden();
   });
 

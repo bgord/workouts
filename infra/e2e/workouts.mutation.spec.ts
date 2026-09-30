@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 import * as fixtures from "../../scripts/seed/fixtures";
 
 test.describe("Workouts - athlete", () => {
@@ -18,7 +17,10 @@ test.describe("Workouts - athlete", () => {
 
   test("discards the scheduled workout", async ({ page }) => {
     await page.goto("/workouts");
-    await page.getByRole("link", { name: /Draft$/ }).first().click();
+    await page
+      .getByRole("link", { name: /Draft$/ })
+      .first()
+      .click();
 
     await page.getByRole("button", { name: "Discard" }).click();
     await page.getByRole("button", { name: "Discard", exact: true }).last().click();
@@ -58,7 +60,10 @@ test.describe("Workouts - athlete", () => {
   test("logs a set and completes the workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: /^Open panel: / }).first().click();
+    await page
+      .getByRole("button", { name: /^Open panel: / })
+      .first()
+      .click();
     await page.getByRole("dialog").getByRole("button", { name: "Log set", exact: true }).click();
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Complete" }).click();

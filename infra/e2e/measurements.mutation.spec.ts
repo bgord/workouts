@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-
 import * as fixtures from "../../scripts/seed/fixtures";
 
 test.describe("Measurements - athlete", () => {
@@ -35,7 +34,11 @@ test.describe("Measurements - athlete", () => {
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(
-      page.getByRole("listitem").filter({ hasText: fixtures.athlete.bodyParts.calfRight.name }).getByText("38.5 cm").first(),
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("38.5 cm")
+        .first(),
     ).toBeVisible();
   });
 });
