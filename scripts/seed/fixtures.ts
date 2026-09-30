@@ -546,8 +546,85 @@ export const archivist = {
   },
 };
 
+export const hoarder = {
+  email: "hoarder@example.com",
+  plan: {
+    id: "2ee70939-6fba-460c-bd28-a21c13c49c77",
+    name: "Hoarder",
+    description: ppl.description,
+    sections: {
+      everything: {
+        id: "1c2a8ad8-2953-4624-97b4-b00b91390e86",
+        name: "Everything",
+        instructions: Object.values(exercises)
+          .slice(0, 20)
+          .map((exercise) => ({
+            exercise,
+            sets: 3,
+            reps: { min: 8, max: 10 },
+            progression: "double_progression",
+          })),
+      },
+      one: {
+        id: "f084da35-7b46-49c9-835e-941682d54a17",
+        name: "One",
+        instructions: [
+          {
+            exercise: exercises.superHorizontalBenchPress,
+            sets: 3,
+            reps: { min: 8, max: 10 },
+            progression: "double_progression",
+          },
+        ],
+      },
+      two: {
+        id: "abac17e1-f155-486e-a1dd-4152f88befb5",
+        name: "Two",
+        instructions: [
+          {
+            exercise: exercises.lateralRaiseDumbbells,
+            sets: 3,
+            reps: { min: 8, max: 10 },
+            progression: "double_progression",
+          },
+        ],
+      },
+      three: {
+        id: "165ee6f3-6a09-4a6f-b70d-ca0a39212dc0",
+        name: "Three",
+        instructions: [
+          {
+            exercise: exercises.hammerCurlDumbbells,
+            sets: 3,
+            reps: { min: 8, max: 10 },
+            progression: "double_progression",
+          },
+        ],
+      },
+      four: {
+        id: "3d743021-88ac-4ce7-89ae-723853860c9f",
+        name: "Four",
+        instructions: [
+          {
+            exercise: exercises.facePull,
+            sets: 3,
+            reps: { min: 8, max: 10 },
+            progression: "double_progression",
+          },
+        ],
+      },
+    },
+  },
+  activeWorkout: { id: "817329e6-15ac-48d7-a4a9-1a9c09006a29" },
+  draftWorkouts: {
+    today: { id: "927ab753-7390-47c0-9f3c-3bfef845e62e" },
+    tomorrow: { id: "981ed6b7-a997-4410-a7df-355b252a967e" },
+    dayAfter: { id: "8b8603e7-4867-450b-b02b-061956a7c88e" },
+  },
+};
+
 export const polyglot = { email: "polyglot@example.com", language: "pl" };
 
 export const disposable = { email: "disposable@example.com" };
 
-export const personas = [empty, builder, drafter, athlete, active, archivist, polyglot, disposable];
+export const personas = [empty, builder, drafter, athlete, active, archivist, hoarder, polyglot, disposable];

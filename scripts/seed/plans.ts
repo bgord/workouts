@@ -14,7 +14,12 @@ type PlanFixture = Pick<typeof fixtures.ppl, "name" | "description"> & {
       name: string;
       warmup?: string;
       cooldown?: string;
-      instructions: ReadonlyArray<(typeof fixtures.ppl.sections.push.instructions)[number]>;
+      instructions: ReadonlyArray<{
+        exercise: { id: string };
+        sets: number;
+        reps: { min: number; max: number };
+        progression: string;
+      }>;
     }
   >;
 };
@@ -133,6 +138,22 @@ export async function finalizePlan(di: BootstrapType, userId: Auth.VO.UserIdType
 
   const command = bg.command(
     Plans.Commands.PlanFinalizeCommand,
+    {
+      revision: (await di.Adapters.Plans.PlanRepository.load(planId)).revision,
+      payload: { planId, requesterId: userId },
+    },
+    deps,
+  );
+
+  await di.Tools.CommandBus.emit(command);
+}
+
+export async function enablePlanEditing(di: BootstrapType, userId: Auth.VO.UserIdType, plan: PlanFixture) {
+  const deps = { ...di.Adapters.System, ...di.Tools };
+  const planId = v.parse(Plans.VO.PlanId, plan.id);
+
+  const command = bg.command(
+    Plans.Commands.PlanEditingEnableCommand,
     {
       revision: (await di.Adapters.Plans.PlanRepository.load(planId)).revision,
       payload: { planId, requesterId: userId },
