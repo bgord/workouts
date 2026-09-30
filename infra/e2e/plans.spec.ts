@@ -360,6 +360,40 @@ test.describe("Plans - builder", () => {
       page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
     ).toBeVisible();
   });
+
+  test("blocks moving the first exercise instruction up", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} up` }),
+    ).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} down` }),
+    ).toBeEnabled();
+  });
+
+  test("blocks moving the last exercise instruction down", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} down` }),
+    ).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} up` }),
+    ).toBeEnabled();
+  });
 });
 
 test.describe("Plans - athlete", () => {
