@@ -760,7 +760,6 @@ infra/
 ├── config.ts
 ├── db.ts
 ├── e2e
-│   ├── a11y.spec.ts
 │   ├── auth.setup.ts
 │   ├── catalog.mutation.spec.ts
 │   ├── catalog.spec.ts

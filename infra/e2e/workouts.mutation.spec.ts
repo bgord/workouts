@@ -17,6 +17,30 @@ test.describe("Workouts - athlete", () => {
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
   });
 
+  test("blocks starting a workout with no exercises", async ({ page }) => {
+    await page.goto("/workouts");
+    await page
+      .locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
+        hasText: /Draft$/,
+      })
+      .click();
+    await expect(page.locator('a[href^="/catalog/exercise/"]').first()).toBeVisible();
+    const exercises = await page.locator('a[href^="/catalog/exercise/"]').count();
+
+    for (let exercise = 0; exercise < exercises; exercise++) {
+      await page
+        .getByRole("button", { name: /^Remove / })
+        .first()
+        .click();
+      await expect(page.locator('a[href^="/catalog/exercise/"]')).toHaveCount(exercises - exercise - 1);
+    }
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
+    await expect(page.getByText("Add an exercise first")).toBeVisible();
+    await expect(page.getByText("No exercises yet")).toBeVisible();
+  });
+
   test("discards the scheduled workout", async ({ page }) => {
     await page.goto("/workouts");
     await page
