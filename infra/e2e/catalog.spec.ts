@@ -212,4 +212,99 @@ test.describe("Catalog - admin", () => {
 
     await expect(page.getByText("Abs", { exact: true })).toBeHidden();
   });
+
+  test("shows the error when adding an exercise fails", async ({ page }) => {
+    await page.route("**/api/exercises/add", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: "New exercise" }).click();
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByPlaceholder("Bench Press Horizontal").fill("Neck curl");
+    await page
+      .getByLabel("Description")
+      .fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+
+    await expect(page.getByText("Could not add the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("32 of 32")).toBeVisible();
+  });
+
+  test("shows the error when renaming an exercise fails", async ({ page }) => {
+    await page.route("**/api/exercises/*", (route) =>
+      route.request().method() === "PATCH" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByLabel("Exercise name").fill("Pec deck fly");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not update the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: fixtures.exercises.pecDeck.name }),
+    ).toBeVisible();
+  });
+
+  test("shows the error when editing the description fails", async ({ page }) => {
+    await page.route("**/api/exercises/*", (route) =>
+      route.request().method() === "PATCH" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await page.getByTitle("Edit the description").click();
+    await page.getByLabel("Description").fill("Seated fly on the machine, squeeze at the front.");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not update the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Seated fly on the machine, squeeze at the front.")).toBeHidden();
+  });
+
+  test("shows the error when changing the image fails", async ({ page }) => {
+    const image = page.getByRole("img", { name: fixtures.exercises.pecDeck.name }).first();
+
+    await page.route("**/api/exercises/*/image", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+    const before = await image.getAttribute("src");
+
+    await page.getByRole("button", { name: "Change image", exact: true }).click();
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not change the image")).toBeVisible();
+
+    await page.reload();
+
+    await expect(image).toHaveAttribute("src", before ?? "");
+  });
+
+  test("shows the error when deleting an exercise fails", async ({ page }) => {
+    await page.route("**/api/exercises/*", (route) =>
+      route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await page.getByRole("button", { name: `Delete ${fixtures.exercises.pecDeck.name}` }).click();
+    await page.getByRole("button", { name: "Delete", exact: true }).click();
+
+    await expect(page.getByText("Could not delete the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: fixtures.exercises.pecDeck.name }),
+    ).toBeVisible();
+  });
 });
