@@ -99,6 +99,9 @@ test.describe("Measurements - athlete", () => {
     await page.reload();
 
     await expect(page.getByText(/^Cut since /)).toBeVisible();
+    await expect(
+      page.getByRole("listitem").filter({ hasText: "Since reference" }).locator(".lucide-trending-down"),
+    ).toBeVisible();
   });
 
   test("rejects a body part measurement out of range", async ({ page }) => {

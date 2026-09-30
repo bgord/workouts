@@ -22,6 +22,16 @@ test.describe("Measurements - athlete", () => {
     await expect(page.getByText(/^Bulk since /)).toBeVisible();
   });
 
+  test("shows a positive delta since the bulk reference", async ({ page }) => {
+    const tile = page.getByRole("listitem").filter({ hasText: "Since reference" });
+
+    await page.goto("/measurements/body-weight");
+
+    await expect(tile.locator(".lucide-trending-up")).toBeVisible();
+    await expect(tile.locator('[data-color="positive-400"]')).toContainText(/\d kg$/);
+    await expect(tile.locator('[data-color="positive-400"] svg')).toHaveAttribute("data-rotate", "0");
+  });
+
   test("shows the progress chart in weekly granularity by default", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
