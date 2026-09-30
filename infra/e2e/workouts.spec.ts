@@ -216,6 +216,32 @@ test.describe("Workouts - active", () => {
 
     await expect(row.getByRole("button", { name: "Remove set 4" })).toBeVisible();
   });
+
+  test("blocks moving the first exercise up", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "Reorder exercises" }).click();
+
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} up` }),
+    ).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} down` }),
+    ).toBeEnabled();
+  });
+
+  test("blocks moving the last exercise down", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "Reorder exercises" }).click();
+
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} down` }),
+    ).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} up` }),
+    ).toBeEnabled();
+  });
 });
 
 test.describe("Workouts - athlete", () => {
