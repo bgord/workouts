@@ -54,6 +54,7 @@ test.describe("Plans - athlete", () => {
     await expect(page.getByRole("button", { name: "Edit" })).toBeEnabled();
     await expect(page.getByRole("button", { name: "Finalize" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Restore" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "Delete", exact: true })).toBeHidden();
   });
 });
 

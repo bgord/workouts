@@ -309,4 +309,18 @@ test.describe("Plans - archivist", () => {
     await expect(page.getByText("Archived", { exact: true })).toBeHidden();
     await expect(page.getByRole("button", { name: "Restore" })).toBeHidden();
   });
+
+  test("deletes the archived plan", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.archivist.plan.id}`);
+
+    await page.getByRole("button", { name: "Delete", exact: true }).click();
+    await page.getByRole("button", { name: "Delete", exact: true }).last().click();
+
+    await expect(page).toHaveURL("/plans");
+
+    await page.reload();
+
+    await expect(page.locator(`a[href="/plans/${fixtures.archivist.plan.id}"]`)).toBeHidden();
+    await expect(page.locator(`a[href="/plans/${fixtures.archivist.archivedPlan.id}"]`)).toBeVisible();
+  });
 });
