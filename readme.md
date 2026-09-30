@@ -764,6 +764,7 @@ infra/
 │   ├── catalog.mutation.spec.ts
 │   ├── catalog.spec.ts
 │   ├── dashboard.spec.ts
+│   ├── errors.spec.ts
 │   ├── home.spec.ts
 │   ├── layout.mobile.spec.ts
 │   ├── measurements.mutation.spec.ts
