@@ -1,3 +1,4 @@
+// cSpell:ignore spinbutton
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -91,6 +92,129 @@ test.describe("Workouts - active", () => {
     await page.reload();
 
     await expect(page.getByText("Shoulder felt tight on the last set.")).toBeHidden();
+  });
+
+  test("shows the error when adding an exercise fails", async ({ page }) => {
+    await page.route("**/api/workouts/*/exercise", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
+    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
+    await page
+      .locator("form")
+      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+
+    await expect(page.getByText("Could not add the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
+    ).toBeHidden();
+  });
+
+  test("shows the error when moving an exercise fails", async ({ page }) => {
+    await page.route("**/api/workouts/*/exercise/*/position", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "Reorder exercises" }).click();
+    await page
+      .getByRole("button", { name: `Move ${fixtures.exercises.overheadPressSeatedDumbbells.name} up` })
+      .click();
+
+    await expect(page.getByText("Could not move the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.locator('a[href^="/catalog/exercise/"]').first()).toHaveText(
+      fixtures.exercises.superHorizontalBenchPress.name,
+    );
+  });
+
+  test("shows the error when removing an exercise fails", async ({ page }) => {
+    await page.route("**/api/workouts/*/exercise/*", (route) =>
+      route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
+    );
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page
+      .getByRole("button", {
+        name: `Remove ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      })
+      .click();
+    await page.getByRole("button", { name: "Remove", exact: true }).click();
+
+    await expect(page.getByText("Could not remove the exercise").first()).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.overheadPressSeatedDumbbells.name, exact: true }),
+    ).toBeVisible();
+  });
+
+  test("shows the error when logging a set fails", async ({ page }) => {
+    await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+    await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
+
+    await expect(page.getByText("Could not log the set")).toBeVisible();
+  });
+
+  test("shows the error when correcting a set fails", async ({ page }) => {
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", {
+        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+        exact: true,
+      }),
+    });
+
+    await page.route("**/api/workouts/*/exercise/*/set/*", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await row.getByRole("button").first().click();
+
+    await row.getByRole("button", { name: "Correct set 1" }).click();
+    await row.locator('input[name^="corrected-reps-"]').fill("9");
+    await row
+      .locator("form")
+      .filter({ has: page.locator('input[name^="corrected-reps-"]') })
+      .getByRole("button", { name: "Log set", exact: true })
+      .click();
+
+    await expect(page.getByText("Could not correct the set")).toBeVisible();
+
+    await page.reload();
+
+    await expect(row).not.toContainText("9×");
+  });
+
+  test("shows the error when removing a set fails", async ({ page }) => {
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    });
+
+    await page.route("**/api/workouts/*/exercise/*/set/*", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await row.getByRole("button").first().click();
+
+    await row.getByRole("button", { name: "Remove set 4" }).click();
+
+    await expect(page.getByText("Could not remove the set").first()).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Remove set 4" })).toBeVisible();
   });
 });
 
@@ -228,5 +352,22 @@ test.describe("Workouts - athlete", () => {
     await page.reload();
 
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+  });
+
+  test("shows the error when setting a target fails", async ({ page }) => {
+    const row = page.getByRole("listitem").first();
+
+    await page.route("**/api/workouts/*/exercise/*/target", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await row.getByTitle("Set target").click();
+    await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
+    await row.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not set the target")).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByTitle("Set target")).toContainText("Set target");
   });
 });
