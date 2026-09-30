@@ -474,6 +474,13 @@ export const builder = {
 export const athlete = {
   email: "athlete@example.com",
   scheduledWorkout: { id: "84d48b25-7c52-4466-8f98-4b435b337bb0" },
+  bodyParts: {
+    waist: { id: "0f45cbd8-7c28-4ea3-8881-df023ebe309d", name: "Waist" },
+    chest: { id: "e8d40984-53c7-4270-bc60-7755252afbd9", name: "Chest" },
+    armRight: { id: "10da7966-a035-430e-ac73-a7f47a307af6", name: "Arm (right)" },
+    thighRight: { id: "10c1a7d9-dd6c-4ad7-9915-236c4a6642cb", name: "Thigh (right)" },
+    calfRight: { id: "e2713f5e-0d09-46f1-88a9-6b3cb6b41c2a", name: "Calf (right)" },
+  },
   plan: {
     id: "82274685-eb24-433f-b987-6bec85ebe9b2",
     name: ppl.name,

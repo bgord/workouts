@@ -1,9 +1,16 @@
 import * as tools from "@bgord/tools";
+import * as Measurements from "+measurements";
 import * as Plans from "+plans";
 import type { BootstrapType } from "+infra/bootstrap";
 import { createAccount } from "../account";
 import { advanceClockBy, moveClockTo, now } from "../clock";
 import * as fixtures from "../fixtures";
+import {
+  defineBodyPart,
+  measureBodyPart,
+  measureBodyWeight,
+  setBodyWeightReference,
+} from "../measurements";
 import { draftPlan, finalizePlan } from "../plans";
 import {
   completeWorkout,
@@ -23,6 +30,17 @@ const schedule = new Map([
   [3, pull],
   [6, legs],
 ]);
+
+const bodyWeightWobble = [0, 0.3, -0.2, 0.4, -0.1, 0.2, -0.3];
+
+const bodyPartWobble = [0, 2, -1];
+
+const bodyPartTrends = [
+  { bodyPart: fixtures.athlete.bodyParts.waist, from: 820, to: 812 },
+  { bodyPart: fixtures.athlete.bodyParts.chest, from: 1000, to: 1015 },
+  { bodyPart: fixtures.athlete.bodyParts.armRight, from: 360, to: 368 },
+  { bodyPart: fixtures.athlete.bodyParts.thighRight, from: 580, to: 590 },
+];
 
 export async function seedAthlete(di: BootstrapType) {
   const userId = await createAccount(di, fixtures.athlete.email);
@@ -94,6 +112,44 @@ export async function seedAthlete(di: BootstrapType) {
 
   moveClockTo(now.subtract(tools.Duration.Hours(1)));
 
+  const referenceId = di.Adapters.System.IdProvider.generate();
+
+  for (let daysAgo = 84; daysAgo >= 1; daysAgo--) {
+    if (daysAgo % 7 === 4) continue;
+
+    const trend = 78 + ((84 - daysAgo) / 84) * 2;
+    const kilograms = trend + (bodyWeightWobble[daysAgo % bodyWeightWobble.length] ?? 0);
+
+    await measureBodyWeight(di, userId, {
+      id: daysAgo === 84 ? referenceId : di.Adapters.System.IdProvider.generate(),
+      grams: Math.round(kilograms * 10) * 100,
+      measuredOn: tools.Day.fromTimestamp(now.subtract(tools.Duration.Days(daysAgo))).toIsoId(),
+    });
+  }
+
+  for (const bodyPart of Object.values(fixtures.athlete.bodyParts)) {
+    await defineBodyPart(di, userId, bodyPart);
+  }
+
+  await Bun.sleep(tools.Duration.Ms(10).ms);
+
+  await setBodyWeightReference(di, userId, {
+    measurementId: referenceId,
+    goal: Measurements.VO.BodyWeightGoalOptions.bulk,
+  });
+
+  for (const { bodyPart, from, to } of bodyPartTrends) {
+    for (let weeksAgo = 12; weeksAgo >= 1; weeksAgo--) {
+      const trend = Math.round(from + ((to - from) * (12 - weeksAgo)) / 11);
+
+      await measureBodyPart(di, userId, {
+        bodyPartId: bodyPart.id,
+        millimeters: trend + (bodyPartWobble[weeksAgo % bodyPartWobble.length] ?? 0),
+        measuredOn: tools.Day.fromTimestamp(now.subtract(tools.Duration.Weeks(weeksAgo))).toIsoId(),
+      });
+    }
+  }
+
   await createWorkout(di, userId, {
     id: fixtures.athlete.scheduledWorkout.id,
     planId: fixtures.athlete.plan.id,
@@ -101,5 +157,5 @@ export async function seedAthlete(di: BootstrapType) {
     scheduledFor: tools.Day.fromTimestamp(now).toIsoId(),
   });
 
-  console.log(`[✓] ${fixtures.athlete.email} plan finalized, workout history completed, next workout scheduled`);
+  console.log(`[✓] ${fixtures.athlete.email} trained, measured, next workout scheduled`);
 }

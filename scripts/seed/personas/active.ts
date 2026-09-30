@@ -32,15 +32,19 @@ export async function seedActive(di: BootstrapType) {
   const firstTarget = first?.target;
   const secondTarget = second?.target;
 
-  if (first === undefined || firstTarget === undefined) throw new Error("Active workout has no first target");
-  if (second === undefined || secondTarget === undefined) throw new Error("Active workout has no second target");
+  if (first === undefined || firstTarget === undefined) throw new Error("Missing first target");
+  if (second === undefined || secondTarget === undefined) throw new Error("Missing second target");
 
   await logSets(
     di,
     userId,
     workoutId,
     first.id,
-    Array.from({ length: firstTarget.sets }, () => ({ reps: firstTarget.reps, load: firstTarget.load, rir: 2 })),
+    Array.from({ length: firstTarget.sets }, () => ({
+      reps: firstTarget.reps,
+      load: firstTarget.load,
+      rir: 2,
+    })),
   );
 
   await logSets(di, userId, workoutId, second.id, [
