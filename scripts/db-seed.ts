@@ -9,6 +9,7 @@ import { db } from "+infra/db";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
 import * as Schema from "+infra/schema";
+import { seedCatalog } from "./seed/catalog";
 import * as fixtures from "./seed/fixtures";
 
 const tables = Object.values(Schema).filter((value) => is(value, SQLiteTable));
@@ -26,6 +27,8 @@ void (async function main() {
   const correlationId = v.parse(bg.CorrelationId, di.Adapters.System.IdProvider.generate());
 
   await bg.CorrelationStorage.run(correlationId, async () => {
+    await seedCatalog(di);
+
     for (const persona of fixtures.personas) {
       const result = await di.Tools.Auth.config.api.signUpEmail({
         body: { email: persona.email, name: persona.email, password: fixtures.password },
