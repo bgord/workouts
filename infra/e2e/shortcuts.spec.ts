@@ -1,4 +1,4 @@
-// cSpell:ignore networkidle
+// cSpell:ignore networkidle spinbutton
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -93,6 +93,35 @@ test.describe("Shortcuts - athlete", () => {
     await page.keyboard.press("o");
 
     await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
+  });
+
+  test("opens the newest workout from the workouts list", async ({ page }) => {
+    await page.goto("/workouts?filter=all_time");
+    await page.waitForLoadState("networkidle");
+    const href = (await page.locator('a[href^="/workouts/"]').first().getAttribute("href")) ?? "";
+
+    await page.keyboard.press("o");
+
+    await expect(page).toHaveURL((url) => url.pathname + url.search === href);
+  });
+
+  test("opens the first exercise from the catalog", async ({ page }) => {
+    await page.goto("/catalog");
+    await page.waitForLoadState("networkidle");
+    const href = (await page.locator('a[href^="/catalog/exercise/"]').first().getAttribute("href")) ?? "";
+
+    await page.keyboard.press("o");
+
+    await expect(page).toHaveURL((url) => url.pathname + url.search === href);
+  });
+
+  test("focuses the body weight input", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+    await page.waitForLoadState("networkidle");
+
+    await page.keyboard.press("n");
+
+    await expect(page.getByRole("spinbutton", { name: "Weight (kg)" })).toBeFocused();
   });
 
   test("opens the schedule dialog from the workouts list", async ({ page }) => {
