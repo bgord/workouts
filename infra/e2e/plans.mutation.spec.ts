@@ -13,7 +13,7 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByLabel("Plan name").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
-    await expect(page.locator("form input:invalid")).toHaveCount(1);
+    await expect(page.getByLabel("Plan name").and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 
@@ -68,7 +68,7 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByLabel("Plan name").fill("ab");
     await page.getByRole("button", { name: "Create", exact: true }).click();
 
-    await expect(page.locator("form input:invalid")).toHaveCount(1);
+    await expect(page.getByLabel("Plan name").and(page.locator(":invalid"))).toHaveCount(1);
     await expect(page).toHaveURL(/\/plans$/);
   });
 
@@ -122,7 +122,7 @@ test.describe("Plans - drafter", () => {
     await page.getByLabel("Description").fill("");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.locator("form textarea:invalid")).toHaveCount(1);
+    await expect(page.getByLabel("Description").and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 
@@ -148,7 +148,7 @@ test.describe("Plans - drafter", () => {
     await page.getByLabel("Section name").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
-    await expect(page.locator("form input:invalid")).toHaveCount(1);
+    await expect(page.getByLabel("Section name").and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 
@@ -174,7 +174,7 @@ test.describe("Plans - drafter", () => {
     await page.getByLabel("New section").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
-    await expect(page.locator("form input:invalid")).toHaveCount(1);
+    await expect(page.getByLabel("New section").and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 
@@ -250,21 +250,25 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
 
     const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("21");
     await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(dialog.locator('input[name="sets"]:invalid')).toHaveCount(1);
+    await expect(
+      dialog.getByRole("spinbutton", { name: "Sets", exact: true }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
     await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(dialog.locator('input[name="repsMax"]:invalid')).toHaveCount(1);
+    await expect(
+      dialog.getByRole("spinbutton", { name: "Reps max", exact: true }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.reload();
 
@@ -277,7 +281,7 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
@@ -351,7 +355,7 @@ test.describe("Plans - drafter", () => {
       .click();
     await page.getByRole("button", { name: `Change exercise: ${fixtures.exercises.facePull.name}` }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.pecDeck.name }).click();
     await page
       .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })

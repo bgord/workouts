@@ -154,14 +154,16 @@ test.describe("Catalog - admin", () => {
   });
 
   test("rejects a too short new category name", async ({ page }) => {
+    const field = page.getByRole("form", { name: "Rename Neck" }).getByLabel("Category name");
+
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
     await page.getByRole("button", { name: "Rename Neck" }).click();
-    await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Category name").fill("ab");
+    await field.fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
-    await expect(page.getByRole("form", { name: "Rename Neck" }).locator("input:invalid")).toHaveCount(1);
+    await expect(field.and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();

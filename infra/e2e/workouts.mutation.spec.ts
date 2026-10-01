@@ -160,13 +160,15 @@ test.describe("Workouts - athlete-mutation", () => {
     await row.getByRole("spinbutton", { name: "Reps" }).fill("101");
     await row.getByRole("button", { name: "Save" }).click();
 
-    await expect(row.locator('input[name^="reps-"]:invalid')).toHaveCount(1);
+    await expect(row.getByRole("spinbutton", { name: "Reps" }).and(page.locator(":invalid"))).toHaveCount(1);
 
     await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
     await row.getByRole("spinbutton", { name: "Load (kg)" }).fill("10.25");
     await row.getByRole("button", { name: "Save" }).click();
 
-    await expect(row.locator('input[name^="load-"]:invalid')).toHaveCount(1);
+    await expect(
+      row.getByRole("spinbutton", { name: "Load (kg)" }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.reload();
 
@@ -476,7 +478,7 @@ test.describe("Workouts - active-mutation", () => {
   test("blocks saving an empty note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Description..." }).click();
+    await page.getByRole("button", { name: "How did it go?" }).click();
 
     await expect(page.getByLabel("Note")).toHaveValue("");
     await expect(page.getByRole("button", { name: "Save", exact: true })).toBeDisabled();
@@ -485,7 +487,7 @@ test.describe("Workouts - active-mutation", () => {
   test("adds a note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Description..." }).click();
+    await page.getByRole("button", { name: "How did it go?" }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await page.reload();
@@ -498,21 +500,25 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
 
     const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("21");
     await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(dialog.locator('input[name="workoutSets"]:invalid')).toHaveCount(1);
+    await expect(
+      dialog.getByRole("spinbutton", { name: "Sets", exact: true }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
     await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(dialog.locator('input[name="workoutRepsMax"]:invalid')).toHaveCount(1);
+    await expect(
+      dialog.getByRole("spinbutton", { name: "Reps max", exact: true }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.reload();
 
@@ -526,7 +532,7 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");

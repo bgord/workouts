@@ -53,7 +53,7 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
 
         <ui.ActionHint {...action} id={`workout-exercise-remove-hint-${props.id}`} />
 
-        {mutation.isError && (
+        {!guarded && mutation.isError && (
           <output aria-live="assertive" data-tone="danger">
             {t("workout.exercise.remove.error")}
           </output>
@@ -76,7 +76,9 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.stack}
         >
-          {mutation.isError && <ui.DialogError>{t("workout.exercise.remove.error")}</ui.DialogError>}
+          {guarded && mutation.isError && (
+            <ui.DialogError>{t("workout.exercise.remove.error")}</ui.DialogError>
+          )}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutExerciseRemove.disable}>
             <button

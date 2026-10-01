@@ -8,8 +8,8 @@ test.describe("Workout - athlete", () => {
   test("shows the previous session of every exercise on the scheduled workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await expect(page.getByTitle("Previous session").first()).toBeVisible();
-    await expect(page.getByTitle("Previous session")).toHaveCount(
+    await expect(page.getByRole("group", { name: "Previous session" }).first()).toBeVisible();
+    await expect(page.getByRole("group", { name: "Previous session" })).toHaveCount(
       await page.getByRole("button", { name: "Set target" }).count(),
     );
   });
@@ -200,7 +200,7 @@ test.describe("Workout - active", () => {
     await page.route("**/api/workouts/*/note", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page.getByRole("button", { name: "Description..." }).click();
+    await page.getByRole("button", { name: "How did it go?" }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
@@ -217,7 +217,7 @@ test.describe("Workout - active", () => {
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
@@ -267,7 +267,7 @@ test.describe("Workout - active", () => {
       .click();
     await page.getByRole("button", { name: "Remove", exact: true }).click();
 
-    await expect(page.getByText("Could not remove the exercise").first()).toBeVisible();
+    await expect(page.getByText("Could not remove the exercise")).toBeVisible();
 
     await page.reload();
 
@@ -353,7 +353,7 @@ test.describe("Workout - active", () => {
 
     await row.getByRole("button", { name: "Remove set 4" }).click();
 
-    await expect(page.getByText("Could not remove the set").first()).toBeVisible();
+    await expect(page.getByText("Could not remove the set")).toBeVisible();
 
     await page.reload();
 

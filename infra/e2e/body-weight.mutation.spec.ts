@@ -56,7 +56,9 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("501");
 
-    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+    await expect(
+      page.getByRole("spinbutton", { name: "Weight (kg)" }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.reload();
 
@@ -87,15 +89,16 @@ test.describe("Body weight - athlete-mutation", () => {
   });
 
   test("rejects a body weight correction out of range", async ({ page }) => {
+    const field = page
+      .getByRole("form", { name: "Correct the measurement" })
+      .getByRole("spinbutton", { name: "Weight (kg)" });
+
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("button", { name: "81.5 kg" }).click();
-    await page
-      .getByRole("form", { name: "Correct the measurement" })
-      .getByRole("spinbutton", { name: "Weight (kg)" })
-      .fill("501");
+    await field.fill("501");
 
-    await expect(page.locator('form input[type="number"]:invalid')).toHaveCount(1);
+    await expect(field.and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 

@@ -88,14 +88,16 @@ test.describe("Body parts - empty-mutation", () => {
   });
 
   test("rejects a too long new body part name", async ({ page }) => {
+    const field = page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name");
+
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Rename Neck" }).click();
-    await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("a".repeat(65));
+    await field.fill("a".repeat(65));
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("form", { name: "Rename Neck" }).locator("input:invalid")).toHaveCount(1);
+    await expect(field.and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 
@@ -140,7 +142,9 @@ test.describe("Body parts - athlete-mutation", () => {
       .click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("301");
 
-    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+    await expect(
+      page.getByRole("spinbutton", { name: "Circumference" }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.reload();
 
@@ -205,7 +209,9 @@ test.describe("Body parts - athlete-mutation", () => {
     await page.getByRole("button", { name: /^Correct the measurement/ }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("0");
 
-    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+    await expect(
+      page.getByRole("spinbutton", { name: "Circumference" }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.reload();
 

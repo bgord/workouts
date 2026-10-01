@@ -53,9 +53,9 @@ test.describe("Navigation - athlete", () => {
 
     const nav = page.getByRole("navigation");
 
-    await expect(nav.getByRole("link", { name: "Workouts" })).toHaveAttribute("data-status", "active");
-    await expect(nav.getByRole("link", { name: "Dashboard" })).not.toHaveAttribute("data-status", "active");
-    await expect(nav.getByRole("link", { name: "Catalog" })).not.toHaveAttribute("data-status", "active");
+    await expect(nav.getByRole("link", { name: "Workouts" })).toHaveAttribute("aria-current", "page");
+    await expect(nav.getByRole("link", { name: "Dashboard" })).not.toHaveAttribute("aria-current", "page");
+    await expect(nav.getByRole("link", { name: "Catalog" })).not.toHaveAttribute("aria-current", "page");
   });
 
   test("keeps the section active on a nested page", async ({ page }) => {
@@ -63,11 +63,11 @@ test.describe("Navigation - athlete", () => {
 
     const nav = page.getByRole("navigation");
 
-    await expect(nav.getByRole("link", { name: "Catalog" })).toHaveAttribute("data-status", "active");
+    await expect(nav.getByRole("link", { name: "Catalog" })).toHaveAttribute("aria-current", "page");
 
     await page.goto("/measurements/body-weight");
 
-    await expect(nav.getByRole("link", { name: "Measurements" })).toHaveAttribute("data-status", "active");
+    await expect(nav.getByRole("link", { name: "Measurements" })).toHaveAttribute("aria-current", "page");
   });
 
   test("goes back to the dashboard from the logo", async ({ page }) => {
@@ -118,7 +118,7 @@ test.describe("Navigation - athlete", () => {
   test("goes back from the exercise to the plan it was opened from", async ({ page }) => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
-    await page.locator('a[href^="/catalog/exercise/"]').first().click();
+    await page.getByRole("list", { name: "Exercises" }).getByRole("link").first().click();
     await expect(page.getByRole("link", { name: "Back", exact: true })).toHaveAttribute("href", "/catalog");
 
     await page.getByRole("link", { name: "Back", exact: true }).click();

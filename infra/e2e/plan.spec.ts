@@ -200,7 +200,7 @@ test.describe("Plan - builder", () => {
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
@@ -275,7 +275,7 @@ test.describe("Plan - builder", () => {
       .getByRole("button", { name: `Change exercise: ${fixtures.exercises.superHorizontalBenchPress.name}` })
       .click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
-    await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
+    await page.getByRole("radio", { name: fixtures.exercises.pecDeck.name }).click();
     await page
       .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
