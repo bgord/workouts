@@ -65,8 +65,12 @@ export function Workout() {
 
           <WorkoutNote />
 
-          {workout.actions.start.available && <ui.ActionHint {...workout.actions.start} />}
-          {workout.actions.complete.available && <ui.ActionHint {...workout.actions.complete} />}
+          {workout.actions.start.available && (
+            <ui.ActionHint {...workout.actions.start} id="workout-start-hint" />
+          )}
+          {workout.actions.complete.available && (
+            <ui.ActionHint {...workout.actions.complete} id="workout-complete-hint" />
+          )}
         </div>
       </div>
 

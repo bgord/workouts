@@ -65,6 +65,10 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
           onClick={bg.exec([catalog.load, planSectionExerciseInstructionAdd.enable])}
           onFocus={catalog.load}
           onPointerEnter={catalog.load}
+          {...ui.describedByHint(
+            props.actions.exerciseInstructionAdd,
+            `exercise-instruction-add-hint-${props.id}`,
+          )}
           {...planSectionExerciseInstructionAdd.props.controller}
         >
           <ui.RowIndex aria-hidden>{props.exerciseInstructions.length + 1}</ui.RowIndex>
@@ -74,7 +78,11 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
           {t("plan.section.exercise.add.cta")}
         </ui.AddButton>
 
-        <ui.ActionHint {...props.actions.exerciseInstructionAdd} data-shrink="0" />
+        <ui.ActionHint
+          {...props.actions.exerciseInstructionAdd}
+          data-shrink="0"
+          id={`exercise-instruction-add-hint-${props.id}`}
+        />
       </ui.HairlineBlock>
 
       <ui.Dialog {...planSectionExerciseInstructionAdd}>

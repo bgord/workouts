@@ -45,12 +45,13 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
           title={t("workout.exercise.remove.title", { name: props.exerciseName })}
           tone="danger"
           type="submit"
+          {...ui.describedByHint(action, `workout-exercise-remove-hint-${props.id}`)}
           {...workoutExerciseRemove.props.controller}
         >
           <X data-size="sm" />
         </ui.IconButton>
 
-        <ui.ActionHint {...action} />
+        <ui.ActionHint {...action} id={`workout-exercise-remove-hint-${props.id}`} />
 
         {mutation.isError && (
           <output aria-live="assertive" data-tone="danger">

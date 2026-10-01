@@ -32,6 +32,7 @@ export function PlanFinalize() {
         data-variant="primary"
         disabled={!plan.actions.finalize.enabled || mutation.isLoading}
         type="submit"
+        {...ui.describedByHint(plan.actions.finalize, "plan-finalize-hint")}
       >
         <Check data-size="sm" />
         {t("plan.finalize.cta")}

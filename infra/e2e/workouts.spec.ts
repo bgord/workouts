@@ -16,7 +16,9 @@ test.describe("Workouts - empty", () => {
   test("blocks scheduling until a plan is finalized", async ({ page }) => {
     await page.goto("/workouts");
 
-    await expect(page.getByText("Finalize a plan to schedule a workout")).toBeVisible();
+    await expect(page.getByRole("button", { name: "New workout" })).toHaveAccessibleDescription(
+      "Finalize a plan to schedule a workout",
+    );
     await expect(page.getByRole("button", { name: "New workout" })).toBeDisabled();
   });
 

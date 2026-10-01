@@ -382,7 +382,9 @@ test.describe("Plan - archivist", () => {
     await page.goto(`/plans/${fixtures.archivist.archivedPlan.id}`);
 
     await expect(page.getByText("Archived", { exact: true })).toBeVisible();
-    await expect(page.getByText("Archive the current plan first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Restore" })).toHaveAccessibleDescription(
+      "Archive the current plan first",
+    );
     await expect(page.getByRole("button", { name: "Restore" })).toBeDisabled();
   });
 });
@@ -393,7 +395,9 @@ test.describe("Plan - hoarder", () => {
   test("blocks adding a section at the limit", async ({ page }) => {
     await page.goto(`/plans/${fixtures.hoarder.plan.id}`);
 
-    await expect(page.getByText("Remove a section to add a new one")).toBeVisible();
+    await expect(page.getByRole("button", { name: "New section" })).toHaveAccessibleDescription(
+      "Remove a section to add a new one",
+    );
     await expect(page.getByRole("button", { name: "New section" })).toBeDisabled();
   });
 
@@ -401,7 +405,9 @@ test.describe("Plan - hoarder", () => {
     await page.goto(`/plans/${fixtures.hoarder.plan.id}`);
     await page.getByRole("button", { name: "Details: Everything", exact: true }).click();
 
-    await expect(page.getByText("Remove an exercise to add a new one")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add exercise" })).toHaveAccessibleDescription(
+      "Remove an exercise to add a new one",
+    );
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeDisabled();
   });
 });

@@ -8,7 +8,9 @@ test.describe("Body parts - empty", () => {
   test("blocks importing body part measurements until a body part is defined", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await expect(page.getByText("Define a body part first")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Import body part measurements" }),
+    ).toHaveAccessibleDescription("Define a body part first");
     await expect(page.getByRole("button", { name: "Import body part measurements" })).toBeDisabled();
   });
 

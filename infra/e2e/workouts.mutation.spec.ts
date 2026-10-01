@@ -84,7 +84,9 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.reload();
 
     await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
-    await expect(page.getByText("Add an exercise first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Start" })).toHaveAccessibleDescription(
+      "Add an exercise first",
+    );
     await expect(page.getByText("No exercises yet")).toBeVisible();
   });
 
@@ -143,7 +145,9 @@ test.describe("Workouts - athlete-mutation", () => {
   test("blocks starting until every exercise has a target", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await expect(page.getByText("Set a target for every exercise")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Start" })).toHaveAccessibleDescription(
+      "Set a target for every exercise",
+    );
     await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
   });
 
@@ -242,7 +246,9 @@ test.describe("Workouts - athlete-mutation", () => {
   test("blocks completing until a set is logged", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await expect(page.getByText("Log at least one set first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Complete" })).toHaveAccessibleDescription(
+      "Log at least one set first",
+    );
     await expect(page.getByRole("button", { name: "Complete" })).toBeDisabled();
   });
 
@@ -306,7 +312,9 @@ test.describe("Workouts - athlete-mutation", () => {
     await row.getByRole("button", { name: /^Details: / }).click();
 
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeDisabled();
-    await expect(page.getByText("A completed workout keeps at least one set")).toBeVisible();
+    await expect(row.getByRole("button", { name: "Remove set 1" })).toHaveAccessibleDescription(
+      "A completed workout keeps at least one set",
+    );
   });
 
   test("copies the completed workout to the clipboard", async ({ page, context }) => {
@@ -352,7 +360,9 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.goto("/workouts");
 
-    await expect(page.getByText("You already have 3 scheduled workouts")).toBeVisible();
+    await expect(page.getByRole("button", { name: "New workout" })).toHaveAccessibleDescription(
+      "You already have 3 scheduled workouts",
+    );
     await expect(page.getByRole("button", { name: "New workout" })).toBeDisabled();
   });
 });

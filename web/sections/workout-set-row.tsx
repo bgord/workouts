@@ -54,7 +54,11 @@ export function WorkoutSetRow(props: {
       </div>
 
       {workoutSetCorrect.off && props.loggedSet.actions.remove.available && (
-        <ui.ActionHint {...props.loggedSet.actions.remove} data-pl="5" />
+        <ui.ActionHint
+          {...props.loggedSet.actions.remove}
+          data-pl="5"
+          id={`workout-set-remove-hint-${props.loggedSet.id}`}
+        />
       )}
     </ui.HairlineRow>
   );

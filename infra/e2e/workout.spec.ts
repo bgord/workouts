@@ -380,14 +380,18 @@ test.describe("Workout - hoarder", () => {
   test("blocks adding an exercise at the limit", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.hoarder.activeWorkout.id}`);
 
-    await expect(page.getByText("Remove an exercise to add a new one")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add exercise" })).toHaveAccessibleDescription(
+      "Remove an exercise to add a new one",
+    );
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeDisabled();
   });
 
   test("blocks starting a second workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.hoarder.draftWorkouts.today.id}`);
 
-    await expect(page.getByText("Finish the workout in progress first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Start" })).toHaveAccessibleDescription(
+      "Finish the workout in progress first",
+    );
     await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
   });
 });

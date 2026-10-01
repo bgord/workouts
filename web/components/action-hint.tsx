@@ -17,3 +17,7 @@ export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["sma
     </small>
   );
 }
+
+export function describedByHint(action: ActionState, id: string) {
+  return action.hints[0] ? { "aria-describedby": id } : {};
+}

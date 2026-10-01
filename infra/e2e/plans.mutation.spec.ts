@@ -90,7 +90,9 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByRole("link", { name: "Upper lower" }).click();
 
     await expect(page.getByRole("button", { name: "Finalize" })).toBeDisabled();
-    await expect(page.getByText("Add a section first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Finalize" })).toHaveAccessibleDescription(
+      "Add a section first",
+    );
   });
 
   test("blocks finalizing a plan with an empty section", async ({ page }) => {
@@ -103,7 +105,9 @@ test.describe("Plans - builder-mutation", () => {
     await page.reload();
 
     await expect(page.getByRole("button", { name: "Finalize" })).toBeDisabled();
-    await expect(page.getByText("Add an exercise to all sections first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Finalize" })).toHaveAccessibleDescription(
+      "Add an exercise to all sections first",
+    );
   });
 });
 

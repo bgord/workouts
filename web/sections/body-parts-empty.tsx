@@ -11,7 +11,12 @@ export function BodyPartsEmpty() {
     <ui.EmptyState>
       <ui.EmptyStateIcon icon={Ruler} />
 
-      <ui.ActionHint {...bodyParts.actions.import} data-color="neutral-300" data-mt="2" />
+      <ui.ActionHint
+        {...bodyParts.actions.import}
+        data-color="neutral-300"
+        data-mt="2"
+        id="body-part-import-hint"
+      />
     </ui.EmptyState>
   );
 }

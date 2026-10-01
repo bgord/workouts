@@ -36,7 +36,7 @@ export function PlanCreate() {
 
   return (
     <>
-      <ui.ActionHint {...plans.actions.create} data-md-width="100%" />
+      <ui.ActionHint {...plans.actions.create} data-md-width="100%" id="plan-create-hint" />
 
       <button
         className="c-button"
@@ -45,6 +45,7 @@ export function PlanCreate() {
         disabled={!plans.actions.create.enabled}
         onClick={planCreate.enable}
         type="button"
+        {...ui.describedByHint(plans.actions.create, "plan-create-hint")}
         {...planCreate.props.controller}
       >
         <Plus data-size="sm" />

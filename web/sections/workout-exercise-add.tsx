@@ -64,6 +64,7 @@ export function WorkoutExerciseAdd() {
           onClick={bg.exec([catalog.load, workoutExerciseAdd.enable])}
           onFocus={catalog.load}
           onPointerEnter={catalog.load}
+          {...ui.describedByHint(workout.actions.exerciseAdd, "workout-exercise-add-hint")}
           {...workoutExerciseAdd.props.controller}
         >
           <ui.AddPlaceholder />
@@ -71,7 +72,7 @@ export function WorkoutExerciseAdd() {
           {t("workout.exercise.add.cta")}
         </ui.AddButton>
 
-        <ui.ActionHint {...workout.actions.exerciseAdd} data-shrink="0" />
+        <ui.ActionHint {...workout.actions.exerciseAdd} data-shrink="0" id="workout-exercise-add-hint" />
       </ui.HairlineBlock>
 
       <ui.Dialog {...workoutExerciseAdd}>

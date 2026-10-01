@@ -39,6 +39,7 @@ export function PlanSectionCreate() {
           <ui.AddButton
             disabled={!plan.actions.sectionCreate.enabled}
             onClick={planSectionCreate.enable}
+            {...ui.describedByHint(plan.actions.sectionCreate, "plan-section-create-hint")}
             {...planSectionCreate.props.controller}
           >
             <ui.AddPlaceholder />
@@ -46,7 +47,7 @@ export function PlanSectionCreate() {
             {t("plan.section.create.cta")}
           </ui.AddButton>
 
-          <ui.ActionHint {...plan.actions.sectionCreate} data-shrink="0" />
+          <ui.ActionHint {...plan.actions.sectionCreate} data-shrink="0" id="plan-section-create-hint" />
         </div>
       )}
 

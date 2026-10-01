@@ -28,6 +28,7 @@ export function WorkoutStart() {
         data-variant="primary"
         disabled={!workout.actions.start.enabled || mutation.isLoading}
         type="submit"
+        {...ui.describedByHint(workout.actions.start, "workout-start-hint")}
       >
         <Play data-size="sm" />
         {t("workout.start.cta")}

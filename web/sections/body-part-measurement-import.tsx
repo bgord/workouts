@@ -46,6 +46,7 @@ export function BodyPartMeasurementImport() {
         disabled={!bodyParts.actions.import.enabled}
         onClick={bodyPartMeasurementImport.enable}
         title={t("measurements.body_parts.import.header")}
+        {...ui.describedByHint(bodyParts.actions.import, "body-part-import-hint")}
         {...bodyPartMeasurementImport.props.controller}
       >
         <Upload data-size="sm" />

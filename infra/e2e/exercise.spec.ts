@@ -83,14 +83,18 @@ test.describe("Exercise - admin", () => {
   test("blocks deleting an exercise used in a plan", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
-    await expect(page.getByText("Remove the exercise from plans").locator("visible=true")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Delete" })).toHaveAccessibleDescription(
+      "Remove the exercise from plans",
+    );
     await expect(page.getByRole("button", { name: "Delete" })).toBeDisabled();
   });
 
   test("blocks assigning a fifth category", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.latPullDownCable.id}`);
 
-    await expect(page.getByText("Up to 4 categories available")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Assign", exact: true })).toHaveAccessibleDescription(
+      "Up to 4 categories available",
+    );
     await expect(page.getByRole("button", { name: "Assign", exact: true })).toBeDisabled();
   });
 

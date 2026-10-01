@@ -48,6 +48,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           tone="danger"
           type="submit"
+          {...ui.describedByHint(action, `workout-set-remove-hint-${props.loggedSet.id}`)}
           {...workoutSetRemove.props.controller}
         >
           <X data-size="sm" />

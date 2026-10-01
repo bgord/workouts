@@ -56,12 +56,13 @@ export function PlanSectionWarmup(props: PlanSection) {
             onClick={planSectionWarmupUpdate.enable}
             title={t("plan.section.warmup.label")}
             type="button"
+            {...ui.describedByHint(plan.actions.sectionWarmupSet, `plan-section-warmup-hint-${props.id}`)}
             {...planSectionWarmupUpdate.props.controller}
           >
             {t("plan.section.warmup.placeholder")}
           </button>
 
-          <ui.ActionHint {...plan.actions.sectionWarmupSet} />
+          <ui.ActionHint {...plan.actions.sectionWarmupSet} id={`plan-section-warmup-hint-${props.id}`} />
         </>
       )}
 

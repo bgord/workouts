@@ -61,7 +61,7 @@ export function ExerciseCategories() {
 
         {assignment.off && (
           <div data-stack="x" {...ui.Gap.related}>
-            <ui.ActionHint {...action} />
+            <ui.ActionHint {...action} id="exercise-category-assign-hint" />
 
             <button
               className="c-button"
@@ -69,6 +69,7 @@ export function ExerciseCategories() {
               disabled={!action.enabled}
               onClick={assignment.enable}
               type="button"
+              {...ui.describedByHint(action, "exercise-category-assign-hint")}
               {...assignment.props.controller}
             >
               <Plus data-size="sm" />

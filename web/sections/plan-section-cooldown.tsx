@@ -56,12 +56,13 @@ export function PlanSectionCooldown(props: PlanSection) {
             onClick={planSectionCooldownUpdate.enable}
             title={t("plan.section.cooldown.label")}
             type="button"
+            {...ui.describedByHint(plan.actions.sectionCooldownSet, `plan-section-cooldown-hint-${props.id}`)}
             {...planSectionCooldownUpdate.props.controller}
           >
             {t("plan.section.cooldown.placeholder")}
           </button>
 
-          <ui.ActionHint {...plan.actions.sectionCooldownSet} />
+          <ui.ActionHint {...plan.actions.sectionCooldownSet} id={`plan-section-cooldown-hint-${props.id}`} />
         </>
       )}
 

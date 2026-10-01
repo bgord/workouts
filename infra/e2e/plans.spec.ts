@@ -43,7 +43,9 @@ test.describe("Plans - builder", () => {
   test("blocks creating a second plan", async ({ page }) => {
     await page.goto("/plans");
 
-    await expect(page.getByText("Archive the current plan first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "New plan" })).toHaveAccessibleDescription(
+      "Archive the current plan first",
+    );
     await expect(page.getByRole("button", { name: "New plan" })).toBeDisabled();
   });
 });

@@ -45,12 +45,13 @@ export function WorkoutNote() {
             onClick={workoutNoteUpdate.enable}
             title={t("workout.note.label")}
             type="button"
+            {...ui.describedByHint(workout.actions.noteSet, "workout-note-hint")}
             {...workoutNoteUpdate.props.controller}
           >
             {workout.data.note ?? t("workout.note.placeholder")}
           </button>
 
-          <ui.ActionHint {...workout.actions.noteSet} />
+          <ui.ActionHint {...workout.actions.noteSet} id="workout-note-hint" />
         </>
       )}
 

@@ -57,12 +57,13 @@ export function WorkoutSetCorrect(
           disabled={!action.enabled}
           onClick={toggle.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
+          {...ui.describedByHint(action, `workout-set-correct-hint-${props.loggedSet.id}`)}
           {...toggle.props.controller}
         >
           <Pencil data-size="sm" />
         </ui.IconButton>
 
-        <ui.ActionHint {...action} />
+        <ui.ActionHint {...action} id={`workout-set-correct-hint-${props.loggedSet.id}`} />
       </div>
     );
   }

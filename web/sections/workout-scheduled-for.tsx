@@ -85,6 +85,7 @@ export function WorkoutScheduledFor() {
         title={t("app.save")}
         tone="positive"
         type="submit"
+        {...ui.describedByHint(workout.actions.reschedule, "workout-reschedule-hint")}
       >
         <Check data-size="sm" />
       </ui.IconButton>
@@ -97,7 +98,7 @@ export function WorkoutScheduledFor() {
         <X data-size="sm" />
       </ui.IconButton>
 
-      <ui.ActionHint {...workout.actions.reschedule} data-ml="2" />
+      <ui.ActionHint {...workout.actions.reschedule} data-ml="2" id="workout-reschedule-hint" />
 
       {mutation.isError && (
         <output aria-live="assertive" data-tone="danger" data-width="100%">
