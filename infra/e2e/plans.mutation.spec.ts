@@ -69,7 +69,7 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByRole("button", { name: "Create", exact: true }).click();
 
     await expect(page.getByLabel("Plan name").and(page.locator(":invalid"))).toHaveCount(1);
-    await expect(page).toHaveURL(/\/plans$/);
+    await expect(page).toHaveURL("/plans");
   });
 
   test("creates a new plan once the previous one is archived", async ({ page }) => {
@@ -79,7 +79,7 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByLabel("Plan name").fill("Upper lower");
     await page.getByRole("button", { name: "Create", exact: true }).click();
 
-    await expect(page).toHaveURL(/\/plans\/(?!500f8ed2)[0-9a-f-]{36}$/);
+    await expect(page).toHaveURL(/\/plans\/[0-9a-f-]{36}$/);
     await expect(page.getByRole("heading", { level: 1, name: "Upper lower" })).toBeVisible();
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
   });

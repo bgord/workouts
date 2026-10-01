@@ -253,7 +253,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Delete Neck flexion" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
 
-    await expect(page).toHaveURL(/\/catalog/);
+    await expect(page).toHaveURL("/catalog");
     await expect(page.getByText("32 of 32")).toBeVisible();
   });
 

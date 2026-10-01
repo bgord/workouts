@@ -23,11 +23,11 @@ test.describe("Profile - polyglot-mutation", () => {
 
     await page.getByRole("button", { name: "Wyloguj się" }).click();
 
-    await expect(page).toHaveURL(/\/public\/login\.html/);
+    await expect(page).toHaveURL("/public/login.html");
 
     await page.goto("/");
 
-    await expect(page).toHaveURL(/\/public\/login\.html/);
+    await expect(page).toHaveURL("/public/login.html");
   });
 });
 
@@ -63,7 +63,7 @@ test.describe("Profile - disposable", () => {
       .getByRole("button", { name: "Delete account" })
       .click();
 
-    await expect(page).toHaveURL(/\/public\/login\.html/);
+    await expect(page).toHaveURL("/public/login.html");
   });
 
   test("rejects signing in to the deleted account", async ({ page }) => {

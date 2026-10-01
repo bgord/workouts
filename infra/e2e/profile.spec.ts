@@ -124,7 +124,7 @@ test.describe("Profile - athlete", () => {
       .click();
 
     await expect(page.getByText("Error while deleting account")).toBeVisible();
-    await expect(page).toHaveURL(/\/profile$/);
+    await expect(page).toHaveURL("/profile");
   });
 });
 

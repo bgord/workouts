@@ -40,7 +40,7 @@ test.describe("Workouts - athlete", () => {
 
     await page.getByLabel("Period").selectOption("all_time");
 
-    await expect(page).toHaveURL(/filter=all_time/);
+    await expect(page).toHaveURL("/workouts?filter=all_time");
     await expect(page.getByText("25 of 25")).toBeVisible();
   });
 
@@ -84,7 +84,7 @@ test.describe("Workouts - athlete", () => {
 
     await page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`).click();
 
-    await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
+    await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
     await expect(page.getByRole("button", { name: "Start" })).toBeVisible();
   });
 
@@ -124,7 +124,7 @@ test.describe("Workouts - athlete", () => {
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
 
     await expect(page.getByText("Could not schedule the workout")).toBeVisible();
-    await expect(page).toHaveURL(/\/workouts$/);
+    await expect(page).toHaveURL("/workouts");
   });
 });
 

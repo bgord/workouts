@@ -46,7 +46,7 @@ test.describe("Shortcuts - athlete", () => {
     await page.keyboard.press("g");
     await page.keyboard.press("w");
 
-    await expect(page).toHaveURL(/\/workouts/);
+    await expect(page).toHaveURL("/workouts");
   });
 
   test("goes to catalog", async ({ page }) => {
@@ -56,7 +56,7 @@ test.describe("Shortcuts - athlete", () => {
     await page.keyboard.press("g");
     await page.keyboard.press("c");
 
-    await expect(page).toHaveURL(/\/catalog/);
+    await expect(page).toHaveURL("/catalog");
   });
 
   test("goes to plans", async ({ page }) => {
@@ -66,7 +66,7 @@ test.describe("Shortcuts - athlete", () => {
     await page.keyboard.press("g");
     await page.keyboard.press("p");
 
-    await expect(page).toHaveURL(/\/plans/);
+    await expect(page).toHaveURL("/plans");
   });
 
   test("goes to measurements", async ({ page }) => {
@@ -76,7 +76,7 @@ test.describe("Shortcuts - athlete", () => {
     await page.keyboard.press("g");
     await page.keyboard.press("m");
 
-    await expect(page).toHaveURL(/\/measurements/);
+    await expect(page).toHaveURL("/measurements");
   });
 
   test("goes to dashboard", async ({ page }) => {
@@ -95,7 +95,7 @@ test.describe("Shortcuts - athlete", () => {
 
     await page.keyboard.press("o");
 
-    await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
+    await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
   });
 
   test("opens the newest workout from the workouts list", async ({ page }) => {
@@ -107,7 +107,7 @@ test.describe("Shortcuts - athlete", () => {
 
     await page.keyboard.press("o");
 
-    await expect(page).toHaveURL((url) => url.pathname + url.search === href);
+    await expect(page).toHaveURL(href);
   });
 
   test("opens the first exercise from the catalog", async ({ page }) => {
@@ -119,7 +119,7 @@ test.describe("Shortcuts - athlete", () => {
 
     await page.keyboard.press("o");
 
-    await expect(page).toHaveURL((url) => url.pathname + url.search === href);
+    await expect(page).toHaveURL(href);
   });
 
   test("focuses the body weight input", async ({ page }) => {

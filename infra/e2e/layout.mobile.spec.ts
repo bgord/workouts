@@ -12,23 +12,23 @@ test.describe("Mobile - athlete", () => {
 
     await nav.getByRole("link", { name: "Workouts" }).click();
 
-    await expect(page).toHaveURL(/\/workouts/);
+    await expect(page).toHaveURL("/workouts");
 
     await nav.getByRole("link", { name: "Catalog" }).click();
 
-    await expect(page).toHaveURL(/\/catalog/);
+    await expect(page).toHaveURL("/catalog");
 
     await nav.getByRole("link", { name: "Plans" }).click();
 
-    await expect(page).toHaveURL(/\/plans/);
+    await expect(page).toHaveURL("/plans");
 
     await nav.getByRole("link", { name: "Measurements" }).click();
 
-    await expect(page).toHaveURL(/\/measurements/);
+    await expect(page).toHaveURL("/measurements");
 
     await nav.getByRole("link", { name: "Profile" }).click();
 
-    await expect(page).toHaveURL(/\/profile/);
+    await expect(page).toHaveURL("/profile");
   });
 
   test("keeps the pages within the viewport width", async ({ page }) => {

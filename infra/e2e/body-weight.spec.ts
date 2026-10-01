@@ -44,7 +44,7 @@ test.describe("Body weight - athlete", () => {
 
     await page.getByRole("combobox", { name: "Granularity" }).selectOption("daily");
 
-    await expect(page).toHaveURL(/\/measurements\/body-weight\?chart=daily/);
+    await expect(page).toHaveURL("/measurements/body-weight?chart=daily");
     await expect(page.getByRole("combobox", { name: "Granularity" })).toHaveValue("daily");
   });
 
@@ -59,7 +59,7 @@ test.describe("Body weight - athlete", () => {
 
     await page.getByRole("combobox", { name: "Month" }).selectOption({ label: "All months" });
 
-    await expect(page).toHaveURL(/\/measurements\/body-weight\?.*month=all/);
+    await expect(page).toHaveURL("/measurements/body-weight?month=all");
     await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
   });
 

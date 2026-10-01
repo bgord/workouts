@@ -37,7 +37,7 @@ test.describe("Errors - athlete", () => {
 
     await page.getByRole("link", { name: "Go to workouts" }).click();
 
-    await expect(page).toHaveURL(/\/workouts/);
+    await expect(page).toHaveURL("/workouts");
   });
 
   test("shows the empty state when the catalog fails to load", async ({ page }) => {

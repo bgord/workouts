@@ -101,13 +101,13 @@ test.describe("Catalog - athlete", () => {
   test("restores the catalog category filter on browser back", async ({ page }) => {
     await page.goto("/catalog");
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
-    await expect(page).toHaveURL(/category=/);
+    await expect(page).toHaveURL(`/catalog?category=${fixtures.categories.chest.id}`);
     await page.getByRole("list", { name: "Catalog" }).getByRole("link").first().click();
-    await expect(page).toHaveURL(/\/catalog\/exercise\//);
+    await expect(page).toHaveURL(`/catalog/exercise/${fixtures.exercises.hammerStrengthIncline.id}`);
 
     await page.goBack();
 
-    await expect(page).toHaveURL(/\/catalog\?category=/);
+    await expect(page).toHaveURL(`/catalog?category=${fixtures.categories.chest.id}`);
     await expect(page.getByText("6 of 32")).toBeVisible();
     await expect(
       page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),

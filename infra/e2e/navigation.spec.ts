@@ -11,23 +11,23 @@ test.describe("Navigation - athlete", () => {
 
     await nav.getByRole("link", { name: "Workouts" }).click();
 
-    await expect(page).toHaveURL(/\/workouts/);
+    await expect(page).toHaveURL("/workouts");
 
     await nav.getByRole("link", { name: "Catalog" }).click();
 
-    await expect(page).toHaveURL(/\/catalog/);
+    await expect(page).toHaveURL("/catalog");
 
     await nav.getByRole("link", { name: "Plans" }).click();
 
-    await expect(page).toHaveURL(/\/plans/);
+    await expect(page).toHaveURL("/plans");
 
     await nav.getByRole("link", { name: "Measurements" }).click();
 
-    await expect(page).toHaveURL(/\/measurements/);
+    await expect(page).toHaveURL("/measurements");
 
     await nav.getByRole("link", { name: "Profile" }).click();
 
-    await expect(page).toHaveURL(/\/profile/);
+    await expect(page).toHaveURL("/profile");
 
     await nav.getByRole("link", { name: "Dashboard" }).click();
 
@@ -83,7 +83,7 @@ test.describe("Navigation - athlete", () => {
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
-    await expect(page).toHaveURL(/\/catalog/);
+    await expect(page).toHaveURL("/catalog");
   });
 
   test("goes back from the plan to the plans", async ({ page }) => {
@@ -91,7 +91,7 @@ test.describe("Navigation - athlete", () => {
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
-    await expect(page).toHaveURL(/\/plans/);
+    await expect(page).toHaveURL("/plans");
   });
 
   test("goes back from the workout to the filtered workouts list", async ({ page }) => {
@@ -100,7 +100,7 @@ test.describe("Navigation - athlete", () => {
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
-    await expect(page).toHaveURL(/\/workouts\?filter=all_time/);
+    await expect(page).toHaveURL("/workouts?filter=all_time");
   });
 
   test("goes back from the exercise to the workout it was opened from", async ({ page }) => {
@@ -110,9 +110,7 @@ test.describe("Navigation - athlete", () => {
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
-    await expect(page).toHaveURL(
-      new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}\\?filter=all_time`),
-    );
+    await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
   });
 
   test("goes back from the exercise to the plan it was opened from", async ({ page }) => {
@@ -123,7 +121,7 @@ test.describe("Navigation - athlete", () => {
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
-    await expect(page).toHaveURL(new RegExp(`/plans/${fixtures.athlete.plan.id}$`));
+    await expect(page).toHaveURL(`/plans/${fixtures.athlete.plan.id}`);
   });
 
   test("links to body weight and body parts", async ({ page }) => {
@@ -139,13 +137,13 @@ test.describe("Navigation - athlete", () => {
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
-    await expect(page).toHaveURL(/\/measurements$/);
+    await expect(page).toHaveURL("/measurements");
 
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
-    await expect(page).toHaveURL(/\/measurements$/);
+    await expect(page).toHaveURL("/measurements");
   });
 
   test("opens the body weight history filtered by a deep link", async ({ page }) => {
@@ -157,13 +155,13 @@ test.describe("Navigation - athlete", () => {
   test("restores the workouts filters on browser back", async ({ page }) => {
     await page.goto("/workouts");
     await page.getByLabel("Period").selectOption({ label: "All time" });
-    await expect(page).toHaveURL(/filter=all_time/);
+    await expect(page).toHaveURL("/workouts?filter=all_time");
     await page.getByRole("list", { name: "Workouts" }).getByRole("link").first().click();
-    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
+    await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
 
     await page.goBack();
 
-    await expect(page).toHaveURL(/\/workouts\?filter=all_time/);
+    await expect(page).toHaveURL("/workouts?filter=all_time");
     await expect(page.getByLabel("Period")).toHaveValue("all_time");
   });
 
@@ -173,13 +171,13 @@ test.describe("Navigation - athlete", () => {
     await page.goto("/workouts");
     const title = (await card.getByRole("heading", { level: 2 }).textContent()) ?? "";
     await card.click();
-    await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
+    await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
     await page.goBack();
-    await expect(page).toHaveURL(/\/workouts$/);
+    await expect(page).toHaveURL("/workouts");
 
     await page.goForward();
 
-    await expect(page).toHaveURL(new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}`));
+    await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
     await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
   });
 });

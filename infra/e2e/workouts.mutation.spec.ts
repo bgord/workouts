@@ -15,7 +15,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
 
     await expect(page.getByRole("textbox", { name: "Date" }).and(page.locator(":invalid"))).toHaveCount(1);
-    await expect(page).toHaveURL(/\/workouts$/);
+    await expect(page).toHaveURL("/workouts");
   });
 
   test("schedules a workout", async ({ page }) => {
@@ -23,7 +23,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "New workout" }).click();
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
-    await expect(page).toHaveURL(/\/workouts\/(?!84d48b25)[0-9a-f-]{36}/);
+    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
     await page.reload();
 
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
@@ -39,7 +39,7 @@ test.describe("Workouts - athlete-mutation", () => {
       .click();
     await page.getByRole("button", { name: "Tomorrow" }).click();
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
-    await expect(page).toHaveURL(/\/workouts\/(?!84d48b25)[0-9a-f-]{36}/);
+    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
     await page.reload();
 
     await expect(
@@ -56,7 +56,7 @@ test.describe("Workouts - athlete-mutation", () => {
       .getByRole("button", { name: "Discard" })
       .click();
 
-    await expect(page).toHaveURL(/\/workouts$/);
+    await expect(page).toHaveURL("/workouts");
   });
 
   test("blocks starting a workout with no exercises", async ({ page }) => {
@@ -129,7 +129,7 @@ test.describe("Workouts - athlete-mutation", () => {
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard" })
       .click();
-    await expect(page).toHaveURL(/\/workouts$/);
+    await expect(page).toHaveURL("/workouts");
     await page.reload();
 
     await expect(

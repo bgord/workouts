@@ -42,7 +42,7 @@ test.describe("Not found - athlete", () => {
 
     await page.getByRole("link", { name: "Go to workouts" }).click();
 
-    await expect(page).toHaveURL(/\/workouts/);
+    await expect(page).toHaveURL("/workouts");
   });
 
   test("hides another user's plan", async ({ page }) => {

@@ -14,7 +14,7 @@ test.describe("Signed out", () => {
     test(`redirects ${url} to sign in`, async ({ page }) => {
       await page.goto(url);
 
-      await expect(page).toHaveURL(/\/public\/login\.html/);
+      await expect(page).toHaveURL("/public/login.html");
       await expect(page.getByRole("button", { name: "Sign in" })).toBeVisible();
     });
   }
