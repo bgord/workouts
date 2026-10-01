@@ -2,135 +2,6 @@
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
-test.describe("Body parts - athlete", () => {
-  test.use({ storageState: ".auth/athlete.json" });
-  test.describe.configure({ mode: "serial" });
-
-  test("rejects a body part measurement out of range", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-
-    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
-    await page.getByRole("spinbutton", { name: "Circumference" }).fill("301");
-
-    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
-
-    await page.reload();
-
-    await expect(
-      page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-        .getByText("Not measured yet")
-        .first(),
-    ).toBeVisible();
-  });
-
-  test("rejects a body part measurement date in the future", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-
-    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
-    await page.getByRole("spinbutton", { name: "Circumference" }).fill("38.5");
-    await page.getByRole("textbox", { name: "Date" }).fill("2099-01-01");
-
-    await expect(page.getByRole("textbox", { name: "Date" }).and(page.locator(":invalid"))).toHaveCount(1);
-
-    await page.reload();
-
-    await expect(
-      page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-        .getByText("Not measured yet")
-        .first(),
-    ).toBeVisible();
-  });
-
-  test("measures the body part that was never measured", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-
-    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
-    await page.getByRole("spinbutton", { name: "Circumference" }).fill("38.5");
-    await page.getByRole("button", { name: "Save", exact: true }).click();
-
-    await expect(
-      page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-        .getByText("38.5 cm")
-        .first(),
-    ).toBeVisible();
-  });
-
-  test("rejects a body part correction out of range", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-    await page
-      .getByRole("listitem")
-      .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-      .getByRole("button")
-      .first()
-      .click();
-
-    await page.getByTitle("Correct the measurement").click();
-    await page.getByRole("spinbutton", { name: "Circumference" }).fill("0");
-
-    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
-
-    await page.reload();
-
-    await expect(
-      page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-        .getByText("38.5 cm")
-        .first(),
-    ).toBeVisible();
-  });
-
-  test("corrects the body part measurement", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-    await page
-      .getByRole("listitem")
-      .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-      .getByRole("button")
-      .first()
-      .click();
-
-    await page.getByTitle("Correct the measurement").click();
-    await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
-    await page.getByRole("button", { name: "Save" }).click();
-    await page.reload();
-
-    await expect(
-      page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-        .getByText("39.5 cm")
-        .first(),
-    ).toBeVisible();
-  });
-
-  test("removes the body part measurement", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-    await page
-      .getByRole("listitem")
-      .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-      .getByRole("button")
-      .first()
-      .click();
-
-    await page.getByTitle("Remove the measurement").click();
-    await page.reload();
-
-    await expect(
-      page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
-        .getByText("Not measured yet")
-        .first(),
-    ).toBeVisible();
-  });
-});
-
 test.describe("Body parts - empty", () => {
   test.use({ storageState: ".auth/empty.json" });
   test.describe.configure({ mode: "serial" });
@@ -264,5 +135,134 @@ test.describe("Body parts - empty", () => {
 
     await expect(page.getByText("Define a body part first")).toBeVisible();
     await expect(page.getByRole("button", { name: "Measure Neck girth" })).toBeHidden();
+  });
+});
+
+test.describe("Body parts - athlete", () => {
+  test.use({ storageState: ".auth/athlete.json" });
+  test.describe.configure({ mode: "serial" });
+
+  test("rejects a body part measurement out of range", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("301");
+
+    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("Not measured yet")
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("rejects a body part measurement date in the future", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("38.5");
+    await page.getByRole("textbox", { name: "Date" }).fill("2099-01-01");
+
+    await expect(page.getByRole("textbox", { name: "Date" }).and(page.locator(":invalid"))).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("Not measured yet")
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("measures the body part that was never measured", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("38.5");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("38.5 cm")
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("rejects a body part correction out of range", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+    await page
+      .getByRole("listitem")
+      .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByTitle("Correct the measurement").click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("0");
+
+    await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("38.5 cm")
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("corrects the body part measurement", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+    await page
+      .getByRole("listitem")
+      .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByTitle("Correct the measurement").click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
+    await page.getByRole("button", { name: "Save" }).click();
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("39.5 cm")
+        .first(),
+    ).toBeVisible();
+  });
+
+  test("removes the body part measurement", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+    await page
+      .getByRole("listitem")
+      .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+      .getByRole("button")
+      .first()
+      .click();
+
+    await page.getByTitle("Remove the measurement").click();
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("Not measured yet")
+        .first(),
+    ).toBeVisible();
   });
 });
