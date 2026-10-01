@@ -772,7 +772,6 @@ infra/
 │   ├── exercise.spec.ts
 │   ├── home.spec.ts
 │   ├── layout.mobile.spec.ts
-│   ├── measurements.spec.ts
 │   ├── navigation.spec.ts
 │   ├── not-found.spec.ts
 │   ├── plan.spec.ts

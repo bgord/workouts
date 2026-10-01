@@ -126,6 +126,14 @@ test.describe("Navigation - athlete", () => {
     await expect(page).toHaveURL(new RegExp(`/plans/${fixtures.athlete.plan.id}$`));
   });
 
+  test("links to body weight and body parts", async ({ page }) => {
+    await page.goto("/measurements");
+
+    await expect(page.getByRole("heading", { level: 1, name: "Measurements" })).toBeVisible();
+    await expect(page.locator('a[href="/measurements/body-weight"]')).toBeVisible();
+    await expect(page.locator('a[href="/measurements/body-parts"]')).toBeVisible();
+  });
+
   test("goes back from body weight and body parts to the measurements", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
