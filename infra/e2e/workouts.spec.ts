@@ -98,7 +98,7 @@ test.describe("Workouts - athlete", () => {
 
     await page.getByRole("button", { name: "New workout" }).click();
 
-    const dialog = page.locator("#workout-create");
+    const dialog = page.getByRole("dialog", { name: "New workout" });
 
     await expect(dialog.getByRole("radio")).toHaveCount(3);
     await expect(dialog.getByRole("radio").first()).toBeChecked();

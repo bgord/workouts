@@ -366,7 +366,7 @@ test.describe("Plan - athlete", () => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
 
     await page.getByRole("button", { name: "Archive", exact: true }).click();
-    await page.getByRole("button", { name: "Archive", exact: true }).last().click();
+    await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Could not archive the plan")).toBeVisible();
 

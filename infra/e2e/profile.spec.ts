@@ -56,15 +56,21 @@ test.describe("Profile - athlete", () => {
 
     await page.getByRole("button", { name: "Continue" }).click();
 
-    await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeDisabled();
+    await expect(
+      page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
+    ).toBeDisabled();
 
     await page.getByPlaceholder("delete").fill("delet");
 
-    await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeDisabled();
+    await expect(
+      page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
+    ).toBeDisabled();
 
     await page.getByPlaceholder("delete").fill("delete");
 
-    await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeEnabled();
+    await expect(
+      page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
+    ).toBeEnabled();
   });
 
   test("shows the error when uploading the avatar fails", async ({ page }) => {
@@ -118,7 +124,10 @@ test.describe("Profile - athlete", () => {
 
     await page.getByRole("button", { name: "Continue" }).click();
     await page.getByPlaceholder("delete").fill("delete");
-    await page.getByRole("button", { name: "Delete account" }).last().click();
+    await page
+      .getByRole("dialog", { name: "Delete account" })
+      .getByRole("button", { name: "Delete account" })
+      .click();
 
     await expect(page.getByText("Error while deleting account")).toBeVisible();
     await expect(page).toHaveURL(/\/profile$/);

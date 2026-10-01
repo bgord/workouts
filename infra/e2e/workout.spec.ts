@@ -38,7 +38,10 @@ test.describe("Workout - athlete", () => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
     await page.getByRole("button", { name: "Discard" }).click();
-    await page.getByRole("button", { name: "Discard", exact: true }).last().click();
+    await page
+      .getByRole("dialog", { name: "Discard workout" })
+      .getByRole("button", { name: "Discard" })
+      .click();
 
     await expect(page.getByText("Could not discard the workout")).toBeVisible();
 
@@ -281,7 +284,10 @@ test.describe("Workout - active", () => {
     await page
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
-    await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
+    await page
+      .getByRole("dialog", { name: "Logging panel" })
+      .getByRole("button", { name: "Log set · RIR 1" })
+      .click();
 
     await expect(page.getByText("Could not log the set")).toBeVisible();
   });
@@ -303,7 +309,10 @@ test.describe("Workout - active", () => {
     await page
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
       .click();
-    await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
+    await page
+      .getByRole("dialog", { name: "Logging panel" })
+      .getByRole("button", { name: "Log set · RIR 1" })
+      .click();
     await expect(page.getByText("Could not log the set")).toBeVisible();
     await page.keyboard.press("Escape");
 

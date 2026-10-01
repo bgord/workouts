@@ -11,16 +11,16 @@ test.describe("Shortcuts - athlete", () => {
 
     await page.keyboard.press("Shift+?");
 
-    const help = page.locator("#shortcuts");
+    const help = page.getByRole("dialog", { name: "Keyboard shortcuts" });
 
-    await expect(help.getByText("Keyboard shortcuts", { exact: true })).toBeVisible();
+    await expect(help).toBeVisible();
     await expect(help.getByText("Global")).toBeVisible();
     await expect(help.getByRole("heading", { name: "Workouts", exact: true })).toBeVisible();
     await expect(help.getByText("g w", { exact: true })).toBeVisible();
 
     await page.keyboard.press("Escape");
 
-    await expect(help.getByText("Keyboard shortcuts", { exact: true })).toBeHidden();
+    await expect(help).toBeHidden();
   });
 
   test("opens the shortcuts help with the button", async ({ page }) => {
@@ -29,11 +29,14 @@ test.describe("Shortcuts - athlete", () => {
 
     await page.getByRole("button", { name: "Show keyboard shortcuts" }).click();
 
-    await expect(page.locator("#shortcuts").getByText("Keyboard shortcuts", { exact: true })).toBeVisible();
+    await expect(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toBeVisible();
 
-    await page.locator("#shortcuts").getByRole("button", { name: "Close" }).click();
+    await page
+      .getByRole("dialog", { name: "Keyboard shortcuts" })
+      .getByRole("button", { name: "Close" })
+      .click();
 
-    await expect(page.locator("#shortcuts").getByText("Keyboard shortcuts", { exact: true })).toBeHidden();
+    await expect(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toBeHidden();
   });
 
   test("goes to workouts", async ({ page }) => {
@@ -130,7 +133,9 @@ test.describe("Shortcuts - athlete", () => {
 
     await page.keyboard.press("n");
 
-    await expect(page.locator("#workout-create").getByRole("button", { name: "Schedule" })).toBeVisible();
+    await expect(
+      page.getByRole("dialog", { name: "New workout" }).getByRole("button", { name: "Schedule" }),
+    ).toBeVisible();
   });
 
   test("focuses the catalog search", async ({ page }) => {

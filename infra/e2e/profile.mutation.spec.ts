@@ -64,7 +64,10 @@ test.describe("Profile - disposable", () => {
 
     await page.getByRole("button", { name: "Continue" }).click();
     await page.getByPlaceholder("delete").fill("delete");
-    await page.getByRole("button", { name: "Delete account" }).last().click();
+    await page
+      .getByRole("dialog", { name: "Delete account" })
+      .getByRole("button", { name: "Delete account" })
+      .click();
 
     await expect(page).toHaveURL(/\/public\/login\.html/);
   });

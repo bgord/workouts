@@ -77,7 +77,7 @@ test.describe("Body parts - empty-mutation", () => {
       buffer: Buffer.from("id,bodyPartName,value,measuredOn\n,Neck,385,2025-01-01\n,Neck,391,2025-01-08\n"),
     });
     await page.getByRole("button", { name: "Import", exact: true }).click();
-    await expect(page.getByRole("dialog")).toBeHidden();
+    await expect(page.getByRole("dialog", { name: "Import body part measurements" })).toBeHidden();
 
     await expect(async () => {
       await page.reload();

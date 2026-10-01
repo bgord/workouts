@@ -34,7 +34,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "New workout" }).click();
     await page
-      .locator("#workout-create")
+      .getByRole("dialog", { name: "New workout" })
       .getByText(fixtures.athleteMutation.plan.sections.legs.name, { exact: true })
       .click();
     await page.getByRole("button", { name: "Tomorrow" }).click();
@@ -51,7 +51,10 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
 
     await page.getByRole("button", { name: "Discard" }).click();
-    await page.getByRole("button", { name: "Discard", exact: true }).last().click();
+    await page
+      .getByRole("dialog", { name: "Discard workout" })
+      .getByRole("button", { name: "Discard" })
+      .click();
 
     await expect(page).toHaveURL(/\/workouts$/);
   });
@@ -118,7 +121,10 @@ test.describe("Workouts - athlete-mutation", () => {
       .click();
 
     await page.getByRole("button", { name: "Discard" }).click();
-    await page.getByRole("button", { name: "Discard", exact: true }).last().click();
+    await page
+      .getByRole("dialog", { name: "Discard workout" })
+      .getByRole("button", { name: "Discard" })
+      .click();
     await expect(page).toHaveURL(/\/workouts$/);
     await page.reload();
 
@@ -247,7 +253,10 @@ test.describe("Workouts - athlete-mutation", () => {
       .getByRole("button", { name: /^Open panel: / })
       .first()
       .click();
-    await page.getByRole("dialog").getByRole("button", { name: "Log set", exact: true }).click();
+    await page
+      .getByRole("dialog", { name: "Logging panel" })
+      .getByRole("button", { name: "Log set", exact: true })
+      .click();
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Complete" }).click();
 
@@ -364,7 +373,7 @@ test.describe("Workouts - active-mutation", () => {
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
 
-    const panel = page.getByRole("dialog");
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await panel.getByRole("spinbutton", { name: "Reps" }).fill("");
 
@@ -384,7 +393,10 @@ test.describe("Workouts - active-mutation", () => {
     await page
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
-    await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
+    await page
+      .getByRole("dialog", { name: "Logging panel" })
+      .getByRole("button", { name: "Log set · RIR 1" })
+      .click();
     await page.keyboard.press("Escape");
     await page.reload();
     await page

@@ -131,7 +131,7 @@ test.describe("Errors - athlete", () => {
     await page.route("**/api/plans/*/archive", (route) => route.abort());
 
     await page.getByRole("button", { name: "Archive" }).click();
-    await page.locator("#plan-archive").getByRole("button", { name: "Archive" }).click();
+    await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Could not archive the plan")).toBeVisible();
   });

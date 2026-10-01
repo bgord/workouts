@@ -30,7 +30,7 @@ test.describe("Mobile - pocket", () => {
   });
 
   test("logs sets from the log panel", async ({ page }) => {
-    const panel = page.getByRole("dialog");
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
     await page

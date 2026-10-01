@@ -55,7 +55,7 @@ test.describe("Plans - builder-mutation", () => {
     await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Archive", exact: true }).click();
-    await page.getByRole("button", { name: "Archive", exact: true }).last().click();
+    await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Archived", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Restore" })).toBeEnabled();
@@ -429,7 +429,7 @@ test.describe("Plans - archivist-mutation", () => {
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Archive", exact: true }).click();
-    await page.getByRole("button", { name: "Archive", exact: true }).last().click();
+    await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Archived", { exact: true })).toBeVisible();
   });
@@ -463,7 +463,7 @@ test.describe("Plans - archivist-mutation", () => {
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Delete", exact: true }).click();
-    await page.getByRole("button", { name: "Delete", exact: true }).last().click();
+    await page.getByRole("dialog", { name: "Delete plan" }).getByRole("button", { name: "Delete" }).click();
 
     await expect(page.getByText("Could not delete the plan")).toBeVisible();
 
@@ -476,7 +476,7 @@ test.describe("Plans - archivist-mutation", () => {
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Delete", exact: true }).click();
-    await page.getByRole("button", { name: "Delete", exact: true }).last().click();
+    await page.getByRole("dialog", { name: "Delete plan" }).getByRole("button", { name: "Delete" }).click();
 
     await expect(page).toHaveURL("/plans");
 

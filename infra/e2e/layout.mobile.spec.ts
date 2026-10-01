@@ -78,17 +78,19 @@ test.describe("Mobile - athlete", () => {
   });
 
   test("opens the schedule dialog on the workouts list", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "New workout" });
+
     await page.goto("/workouts");
 
     await page.getByRole("button", { name: "New workout" }).click();
 
-    await expect(page.locator("#workout-create").getByRole("button", { name: "Schedule" })).toBeInViewport();
-    await expect(page.locator("#workout-create").getByRole("button", { name: "Close" })).toBeInViewport();
-    await expect(page.locator("#workout-create").getByRole("button", { name: "Cancel" })).toBeInViewport();
+    await expect(dialog.getByRole("button", { name: "Schedule" })).toBeInViewport();
+    await expect(dialog.getByRole("button", { name: "Close" })).toBeInViewport();
+    await expect(dialog.getByRole("button", { name: "Cancel" })).toBeInViewport();
 
-    await page.locator("#workout-create").getByRole("button", { name: "Close" }).tap();
+    await dialog.getByRole("button", { name: "Close" }).tap();
 
-    await expect(page.locator("#workout-create")).toBeHidden();
+    await expect(dialog).toBeHidden();
   });
 
   test("fits the body weight form on the screen", async ({ page }) => {
@@ -132,7 +134,7 @@ test.describe("Mobile - active", () => {
     await page
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
-    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("dialog", { name: "Logging panel" })).toBeVisible();
 
     const open = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -142,7 +144,7 @@ test.describe("Mobile - active", () => {
   });
 
   test("fits the add exercise dialog on the screen", async ({ page }) => {
-    const dialog = page.locator(`#workout-exercise-add-${fixtures.active.workout.id}`);
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.waitForLoadState("networkidle");
