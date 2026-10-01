@@ -5,28 +5,14 @@ import { expect, test } from "./test";
 test.describe("Errors - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });
 
-  test("shows the empty state when the plans fail to load", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
-    await page.route("**/api/plans/list", (route) => route.fulfill({ status: 500 }));
-
-    await page.getByRole("navigation").getByRole("link", { name: "Plans" }).click();
-
-    await expect(page.getByText("No plans created yet")).toBeVisible();
-  });
-
-  test("shows the plan not found when the plan fails to load", async ({ page }) => {
+  test("shows the empty dashboard when the dashboard fails to load", async ({ page }) => {
     await page.goto("/plans");
     await page.waitForLoadState("networkidle");
-    await page.route(`**/api/plans/${fixtures.athlete.plan.id}`, (route) => route.fulfill({ status: 500 }));
+    await page.route("**/api/dashboard", (route) => route.fulfill({ status: 500 }));
 
-    await page.locator(`a[href^="/plans/${fixtures.athlete.plan.id}"]`).click();
+    await page.getByRole("navigation").getByRole("link", { name: "Dashboard" }).click();
 
-    await expect(page.getByRole("heading", { level: 1, name: "Plan not found" })).toBeVisible();
-
-    await page.getByRole("link", { name: "Go to plans" }).click();
-
-    await expect(page).toHaveURL("/plans");
+    await expect(page.getByText("Nothing scheduled")).toBeVisible();
   });
 
   test("shows the empty state when the workouts fail to load", async ({ page }) => {
@@ -83,6 +69,30 @@ test.describe("Errors - athlete", () => {
     await expect(page).toHaveURL("/catalog");
   });
 
+  test("shows the empty state when the plans fail to load", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+    await page.route("**/api/plans/list", (route) => route.fulfill({ status: 500 }));
+
+    await page.getByRole("navigation").getByRole("link", { name: "Plans" }).click();
+
+    await expect(page.getByText("No plans created yet")).toBeVisible();
+  });
+
+  test("shows the plan not found when the plan fails to load", async ({ page }) => {
+    await page.goto("/plans");
+    await page.waitForLoadState("networkidle");
+    await page.route(`**/api/plans/${fixtures.athlete.plan.id}`, (route) => route.fulfill({ status: 500 }));
+
+    await page.locator(`a[href^="/plans/${fixtures.athlete.plan.id}"]`).click();
+
+    await expect(page.getByRole("heading", { level: 1, name: "Plan not found" })).toBeVisible();
+
+    await page.getByRole("link", { name: "Go to plans" }).click();
+
+    await expect(page).toHaveURL("/plans");
+  });
+
   test("shows the empty state when the body weight fails to load", async ({ page }) => {
     await page.goto("/measurements");
     await page.waitForLoadState("networkidle");
@@ -102,16 +112,6 @@ test.describe("Errors - athlete", () => {
 
     await expect(page.getByRole("heading", { level: 1, name: "Body parts" })).toBeVisible();
     await expect(page.getByRole("button", { name: /^Measure / })).toHaveCount(0);
-  });
-
-  test("shows the empty dashboard when the dashboard fails to load", async ({ page }) => {
-    await page.goto("/plans");
-    await page.waitForLoadState("networkidle");
-    await page.route("**/api/dashboard", (route) => route.fulfill({ status: 500 }));
-
-    await page.getByRole("navigation").getByRole("link", { name: "Dashboard" }).click();
-
-    await expect(page.getByText("Nothing scheduled")).toBeVisible();
   });
 
   test("shows the error boundary when the plans request is aborted", async ({ page }) => {
