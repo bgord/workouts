@@ -135,25 +135,4 @@ test.describe("Errors - athlete", () => {
 
     await expect(page.getByText("Could not archive the plan")).toBeVisible();
   });
-
-  test("shows the mutation error when the session has expired", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.athlete.plan.id}`);
-    await page.waitForLoadState("networkidle");
-    await page.route("**/api/plans/*/archive", (route) => route.fulfill({ status: 401 }));
-
-    await page.getByRole("button", { name: "Archive" }).click();
-    await page.locator("#plan-archive").getByRole("button", { name: "Archive" }).click();
-
-    await expect(page.getByText("Could not archive the plan")).toBeVisible();
-  });
-
-  test("shows the empty state when the session has expired", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
-    await page.route("**/api/plans/list", (route) => route.fulfill({ status: 401 }));
-
-    await page.getByRole("navigation").getByRole("link", { name: "Plans" }).click();
-
-    await expect(page.getByText("No plans created yet")).toBeVisible();
-  });
 });

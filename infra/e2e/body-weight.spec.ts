@@ -45,7 +45,7 @@ test.describe("Body weight - athlete", () => {
 
     await page.getByRole("combobox", { name: "Month" }).selectOption({ label: "All months" });
 
-    await expect(page).toHaveURL(/\/measurements\/body-weight/);
+    await expect(page).toHaveURL(/\/measurements\/body-weight\?.*month=all/);
     await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
   });
 

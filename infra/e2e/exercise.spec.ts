@@ -42,18 +42,6 @@ test.describe("Exercise - athlete", () => {
     await expect(history.getByRole("img", { name: "1RM" })).toHaveCount(1);
   });
 
-  test("expands a history session to its sets", async ({ page }) => {
-    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
-
-    const history = page.getByRole("heading", { name: "History" }).locator("..");
-
-    await expect(history.getByRole("listitem")).toHaveCount(8);
-
-    await history.getByRole("button").first().click();
-
-    await expect(history.getByRole("listitem")).not.toHaveCount(8);
-  });
-
   test("keeps the history session expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 

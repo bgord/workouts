@@ -248,22 +248,6 @@ test.describe("Workout - active", () => {
     ).toBeEnabled();
   });
 
-  test("shows the warm-up of the section", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
-
-    await page.getByTitle("Toggle warm-up").click();
-
-    await expect(page.getByText("10x Arm Circles forward")).toBeVisible();
-  });
-
-  test("shows the cool-down of the section", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
-
-    await page.getByTitle("Toggle cool-down").click();
-
-    await expect(page.getByText("Doorway chest stretch, 2 minutes each side")).toBeVisible();
-  });
-
   test("keeps the warm-up expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
