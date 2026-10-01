@@ -185,6 +185,23 @@ test.describe("Workouts - athlete", () => {
     await expect(row.getByTitle("Set target")).toContainText("×5 ");
   });
 
+  test("shows the error when starting the workout fails", async ({ page }) => {
+    await page.route("**/api/workouts/*/start", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    const exercises = await page.getByText("Set target").count();
+
+    for (let exercise = 0; exercise < exercises; exercise++) {
+      await page.getByText("Set target").first().click();
+      await page.getByRole("button", { name: "Last", exact: true }).click();
+      await page.getByRole("button", { name: "Save" }).click();
+      await expect(page.getByText("Set target")).toHaveCount(exercises - exercise - 1);
+    }
+    await page.getByRole("button", { name: "Start" }).click();
+
+    await expect(page.getByText("Could not start the workout")).toBeVisible();
+    await expect(page.getByText("In progress", { exact: true })).toBeHidden();
+  });
+
   test("starts the workout once every exercise has a target", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
     const exercises = await page.getByText("Set target").count();
