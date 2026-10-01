@@ -5,7 +5,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env["CI"]),
   retries: 0,
-  workers: 1,
+  workers: process.env["CI"] ? 1 : 4,
   use: { baseURL: "http://localhost:3000", trace: "on-first-retry" },
   projects: [
     { name: "setup", testMatch: /.*\.setup\.ts/ },
