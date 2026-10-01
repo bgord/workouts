@@ -48,12 +48,13 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
           title={t("workout.set.remove.title", { setNumber: props.loggedSet.setNumber })}
           tone="danger"
           type="submit"
+          {...ui.describedByHint(action, `workout-set-remove-hint-${props.loggedSet.id}`)}
           {...workoutSetRemove.props.controller}
         >
           <X data-size="sm" />
         </ui.IconButton>
 
-        {mutation.isError && (
+        {!guarded && mutation.isError && (
           <output aria-live="assertive" data-tone="danger">
             {t("workout.set.remove.error")}
           </output>
@@ -81,7 +82,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.stack}
         >
-          {mutation.isError && <ui.DialogError>{t("workout.set.remove.error")}</ui.DialogError>}
+          {guarded && mutation.isError && <ui.DialogError>{t("workout.set.remove.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={workoutSetRemove.disable}>
             <button

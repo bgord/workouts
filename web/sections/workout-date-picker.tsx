@@ -45,16 +45,15 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
         </div>
 
         {custom.on && (
-          <input
-            className="c-input"
-            data-md-self="stretch"
-            data-self="start"
-            max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
-            min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
-            type="date"
-            {...field.input.props}
-            {...custom.props.target}
-          />
+          <div data-md-self="stretch" data-self="start" data-stack="y" {...custom.props.target}>
+            <input
+              className="c-input"
+              max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
+              min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
+              type="date"
+              {...field.input.props}
+            />
+          </div>
         )}
       </div>
     </div>

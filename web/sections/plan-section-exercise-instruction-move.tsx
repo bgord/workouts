@@ -39,6 +39,8 @@ export function PlanSectionExerciseInstructionMove(props: {
   }
 
   const busy = up.isLoading || down.isLoading;
+  const moveUp = props.exerciseInstruction.actions.moveUp;
+  const moveDown = props.exerciseInstruction.actions.moveDown;
 
   return (
     <div data-cross="center" data-shrink="0" data-stack="y">
@@ -47,9 +49,13 @@ export function PlanSectionExerciseInstructionMove(props: {
           name: props.exerciseInstruction.exercise.name,
         })}
         data-width="auto"
-        disabled={!props.exerciseInstruction.actions.moveUp.enabled || busy}
+        disabled={!moveUp.enabled || busy}
         onClick={() => up.mutate()}
-        title={t("plan.section.exercise.move.up.title", { name: props.exerciseInstruction.exercise.name })}
+        title={
+          moveUp.hints[0]
+            ? t(moveUp.hints[0])
+            : t("plan.section.exercise.move.up.title", { name: props.exerciseInstruction.exercise.name })
+        }
         {...bg.Rhythm().times(2).style.height}
       >
         <ChevronUp data-size="sm" />
@@ -62,9 +68,13 @@ export function PlanSectionExerciseInstructionMove(props: {
           name: props.exerciseInstruction.exercise.name,
         })}
         data-width="auto"
-        disabled={!props.exerciseInstruction.actions.moveDown.enabled || busy}
+        disabled={!moveDown.enabled || busy}
         onClick={() => down.mutate()}
-        title={t("plan.section.exercise.move.down.title", { name: props.exerciseInstruction.exercise.name })}
+        title={
+          moveDown.hints[0]
+            ? t(moveDown.hints[0])
+            : t("plan.section.exercise.move.down.title", { name: props.exerciseInstruction.exercise.name })
+        }
         {...bg.Rhythm().times(2).style.height}
       >
         <ChevronDown data-size="sm" />

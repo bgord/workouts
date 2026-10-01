@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-export
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
@@ -65,8 +64,12 @@ export function Workout() {
 
           <WorkoutNote />
 
-          {workout.actions.start.available && <ui.ActionHint {...workout.actions.start} />}
-          {workout.actions.complete.available && <ui.ActionHint {...workout.actions.complete} />}
+          {workout.actions.start.available && (
+            <ui.ActionHint {...workout.actions.start} id="workout-start-hint" />
+          )}
+          {workout.actions.complete.available && (
+            <ui.ActionHint {...workout.actions.complete} id="workout-complete-hint" />
+          )}
         </div>
       </div>
 
@@ -75,7 +78,7 @@ export function Workout() {
       <WorkoutExercisesEmpty />
 
       <div data-stack="y">
-        <ul data-stack="y">
+        <ul aria-label={t("workout.exercises")} data-stack="y">
           {workout.data.exercises.map((exercise, index) => (
             <WorkoutExerciseRow
               exercise={exercise}

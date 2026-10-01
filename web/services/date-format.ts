@@ -53,7 +53,8 @@ export const DateFormat = {
 
   dayWithWeekday: (language: string, date: string) => format(language, date, { ...DAY, weekday: "short" }),
 
-  dayWithTime: (language: string, timestamp: number) => format(language, timestamp, { ...DAY, ...TIME }),
+  dayWithTime: (language: string, timestamp: number, timeZone?: string) =>
+    `${format(language, timestamp, { ...DAY, timeZone })}, ${format(language, timestamp, { ...TIME, timeZone })}`,
 
   time: (language: string, timestamp: number) => format(language, timestamp, TIME),
 

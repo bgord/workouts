@@ -25,7 +25,7 @@
   "dependencies": {
     "@bgord/bun": "1.23.11",
     "@bgord/design": "2.1.2",
-    "@bgord/ui": "0.10.8",
+    "@bgord/ui": "0.10.9",
     "@react-email/components": "1.0.12",
     "@tanstack/react-router": "1.170.38",
     "better-auth": "1.7.6",

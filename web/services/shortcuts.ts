@@ -42,6 +42,7 @@ export const LogBodyWeight: ShortcutType = {
 
 export const GlobalGroup: Array<ShortcutType> = [
   GoToDashboard,
+  GoToWorkouts,
   GoToCatalog,
   GoToPlans,
   GoToMeasurements,

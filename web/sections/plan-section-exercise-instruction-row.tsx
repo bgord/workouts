@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useId } from "react";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
 import { PlanSectionExerciseInstructionEdit } from "./plan-section-exercise-instruction-edit";
@@ -11,9 +12,10 @@ export function PlanSectionExerciseInstructionRow(props: {
   position: number;
 }) {
   const { exerciseInstruction } = props;
+  const label = useId();
 
   return (
-    <ui.HairlineRow data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
+    <ui.HairlineRow aria-labelledby={label} data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
       <PlanSectionExerciseInstructionMove
         exerciseInstruction={exerciseInstruction}
         position={props.position}
@@ -32,6 +34,7 @@ export function PlanSectionExerciseInstructionRow(props: {
 
       <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
         <ui.ExerciseLink
+          id={label}
           params={{ exerciseId: exerciseInstruction.exercise.id }}
           title={exerciseInstruction.exercise.name}
           to="/catalog/exercise/$exerciseId"

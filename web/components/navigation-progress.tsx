@@ -7,5 +7,5 @@ export function NavigationProgress() {
 
   if (!navigating) return null;
 
-  return <div aria-hidden className="c-progress-bar" />;
+  return <div aria-hidden className="c-progress-bar" data-testid="navigation-progress" />;
 }

@@ -15,7 +15,7 @@ export function ExerciseCategoryManage() {
 
   return (
     <>
-      <ui.ActionHint {...exerciseCategories.actions.manage} />
+      <ui.ActionHint {...exerciseCategories.actions.manage} id="exercise-category-manage-hint" />
 
       <button
         className="c-button"
@@ -24,6 +24,7 @@ export function ExerciseCategoryManage() {
         disabled={!exerciseCategories.actions.manage.enabled}
         onClick={exerciseCategoryManage.enable}
         type="button"
+        {...ui.describedByHint(exerciseCategories.actions.manage, "exercise-category-manage-hint")}
         {...exerciseCategoryManage.props.controller}
       >
         <Tags data-size="sm" />

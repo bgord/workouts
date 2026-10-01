@@ -4,7 +4,7 @@ import { Info } from "lucide-react";
 import { Gap } from "./gap";
 
 export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["small"]) {
-  const { hints, ...rest } = props;
+  const { hints, available, enabled, ...rest } = props;
   const t = bg.useTranslations();
   const hint = hints[0];
 
@@ -16,4 +16,8 @@ export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["sma
       {t(hint)}
     </small>
   );
+}
+
+export function describedByHint(action: ActionState, id: string) {
+  return action.hints[0] ? { "aria-describedby": id } : {};
 }

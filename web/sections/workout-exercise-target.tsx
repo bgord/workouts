@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { WeightFormat } from "../services/weight-format";
 
 export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
@@ -29,6 +30,17 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
 
   return (
     <button
+      aria-label={
+        target
+          ? t("workout.target.edit", {
+              target: t("exercise.sets_reps_load", {
+                sets: target.sets,
+                reps: target.reps,
+                load: WeightFormat.kilograms(target.load),
+              }),
+            })
+          : undefined
+      }
       data-bc={target ? undefined : "alpha-strong"}
       data-br="sm"
       data-bs={target ? undefined : "dashed"}

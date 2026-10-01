@@ -28,6 +28,7 @@ export function WorkoutComplete() {
         data-variant="primary"
         disabled={!workout.actions.complete.enabled || mutation.isLoading}
         type="submit"
+        {...ui.describedByHint(workout.actions.complete, "workout-complete-hint")}
       >
         <Check data-size="sm" />
         {t("workout.complete.cta")}

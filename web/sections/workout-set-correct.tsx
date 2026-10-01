@@ -57,12 +57,13 @@ export function WorkoutSetCorrect(
           disabled={!action.enabled}
           onClick={toggle.enable}
           title={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
+          {...ui.describedByHint(action, `workout-set-correct-hint-${props.loggedSet.id}`)}
           {...toggle.props.controller}
         >
           <Pencil data-size="sm" />
         </ui.IconButton>
 
-        <ui.ActionHint {...action} />
+        <ui.ActionHint {...action} id={`workout-set-correct-hint-${props.loggedSet.id}`} />
       </div>
     );
   }
@@ -72,6 +73,7 @@ export function WorkoutSetCorrect(
   return (
     <form
       aria-busy={mutation.isLoading}
+      aria-label={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
       data-grow="1"
       data-md-main="end"
       data-md-wrap="wrap"

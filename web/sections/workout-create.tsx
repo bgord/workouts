@@ -67,7 +67,7 @@ export function WorkoutCreate() {
 
   return (
     <>
-      <ui.ActionHint {...workouts.actions.create} data-md-width="100%" />
+      <ui.ActionHint {...workouts.actions.create} data-md-width="100%" id="workout-create-hint" />
 
       <button
         className="c-button"
@@ -76,6 +76,7 @@ export function WorkoutCreate() {
         disabled={!workouts.actions.create.enabled}
         onClick={workoutCreate.enable}
         type="button"
+        {...ui.describedByHint(workouts.actions.create, "workout-create-hint")}
         {...workoutCreate.props.controller}
       >
         <CalendarPlus data-size="sm" />

@@ -1,5 +1,5 @@
 import * as bg from "@bgord/bun";
-import { render } from "@react-email/components";
+import { render } from "@react-email/render";
 import { createElement } from "react";
 import * as v from "valibot";
 

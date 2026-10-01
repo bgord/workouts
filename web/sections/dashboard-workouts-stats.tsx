@@ -26,6 +26,7 @@ export function DashboardWorkoutStats() {
       >
         {tiles.map((tile, index) => (
           <li
+            aria-labelledby={tile.label}
             data-basis="0"
             data-bcl="alpha-subtle"
             data-bsl="solid"
@@ -38,7 +39,7 @@ export function DashboardWorkoutStats() {
           >
             <ui.TileValue>{tile.value}</ui.TileValue>
 
-            <small>{t(tile.label)}</small>
+            <small id={tile.label}>{t(tile.label)}</small>
           </li>
         ))}
       </ul>

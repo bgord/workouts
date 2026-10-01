@@ -52,12 +52,13 @@ export function PlanDescription() {
             onClick={planDescriptionUpdate.enable}
             title={t("plan.description.label")}
             type="button"
+            {...ui.describedByHint(plan.actions.descriptionSet, "plan-description-hint")}
             {...planDescriptionUpdate.props.controller}
           >
             {plan.data.description ?? t("plan.description.placeholder")}
           </button>
 
-          <ui.ActionHint {...plan.actions.descriptionSet} />
+          <ui.ActionHint {...plan.actions.descriptionSet} id="plan-description-hint" />
         </>
       )}
 

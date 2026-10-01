@@ -41,13 +41,14 @@ export function WorkoutScheduledFor() {
   if (workoutReschedule.off) {
     return (
       <button
+        aria-label={t("workout.reschedule.cta", { date: scheduledOn })}
         data-color="neutral-500"
         data-cursor="pointer"
         data-fs="xs"
         data-hover-color="neutral-200"
         data-self="start"
         onClick={workoutReschedule.enable}
-        title={t("workout.reschedule.cta")}
+        title={t("workout.reschedule.cta", { date: scheduledOn })}
         type="button"
         {...workoutReschedule.props.controller}
       >
@@ -84,6 +85,7 @@ export function WorkoutScheduledFor() {
         title={t("app.save")}
         tone="positive"
         type="submit"
+        {...ui.describedByHint(workout.actions.reschedule, "workout-reschedule-hint")}
       >
         <Check data-size="sm" />
       </ui.IconButton>
@@ -96,7 +98,7 @@ export function WorkoutScheduledFor() {
         <X data-size="sm" />
       </ui.IconButton>
 
-      <ui.ActionHint {...workout.actions.reschedule} data-ml="2" />
+      <ui.ActionHint {...workout.actions.reschedule} data-ml="2" id="workout-reschedule-hint" />
 
       {mutation.isError && (
         <output aria-live="assertive" data-tone="danger" data-width="100%">

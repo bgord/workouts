@@ -9,7 +9,7 @@ export function ShowMoreLink(
   const { more, less, ...button } = rest;
 
   return (
-    <TextLink onClick={toggle.toggle} {...button}>
+    <TextLink aria-expanded={toggle.on} onClick={toggle.toggle} {...button}>
       {toggle.on ? less : more}
       {toggle.on ? <ChevronUp data-size="xs" /> : <ChevronDown data-size="xs" />}
     </TextLink>

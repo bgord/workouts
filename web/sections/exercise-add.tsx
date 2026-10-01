@@ -44,7 +44,7 @@ export function ExerciseAdd() {
 
   return (
     <>
-      <ui.ActionHint {...exercises.actions.add} />
+      <ui.ActionHint {...exercises.actions.add} id="exercise-add-hint" />
 
       <button
         className="c-button"
@@ -53,6 +53,7 @@ export function ExerciseAdd() {
         disabled={!exercises.actions.add.enabled}
         onClick={exerciseAdd.enable}
         type="button"
+        {...ui.describedByHint(exercises.actions.add, "exercise-add-hint")}
         {...exerciseAdd.props.controller}
       >
         <Plus data-size="sm" />

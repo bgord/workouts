@@ -96,14 +96,17 @@ function ExercisePickerOptions(props: ExercisePickerOptionsProps) {
           >
             <input
               checked={props.value === exercise.id}
-              className="c-visually-hidden"
+              data-cursor="pointer"
+              data-inset="0"
+              data-opacity="none"
+              data-position="absolute"
               name={props.name}
               onChange={() => props.onChange(exercise)}
               type="radio"
               value={exercise.id}
             />
 
-            <span data-shrink="0" data-stack="x">
+            <span aria-hidden data-shrink="0" data-stack="x">
               <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
             </span>
 

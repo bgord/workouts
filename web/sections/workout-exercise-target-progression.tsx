@@ -40,15 +40,18 @@ export function WorkoutExerciseTargetProgression(
       ? label.reps(option.reps - progression.last.reps)
       : label.load(option.load - progression.last.load);
 
+  const title = `${t("workout.target.progression.title")} · ${t(`progression.method.${method}`)}`;
+
   return (
-    <div
+    <fieldset
+      aria-label={title}
       data-md-ml="1"
       data-md-pl="8"
       data-pl="12"
       data-stack="x"
       data-transform="font-variant-numeric"
       data-wrap="wrap"
-      title={`${t("workout.target.progression.title")} · ${t(`progression.method.${method}`)}`}
+      title={title}
       {...ui.Gap.cluster}
     >
       {progression.regress && (
@@ -78,6 +81,6 @@ export function WorkoutExerciseTargetProgression(
           {step(progression.progress)}
         </ui.ChipButton>
       )}
-    </div>
+    </fieldset>
   );
 }

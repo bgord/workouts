@@ -1,33 +1,43 @@
 import * as bg from "@bgord/ui";
 import { CircleAlert, RotateCcw } from "lucide-react";
+import { createContext, useContext } from "react";
 import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
 import { Gap } from "./gap";
 
+const DialogHeaderId = createContext<string | undefined>(undefined);
+
 export function Dialog(props: bg.DialogPropsType) {
+  const header = `${props.props.target.id}-header`;
+
   return (
-    <bg.Dialog
-      data-md-mt="4"
-      data-md-p="3"
-      data-mt="8"
-      data-overflow="auto"
-      data-wrap="nowrap"
-      style={{
-        ...bg.Rhythm().times(50).width,
-        maxHeight: "calc(100% - 4rem - env(safe-area-inset-top))",
-        maxWidth: "calc(100% - 2rem)",
-        top: "env(safe-area-inset-top)",
-      }}
-      {...Gap.stack}
-      {...props}
-    />
+    <DialogHeaderId.Provider value={header}>
+      <bg.Dialog
+        aria-labelledby={header}
+        data-md-mt="4"
+        data-md-p="3"
+        data-mt="8"
+        data-overflow="auto"
+        data-wrap="nowrap"
+        style={{
+          ...bg.Rhythm().times(50).width,
+          maxHeight: "calc(100% - 4rem - env(safe-area-inset-top))",
+          maxWidth: "calc(100% - 2rem)",
+          top: "env(safe-area-inset-top)",
+        }}
+        {...Gap.stack}
+        {...props}
+      />
+    </DialogHeaderId.Provider>
   );
 }
 
 export function DialogHeader(props: { disabled?: boolean; onClose: () => void; children: React.ReactNode }) {
+  const id = useContext(DialogHeaderId);
+
   return (
     <div data-main="between" data-stack="x" {...Gap.related}>
-      <strong data-color="neutral-100" data-transform="truncate">
+      <strong data-color="neutral-100" data-transform="truncate" id={id}>
         {props.children}
       </strong>
       <ButtonClose disabled={props.disabled} onClick={props.onClose} />

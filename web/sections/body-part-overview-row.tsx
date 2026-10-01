@@ -1,5 +1,6 @@
 // cSpell:ignore sparkline
 import * as bg from "@bgord/ui";
+import { useId } from "react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
@@ -9,17 +10,28 @@ import { BodyPartMeasure } from "./body-part-measure";
 export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const label = useId();
   const bodyPartHistory = bg.useToggle({ name: `body-part-history-${props.id}` });
 
   const [latest, previous] = props.measurements;
 
   return (
-    <ui.HairlineRow data-stack="y" first={props.first} {...ui.Spacing.row} {...ui.Gap.related}>
+    <ui.HairlineRow
+      aria-labelledby={label}
+      data-stack="y"
+      first={props.first}
+      {...ui.Spacing.row}
+      {...ui.Gap.related}
+    >
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
-        <ui.ChevronToggle {...bodyPartHistory} disabled={!latest} />
+        <ui.ChevronToggle
+          disabled={!latest}
+          label={t("app.details", { name: props.name })}
+          {...bodyPartHistory}
+        />
 
         <span data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-          <span data-color="neutral-100" data-transform="truncate">
+          <span data-color="neutral-100" data-transform="truncate" id={label}>
             {props.name}
           </span>
 
@@ -62,7 +74,12 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
       </div>
 
       {bodyPartHistory.on && (
-        <ul data-stack="y" {...ui.Spacing.inset} {...bodyPartHistory.props.target}>
+        <ul
+          aria-label={t("app.details", { name: props.name })}
+          data-stack="y"
+          {...ui.Spacing.inset}
+          {...bodyPartHistory.props.target}
+        >
           {props.measurements.map((measurement, index) => (
             <BodyPartHistoryRow
               key={measurement.id}

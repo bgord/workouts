@@ -41,7 +41,7 @@ export function ExerciseCategories() {
       <div data-stack="y" {...ui.Gap.cluster}>
         <h3>{t("exercise.categories.header")}</h3>
 
-        <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+        <ul aria-label={t("exercise.categories.header")} data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           {assigned.map((category) => (
             <li key={category.id}>
               <ui.ChipLink search={{ category: category.id }} to="/catalog">
@@ -61,7 +61,7 @@ export function ExerciseCategories() {
 
         {assignment.off && (
           <div data-stack="x" {...ui.Gap.related}>
-            <ui.ActionHint {...action} />
+            <ui.ActionHint {...action} id="exercise-category-assign-hint" />
 
             <button
               className="c-button"
@@ -69,6 +69,7 @@ export function ExerciseCategories() {
               disabled={!action.enabled}
               onClick={assignment.enable}
               type="button"
+              {...ui.describedByHint(action, "exercise-category-assign-hint")}
               {...assignment.props.controller}
             >
               <Plus data-size="sm" />
@@ -127,7 +128,7 @@ export function ExerciseCategories() {
         </form>
       )}
 
-      <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+      <ul aria-label={t("exercise.categories.header")} data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
         {assigned.map((category) => (
           <li key={category.id}>
             <ui.Chip>

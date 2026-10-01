@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { BodyWeightMeasure } from "../sections/body-weight-measure";

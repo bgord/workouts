@@ -17,7 +17,9 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
 
   const nameInput = useRef<HTMLInputElement>(null);
 
-  const visible = all.on ? exerciseCategories.data : exerciseCategories.data.slice(0, 5);
+  const visible = all.on
+    ? exerciseCategories.data
+    : exerciseCategories.data.filter((category, index) => index < 5 || category.id === search.category);
 
   const hidden = exerciseCategories.data.length - visible.length;
 
@@ -37,10 +39,10 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
           <input
+            aria-label={t("exercise.catalog.name.label")}
             className="c-input"
             data-pl="8"
             data-width="100%"
-            id={ExerciseCatalogFiltersForm.Form.name.field.name}
             name={ExerciseCatalogFiltersForm.Form.name.field.name}
             onChange={(event) =>
               navigate({

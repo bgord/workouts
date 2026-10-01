@@ -22,13 +22,14 @@ export function ExerciseDelete() {
 
   return (
     <div data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
-      <ui.ActionHint {...exercise.actions.delete} data-md-disp="none" />
+      <ui.ActionHint {...exercise.actions.delete} data-md-disp="none" id="exercise-delete-hint" />
 
       <ui.IconButton
         disabled={!exercise.actions.delete.enabled}
         onClick={exerciseDelete.enable}
         title={t("exercise.delete.title", { name: exercise.data.name })}
         tone="danger"
+        {...ui.describedByHint(exercise.actions.delete, "exercise-delete-hint")}
         {...exerciseDelete.props.controller}
       >
         <Trash2 data-size="sm" />

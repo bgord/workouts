@@ -35,15 +35,21 @@ export function WorkoutExerciseMove(props: {
   if (!(props.active && props.exercise.actions.moveUp.available)) return props.children;
 
   const busy = up.isLoading || down.isLoading;
+  const moveUp = props.exercise.actions.moveUp;
+  const moveDown = props.exercise.actions.moveDown;
 
   return (
     <div data-cross="center" data-shrink="0" data-stack="y">
       <ui.IconButton
         aria-label={t("workout.exercise.move.up.title", { name: props.exercise.exerciseName })}
         data-width="auto"
-        disabled={!props.exercise.actions.moveUp.enabled || busy}
+        disabled={!moveUp.enabled || busy}
         onClick={() => up.mutate()}
-        title={t("workout.exercise.move.up.title", { name: props.exercise.exerciseName })}
+        title={
+          moveUp.hints[0]
+            ? t(moveUp.hints[0])
+            : t("workout.exercise.move.up.title", { name: props.exercise.exerciseName })
+        }
         {...bg.Rhythm().times(2).style.height}
       >
         <ChevronUp data-size="sm" />
@@ -54,9 +60,13 @@ export function WorkoutExerciseMove(props: {
       <ui.IconButton
         aria-label={t("workout.exercise.move.down.title", { name: props.exercise.exerciseName })}
         data-width="auto"
-        disabled={!props.exercise.actions.moveDown.enabled || busy}
+        disabled={!moveDown.enabled || busy}
         onClick={() => down.mutate()}
-        title={t("workout.exercise.move.down.title", { name: props.exercise.exerciseName })}
+        title={
+          moveDown.hints[0]
+            ? t(moveDown.hints[0])
+            : t("workout.exercise.move.down.title", { name: props.exercise.exerciseName })
+        }
         {...bg.Rhythm().times(2).style.height}
       >
         <ChevronDown data-size="sm" />

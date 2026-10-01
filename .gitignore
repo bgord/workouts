@@ -11,11 +11,14 @@ jobs.db*
 meta.json
 node_modules/
 output/
+playwright-report/
 public/*.js
 public/*.js.map
 public/main.min.css
 reports/
 sqlite.db*
+sqlite.e2e.db*
+.auth
 test-results/
 tmp/
 tsconfig.tsbuildinfo

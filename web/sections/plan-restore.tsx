@@ -32,6 +32,7 @@ export function PlanRestore() {
         data-variant="primary"
         disabled={!plan.actions.restore.enabled || mutation.isLoading}
         type="submit"
+        {...ui.describedByHint(plan.actions.restore, "plan-restore-hint")}
       >
         <ArchiveRestore data-size="sm" />
         {t("plan.restore.cta")}

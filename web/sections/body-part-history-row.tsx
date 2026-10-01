@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { DateFormat } from "../services/date-format";
+import { LengthFormat } from "../services/length-format";
 import { BodyPartMeasurementCorrect } from "./body-part-measurement-correct";
 import { BodyPartMeasurementRemove } from "./body-part-measurement-remove";
 
@@ -13,6 +14,13 @@ export function BodyPartHistoryRow(props: {
   const language = bg.useLanguage();
   const bodyPartMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
 
+  const label = t("measurements.body_parts.correct.title", {
+    date: DateFormat.plainDay(language, props.measurement.measuredOn),
+    value: t("measurements.body_parts.value", {
+      value: LengthFormat.centimeters(props.measurement.value).toFixed(1),
+    }),
+  });
+
   return (
     <ui.HairlineRow data-cross="center" data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
       {bodyPartMeasurementCorrect.on && (
@@ -22,13 +30,14 @@ export function BodyPartHistoryRow(props: {
       {bodyPartMeasurementCorrect.off && (
         <>
           <button
+            aria-label={label}
             data-cross="center"
             data-cursor="pointer"
             data-grow="1"
             data-minw="0"
             data-stack="x"
             onClick={bodyPartMeasurementCorrect.enable}
-            title={t("measurements.body_parts.correct.title")}
+            title={label}
             type="button"
             {...ui.Gap.cluster}
             {...bodyPartMeasurementCorrect.props.controller}

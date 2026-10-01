@@ -5,7 +5,7 @@ export function createFileInspection(Env: EnvironmentResultType): bg.FileInspect
   return {
     [bg.NodeEnvironmentEnum.local]: new bg.FileInspectionAdapter(),
     [bg.NodeEnvironmentEnum.test]: new bg.FileInspectionNoopAdapter({ exists: true }),
-    [bg.NodeEnvironmentEnum.staging]: new bg.FileInspectionNoopAdapter({ exists: true }),
+    [bg.NodeEnvironmentEnum.staging]: new bg.FileInspectionAdapter(),
     [bg.NodeEnvironmentEnum.production]: new bg.FileInspectionAdapter(),
   }[Env.type];
 }

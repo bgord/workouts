@@ -1,4 +1,5 @@
-import { Column, Row } from "@react-email/components";
+import { Column } from "@react-email/column";
+import { Row } from "@react-email/row";
 import { theme } from "../theme";
 
 const styles = {

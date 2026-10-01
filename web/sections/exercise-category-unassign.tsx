@@ -26,6 +26,7 @@ export function ExerciseCategoryUnassign(props: ExerciseCategory) {
 
   return (
     <button
+      aria-label={t("exercise.category.unassign.cta", { name: props.name })}
       data-color="neutral-400"
       data-cursor="pointer"
       data-hover-color="danger-400"

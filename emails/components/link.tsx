@@ -1,4 +1,4 @@
-import { Link as EmailLink } from "@react-email/components";
+import { Link as EmailLink } from "@react-email/link";
 import { theme } from "../theme";
 
 const styles = {

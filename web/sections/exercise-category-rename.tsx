@@ -32,13 +32,14 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
   if (toggle.off) {
     return (
       <button
+        aria-label={t("exercise.category.rename.cta", { name: props.name })}
         data-color="neutral-100"
         data-cursor="pointer"
         data-hover-color="brand-300"
         data-transform="truncate"
         disabled={!exerciseCategories.actions.rename.enabled}
         onClick={toggle.enable}
-        title={t("exercise.category.rename.cta")}
+        title={t("exercise.category.rename.cta", { name: props.name })}
         type="button"
         {...toggle.props.controller}
       >
@@ -50,6 +51,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
   return (
     <form
       aria-busy={mutation.isLoading}
+      aria-label={t("exercise.category.rename.cta", { name: props.name })}
       data-grow="1"
       data-minw="0"
       data-stack="y"

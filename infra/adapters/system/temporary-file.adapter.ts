@@ -18,7 +18,7 @@ export function createTemporaryFile(Env: EnvironmentResultType, deps: Dependenci
   return {
     [bg.NodeEnvironmentEnum.local]: new bg.TemporaryFileAbsoluteAdapter(local, deps),
     [bg.NodeEnvironmentEnum.test]: new bg.TemporaryFileNoopAdapter(local),
-    [bg.NodeEnvironmentEnum.staging]: new bg.TemporaryFileNoopAdapter(local),
+    [bg.NodeEnvironmentEnum.staging]: new bg.TemporaryFileAbsoluteAdapter(local, deps),
     [bg.NodeEnvironmentEnum.production]: new bg.TemporaryFileAbsoluteAdapter(production, deps),
   }[Env.type];
 }

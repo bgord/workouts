@@ -6,6 +6,7 @@ import { WorkoutHistoryEmpty } from "./workout-history-empty";
 import { WorkoutHistoryFilters } from "./workout-history-filters";
 
 export function WorkoutHistory() {
+  const t = bg.useTranslations();
   const { workouts } = workoutsRoute.useLoaderData();
   const navigate = workoutsRoute.useNavigate();
   const search = workoutsRoute.useSearch();
@@ -30,7 +31,7 @@ export function WorkoutHistory() {
 
       <WorkoutHistoryEmpty matching={matching} />
 
-      <ul data-stack="y" {...ui.Gap.cluster}>
+      <ul aria-label={t("workout.list.header")} data-stack="y" {...ui.Gap.cluster}>
         {matching.map((workout) => (
           <ui.WorkoutCard key={workout.id} {...workout} />
         ))}

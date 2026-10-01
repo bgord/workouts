@@ -18,22 +18,24 @@ export function createLogger(Env: EnvironmentResultType, deps: Dependencies) {
     new bg.WoodchopperSamplingEveryNth({ n: tools.Int.positive(10) }),
   ]);
 
+  const local = new bg.Woodchopper(
+    {
+      app: name,
+      environment: Env.type,
+      level: Env.LOGS_LEVEL,
+      redactor,
+      dispatcher: new bg.WoodchopperDispatcherSync(
+        new bg.WoodchopperSinkBufferedStdout(new bg.WoodchopperFormatterHuman()),
+      ),
+      diagnostics: new bg.WoodchopperDiagnosticsConsoleError(),
+    },
+    deps,
+  );
+
   return {
-    [bg.NodeEnvironmentEnum.local]: new bg.Woodchopper(
-      {
-        app: name,
-        environment: Env.type,
-        level: Env.LOGS_LEVEL,
-        redactor,
-        dispatcher: new bg.WoodchopperDispatcherSync(
-          new bg.WoodchopperSinkBufferedStdout(new bg.WoodchopperFormatterHuman()),
-        ),
-        diagnostics: new bg.WoodchopperDiagnosticsConsoleError(),
-      },
-      deps,
-    ),
+    [bg.NodeEnvironmentEnum.local]: local,
     [bg.NodeEnvironmentEnum.test]: new bg.LoggerNoopAdapter(),
-    [bg.NodeEnvironmentEnum.staging]: new bg.LoggerNoopAdapter(),
+    [bg.NodeEnvironmentEnum.staging]: local,
     [bg.NodeEnvironmentEnum.production]: new bg.Woodchopper(
       {
         app: name,

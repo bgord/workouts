@@ -115,6 +115,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
             title={t("app.save")}
             tone="positive"
             type="submit"
+            {...ui.describedByHint(action, `workout-exercise-target-set-hint-${props.exercise.id}`)}
           >
             <Check data-size="sm" />
           </ui.IconButton>
@@ -124,7 +125,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           </ui.IconButton>
         </div>
 
-        <ui.ActionHint {...action} />
+        <ui.ActionHint {...action} id={`workout-exercise-target-set-hint-${props.exercise.id}`} />
 
         {mutation.isError && (
           <output aria-live="assertive" data-tone="danger" data-width="100%">

@@ -29,12 +29,13 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
   if (toggle.off) {
     return (
       <button
+        aria-label={t("measurements.body_parts.rename.cta", { name: props.name })}
         data-color="neutral-100"
         data-cursor="pointer"
         data-hover-color="brand-300"
         data-transform="truncate"
         onClick={toggle.enable}
-        title={t("measurements.body_parts.rename.cta")}
+        title={t("measurements.body_parts.rename.cta", { name: props.name })}
         type="button"
         {...toggle.props.controller}
       >
@@ -46,6 +47,7 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
   return (
     <form
       aria-busy={mutation.isLoading}
+      aria-label={t("measurements.body_parts.rename.cta", { name: props.name })}
       data-grow="1"
       data-minw="0"
       data-stack="y"
