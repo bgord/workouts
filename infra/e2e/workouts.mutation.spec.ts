@@ -6,6 +6,18 @@ test.describe("Workouts - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });
   test.describe.configure({ mode: "serial" });
 
+  test("rejects a date beyond the scheduling horizon", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+    await page.getByRole("button", { name: "Pick" }).click();
+    await page.locator('input[type="date"]').fill("2099-01-01");
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+
+    await expect(page.locator('input[type="date"]:invalid')).toHaveCount(1);
+    await expect(page).toHaveURL(/\/workouts$/);
+  });
+
   test("schedules a workout", async ({ page }) => {
     await page.goto("/workouts");
 
@@ -15,6 +27,30 @@ test.describe("Workouts - athlete", () => {
     await page.reload();
 
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+  });
+
+  test("schedules a workout for a chosen section and day", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+    await page
+      .locator("#workout-create")
+      .getByText(fixtures.athlete.plan.sections.legs.name, { exact: true })
+      .click();
+    await page.getByRole("button", { name: "Tomorrow" }).click();
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+    await expect(page).toHaveURL(/\/workouts\/(?!84d48b25)[0-9a-f-]{36}/);
+    await page.reload();
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: `PPL – ${fixtures.athlete.plan.sections.legs.name}` }),
+    ).toBeVisible();
+    await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+
+    await page.getByRole("button", { name: "Discard" }).click();
+    await page.getByRole("button", { name: "Discard", exact: true }).last().click();
+
+    await expect(page).toHaveURL(/\/workouts$/);
   });
 
   test("blocks starting a workout with no exercises", async ({ page }) => {
@@ -79,42 +115,6 @@ test.describe("Workouts - athlete", () => {
         hasText: /Draft$/,
       }),
     ).toHaveCount(0);
-  });
-
-  test("rejects a date beyond the scheduling horizon", async ({ page }) => {
-    await page.goto("/workouts");
-
-    await page.getByRole("button", { name: "New workout" }).click();
-    await page.getByRole("button", { name: "Pick" }).click();
-    await page.locator('input[type="date"]').fill("2099-01-01");
-    await page.getByRole("button", { name: "Schedule", exact: true }).click();
-
-    await expect(page.locator('input[type="date"]:invalid')).toHaveCount(1);
-    await expect(page).toHaveURL(/\/workouts$/);
-  });
-
-  test("schedules a workout for a chosen section and day", async ({ page }) => {
-    await page.goto("/workouts");
-
-    await page.getByRole("button", { name: "New workout" }).click();
-    await page
-      .locator("#workout-create")
-      .getByText(fixtures.athlete.plan.sections.legs.name, { exact: true })
-      .click();
-    await page.getByRole("button", { name: "Tomorrow" }).click();
-    await page.getByRole("button", { name: "Schedule", exact: true }).click();
-    await expect(page).toHaveURL(/\/workouts\/(?!84d48b25)[0-9a-f-]{36}/);
-    await page.reload();
-
-    await expect(
-      page.getByRole("heading", { level: 1, name: `PPL – ${fixtures.athlete.plan.sections.legs.name}` }),
-    ).toBeVisible();
-    await expect(page.getByText("Draft", { exact: true })).toBeVisible();
-
-    await page.getByRole("button", { name: "Discard" }).click();
-    await page.getByRole("button", { name: "Discard", exact: true }).last().click();
-
-    await expect(page).toHaveURL(/\/workouts$/);
   });
 
   test("blocks starting until every exercise has a target", async ({ page }) => {
@@ -343,6 +343,40 @@ test.describe("Workouts - active", () => {
   test.use({ storageState: ".auth/active.json" });
   test.describe.configure({ mode: "serial" });
 
+  test("blocks logging a set with reps missing or out of range", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+
+    const panel = page.getByRole("dialog");
+
+    await panel.getByRole("spinbutton", { name: "Reps" }).fill("");
+
+    await expect(panel.getByRole("button", { name: "Log set", exact: true })).toBeDisabled();
+
+    await panel.getByRole("spinbutton", { name: "Reps" }).fill("101");
+
+    await expect(panel.getByRole("button", { name: "Log set", exact: true })).toBeDisabled();
+  });
+
+  test("logs a set with reps in reserve", async ({ page }) => {
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }),
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+    await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
+    await page.keyboard.press("Escape");
+    await page.reload();
+    await row.getByRole("button").first().click();
+
+    await expect(row.getByText("RIR 1")).toBeVisible();
+  });
+
   test("rejects a logged set correction out of range", async ({ page }) => {
     const row = page.getByRole("listitem").filter({
       has: page.getByRole("link", {
@@ -408,40 +442,6 @@ test.describe("Workouts - active", () => {
 
     await expect(row.getByRole("button", { name: "Remove set 4" })).toBeHidden();
     await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
-  });
-
-  test("blocks logging a set with reps missing or out of range", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
-
-    const panel = page.getByRole("dialog");
-
-    await panel.getByRole("spinbutton", { name: "Reps" }).fill("");
-
-    await expect(panel.getByRole("button", { name: "Log set", exact: true })).toBeDisabled();
-
-    await panel.getByRole("spinbutton", { name: "Reps" }).fill("101");
-
-    await expect(panel.getByRole("button", { name: "Log set", exact: true })).toBeDisabled();
-  });
-
-  test("logs a set with reps in reserve", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }),
-    });
-
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
-    await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
-    await page.keyboard.press("Escape");
-    await page.reload();
-    await row.getByRole("button").first().click();
-
-    await expect(row.getByText("RIR 1")).toBeVisible();
   });
 
   test("blocks saving an empty note", async ({ page }) => {
