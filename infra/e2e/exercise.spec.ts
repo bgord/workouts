@@ -4,6 +4,14 @@ import { expect, test } from "./test";
 test.describe("Exercise - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });
 
+  test("shows the empty state for an exercise that was never trained", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.bicepsCurlBarStraight.id}`);
+
+    await expect(page.getByText("No sessions logged yet")).toBeVisible();
+    await expect(page.getByRole("img", { name: "Progress" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "History" })).toBeHidden();
+  });
+
   test("shows the exercise details", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
@@ -56,14 +64,6 @@ test.describe("Exercise - athlete", () => {
     await page.reload();
 
     await expect(history.getByRole("listitem")).toHaveCount(8);
-  });
-
-  test("shows the empty state for an exercise that was never trained", async ({ page }) => {
-    await page.goto(`/catalog/exercise/${fixtures.exercises.bicepsCurlBarStraight.id}`);
-
-    await expect(page.getByText("No sessions logged yet")).toBeVisible();
-    await expect(page.getByRole("img", { name: "Progress" })).toBeHidden();
-    await expect(page.getByRole("heading", { name: "History" })).toBeHidden();
   });
 });
 
