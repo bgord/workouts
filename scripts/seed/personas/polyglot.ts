@@ -2,16 +2,16 @@ import * as tools from "@bgord/tools";
 import * as Preferences from "+preferences";
 import type { BootstrapType } from "+infra/bootstrap";
 import { createAccount } from "../account";
-import * as fixtures from "../fixtures";
+import type * as fixtures from "../fixtures";
 import { setLanguage, setWeeklySummary } from "../preferences";
 
-export async function seedPolyglot(di: BootstrapType) {
-  const userId = await createAccount(di, fixtures.polyglot.email);
+export async function seedPolyglot(di: BootstrapType, persona: typeof fixtures.polyglot) {
+  const userId = await createAccount(di, persona.email);
 
   await Bun.sleep(tools.Duration.Ms(10).ms);
 
-  await setLanguage(di, userId, fixtures.polyglot.language);
+  await setLanguage(di, userId, persona.language);
   await setWeeklySummary(di, userId, Preferences.VO.WeeklySummaryOptions.off);
 
-  console.log(`[✓] ${fixtures.polyglot.email} language and weekly summary set`);
+  console.log(`[✓] ${persona.email} language and weekly summary set`);
 }

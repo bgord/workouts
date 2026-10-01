@@ -3,24 +3,24 @@ import * as tools from "@bgord/tools";
 import type { BootstrapType } from "+infra/bootstrap";
 import { createAccount } from "../account";
 import { now, withClock } from "../clock";
-import * as fixtures from "../fixtures";
+import type * as fixtures from "../fixtures";
 import { draftPlan, finalizePlan } from "../plans";
 import { createWorkout, logSets, startWorkout, targetWorkout } from "../workouts";
 
-export async function seedActive(di: BootstrapType) {
-  const userId = await createAccount(di, fixtures.active.email);
+export async function seedActive(di: BootstrapType, persona: typeof fixtures.active) {
+  const userId = await createAccount(di, persona.email);
   const clock = new bg.ClockFixedAdapter(now.subtract(tools.Duration.Minutes(30)));
 
   await withClock(clock, async () => {
-    await draftPlan(di, userId, fixtures.active.plan);
-    await finalizePlan(di, userId, fixtures.active.plan);
+    await draftPlan(di, userId, persona.plan);
+    await finalizePlan(di, userId, persona.plan);
 
     await Bun.sleep(tools.Duration.Ms(10).ms);
 
     const workoutId = await createWorkout(di, userId, {
-      id: fixtures.active.workout.id,
-      planId: fixtures.active.plan.id,
-      planSectionId: fixtures.active.plan.sections.push.id,
+      id: persona.workout.id,
+      planId: persona.plan.id,
+      planSectionId: persona.plan.sections.push.id,
       scheduledFor: tools.Day.fromTimestamp(now).toIsoId(),
     });
 
@@ -59,5 +59,5 @@ export async function seedActive(di: BootstrapType) {
     );
   });
 
-  console.log(`[✓] ${fixtures.active.email} plan finalized, workout in progress`);
+  console.log(`[✓] ${persona.email} plan finalized, workout in progress`);
 }

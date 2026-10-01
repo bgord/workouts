@@ -10,6 +10,7 @@ import { registerEventHandlers } from "+infra/register-event-handlers";
 import * as Schema from "+infra/schema";
 import { seedCatalog } from "./seed/catalog";
 import { Clock, now, withClock } from "./seed/clock";
+import * as fixtures from "./seed/fixtures";
 import { seedActive } from "./seed/personas/active";
 import { seedArchivist } from "./seed/personas/archivist";
 import { seedAthlete } from "./seed/personas/athlete";
@@ -38,13 +39,19 @@ void (async function main() {
   await bg.CorrelationStorage.run(correlationId, async () => {
     await withClock(new bg.ClockFixedAdapter(now.subtract(tools.Duration.Weeks(10))), () => seedCatalog(di));
 
-    await seedEmpty(di);
-    await seedBuilder(di);
+    await seedEmpty(di, fixtures.empty);
+    await seedEmpty(di, fixtures.emptyMutation);
+    await seedBuilder(di, fixtures.builder);
+    await seedBuilder(di, fixtures.builderMutation);
     await seedDrafter(di);
-    await seedAthlete(di);
-    await seedActive(di);
-    await seedArchivist(di);
-    await seedPolyglot(di);
+    await seedAthlete(di, fixtures.athlete);
+    await seedAthlete(di, fixtures.athleteMutation);
+    await seedActive(di, fixtures.active);
+    await seedActive(di, fixtures.activeMutation);
+    await seedArchivist(di, fixtures.archivist);
+    await seedArchivist(di, fixtures.archivistMutation);
+    await seedPolyglot(di, fixtures.polyglot);
+    await seedPolyglot(di, fixtures.polyglotMutation);
     await seedDisposable(di);
     await seedHoarder(di);
     await seedPocket(di);

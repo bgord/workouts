@@ -7,7 +7,7 @@ import * as Workouts from "+workouts";
 import type { BootstrapType } from "+infra/bootstrap";
 import { createAccount } from "../account";
 import { now, withClock } from "../clock";
-import * as fixtures from "../fixtures";
+import type * as fixtures from "../fixtures";
 import { defineBodyPart, measureBodyPart, measureBodyWeight, setBodyWeightReference } from "../measurements";
 import { draftPlan, finalizePlan } from "../plans";
 import {
@@ -19,33 +19,33 @@ import {
   targetWorkout,
 } from "../workouts";
 
-const { push, pull, legs } = fixtures.athlete.plan.sections;
-
-const rotation = [push.id, pull.id, legs.id];
-
-const schedule = new Map([
-  [1, push],
-  [3, pull],
-  [6, legs],
-]);
-
 const bodyWeightWobble = [0, 0.3, -0.2, 0.4, -0.1, 0.2, -0.3];
 
 const bodyPartWobble = [0, 2, -1];
 
-const bodyPartTrends = [
-  { bodyPart: fixtures.athlete.bodyParts.waist, from: 820, to: 812 },
-  { bodyPart: fixtures.athlete.bodyParts.chest, from: 1000, to: 1015 },
-  { bodyPart: fixtures.athlete.bodyParts.armRight, from: 360, to: 368 },
-  { bodyPart: fixtures.athlete.bodyParts.thighRight, from: 580, to: 590 },
-];
+export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.athlete) {
+  const { push, pull, legs } = persona.plan.sections;
 
-export async function seedAthlete(di: BootstrapType) {
-  const userId = await createAccount(di, fixtures.athlete.email);
+  const rotation = [push.id, pull.id, legs.id];
+
+  const schedule = new Map([
+    [1, push],
+    [3, pull],
+    [6, legs],
+  ]);
+
+  const bodyPartTrends = [
+    { bodyPart: persona.bodyParts.waist, from: 820, to: 812 },
+    { bodyPart: persona.bodyParts.chest, from: 1000, to: 1015 },
+    { bodyPart: persona.bodyParts.armRight, from: 360, to: 368 },
+    { bodyPart: persona.bodyParts.thighRight, from: 580, to: 590 },
+  ];
+
+  const userId = await createAccount(di, persona.email);
 
   await withClock(new bg.ClockFixedAdapter(now.subtract(tools.Duration.Weeks(9))), async () => {
-    await draftPlan(di, userId, fixtures.athlete.plan);
-    await finalizePlan(di, userId, fixtures.athlete.plan);
+    await draftPlan(di, userId, persona.plan);
+    await finalizePlan(di, userId, persona.plan);
   });
 
   await Bun.sleep(tools.Duration.Ms(10).ms);
@@ -65,7 +65,7 @@ export async function seedAthlete(di: BootstrapType) {
     await withClock(clock, async () => {
       await createWorkout(di, userId, {
         id: workoutId,
-        planId: fixtures.athlete.plan.id,
+        planId: persona.plan.id,
         planSectionId: section.id,
         scheduledFor: day.toIsoId(),
       });
@@ -129,7 +129,7 @@ export async function seedAthlete(di: BootstrapType) {
     });
   }
 
-  for (const bodyPart of Object.values(fixtures.athlete.bodyParts)) {
+  for (const bodyPart of Object.values(persona.bodyParts)) {
     await defineBodyPart(di, userId, bodyPart);
   }
 
@@ -153,11 +153,11 @@ export async function seedAthlete(di: BootstrapType) {
   }
 
   await createWorkout(di, userId, {
-    id: fixtures.athlete.scheduledWorkout.id,
-    planId: fixtures.athlete.plan.id,
+    id: persona.scheduledWorkout.id,
+    planId: persona.plan.id,
     planSectionId: next,
     scheduledFor: tools.Day.fromTimestamp(now).toIsoId(),
   });
 
-  console.log(`[✓] ${fixtures.athlete.email} trained, measured, next workout scheduled`);
+  console.log(`[✓] ${persona.email} trained, measured, next workout scheduled`);
 }

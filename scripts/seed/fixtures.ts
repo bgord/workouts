@@ -459,6 +459,8 @@ export const fullBody = {
 
 export const empty = { email: "empty@example.com" };
 
+export const emptyMutation = { email: "empty-mutation@example.com" };
+
 export const builder = {
   email: "builder@example.com",
   plan: {
@@ -469,6 +471,20 @@ export const builder = {
       push: { id: "05568f55-10b2-407b-a001-e9fac7ac5204", ...ppl.sections.push },
       pull: { id: "949e2de0-5a92-45c7-90de-0884e599e2a2", ...ppl.sections.pull },
       legs: { id: "e31bacbf-ff60-42a2-a617-d1cb960f98b6", ...ppl.sections.legs },
+    },
+  },
+};
+
+export const builderMutation = {
+  email: "builder-mutation@example.com",
+  plan: {
+    id: "99c624ce-4cde-4fb8-9a7b-eb5491ee07e5",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "63099b9f-fe51-4ff8-aead-12de1b1e7274", ...ppl.sections.push },
+      pull: { id: "bd4da05d-9a07-4aa9-9d1b-765cd1d30064", ...ppl.sections.pull },
+      legs: { id: "47777a35-1cff-40f8-96b7-b72e0612a080", ...ppl.sections.legs },
     },
   },
 };
@@ -509,6 +525,28 @@ export const athlete = {
   },
 };
 
+export const athleteMutation = {
+  email: "athlete-mutation@example.com",
+  scheduledWorkout: { id: "cd6aba9a-80fb-48c9-9fa0-37adb5915031" },
+  bodyParts: {
+    waist: { id: "cab2b985-aa02-415d-8bae-3a175ae7f21c", name: "Waist" },
+    chest: { id: "79e2e5d0-3bde-48bc-a580-eedf7d8191a7", name: "Chest" },
+    armRight: { id: "e7f38be8-c8bb-424e-a05a-d5d2352a192b", name: "Arm (right)" },
+    thighRight: { id: "9a74505b-6068-43da-9bc4-4fa884d79090", name: "Thigh (right)" },
+    calfRight: { id: "bd9fdad3-887a-427d-a2b7-a85cad6107c2", name: "Calf (right)" },
+  },
+  plan: {
+    id: "f5219087-e3d1-4466-8000-d204c4c9cfe2",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "29269f93-4504-4df9-a092-4024c2598135", ...ppl.sections.push },
+      pull: { id: "7b6f3dce-5761-4978-a6fb-6550d7ddab05", ...ppl.sections.pull },
+      legs: { id: "7651be7a-d628-4458-9d47-a83ddd8582d2", ...ppl.sections.legs },
+    },
+  },
+};
+
 export const active = {
   email: "active@example.com",
   workout: { id: "80422684-2d70-4d20-9622-8e2ff3126814" },
@@ -520,6 +558,21 @@ export const active = {
       push: { id: "bda41f3e-e8c0-49fe-804d-0a033fe7671c", ...ppl.sections.push },
       pull: { id: "332dd599-7873-4c8c-8a10-ae50976d5b88", ...ppl.sections.pull },
       legs: { id: "162f52fe-193c-496f-9673-612a06610ff6", ...ppl.sections.legs },
+    },
+  },
+};
+
+export const activeMutation = {
+  email: "active-mutation@example.com",
+  workout: { id: "6af521cc-c468-4b42-a6b5-3093dfafee1a" },
+  plan: {
+    id: "325956c7-ccb9-47ec-a8fa-1d169035b335",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "1f9105c6-2ce2-4ee8-9aa6-91f94928d05f", ...ppl.sections.push },
+      pull: { id: "7d0d5eec-4f2b-41ff-b07f-6659aaf1b0b9", ...ppl.sections.pull },
+      legs: { id: "89174f6d-5aa1-44ca-9f6d-85744a5b5f8f", ...ppl.sections.legs },
     },
   },
 };
@@ -542,6 +595,28 @@ export const archivist = {
     description: fullBody.description,
     sections: {
       fullBody: { id: "0aff0b76-8bc8-431c-b41f-6557aacb96c9", ...fullBody.sections.fullBody },
+    },
+  },
+};
+
+export const archivistMutation = {
+  email: "archivist-mutation@example.com",
+  archivedPlan: {
+    id: "ff1230ba-4d60-4ae3-9e52-3e4dc8c57324",
+    name: ppl.name,
+    description: ppl.description,
+    sections: {
+      push: { id: "46f8e829-3e66-4671-b406-f413fe735f6c", ...ppl.sections.push },
+      pull: { id: "ac75dd55-b3d0-45e1-b3cb-79a597bb4eb8", ...ppl.sections.pull },
+      legs: { id: "af2853d0-c672-4054-b9d4-7010f7b6cc37", ...ppl.sections.legs },
+    },
+  },
+  plan: {
+    id: "fad607a6-21ed-4033-ad42-b159798e4a6b",
+    name: fullBody.name,
+    description: fullBody.description,
+    sections: {
+      fullBody: { id: "f053e3ca-3d3f-4ba1-800f-df4e0eb428d8", ...fullBody.sections.fullBody },
     },
   },
 };
@@ -640,17 +715,25 @@ export const pocket = {
 
 export const polyglot = { email: "polyglot@example.com", language: "pl" };
 
+export const polyglotMutation = { email: "polyglot-mutation@example.com", language: "pl" };
+
 export const disposable = { email: "disposable@example.com" };
 
 export const personas = [
   empty,
+  emptyMutation,
   builder,
+  builderMutation,
   drafter,
   athlete,
+  athleteMutation,
   active,
+  activeMutation,
   archivist,
+  archivistMutation,
   hoarder,
   pocket,
   polyglot,
+  polyglotMutation,
   disposable,
 ];
