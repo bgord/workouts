@@ -25,7 +25,7 @@ test.describe("Navigation - athlete", () => {
 
     await expect(page).toHaveURL(/\/measurements/);
 
-    await nav.locator('a[href="/profile"]').click();
+    await nav.getByRole("link", { name: "Profile" }).click();
 
     await expect(page).toHaveURL(/\/profile/);
 
@@ -73,7 +73,7 @@ test.describe("Navigation - athlete", () => {
   test("goes back to the dashboard from the logo", async ({ page }) => {
     await page.goto("/plans");
 
-    await page.getByRole("navigation").locator('a[href="/"]').first().click();
+    await page.getByRole("navigation").getByRole("link", { name: "Home" }).click();
 
     await expect(page).toHaveURL("/");
   });

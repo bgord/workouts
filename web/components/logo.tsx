@@ -1,9 +1,12 @@
+import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { Gap } from "./gap";
 
 function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
+  const t = bg.useTranslations();
+
   return (
-    <a data-main="center" data-stack="x" {...props}>
+    <a aria-label={t("app.home")} data-main="center" data-stack="x" {...props}>
       <div
         className="logo"
         data-color="brand-500"

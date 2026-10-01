@@ -9,7 +9,7 @@ test.describe("Plans - builder-mutation", () => {
   test("rejects a too short plan name", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
-    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByRole("button", { name: `Rename ${fixtures.builderMutation.plan.name}` }).click();
     await page.getByLabel("Plan name").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -25,7 +25,7 @@ test.describe("Plans - builder-mutation", () => {
   test("renames the draft plan", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
-    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByRole("button", { name: `Rename ${fixtures.builderMutation.plan.name}` }).click();
     await page.getByLabel("Plan name").fill("PPL v2");
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();
@@ -140,7 +140,7 @@ test.describe("Plans - drafter", () => {
   test("rejects a too short section name", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
-    await page.getByRole("heading", { level: 2, name: "Push", exact: true }).getByRole("button").click();
+    await page.getByRole("button", { name: "Rename Push", exact: true }).click();
     await page.getByLabel("Section name").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -154,7 +154,7 @@ test.describe("Plans - drafter", () => {
   test("renames a section", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
-    await page.getByRole("heading", { level: 2, name: "Push", exact: true }).getByRole("button").click();
+    await page.getByRole("button", { name: "Rename Push", exact: true }).click();
     await page.getByLabel("Section name").fill("Push A");
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();

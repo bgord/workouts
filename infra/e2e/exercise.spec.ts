@@ -111,7 +111,7 @@ test.describe("Exercise - admin", () => {
     );
     await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
 
-    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByRole("button", { name: `Rename ${fixtures.exercises.pecDeck.name}` }).click();
     await page.getByLabel("Exercise name").fill("Pec deck fly");
     await page.getByRole("button", { name: "Save" }).click();
 

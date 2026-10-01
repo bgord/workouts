@@ -62,7 +62,7 @@ function NavigationDesktop() {
 
         <NavigationLink to="/measurements">{t("app.measurements")}</NavigationLink>
 
-        <NavigationLink to="/profile">
+        <NavigationLink aria-label={t("app.profile")} to="/profile">
           <ui.Avatar size={ui.AvatarSize.md} />
         </NavigationLink>
       </div>
@@ -108,7 +108,7 @@ function NavigationMobileDrawer() {
         <Weight data-size="md" />
       </NavigationLink>
 
-      <NavigationLink to="/profile" {...drawerItem}>
+      <NavigationLink aria-label={t("app.profile")} to="/profile" {...drawerItem}>
         <ui.Avatar size={ui.AvatarSize.sm} />
       </NavigationLink>
     </nav>

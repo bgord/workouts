@@ -37,13 +37,14 @@ export function ExerciseName() {
 
   if (exerciseNameUpdate.off) {
     return (
-      <h1 data-grow="1" data-minw="0">
+      <h1 aria-label={exercise.data.name} data-grow="1" data-minw="0">
         <button
+          aria-label={t("exercise.update.name.cta", { name: exercise.data.name })}
           data-cursor="pointer"
           data-maxw="100%"
           data-transform="truncate"
           onClick={exerciseNameUpdate.enable}
-          title={t("exercise.update.name.cta")}
+          title={t("exercise.update.name.cta", { name: exercise.data.name })}
           type="button"
           {...exerciseNameUpdate.props.controller}
         >

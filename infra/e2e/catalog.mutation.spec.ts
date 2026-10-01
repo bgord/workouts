@@ -114,7 +114,7 @@ test.describe("Catalog - admin", () => {
     await page.getByPlaceholder("Search by name").fill("Neck curl");
     await page.getByRole("link", { name: /Neck curl/ }).click();
 
-    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByRole("button", { name: "Rename Neck curl" }).click();
     await page.getByLabel("Exercise name").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -130,7 +130,7 @@ test.describe("Catalog - admin", () => {
     await page.getByPlaceholder("Search by name").fill("Neck curl");
     await page.getByRole("link", { name: /Neck curl/ }).click();
 
-    await page.getByRole("heading", { level: 1 }).getByRole("button").click();
+    await page.getByRole("button", { name: "Rename Neck curl" }).click();
     await page.getByLabel("Exercise name").fill("Neck flexion");
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();

@@ -26,7 +26,7 @@ test.describe("Mobile - athlete", () => {
 
     await expect(page).toHaveURL(/\/measurements/);
 
-    await nav.locator('a[href="/profile"]').click();
+    await nav.getByRole("link", { name: "Profile" }).click();
 
     await expect(page).toHaveURL(/\/profile/);
   });

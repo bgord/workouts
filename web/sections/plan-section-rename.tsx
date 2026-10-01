@@ -41,15 +41,16 @@ export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggle
 
   if (toggle.off) {
     return (
-      <h2>
+      <h2 aria-label={props.section.name}>
         <button
+          aria-label={t("plan.section.rename.cta", { name: props.section.name })}
           data-cursor="pointer"
           data-disp="block"
           data-maxw="100%"
           data-transform="truncate"
           disabled={!plan.actions.sectionRename.enabled}
           onClick={toggle.enable}
-          title={t("plan.section.rename.cta")}
+          title={t("plan.section.rename.cta", { name: props.section.name })}
           type="button"
           {...toggle.props.controller}
         >

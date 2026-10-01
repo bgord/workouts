@@ -35,13 +35,14 @@ export function PlanName() {
 
   if (planRename.off) {
     return (
-      <h1 data-minw="0">
+      <h1 aria-label={plan.data.name} data-minw="0">
         <button
+          aria-label={t("plan.rename.cta", { name: plan.data.name })}
           data-cursor="pointer"
           data-maxw="100%"
           data-transform="truncate"
           onClick={planRename.enable}
-          title={t("plan.rename.cta")}
+          title={t("plan.rename.cta", { name: plan.data.name })}
           type="button"
           {...planRename.props.controller}
         >

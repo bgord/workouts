@@ -1,4 +1,4 @@
-// cSpell:ignore Wyłączone Włączone Zapisz
+// cSpell:ignore Wyłączone Włączone Zapisz Wyloguj
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -21,7 +21,7 @@ test.describe("Profile - polyglot-mutation", () => {
   test("signs out", async ({ page }) => {
     await page.goto("/profile");
 
-    await page.locator("button:has(.lucide-log-out)").click();
+    await page.getByRole("button", { name: "Wyloguj się" }).click();
 
     await expect(page).toHaveURL(/\/public\/login\.html/);
 
