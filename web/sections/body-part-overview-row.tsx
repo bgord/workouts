@@ -66,7 +66,12 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
       </div>
 
       {bodyPartHistory.on && (
-        <ul data-stack="y" {...ui.Spacing.inset} {...bodyPartHistory.props.target}>
+        <ul
+          aria-label={t("app.details", { name: props.name })}
+          data-stack="y"
+          {...ui.Spacing.inset}
+          {...bodyPartHistory.props.target}
+        >
           {props.measurements.map((measurement, index) => (
             <BodyPartHistoryRow
               key={measurement.id}

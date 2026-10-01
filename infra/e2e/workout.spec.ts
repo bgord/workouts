@@ -51,7 +51,7 @@ test.describe("Workout - athlete", () => {
   });
 
   test("shows the error when setting a target fails", async ({ page }) => {
-    const row = page.getByRole("listitem").first();
+    const row = page.getByRole("list", { name: "Exercises" }).getByRole("listitem").first();
 
     await page.route("**/api/workouts/*/exercise/*/target", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
@@ -248,7 +248,7 @@ test.describe("Workout - active", () => {
 
     await page.reload();
 
-    await expect(page.locator('a[href^="/catalog/exercise/"]').first()).toHaveText(
+    await expect(page.getByRole("list", { name: "Exercises" }).getByRole("link").first()).toHaveText(
       fixtures.exercises.superHorizontalBenchPress.name,
     );
   });

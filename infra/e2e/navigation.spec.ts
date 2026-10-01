@@ -105,7 +105,7 @@ test.describe("Navigation - athlete", () => {
 
   test("goes back from the exercise to the workout it was opened from", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
-    await page.locator('a[href^="/catalog/exercise/"]').first().click();
+    await page.getByRole("list", { name: "Exercises" }).getByRole("link").first().click();
     await expect(page.getByRole("link", { name: "Back", exact: true })).toHaveAttribute("href", "/catalog");
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
@@ -158,7 +158,7 @@ test.describe("Navigation - athlete", () => {
     await page.goto("/workouts");
     await page.getByLabel("Period").selectOption({ label: "All time" });
     await expect(page).toHaveURL(/filter=all_time/);
-    await page.locator('a[href^="/workouts/"]').first().click();
+    await page.getByRole("list", { name: "Workouts" }).getByRole("link").first().click();
     await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
 
     await page.goBack();

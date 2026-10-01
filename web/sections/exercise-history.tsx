@@ -1,14 +1,16 @@
+import * as bg from "@bgord/ui";
 import { exerciseRoute } from "../router";
 import { ExerciseHistoryRow } from "./exercise-history-row";
 
 export function ExerciseHistory() {
+  const t = bg.useTranslations();
   const { performances } = exerciseRoute.useLoaderData();
 
   const history = performances.toReversed();
   const record = performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
 
   return (
-    <ul data-stack="y">
+    <ul aria-label={t("statistics.exercise.history")} data-stack="y">
       {history.map((performance, index) => (
         <ExerciseHistoryRow
           index={index}

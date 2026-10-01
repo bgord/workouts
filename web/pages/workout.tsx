@@ -75,7 +75,7 @@ export function Workout() {
       <WorkoutExercisesEmpty />
 
       <div data-stack="y">
-        <ul data-stack="y">
+        <ul aria-label={t("workout.exercises")} data-stack="y">
           {workout.data.exercises.map((exercise, index) => (
             <WorkoutExerciseRow
               exercise={exercise}

@@ -99,9 +99,11 @@ test.describe("Shortcuts - athlete", () => {
   });
 
   test("opens the newest workout from the workouts list", async ({ page }) => {
+    const workouts = page.getByRole("list", { name: "Workouts" });
+
     await page.goto("/workouts?filter=all_time");
     await page.waitForLoadState("networkidle");
-    const href = (await page.locator('a[href^="/workouts/"]').first().getAttribute("href")) ?? "";
+    const href = (await workouts.getByRole("link").first().getAttribute("href")) ?? "";
 
     await page.keyboard.press("o");
 
@@ -109,9 +111,11 @@ test.describe("Shortcuts - athlete", () => {
   });
 
   test("opens the first exercise from the catalog", async ({ page }) => {
+    const catalog = page.getByRole("list", { name: "Catalog" });
+
     await page.goto("/catalog");
     await page.waitForLoadState("networkidle");
-    const href = (await page.locator('a[href^="/catalog/exercise/"]').first().getAttribute("href")) ?? "";
+    const href = (await catalog.getByRole("link").first().getAttribute("href")) ?? "";
 
     await page.keyboard.press("o");
 

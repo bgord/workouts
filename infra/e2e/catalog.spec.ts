@@ -102,7 +102,7 @@ test.describe("Catalog - athlete", () => {
     await page.goto("/catalog");
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
     await expect(page).toHaveURL(/category=/);
-    await page.locator('a[href^="/catalog/exercise/"]').first().click();
+    await page.getByRole("list", { name: "Catalog" }).getByRole("link").first().click();
     await expect(page).toHaveURL(/\/catalog\/exercise\//);
 
     await page.goBack();
@@ -126,6 +126,8 @@ test.describe("Catalog - admin", () => {
   });
 
   test("shows the error when adding a category fails", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Categories" });
+
     await page.route("**/api/exercises/category", (route) => route.fulfill({ status: 500 }));
     await page.goto("/catalog");
 
@@ -138,7 +140,7 @@ test.describe("Catalog - admin", () => {
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
 
-    await expect(page.getByText("Neck", { exact: true })).toBeHidden();
+    await expect(dialog.getByText("Neck", { exact: true })).toBeHidden();
   });
 
   test("shows the error when renaming a category fails", async ({ page }) => {

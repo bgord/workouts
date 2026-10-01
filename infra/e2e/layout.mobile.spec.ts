@@ -63,7 +63,9 @@ test.describe("Mobile - athlete", () => {
     await page.waitForLoadState("networkidle");
     const href =
       (await page
-        .locator('a[href^="/workouts/"]', { hasText: /Completed$/ })
+        .getByRole("list", { name: "Workouts" })
+        .getByRole("link")
+        .filter({ hasText: /Completed$/ })
         .first()
         .getAttribute("href")) ?? "";
 
@@ -102,7 +104,7 @@ test.describe("Mobile - athlete", () => {
   });
 
   test("fits the set target form on the screen", async ({ page }) => {
-    const row = page.getByRole("listitem").first();
+    const row = page.getByRole("list", { name: "Exercises" }).getByRole("listitem").first();
 
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
     await page.waitForLoadState("networkidle");

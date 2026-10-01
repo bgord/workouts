@@ -428,6 +428,7 @@
   "workout.list.filter.last_week": "Last week",
   "workout.list.filter.last_month": "Last month",
   "workout.list.filter.all_time": "All time",
+  "workout.exercises": "Exercises",
   "workout.list.header": "Workouts",
   "workout.list.no_matches": "No workouts match the filters",
   "workout.list.no_matches.hint": "Try another section or clear the filters",

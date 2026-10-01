@@ -6,6 +6,7 @@ import { ExerciseCatalogEmpty } from "./exercise-catalog-empty";
 import { ExerciseCatalogFilters } from "./exercise-catalog-filters";
 
 export function ExerciseCatalog() {
+  const t = bg.useTranslations();
   const { exercises } = catalogRoute.useLoaderData();
   const navigate = catalogRoute.useNavigate();
   const search = catalogRoute.useSearch();
@@ -33,7 +34,14 @@ export function ExerciseCatalog() {
 
       <ExerciseCatalogEmpty matching={matching} />
 
-      <ul data-cross="stretch" data-md-main="center" data-stack="x" data-wrap="wrap" {...ui.Gap.block}>
+      <ul
+        aria-label={t("exercise.catalog.header")}
+        data-cross="stretch"
+        data-md-main="center"
+        data-stack="x"
+        data-wrap="wrap"
+        {...ui.Gap.block}
+      >
         {matching.map((exercise) => (
           <ui.ExerciseCard key={exercise.id} {...exercise} />
         ))}

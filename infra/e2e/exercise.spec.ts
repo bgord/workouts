@@ -13,15 +13,17 @@ test.describe("Exercise - athlete", () => {
   });
 
   test("shows the exercise details", async ({ page }) => {
+    const categories = page.getByRole("list", { name: "Categories" });
+
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
     await expect(
       page.getByRole("heading", { level: 1, name: fixtures.exercises.superHorizontalBenchPress.name }),
     ).toBeVisible();
     await expect(page.getByText(fixtures.exercises.superHorizontalBenchPress.description)).toBeVisible();
-    await expect(page.getByText(fixtures.categories.chest.name, { exact: true })).toBeVisible();
-    await expect(page.getByText(fixtures.categories.shoulders.name, { exact: true })).toBeVisible();
-    await expect(page.getByText(fixtures.categories.triceps.name, { exact: true })).toBeVisible();
+    await expect(categories.getByText(fixtures.categories.chest.name, { exact: true })).toBeVisible();
+    await expect(categories.getByText(fixtures.categories.shoulders.name, { exact: true })).toBeVisible();
+    await expect(categories.getByText(fixtures.categories.triceps.name, { exact: true })).toBeVisible();
   });
 
   test("shows the exercise stats", async ({ page }) => {
@@ -44,7 +46,7 @@ test.describe("Exercise - athlete", () => {
   test("lists the exercise history with the record session", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
-    const history = page.getByRole("heading", { name: "History" }).locator("..");
+    const history = page.getByRole("list", { name: "History" });
 
     await expect(history.getByRole("link")).toHaveCount(8);
     await expect(history.getByRole("img", { name: "1RM" })).toHaveCount(1);
@@ -53,7 +55,7 @@ test.describe("Exercise - athlete", () => {
   test("keeps the history session expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
-    const history = page.getByRole("heading", { name: "History" }).locator("..");
+    const history = page.getByRole("list", { name: "History" });
 
     await history
       .getByRole("button", { name: /^Details: / })
@@ -91,6 +93,8 @@ test.describe("Exercise - admin", () => {
   });
 
   test("shows the error when assigning a category fails", async ({ page }) => {
+    const categories = page.getByRole("list", { name: "Categories" });
+
     await page.route("**/api/exercises/category/assign", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
@@ -102,7 +106,7 @@ test.describe("Exercise - admin", () => {
 
     await page.reload();
 
-    await expect(page.getByText("Abs", { exact: true })).toBeHidden();
+    await expect(categories.getByText("Abs", { exact: true })).toBeHidden();
   });
 
   test("shows the error when renaming an exercise fails", async ({ page }) => {

@@ -62,7 +62,7 @@ test.describe("Body parts - athlete", () => {
   });
 
   test("lists the history of a body part", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({ hasText: fixtures.athlete.bodyParts.waist.name });
+    const history = page.getByRole("list", { name: `Details: ${fixtures.athlete.bodyParts.waist.name}` });
 
     await page.goto("/measurements/body-parts");
 
@@ -70,9 +70,9 @@ test.describe("Body parts - athlete", () => {
       .getByRole("button", { name: `Details: ${fixtures.athlete.bodyParts.waist.name}`, exact: true })
       .click();
 
-    await expect(row.getByTitle("Correct the measurement")).toHaveCount(12);
-    await expect(row.getByTitle("Correct the measurement").first()).toContainText("81.4 cm");
-    await expect(row.getByTitle("Correct the measurement").last()).toContainText("82.0 cm");
+    await expect(history.getByRole("listitem")).toHaveCount(12);
+    await expect(history.getByRole("listitem").first()).toContainText("81.4 cm");
+    await expect(history.getByRole("listitem").last()).toContainText("82.0 cm");
   });
 
   test("downloads the body part export", async ({ page }) => {

@@ -34,7 +34,13 @@ export function ProfileAvatarChange() {
   });
 
   return (
-    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
+    <section
+      aria-label={t("profile.avatar.header")}
+      className="c-card"
+      data-variant="flat"
+      {...ui.Spacing.surface}
+      {...ui.Gap.related}
+    >
       <div data-stack="x" {...ui.Gap.cluster}>
         <CircleUser data-color="neutral-400" data-size="sm" />
         <h2>{t("profile.avatar.header")}</h2>

@@ -22,6 +22,8 @@ test.describe("Catalog - admin", () => {
   });
 
   test("adds a category", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Categories" });
+
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
@@ -33,7 +35,7 @@ test.describe("Catalog - admin", () => {
     await expect(async () => {
       await page.reload();
       await page.getByRole("button", { name: "Categories", exact: true }).click();
-      await expect(page.getByText("Neck", { exact: true })).toBeVisible({ timeout: 1000 });
+      await expect(dialog.getByText("Neck", { exact: true })).toBeVisible({ timeout: 1000 });
     }).toPass();
   });
 
@@ -137,6 +139,8 @@ test.describe("Catalog - admin", () => {
   });
 
   test("assigns the category to the exercise", async ({ page }) => {
+    const categories = page.getByRole("list", { name: "Categories" });
+
     await page.goto("/catalog");
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
@@ -146,7 +150,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Assign" }).click();
     await page.reload();
 
-    await expect(page.getByText("Neck", { exact: true })).toBeVisible();
+    await expect(categories.getByText("Neck", { exact: true })).toBeVisible();
   });
 
   test("rejects a too short new category name", async ({ page }) => {
@@ -166,6 +170,8 @@ test.describe("Catalog - admin", () => {
   });
 
   test("renames the category", async ({ page }) => {
+    const categories = page.getByRole("list", { name: "Categories" });
+
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
@@ -176,7 +182,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
-    await expect(page.getByText("Neck and traps", { exact: true }).first()).toBeVisible();
+    await expect(categories.getByText("Neck and traps", { exact: true })).toBeVisible();
   });
 
   test("rejects a too short exercise description", async ({ page }) => {
@@ -265,6 +271,8 @@ test.describe("Catalog - admin", () => {
   });
 
   test("deletes a category assigned to an exercise", async ({ page }) => {
+    const categories = page.getByRole("list", { name: "Categories" });
+
     await page.goto("/catalog");
     await page.getByRole("button", { name: "Categories", exact: true }).click();
     await page.getByLabel("Category name").fill("Grip");
@@ -281,8 +289,8 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Delete", exact: true }).click();
     await page.goto(`/catalog/exercise/${fixtures.exercises.hammerCurlDumbbells.id}`);
 
-    await expect(page.getByText("Grip", { exact: true })).toBeHidden();
-    await expect(page.getByText("Biceps", { exact: true })).toBeVisible();
-    await expect(page.getByText("Forearms", { exact: true })).toBeVisible();
+    await expect(categories.getByText("Grip", { exact: true })).toBeHidden();
+    await expect(categories.getByText("Biceps", { exact: true })).toBeVisible();
+    await expect(categories.getByText("Forearms", { exact: true })).toBeVisible();
   });
 });

@@ -43,8 +43,7 @@ test.describe("Profile - disposable", () => {
       .getByLabel("Select file")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
     await page
-      .locator("section")
-      .filter({ has: page.getByRole("heading", { name: "Avatar" }) })
+      .getByRole("region", { name: "Avatar" })
       .getByRole("button", { name: "Save" })
       .click();
 

@@ -41,7 +41,7 @@ export function ExerciseCategories() {
       <div data-stack="y" {...ui.Gap.cluster}>
         <h3>{t("exercise.categories.header")}</h3>
 
-        <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+        <ul aria-label={t("exercise.categories.header")} data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           {assigned.map((category) => (
             <li key={category.id}>
               <ui.ChipLink search={{ category: category.id }} to="/catalog">
@@ -127,7 +127,7 @@ export function ExerciseCategories() {
         </form>
       )}
 
-      <ul data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+      <ul aria-label={t("exercise.categories.header")} data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
         {assigned.map((category) => (
           <li key={category.id}>
             <ui.Chip>
