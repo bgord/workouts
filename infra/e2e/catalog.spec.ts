@@ -26,7 +26,7 @@ test.describe("Catalog - athlete", () => {
     ).toBeHidden();
   });
 
-  test("filters by category and clears the filters", async ({ page }) => {
+  test("filters by category, unpresses it and clears the filters", async ({ page }) => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
@@ -36,6 +36,14 @@ test.describe("Catalog - athlete", () => {
       page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
 
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
+
+    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
+    ).toHaveAttribute("aria-pressed", "false");
+
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
     await page.getByRole("button", { name: "Clear" }).click();
 
     await expect(page.getByText("32 of 32")).toBeVisible();
@@ -50,35 +58,18 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText("Try another name or category")).toBeVisible();
   });
 
-  test("shows more categories on demand", async ({ page }) => {
+  test("shows more and less categories", async ({ page }) => {
     await page.goto("/catalog");
 
     await page.getByText("+8 more").click();
 
     await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeVisible();
     await expect(page.getByText("Show less")).toBeVisible();
-  });
 
-  test("shows less categories", async ({ page }) => {
-    await page.goto("/catalog");
-
-    await page.getByText("+8 more").click();
     await page.getByText("Show less").click();
 
     await expect(page.getByText("+8 more")).toBeVisible();
     await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeHidden();
-  });
-
-  test("unpresses the category", async ({ page }) => {
-    await page.goto("/catalog");
-
-    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
-    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
-
-    await expect(page.getByText("32 of 32")).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
-    ).toHaveAttribute("aria-pressed", "false");
   });
 
   test("combines the search and the category", async ({ page }) => {

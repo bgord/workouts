@@ -216,7 +216,7 @@ test.describe("Workout - active", () => {
     await expect(row.getByRole("button", { name: "Remove set 4" })).toBeVisible();
   });
 
-  test("blocks moving the first exercise up", async ({ page }) => {
+  test("blocks moving the first exercise up and the last exercise down", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
     await page.getByRole("button", { name: "Reorder exercises" }).click();
@@ -230,13 +230,6 @@ test.describe("Workout - active", () => {
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} down` }),
     ).toBeEnabled();
-  });
-
-  test("blocks moving the last exercise down", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
-
-    await page.getByRole("button", { name: "Reorder exercises" }).click();
-
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} down` }),
     ).toBeDisabled();

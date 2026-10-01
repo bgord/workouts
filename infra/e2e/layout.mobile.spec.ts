@@ -119,30 +119,26 @@ test.describe("Mobile - athlete", () => {
 test.describe("Mobile - active", () => {
   test.use({ storageState: ".auth/active.json" });
 
-  test("keeps the workout within the viewport width", async ({ page }) => {
+  test("keeps the workout within the viewport width with the log panel closed and open", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.waitForLoadState("networkidle");
 
-    const overflow = await page.evaluate(
+    const closed = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
 
-    expect(overflow).toBeLessThanOrEqual(0);
-  });
+    expect(closed).toBeLessThanOrEqual(0);
 
-  test("keeps the workout with the log panel open within the viewport width", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.waitForLoadState("networkidle");
     await page
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
     await expect(page.getByRole("dialog")).toBeVisible();
 
-    const overflow = await page.evaluate(
+    const open = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
 
-    expect(overflow).toBeLessThanOrEqual(0);
+    expect(open).toBeLessThanOrEqual(0);
   });
 
   test("fits the add exercise dialog on the screen", async ({ page }) => {

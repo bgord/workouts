@@ -23,16 +23,12 @@ test.describe("Body weight - athlete", () => {
     await expect(tile.locator('[data-color="positive-400"] svg')).toHaveAttribute("data-rotate", "0");
   });
 
-  test("shows the progress chart in weekly granularity by default", async ({ page }) => {
+  test("shows the progress chart in weekly granularity by default and changes it", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
     await expect(page.getByRole("heading", { name: "Progress" })).toBeVisible();
     await expect(page.getByRole("img", { name: "Progress" })).toBeVisible();
     await expect(page.getByRole("combobox", { name: "Granularity" })).toHaveValue("weekly");
-  });
-
-  test("changes the chart granularity", async ({ page }) => {
-    await page.goto("/measurements/body-weight");
 
     await page.getByRole("combobox", { name: "Granularity" }).selectOption("daily");
 
@@ -40,16 +36,7 @@ test.describe("Body weight - athlete", () => {
     await expect(page.getByRole("combobox", { name: "Granularity" })).toHaveValue("daily");
   });
 
-  test("filters the history by month", async ({ page }) => {
-    await page.goto("/measurements/body-weight");
-
-    await page.getByRole("combobox", { name: "Month" }).selectOption({ label: "All months" });
-
-    await expect(page).toHaveURL(/\/measurements\/body-weight\?.*month=all/);
-    await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
-  });
-
-  test("lists the measurement history with a month filter", async ({ page }) => {
+  test("lists the measurement history and filters it by month", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
     await expect(page.getByRole("heading", { name: "History" })).toBeVisible();
@@ -57,6 +44,11 @@ test.describe("Body weight - athlete", () => {
       page.getByRole("combobox", { name: "Month" }).getByRole("option", { name: "All months" }),
     ).toHaveCount(1);
     await expect(page.getByRole("button", { name: "Remove the measurement" }).first()).toBeVisible();
+
+    await page.getByRole("combobox", { name: "Month" }).selectOption({ label: "All months" });
+
+    await expect(page).toHaveURL(/\/measurements\/body-weight\?.*month=all/);
+    await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
   });
 
   test("downloads the body weight export", async ({ page }) => {

@@ -318,7 +318,7 @@ test.describe("Plan - builder", () => {
     ).toBeVisible();
   });
 
-  test("blocks moving the first exercise instruction up", async ({ page }) => {
+  test("blocks moving the first exercise instruction up and the last one down", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     await page
       .getByRole("listitem")
@@ -336,17 +336,6 @@ test.describe("Plan - builder", () => {
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} down` }),
     ).toBeEnabled();
-  });
-
-  test("blocks moving the last exercise instruction down", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
-
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.lateralRaiseDumbbells.name} down` }),
     ).toBeDisabled();
