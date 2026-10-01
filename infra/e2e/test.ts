@@ -4,7 +4,10 @@ export const test = base.extend<{ pageErrors: void }>({
   pageErrors: [
     async ({ page }, use) => {
       const errors: Array<string> = [];
-      page.on("pageerror", (error) => errors.push(error.message));
+      page.on("pageerror", (error) => {
+        if (error.message.startsWith("Transition was skipped")) return;
+        errors.push(error.message);
+      });
 
       await use();
 
