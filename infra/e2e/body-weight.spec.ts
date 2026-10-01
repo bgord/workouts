@@ -106,8 +106,7 @@ test.describe("Body weight - athlete", () => {
 
     await page.getByRole("listitem").getByRole("button", { name: / kg$/ }).first().click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByRole("form", { name: "Correct the measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("85");
     await page.getByRole("button", { name: "Save" }).click();
@@ -127,8 +126,7 @@ test.describe("Body weight - athlete", () => {
 
     await page.getByRole("button", { name: "Use as the reference point" }).first().click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByRole("form", { name: "Use as the reference point" })
       .getByRole("button", { name: "Cut" })
       .click();
     await page.getByRole("button", { name: "Save" }).click();

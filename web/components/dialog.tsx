@@ -19,7 +19,6 @@ export function Dialog(props: bg.DialogPropsType) {
         data-mt="8"
         data-overflow="auto"
         data-wrap="nowrap"
-        role="dialog"
         style={{
           ...bg.Rhythm().times(50).width,
           maxHeight: "calc(100% - 4rem - env(safe-area-inset-top))",

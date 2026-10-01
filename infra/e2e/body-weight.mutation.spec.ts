@@ -91,8 +91,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "81.5 kg" }).click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByRole("form", { name: "Correct the measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("501");
 
@@ -108,8 +107,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "81.5 kg" }).click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByRole("form", { name: "Correct the measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("82");
     await page.getByRole("button", { name: "Save" }).click();
@@ -136,8 +134,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "Use as the reference point" }).first().click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByRole("form", { name: "Use as the reference point" })
       .getByRole("button", { name: "Cut" })
       .click();
     await page.getByRole("button", { name: "Save" }).click();

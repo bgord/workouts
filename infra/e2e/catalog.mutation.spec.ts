@@ -49,7 +49,7 @@ test.describe("Catalog - admin", () => {
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
 
-    await expect(page.getByTitle("Rename the category").filter({ hasText: /^Abs$/ })).toHaveCount(1);
+    await expect(page.getByTitle("Rename Abs")).toHaveCount(1);
   });
 
   test("rejects a too short exercise name and description", async ({ page }) => {
@@ -153,43 +153,24 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page
-      .getByTitle("Rename the category")
-      .filter({ hasText: /^Neck$/ })
-      .click();
-    await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
-      .getByLabel("Category name")
-      .fill("ab");
+    await page.getByTitle("Rename Neck").click();
+    await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Category name").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
-    await expect(
-      page
-        .locator("form")
-        .filter({ has: page.getByRole("button", { name: "Cancel" }) })
-        .locator("input:invalid"),
-    ).toHaveCount(1);
+    await expect(page.getByRole("form", { name: "Rename Neck" }).locator("input:invalid")).toHaveCount(1);
 
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
 
-    await expect(page.getByTitle("Rename the category").filter({ hasText: /^Neck$/ })).toBeVisible();
+    await expect(page.getByTitle("Rename Neck")).toBeVisible();
   });
 
   test("renames the category", async ({ page }) => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page
-      .getByTitle("Rename the category")
-      .filter({ hasText: /^Neck$/ })
-      .click();
-    await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
-      .getByLabel("Category name")
-      .fill("Neck and traps");
+    await page.getByTitle("Rename Neck").click();
+    await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Category name").fill("Neck and traps");
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");

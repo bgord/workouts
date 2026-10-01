@@ -92,19 +92,10 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Neck", exact: true }).click();
-    await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
-      .getByLabel("Body part name")
-      .fill("a".repeat(65));
+    await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("a".repeat(65));
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(
-      page
-        .locator("form")
-        .filter({ has: page.getByRole("button", { name: "Cancel" }) })
-        .locator("input:invalid"),
-    ).toHaveCount(1);
+    await expect(page.getByRole("form", { name: "Rename Neck" }).locator("input:invalid")).toHaveCount(1);
 
     await page.reload();
 
@@ -116,11 +107,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Neck", exact: true }).click();
-    await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
-      .getByLabel("Body part name")
-      .fill("Neck girth");
+    await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("Neck girth");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await page.reload();
 

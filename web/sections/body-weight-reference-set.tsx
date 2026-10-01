@@ -38,6 +38,7 @@ export function BodyWeightReferenceSet(
   return (
     <form
       aria-busy={mutation.isLoading}
+      aria-label={t("measurements.body_weight.reference.title")}
       data-grow="1"
       data-stack="x"
       data-wrap="wrap"

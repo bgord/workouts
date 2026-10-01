@@ -265,6 +265,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
   test("rejects a set correction out of range", async ({ page }) => {
     const row = page.getByRole("listitem").first();
+    const form = row.getByRole("form", { name: "Correct set 1" });
 
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     await row.getByRole("button", { name: /^Details: / }).click();
@@ -272,14 +273,10 @@ test.describe("Workouts - athlete-mutation", () => {
     const before = await row.textContent();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
-    await row.locator('input[name^="corrected-reps-"]').fill("0");
-    await row
-      .locator("form")
-      .filter({ has: page.locator('input[name^="corrected-reps-"]') })
-      .getByRole("button", { name: "Log set", exact: true })
-      .click();
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("0");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
 
-    await expect(row.locator('input[name^="corrected-reps-"]:invalid')).toHaveCount(1);
+    await expect(form.getByRole("spinbutton", { name: "Reps" }).and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 
@@ -288,18 +285,15 @@ test.describe("Workouts - athlete-mutation", () => {
 
   test("corrects the set of the completed workout", async ({ page }) => {
     const row = page.getByRole("listitem").first();
+    const form = row.getByRole("form", { name: "Correct set 1" });
 
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
-    await row.locator('input[name^="corrected-reps-"]').fill("7");
-    await row.locator('input[name^="corrected-load-"]').fill("30");
-    await row
-      .locator("form")
-      .filter({ has: page.locator('input[name^="corrected-reps-"]') })
-      .getByRole("button", { name: "Log set", exact: true })
-      .click();
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("7");
+    await form.getByRole("spinbutton", { name: "Load (kg)" }).fill("30");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
     await page.reload();
 
     await expect(row).toContainText("7×30 kg");
@@ -413,6 +407,7 @@ test.describe("Workouts - active-mutation", () => {
         exact: true,
       }),
     });
+    const form = row.getByRole("form", { name: "Correct set 1" });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await row.getByRole("button", { name: /^Details: / }).click();
@@ -420,14 +415,12 @@ test.describe("Workouts - active-mutation", () => {
     const before = await row.textContent();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
-    await row.locator('input[name^="corrected-load-"]').fill("1001");
-    await row
-      .locator("form")
-      .filter({ has: page.locator('input[name^="corrected-reps-"]') })
-      .getByRole("button", { name: "Log set", exact: true })
-      .click();
+    await form.getByRole("spinbutton", { name: "Load (kg)" }).fill("1001");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
 
-    await expect(row.locator('input[name^="corrected-load-"]:invalid')).toHaveCount(1);
+    await expect(
+      form.getByRole("spinbutton", { name: "Load (kg)" }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
 
     await page.reload();
 
@@ -441,18 +434,15 @@ test.describe("Workouts - active-mutation", () => {
         exact: true,
       }),
     });
+    const form = row.getByRole("form", { name: "Correct set 1" });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
-    await row.locator('input[name^="corrected-reps-"]').fill("9");
-    await row.locator('input[name^="corrected-load-"]').fill("22.5");
-    await row
-      .locator("form")
-      .filter({ has: page.locator('input[name^="corrected-reps-"]') })
-      .getByRole("button", { name: "Log set", exact: true })
-      .click();
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("9");
+    await form.getByRole("spinbutton", { name: "Load (kg)" }).fill("22.5");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
     await page.reload();
 
     await expect(row).toContainText("9×22.5 kg");
@@ -500,21 +490,19 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
 
-    const form = page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) });
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("21");
-    await form.getByRole("button", { name: "Add exercise" }).click();
+    await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(form.locator('input[name="workoutSets"]:invalid')).toHaveCount(1);
+    await expect(dialog.locator('input[name="workoutSets"]:invalid')).toHaveCount(1);
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
-    await form.getByRole("button", { name: "Add exercise" }).click();
+    await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(form.locator('input[name="workoutRepsMax"]:invalid')).toHaveCount(1);
+    await expect(dialog.locator('input[name="workoutRepsMax"]:invalid')).toHaveCount(1);
 
     await page.reload();
 
@@ -533,8 +521,7 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
       .click();
     await page.reload();

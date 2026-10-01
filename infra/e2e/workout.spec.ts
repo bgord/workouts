@@ -222,8 +222,7 @@ test.describe("Workout - active", () => {
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
       .click();
 
@@ -326,18 +325,15 @@ test.describe("Workout - active", () => {
         exact: true,
       }),
     });
+    const form = row.getByRole("form", { name: "Correct set 1" });
 
     await page.route("**/api/workouts/*/exercise/*/set/*", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
-    await row.locator('input[name^="corrected-reps-"]').fill("9");
-    await row
-      .locator("form")
-      .filter({ has: page.locator('input[name^="corrected-reps-"]') })
-      .getByRole("button", { name: "Log set", exact: true })
-      .click();
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("9");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
 
     await expect(page.getByText("Could not correct the set")).toBeVisible();
 

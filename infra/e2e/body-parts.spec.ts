@@ -150,8 +150,7 @@ test.describe("Body parts - athlete", () => {
     await page.getByRole("button", { name: "Manage" }).click();
     await page.getByRole("button", { name: fixtures.athlete.bodyParts.waist.name, exact: true }).click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("button", { name: "Cancel" }) })
+      .getByRole("form", { name: `Rename ${fixtures.athlete.bodyParts.waist.name}` })
       .getByLabel("Body part name")
       .fill("Waist girth");
     await page.getByRole("button", { name: "Save", exact: true }).click();

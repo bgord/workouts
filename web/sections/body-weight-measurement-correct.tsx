@@ -44,6 +44,7 @@ export function BodyWeightMeasurementCorrect(
   return (
     <form
       aria-busy={mutation.isLoading}
+      aria-label={t("measurements.body_weight.correct.title")}
       data-grow="1"
       data-stack="x"
       data-wrap="wrap"

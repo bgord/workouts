@@ -171,14 +171,14 @@ test.describe("Mobile - active", () => {
 
     await row.getByRole("button", { name: "Correct set 1" }).tap();
 
-    const form = row.locator("form").filter({ has: page.locator('input[name^="corrected-reps-"]') });
+    const form = row.getByRole("form", { name: "Correct set 1" });
 
     await expect(form.getByRole("button", { name: "Log set", exact: true })).toBeInViewport();
     await expect(form.getByRole("button", { name: "Cancel" })).toBeInViewport();
 
     await form.getByRole("button", { name: "Cancel" }).tap();
 
-    await expect(row.locator('input[name^="corrected-reps-"]')).toBeHidden();
+    await expect(form).toBeHidden();
   });
 });
 

@@ -72,6 +72,7 @@ export function WorkoutSetCorrect(
   return (
     <form
       aria-busy={mutation.isLoading}
+      aria-label={t("workout.set.correct.title", { setNumber: props.loggedSet.setNumber })}
       data-grow="1"
       data-md-main="end"
       data-md-wrap="wrap"

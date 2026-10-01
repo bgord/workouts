@@ -248,21 +248,19 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
 
-    const form = page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) });
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("21");
-    await form.getByRole("button", { name: "Add exercise" }).click();
+    await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(form.locator('input[name="sets"]:invalid')).toHaveCount(1);
+    await expect(dialog.locator('input[name="sets"]:invalid')).toHaveCount(1);
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
-    await form.getByRole("button", { name: "Add exercise" }).click();
+    await dialog.getByRole("button", { name: "Add exercise" }).click();
 
-    await expect(form.locator('input[name="repsMax"]:invalid')).toHaveCount(1);
+    await expect(dialog.locator('input[name="repsMax"]:invalid')).toHaveCount(1);
 
     await page.reload();
 
@@ -281,8 +279,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
     await page.getByRole("combobox", { name: "Progression" }).selectOption("linear_progression");
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
       .click();
     await page.reload();
@@ -306,10 +303,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("0");
 
     await expect(
-      page
-        .locator("form")
-        .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
-        .getByRole("button", { name: "Save", exact: true }),
+      page.getByRole("dialog", { name: "Edit exercise" }).getByRole("button", { name: "Save", exact: true }),
     ).toBeDisabled();
 
     await page.reload();
@@ -332,8 +326,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
     await page.getByRole("combobox", { name: "Progression" }).selectOption("double_progression");
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
       .click();
     await page.reload();
@@ -356,8 +349,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
       .click();
     await page.reload();

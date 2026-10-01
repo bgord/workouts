@@ -205,8 +205,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
       .click();
 
@@ -236,8 +235,7 @@ test.describe("Plan - builder", () => {
       .click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("5");
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
       .click();
 
@@ -277,8 +275,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
     await page
-      .locator("form")
-      .filter({ has: page.getByRole("spinbutton", { name: "Sets", exact: true }) })
+      .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
       .click();
 
