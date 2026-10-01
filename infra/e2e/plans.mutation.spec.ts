@@ -299,10 +299,7 @@ test.describe("Plans - drafter", () => {
   });
 
   test("blocks saving an exercise instruction edit with no sets", async ({ page }) => {
-    const row = page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }) })
-      .last();
+    const row = page.getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true });
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
@@ -320,10 +317,7 @@ test.describe("Plans - drafter", () => {
   });
 
   test("edits the exercise instruction", async ({ page }) => {
-    const row = page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }) })
-      .last();
+    const row = page.getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true });
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
@@ -348,9 +342,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }) })
-      .last()
+      .getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true })
       .getByRole("button", { name: "Edit exercise" })
       .click();
     await page.getByRole("button", { name: `Change exercise: ${fixtures.exercises.facePull.name}` }).click();

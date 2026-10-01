@@ -111,8 +111,7 @@ test.describe("Body parts - athlete", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByRole("listitem", { name: fixtures.athlete.bodyParts.calfRight.name, exact: true })
         .getByText("Not measured yet")
         .first(),
     ).toBeVisible();
@@ -140,8 +139,7 @@ test.describe("Body parts - athlete", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athlete.bodyParts.waist.name })
+        .getByRole("listitem", { name: fixtures.athlete.bodyParts.waist.name, exact: true })
         .getByText("39.5 cm"),
     ).toBeHidden();
   });

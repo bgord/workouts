@@ -226,11 +226,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page
-      .getByRole("listitem")
-      .filter({
-        has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
-      })
-      .last()
+      .getByRole("listitem", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true })
       .getByRole("button", { name: "Edit exercise" })
       .click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("5");
@@ -244,15 +240,7 @@ test.describe("Plan - builder", () => {
     await page.reload();
 
     await expect(
-      page
-        .getByRole("listitem")
-        .filter({
-          has: page.getByRole("link", {
-            name: fixtures.exercises.superHorizontalBenchPress.name,
-            exact: true,
-          }),
-        })
-        .last(),
+      page.getByRole("listitem", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
     ).toContainText("4×5");
   });
 
@@ -264,11 +252,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page
-      .getByRole("listitem")
-      .filter({
-        has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
-      })
-      .last()
+      .getByRole("listitem", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true })
       .getByRole("button", { name: "Edit exercise" })
       .click();
     await page

@@ -136,11 +136,9 @@ test.describe("Workout - active", () => {
   });
 
   test("keeps the exercise row expanded and collapsed after reload", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", {
-        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
-        exact: true,
-      }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+      exact: true,
     });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
@@ -292,11 +290,9 @@ test.describe("Workout - active", () => {
   });
 
   test("drops the optimistic set when logging fails", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", {
-        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
-        exact: true,
-      }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+      exact: true,
     });
 
     await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
@@ -319,11 +315,9 @@ test.describe("Workout - active", () => {
   });
 
   test("shows the error when correcting a set fails", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", {
-        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
-        exact: true,
-      }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+      exact: true,
     });
     const form = row.getByRole("form", { name: "Correct set 1" });
 
@@ -343,8 +337,9 @@ test.describe("Workout - active", () => {
   });
 
   test("shows the error when removing a set fails", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.superHorizontalBenchPress.name,
+      exact: true,
     });
 
     await page.route("**/api/workouts/*/exercise/*/set/*", (route) => route.fulfill({ status: 500 }));

@@ -66,8 +66,9 @@ test.describe("Mobile - pocket", () => {
   });
 
   test("completes the workout", async ({ page }) => {
-    const bench = page.getByRole("listitem").filter({
-      has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    const bench = page.getByRole("listitem", {
+      name: fixtures.exercises.superHorizontalBenchPress.name,
+      exact: true,
     });
 
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);

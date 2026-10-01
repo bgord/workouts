@@ -391,9 +391,7 @@ test.describe("Workouts - active-mutation", () => {
   });
 
   test("logs a set with reps in reserve", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }),
-    });
+    const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await page
@@ -413,11 +411,9 @@ test.describe("Workouts - active-mutation", () => {
   });
 
   test("rejects a logged set correction out of range", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", {
-        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
-        exact: true,
-      }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+      exact: true,
     });
     const form = row.getByRole("form", { name: "Correct set 1" });
 
@@ -440,11 +436,9 @@ test.describe("Workouts - active-mutation", () => {
   });
 
   test("corrects a logged set", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", {
-        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
-        exact: true,
-      }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+      exact: true,
     });
     const form = row.getByRole("form", { name: "Correct set 1" });
 
@@ -461,8 +455,9 @@ test.describe("Workouts - active-mutation", () => {
   });
 
   test("removes a logged set", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.superHorizontalBenchPress.name,
+      exact: true,
     });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);

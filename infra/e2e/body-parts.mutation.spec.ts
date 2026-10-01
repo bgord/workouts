@@ -82,7 +82,7 @@ test.describe("Body parts - empty-mutation", () => {
     await expect(async () => {
       await page.reload();
       await expect(
-        page.getByRole("listitem").filter({ hasText: "Neck" }).getByText("39.1 cm").first(),
+        page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first(),
       ).toBeVisible({ timeout: 1000 });
     }).toPass();
   });
@@ -150,8 +150,7 @@ test.describe("Body parts - athlete-mutation", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
         .getByText("Not measured yet")
         .first(),
     ).toBeVisible();
@@ -172,8 +171,7 @@ test.describe("Body parts - athlete-mutation", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
         .getByText("Not measured yet")
         .first(),
     ).toBeVisible();
@@ -190,8 +188,7 @@ test.describe("Body parts - athlete-mutation", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
         .getByText("38.5 cm")
         .first(),
     ).toBeVisible();
@@ -217,8 +214,7 @@ test.describe("Body parts - athlete-mutation", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
         .getByText("38.5 cm")
         .first(),
     ).toBeVisible();
@@ -240,8 +236,7 @@ test.describe("Body parts - athlete-mutation", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
         .getByText("39.5 cm")
         .first(),
     ).toBeVisible();
@@ -261,8 +256,7 @@ test.describe("Body parts - athlete-mutation", () => {
 
     await expect(
       page
-        .getByRole("listitem")
-        .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
         .getByText("Not measured yet")
         .first(),
     ).toBeVisible();

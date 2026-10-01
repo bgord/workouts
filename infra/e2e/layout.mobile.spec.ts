@@ -64,8 +64,7 @@ test.describe("Mobile - athlete", () => {
     const href =
       (await page
         .getByRole("list", { name: "Workouts" })
-        .getByRole("link")
-        .filter({ hasText: /Completed$/ })
+        .getByRole("link", { name: /Completed$/ })
         .first()
         .getAttribute("href")) ?? "";
 
@@ -163,8 +162,9 @@ test.describe("Mobile - active", () => {
   });
 
   test("fits the set correction form on the screen", async ({ page }) => {
-    const row = page.getByRole("listitem").filter({
-      has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.superHorizontalBenchPress.name,
+      exact: true,
     });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);

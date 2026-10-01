@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { useId } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
@@ -21,6 +22,7 @@ export function WorkoutExerciseRow(props: {
   reordering: boolean;
 }) {
   const t = bg.useTranslations();
+  const label = useId();
   const { workout } = workoutRoute.useLoaderData();
 
   const workoutExerciseVisibility = bg.usePersistedToggle({ name: `workout-exercise-${props.exercise.id}` });
@@ -47,7 +49,13 @@ export function WorkoutExerciseRow(props: {
   const mobile = width !== undefined && width <= 768;
 
   return (
-    <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
+    <ui.HairlineRow
+      aria-labelledby={label}
+      data-stack="y"
+      first={props.index === 0}
+      last={props.last}
+      {...ui.Spacing.row}
+    >
       <div data-stack="x" {...ui.Gap.related}>
         <WorkoutExerciseMove
           active={isDraft || props.reordering}
@@ -97,6 +105,7 @@ export function WorkoutExerciseRow(props: {
 
         <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
           <ui.ExerciseLink
+            id={label}
             params={{ exerciseId: props.exercise.exerciseId }}
             title={props.exercise.exerciseName}
             to="/catalog/exercise/$exerciseId"
