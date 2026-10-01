@@ -29,6 +29,7 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
   if (toggle.off) {
     return (
       <button
+        aria-label={t("measurements.body_parts.rename.cta", { name: props.name })}
         data-color="neutral-100"
         data-cursor="pointer"
         data-hover-color="brand-300"

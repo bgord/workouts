@@ -219,7 +219,7 @@ test.describe("Plans - drafter", () => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
-    await page.getByTitle("Warm-up").click();
+    await page.getByRole("button", { name: "Warm-up" }).click();
     await page.getByLabel("Warm-up").fill("5 minutes on the rower");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await page.reload();
@@ -232,7 +232,7 @@ test.describe("Plans - drafter", () => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
-    await page.getByTitle("Cool-down").click();
+    await page.getByRole("button", { name: "Cool-down" }).click();
     await page.getByLabel("Cool-down").fill("Chest and lat stretch, 2 minutes each");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await page.reload();

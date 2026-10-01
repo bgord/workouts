@@ -109,7 +109,7 @@ test.describe("Mobile - athlete", () => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
     await page.waitForLoadState("networkidle");
 
-    await row.getByTitle("Set target").tap();
+    await row.getByRole("button", { name: "Set target" }).tap();
 
     await expect(row.getByRole("button", { name: "Save" })).toBeInViewport();
     await expect(row.getByRole("button", { name: "Cancel" })).toBeInViewport();

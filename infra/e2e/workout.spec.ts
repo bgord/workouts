@@ -20,7 +20,7 @@ test.describe("Workout - athlete", () => {
     await page.route("**/api/workouts/*/scheduled-for", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await page.getByTitle("Change the date").click();
+    await page.getByRole("button", { name: /^Change the date/ }).click();
     await scheduledFor.fill((await scheduledFor.getAttribute("min")) ?? "");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -28,7 +28,7 @@ test.describe("Workout - athlete", () => {
 
     await page.reload();
 
-    await expect(page.getByTitle("Change the date")).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Change the date/ })).toBeVisible();
   });
 
   test("shows the error when discarding the workout fails", async ({ page }) => {
@@ -56,7 +56,7 @@ test.describe("Workout - athlete", () => {
     await page.route("**/api/workouts/*/exercise/*/target", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await row.getByTitle("Set target").click();
+    await row.getByRole("button", { name: "Set target" }).click();
     await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
     await row.getByRole("button", { name: "Save" }).click();
 
@@ -64,7 +64,7 @@ test.describe("Workout - athlete", () => {
 
     await page.reload();
 
-    await expect(row.getByTitle("Set target")).toContainText("Set target");
+    await expect(row.getByRole("button", { name: "Set target" })).toBeVisible();
   });
 });
 
@@ -110,12 +110,12 @@ test.describe("Workout - active", () => {
   test("keeps the warm-up expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page.getByTitle("Toggle warm-up").click();
+    await page.getByRole("button", { name: "Warm-up" }).click();
     await page.reload();
 
     await expect(page.getByText("10x Arm Circles forward")).toBeVisible();
 
-    await page.getByTitle("Toggle warm-up").click();
+    await page.getByRole("button", { name: "Warm-up" }).click();
     await page.reload();
 
     await expect(page.getByText("10x Arm Circles forward")).toBeHidden();
@@ -124,12 +124,12 @@ test.describe("Workout - active", () => {
   test("keeps the cool-down expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page.getByTitle("Toggle cool-down").click();
+    await page.getByRole("button", { name: "Cool-down" }).click();
     await page.reload();
 
     await expect(page.getByText("Doorway chest stretch, 2 minutes each side")).toBeVisible();
 
-    await page.getByTitle("Toggle cool-down").click();
+    await page.getByRole("button", { name: "Cool-down" }).click();
     await page.reload();
 
     await expect(page.getByText("Doorway chest stretch, 2 minutes each side")).toBeHidden();

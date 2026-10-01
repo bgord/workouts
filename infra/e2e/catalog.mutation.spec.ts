@@ -51,7 +51,7 @@ test.describe("Catalog - admin", () => {
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
 
-    await expect(page.getByTitle("Rename Abs")).toHaveCount(1);
+    await expect(page.getByRole("button", { name: "Rename Abs" })).toHaveCount(1);
   });
 
   test("rejects a too short exercise name and description", async ({ page }) => {
@@ -157,7 +157,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByTitle("Rename Neck").click();
+    await page.getByRole("button", { name: "Rename Neck" }).click();
     await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Category name").fill("ab");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -166,7 +166,7 @@ test.describe("Catalog - admin", () => {
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
 
-    await expect(page.getByTitle("Rename Neck")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Rename Neck" })).toBeVisible();
   });
 
   test("renames the category", async ({ page }) => {
@@ -175,7 +175,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByTitle("Rename Neck").click();
+    await page.getByRole("button", { name: "Rename Neck" }).click();
     await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Category name").fill("Neck and traps");
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();
@@ -190,7 +190,9 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
-    await page.getByTitle("Edit the description").click();
+    await page
+      .getByRole("button", { name: "Lie on your back, curl the head up with a plate on the forehead." })
+      .click();
     await page.getByLabel("Description").fill("ab");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
@@ -208,7 +210,9 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
-    await page.getByTitle("Edit the description").click();
+    await page
+      .getByRole("button", { name: "Lie on your back, curl the head up with a plate on the forehead." })
+      .click();
     await page.getByLabel("Description").fill("Lie on your back, curl the head up against a light plate.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await page.reload();
@@ -241,7 +245,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
-    await page.getByTitle("Unassign Neck and traps").click();
+    await page.getByRole("button", { name: "Unassign Neck and traps" }).click();
     await page.reload();
 
     await expect(page.getByText("No categories assigned")).toBeVisible();

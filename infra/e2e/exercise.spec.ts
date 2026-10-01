@@ -136,7 +136,7 @@ test.describe("Exercise - admin", () => {
     );
     await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
 
-    await page.getByTitle("Edit the description").click();
+    await page.getByRole("button", { name: fixtures.exercises.pecDeck.description }).click();
     await page.getByLabel("Description").fill("Seated fly on the machine, squeeze at the front.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 

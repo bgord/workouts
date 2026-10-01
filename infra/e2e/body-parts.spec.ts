@@ -125,7 +125,10 @@ test.describe("Body parts - athlete", () => {
       .getByRole("button", { name: `Details: ${fixtures.athlete.bodyParts.waist.name}`, exact: true })
       .click();
 
-    await page.getByTitle("Correct the measurement").first().click();
+    await page
+      .getByRole("button", { name: /^Correct the measurement/ })
+      .first()
+      .click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -148,7 +151,7 @@ test.describe("Body parts - athlete", () => {
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Manage" }).click();
-    await page.getByRole("button", { name: fixtures.athlete.bodyParts.waist.name, exact: true }).click();
+    await page.getByRole("button", { name: `Rename ${fixtures.athlete.bodyParts.waist.name}` }).click();
     await page
       .getByRole("form", { name: `Rename ${fixtures.athlete.bodyParts.waist.name}` })
       .getByLabel("Body part name")

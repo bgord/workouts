@@ -8,14 +8,14 @@ test.describe("Mobile - pocket", () => {
 
   test("sets every target", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
-    await expect(page.getByText("Set target").first()).toBeVisible();
-    const exercises = await page.getByText("Set target").count();
+    await expect(page.getByRole("button", { name: "Set target" }).first()).toBeVisible();
+    const exercises = await page.getByRole("button", { name: "Set target" }).count();
 
     for (let exercise = 0; exercise < exercises; exercise++) {
-      await page.getByText("Set target").first().tap();
+      await page.getByRole("button", { name: "Set target" }).first().tap();
       await page.getByRole("spinbutton", { name: "Load (kg)" }).fill("20");
       await page.getByRole("button", { name: "Save" }).tap();
-      await expect(page.getByText("Set target")).toHaveCount(exercises - exercise - 1);
+      await expect(page.getByRole("button", { name: "Set target" })).toHaveCount(exercises - exercise - 1);
     }
 
     await expect(page.getByRole("button", { name: "Start" })).toBeEnabled();

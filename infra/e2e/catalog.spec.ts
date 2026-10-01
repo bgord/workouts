@@ -150,7 +150,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByTitle("Rename Abs").click();
+    await page.getByRole("button", { name: "Rename Abs" }).click();
     await page.getByRole("form", { name: "Rename Abs" }).getByLabel("Category name").fill("Abs and core");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -159,7 +159,7 @@ test.describe("Catalog - admin", () => {
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
 
-    await expect(page.getByTitle("Rename Abs")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Rename Abs" })).toBeVisible();
   });
 
   test("shows the error when deleting a category fails", async ({ page }) => {

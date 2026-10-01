@@ -41,13 +41,14 @@ export function WorkoutScheduledFor() {
   if (workoutReschedule.off) {
     return (
       <button
+        aria-label={t("workout.reschedule.cta", { date: scheduledOn })}
         data-color="neutral-500"
         data-cursor="pointer"
         data-fs="xs"
         data-hover-color="neutral-200"
         data-self="start"
         onClick={workoutReschedule.enable}
-        title={t("workout.reschedule.cta")}
+        title={t("workout.reschedule.cta", { date: scheduledOn })}
         type="button"
         {...workoutReschedule.props.controller}
       >

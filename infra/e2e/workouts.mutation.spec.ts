@@ -100,13 +100,13 @@ test.describe("Workouts - athlete-mutation", () => {
         },
       )
       .click();
-    await page.getByTitle("Change the date").click();
+    await page.getByRole("button", { name: /^Change the date/ }).click();
     const date = (await scheduledFor.getAttribute("max")) ?? "";
 
     await scheduledFor.fill(date);
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();
-    await page.getByTitle("Change the date").click();
+    await page.getByRole("button", { name: /^Change the date/ }).click();
 
     await expect(scheduledFor).toHaveValue(date);
   });
@@ -152,7 +152,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await row.getByTitle("Set target").click();
+    await row.getByRole("button", { name: "Set target" }).click();
     await row.getByRole("spinbutton", { name: "Reps" }).fill("101");
     await row.getByRole("button", { name: "Save" }).click();
 
@@ -166,7 +166,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.reload();
 
-    await expect(row.getByTitle("Set target")).toContainText("Set target");
+    await expect(row.getByRole("button", { name: "Set target" })).toBeVisible();
   });
 
   test("sets a target from the progression suggestion", async ({ page }) => {
@@ -190,7 +190,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();
 
-    await expect(page.getByText("Set target")).toHaveCount(exercises - 1);
+    await expect(page.getByRole("button", { name: "Set target" })).toHaveCount(exercises - 1);
   });
 
   test("edits the target with the steppers", async ({ page }) => {
@@ -198,24 +198,24 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await row.getByTitle("Set target").click();
+    await row.getByRole("button", { name: /^Edit target/ }).click();
     await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
     await row.getByRole("button", { name: "Save" }).click();
     await page.reload();
 
-    await expect(row.getByTitle("Set target")).toContainText("×5 ");
+    await expect(row).toContainText("×5 ");
   });
 
   test("shows the error when starting the workout fails", async ({ page }) => {
     await page.route("**/api/workouts/*/start", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
-    const exercises = await page.getByText("Set target").count();
+    const exercises = await page.getByRole("button", { name: "Set target" }).count();
 
     for (let exercise = 0; exercise < exercises; exercise++) {
-      await page.getByText("Set target").first().click();
+      await page.getByRole("button", { name: "Set target" }).first().click();
       await page.getByRole("button", { name: "Last", exact: true }).click();
       await page.getByRole("button", { name: "Save" }).click();
-      await expect(page.getByText("Set target")).toHaveCount(exercises - exercise - 1);
+      await expect(page.getByRole("button", { name: "Set target" })).toHaveCount(exercises - exercise - 1);
     }
     await page.getByRole("button", { name: "Start" }).click();
 
@@ -225,13 +225,13 @@ test.describe("Workouts - athlete-mutation", () => {
 
   test("starts the workout once every exercise has a target", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
-    const exercises = await page.getByText("Set target").count();
+    const exercises = await page.getByRole("button", { name: "Set target" }).count();
 
     for (let exercise = 0; exercise < exercises; exercise++) {
-      await page.getByText("Set target").first().click();
+      await page.getByRole("button", { name: "Set target" }).first().click();
       await page.getByRole("button", { name: "Last", exact: true }).click();
       await page.getByRole("button", { name: "Save" }).click();
-      await expect(page.getByText("Set target")).toHaveCount(exercises - exercise - 1);
+      await expect(page.getByRole("button", { name: "Set target" })).toHaveCount(exercises - exercise - 1);
     }
     await page.getByRole("button", { name: "Start" }).click();
 

@@ -32,6 +32,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
   if (toggle.off) {
     return (
       <button
+        aria-label={t("exercise.category.rename.cta", { name: props.name })}
         data-color="neutral-100"
         data-cursor="pointer"
         data-hover-color="brand-300"

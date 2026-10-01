@@ -22,6 +22,7 @@ export function BodyPartMeasurementRemove(props: { measurement: BodyPartSummaryM
   return (
     <form aria-busy={mutation.isLoading} data-stack="x" onSubmit={mutation.handleSubmit}>
       <ui.IconButton
+        aria-label={t("measurements.body_parts.remove.title")}
         disabled={mutation.isLoading}
         title={t("measurements.body_parts.remove.title")}
         tone="danger"

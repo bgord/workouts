@@ -91,7 +91,7 @@ test.describe("Body parts - empty-mutation", () => {
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Manage" }).click();
-    await page.getByRole("button", { name: "Neck", exact: true }).click();
+    await page.getByRole("button", { name: "Rename Neck" }).click();
     await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("a".repeat(65));
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
@@ -106,7 +106,7 @@ test.describe("Body parts - empty-mutation", () => {
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Manage" }).click();
-    await page.getByRole("button", { name: "Neck", exact: true }).click();
+    await page.getByRole("button", { name: "Rename Neck" }).click();
     await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("Neck girth");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await page.reload();
@@ -202,7 +202,7 @@ test.describe("Body parts - athlete-mutation", () => {
       })
       .click();
 
-    await page.getByTitle("Correct the measurement").click();
+    await page.getByRole("button", { name: /^Correct the measurement/ }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("0");
 
     await expect(page.locator('input[type="number"]:invalid')).toHaveCount(1);
@@ -227,7 +227,7 @@ test.describe("Body parts - athlete-mutation", () => {
       })
       .click();
 
-    await page.getByTitle("Correct the measurement").click();
+    await page.getByRole("button", { name: /^Correct the measurement/ }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();
@@ -250,7 +250,7 @@ test.describe("Body parts - athlete-mutation", () => {
       })
       .click();
 
-    await page.getByTitle("Remove the measurement").click();
+    await page.getByRole("button", { name: "Remove the measurement" }).click();
     await page.reload();
 
     await expect(
