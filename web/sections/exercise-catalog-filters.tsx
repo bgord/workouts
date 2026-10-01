@@ -17,7 +17,9 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
 
   const nameInput = useRef<HTMLInputElement>(null);
 
-  const visible = all.on ? exerciseCategories.data : exerciseCategories.data.slice(0, 5);
+  const visible = all.on
+    ? exerciseCategories.data
+    : exerciseCategories.data.filter((category, index) => index < 5 || category.id === search.category);
 
   const hidden = exerciseCategories.data.length - visible.length;
 

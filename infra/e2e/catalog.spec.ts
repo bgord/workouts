@@ -90,7 +90,7 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText("3 of 32")).toBeVisible();
   });
 
-  test.fixme("keeps a hidden selected category visible", async ({ page }) => {
+  test("keeps a hidden selected category visible", async ({ page }) => {
     await page.goto(`/catalog?category=${fixtures.categories.lowerBack.id}`);
 
     await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeVisible();
