@@ -38,7 +38,7 @@ export async function createMailer(Env: EnvironmentResultType, deps: Dependencie
   return {
     [bg.NodeEnvironmentEnum.local]: local,
     [bg.NodeEnvironmentEnum.test]: MailerNoop,
-    [bg.NodeEnvironmentEnum.staging]: MailerNoop,
+    [bg.NodeEnvironmentEnum.staging]: local,
     [bg.NodeEnvironmentEnum.production]: production,
   }[Env.type];
 }
