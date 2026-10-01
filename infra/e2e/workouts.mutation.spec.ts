@@ -11,10 +11,10 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "New workout" }).click();
     await page.getByRole("button", { name: "Pick" }).click();
-    await page.locator('input[type="date"]').fill("2099-01-01");
+    await page.getByRole("textbox", { name: "Date" }).fill("2099-01-01");
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
 
-    await expect(page.locator('input[type="date"]:invalid')).toHaveCount(1);
+    await expect(page.getByRole("textbox", { name: "Date" }).and(page.locator(":invalid"))).toHaveCount(1);
     await expect(page).toHaveURL(/\/workouts$/);
   });
 
@@ -497,7 +497,7 @@ test.describe("Workouts - active-mutation", () => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
 
     const form = page
@@ -527,7 +527,7 @@ test.describe("Workouts - active-mutation", () => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");

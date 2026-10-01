@@ -19,7 +19,7 @@ test.describe("Body weight - empty-mutation", () => {
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("button", { name: "Import measurements" }).click();
-    await page.locator('input[type="file"]').setInputFiles({
+    await page.getByLabel("Select CSV").setInputFiles({
       name: "body-weight.csv",
       mimeType: "text/csv",
       buffer: Buffer.from("id,weight,measuredOn\n,not-a-number,2025-01-01\n"),
@@ -33,7 +33,7 @@ test.describe("Body weight - empty-mutation", () => {
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("button", { name: "Import measurements" }).click();
-    await page.locator('input[type="file"]').setInputFiles({
+    await page.getByLabel("Select CSV").setInputFiles({
       name: "body-weight.csv",
       mimeType: "text/csv",
       buffer: Buffer.from("id,weight,measuredOn\n,80250,2025-01-01\n,80750,2025-01-02\n"),
@@ -67,9 +67,9 @@ test.describe("Body weight - athlete-mutation", () => {
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("81.5");
-    await page.locator('input[type="date"]').fill("2099-01-01");
+    await page.getByRole("textbox", { name: "Date" }).fill("2099-01-01");
 
-    await expect(page.locator('input[type="date"]:invalid')).toHaveCount(1);
+    await expect(page.getByRole("textbox", { name: "Date" }).and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 

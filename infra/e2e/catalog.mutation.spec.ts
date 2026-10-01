@@ -57,15 +57,13 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "New exercise" }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select an image")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
-    await page.getByPlaceholder("Bench Press Horizontal").fill("ab");
+    await page.getByLabel("Exercise name").fill("ab");
     await page.getByLabel("Description").fill("ab");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
-    await expect(page.getByPlaceholder("Bench Press Horizontal").and(page.locator(":invalid"))).toHaveCount(
-      1,
-    );
+    await expect(page.getByLabel("Exercise name").and(page.locator(":invalid"))).toHaveCount(1);
     await expect(page.getByLabel("Description").and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
@@ -78,9 +76,9 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "New exercise" }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select an image")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
-    await page.getByPlaceholder("Bench Press Horizontal").fill(fixtures.exercises.facePull.name);
+    await page.getByLabel("Exercise name").fill(fixtures.exercises.facePull.name);
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
@@ -98,9 +96,9 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "New exercise" }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select an image")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
-    await page.getByPlaceholder("Bench Press Horizontal").fill("Neck curl");
+    await page.getByLabel("Exercise name").fill("Neck curl");
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
@@ -111,7 +109,7 @@ test.describe("Catalog - admin", () => {
 
   test("rejects a too short new exercise name", async ({ page }) => {
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck curl");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck curl");
     await page.getByRole("link", { name: /Neck curl/ }).click();
 
     await page.getByRole("button", { name: "Rename Neck curl" }).click();
@@ -127,7 +125,7 @@ test.describe("Catalog - admin", () => {
 
   test("renames the exercise", async ({ page }) => {
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck curl");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck curl");
     await page.getByRole("link", { name: /Neck curl/ }).click();
 
     await page.getByRole("button", { name: "Rename Neck curl" }).click();
@@ -140,7 +138,7 @@ test.describe("Catalog - admin", () => {
 
   test("assigns the category to the exercise", async ({ page }) => {
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck flexion");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
     await page.getByRole("button", { name: "Assign" }).click();
@@ -194,7 +192,7 @@ test.describe("Catalog - admin", () => {
       .fill("Neck and traps");
     await page.getByRole("button", { name: "Save" }).click();
     await page.reload();
-    await page.getByPlaceholder("Search by name").fill("Neck flexion");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
     await expect(page.getByText("Neck and traps", { exact: true }).first()).toBeVisible();
@@ -202,7 +200,7 @@ test.describe("Catalog - admin", () => {
 
   test("rejects a too short exercise description", async ({ page }) => {
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck flexion");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
     await page.getByTitle("Edit the description").click();
@@ -220,7 +218,7 @@ test.describe("Catalog - admin", () => {
 
   test("edits the exercise description", async ({ page }) => {
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck flexion");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
     await page.getByTitle("Edit the description").click();
@@ -235,13 +233,13 @@ test.describe("Catalog - admin", () => {
     const image = page.getByRole("img", { name: "Neck flexion" }).first();
 
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck flexion");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
     const before = await image.getAttribute("src");
 
     await page.getByRole("button", { name: "Change image", exact: true }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select an image")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.pecDeck.image}`);
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
@@ -253,7 +251,7 @@ test.describe("Catalog - admin", () => {
 
   test("unassigns the category from the exercise", async ({ page }) => {
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck flexion");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
     await page.getByTitle("Unassign Neck and traps").click();
@@ -264,7 +262,7 @@ test.describe("Catalog - admin", () => {
 
   test("deletes the unused exercise", async ({ page }) => {
     await page.goto("/catalog");
-    await page.getByPlaceholder("Search by name").fill("Neck flexion");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
     await page.getByRole("button", { name: "Delete Neck flexion" }).click();

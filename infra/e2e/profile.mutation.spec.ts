@@ -1,4 +1,4 @@
-// cSpell:ignore Wyłączone Włączone Zapisz Wyloguj
+// cSpell:ignore Tygodniowe podsumowanie Zapisz Wyloguj
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -9,13 +9,13 @@ test.describe("Profile - polyglot-mutation", () => {
     await page.goto("/profile");
 
     const updated = page.waitForResponse("**/api/preferences/weekly-summary/update");
-    await page.getByRole("combobox").filter({ hasText: "Wyłączone" }).selectOption("on");
+    await page.getByRole("combobox", { name: "Tygodniowe podsumowanie" }).selectOption("on");
     await page.getByRole("button", { name: "Zapisz" }).click();
     await updated;
 
     await page.reload();
 
-    await expect(page.getByRole("combobox").filter({ hasText: "Włączone" })).toHaveValue("on");
+    await expect(page.getByRole("combobox", { name: "Tygodniowe podsumowanie" })).toHaveValue("on");
   });
 
   test("signs out", async ({ page }) => {
@@ -40,7 +40,7 @@ test.describe("Profile - disposable", () => {
 
     await page.getByRole("button", { name: "Change avatar" }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select file")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
     await page
       .locator("section")
@@ -63,7 +63,7 @@ test.describe("Profile - disposable", () => {
     await page.goto("/profile");
 
     await page.getByRole("button", { name: "Continue" }).click();
-    await page.getByPlaceholder("delete").fill("delete");
+    await page.getByLabel("Type 'delete' in the field below").fill("delete");
     await page
       .getByRole("dialog", { name: "Delete account" })
       .getByRole("button", { name: "Delete account" })

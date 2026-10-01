@@ -102,7 +102,7 @@ test.describe("Workouts - athlete", () => {
 
     await expect(dialog.getByRole("radio")).toHaveCount(3);
     await expect(dialog.getByRole("radio").first()).toBeChecked();
-    await expect(dialog.locator('input[type="date"]')).toBeHidden();
+    await expect(dialog.getByRole("textbox", { name: "Date" })).toBeHidden();
 
     await dialog.getByRole("button", { name: "Tomorrow" }).click();
 
@@ -110,7 +110,7 @@ test.describe("Workouts - athlete", () => {
 
     await dialog.getByRole("button", { name: "Pick" }).click();
 
-    await expect(dialog.locator('input[type="date"]')).toBeVisible();
+    await expect(dialog.getByRole("textbox", { name: "Date" })).toBeVisible();
     await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "false");
   });
 

@@ -11,6 +11,7 @@ export function LanguageSelector() {
 
   return (
     <Select
+      aria-label={t("profile.change_language.header")}
       defaultValue={language}
       onChange={async (event) => {
         bg.Cookies.set("language", event.target.value);

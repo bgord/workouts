@@ -45,7 +45,7 @@ export function ProfileWeeklySummary() {
         onSubmit={mutation.handleSubmit}
         {...ui.Gap.inline}
       >
-        <ui.Select {...field.input.props}>
+        <ui.Select aria-label={t("profile.weekly_summary.header")} {...field.input.props}>
           {options.map((option) => (
             <option key={option} value={option}>
               {t(`profile.weekly_summary.${option}.value`)}

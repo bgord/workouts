@@ -150,7 +150,7 @@ test.describe("Exercise - admin", () => {
 
     await page.getByRole("button", { name: "Change image", exact: true }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select an image")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
     await page.getByRole("button", { name: "Save", exact: true }).click();
 

@@ -39,10 +39,10 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
           <Search data-color="neutral-500" data-left="2-5" data-position="absolute" data-size="sm" />
 
           <input
+            aria-label={t("exercise.catalog.name.label")}
             className="c-input"
             data-pl="8"
             data-width="100%"
-            id={ExerciseCatalogFiltersForm.Form.name.field.name}
             name={ExerciseCatalogFiltersForm.Form.name.field.name}
             onChange={(event) =>
               navigate({

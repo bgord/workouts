@@ -144,6 +144,6 @@ test.describe("Shortcuts - athlete", () => {
 
     await page.keyboard.press("/");
 
-    await expect(page.getByPlaceholder("Search by name")).toBeFocused();
+    await expect(page.getByRole("textbox", { name: "Search by name" })).toBeFocused();
   });
 });

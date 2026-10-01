@@ -39,7 +39,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await page.getByPlaceholder("Search exercises").fill("zzz");
+    await page.getByRole("searchbox", { name: "Exercise" }).fill("zzz");
 
     await expect(page.getByText("No exercises match", { exact: true })).toBeVisible();
   });
@@ -199,7 +199,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
@@ -274,7 +274,7 @@ test.describe("Plan - builder", () => {
       .getByRole("button", { name: "Edit exercise" })
       .click();
     await page.getByRole("img", { name: fixtures.exercises.superHorizontalBenchPress.name }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.pecDeck.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
     await page
       .locator("form")

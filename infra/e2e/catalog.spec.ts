@@ -17,7 +17,7 @@ test.describe("Catalog - athlete", () => {
   test("searches by name", async ({ page }) => {
     await page.goto("/catalog");
 
-    await page.getByPlaceholder("Search by name").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("textbox", { name: "Search by name" }).fill(fixtures.exercises.facePull.name);
 
     await expect(page.getByText("1 of 32")).toBeVisible();
     await expect(page.locator(`a[href="/catalog/exercise/${fixtures.exercises.facePull.id}"]`)).toBeVisible();
@@ -53,7 +53,7 @@ test.describe("Catalog - athlete", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
-    await page.getByPlaceholder("Search by name").fill("Pec");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Pec");
 
     await expect(page.getByText("3 of 32")).toBeVisible();
   });
@@ -85,7 +85,7 @@ test.describe("Catalog - athlete", () => {
   test("shows the empty state when nothing matches", async ({ page }) => {
     await page.goto("/catalog");
 
-    await page.getByPlaceholder("Search by name").fill("no such exercise");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("no such exercise");
 
     await expect(page.getByText("No exercises match the filters")).toBeVisible();
     await expect(page.getByText("Try another name or category")).toBeVisible();
@@ -188,9 +188,9 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "New exercise" }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select an image")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
-    await page.getByPlaceholder("Bench Press Horizontal").fill("Neck curl");
+    await page.getByLabel("Exercise name").fill("Neck curl");
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");

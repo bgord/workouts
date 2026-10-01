@@ -57,7 +57,7 @@ test.describe("Body parts - empty-mutation", () => {
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Import body part measurements" }).click();
-    await page.locator('input[type="file"]').setInputFiles({
+    await page.getByLabel("Select CSV").setInputFiles({
       name: "body-parts.csv",
       mimeType: "text/csv",
       buffer: Buffer.from("id,bodyPartName,value,measuredOn\n,Unknown,385,2025-01-01\n"),
@@ -71,7 +71,7 @@ test.describe("Body parts - empty-mutation", () => {
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Import body part measurements" }).click();
-    await page.locator('input[type="file"]').setInputFiles({
+    await page.getByLabel("Select CSV").setInputFiles({
       name: "body-parts.csv",
       mimeType: "text/csv",
       buffer: Buffer.from("id,bodyPartName,value,measuredOn\n,Neck,385,2025-01-01\n,Neck,391,2025-01-08\n"),

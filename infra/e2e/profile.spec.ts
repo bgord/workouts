@@ -1,4 +1,4 @@
-// cSpell:ignore Ustawienia profilu Polski Wyłączone delet
+// cSpell:ignore Ustawienia profilu Zmiana języka Tygodniowe podsumowanie delet
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -20,14 +20,14 @@ test.describe("Profile - athlete", () => {
   test("keeps the weekly summary on by default", async ({ page }) => {
     await page.goto("/profile");
 
-    await expect(page.getByRole("combobox").filter({ hasText: "On" })).toHaveValue("on");
+    await expect(page.getByRole("combobox", { name: "Weekly summary" })).toHaveValue("on");
     await expect(page.getByRole("button", { name: "Save" })).toBeDisabled();
   });
 
   test("changes the language", async ({ page }) => {
     await page.goto("/profile");
 
-    await page.getByRole("combobox").filter({ hasText: "English" }).selectOption("pl");
+    await page.getByRole("combobox", { name: "Change language" }).selectOption("pl");
 
     await expect(
       page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
@@ -60,13 +60,13 @@ test.describe("Profile - athlete", () => {
       page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
     ).toBeDisabled();
 
-    await page.getByPlaceholder("delete").fill("delet");
+    await page.getByLabel("Type 'delete' in the field below").fill("delet");
 
     await expect(
       page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
     ).toBeDisabled();
 
-    await page.getByPlaceholder("delete").fill("delete");
+    await page.getByLabel("Type 'delete' in the field below").fill("delete");
 
     await expect(
       page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
@@ -79,7 +79,7 @@ test.describe("Profile - athlete", () => {
 
     await page.getByRole("button", { name: "Change avatar" }).click();
     await page
-      .locator('input[type="file"]')
+      .getByLabel("Select file")
       .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
     await page
       .locator("section")
@@ -98,14 +98,14 @@ test.describe("Profile - athlete", () => {
     await page.route("**/api/preferences/weekly-summary/update", (route) => route.fulfill({ status: 500 }));
     await page.goto("/profile");
 
-    await page.getByRole("combobox").filter({ hasText: "On" }).selectOption("off");
+    await page.getByRole("combobox", { name: "Weekly summary" }).selectOption("off");
     await page.getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByText("Could not save the preference, please try again")).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("combobox").filter({ hasText: "On" })).toHaveValue("on");
+    await expect(page.getByRole("combobox", { name: "Weekly summary" })).toHaveValue("on");
   });
 
   test("shows the error when sending the password reset link fails", async ({ page }) => {
@@ -123,7 +123,7 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await page.getByRole("button", { name: "Continue" }).click();
-    await page.getByPlaceholder("delete").fill("delete");
+    await page.getByLabel("Type 'delete' in the field below").fill("delete");
     await page
       .getByRole("dialog", { name: "Delete account" })
       .getByRole("button", { name: "Delete account" })
@@ -143,7 +143,7 @@ test.describe("Profile - polyglot", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
     ).toBeVisible();
-    await expect(page.getByRole("combobox").filter({ hasText: "Polski" })).toHaveValue("pl");
-    await expect(page.getByRole("combobox").filter({ hasText: "Wyłączone" })).toHaveValue("off");
+    await expect(page.getByRole("combobox", { name: "Zmiana języka" })).toHaveValue("pl");
+    await expect(page.getByRole("combobox", { name: "Tygodniowe podsumowanie" })).toHaveValue("off");
   });
 });

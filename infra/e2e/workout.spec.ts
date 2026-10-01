@@ -216,7 +216,7 @@ test.describe("Workout - active", () => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");

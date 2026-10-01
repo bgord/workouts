@@ -245,7 +245,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
 
     const form = page
@@ -274,7 +274,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.facePull.name).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
@@ -353,7 +353,7 @@ test.describe("Plans - drafter", () => {
       .getByRole("button", { name: "Edit exercise" })
       .click();
     await page.getByRole("img", { name: fixtures.exercises.facePull.name }).click();
-    await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.pecDeck.name);
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
     await page
       .locator("form")

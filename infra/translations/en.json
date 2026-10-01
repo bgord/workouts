@@ -93,6 +93,7 @@
   "exercise.catalog.categories.more": "+{{count}} more",
   "exercise.catalog.count": "{{matching}} of {{total}}",
   "exercise.catalog.header": "Catalog",
+  "exercise.catalog.name.label": "Search by name",
   "exercise.catalog.name.placeholder": "Search by name",
   "exercise.catalog.no_matches": "No exercises match the filters",
   "exercise.catalog.no_matches.hint": "Try another name or category",
