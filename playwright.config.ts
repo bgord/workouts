@@ -6,7 +6,8 @@ export default defineConfig({
   forbidOnly: Boolean(process.env["CI"]),
   retries: 0,
   workers: process.env["CI"] ? 1 : 4,
-  use: { baseURL: "http://localhost:3000", trace: "on-first-retry" },
+  timeout: 10_000,
+  use: { baseURL: "http://localhost:3000" },
   projects: [
     { name: "setup", testMatch: /.*\.setup\.ts/ },
     {
