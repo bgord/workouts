@@ -217,12 +217,7 @@ test.describe("Plans - drafter", () => {
 
   test("edits the warm-up of a section", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page.getByTitle("Warm-up").click();
     await page.getByLabel("Warm-up").fill("5 minutes on the rower");
@@ -235,12 +230,7 @@ test.describe("Plans - drafter", () => {
 
   test("sets the cool-down of a section", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page.getByTitle("Cool-down").click();
     await page.getByLabel("Cool-down").fill("Chest and lat stretch, 2 minutes each");
@@ -252,12 +242,7 @@ test.describe("Plans - drafter", () => {
 
   test("rejects an exercise instruction with invalid sets and reps range", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
@@ -286,12 +271,7 @@ test.describe("Plans - drafter", () => {
 
   test("adds an exercise instruction", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
@@ -320,12 +300,7 @@ test.describe("Plans - drafter", () => {
       .last();
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await row.getByRole("button", { name: "Edit exercise" }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("0");
@@ -349,12 +324,7 @@ test.describe("Plans - drafter", () => {
       .last();
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await row.getByRole("button", { name: "Edit exercise" }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("5");
@@ -374,12 +344,7 @@ test.describe("Plans - drafter", () => {
 
   test("changes the exercise of the instruction", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await page
       .getByRole("listitem")
@@ -407,12 +372,7 @@ test.describe("Plans - drafter", () => {
 
   test("moves the exercise instruction up", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.pecDeck.name} down` }),
@@ -428,12 +388,7 @@ test.describe("Plans - drafter", () => {
 
   test("removes the exercise instruction", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push A", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     const removed = page.waitForResponse((response) => response.request().method() === "DELETE");
     await page

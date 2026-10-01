@@ -209,10 +209,10 @@ test.describe("Body parts - athlete-mutation", () => {
   test("rejects a body part correction out of range", async ({ page }) => {
     await page.goto("/measurements/body-parts");
     await page
-      .getByRole("listitem")
-      .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
-      .getByRole("button")
-      .first()
+      .getByRole("button", {
+        name: `Details: ${fixtures.athleteMutation.bodyParts.calfRight.name}`,
+        exact: true,
+      })
       .click();
 
     await page.getByTitle("Correct the measurement").click();
@@ -234,10 +234,10 @@ test.describe("Body parts - athlete-mutation", () => {
   test("corrects the body part measurement", async ({ page }) => {
     await page.goto("/measurements/body-parts");
     await page
-      .getByRole("listitem")
-      .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
-      .getByRole("button")
-      .first()
+      .getByRole("button", {
+        name: `Details: ${fixtures.athleteMutation.bodyParts.calfRight.name}`,
+        exact: true,
+      })
       .click();
 
     await page.getByTitle("Correct the measurement").click();
@@ -257,10 +257,10 @@ test.describe("Body parts - athlete-mutation", () => {
   test("removes the body part measurement", async ({ page }) => {
     await page.goto("/measurements/body-parts");
     await page
-      .getByRole("listitem")
-      .filter({ hasText: fixtures.athleteMutation.bodyParts.calfRight.name })
-      .getByRole("button")
-      .first()
+      .getByRole("button", {
+        name: `Details: ${fixtures.athleteMutation.bodyParts.calfRight.name}`,
+        exact: true,
+      })
       .click();
 
     await page.getByTitle("Remove the measurement").click();

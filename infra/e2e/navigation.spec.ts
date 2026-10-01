@@ -117,7 +117,7 @@ test.describe("Navigation - athlete", () => {
 
   test("goes back from the exercise to the plan it was opened from", async ({ page }) => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
-    await page.getByRole("listitem").filter({ hasText: "Push" }).getByRole("button").first().click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
     await page.locator('a[href^="/catalog/exercise/"]').first().click();
     await expect(page.getByRole("link", { name: "Back", exact: true })).toHaveAttribute("href", "/catalog");
 

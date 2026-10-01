@@ -142,12 +142,12 @@ test.describe("Workout - active", () => {
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
     await page.reload();
 
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeVisible();
 
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
     await page.reload();
 
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeHidden();
@@ -296,7 +296,7 @@ test.describe("Workout - active", () => {
 
     await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeVisible();
     const before = await row.getByRole("button", { name: /^Remove set / }).count();
 
@@ -320,7 +320,7 @@ test.describe("Workout - active", () => {
 
     await page.route("**/api/workouts/*/exercise/*/set/*", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
     await row.locator('input[name^="corrected-reps-"]').fill("9");
@@ -344,7 +344,7 @@ test.describe("Workout - active", () => {
 
     await page.route("**/api/workouts/*/exercise/*/set/*", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Remove set 4" }).click();
 

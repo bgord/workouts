@@ -258,7 +258,7 @@ test.describe("Workouts - athlete-mutation", () => {
     const row = page.getByRole("listitem").first();
 
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     const before = await row.textContent();
 
@@ -281,7 +281,7 @@ test.describe("Workouts - athlete-mutation", () => {
     const row = page.getByRole("listitem").first();
 
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
     await row.locator('input[name^="corrected-reps-"]').fill("7");
@@ -300,7 +300,7 @@ test.describe("Workouts - athlete-mutation", () => {
     const row = page.getByRole("listitem").first();
 
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeDisabled();
     await expect(page.getByText("A completed workout keeps at least one set")).toBeVisible();
@@ -329,7 +329,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.goto("/workouts?filter=all_time");
     await page.locator('a[href^="/workouts/"]').nth(1).click();
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Remove set 4" }).click();
     await page.getByRole("button", { name: "Remove", exact: true }).click();
@@ -387,7 +387,9 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByRole("dialog").getByRole("button", { name: "Log set · RIR 1" }).click();
     await page.keyboard.press("Escape");
     await page.reload();
-    await row.getByRole("button").first().click();
+    await page
+      .getByRole("button", { name: `Details: ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true })
+      .click();
 
     await expect(row.getByText("RIR 1")).toBeVisible();
   });
@@ -401,7 +403,7 @@ test.describe("Workouts - active-mutation", () => {
     });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     const before = await row.textContent();
 
@@ -429,7 +431,7 @@ test.describe("Workouts - active-mutation", () => {
     });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
     await row.locator('input[name^="corrected-reps-"]').fill("9");
@@ -450,7 +452,7 @@ test.describe("Workouts - active-mutation", () => {
     });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await row.getByRole("button").first().click();
+    await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Remove set 4" }).click();
     await page.reload();

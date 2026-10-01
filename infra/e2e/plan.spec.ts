@@ -19,11 +19,7 @@ test.describe("Plan - builder", () => {
 
   test("keeps the section expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    const toggle = page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first();
+    const toggle = page.getByRole("button", { name: "Details: Push", exact: true });
 
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeHidden();
 
@@ -40,12 +36,7 @@ test.describe("Plan - builder", () => {
 
   test("shows the empty state when no exercise matches", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByPlaceholder("Search exercises").fill("zzz");
@@ -55,12 +46,7 @@ test.describe("Plan - builder", () => {
 
   test("blocks moving the first exercise instruction up and the last one down", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} up` }),
@@ -176,12 +162,7 @@ test.describe("Plan - builder", () => {
   test("shows the error when saving the warm-up fails", async ({ page }) => {
     await page.route("**/api/plans/*/section/*/warmup", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page.getByTitle("Warm-up").click();
     await page.getByLabel("Warm-up").fill("5 minutes on the rower");
@@ -197,12 +178,7 @@ test.describe("Plan - builder", () => {
   test("shows the error when saving the cool-down fails", async ({ page }) => {
     await page.route("**/api/plans/*/section/*/cooldown", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page.getByTitle("Cool-down").click();
     await page.getByLabel("Cool-down").fill("Chest and lat stretch, 2 minutes each");
@@ -220,12 +196,7 @@ test.describe("Plan - builder", () => {
       route.fulfill({ status: 500 }),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
@@ -253,12 +224,7 @@ test.describe("Plan - builder", () => {
       route.fulfill({ status: 500 }),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page
       .getByRole("listitem")
@@ -297,12 +263,7 @@ test.describe("Plan - builder", () => {
       route.fulfill({ status: 500 }),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page
       .getByRole("listitem")
@@ -335,12 +296,7 @@ test.describe("Plan - builder", () => {
       route.fulfill({ status: 500 }),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page
       .getByRole("button", { name: `Move ${fixtures.exercises.overheadPressSeatedDumbbells.name} up` })
@@ -360,12 +316,7 @@ test.describe("Plan - builder", () => {
       route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
 
     await page
       .getByRole("button", {
@@ -449,12 +400,7 @@ test.describe("Plan - hoarder", () => {
 
   test("blocks adding an exercise instruction at the limit", async ({ page }) => {
     await page.goto(`/plans/${fixtures.hoarder.plan.id}`);
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Everything", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Everything", exact: true }).click();
 
     await expect(page.getByText("Remove an exercise to add a new one")).toBeVisible();
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeDisabled();

@@ -66,7 +66,9 @@ test.describe("Body parts - athlete", () => {
 
     await page.goto("/measurements/body-parts");
 
-    await row.getByRole("button").first().click();
+    await page
+      .getByRole("button", { name: `Details: ${fixtures.athlete.bodyParts.waist.name}`, exact: true })
+      .click();
 
     await expect(row.getByTitle("Correct the measurement")).toHaveCount(12);
     await expect(row.getByTitle("Correct the measurement").first()).toContainText("81.4 cm");
@@ -120,10 +122,7 @@ test.describe("Body parts - athlete", () => {
     );
     await page.goto("/measurements/body-parts");
     await page
-      .getByRole("listitem")
-      .filter({ hasText: fixtures.athlete.bodyParts.waist.name })
-      .getByRole("button")
-      .first()
+      .getByRole("button", { name: `Details: ${fixtures.athlete.bodyParts.waist.name}`, exact: true })
       .click();
 
     await page.getByTitle("Correct the measurement").first().click();

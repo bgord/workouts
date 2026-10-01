@@ -55,12 +55,18 @@ test.describe("Exercise - athlete", () => {
 
     const history = page.getByRole("heading", { name: "History" }).locator("..");
 
-    await history.getByRole("button").first().click();
+    await history
+      .getByRole("button", { name: /^Details: / })
+      .first()
+      .click();
     await page.reload();
 
     await expect(history.getByRole("listitem")).not.toHaveCount(8);
 
-    await history.getByRole("button").first().click();
+    await history
+      .getByRole("button", { name: /^Details: / })
+      .first()
+      .click();
     await page.reload();
 
     await expect(history.getByRole("listitem")).toHaveCount(8);

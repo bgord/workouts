@@ -165,7 +165,7 @@ test.describe("Mobile - active", () => {
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.waitForLoadState("networkidle");
-    await row.getByRole("button").first().tap();
+    await row.getByRole("button", { name: /^Details: / }).tap();
 
     await row.getByRole("button", { name: "Correct set 1" }).tap();
 
@@ -186,12 +186,7 @@ test.describe("Mobile - builder", () => {
   test("keeps the plan with an expanded section within the viewport width", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     await page.waitForLoadState("networkidle");
-    await page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
-      .getByRole("button")
-      .first()
-      .click();
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeVisible();
 
     const overflow = await page.evaluate(

@@ -78,7 +78,7 @@ test.describe("Mobile - pocket", () => {
 
     await expect(async () => {
       await page.reload();
-      await bench.getByRole("button").first().tap();
+      await bench.getByRole("button", { name: /^Details: / }).tap();
       await expect(bench.getByRole("button", { name: "Correct set 1" })).toBeVisible({ timeout: 1000 });
       await expect(bench.getByRole("button", { name: "Correct set 2" })).toBeVisible({ timeout: 1000 });
     }).toPass();
