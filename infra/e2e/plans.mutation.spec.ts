@@ -149,6 +149,22 @@ test.describe("Plans - drafter", () => {
     await expect(page.getByRole("heading", { level: 2, name: "ab", exact: true })).toBeHidden();
   });
 
+  test("rejects a duplicate section name", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill(fixtures.drafter.plan.sections.pull.name);
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not create a section")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("heading", { level: 2, name: fixtures.drafter.plan.sections.pull.name, exact: true }),
+    ).toHaveCount(1);
+  });
+
   test("adds a section", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
