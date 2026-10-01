@@ -109,6 +109,32 @@ test.describe("Plans - drafter", () => {
   test.use({ storageState: ".auth/drafter.json" });
   test.describe.configure({ mode: "serial" });
 
+  test("rejects an empty plan description", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("button", { name: fixtures.drafter.plan.description }).click();
+    await page.getByLabel("Description").fill("");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.locator("form textarea:invalid")).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByText(fixtures.drafter.plan.description)).toBeVisible();
+  });
+
+  test("edits the plan description", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("button", { name: fixtures.drafter.plan.description }).click();
+    await page.getByLabel("Description").fill("Upper body twice, legs once.");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+    await page.reload();
+
+    await expect(page.getByText("Upper body twice, legs once.")).toBeVisible();
+    await expect(page.getByText(fixtures.drafter.plan.description)).toBeHidden();
+  });
+
   test("rejects a too short section name", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
@@ -185,32 +211,6 @@ test.describe("Plans - drafter", () => {
 
     await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeHidden();
     await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
-  });
-
-  test("rejects an empty plan description", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-
-    await page.getByRole("button", { name: fixtures.drafter.plan.description }).click();
-    await page.getByLabel("Description").fill("");
-    await page.getByRole("button", { name: "Save", exact: true }).click();
-
-    await expect(page.locator("form textarea:invalid")).toHaveCount(1);
-
-    await page.reload();
-
-    await expect(page.getByText(fixtures.drafter.plan.description)).toBeVisible();
-  });
-
-  test("edits the plan description", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-
-    await page.getByRole("button", { name: fixtures.drafter.plan.description }).click();
-    await page.getByLabel("Description").fill("Upper body twice, legs once.");
-    await page.getByRole("button", { name: "Save", exact: true }).click();
-    await page.reload();
-
-    await expect(page.getByText("Upper body twice, legs once.")).toBeVisible();
-    await expect(page.getByText(fixtures.drafter.plan.description)).toBeHidden();
   });
 
   test("edits the warm-up of a section", async ({ page }) => {
