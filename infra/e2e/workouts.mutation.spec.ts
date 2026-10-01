@@ -2,8 +2,8 @@
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
-test.describe("Workouts - athlete", () => {
-  test.use({ storageState: ".auth/athlete.json" });
+test.describe("Workouts - athlete-mutation", () => {
+  test.use({ storageState: ".auth/athlete-mutation.json" });
   test.describe.configure({ mode: "serial" });
 
   test("rejects a date beyond the scheduling horizon", async ({ page }) => {
@@ -35,7 +35,7 @@ test.describe("Workouts - athlete", () => {
     await page.getByRole("button", { name: "New workout" }).click();
     await page
       .locator("#workout-create")
-      .getByText(fixtures.athlete.plan.sections.legs.name, { exact: true })
+      .getByText(fixtures.athleteMutation.plan.sections.legs.name, { exact: true })
       .click();
     await page.getByRole("button", { name: "Tomorrow" }).click();
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
@@ -43,7 +43,10 @@ test.describe("Workouts - athlete", () => {
     await page.reload();
 
     await expect(
-      page.getByRole("heading", { level: 1, name: `PPL – ${fixtures.athlete.plan.sections.legs.name}` }),
+      page.getByRole("heading", {
+        level: 1,
+        name: `PPL – ${fixtures.athleteMutation.plan.sections.legs.name}`,
+      }),
     ).toBeVisible();
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
 
@@ -56,9 +59,12 @@ test.describe("Workouts - athlete", () => {
   test("blocks starting a workout with no exercises", async ({ page }) => {
     await page.goto("/workouts");
     await page
-      .locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
-        hasText: /Draft$/,
-      })
+      .locator(
+        `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
+        {
+          hasText: /Draft$/,
+        },
+      )
       .click();
     await expect(page.locator('a[href^="/catalog/exercise/"]').first()).toBeVisible();
     const exercises = await page.locator('a[href^="/catalog/exercise/"]').count();
@@ -82,9 +88,12 @@ test.describe("Workouts - athlete", () => {
 
     await page.goto("/workouts");
     await page
-      .locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
-        hasText: /Draft$/,
-      })
+      .locator(
+        `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
+        {
+          hasText: /Draft$/,
+        },
+      )
       .click();
     await page.getByTitle("Change the date").click();
     const date = (await scheduledFor.getAttribute("max")) ?? "";
@@ -100,9 +109,12 @@ test.describe("Workouts - athlete", () => {
   test("discards the scheduled workout", async ({ page }) => {
     await page.goto("/workouts");
     await page
-      .locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
-        hasText: /Draft$/,
-      })
+      .locator(
+        `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
+        {
+          hasText: /Draft$/,
+        },
+      )
       .click();
 
     await page.getByRole("button", { name: "Discard" }).click();
@@ -111,14 +123,17 @@ test.describe("Workouts - athlete", () => {
     await page.reload();
 
     await expect(
-      page.locator(`a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"])`, {
-        hasText: /Draft$/,
-      }),
+      page.locator(
+        `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
+        {
+          hasText: /Draft$/,
+        },
+      ),
     ).toHaveCount(0);
   });
 
   test("blocks starting until every exercise has a target", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await expect(page.getByText("Set a target for every exercise")).toBeVisible();
     await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
@@ -127,7 +142,7 @@ test.describe("Workouts - athlete", () => {
   test("rejects a target out of range", async ({ page }) => {
     const row = page.getByRole("listitem").first();
 
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await row.getByTitle("Set target").click();
     await row.getByRole("spinbutton", { name: "Reps" }).fill("101");
@@ -147,7 +162,7 @@ test.describe("Workouts - athlete", () => {
   });
 
   test("sets a target from the progression suggestion", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     const exercises = await page.getByRole("button", { name: "Set target" }).count();
 
     await page.getByRole("button", { name: "Set target" }).first().click();
@@ -175,7 +190,7 @@ test.describe("Workouts - athlete", () => {
   test("edits the target with the steppers", async ({ page }) => {
     const row = page.getByRole("listitem").first();
 
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await row.getByTitle("Set target").click();
     await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
@@ -187,7 +202,7 @@ test.describe("Workouts - athlete", () => {
 
   test("shows the error when starting the workout fails", async ({ page }) => {
     await page.route("**/api/workouts/*/start", (route) => route.fulfill({ status: 500 }));
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     const exercises = await page.getByText("Set target").count();
 
     for (let exercise = 0; exercise < exercises; exercise++) {
@@ -203,7 +218,7 @@ test.describe("Workouts - athlete", () => {
   });
 
   test("starts the workout once every exercise has a target", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     const exercises = await page.getByText("Set target").count();
 
     for (let exercise = 0; exercise < exercises; exercise++) {
@@ -219,14 +234,14 @@ test.describe("Workouts - athlete", () => {
   });
 
   test("blocks completing until a set is logged", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await expect(page.getByText("Log at least one set first")).toBeVisible();
     await expect(page.getByRole("button", { name: "Complete" })).toBeDisabled();
   });
 
   test("logs a set and completes the workout", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await page
       .getByRole("button", { name: /^Open panel: / })
@@ -242,7 +257,7 @@ test.describe("Workouts - athlete", () => {
   test("rejects a set correction out of range", async ({ page }) => {
     const row = page.getByRole("listitem").first();
 
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     await row.getByRole("button").first().click();
 
     const before = await row.textContent();
@@ -265,7 +280,7 @@ test.describe("Workouts - athlete", () => {
   test("corrects the set of the completed workout", async ({ page }) => {
     const row = page.getByRole("listitem").first();
 
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     await row.getByRole("button").first().click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
@@ -284,7 +299,7 @@ test.describe("Workouts - athlete", () => {
   test("blocks removing the last set of the completed workout", async ({ page }) => {
     const row = page.getByRole("listitem").first();
 
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
     await row.getByRole("button").first().click();
 
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeDisabled();
@@ -293,7 +308,7 @@ test.describe("Workouts - athlete", () => {
 
   test("copies the completed workout to the clipboard", async ({ page, context }) => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await page.getByRole("button", { name: "Copy workout" }).click();
 
@@ -304,7 +319,7 @@ test.describe("Workouts - athlete", () => {
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
-    expect(copied).toContain(`Workout id: ${fixtures.athlete.scheduledWorkout.id}`);
+    expect(copied).toContain(`Workout id: ${fixtures.athleteMutation.scheduledWorkout.id}`);
     expect(copied).toContain("Logged sets: 1");
     expect(copied).toContain("| 1 | 7 | 30 | not recorded |");
   });
@@ -339,12 +354,12 @@ test.describe("Workouts - athlete", () => {
   });
 });
 
-test.describe("Workouts - active", () => {
-  test.use({ storageState: ".auth/active.json" });
+test.describe("Workouts - active-mutation", () => {
+  test.use({ storageState: ".auth/active-mutation.json" });
   test.describe.configure({ mode: "serial" });
 
   test("blocks logging a set with reps missing or out of range", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await page
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
@@ -365,7 +380,7 @@ test.describe("Workouts - active", () => {
       has: page.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }),
     });
 
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await page
       .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
@@ -385,7 +400,7 @@ test.describe("Workouts - active", () => {
       }),
     });
 
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await row.getByRole("button").first().click();
 
     const before = await row.textContent();
@@ -413,7 +428,7 @@ test.describe("Workouts - active", () => {
       }),
     });
 
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await row.getByRole("button").first().click();
 
     await row.getByRole("button", { name: "Correct set 1" }).click();
@@ -434,7 +449,7 @@ test.describe("Workouts - active", () => {
       has: page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
     });
 
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await row.getByRole("button").first().click();
 
     await row.getByRole("button", { name: "Remove set 4" }).click();
@@ -445,7 +460,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("blocks saving an empty note", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Description..." }).click();
 
@@ -454,7 +469,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("adds a note", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Description..." }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
@@ -465,7 +480,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("rejects an exercise with invalid sets and reps range", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
@@ -495,7 +510,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("adds an exercise", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Add exercise" }).click();
     await page.getByPlaceholder("Search exercises").fill(fixtures.exercises.facePull.name);
@@ -516,7 +531,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("reorders the added exercise", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Reorder exercises" }).click();
     await page.getByRole("button", { name: `Move ${fixtures.exercises.facePull.name} up` }).click();
@@ -528,7 +543,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("removes an exercise without logged sets", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page
       .getByRole("button", { name: `Remove ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
@@ -541,7 +556,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("removes an exercise with logged sets", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page
       .getByRole("button", {
@@ -561,7 +576,7 @@ test.describe("Workouts - active", () => {
   });
 
   test("completes the workout in progress", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page.getByRole("button", { name: "Complete" }).click();
 

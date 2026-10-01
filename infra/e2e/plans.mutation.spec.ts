@@ -2,12 +2,12 @@
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
-test.describe("Plans - builder", () => {
-  test.use({ storageState: ".auth/builder.json" });
+test.describe("Plans - builder-mutation", () => {
+  test.use({ storageState: ".auth/builder-mutation.json" });
   test.describe.configure({ mode: "serial" });
 
   test("rejects a too short plan name", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
     await page.getByRole("heading", { level: 1 }).getByRole("button").click();
     await page.getByLabel("Plan name").fill("ab");
@@ -17,11 +17,13 @@ test.describe("Plans - builder", () => {
 
     await page.reload();
 
-    await expect(page.getByRole("heading", { level: 1, name: fixtures.builder.plan.name })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: fixtures.builderMutation.plan.name }),
+    ).toBeVisible();
   });
 
   test("renames the draft plan", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
     await page.getByRole("heading", { level: 1 }).getByRole("button").click();
     await page.getByLabel("Plan name").fill("PPL v2");
@@ -32,7 +34,7 @@ test.describe("Plans - builder", () => {
   });
 
   test("finalizes the draft plan", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Finalize" }).click();
 
@@ -41,7 +43,7 @@ test.describe("Plans - builder", () => {
   });
 
   test("enables editing of the finalized plan", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Edit" }).click();
 
@@ -50,7 +52,7 @@ test.describe("Plans - builder", () => {
   });
 
   test("archives the plan", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Archive", exact: true }).click();
     await page.getByRole("button", { name: "Archive", exact: true }).last().click();
@@ -456,12 +458,12 @@ test.describe("Plans - drafter", () => {
   });
 });
 
-test.describe("Plans - archivist", () => {
-  test.use({ storageState: ".auth/archivist.json" });
+test.describe("Plans - archivist-mutation", () => {
+  test.use({ storageState: ".auth/archivist-mutation.json" });
   test.describe.configure({ mode: "serial" });
 
   test("archives the draft plan", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.archivist.plan.id}`);
+    await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Archive", exact: true }).click();
     await page.getByRole("button", { name: "Archive", exact: true }).last().click();
@@ -471,7 +473,7 @@ test.describe("Plans - archivist", () => {
 
   test("shows the error when restoring the plan fails", async ({ page }) => {
     await page.route("**/api/plans/*/restore", (route) => route.fulfill({ status: 500 }));
-    await page.goto(`/plans/${fixtures.archivist.archivedPlan.id}`);
+    await page.goto(`/plans/${fixtures.archivistMutation.archivedPlan.id}`);
 
     await page.getByRole("button", { name: "Restore" }).click();
 
@@ -483,7 +485,7 @@ test.describe("Plans - archivist", () => {
   });
 
   test("restores the archived plan", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.archivist.archivedPlan.id}`);
+    await page.goto(`/plans/${fixtures.archivistMutation.archivedPlan.id}`);
 
     await page.getByRole("button", { name: "Restore" }).click();
 
@@ -492,10 +494,10 @@ test.describe("Plans - archivist", () => {
   });
 
   test("shows the error when deleting the plan fails", async ({ page }) => {
-    await page.route(`**/api/plans/${fixtures.archivist.plan.id}`, (route) =>
+    await page.route(`**/api/plans/${fixtures.archivistMutation.plan.id}`, (route) =>
       route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
     );
-    await page.goto(`/plans/${fixtures.archivist.plan.id}`);
+    await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Delete", exact: true }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).last().click();
@@ -508,7 +510,7 @@ test.describe("Plans - archivist", () => {
   });
 
   test("deletes the archived plan", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.archivist.plan.id}`);
+    await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Delete", exact: true }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).last().click();
@@ -517,7 +519,9 @@ test.describe("Plans - archivist", () => {
 
     await page.reload();
 
-    await expect(page.locator(`a[href="/plans/${fixtures.archivist.plan.id}"]`)).toBeHidden();
-    await expect(page.locator(`a[href="/plans/${fixtures.archivist.archivedPlan.id}"]`)).toBeVisible();
+    await expect(page.locator(`a[href="/plans/${fixtures.archivistMutation.plan.id}"]`)).toBeHidden();
+    await expect(
+      page.locator(`a[href="/plans/${fixtures.archivistMutation.archivedPlan.id}"]`),
+    ).toBeVisible();
   });
 });

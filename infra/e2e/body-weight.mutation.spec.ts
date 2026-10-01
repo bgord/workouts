@@ -1,8 +1,8 @@
 // cSpell:ignore spinbutton
 import { expect, test } from "./test";
 
-test.describe("Body weight - empty", () => {
-  test.use({ storageState: ".auth/empty.json" });
+test.describe("Body weight - empty-mutation", () => {
+  test.use({ storageState: ".auth/empty-mutation.json" });
   test.describe.configure({ mode: "serial" });
 
   test("logs the first body weight measurement", async ({ page }) => {
@@ -47,8 +47,8 @@ test.describe("Body weight - empty", () => {
   });
 });
 
-test.describe("Body weight - athlete", () => {
-  test.use({ storageState: ".auth/athlete.json" });
+test.describe("Body weight - athlete-mutation", () => {
+  test.use({ storageState: ".auth/athlete-mutation.json" });
   test.describe.configure({ mode: "serial" });
 
   test("rejects a body weight out of range", async ({ page }) => {

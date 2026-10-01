@@ -2,8 +2,8 @@
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
-test.describe("Profile - polyglot", () => {
-  test.use({ storageState: ".auth/polyglot.json" });
+test.describe("Profile - polyglot-mutation", () => {
+  test.use({ storageState: ".auth/polyglot-mutation.json" });
 
   test("turns the weekly summary on", async ({ page }) => {
     await page.goto("/profile");
