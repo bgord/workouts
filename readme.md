@@ -771,6 +771,7 @@ infra/
 │   ├── measurements.spec.ts
 │   ├── navigation.spec.ts
 │   ├── not-found.spec.ts
+│   ├── ok
 │   ├── plans.mutation.spec.ts
 │   ├── plans.spec.ts
 │   ├── profile.mutation.spec.ts

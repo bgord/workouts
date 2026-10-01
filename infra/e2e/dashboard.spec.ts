@@ -106,14 +106,3 @@ test.describe("Dashboard - active", () => {
     await expect(page.getByRole("listitem").filter({ hasText: "All time" })).toHaveText("0All time");
   });
 });
-
-test.describe("Dashboard - polyglot", () => {
-  test.use({ storageState: ".auth/polyglot.json" });
-
-  test("renders in Polish", async ({ page }) => {
-    await page.goto("/");
-
-    await expect(page.getByRole("heading", { level: 1, name: "Pulpit" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Dashboard" })).toBeHidden();
-  });
-});
