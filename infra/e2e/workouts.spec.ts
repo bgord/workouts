@@ -38,6 +38,13 @@ test.describe("Workouts - active", () => {
     await expect(page.getByRole("button", { name: "Start" })).toBeHidden();
   });
 
+  test("shows the empty state when no workout matches", async ({ page }) => {
+    await page.goto(`/workouts?section=${fixtures.active.plan.sections.pull.id}`);
+
+    await expect(page.getByText("No workouts match the filters")).toBeVisible();
+    await expect(page.getByText("Try another section or clear the filters")).toBeVisible();
+  });
+
   test("steps between exercises in the log panel", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
