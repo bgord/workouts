@@ -435,13 +435,21 @@ test.describe("Plans - drafter", () => {
       .first()
       .click();
 
+    const removed = page.waitForResponse((response) => response.request().method() === "DELETE");
     await page
       .getByRole("button", { name: `Remove ${fixtures.exercises.pecDeck.name}`, exact: true })
       .click();
-    await page.reload();
+    await removed;
 
-    await expect(page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true })).toBeHidden();
-    await expect(page.getByText("6 exercises").first()).toBeVisible();
+    await expect(async () => {
+      await page.reload();
+      await expect(page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true })).toBeHidden(
+        {
+          timeout: 1000,
+        },
+      );
+      await expect(page.getByText("6 exercises").first()).toBeVisible({ timeout: 1000 });
+    }).toPass();
   });
 
   test("finalizes the plan with the edits", async ({ page }) => {

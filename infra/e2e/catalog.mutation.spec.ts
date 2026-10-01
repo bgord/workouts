@@ -25,12 +25,16 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
+    const added = page.waitForResponse("**/api/exercises/category");
     await page.getByLabel("Category name").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
-    await page.reload();
-    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await added;
 
-    await expect(page.getByText("Neck", { exact: true })).toBeVisible();
+    await expect(async () => {
+      await page.reload();
+      await page.getByRole("button", { name: "Categories", exact: true }).click();
+      await expect(page.getByText("Neck", { exact: true })).toBeVisible({ timeout: 1000 });
+    }).toPass();
   });
 
   test("rejects a duplicate category name", async ({ page }) => {

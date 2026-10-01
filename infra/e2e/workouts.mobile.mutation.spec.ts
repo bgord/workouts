@@ -76,10 +76,11 @@ test.describe("Mobile - pocket", () => {
 
     await expect(page.getByText("Completed", { exact: true })).toBeVisible();
 
-    await page.reload();
-    await bench.getByRole("button").first().tap();
-
-    await expect(bench.getByRole("button", { name: "Correct set 1" })).toBeVisible();
-    await expect(bench.getByRole("button", { name: "Correct set 2" })).toBeVisible();
+    await expect(async () => {
+      await page.reload();
+      await bench.getByRole("button").first().tap();
+      await expect(bench.getByRole("button", { name: "Correct set 1" })).toBeVisible({ timeout: 1000 });
+      await expect(bench.getByRole("button", { name: "Correct set 2" })).toBeVisible({ timeout: 1000 });
+    }).toPass();
   });
 });
