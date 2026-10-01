@@ -746,6 +746,7 @@ infra/
 │   │   ├── timekeeper.adapter.ts
 │   │   ├── timeout-runner.adapter.ts
 │   │   └── tmp
+│   │       └── c027e3cd-28d8-4bb6-a3a1-b6f3ca9da563.webp
 │   └── workouts
 │       ├── get-exercise-previous-performance.adapter.ts
 │       ├── get-workout-dashboard.adapter.ts

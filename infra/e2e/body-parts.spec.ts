@@ -2,6 +2,32 @@
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
+test.describe("Body parts - empty", () => {
+  test.use({ storageState: ".auth/empty.json" });
+
+  test("blocks importing body part measurements until a body part is defined", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await expect(page.getByText("Define a body part first")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Import body part measurements" })).toBeDisabled();
+  });
+
+  test("shows the error when defining a body part fails", async ({ page }) => {
+    await page.route("**/api/measurements/body-part", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByLabel("Body part name").fill("Neck");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+
+    await expect(page.getByText("Could not add the body part")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("Define a body part first")).toBeVisible();
+  });
+});
+
 test.describe("Body parts - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });
 
@@ -26,6 +52,15 @@ test.describe("Body parts - athlete", () => {
     ).toBeVisible();
   });
 
+  test("marks the body part that was never measured", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await expect(page.getByText("Not measured yet").first()).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
+    ).toBeVisible();
+  });
+
   test("lists the history of a body part", async ({ page }) => {
     const row = page.getByRole("listitem").filter({ hasText: fixtures.athlete.bodyParts.waist.name });
 
@@ -36,15 +71,6 @@ test.describe("Body parts - athlete", () => {
     await expect(row.getByTitle("Correct the measurement")).toHaveCount(12);
     await expect(row.getByTitle("Correct the measurement").first()).toContainText("81.4 cm");
     await expect(row.getByTitle("Correct the measurement").last()).toContainText("82.0 cm");
-  });
-
-  test("marks the body part that was never measured", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-
-    await expect(page.getByText("Not measured yet").first()).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
-    ).toBeVisible();
   });
 
   test("downloads the body part export", async ({ page }) => {
@@ -157,31 +183,5 @@ test.describe("Body parts - athlete", () => {
     await expect(
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` }),
     ).toBeVisible();
-  });
-});
-
-test.describe("Body parts - empty", () => {
-  test.use({ storageState: ".auth/empty.json" });
-
-  test("blocks importing body part measurements until a body part is defined", async ({ page }) => {
-    await page.goto("/measurements/body-parts");
-
-    await expect(page.getByText("Define a body part first")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Import body part measurements" })).toBeDisabled();
-  });
-
-  test("shows the error when defining a body part fails", async ({ page }) => {
-    await page.route("**/api/measurements/body-part", (route) => route.fulfill({ status: 500 }));
-    await page.goto("/measurements/body-parts");
-
-    await page.getByRole("button", { name: "Manage" }).click();
-    await page.getByLabel("Body part name").fill("Neck");
-    await page.getByRole("button", { name: "Add", exact: true }).click();
-
-    await expect(page.getByText("Could not add the body part")).toBeVisible();
-
-    await page.reload();
-
-    await expect(page.getByText("Define a body part first")).toBeVisible();
   });
 });
