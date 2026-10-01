@@ -1,6 +1,19 @@
 // cSpell:ignore spinbutton
 import { expect, test } from "./test";
 
+test.describe("Body weight - empty", () => {
+  test.use({ storageState: ".auth/empty.json" });
+
+  test("shows the body weight empty state", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await expect(page.getByText("No measurements logged yet")).toBeVisible();
+    await expect(page.getByText("Log your body weight to track progress here")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Log" })).toBeDisabled();
+    await expect(page.getByText("Latest weight")).toBeHidden();
+  });
+});
+
 test.describe("Body weight - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });
 
@@ -125,18 +138,5 @@ test.describe("Body weight - athlete", () => {
     await page.reload();
 
     await expect(page.getByText(/^Bulk since /)).toBeVisible();
-  });
-});
-
-test.describe("Body weight - empty", () => {
-  test.use({ storageState: ".auth/empty.json" });
-
-  test("shows the body weight empty state", async ({ page }) => {
-    await page.goto("/measurements/body-weight");
-
-    await expect(page.getByText("No measurements logged yet")).toBeVisible();
-    await expect(page.getByText("Log your body weight to track progress here")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Log" })).toBeDisabled();
-    await expect(page.getByText("Latest weight")).toBeHidden();
   });
 });
