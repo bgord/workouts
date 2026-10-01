@@ -80,6 +80,15 @@ test.describe("Catalog - athlete", () => {
     ).toHaveAttribute("aria-pressed", "false");
   });
 
+  test("combines the search and the category", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
+    await page.getByPlaceholder("Search by name").fill("Pec");
+
+    await expect(page.getByText("3 of 32")).toBeVisible();
+  });
+
   test("shows the exercise details", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
