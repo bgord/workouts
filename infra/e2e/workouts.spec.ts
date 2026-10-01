@@ -288,6 +288,70 @@ test.describe("Workouts - active", () => {
 
     await expect(page.getByText("Doorway chest stretch, 2 minutes each side")).toBeVisible();
   });
+
+  test("keeps the warm-up expanded and collapsed after reload", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByTitle("Toggle warm-up").click();
+    await page.reload();
+
+    await expect(page.getByText("10x Arm Circles forward")).toBeVisible();
+
+    await page.getByTitle("Toggle warm-up").click();
+    await page.reload();
+
+    await expect(page.getByText("10x Arm Circles forward")).toBeHidden();
+  });
+
+  test("keeps the cool-down expanded and collapsed after reload", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByTitle("Toggle cool-down").click();
+    await page.reload();
+
+    await expect(page.getByText("Doorway chest stretch, 2 minutes each side")).toBeVisible();
+
+    await page.getByTitle("Toggle cool-down").click();
+    await page.reload();
+
+    await expect(page.getByText("Doorway chest stretch, 2 minutes each side")).toBeHidden();
+  });
+
+  test("keeps the exercise row expanded and collapsed after reload", async ({ page }) => {
+    const row = page.getByRole("listitem").filter({
+      has: page.getByRole("link", {
+        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+        exact: true,
+      }),
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await row.getByRole("button").first().click();
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Remove set 1" })).toBeVisible();
+
+    await row.getByRole("button").first().click();
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Remove set 1" })).toBeHidden();
+  });
+
+  test("reopens the log panel on the same exercise after reload", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
+      .click();
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("dialog", { name: "Logging panel" })
+        .getByText(fixtures.exercises.overheadPressSeatedDumbbells.name, { exact: true }),
+    ).toBeVisible();
+  });
 });
 
 test.describe("Workouts - athlete", () => {
