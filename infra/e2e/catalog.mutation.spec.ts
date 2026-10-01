@@ -33,6 +33,21 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByText("Neck", { exact: true })).toBeVisible();
   });
 
+  test("rejects a duplicate category name", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await page.getByLabel("Category name").fill(fixtures.categories.abs.name);
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+
+    await expect(page.getByText("Could not add the category")).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+
+    await expect(page.getByTitle("Rename the category").filter({ hasText: /^Abs$/ })).toHaveCount(1);
+  });
+
   test("rejects a too short exercise name and description", async ({ page }) => {
     await page.goto("/catalog");
 
