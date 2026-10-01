@@ -58,6 +58,15 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText("Show less")).toBeVisible();
   });
 
+  test("shows less categories", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await page.getByText("+8 more").click();
+    await page.getByText("Show less").click();
+
+    await expect(page.getByText("+8 more")).toBeVisible();
+    await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeHidden();
+  });
   test("shows the exercise details", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
