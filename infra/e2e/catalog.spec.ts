@@ -1,3 +1,4 @@
+// cSpell:ignore unpresses
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -89,6 +90,15 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText("3 of 32")).toBeVisible();
   });
 
+  test.fixme("keeps a hidden selected category visible", async ({ page }) => {
+    await page.goto(`/catalog?category=${fixtures.categories.lowerBack.id}`);
+
+    await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeVisible();
+    await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
   test("shows the exercise details", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
