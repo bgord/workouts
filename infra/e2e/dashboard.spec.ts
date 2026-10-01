@@ -32,20 +32,6 @@ test.describe("Dashboard - empty", () => {
 test.describe("Dashboard - athlete", () => {
   test.use({ storageState: ".auth/athlete.json" });
 
-  test("shows the offline bar while the connection is lost", async ({ page, context }) => {
-    await page.goto("/");
-
-    await expect(page.getByText("No internet connection detected")).toBeHidden();
-
-    await context.setOffline(true);
-
-    await expect(page.getByText("No internet connection detected")).toBeVisible();
-
-    await context.setOffline(false);
-
-    await expect(page.getByText("No internet connection detected")).toBeHidden();
-  });
-
   test("shows the scheduled workout as next up", async ({ page }) => {
     await page.goto("/");
 
@@ -79,6 +65,20 @@ test.describe("Dashboard - athlete", () => {
     await expect(page.getByText("7-day average")).toBeVisible();
     await expect(page.getByText("Since reference")).toBeVisible();
     await expect(page.getByText(/^Bulk since /)).toBeVisible();
+  });
+
+  test("shows the offline bar while the connection is lost", async ({ page, context }) => {
+    await page.goto("/");
+
+    await expect(page.getByText("No internet connection detected")).toBeHidden();
+
+    await context.setOffline(true);
+
+    await expect(page.getByText("No internet connection detected")).toBeVisible();
+
+    await context.setOffline(false);
+
+    await expect(page.getByText("No internet connection detected")).toBeHidden();
   });
 });
 
