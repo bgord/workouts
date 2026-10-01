@@ -718,22 +718,3 @@ export const polyglot = { email: "polyglot@example.com", language: "pl" };
 export const polyglotMutation = { email: "polyglot-mutation@example.com", language: "pl" };
 
 export const disposable = { email: "disposable@example.com" };
-
-export const personas = [
-  empty,
-  emptyMutation,
-  builder,
-  builderMutation,
-  drafter,
-  athlete,
-  athleteMutation,
-  active,
-  activeMutation,
-  archivist,
-  archivistMutation,
-  hoarder,
-  pocket,
-  polyglot,
-  polyglotMutation,
-  disposable,
-];
