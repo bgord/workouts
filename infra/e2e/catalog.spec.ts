@@ -67,6 +67,19 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText("+8 more")).toBeVisible();
     await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeHidden();
   });
+
+  test("unpresses the category", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
+
+    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
+    ).toHaveAttribute("aria-pressed", "false");
+  });
+
   test("shows the exercise details", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
