@@ -287,6 +287,20 @@ test.describe("Measurements - empty", () => {
     await expect(page.getByRole("button", { name: "Measure Neck" })).toBeVisible();
   });
 
+  test("rejects a duplicate body part name", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByLabel("Body part name").fill("Neck");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+
+    await expect(page.getByText("Could not add the body part")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Measure Neck" })).toHaveCount(1);
+  });
+
   test("rejects a body part import with an unknown body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
