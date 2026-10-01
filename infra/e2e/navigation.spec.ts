@@ -128,8 +128,8 @@ test.describe("Navigation - athlete", () => {
     await page.goto("/measurements");
 
     await expect(page.getByRole("heading", { level: 1, name: "Measurements" })).toBeVisible();
-    await expect(page.locator('a[href="/measurements/body-weight"]')).toBeVisible();
-    await expect(page.locator('a[href="/measurements/body-parts"]')).toBeVisible();
+    await expect(page.getByRole("link", { name: "Body weight" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Body parts" })).toBeVisible();
   });
 
   test("goes back from body weight and body parts to the measurements", async ({ page }) => {

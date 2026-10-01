@@ -36,7 +36,7 @@ test.describe("Plans - builder", () => {
     await page.goto("/plans");
 
     await expect(page.getByRole("heading", { name: "Active" })).toBeVisible();
-    await expect(page.locator(`a[href="/plans/${fixtures.builder.plan.id}"]`)).toBeVisible();
+    await expect(page.getByRole("link", { name: fixtures.builder.plan.name })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Archived" })).toBeHidden();
   });
 
@@ -57,8 +57,8 @@ test.describe("Plans - archivist", () => {
     await page.goto("/plans");
 
     await expect(page.getByRole("heading", { name: "Active" })).toBeVisible();
-    await expect(page.locator(`a[href="/plans/${fixtures.archivist.plan.id}"]`)).toBeVisible();
+    await expect(page.getByRole("link", { name: fixtures.archivist.plan.name })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Archived" })).toBeVisible();
-    await expect(page.locator(`a[href="/plans/${fixtures.archivist.archivedPlan.id}"]`)).toBeVisible();
+    await expect(page.getByRole("link", { name: fixtures.archivist.archivedPlan.name })).toBeVisible();
   });
 });

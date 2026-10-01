@@ -57,9 +57,7 @@ test.describe("Errors - athlete", () => {
       route.fulfill({ status: 500 }),
     );
 
-    await page
-      .locator(`a[href="/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}"]`)
-      .click();
+    await page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }).click();
 
     await expect(page.getByRole("heading", { level: 1, name: "Exercise not found" })).toBeVisible();
 
@@ -83,7 +81,7 @@ test.describe("Errors - athlete", () => {
     await expect(page.locator("main[data-hydrated]")).toBeAttached();
     await page.route(`**/api/plans/${fixtures.athlete.plan.id}`, (route) => route.fulfill({ status: 500 }));
 
-    await page.locator(`a[href^="/plans/${fixtures.athlete.plan.id}"]`).click();
+    await page.getByRole("link", { name: fixtures.athlete.plan.name }).click();
 
     await expect(page.getByRole("heading", { level: 1, name: "Plan not found" })).toBeVisible();
 
@@ -97,7 +95,7 @@ test.describe("Errors - athlete", () => {
     await expect(page.locator("main[data-hydrated]")).toBeAttached();
     await page.route("**/api/measurements/body-weight/**", (route) => route.fulfill({ status: 500 }));
 
-    await page.locator('a[href="/measurements/body-weight"]').click();
+    await page.getByRole("link", { name: "Body weight" }).click();
 
     await expect(page.getByText("No measurements logged yet")).toBeVisible();
   });
@@ -107,7 +105,7 @@ test.describe("Errors - athlete", () => {
     await expect(page.locator("main[data-hydrated]")).toBeAttached();
     await page.route("**/api/measurements/body-part/list", (route) => route.fulfill({ status: 500 }));
 
-    await page.locator('a[href="/measurements/body-parts"]').click();
+    await page.getByRole("link", { name: "Body parts" }).click();
 
     await expect(page.getByRole("heading", { level: 1, name: "Body parts" })).toBeVisible();
     await expect(page.getByRole("button", { name: /^Measure / })).toHaveCount(0);

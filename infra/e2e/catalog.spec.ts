@@ -10,7 +10,7 @@ test.describe("Catalog - athlete", () => {
 
     await expect(page.getByText("32 of 32")).toBeVisible();
     await expect(
-      page.locator(`a[href="/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}"]`),
+      page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }),
     ).toBeVisible();
   });
 
@@ -20,9 +20,9 @@ test.describe("Catalog - athlete", () => {
     await page.getByRole("textbox", { name: "Search by name" }).fill(fixtures.exercises.facePull.name);
 
     await expect(page.getByText("1 of 32")).toBeVisible();
-    await expect(page.locator(`a[href="/catalog/exercise/${fixtures.exercises.facePull.id}"]`)).toBeVisible();
+    await expect(page.getByRole("link", { name: fixtures.exercises.facePull.name })).toBeVisible();
     await expect(
-      page.locator(`a[href="/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}"]`),
+      page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }),
     ).toBeHidden();
   });
 

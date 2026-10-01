@@ -482,9 +482,9 @@ test.describe("Plans - archivist-mutation", () => {
 
     await page.reload();
 
-    await expect(page.locator(`a[href="/plans/${fixtures.archivistMutation.plan.id}"]`)).toBeHidden();
+    await expect(page.getByRole("link", { name: fixtures.archivistMutation.plan.name })).toBeHidden();
     await expect(
-      page.locator(`a[href="/plans/${fixtures.archivistMutation.archivedPlan.id}"]`),
+      page.getByRole("link", { name: fixtures.archivistMutation.archivedPlan.name }),
     ).toBeVisible();
   });
 });
