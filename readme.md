@@ -761,22 +761,28 @@ infra/
 ├── db.ts
 ├── e2e
 │   ├── auth.setup.ts
+│   ├── body-parts.mutation.spec.ts
+│   ├── body-parts.spec.ts
+│   ├── body-weight.mutation.spec.ts
+│   ├── body-weight.spec.ts
 │   ├── catalog.mutation.spec.ts
 │   ├── catalog.spec.ts
 │   ├── dashboard.spec.ts
 │   ├── errors.spec.ts
+│   ├── exercise.spec.ts
 │   ├── home.spec.ts
 │   ├── layout.mobile.spec.ts
-│   ├── measurements.mutation.spec.ts
 │   ├── measurements.spec.ts
 │   ├── navigation.spec.ts
 │   ├── not-found.spec.ts
+│   ├── plan.spec.ts
 │   ├── plans.mutation.spec.ts
 │   ├── plans.spec.ts
 │   ├── profile.mutation.spec.ts
 │   ├── profile.spec.ts
 │   ├── shortcuts.spec.ts
 │   ├── test.ts
+│   ├── workout.spec.ts
 │   ├── workouts.mobile.mutation.spec.ts
 │   ├── workouts.mutation.spec.ts
 │   └── workouts.spec.ts
