@@ -149,6 +149,22 @@ test.describe("Catalog - athlete", () => {
     await expect(history.getByRole("listitem")).not.toHaveCount(8);
   });
 
+  test("keeps the history session expanded and collapsed after reload", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    const history = page.getByRole("heading", { name: "History" }).locator("..");
+
+    await history.getByRole("button").first().click();
+    await page.reload();
+
+    await expect(history.getByRole("listitem")).not.toHaveCount(8);
+
+    await history.getByRole("button").first().click();
+    await page.reload();
+
+    await expect(history.getByRole("listitem")).toHaveCount(8);
+  });
+
   test("shows the empty state for an exercise that was never trained", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.bicepsCurlBarStraight.id}`);
 
