@@ -69,6 +69,26 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByText("32 of 32")).toBeVisible();
   });
 
+  test("rejects a duplicate exercise name", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: "New exercise" }).click();
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByPlaceholder("Bench Press Horizontal").fill(fixtures.exercises.facePull.name);
+    await page
+      .getByLabel("Description")
+      .fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page.getByRole("button", { name: "Add", exact: true }).click();
+
+    await expect(page.getByText("Could not add the exercise")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByText("32 of 32")).toBeVisible();
+  });
+
   test("adds an exercise", async ({ page }) => {
     await page.goto("/catalog");
 
