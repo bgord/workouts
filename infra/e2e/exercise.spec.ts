@@ -159,9 +159,7 @@ test.describe("Exercise - admin", () => {
     const before = await image.getAttribute("src");
 
     await page.getByRole("button", { name: "Change image", exact: true }).click();
-    await page
-      .getByLabel("Select an image")
-      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByLabel("Select an image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not change the image")).toBeVisible();

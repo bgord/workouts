@@ -185,9 +185,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page
-      .getByLabel("Select an image")
-      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByLabel("Select an image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill("Neck curl");
     await page
       .getByLabel("Description")

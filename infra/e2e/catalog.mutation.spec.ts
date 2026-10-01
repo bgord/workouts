@@ -58,9 +58,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page
-      .getByLabel("Select an image")
-      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByLabel("Select an image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill("ab");
     await page.getByLabel("Description").fill("ab");
     await page.getByRole("button", { name: "Add", exact: true }).click();
@@ -77,9 +75,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page
-      .getByLabel("Select an image")
-      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByLabel("Select an image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill(fixtures.exercises.facePull.name);
     await page
       .getByLabel("Description")
@@ -97,9 +93,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page
-      .getByLabel("Select an image")
-      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByLabel("Select an image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill("Neck curl");
     await page
       .getByLabel("Description")
@@ -231,9 +225,7 @@ test.describe("Catalog - admin", () => {
     const before = await image.getAttribute("src");
 
     await page.getByRole("button", { name: "Change image", exact: true }).click();
-    await page
-      .getByLabel("Select an image")
-      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.pecDeck.image}`);
+    await page.getByLabel("Select an image").setInputFiles("scripts/seed/assets/exercise-alternative.webp");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(async () => {

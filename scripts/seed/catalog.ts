@@ -36,11 +36,11 @@ export async function seedCatalog(di: BootstrapType) {
   console.log(`[✓] ${Object.values(fixtures.categories).length} exercise categories added`);
 
   for (const exercise of Object.values(fixtures.exercises)) {
-    const asset = Bun.file(`${import.meta.dir}/assets/${exercise.image}`);
+    const asset = Bun.file(`${import.meta.dir}/assets/exercise.webp`);
     const filename = tools.Filename.fromParts(deps.IdProvider.generate(), "webp");
     const temporary = await deps.TemporaryFile.write(
       filename,
-      new File([await asset.bytes()], exercise.image),
+      new File([await asset.bytes()], "exercise.webp"),
     );
 
     const command = bg.command(

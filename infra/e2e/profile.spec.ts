@@ -78,9 +78,7 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await page.getByRole("button", { name: "Change avatar" }).click();
-    await page
-      .getByLabel("Select file")
-      .setInputFiles(`scripts/seed/assets/${fixtures.exercises.facePull.image}`);
+    await page.getByLabel("Select file").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("region", { name: "Avatar" }).getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByText("Could not upload the avatar, please try again")).toBeVisible();
