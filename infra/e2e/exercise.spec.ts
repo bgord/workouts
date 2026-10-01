@@ -29,9 +29,11 @@ test.describe("Exercise - athlete", () => {
   test("shows the exercise stats", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
-    await expect(page.getByRole("listitem").filter({ hasText: "Sessions" })).toContainText("8");
-    await expect(page.getByRole("listitem").filter({ hasText: "Best volume" })).toContainText("kg");
-    await expect(page.getByRole("listitem").filter({ hasText: "1RM" })).toContainText("kg");
+    await expect(
+      page.getByRole("listitem", { name: "Sessions" }).getByText("8", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "Best volume" })).toContainText("kg");
+    await expect(page.getByRole("link", { name: /^1RM/ })).toContainText("kg");
   });
 
   test("shows the exercise progress chart", async ({ page }) => {

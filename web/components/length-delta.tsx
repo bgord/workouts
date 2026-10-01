@@ -1,3 +1,4 @@
+import * as bg from "@bgord/ui";
 import { Triangle } from "lucide-react";
 import { Gap } from "./gap";
 import { LengthValue } from "./length-value";
@@ -5,6 +6,7 @@ import { LengthValue } from "./length-value";
 export function LengthDelta(
   props: { current: number; previous: number | undefined } & React.JSX.IntrinsicElements["span"],
 ) {
+  const t = bg.useTranslations();
   const { previous, current, ...rest } = props;
 
   if (previous === undefined) return null;
@@ -24,9 +26,11 @@ export function LengthDelta(
       {...rest}
     >
       <Triangle
+        aria-label={t(positive ? "app.delta.increase" : "app.delta.decrease")}
         data-mt={positive ? "0" : "0-5"}
         data-rotate={positive ? "0" : "180"}
         fill="currentColor"
+        role="img"
         size={9}
         strokeWidth={0}
       />

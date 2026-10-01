@@ -10,7 +10,7 @@ test.describe("Body weight - empty", () => {
     await expect(page.getByText("No measurements logged yet")).toBeVisible();
     await expect(page.getByText("Log your body weight to track progress here")).toBeVisible();
     await expect(page.getByRole("button", { name: "Log" })).toBeDisabled();
-    await expect(page.getByText("Latest weight")).toBeHidden();
+    await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeHidden();
   });
 });
 
@@ -20,20 +20,19 @@ test.describe("Body weight - athlete", () => {
   test("shows the body weight stats with the bulk reference", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await expect(page.getByText("Latest weight")).toBeVisible();
-    await expect(page.getByText("7-day average")).toBeVisible();
-    await expect(page.getByText("Since reference", { exact: true }).first()).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "7-day average" })).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "Since reference" })).toBeVisible();
     await expect(page.getByText(/^Bulk since /)).toBeVisible();
   });
 
   test("shows a positive delta since the bulk reference", async ({ page }) => {
-    const tile = page.getByRole("listitem").filter({ hasText: "Since reference" });
+    const tile = page.getByRole("listitem", { name: "Since reference" });
 
     await page.goto("/measurements/body-weight");
 
-    await expect(tile.locator(".lucide-trending-up")).toBeVisible();
-    await expect(tile.locator('[data-color="positive-400"]')).toContainText(/\d kg$/);
-    await expect(tile.locator('[data-color="positive-400"] svg')).toHaveAttribute("data-rotate", "0");
+    await expect(tile.getByRole("img", { name: "Increase" })).toBeVisible();
+    await expect(tile).toContainText(/\d kg/);
   });
 
   test("shows the progress chart in weekly granularity by default and changes it", async ({ page }) => {

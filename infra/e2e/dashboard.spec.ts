@@ -16,7 +16,9 @@ test.describe("Dashboard - empty", () => {
     await page.goto("/");
 
     await expect(page.getByRole("heading", { name: "Completed sessions" })).toBeVisible();
-    await expect(page.getByRole("listitem").filter({ hasText: "All time" })).toHaveText("0All time");
+    await expect(
+      page.getByRole("listitem", { name: "All time" }).getByText("0", { exact: true }),
+    ).toBeVisible();
   });
 
   test("hides the workout cards and body weight stats", async ({ page }) => {
@@ -25,7 +27,7 @@ test.describe("Dashboard - empty", () => {
     await expect(page.getByRole("heading", { name: "Next up" })).toBeHidden();
     await expect(page.getByRole("heading", { name: "In progress" })).toBeHidden();
     await expect(page.getByRole("heading", { name: "Last completed" })).toBeHidden();
-    await expect(page.getByText("Latest weight")).toBeHidden();
+    await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeHidden();
   });
 });
 
@@ -55,15 +57,17 @@ test.describe("Dashboard - athlete", () => {
   test("counts all completed sessions", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("listitem").filter({ hasText: "All time" })).toHaveText("24All time");
+    await expect(
+      page.getByRole("listitem", { name: "All time" }).getByText("24", { exact: true }),
+    ).toBeVisible();
   });
 
   test("shows the body weight stats with the bulk reference", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByText("Latest weight")).toBeVisible();
-    await expect(page.getByText("7-day average")).toBeVisible();
-    await expect(page.getByText("Since reference")).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "7-day average" })).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "Since reference" })).toBeVisible();
     await expect(page.getByText(/^Bulk since /)).toBeVisible();
   });
 
@@ -103,6 +107,8 @@ test.describe("Dashboard - active", () => {
   test("shows zeroed completed sessions", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("listitem").filter({ hasText: "All time" })).toHaveText("0All time");
+    await expect(
+      page.getByRole("listitem", { name: "All time" }).getByText("0", { exact: true }),
+    ).toBeVisible();
   });
 });

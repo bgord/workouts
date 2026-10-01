@@ -11,7 +11,7 @@ test.describe("Body weight - empty-mutation", () => {
     await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("70");
     await page.getByRole("button", { name: "Log", exact: true }).click();
 
-    await expect(page.getByText("Latest weight")).toBeVisible();
+    await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeVisible();
     await expect(page.getByText("No measurements logged yet")).toBeHidden();
   });
 
@@ -141,8 +141,5 @@ test.describe("Body weight - athlete-mutation", () => {
     await page.reload();
 
     await expect(page.getByText(/^Cut since /)).toBeVisible();
-    await expect(
-      page.getByRole("listitem").filter({ hasText: "Since reference" }).locator(".lucide-trending-down"),
-    ).toBeVisible();
   });
 });

@@ -1,4 +1,5 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
+import { createContext, useContext, useId } from "react";
 import { Gap } from "./gap";
 import { Spacing } from "./spacing";
 
@@ -20,8 +21,16 @@ const card = {
   ...Gap.inline,
 } as const;
 
+const TileHeaderId = createContext<string | undefined>(undefined);
+
 export function Tile(props: React.JSX.IntrinsicElements["li"]) {
-  return <li {...item} {...card} {...props} />;
+  const header = useId();
+
+  return (
+    <TileHeaderId.Provider value={header}>
+      <li aria-labelledby={header} {...item} {...card} {...props} />
+    </TileHeaderId.Provider>
+  );
 }
 
 function TileAnchor(props: React.JSX.IntrinsicElements["a"]) {
@@ -39,12 +48,15 @@ export const TileLink: LinkComponent<typeof TileAnchor> = (props) => (
 );
 
 export function TileHeader(props: React.JSX.IntrinsicElements["small"]) {
+  const id = useContext(TileHeaderId);
+
   return (
     <small
       data-color="neutral-600"
       data-md-width="100%"
       data-stack="x"
       data-wrap="wrap"
+      id={id}
       {...Gap.inline}
       {...props}
     />

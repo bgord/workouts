@@ -6,6 +6,8 @@
   "app.close": "Close",
   "app.details": "Details: {{name}}",
   "app.dashboard": "Dashboard",
+  "app.delta.decrease": "Decrease",
+  "app.delta.increase": "Increase",
   "app.dialog.irreversible": "Cannot be undone",
   "app.dialog.restorable": "Can be restored later",
   "app.home": "Home",

@@ -1,3 +1,4 @@
+import * as bg from "@bgord/ui";
 import { Triangle } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import { WeightFormat } from "../services/weight-format";
@@ -17,6 +18,7 @@ export function WeightDelta(
     decimals?: number;
   } & React.JSX.IntrinsicElements["span"],
 ) {
+  const t = bg.useTranslations();
   const { previous, current, goal, decimals, ...rest } = props;
 
   if (previous === undefined) return null;
@@ -30,9 +32,11 @@ export function WeightDelta(
   return (
     <span data-color={color(positive, goal)} data-stack="x" data-transform="nowrap" {...Gap.inline} {...rest}>
       <Triangle
+        aria-label={t(positive ? "app.delta.increase" : "app.delta.decrease")}
         data-mt={positive ? "0" : "0-5"}
         data-rotate={positive ? "0" : "180"}
         fill="currentColor"
+        role="img"
         size={9}
         strokeWidth={0}
       />

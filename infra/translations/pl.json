@@ -6,6 +6,8 @@
   "app.close": "Zamknij",
   "app.details": "Szczegóły: {{name}}",
   "app.dashboard": "Pulpit",
+  "app.delta.decrease": "Spadek",
+  "app.delta.increase": "Wzrost",
   "app.dialog.irreversible": "Nie można cofnąć",
   "app.dialog.restorable": "Można później przywrócić",
   "app.home": "Strona główna",
