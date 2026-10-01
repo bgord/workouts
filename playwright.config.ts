@@ -10,6 +10,12 @@ export default defineConfig({
   projects: [
     { name: "setup", testMatch: /.*\.setup\.ts/ },
     {
+      name: "catalog-mutation",
+      testMatch: /catalog\.mutation\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+      dependencies: ["setup"],
+    },
+    {
       name: "desktop",
       testIgnore: [/.*\.setup\.ts/, /.*\.mutation\.spec\.ts/, /.*\.mobile\.spec\.ts/, /catalog\.spec\.ts/],
       use: { ...devices["Desktop Chrome"] },
@@ -22,29 +28,23 @@ export default defineConfig({
       dependencies: ["setup"],
     },
     {
-      name: "catalog",
-      testMatch: /catalog\.spec\.ts/,
-      use: { ...devices["Desktop Chrome"] },
-      dependencies: ["setup"],
-    },
-    {
       name: "desktop-mutation",
       testMatch: /.*\.mutation\.spec\.ts/,
       testIgnore: [/.*\.mobile\.mutation\.spec\.ts/, /catalog\.mutation\.spec\.ts/],
       use: { ...devices["Desktop Chrome"] },
-      dependencies: ["desktop"],
-    },
-    {
-      name: "catalog-mutation",
-      testMatch: /catalog\.mutation\.spec\.ts/,
-      use: { ...devices["Desktop Chrome"] },
-      dependencies: ["catalog"],
+      dependencies: ["setup"],
     },
     {
       name: "mobile-mutation",
       testMatch: /.*\.mobile\.mutation\.spec\.ts/,
       use: { ...devices["Pixel 10"] },
-      dependencies: ["desktop-mutation"],
+      dependencies: ["setup"],
+    },
+    {
+      name: "catalog",
+      testMatch: /catalog\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+      dependencies: ["catalog-mutation"],
     },
   ],
   webServer: [
