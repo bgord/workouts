@@ -6,7 +6,8 @@ function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
   const t = bg.useTranslations();
 
   return (
-    <a aria-label={t("app.home")} data-main="center" data-stack="x" {...props}>
+    <a data-main="center" data-stack="x" {...props}>
+      <span className="c-visually-hidden">{t("app.home")}</span>
       <div
         className="logo"
         data-color="brand-500"

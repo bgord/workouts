@@ -17,7 +17,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
       aria-label={t("workout.previous_performance.title")}
       data-stack="x"
       data-wrap="wrap"
-      role="group"
+      role="note"
       title={t("workout.previous_performance.title")}
       {...ui.Gap.cluster}
     >

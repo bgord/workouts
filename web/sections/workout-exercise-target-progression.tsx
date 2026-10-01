@@ -43,7 +43,7 @@ export function WorkoutExerciseTargetProgression(
   const title = `${t("workout.target.progression.title")} · ${t(`progression.method.${method}`)}`;
 
   return (
-    <div
+    <fieldset
       aria-label={title}
       data-md-ml="1"
       data-md-pl="8"
@@ -51,7 +51,6 @@ export function WorkoutExerciseTargetProgression(
       data-stack="x"
       data-transform="font-variant-numeric"
       data-wrap="wrap"
-      role="group"
       title={title}
       {...ui.Gap.cluster}
     >
@@ -82,6 +81,6 @@ export function WorkoutExerciseTargetProgression(
           {step(progression.progress)}
         </ui.ChipButton>
       )}
-    </div>
+    </fieldset>
   );
 }

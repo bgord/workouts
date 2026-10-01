@@ -8,8 +8,8 @@ test.describe("Workout - athlete", () => {
   test("shows the previous session of every exercise on the scheduled workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await expect(page.getByRole("group", { name: "Previous session" }).first()).toBeVisible();
-    await expect(page.getByRole("group", { name: "Previous session" })).toHaveCount(
+    await expect(page.getByRole("note", { name: "Previous session" }).first()).toBeVisible();
+    await expect(page.getByRole("note", { name: "Previous session" })).toHaveCount(
       await page.getByRole("button", { name: "Set target" }).count(),
     );
   });
