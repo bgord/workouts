@@ -49,13 +49,13 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText("32 of 32")).toBeVisible();
   });
 
-  test("shows the empty state when nothing matches", async ({ page }) => {
+  test("combines the search and the category", async ({ page }) => {
     await page.goto("/catalog");
 
-    await page.getByPlaceholder("Search by name").fill("no such exercise");
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
+    await page.getByPlaceholder("Search by name").fill("Pec");
 
-    await expect(page.getByText("No exercises match the filters")).toBeVisible();
-    await expect(page.getByText("Try another name or category")).toBeVisible();
+    await expect(page.getByText("3 of 32")).toBeVisible();
   });
 
   test("shows more and less categories", async ({ page }) => {
@@ -72,15 +72,6 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeHidden();
   });
 
-  test("combines the search and the category", async ({ page }) => {
-    await page.goto("/catalog");
-
-    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
-    await page.getByPlaceholder("Search by name").fill("Pec");
-
-    await expect(page.getByText("3 of 32")).toBeVisible();
-  });
-
   test("keeps a hidden selected category visible", async ({ page }) => {
     await page.goto(`/catalog?category=${fixtures.categories.lowerBack.id}`);
 
@@ -89,6 +80,15 @@ test.describe("Catalog - athlete", () => {
       "aria-pressed",
       "true",
     );
+  });
+
+  test("shows the empty state when nothing matches", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await page.getByPlaceholder("Search by name").fill("no such exercise");
+
+    await expect(page.getByText("No exercises match the filters")).toBeVisible();
+    await expect(page.getByText("Try another name or category")).toBeVisible();
   });
 
   test("hides the catalog management", async ({ page }) => {
