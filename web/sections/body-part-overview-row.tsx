@@ -16,7 +16,11 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
   return (
     <ui.HairlineRow data-stack="y" first={props.first} {...ui.Spacing.row} {...ui.Gap.related}>
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
-        <ui.ChevronToggle {...bodyPartHistory} disabled={!latest} />
+        <ui.ChevronToggle
+          disabled={!latest}
+          label={t("app.details", { name: props.name })}
+          {...bodyPartHistory}
+        />
 
         <span data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
           <span data-color="neutral-100" data-transform="truncate">

@@ -56,7 +56,10 @@ export function WorkoutExerciseRow(props: {
         >
           {isExpandable && (
             <div data-cross="center" data-shrink="0" data-stack="y">
-              <ui.ChevronToggle {...workoutExerciseVisibility} />
+              <ui.ChevronToggle
+                label={t("app.details", { name: props.exercise.exerciseName })}
+                {...workoutExerciseVisibility}
+              />
 
               {props.exercise.actions.setLog.available && (
                 <WorkoutExerciseLogPanel exercise={props.exercise} />

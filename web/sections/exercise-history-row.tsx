@@ -18,7 +18,7 @@ export function ExerciseHistoryRow(props: {
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div data-stack="x" {...ui.Gap.related}>
-        <ui.ChevronToggle {...open} />
+        <ui.ChevronToggle label={t("app.details", { name: props.performance.scheduledFor })} {...open} />
 
         <Link
           data-color="neutral-100"

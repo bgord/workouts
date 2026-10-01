@@ -1,9 +1,10 @@
 import type * as bg from "@bgord/ui";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
-export function ChevronToggle(props: { disabled?: boolean } & bg.UseToggleReturnType) {
+export function ChevronToggle(props: { label: string; disabled?: boolean } & bg.UseToggleReturnType) {
   return (
     <button
+      aria-label={props.label}
       data-color="neutral-400"
       data-cursor="pointer"
       data-hover-color="neutral-0"
@@ -13,6 +14,7 @@ export function ChevronToggle(props: { disabled?: boolean } & bg.UseToggleReturn
       data-stack="x"
       disabled={props.disabled}
       onClick={props.toggle}
+      title={props.label}
       type="button"
       {...props.props.controller}
     >
