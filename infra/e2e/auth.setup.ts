@@ -1,4 +1,4 @@
-import { test as setup } from "@playwright/test";
+import { expect, test as setup } from "@playwright/test";
 import * as fixtures from "../../scripts/seed/fixtures";
 
 const personas = {
@@ -22,18 +22,17 @@ const personas = {
 };
 
 for (const [name, persona] of Object.entries(personas)) {
-  setup(`Sign in - ${name}`, async ({ page }) => {
-    await page.goto("/public/login.html");
+  setup(`Sign in - ${name}`, async ({ context, baseURL }) => {
+    const response = await context.request.post("/api/auth/sign-in/email", {
+      data: { email: persona.email, password: fixtures.password },
+    });
 
-    await page.getByLabel("Email").fill(persona.email);
-    await page.getByLabel("Password").fill(fixtures.password);
-    await page.getByRole("button", { name: "Sign in" }).click();
-    await page.waitForURL((url) => url.pathname === "/");
+    await expect(response).toBeOK();
 
     if ("language" in persona) {
-      await page.context().addCookies([{ name: "language", value: persona.language, url: page.url() }]);
+      await context.addCookies([{ name: "language", value: persona.language, url: baseURL }]);
     }
 
-    await page.context().storageState({ path: `.auth/${name}.json` });
+    await context.storageState({ path: `.auth/${name}.json` });
   });
 }
