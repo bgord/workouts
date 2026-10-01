@@ -8,8 +8,10 @@ test.describe("Profile - polyglot", () => {
   test("turns the weekly summary on", async ({ page }) => {
     await page.goto("/profile");
 
+    const updated = page.waitForResponse("**/api/preferences/weekly-summary/update");
     await page.getByRole("combobox").filter({ hasText: "Wyłączone" }).selectOption("on");
     await page.getByRole("button", { name: "Zapisz" }).click();
+    await updated;
 
     await page.reload();
 
