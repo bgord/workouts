@@ -175,11 +175,9 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "Set target" }).first().click();
 
-    const last = page.getByRole("button", { name: "Last", exact: true });
-    const progress = page
-      .getByTitle(/^Based on the previous session/)
-      .getByRole("button")
-      .last();
+    const suggestion = page.getByRole("group", { name: /^Based on the previous session/ });
+    const last = suggestion.getByRole("button", { name: "Last", exact: true });
+    const progress = suggestion.getByRole("button", { name: /^\+/ });
 
     await expect(last).toHaveAttribute("aria-pressed", "true");
     await expect(progress).toHaveAttribute("aria-pressed", "false");

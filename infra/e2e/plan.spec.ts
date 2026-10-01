@@ -271,7 +271,9 @@ test.describe("Plan - builder", () => {
       .last()
       .getByRole("button", { name: "Edit exercise" })
       .click();
-    await page.getByRole("img", { name: fixtures.exercises.superHorizontalBenchPress.name }).click();
+    await page
+      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.superHorizontalBenchPress.name}` })
+      .click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
     await page.getByRole("list", { name: "Exercise" }).getByText(fixtures.exercises.pecDeck.name).click();
     await page

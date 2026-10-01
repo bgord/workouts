@@ -103,7 +103,7 @@ function ExercisePickerOptions(props: ExercisePickerOptionsProps) {
               value={exercise.id}
             />
 
-            <span data-shrink="0" data-stack="x">
+            <span aria-hidden data-shrink="0" data-stack="x">
               <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
             </span>
 

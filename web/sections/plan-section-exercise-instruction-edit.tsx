@@ -146,6 +146,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
         >
           {planSectionExerciseInstructionPick.off && exercise && (
             <button
+              aria-label={t("plan.section.exercise.edit.change", { name: exercise.name })}
               data-bc="alpha-medium"
               data-br="md"
               data-bw="hairline"
@@ -158,7 +159,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
               onClick={bg.exec([catalog.load, planSectionExerciseInstructionPick.enable])}
               onFocus={catalog.load}
               onPointerEnter={catalog.load}
-              title={t("plan.section.exercise.edit.change")}
+              title={t("plan.section.exercise.edit.change", { name: exercise.name })}
               type="button"
               {...ui.Spacing.rowCompact}
               {...planSectionExerciseInstructionPick.props.controller}

@@ -302,7 +302,7 @@
   "plan.section.exercise.add.reps.max.label": "Reps max",
   "plan.section.exercise.add.sets.label": "Sets",
   "plan.section.exercise.count": "{{count}} {{noun}}",
-  "plan.section.exercise.edit.change": "Change exercise",
+  "plan.section.exercise.edit.change": "Change exercise: {{name}}",
   "plan.section.exercise.edit.cta": "Edit exercise",
   "plan.section.exercise.edit.error": "Could not save the exercise",
   "plan.section.exercise.list.empty": "No exercises yet",

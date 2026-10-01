@@ -302,7 +302,7 @@
   "plan.section.exercise.add.reps.max.label": "Maks. powtórzeń",
   "plan.section.exercise.add.sets.label": "Serie",
   "plan.section.exercise.count": "{{count}} {{noun}}",
-  "plan.section.exercise.edit.change": "Zmień ćwiczenie",
+  "plan.section.exercise.edit.change": "Zmień ćwiczenie: {{name}}",
   "plan.section.exercise.edit.cta": "Edytuj ćwiczenie",
   "plan.section.exercise.edit.error": "Nie udało się zapisać ćwiczenia",
   "plan.section.exercise.list.empty": "Brak ćwiczeń",
