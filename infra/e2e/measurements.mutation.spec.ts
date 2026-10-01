@@ -123,6 +123,26 @@ test.describe("Measurements - athlete", () => {
     ).toBeVisible();
   });
 
+  test("rejects a body part measurement date in the future", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
+    await page.getByRole("spinbutton", { name: "Circumference" }).fill("38.5");
+    await page.getByRole("textbox", { name: "Date" }).fill("2099-01-01");
+
+    await expect(page.getByRole("textbox", { name: "Date" }).and(page.locator(":invalid"))).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(
+      page
+        .getByRole("listitem")
+        .filter({ hasText: fixtures.athlete.bodyParts.calfRight.name })
+        .getByText("Not measured yet")
+        .first(),
+    ).toBeVisible();
+  });
+
   test("measures the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
