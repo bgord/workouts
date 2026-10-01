@@ -42,6 +42,15 @@ test.describe("Profile - athlete", () => {
     await expect(page.getByRole("heading", { name: "Profile" })).toBeHidden();
   });
 
+  test("downloads the workouts export", async ({ page }) => {
+    await page.goto("/profile");
+
+    const download = page.waitForEvent("download");
+    await page.getByRole("link", { name: "Download CSV" }).click();
+
+    expect((await download).suggestedFilename()).toMatch(/\.csv$/);
+  });
+
   test("blocks deleting the account until delete is typed", async ({ page }) => {
     await page.goto("/profile");
 
@@ -56,27 +65,6 @@ test.describe("Profile - athlete", () => {
     await page.getByPlaceholder("delete").fill("delete");
 
     await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeEnabled();
-  });
-
-  test("shows the error when deleting the account fails", async ({ page }) => {
-    await page.route("**/api/auth/delete-user", (route) => route.fulfill({ status: 500 }));
-    await page.goto("/profile");
-
-    await page.getByRole("button", { name: "Continue" }).click();
-    await page.getByPlaceholder("delete").fill("delete");
-    await page.getByRole("button", { name: "Delete account" }).last().click();
-
-    await expect(page.getByText("Error while deleting account")).toBeVisible();
-    await expect(page).toHaveURL(/\/profile$/);
-  });
-
-  test("downloads the workouts export", async ({ page }) => {
-    await page.goto("/profile");
-
-    const download = page.waitForEvent("download");
-    await page.getByRole("link", { name: "Download CSV" }).click();
-
-    expect((await download).suggestedFilename()).toMatch(/\.csv$/);
   });
 
   test("shows the error when uploading the avatar fails", async ({ page }) => {
@@ -100,16 +88,6 @@ test.describe("Profile - athlete", () => {
     await expect(page.getByRole("button", { name: "Delete avatar" })).toBeHidden();
   });
 
-  test("shows the error when sending the password reset link fails", async ({ page }) => {
-    await page.route("**/api/auth/request-password-reset", (route) => route.fulfill({ status: 500 }));
-    await page.goto("/profile");
-
-    await page.getByRole("button", { name: "Send reset link" }).click();
-
-    await expect(page.getByText("Error while sending the link")).toBeVisible();
-    await expect(page.getByText("Check your inbox")).toBeHidden();
-  });
-
   test("shows the error when saving the weekly summary fails", async ({ page }) => {
     await page.route("**/api/preferences/weekly-summary/update", (route) => route.fulfill({ status: 500 }));
     await page.goto("/profile");
@@ -122,6 +100,28 @@ test.describe("Profile - athlete", () => {
     await page.reload();
 
     await expect(page.getByRole("combobox").filter({ hasText: "On" })).toHaveValue("on");
+  });
+
+  test("shows the error when sending the password reset link fails", async ({ page }) => {
+    await page.route("**/api/auth/request-password-reset", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/profile");
+
+    await page.getByRole("button", { name: "Send reset link" }).click();
+
+    await expect(page.getByText("Error while sending the link")).toBeVisible();
+    await expect(page.getByText("Check your inbox")).toBeHidden();
+  });
+
+  test("shows the error when deleting the account fails", async ({ page }) => {
+    await page.route("**/api/auth/delete-user", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/profile");
+
+    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByPlaceholder("delete").fill("delete");
+    await page.getByRole("button", { name: "Delete account" }).last().click();
+
+    await expect(page.getByText("Error while deleting account")).toBeVisible();
+    await expect(page).toHaveURL(/\/profile$/);
   });
 });
 
