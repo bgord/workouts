@@ -1,4 +1,4 @@
-// cSpell:ignore spinbutton
+// cSpell:ignore spinbutton unpresses
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -412,6 +412,18 @@ test.describe("Workouts - athlete", () => {
       page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }),
     ).toHaveAttribute("aria-pressed", "false");
     await expect(page.getByRole("button", { name: "Clear" })).toBeHidden();
+  });
+
+  test("unpresses the section", async ({ page }) => {
+    await page.goto("/workouts?filter=all_time");
+
+    await page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }).click();
+    await page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }).click();
+
+    await expect(page.getByText("25 of 25")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }),
+    ).toHaveAttribute("aria-pressed", "false");
   });
 
   test("opens the scheduled workout", async ({ page }) => {
