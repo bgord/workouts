@@ -7,7 +7,8 @@ export default defineConfig({
   retries: 0,
   workers: process.env["CI"] ? 1 : 4,
   timeout: 10_000,
-  use: { baseURL: "http://localhost:3000" },
+  reporter: process.env["CI"] ? [["github"], ["list"], ["html", { open: "never" }]] : "list",
+  use: { baseURL: "http://localhost:3000", trace: "retain-on-failure" },
   projects: [
     { name: "setup", testMatch: /.*\.setup\.ts/ },
     {
@@ -55,7 +56,7 @@ export default defineConfig({
       stderr: "pipe",
       port: 3000,
       name: "bun-backend",
-      timeout: 20_000,
+      timeout: process.env["CI"] ? 60_000 : 20_000,
       gracefulShutdown: { signal: "SIGTERM", timeout: 1_000 },
     },
   ],

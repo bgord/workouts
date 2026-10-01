@@ -11,6 +11,7 @@ jobs.db*
 meta.json
 node_modules/
 output/
+playwright-report/
 public/*.js
 public/*.js.map
 public/main.min.css
