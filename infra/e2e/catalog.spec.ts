@@ -97,6 +97,22 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByRole("button", { name: "New exercise" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Categories", exact: true })).toBeHidden();
   });
+
+  test("restores the catalog category filter on browser back", async ({ page }) => {
+    await page.goto("/catalog");
+    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
+    await expect(page).toHaveURL(/category=/);
+    await page.locator('a[href^="/catalog/exercise/"]').first().click();
+    await expect(page).toHaveURL(/\/catalog\/exercise\//);
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(/\/catalog\?category=/);
+    await expect(page.getByText("6 of 32")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+  });
 });
 
 test.describe("Catalog - admin", () => {

@@ -167,22 +167,6 @@ test.describe("Navigation - athlete", () => {
     await expect(page.getByLabel("Period")).toHaveValue("all_time");
   });
 
-  test("restores the catalog category filter on browser back", async ({ page }) => {
-    await page.goto("/catalog");
-    await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
-    await expect(page).toHaveURL(/category=/);
-    await page.locator('a[href^="/catalog/exercise/"]').first().click();
-    await expect(page).toHaveURL(/\/catalog\/exercise\//);
-
-    await page.goBack();
-
-    await expect(page).toHaveURL(/\/catalog\?category=/);
-    await expect(page.getByText("6 of 32")).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-  });
-
   test("goes forward again after going back", async ({ page }) => {
     const card = page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`);
 
