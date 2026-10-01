@@ -55,7 +55,7 @@ test.describe("Catalog - athlete", () => {
 
     await page.getByText("+8 more").click();
 
-    await expect(page.getByRole("button", { name: fixtures.categories.upperMidBack.name })).toBeVisible();
+    await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeVisible();
     await expect(page.getByText("Show less")).toBeVisible();
   });
 
