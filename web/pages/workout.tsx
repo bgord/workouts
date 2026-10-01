@@ -1,4 +1,3 @@
-// fallow-ignore-file unused-export
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
 import * as ui from "../components";

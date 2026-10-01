@@ -1,5 +1,3 @@
-// fallow-ignore-file unused-export
-
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { ExerciseAdd } from "../sections/exercise-add";
