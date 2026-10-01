@@ -62,7 +62,7 @@ export async function seedCatalog(di: BootstrapType) {
 
   console.log(`[✓] ${Object.values(fixtures.exercises).length} exercises added`);
 
-  await Bun.sleep(tools.Duration.Ms(10).ms);
+  await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
   for (const exercise of Object.values(fixtures.exercises)) {
     for (const category of exercise.categories) {

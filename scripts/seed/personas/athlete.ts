@@ -48,7 +48,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
     await finalizePlan(di, userId, persona.plan);
   });
 
-  await Bun.sleep(tools.Duration.Ms(10).ms);
+  await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
   const history: ExerciseHistory = new Map();
   let next = push.id;
@@ -111,7 +111,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
 
     next = rotation[(rotation.indexOf(section.id) + 1) % rotation.length] ?? push.id;
 
-    await Bun.sleep(tools.Duration.Ms(10).ms);
+    await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
   }
 
   const referenceId = di.Adapters.System.IdProvider.generate();
@@ -133,7 +133,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
     await defineBodyPart(di, userId, bodyPart);
   }
 
-  await Bun.sleep(tools.Duration.Ms(10).ms);
+  await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
   await setBodyWeightReference(di, userId, {
     measurementId: referenceId,

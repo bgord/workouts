@@ -11,7 +11,7 @@ export async function seedArchivist(di: BootstrapType, persona: typeof fixtures.
   await finalizePlan(di, userId, persona.archivedPlan);
   await archivePlan(di, userId, persona.archivedPlan);
 
-  await Bun.sleep(tools.Duration.Ms(10).ms);
+  await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
   await draftPlan(di, userId, persona.plan);
 

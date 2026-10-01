@@ -15,7 +15,7 @@ export async function seedHoarder(di: BootstrapType) {
     await draftPlan(di, userId, fixtures.hoarder.plan);
     await finalizePlan(di, userId, fixtures.hoarder.plan);
 
-    await Bun.sleep(tools.Duration.Ms(10).ms);
+    await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
     const activeWorkoutId = await createWorkout(di, userId, {
       id: fixtures.hoarder.activeWorkout.id,

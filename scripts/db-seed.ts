@@ -56,7 +56,7 @@ void (async function main() {
     await seedHoarder(di);
     await seedPocket(di);
 
-    await Bun.sleep(tools.Duration.Ms(10).ms);
+    await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
     process.exit(0);
   });

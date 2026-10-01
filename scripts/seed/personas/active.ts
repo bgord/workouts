@@ -15,7 +15,7 @@ export async function seedActive(di: BootstrapType, persona: typeof fixtures.act
     await draftPlan(di, userId, persona.plan);
     await finalizePlan(di, userId, persona.plan);
 
-    await Bun.sleep(tools.Duration.Ms(10).ms);
+    await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
     const workoutId = await createWorkout(di, userId, {
       id: persona.workout.id,
