@@ -3,13 +3,21 @@
 source bgord-scripts/base.sh
 setup_base_config
 
-export NODE_ENV="local"
+export NODE_ENV="staging"
 export DATABASE_PATH="sqlite.e2e.db"
 
-info "Environment: e2e (local adapters, $DATABASE_PATH)"
+info "Environment: e2e (staging adapters, $DATABASE_PATH)"
+
+ensure_drizzle_set_up
+
+mkdir -p infra/adapters/system/tmp
 
 ./bgord-scripts/db-reset.sh
-./bgord-scripts/db-seed-local.sh
+
+step_start "DB seed e2e"
+bun --env-file=".env.$NODE_ENV" scripts/db-seed.ts
+step_end "DB seed e2e"
+
 ./bgord-scripts/web-build-bun.sh
 
 step_start "Server start e2e"
