@@ -415,6 +415,27 @@ test.describe("Plans - builder", () => {
 
     await expect(page.getByText("No exercises match", { exact: true })).toBeVisible();
   });
+
+  test("keeps the section expanded and collapsed after reload", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    const toggle = page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("heading", { level: 2, name: "Push", exact: true }) })
+      .getByRole("button")
+      .first();
+
+    await expect(page.getByRole("button", { name: "Add exercise" })).toBeHidden();
+
+    await toggle.click();
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Add exercise" })).toBeVisible();
+
+    await toggle.click();
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Add exercise" })).toBeHidden();
+  });
 });
 
 test.describe("Plans - athlete", () => {
