@@ -15,6 +15,18 @@ test.describe("Profile - polyglot", () => {
 
     await expect(page.getByRole("combobox").filter({ hasText: "Włączone" })).toHaveValue("on");
   });
+
+  test("signs out", async ({ page }) => {
+    await page.goto("/profile");
+
+    await page.locator("button:has(.lucide-log-out)").click();
+
+    await expect(page).toHaveURL(/\/public\/login\.html/);
+
+    await page.goto("/");
+
+    await expect(page).toHaveURL(/\/public\/login\.html/);
+  });
 });
 
 test.describe("Profile - disposable", () => {
