@@ -103,6 +103,29 @@ test.describe("Navigation - athlete", () => {
     await expect(page).toHaveURL(/\/workouts\?filter=all_time/);
   });
 
+  test("goes back from the exercise to the workout it was opened from", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
+    await page.locator('a[href^="/catalog/exercise/"]').first().click();
+    await expect(page).toHaveURL(/\/catalog\/exercise\//);
+
+    await page.getByRole("link", { name: "Back", exact: true }).click();
+
+    await expect(page).toHaveURL(
+      new RegExp(`/workouts/${fixtures.athlete.scheduledWorkout.id}\\?filter=all_time`),
+    );
+  });
+
+  test("goes back from the exercise to the plan it was opened from", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.athlete.plan.id}`);
+    await page.getByRole("listitem").filter({ hasText: "Push" }).getByRole("button").first().click();
+    await page.locator('a[href^="/catalog/exercise/"]').first().click();
+    await expect(page).toHaveURL(/\/catalog\/exercise\//);
+
+    await page.getByRole("link", { name: "Back", exact: true }).click();
+
+    await expect(page).toHaveURL(new RegExp(`/plans/${fixtures.athlete.plan.id}$`));
+  });
+
   test("goes back from body weight and body parts to the measurements", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 

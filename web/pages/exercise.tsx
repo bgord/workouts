@@ -1,5 +1,6 @@
 // fallow-ignore-file unused-export
 import * as bg from "@bgord/ui";
+import { useCanGoBack, useRouter } from "@tanstack/react-router";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategories } from "../sections/exercise-categories";
@@ -12,12 +13,21 @@ import { ExercisePerformancesEmpty } from "../sections/exercise-performances-emp
 
 export function Exercise() {
   const { exercise } = exerciseRoute.useLoaderData();
+  const router = useRouter();
+  const canGoBack = useCanGoBack();
 
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
         <div data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack to="/catalog" />
+          <ui.ButtonBack
+            onClick={(event) => {
+              if (!canGoBack) return;
+              event.preventDefault();
+              router.history.back();
+            }}
+            to="/catalog"
+          />
 
           <ExerciseName />
 
