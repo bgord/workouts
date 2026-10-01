@@ -148,6 +148,12 @@ test.describe("Navigation - athlete", () => {
     await expect(page).toHaveURL(/\/measurements$/);
   });
 
+  test("opens the body weight history filtered by a deep link", async ({ page }) => {
+    await page.goto("/measurements/body-weight?month=all");
+
+    await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
+  });
+
   test("restores the workouts filters on browser back", async ({ page }) => {
     await page.goto("/workouts");
     await page.getByLabel("Period").selectOption({ label: "All time" });
@@ -175,12 +181,6 @@ test.describe("Navigation - athlete", () => {
     await expect(
       page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
-  });
-
-  test("opens the body weight history filtered by a deep link", async ({ page }) => {
-    await page.goto("/measurements/body-weight?month=all");
-
-    await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
   });
 
   test("goes forward again after going back", async ({ page }) => {
