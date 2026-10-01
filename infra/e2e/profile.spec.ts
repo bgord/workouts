@@ -42,6 +42,22 @@ test.describe("Profile - athlete", () => {
     await expect(page.getByRole("heading", { name: "Profile" })).toBeHidden();
   });
 
+  test("blocks deleting the account until delete is typed", async ({ page }) => {
+    await page.goto("/profile");
+
+    await page.getByRole("button", { name: "Continue" }).click();
+
+    await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeDisabled();
+
+    await page.getByPlaceholder("delete").fill("delet");
+
+    await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeDisabled();
+
+    await page.getByPlaceholder("delete").fill("delete");
+
+    await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeEnabled();
+  });
+
   test("downloads the workouts export", async ({ page }) => {
     await page.goto("/profile");
 
