@@ -58,6 +58,18 @@ test.describe("Profile - athlete", () => {
     await expect(page.getByRole("button", { name: "Delete account" }).last()).toBeEnabled();
   });
 
+  test("shows the error when deleting the account fails", async ({ page }) => {
+    await page.route("**/api/auth/delete-user", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/profile");
+
+    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByPlaceholder("delete").fill("delete");
+    await page.getByRole("button", { name: "Delete account" }).last().click();
+
+    await expect(page.getByText("Error while deleting account")).toBeVisible();
+    await expect(page).toHaveURL(/\/profile$/);
+  });
+
   test("downloads the workouts export", async ({ page }) => {
     await page.goto("/profile");
 
