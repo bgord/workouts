@@ -1,4 +1,4 @@
-// cSpell:ignore networkidle spinbutton
+// cSpell:ignore spinbutton
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -7,7 +7,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("toggles the shortcuts help", async ({ page }) => {
     await page.goto("/workouts");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("Shift+?");
 
@@ -25,7 +25,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("opens the shortcuts help with the button", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.getByRole("button", { name: "Show keyboard shortcuts" }).click();
 
@@ -41,7 +41,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("goes to workouts", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("g");
     await page.keyboard.press("w");
@@ -51,7 +51,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("goes to catalog", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("g");
     await page.keyboard.press("c");
@@ -61,7 +61,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("goes to plans", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("g");
     await page.keyboard.press("p");
@@ -71,7 +71,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("goes to measurements", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("g");
     await page.keyboard.press("m");
@@ -81,7 +81,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("goes to dashboard", async ({ page }) => {
     await page.goto("/workouts");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("g");
     await page.keyboard.press("d");
@@ -91,7 +91,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("opens the upcoming workout from the dashboard", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("o");
 
@@ -102,7 +102,7 @@ test.describe("Shortcuts - athlete", () => {
     const workouts = page.getByRole("list", { name: "Workouts" });
 
     await page.goto("/workouts?filter=all_time");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
     const href = (await workouts.getByRole("link").first().getAttribute("href")) ?? "";
 
     await page.keyboard.press("o");
@@ -114,7 +114,7 @@ test.describe("Shortcuts - athlete", () => {
     const catalog = page.getByRole("list", { name: "Catalog" });
 
     await page.goto("/catalog");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
     const href = (await catalog.getByRole("link").first().getAttribute("href")) ?? "";
 
     await page.keyboard.press("o");
@@ -124,7 +124,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("focuses the body weight input", async ({ page }) => {
     await page.goto("/measurements/body-weight");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("n");
 
@@ -133,7 +133,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("opens the schedule dialog from the workouts list", async ({ page }) => {
     await page.goto("/workouts");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("n");
 
@@ -144,7 +144,7 @@ test.describe("Shortcuts - athlete", () => {
 
   test("focuses the catalog search", async ({ page }) => {
     await page.goto("/catalog");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.keyboard.press("/");
 

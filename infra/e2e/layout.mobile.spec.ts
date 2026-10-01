@@ -1,4 +1,4 @@
-// cSpell:ignore networkidle spinbutton
+// cSpell:ignore spinbutton
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -48,7 +48,7 @@ test.describe("Mobile - athlete", () => {
 
     for (const route of routes) {
       await page.goto(route);
-      await page.waitForLoadState("networkidle");
+      await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -60,7 +60,7 @@ test.describe("Mobile - athlete", () => {
 
   test("keeps a completed workout within the viewport width", async ({ page }) => {
     await page.goto("/workouts?filter=all_time");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
     const href =
       (await page
         .getByRole("list", { name: "Workouts" })
@@ -70,7 +70,7 @@ test.describe("Mobile - athlete", () => {
         .getAttribute("href")) ?? "";
 
     await page.goto(href);
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -97,7 +97,7 @@ test.describe("Mobile - athlete", () => {
 
   test("fits the body weight form on the screen", async ({ page }) => {
     await page.goto("/measurements/body-weight");
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await expect(page.getByRole("spinbutton", { name: "Weight (kg)" })).toBeInViewport();
     await expect(page.getByRole("button", { name: "Log", exact: true })).toBeInViewport();
@@ -107,7 +107,7 @@ test.describe("Mobile - athlete", () => {
     const row = page.getByRole("list", { name: "Exercises" }).getByRole("listitem").first();
 
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await row.getByRole("button", { name: "Set target" }).tap();
 
@@ -125,7 +125,7 @@ test.describe("Mobile - active", () => {
 
   test("keeps the workout within the viewport width with the log panel closed and open", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     const closed = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -149,7 +149,7 @@ test.describe("Mobile - active", () => {
     const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
 
     await page.getByRole("button", { name: "Add exercise" }).tap();
 
@@ -168,7 +168,7 @@ test.describe("Mobile - active", () => {
     });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
     await row.getByRole("button", { name: /^Details: / }).tap();
 
     await row.getByRole("button", { name: "Correct set 1" }).tap();
@@ -189,7 +189,7 @@ test.describe("Mobile - builder", () => {
 
   test("keeps the plan with an expanded section within the viewport width", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("main[data-hydrated]")).toBeAttached();
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeVisible();
 
