@@ -1,4 +1,4 @@
-// cSpell:ignore Ustawienia profilu Polski Wyłączone
+// cSpell:ignore Ustawienia profilu Polski Wyłączone delet
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -28,6 +28,13 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await page.getByRole("combobox").filter({ hasText: "English" }).selectOption("pl");
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Profile" })).toBeHidden();
+
+    await page.reload();
 
     await expect(
       page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
