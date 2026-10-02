@@ -59,6 +59,33 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(page).toHaveURL("/workouts");
   });
 
+  test("summarizes the previous session with identical reps", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+    await page
+      .getByRole("dialog", { name: "New workout" })
+      .getByText(fixtures.athleteMutation.plan.sections.pull.name, { exact: true })
+      .click();
+    await page.getByRole("button", { name: "Tomorrow" }).click();
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
+
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.exercises.pullUp.name, exact: true })
+        .getByRole("note", { name: "Previous session" }),
+    ).toContainText("4×4 17.5 kg");
+
+    await page.getByRole("button", { name: "Discard" }).click();
+    await page
+      .getByRole("dialog", { name: "Discard workout" })
+      .getByRole("button", { name: "Discard" })
+      .click();
+
+    await expect(page).toHaveURL("/workouts");
+  });
+
   test("blocks starting a workout with no exercises", async ({ page }) => {
     const links = page.getByRole("list", { name: "Exercises" }).getByRole("link");
 
