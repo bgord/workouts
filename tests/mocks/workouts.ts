@@ -2,6 +2,7 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import { userId } from "./auth";
 import {
@@ -194,7 +195,7 @@ export const workout: Workouts.VO.Workout = {
 };
 
 export const exercisePerformanceWeakestSet = v.parse(Workouts.VO.ExerciseTarget, {
-  sets: v.parse(Workouts.VO.Sets, 2),
+  sets: v.parse(Plans.VO.Sets, 2),
   reps: v.parse(Workouts.VO.Reps, 5),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
 });
@@ -202,12 +203,12 @@ export const exercisePerformanceWeakestSet = v.parse(Workouts.VO.ExerciseTarget,
 export const exerciseTargetProgression: Workouts.VO.ExerciseTargetProgression = {
   last: exercisePerformanceWeakestSet,
   regress: v.parse(Workouts.VO.ExerciseTarget, {
-    sets: v.parse(Workouts.VO.Sets, 2),
+    sets: v.parse(Plans.VO.Sets, 2),
     reps: v.parse(Workouts.VO.Reps, 4),
     load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
   }),
   progress: v.parse(Workouts.VO.ExerciseTarget, {
-    sets: v.parse(Workouts.VO.Sets, 2),
+    sets: v.parse(Plans.VO.Sets, 2),
     reps: v.parse(Workouts.VO.Reps, 6),
     load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
   }),
