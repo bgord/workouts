@@ -1,3 +1,5 @@
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+
 const DAY: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" };
 const TIME: Intl.DateTimeFormatOptions = { hour: "2-digit", hour12: false, minute: "2-digit" };
 
@@ -27,6 +29,9 @@ export const DateFormat = {
   todayISO: () =>
     // biome-ignore lint: lint/style/noRestrictedGlobals
     iso(new Date()),
+
+  daysAgo: (date: string) =>
+    Math.max(0, Math.round((plain(DateFormat.todayISO()).getTime() - plain(date).getTime()) / DAY_IN_MS)),
 
   addDays: (date: string, days: number) => {
     const moment = plain(date);

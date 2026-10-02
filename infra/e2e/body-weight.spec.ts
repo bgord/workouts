@@ -26,6 +26,17 @@ test.describe("Body weight - athlete", () => {
     await expect(page.getByText(/^Bulk since /)).toBeVisible();
   });
 
+  test("shows the latest weight as measured yesterday", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    const context = page
+      .getByRole("listitem", { name: "Latest weight" })
+      .getByText("Yesterday", { exact: true });
+
+    await expect(context).toBeVisible();
+    await expect(context).toHaveAttribute("title", /^\w{3}, \w{3} \d{1,2}, \d{4}$/);
+  });
+
   test("shows a positive delta since the bulk reference", async ({ page }) => {
     const tile = page.getByRole("listitem", { name: "Since reference" });
 

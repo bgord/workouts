@@ -2,12 +2,23 @@ import * as bg from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
+import { useHydrated } from "../hooks/use-hydrated";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals } from "../services/weight-format";
 
 export function BodyWeightStats(props: VO.BodyWeightStats) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const hydrated = useHydrated();
+
+  const latestOn = DateFormat.dayWithWeekday(language, props.latest.measuredOn);
+  const latestDaysAgo = DateFormat.daysAgo(props.latest.measuredOn);
+  const latestRelative =
+    latestDaysAgo === 0
+      ? t("measurements.body_weight.stats.latest.today")
+      : latestDaysAgo === 1
+        ? t("measurements.body_weight.stats.latest.yesterday")
+        : t("measurements.body_weight.stats.latest.days_ago", { count: latestDaysAgo });
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
@@ -29,7 +40,7 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
           />
         </ui.TileValue>
 
-        <ui.TileContext>{DateFormat.dayWithWeekday(language, props.latest.measuredOn)}</ui.TileContext>
+        <ui.TileContext title={latestOn}>{hydrated ? latestRelative : latestOn}</ui.TileContext>
       </ui.Tile>
 
       <ui.Tile>
