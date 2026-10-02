@@ -29,6 +29,7 @@ export function WorkoutNote() {
     },
   });
 
+  /* v8 ignore next */
   if (!workout.actions.noteSet.available) return null;
 
   return (

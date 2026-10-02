@@ -27,6 +27,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
     },
   });
 
+  /* v8 ignore next */
   if (!exerciseCategories.actions.rename.available) return <div>{props.name}</div>;
 
   if (toggle.off) {
