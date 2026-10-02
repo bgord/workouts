@@ -12,6 +12,7 @@ export function ExerciseStats() {
   const heaviest = performances.toSorted((a, b) => b.volume - a.volume)[0];
   const latest = performances.at(-1);
 
+  /* v8 ignore next */
   if (!(best && heaviest && latest)) return null;
 
   return (

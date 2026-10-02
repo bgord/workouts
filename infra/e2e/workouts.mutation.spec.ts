@@ -653,4 +653,14 @@ test.describe("Workouts - active-mutation", () => {
     await expect(page.getByRole("heading", { name: "In progress" })).toBeHidden();
     await expect(page.getByText("Nothing scheduled")).toBeHidden();
   });
+
+  test("shows the stats without the progress chart after the first session", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    await expect(
+      page.getByRole("listitem", { name: "Sessions" }).getByText("1", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("img", { name: "Progress" })).toBeHidden();
+    await expect(page.getByRole("list", { name: "History" }).getByRole("link")).toHaveCount(1);
+  });
 });

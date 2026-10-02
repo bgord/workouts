@@ -148,6 +148,21 @@ test.describe("Plans - drafter", () => {
     await expect(page.getByText(fixtures.drafter.plan.description)).toBeHidden();
   });
 
+  test("clears the plan description", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("button", { name: "Upper body twice, legs once." }).click();
+    await page.getByLabel("Description").fill(" ");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Add a description..." })).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Add a description..." })).toBeVisible();
+    await expect(page.getByText("Upper body twice, legs once.")).toBeHidden();
+  });
+
   test("rejects a too short section name", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
@@ -253,6 +268,22 @@ test.describe("Plans - drafter", () => {
     await expect(page.getByText("10x Arm Circles forward")).toBeHidden();
   });
 
+  test("clears the warm-up of a section", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
+
+    await page.getByRole("button", { name: "5 minutes on the rower" }).click();
+    await page.getByLabel("Warm-up").fill("");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Add a warm-up..." })).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Add a warm-up..." })).toBeVisible();
+    await expect(page.getByText("5 minutes on the rower")).toBeHidden();
+  });
+
   test("sets the cool-down of a section", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
@@ -266,6 +297,22 @@ test.describe("Plans - drafter", () => {
     await page.reload();
 
     await expect(page.getByRole("button", { name: "Chest and lat stretch, 2 minutes each" })).toBeVisible();
+  });
+
+  test("clears the cool-down of a section", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
+
+    await page.getByRole("button", { name: "Chest and lat stretch, 2 minutes each" }).click();
+    await page.getByLabel("Cool-down").fill("");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Add a cool-down..." })).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Add a cool-down..." })).toBeVisible();
+    await expect(page.getByText("Chest and lat stretch, 2 minutes each")).toBeHidden();
   });
 
   test("rejects an exercise instruction with invalid sets and reps range", async ({ page }) => {
@@ -450,9 +497,16 @@ test.describe("Plans - drafter", () => {
 
     await expect(page.getByText("Finalized", { exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
-    await expect(page.getByText("Upper body twice, legs once.")).toBeVisible();
     await expect(page.getByRole("button", { name: "New section" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Edit" })).toBeEnabled();
+    await expect(page.getByText("Add a description...")).toBeHidden();
+
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
+
+    await expect(page.getByRole("heading", { name: "Warm-up" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Cool-down" })).toBeHidden();
+    await expect(page.getByText("Add a warm-up...")).toBeHidden();
+    await expect(page.getByText("Add a cool-down...")).toBeHidden();
   });
 });
 

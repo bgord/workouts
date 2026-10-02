@@ -220,11 +220,15 @@ test.describe("Catalog - admin", () => {
     await page.getByLabel("Description").fill("Lie on your back, curl the head up against a light plate.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "Lie on your back, curl the head up against a light plate." })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Lie on your back, curl the head up against a light plate." }),
+    ).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "Lie on your back, curl the head up against a light plate." })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Lie on your back, curl the head up against a light plate." }),
+    ).toBeVisible();
   });
 
   test("changes the exercise image", async ({ page }) => {

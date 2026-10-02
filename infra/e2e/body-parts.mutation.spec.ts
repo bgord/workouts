@@ -79,11 +79,15 @@ test.describe("Body parts - empty-mutation", () => {
     await page.getByRole("button", { name: "Import", exact: true }).click();
 
     await expect(page.getByRole("dialog", { name: "Import body part measurements" })).toBeHidden();
-    await expect(page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first()).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first(),
+    ).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first()).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first(),
+    ).toBeVisible();
   });
 
   test("rejects a too long new body part name", async ({ page }) => {
