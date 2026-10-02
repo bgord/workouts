@@ -3,18 +3,20 @@ import { Link } from "@tanstack/react-router";
 import { EqualApproximately } from "lucide-react";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
+import { DateFormat } from "../services/date-format";
 import { LineChartMath } from "../services/line-chart";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseProgressChart() {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const { performances } = exerciseRoute.useLoaderData();
 
   if (performances.length < LineChartMath.MINIMAL_POINTS) return null;
 
   const layout = LineChartMath.layout(
     performances.map((performance) => WeightFormat.kilograms(performance.bestEstimate)),
-    (load) => t("statistics.exercise.one_rep_max_estimate.value", { load }),
+    (load) => t("statistics.exercise.one_rep_max_estimate.value", { load: load.toLocaleString(language) }),
   );
 
   return (
@@ -49,8 +51,8 @@ export function ExerciseProgressChart() {
             >
               <title>
                 {t("statistics.exercise.progress.point", {
-                  date: performance.scheduledFor,
-                  load: WeightFormat.kilograms(performance.bestEstimate),
+                  date: DateFormat.plainDay(language, performance.scheduledFor),
+                  load: WeightFormat.kilograms(performance.bestEstimate).toLocaleString(language),
                 })}
               </title>
 

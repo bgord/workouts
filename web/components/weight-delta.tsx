@@ -19,6 +19,7 @@ export function WeightDelta(
   } & React.JSX.IntrinsicElements["span"],
 ) {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const { previous, current, goal, decimals, ...rest } = props;
 
   if (previous === undefined) return null;
@@ -41,7 +42,7 @@ export function WeightDelta(
         strokeWidth={0}
       />
 
-      {WeightFormat.kilograms(Math.abs(difference), decimals)}
+      {WeightFormat.kilograms(Math.abs(difference), decimals).toLocaleString(language)}
 
       {" kg"}
     </span>

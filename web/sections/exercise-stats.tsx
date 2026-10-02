@@ -6,6 +6,7 @@ import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseStats() {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const { performances } = exerciseRoute.useLoaderData();
 
   const best = performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
@@ -28,7 +29,7 @@ export function ExerciseStats() {
 
         <ui.TileValue>
           {t("statistics.exercise.one_rep_max_estimate.value", {
-            load: WeightFormat.kilograms(best.bestEstimate),
+            load: WeightFormat.kilograms(best.bestEstimate).toLocaleString(language),
           })}
         </ui.TileValue>
 
@@ -45,7 +46,7 @@ export function ExerciseStats() {
 
         <ui.TileValue>
           {t("statistics.exercise.history.volume_load.value", {
-            load: WeightFormat.kilograms(heaviest.volume),
+            load: WeightFormat.kilograms(heaviest.volume).toLocaleString(language),
           })}
         </ui.TileValue>
 
