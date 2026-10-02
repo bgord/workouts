@@ -7,7 +7,7 @@ test.describe("Plans - empty", () => {
   test("shows the empty state", async ({ page }) => {
     await page.goto("/plans");
 
-    await expect(page.getByText("No plans created yet")).toBeVisible();
+    await expect(page.getByText("No plans yet")).toBeVisible();
     await expect(page.getByText("Create a plan to schedule your workouts")).toBeVisible();
     await expect(page.getByRole("button", { name: "New plan" })).toBeEnabled();
   });
@@ -25,7 +25,7 @@ test.describe("Plans - empty", () => {
 
     await page.reload();
 
-    await expect(page.getByText("No plans created yet")).toBeVisible();
+    await expect(page.getByText("No plans yet")).toBeVisible();
   });
 });
 

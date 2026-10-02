@@ -17,7 +17,7 @@ test.describe("Workouts - empty", () => {
     await page.goto("/workouts");
 
     await expect(page.getByRole("button", { name: "New workout" })).toHaveAccessibleDescription(
-      "Finalize a plan to schedule a workout",
+      "Finalize a plan first",
     );
     await expect(page.getByRole("button", { name: "New workout" })).toBeDisabled();
   });
@@ -110,7 +110,7 @@ test.describe("Workouts - athlete", () => {
 
     await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "true");
 
-    await dialog.getByRole("button", { name: "Pick" }).click();
+    await dialog.getByRole("button", { name: "Other" }).click();
 
     await expect(dialog.getByRole("textbox", { name: "Date" })).toBeVisible();
     await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "false");

@@ -12,13 +12,13 @@ test.describe("Body weight - empty-mutation", () => {
     await page.getByRole("button", { name: "Log", exact: true }).click();
 
     await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeVisible();
-    await expect(page.getByText("No measurements logged yet")).toBeHidden();
+    await expect(page.getByText("No measurements yet")).toBeHidden();
   });
 
   test("rejects an invalid body weight import", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Import measurements" }).click();
+    await page.getByRole("button", { name: "Import body weight" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-weight.csv",
       mimeType: "text/csv",
@@ -32,7 +32,7 @@ test.describe("Body weight - empty-mutation", () => {
   test("imports body weight measurements", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Import measurements" }).click();
+    await page.getByRole("button", { name: "Import body weight" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-weight.csv",
       mimeType: "text/csv",
@@ -40,7 +40,7 @@ test.describe("Body weight - empty-mutation", () => {
     });
     await page.getByRole("button", { name: "Import", exact: true }).click();
 
-    await expect(page.getByRole("dialog", { name: "Import measurements" })).toBeHidden();
+    await expect(page.getByRole("dialog", { name: "Import body weight" })).toBeHidden();
 
     await page.getByRole("combobox", { name: "Month" }).selectOption({ index: 0 });
 
@@ -101,7 +101,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
   test("rejects a body weight correction out of range", async ({ page }) => {
     const field = page
-      .getByRole("form", { name: "Correct the measurement" })
+      .getByRole("form", { name: "Correct measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" });
 
     await page.goto("/measurements/body-weight");
@@ -121,7 +121,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "81.5 kg" }).click();
     await page
-      .getByRole("form", { name: "Correct the measurement" })
+      .getByRole("form", { name: "Correct measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("82");
     await page.getByRole("button", { name: "Save" }).click();
@@ -141,7 +141,7 @@ test.describe("Body weight - athlete-mutation", () => {
     await page
       .getByRole("listitem")
       .filter({ has: page.getByRole("button", { name: "82 kg" }) })
-      .getByRole("button", { name: "Remove the measurement" })
+      .getByRole("button", { name: "Remove measurement" })
       .click();
 
     await expect(page.getByRole("button", { name: "82 kg" })).toBeHidden();
@@ -150,11 +150,8 @@ test.describe("Body weight - athlete-mutation", () => {
   test("sets a new body weight reference and goal", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Use as the reference point" }).first().click();
-    await page
-      .getByRole("form", { name: "Use as the reference point" })
-      .getByRole("button", { name: "Cut" })
-      .click();
+    await page.getByRole("button", { name: "Set as reference" }).first().click();
+    await page.getByRole("form", { name: "Set as reference" }).getByRole("button", { name: "Cut" }).click();
     await page.getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByText(/^Cut since /)).toBeVisible();

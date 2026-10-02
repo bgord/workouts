@@ -9,6 +9,7 @@ import { BodyWeightDecimals } from "../services/weight-format";
 export function BodyWeightStats(props: VO.BodyWeightStats) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const pluralize = bg.usePluralize();
   const hydrated = useHydrated();
 
   const latestOn = DateFormat.dayWithWeekday(language, props.latest.measuredOn);
@@ -62,7 +63,15 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
         </ui.TileValue>
 
         <ui.TileContext>
-          {t("measurements.body_weight.stats.week_average.count", { count: props.week.count })}
+          {t("measurements.body_weight.stats.week_average.count", {
+            count: props.week.count,
+            noun: pluralize({
+              value: props.week.count,
+              singular: t("measurements.body_weight.stats.week_average.noun.singular"),
+              plural: t("measurements.body_weight.stats.week_average.noun.plural"),
+              genitive: t("measurements.body_weight.stats.week_average.noun.genitive"),
+            }),
+          })}
         </ui.TileContext>
       </ui.Tile>
 

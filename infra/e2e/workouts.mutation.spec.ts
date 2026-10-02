@@ -10,7 +10,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.goto("/workouts");
 
     await page.getByRole("button", { name: "New workout" }).click();
-    await page.getByRole("button", { name: "Pick" }).click();
+    await page.getByRole("button", { name: "Other" }).click();
     await page.getByRole("textbox", { name: "Date" }).fill("2099-01-01");
     await page.getByRole("button", { name: "Schedule", exact: true }).click();
 
@@ -26,7 +26,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
     await page.reload();
 
-    await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+    await expect(page.getByText("Scheduled", { exact: true })).toBeVisible();
   });
 
   test("schedules a workout for a chosen section and day", async ({ page }) => {
@@ -48,7 +48,7 @@ test.describe("Workouts - athlete-mutation", () => {
         name: `PPL – ${fixtures.athleteMutation.plan.sections.legs.name}`,
       }),
     ).toBeVisible();
-    await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+    await expect(page.getByText("Scheduled", { exact: true })).toBeVisible();
 
     await page.getByRole("button", { name: "Discard" }).click();
     await page
@@ -74,7 +74,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.exercises.pullUp.name, exact: true })
-        .getByRole("note", { name: "Previous session" }),
+        .getByRole("note", { name: "Last session" }),
     ).toContainText("4×4 17.5 kg");
 
     await page.getByRole("button", { name: "Discard" }).click();
@@ -94,7 +94,7 @@ test.describe("Workouts - athlete-mutation", () => {
       .locator(
         `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
         {
-          hasText: /Draft$/,
+          hasText: /Scheduled$/,
         },
       )
       .click();
@@ -125,20 +125,20 @@ test.describe("Workouts - athlete-mutation", () => {
       .locator(
         `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
         {
-          hasText: /Draft$/,
+          hasText: /Scheduled$/,
         },
       )
       .click();
-    await page.getByRole("button", { name: /^Change the date/ }).click();
+    await page.getByRole("button", { name: /^Change date/ }).click();
     const date = (await scheduledFor.getAttribute("max")) ?? "";
 
     await scheduledFor.fill(date);
     await page.getByRole("button", { name: "Save" }).click();
 
-    await expect(page.getByRole("button", { name: /^Change the date/ })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Change date/ })).toBeVisible();
 
     await page.reload();
-    await page.getByRole("button", { name: /^Change the date/ }).click();
+    await page.getByRole("button", { name: /^Change date/ }).click();
 
     await expect(scheduledFor).toHaveValue(date);
   });
@@ -149,7 +149,7 @@ test.describe("Workouts - athlete-mutation", () => {
       .locator(
         `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
         {
-          hasText: /Draft$/,
+          hasText: /Scheduled$/,
         },
       )
       .click();
@@ -166,7 +166,7 @@ test.describe("Workouts - athlete-mutation", () => {
       page.locator(
         `a[href^="/workouts/"]:not([href^="/workouts/${fixtures.athleteMutation.scheduledWorkout.id}"])`,
         {
-          hasText: /Draft$/,
+          hasText: /Scheduled$/,
         },
       ),
     ).toHaveCount(0);
@@ -176,7 +176,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await expect(page.getByRole("button", { name: "Start" })).toHaveAccessibleDescription(
-      "Set a target for every exercise",
+      "Set every target first",
     );
     await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
   });
@@ -211,7 +211,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "Set target" }).first().click();
 
-    const suggestion = page.getByRole("group", { name: /^Based on the previous session/ });
+    const suggestion = page.getByRole("group", { name: /^Based on the last session/ });
     const last = suggestion.getByRole("button", { name: "Last", exact: true });
     const progress = suggestion.getByRole("button", { name: /^\+/ });
 
@@ -364,10 +364,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "Copy workout" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute(
-      "title",
-      "Copied to the clipboard",
-    );
+    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute("title", "Copied");
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
@@ -406,7 +403,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.goto("/workouts");
 
     await expect(page.getByRole("button", { name: "New workout" })).toHaveAccessibleDescription(
-      "You already have 3 scheduled workouts",
+      "Start or discard a scheduled workout first",
     );
     await expect(page.getByRole("button", { name: "New workout" })).toBeDisabled();
   });
@@ -565,11 +562,11 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
-    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("8");
     await dialog.getByRole("button", { name: "Add exercise" }).click();
 
     await expect(
-      dialog.getByRole("spinbutton", { name: "Reps max", exact: true }).and(page.locator(":invalid")),
+      dialog.getByRole("spinbutton", { name: "Max reps", exact: true }).and(page.locator(":invalid")),
     ).toHaveCount(1);
 
     await page.reload();
@@ -587,7 +584,7 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
-    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
     await page
       .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })

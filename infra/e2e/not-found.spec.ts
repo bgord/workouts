@@ -10,7 +10,7 @@ test.describe("Not found - athlete", () => {
     await expect(page.getByRole("heading", { level: 1, name: "Nothing on the bar" })).toBeVisible();
     await expect(page.getByText("The page you are looking for does not exist")).toBeVisible();
 
-    await page.getByRole("link", { name: "Back to dashboard" }).click();
+    await page.getByRole("link", { name: "Go to dashboard" }).click();
 
     await expect(page).toHaveURL("/");
   });
@@ -20,7 +20,7 @@ test.describe("Not found - athlete", () => {
 
     await expect(page.getByRole("heading", { level: 1, name: "Exercise not found" })).toBeVisible();
 
-    await page.getByRole("link", { name: "Browse the catalog" }).click();
+    await page.getByRole("link", { name: "Go to catalog" }).click();
 
     await expect(page).toHaveURL("/catalog");
   });

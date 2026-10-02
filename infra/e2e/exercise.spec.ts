@@ -7,7 +7,7 @@ test.describe("Exercise - athlete", () => {
   test("shows the empty state for an exercise that was never trained", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.bicepsCurlBarStraight.id}`);
 
-    await expect(page.getByText("No sessions logged yet")).toBeVisible();
+    await expect(page.getByText("No sessions yet")).toBeVisible();
     await expect(page.getByRole("img", { name: "Progress" })).toBeHidden();
     await expect(page.getByRole("heading", { name: "History" })).toBeHidden();
   });
@@ -84,7 +84,7 @@ test.describe("Exercise - admin", () => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
     await expect(page.getByRole("button", { name: "Delete" })).toHaveAccessibleDescription(
-      "Remove the exercise from plans",
+      "Remove it from plans first",
     );
     await expect(page.getByRole("button", { name: "Delete" })).toBeDisabled();
   });
@@ -93,7 +93,7 @@ test.describe("Exercise - admin", () => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.latPullDownCable.id}`);
 
     await expect(page.getByRole("button", { name: "Assign", exact: true })).toHaveAccessibleDescription(
-      "Up to 4 categories available",
+      "Unassign a category to add a new one",
     );
     await expect(page.getByRole("button", { name: "Assign", exact: true })).toBeDisabled();
   });
@@ -159,7 +159,7 @@ test.describe("Exercise - admin", () => {
     const before = await image.getAttribute("src");
 
     await page.getByRole("button", { name: "Change image", exact: true }).click();
-    await page.getByLabel("Select an image").setInputFiles("scripts/seed/assets/exercise.webp");
+    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not change the image")).toBeVisible();

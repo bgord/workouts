@@ -110,7 +110,7 @@ test.describe("Plans - builder-mutation", () => {
 
     await expect(page.getByRole("button", { name: "Finalize" })).toBeDisabled();
     await expect(page.getByRole("button", { name: "Finalize" })).toHaveAccessibleDescription(
-      "Add an exercise to all sections first",
+      "Add an exercise to every section first",
     );
   });
 });
@@ -155,11 +155,11 @@ test.describe("Plans - drafter", () => {
     await page.getByLabel("Description").fill(" ");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "Add a description..." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add a description…" })).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "Add a description..." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add a description…" })).toBeVisible();
     await expect(page.getByText("Upper body twice, legs once.")).toBeHidden();
   });
 
@@ -281,11 +281,11 @@ test.describe("Plans - drafter", () => {
     await page.getByLabel("Warm-up").fill("");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "Add a warm-up..." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add a warm-up…" })).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "Add a warm-up..." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add a warm-up…" })).toBeVisible();
     await expect(page.getByText("5 minutes on the rower")).toBeHidden();
   });
 
@@ -312,11 +312,11 @@ test.describe("Plans - drafter", () => {
     await page.getByLabel("Cool-down").fill("");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "Add a cool-down..." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add a cool-down…" })).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "Add a cool-down..." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Add a cool-down…" })).toBeVisible();
     await expect(page.getByText("Chest and lat stretch, 2 minutes each")).toBeHidden();
   });
 
@@ -339,11 +339,11 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
-    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("8");
     await dialog.getByRole("button", { name: "Add exercise" }).click();
 
     await expect(
-      dialog.getByRole("spinbutton", { name: "Reps max", exact: true }).and(page.locator(":invalid")),
+      dialog.getByRole("spinbutton", { name: "Max reps", exact: true }).and(page.locator(":invalid")),
     ).toHaveCount(1);
 
     await page.reload();
@@ -360,7 +360,7 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
-    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
     await page.getByRole("combobox", { name: "Progression" }).selectOption("linear_progression");
     await page
       .getByRole("dialog", { name: "Add exercise" })
@@ -407,7 +407,7 @@ test.describe("Plans - drafter", () => {
     await row.getByRole("button", { name: "Edit exercise" }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("5");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("6");
-    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("8");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("8");
     await page.getByRole("combobox", { name: "Progression" }).selectOption("double_progression");
     await page
       .getByRole("dialog", { name: "Edit exercise" })
@@ -535,14 +535,14 @@ test.describe("Plans - drafter", () => {
     await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "New section" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Edit" })).toBeEnabled();
-    await expect(page.getByText("Add a description...")).toBeHidden();
+    await expect(page.getByText("Add a description…")).toBeHidden();
 
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
     await expect(page.getByRole("heading", { name: "Warm-up" })).toBeHidden();
     await expect(page.getByRole("heading", { name: "Cool-down" })).toBeHidden();
-    await expect(page.getByText("Add a warm-up...")).toBeHidden();
-    await expect(page.getByText("Add a cool-down...")).toBeHidden();
+    await expect(page.getByText("Add a warm-up…")).toBeHidden();
+    await expect(page.getByText("Add a cool-down…")).toBeHidden();
   });
 });
 

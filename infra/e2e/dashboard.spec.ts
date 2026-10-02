@@ -15,7 +15,7 @@ test.describe("Dashboard - empty", () => {
   test("shows zeroed completed sessions", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("heading", { name: "Completed sessions" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Completed workouts" })).toBeVisible();
     await expect(
       page.getByRole("listitem", { name: "All time" }).getByText("0", { exact: true }),
     ).toBeVisible();
@@ -74,15 +74,15 @@ test.describe("Dashboard - athlete", () => {
   test("shows the offline bar while the connection is lost", async ({ page, context }) => {
     await page.goto("/");
 
-    await expect(page.getByText("No internet connection detected")).toBeHidden();
+    await expect(page.getByText("You're offline")).toBeHidden();
 
     await context.setOffline(true);
 
-    await expect(page.getByText("No internet connection detected")).toBeVisible();
+    await expect(page.getByText("You're offline")).toBeVisible();
 
     await context.setOffline(false);
 
-    await expect(page.getByText("No internet connection detected")).toBeHidden();
+    await expect(page.getByText("You're offline")).toBeHidden();
   });
 });
 

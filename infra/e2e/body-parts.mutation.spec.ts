@@ -17,7 +17,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.reload();
 
-    await expect(page.getByText("Define a body part first")).toBeVisible();
+    await expect(page.getByText("Add a body part first")).toBeVisible();
   });
 
   test("blocks defining a body part with an empty name", async ({ page }) => {
@@ -35,7 +35,7 @@ test.describe("Body parts - empty-mutation", () => {
     await page.getByLabel("Body part name").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
-    await expect(page.getByText("Define a body part first")).toBeHidden();
+    await expect(page.getByText("Add a body part first")).toBeHidden();
     await expect(page.getByRole("button", { name: "Measure Neck" })).toBeVisible();
   });
 
@@ -56,7 +56,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("rejects a body part import with an unknown body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Import body part measurements" }).click();
+    await page.getByRole("button", { name: "Import body parts" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-parts.csv",
       mimeType: "text/csv",
@@ -70,7 +70,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("imports body part measurements", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Import body part measurements" }).click();
+    await page.getByRole("button", { name: "Import body parts" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-parts.csv",
       mimeType: "text/csv",
@@ -78,7 +78,7 @@ test.describe("Body parts - empty-mutation", () => {
     });
     await page.getByRole("button", { name: "Import", exact: true }).click();
 
-    await expect(page.getByRole("dialog", { name: "Import body part measurements" })).toBeHidden();
+    await expect(page.getByRole("dialog", { name: "Import body parts" })).toBeHidden();
     await expect(
       page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first(),
     ).toBeVisible();
@@ -134,7 +134,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.reload();
 
-    await expect(page.getByText("Define a body part first")).toBeVisible();
+    await expect(page.getByText("Add a body part first")).toBeVisible();
     await expect(page.getByRole("button", { name: "Measure Neck girth" })).toBeHidden();
   });
 });
@@ -193,7 +193,7 @@ test.describe("Body parts - athlete-mutation", () => {
       .getByRole("button", { name: `Measure ${fixtures.athleteMutation.bodyParts.calfRight.name}` })
       .click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("38.5");
-    await page.getByRole("button", { name: "Save", exact: true }).click();
+    await page.getByRole("button", { name: "Log", exact: true }).click();
 
     await expect(
       page
@@ -212,7 +212,7 @@ test.describe("Body parts - athlete-mutation", () => {
       })
       .click();
 
-    await page.getByRole("button", { name: /^Correct the measurement/ }).click();
+    await page.getByRole("button", { name: /^Correct measurement/ }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("0");
 
     await expect(
@@ -238,7 +238,7 @@ test.describe("Body parts - athlete-mutation", () => {
       })
       .click();
 
-    await page.getByRole("button", { name: /^Correct the measurement/ }).click();
+    await page.getByRole("button", { name: /^Correct measurement/ }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -268,7 +268,7 @@ test.describe("Body parts - athlete-mutation", () => {
       })
       .click();
 
-    await page.getByRole("button", { name: "Remove the measurement" }).click();
+    await page.getByRole("button", { name: "Remove measurement" }).click();
 
     await expect(
       page

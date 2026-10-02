@@ -39,7 +39,7 @@ test.describe("Profile - disposable", () => {
     await page.goto("/profile");
 
     await page.getByRole("button", { name: "Change avatar" }).click();
-    await page.getByLabel("Select file").setInputFiles("scripts/seed/assets/exercise.webp");
+    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("region", { name: "Avatar" }).getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByRole("button", { name: "Delete avatar" })).toBeVisible();
@@ -57,7 +57,7 @@ test.describe("Profile - disposable", () => {
     await page.goto("/profile");
 
     await page.getByRole("button", { name: "Continue" }).click();
-    await page.getByLabel("Type 'delete' in the field below").fill("delete");
+    await page.getByLabel("Type “delete” to confirm").fill("delete");
     await page
       .getByRole("dialog", { name: "Delete account" })
       .getByRole("button", { name: "Delete account" })

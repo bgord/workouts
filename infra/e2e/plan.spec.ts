@@ -23,10 +23,7 @@ test.describe("Plan - builder", () => {
 
     await page.getByRole("button", { name: "Copy plan" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy plan" })).toHaveAttribute(
-      "title",
-      "Copied to the clipboard",
-    );
+    await expect(page.getByRole("button", { name: "Copy plan" })).toHaveAttribute("title", "Copied");
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
@@ -227,7 +224,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
-    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
     await page
       .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })

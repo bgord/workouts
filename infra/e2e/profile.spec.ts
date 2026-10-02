@@ -11,7 +11,7 @@ test.describe("Profile - athlete", () => {
     await expect(page.getByRole("heading", { level: 1, name: "Profile" })).toBeVisible();
     await expect(page.getByText(fixtures.athlete.email, { exact: true }).first()).toBeVisible();
     await expect(page.getByRole("heading", { name: "Avatar" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Change language" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Language" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Weekly summary" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Export workouts" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Delete account" })).toBeVisible();
@@ -27,7 +27,7 @@ test.describe("Profile - athlete", () => {
   test("changes the language", async ({ page }) => {
     await page.goto("/profile");
 
-    await page.getByRole("combobox", { name: "Change language" }).selectOption("pl");
+    await page.getByRole("combobox", { name: "Language" }).selectOption("pl");
 
     await expect(
       page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
@@ -60,13 +60,13 @@ test.describe("Profile - athlete", () => {
       page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
     ).toBeDisabled();
 
-    await page.getByLabel("Type 'delete' in the field below").fill("delet");
+    await page.getByLabel("Type “delete” to confirm").fill("delet");
 
     await expect(
       page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
     ).toBeDisabled();
 
-    await page.getByLabel("Type 'delete' in the field below").fill("delete");
+    await page.getByLabel("Type “delete” to confirm").fill("delete");
 
     await expect(
       page.getByRole("dialog", { name: "Delete account" }).getByRole("button", { name: "Delete account" }),
@@ -78,10 +78,10 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await page.getByRole("button", { name: "Change avatar" }).click();
-    await page.getByLabel("Select file").setInputFiles("scripts/seed/assets/exercise.webp");
+    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("region", { name: "Avatar" }).getByRole("button", { name: "Save" }).click();
 
-    await expect(page.getByText("Could not upload the avatar, please try again")).toBeVisible();
+    await expect(page.getByText("Could not upload the avatar")).toBeVisible();
 
     await page.reload();
 
@@ -95,7 +95,7 @@ test.describe("Profile - athlete", () => {
     await page.getByRole("combobox", { name: "Weekly summary" }).selectOption("off");
     await page.getByRole("button", { name: "Save" }).click();
 
-    await expect(page.getByText("Could not save the preference, please try again")).toBeVisible();
+    await expect(page.getByText("Could not save the preference")).toBeVisible();
 
     await page.reload();
 
@@ -108,7 +108,7 @@ test.describe("Profile - athlete", () => {
 
     await page.getByRole("button", { name: "Send reset link" }).click();
 
-    await expect(page.getByText("Error while sending the link")).toBeVisible();
+    await expect(page.getByText("Could not send the reset link")).toBeVisible();
     await expect(page.getByText("Check your inbox")).toBeHidden();
   });
 
@@ -117,13 +117,13 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await page.getByRole("button", { name: "Continue" }).click();
-    await page.getByLabel("Type 'delete' in the field below").fill("delete");
+    await page.getByLabel("Type “delete” to confirm").fill("delete");
     await page
       .getByRole("dialog", { name: "Delete account" })
       .getByRole("button", { name: "Delete account" })
       .click();
 
-    await expect(page.getByText("Error while deleting account")).toBeVisible();
+    await expect(page.getByText("Could not delete the account")).toBeVisible();
     await expect(page).toHaveURL("/profile");
   });
 });

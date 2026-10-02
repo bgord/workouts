@@ -7,7 +7,7 @@ test.describe("Body weight - empty", () => {
   test("shows the body weight empty state", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await expect(page.getByText("No measurements logged yet")).toBeVisible();
+    await expect(page.getByText("No measurements yet")).toBeVisible();
     await expect(page.getByText("Log your body weight to track progress here")).toBeVisible();
     await expect(page.getByRole("button", { name: "Log" })).toBeDisabled();
     await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeHidden();
@@ -51,12 +51,12 @@ test.describe("Body weight - athlete", () => {
 
     await expect(page.getByRole("heading", { name: "Progress" })).toBeVisible();
     await expect(page.getByRole("img", { name: "Progress" })).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Granularity" })).toHaveValue("weekly");
+    await expect(page.getByRole("combobox", { name: "Group by" })).toHaveValue("weekly");
 
-    await page.getByRole("combobox", { name: "Granularity" }).selectOption("daily");
+    await page.getByRole("combobox", { name: "Group by" }).selectOption("daily");
 
     await expect(page).toHaveURL("/measurements/body-weight?chart=daily");
-    await expect(page.getByRole("combobox", { name: "Granularity" })).toHaveValue("daily");
+    await expect(page.getByRole("combobox", { name: "Group by" })).toHaveValue("daily");
   });
 
   test("lists the measurement history and filters it by month", async ({ page }) => {
@@ -66,7 +66,7 @@ test.describe("Body weight - athlete", () => {
     await expect(
       page.getByRole("combobox", { name: "Month" }).getByRole("option", { name: "All months" }),
     ).toHaveCount(1);
-    await expect(page.getByRole("button", { name: "Remove the measurement" }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: "Remove measurement" }).first()).toBeVisible();
 
     await page.getByRole("combobox", { name: "Month" }).selectOption({ label: "All months" });
 
@@ -86,7 +86,7 @@ test.describe("Body weight - athlete", () => {
   test("downloads the body weight import template", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Import measurements" }).click();
+    await page.getByRole("button", { name: "Import body weight" }).click();
 
     const download = page.waitForEvent("download");
     await page.getByRole("link", { name: "CSV template" }).click();
@@ -116,7 +116,7 @@ test.describe("Body weight - athlete", () => {
 
     await page.getByRole("listitem").getByRole("button", { name: / kg$/ }).first().click();
     await page
-      .getByRole("form", { name: "Correct the measurement" })
+      .getByRole("form", { name: "Correct measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("85");
     await page.getByRole("button", { name: "Save" }).click();
@@ -134,11 +134,8 @@ test.describe("Body weight - athlete", () => {
     );
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Use as the reference point" }).first().click();
-    await page
-      .getByRole("form", { name: "Use as the reference point" })
-      .getByRole("button", { name: "Cut" })
-      .click();
+    await page.getByRole("button", { name: "Set as reference" }).first().click();
+    await page.getByRole("form", { name: "Set as reference" }).getByRole("button", { name: "Cut" }).click();
     await page.getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByText("Could not set the reference point")).toBeVisible();

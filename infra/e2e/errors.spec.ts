@@ -61,7 +61,7 @@ test.describe("Errors - athlete", () => {
 
     await expect(page.getByRole("heading", { level: 1, name: "Exercise not found" })).toBeVisible();
 
-    await page.getByRole("link", { name: "Browse the catalog" }).click();
+    await page.getByRole("link", { name: "Go to catalog" }).click();
 
     await expect(page).toHaveURL("/catalog");
   });
@@ -73,7 +73,7 @@ test.describe("Errors - athlete", () => {
 
     await page.getByRole("navigation").getByRole("link", { name: "Plans" }).click();
 
-    await expect(page.getByText("No plans created yet")).toBeVisible();
+    await expect(page.getByText("No plans yet")).toBeVisible();
   });
 
   test("shows the plan not found when the plan fails to load", async ({ page }) => {
@@ -97,7 +97,7 @@ test.describe("Errors - athlete", () => {
 
     await page.getByRole("link", { name: "Body weight" }).click();
 
-    await expect(page.getByText("No measurements logged yet")).toBeVisible();
+    await expect(page.getByText("No measurements yet")).toBeVisible();
   });
 
   test("shows no body parts when the body parts fail to load", async ({ page }) => {

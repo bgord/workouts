@@ -8,10 +8,10 @@ test.describe("Body parts - empty", () => {
   test("blocks importing body part measurements until a body part is defined", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await expect(
-      page.getByRole("button", { name: "Import body part measurements" }),
-    ).toHaveAccessibleDescription("Define a body part first");
-    await expect(page.getByRole("button", { name: "Import body part measurements" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Import body parts" })).toHaveAccessibleDescription(
+      "Add a body part first",
+    );
+    await expect(page.getByRole("button", { name: "Import body parts" })).toBeDisabled();
   });
 
   test("shows the error when defining a body part fails", async ({ page }) => {
@@ -26,7 +26,7 @@ test.describe("Body parts - empty", () => {
 
     await page.reload();
 
-    await expect(page.getByText("Define a body part first")).toBeVisible();
+    await expect(page.getByText("Add a body part first")).toBeVisible();
   });
 });
 
@@ -85,7 +85,7 @@ test.describe("Body parts - athlete", () => {
     await page.goto("/measurements/body-parts");
 
     const download = page.waitForEvent("download");
-    await page.getByRole("link", { name: "Export body part measurements" }).click();
+    await page.getByRole("link", { name: "Export" }).click();
 
     expect((await download).suggestedFilename()).toMatch(/\.csv$/);
   });
@@ -93,7 +93,7 @@ test.describe("Body parts - athlete", () => {
   test("downloads the body part import template", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Import body part measurements" }).click();
+    await page.getByRole("button", { name: "Import body parts" }).click();
 
     const download = page.waitForEvent("download");
     await page.getByRole("link", { name: "CSV template" }).click();
@@ -107,9 +107,9 @@ test.describe("Body parts - athlete", () => {
 
     await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("38.5");
-    await page.getByRole("button", { name: "Save", exact: true }).click();
+    await page.getByRole("button", { name: "Log", exact: true }).click();
 
-    await expect(page.getByText("Could not save the measurement")).toBeVisible();
+    await expect(page.getByText("Could not log the measurement")).toBeVisible();
 
     await page.reload();
 
@@ -131,7 +131,7 @@ test.describe("Body parts - athlete", () => {
       .click();
 
     await page
-      .getByRole("button", { name: /^Correct the measurement/ })
+      .getByRole("button", { name: /^Correct measurement/ })
       .first()
       .click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");

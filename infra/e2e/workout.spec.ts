@@ -8,8 +8,8 @@ test.describe("Workout - athlete", () => {
   test("shows the previous session of every exercise on the scheduled workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await expect(page.getByRole("note", { name: "Previous session" }).first()).toBeVisible();
-    await expect(page.getByRole("note", { name: "Previous session" })).toHaveCount(
+    await expect(page.getByRole("note", { name: "Last session" }).first()).toBeVisible();
+    await expect(page.getByRole("note", { name: "Last session" })).toHaveCount(
       await page.getByRole("button", { name: "Set target" }).count(),
     );
   });
@@ -20,7 +20,7 @@ test.describe("Workout - athlete", () => {
     await page.route("**/api/workouts/*/scheduled-for", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: /^Change the date/ }).click();
+    await page.getByRole("button", { name: /^Change date/ }).click();
     await scheduledFor.fill((await scheduledFor.getAttribute("min")) ?? "");
     await page.getByRole("button", { name: "Save" }).click();
 
@@ -28,7 +28,7 @@ test.describe("Workout - athlete", () => {
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: /^Change the date/ })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^Change date/ })).toBeVisible();
   });
 
   test("shows the error when discarding the workout fails", async ({ page }) => {
@@ -47,7 +47,7 @@ test.describe("Workout - athlete", () => {
 
     await page.reload();
 
-    await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+    await expect(page.getByText("Scheduled", { exact: true })).toBeVisible();
   });
 
   test("shows the error when setting a target fails", async ({ page }) => {
@@ -218,7 +218,7 @@ test.describe("Workout - active", () => {
     await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
-    await page.getByRole("spinbutton", { name: "Reps max", exact: true }).fill("15");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
     await page
       .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
@@ -382,7 +382,7 @@ test.describe("Workout - hoarder", () => {
     await page.goto(`/workouts/${fixtures.hoarder.draftWorkouts.today.id}`);
 
     await expect(page.getByRole("button", { name: "Start" })).toHaveAccessibleDescription(
-      "Finish the workout in progress first",
+      "Complete the workout in progress first",
     );
     await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
   });
