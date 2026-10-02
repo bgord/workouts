@@ -39,6 +39,14 @@ test.describe("Body weight - empty-mutation", () => {
       buffer: Buffer.from("id,weight,measuredOn\n,80250,2025-01-01\n,80750,2025-01-02\n"),
     });
     await page.getByRole("button", { name: "Import", exact: true }).click();
+
+    await expect(page.getByRole("dialog", { name: "Import measurements" })).toBeHidden();
+
+    await page.getByRole("combobox", { name: "Month" }).selectOption({ index: 0 });
+
+    await expect(page.getByRole("button", { name: "80.25 kg" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "80.75 kg" })).toBeVisible();
+
     await page.reload();
     await page.getByRole("combobox", { name: "Month" }).selectOption({ index: 0 });
 
@@ -83,6 +91,9 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("81.5");
     await page.getByRole("button", { name: "Log", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "81.5 kg" })).toBeVisible();
+
     await page.reload();
 
     await expect(page.getByRole("button", { name: "81.5 kg" })).toBeVisible();
@@ -114,6 +125,10 @@ test.describe("Body weight - athlete-mutation", () => {
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("82");
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByRole("button", { name: "82 kg" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "81.5 kg" })).toBeHidden();
+
     await page.reload();
 
     await expect(page.getByRole("button", { name: "82 kg" })).toBeVisible();
@@ -141,6 +156,9 @@ test.describe("Body weight - athlete-mutation", () => {
       .getByRole("button", { name: "Cut" })
       .click();
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText(/^Cut since /)).toBeVisible();
+
     await page.reload();
 
     await expect(page.getByText(/^Cut since /)).toBeVisible();

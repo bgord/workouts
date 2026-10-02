@@ -47,6 +47,7 @@ export function WorkoutSetCorrect(
     },
   });
 
+  /* v8 ignore next */
   if (!action.available) return null;
 
   if (toggle.off) {

@@ -45,9 +45,6 @@ export function WorkoutExerciseRow(props: {
   const isExpandable = !props.reordering && (hasLoggedSets || props.exercise.actions.setLog.available);
   const isInLogPanel = active?.id === props.exercise.id;
 
-  const { width } = bg.useWindowDimensions();
-  const mobile = width !== undefined && width <= 768;
-
   return (
     <ui.HairlineRow
       aria-labelledby={label}
@@ -95,12 +92,23 @@ export function WorkoutExerciseRow(props: {
           type="button"
           {...workoutExerciseDescription.props.controller}
         >
-          <ui.ExerciseImage
-            id={props.exercise.exerciseId}
-            imageEtag={props.exercise.exerciseImageEtag}
-            name={props.exercise.exerciseName}
-            size={mobile ? ui.ExerciseImageSize.xs : ui.ExerciseImageSize.sm}
-          />
+          <span data-md-disp="none" data-stack="x">
+            <ui.ExerciseImage
+              id={props.exercise.exerciseId}
+              imageEtag={props.exercise.exerciseImageEtag}
+              name={props.exercise.exerciseName}
+              size={ui.ExerciseImageSize.sm}
+            />
+          </span>
+
+          <span data-disp="none" data-md-disp="flex" data-stack="x">
+            <ui.ExerciseImage
+              id={props.exercise.exerciseId}
+              imageEtag={props.exercise.exerciseImageEtag}
+              name={props.exercise.exerciseName}
+              size={ui.ExerciseImageSize.xs}
+            />
+          </span>
         </button>
 
         <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>

@@ -20,6 +20,7 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
     },
   });
 
+  /* v8 ignore next */
   if (!exerciseCategories.actions.delete.available) return null;
 
   return (

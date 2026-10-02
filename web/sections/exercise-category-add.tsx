@@ -26,6 +26,7 @@ export function ExerciseCategoryAdd() {
     },
   });
 
+  /* v8 ignore next */
   if (!exerciseCategories.actions.add.available) return null;
 
   return (

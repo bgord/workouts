@@ -64,17 +64,21 @@ test.describe("Body parts - athlete", () => {
   });
 
   test("lists the history of a body part", async ({ page }) => {
-    const history = page.getByRole("list", { name: `Details: ${fixtures.athlete.bodyParts.waist.name}` });
+    const history = page.getByRole("list", {
+      name: `Details: ${fixtures.athlete.bodyParts.thighRight.name}`,
+    });
 
     await page.goto("/measurements/body-parts");
 
     await page
-      .getByRole("button", { name: `Details: ${fixtures.athlete.bodyParts.waist.name}`, exact: true })
+      .getByRole("button", { name: `Details: ${fixtures.athlete.bodyParts.thighRight.name}`, exact: true })
       .click();
 
     await expect(history.getByRole("listitem")).toHaveCount(12);
-    await expect(history.getByRole("listitem").first()).toContainText("81.4 cm");
-    await expect(history.getByRole("listitem").last()).toContainText("82.0 cm");
+    await expect(history.getByRole("listitem").first()).toContainText("59.2 cm");
+    await expect(history.getByRole("listitem").last()).toContainText("58.0 cm");
+    await expect(history.getByRole("img", { name: "Increase" })).toHaveCount(4);
+    await expect(history.getByRole("img", { name: "Decrease" })).toHaveCount(3);
   });
 
   test("downloads the body part export", async ({ page }) => {

@@ -60,9 +60,12 @@ test.describe("Mobile - pocket", () => {
     await page.getByRole("button", { name: "How did it go?" }).tap();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).tap();
+
+    await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
+
     await page.reload();
 
-    await expect(page.getByText("Shoulder felt tight on the last set.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
   });
 
   test("completes the workout", async ({ page }) => {
@@ -77,11 +80,10 @@ test.describe("Mobile - pocket", () => {
 
     await expect(page.getByText("Completed", { exact: true })).toBeVisible();
 
-    await expect(async () => {
-      await page.reload();
-      await bench.getByRole("button", { name: /^Details: / }).tap();
-      await expect(bench.getByRole("button", { name: "Correct set 1" })).toBeVisible({ timeout: 1000 });
-      await expect(bench.getByRole("button", { name: "Correct set 2" })).toBeVisible({ timeout: 1000 });
-    }).toPass();
+    await page.reload();
+    await bench.getByRole("button", { name: /^Details: / }).tap();
+
+    await expect(bench.getByRole("button", { name: "Correct set 1" })).toBeVisible();
+    await expect(bench.getByRole("button", { name: "Correct set 2" })).toBeVisible();
   });
 });

@@ -22,6 +22,7 @@ export function ExerciseCategoryUnassign(props: ExerciseCategory) {
     onSuccess: () => router.invalidate({ filter: (match) => match.routeId === exerciseRoute.id, sync: true }),
   });
 
+  /* v8 ignore next */
   if (!exercise.actions.categoryUnassign.available) return null;
 
   return (

@@ -14,11 +14,12 @@ const link = {
 const drawerItem = { "data-grow": "1", "data-py": "4" } as const;
 
 export function Navigation() {
-  const { width } = bg.useWindowDimensions();
-
-  if (!width) return <NavigationShell />; // Don't SSR navigation
-  if (width <= 768) return <NavigationMobileDrawer />;
-  return <NavigationDesktop />;
+  return (
+    <>
+      <NavigationDesktop />
+      <NavigationMobileDrawer />
+    </>
+  );
 }
 
 function NavigationDesktop() {
@@ -29,6 +30,7 @@ function NavigationDesktop() {
       data-bcb="alpha-subtle"
       data-bsb="solid"
       data-bwb="hairline"
+      data-md-disp="none"
       data-position="sticky"
       data-top="0"
       data-z="2"
@@ -81,8 +83,10 @@ function NavigationMobileDrawer() {
       data-bst="solid"
       data-bwt="hairline"
       data-cross="stretch"
+      data-disp="none"
       data-left="0"
       data-main="around"
+      data-md-disp="flex"
       data-position="fixed"
       data-right="0"
       data-safe-area="bottom"
@@ -128,20 +132,3 @@ const NavigationLink: LinkComponent<typeof NavigationAnchor> = (props) => (
     {...props}
   />
 );
-
-function NavigationShell() {
-  return (
-    <nav {...bg.Rhythm(70).times(1).style.height}>
-      <div
-        data-height="100%"
-        data-maxw="md"
-        data-mx="auto"
-        data-stack="x"
-        data-width="100%"
-        {...ui.Spacing.gutter}
-      >
-        <ui.Logo to="/" />
-      </div>
-    </nav>
-  );
-}

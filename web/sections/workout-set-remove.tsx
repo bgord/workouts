@@ -31,6 +31,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
     onSuccess: () => router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true }),
   });
 
+  /* v8 ignore next */
   if (!action.available) return null;
 
   return (

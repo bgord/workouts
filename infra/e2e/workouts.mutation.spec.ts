@@ -59,6 +59,33 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(page).toHaveURL("/workouts");
   });
 
+  test("summarizes the previous session with identical reps", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+    await page
+      .getByRole("dialog", { name: "New workout" })
+      .getByText(fixtures.athleteMutation.plan.sections.pull.name, { exact: true })
+      .click();
+    await page.getByRole("button", { name: "Tomorrow" }).click();
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
+
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.exercises.pullUp.name, exact: true })
+        .getByRole("note", { name: "Previous session" }),
+    ).toContainText("4×4 17.5 kg");
+
+    await page.getByRole("button", { name: "Discard" }).click();
+    await page
+      .getByRole("dialog", { name: "Discard workout" })
+      .getByRole("button", { name: "Discard" })
+      .click();
+
+    await expect(page).toHaveURL("/workouts");
+  });
+
   test("blocks starting a workout with no exercises", async ({ page }) => {
     const links = page.getByRole("list", { name: "Exercises" }).getByRole("link");
 
@@ -107,6 +134,9 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await scheduledFor.fill(date);
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByRole("button", { name: /^Change the date/ })).toBeVisible();
+
     await page.reload();
     await page.getByRole("button", { name: /^Change the date/ }).click();
 
@@ -194,6 +224,9 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(last).toHaveAttribute("aria-pressed", "false");
 
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByRole("button", { name: "Set target" })).toHaveCount(exercises - 1);
+
     await page.reload();
 
     await expect(page.getByRole("button", { name: "Set target" })).toHaveCount(exercises - 1);
@@ -207,6 +240,9 @@ test.describe("Workouts - athlete-mutation", () => {
     await row.getByRole("button", { name: /^Edit target/ }).click();
     await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
     await row.getByRole("button", { name: "Save" }).click();
+
+    await expect(row).toContainText("×5 ");
+
     await page.reload();
 
     await expect(row).toContainText("×5 ");
@@ -302,6 +338,9 @@ test.describe("Workouts - athlete-mutation", () => {
     await form.getByRole("spinbutton", { name: "Reps" }).fill("7");
     await form.getByRole("spinbutton", { name: "Load (kg)" }).fill("30");
     await form.getByRole("button", { name: "Log set", exact: true }).click();
+
+    await expect(row).toContainText("7×30 kg");
+
     await page.reload();
 
     await expect(row).toContainText("7×30 kg");
@@ -346,6 +385,10 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await row.getByRole("button", { name: "Remove set 4" }).click();
     await page.getByRole("button", { name: "Remove", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Remove set 4" })).toBeHidden();
+    await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
+
     await page.reload();
 
     await expect(row.getByRole("button", { name: "Remove set 4" })).toBeHidden();
@@ -401,11 +444,15 @@ test.describe("Workouts - active-mutation", () => {
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set · RIR 1" })
       .click();
+    await expect(page.locator("[aria-busy=true]")).toHaveCount(0);
     await page.keyboard.press("Escape");
-    await page.reload();
     await page
       .getByRole("button", { name: `Details: ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true })
       .click();
+
+    await expect(row.getByText("RIR 1")).toBeVisible();
+
+    await page.reload();
 
     await expect(row.getByText("RIR 1")).toBeVisible();
   });
@@ -449,6 +496,9 @@ test.describe("Workouts - active-mutation", () => {
     await form.getByRole("spinbutton", { name: "Reps" }).fill("9");
     await form.getByRole("spinbutton", { name: "Load (kg)" }).fill("22.5");
     await form.getByRole("button", { name: "Log set", exact: true }).click();
+
+    await expect(row).toContainText("9×22.5 kg");
+
     await page.reload();
 
     await expect(row).toContainText("9×22.5 kg");
@@ -464,6 +514,10 @@ test.describe("Workouts - active-mutation", () => {
     await row.getByRole("button", { name: /^Details: / }).click();
 
     await row.getByRole("button", { name: "Remove set 4" }).click();
+
+    await expect(row.getByRole("button", { name: "Remove set 4" })).toBeHidden();
+    await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
+
     await page.reload();
 
     await expect(row.getByRole("button", { name: "Remove set 4" })).toBeHidden();
@@ -485,9 +539,12 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByRole("button", { name: "How did it go?" }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
+
     await page.reload();
 
-    await expect(page.getByText("Shoulder felt tight on the last set.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
   });
 
   test("rejects an exercise with invalid sets and reps range", async ({ page }) => {
@@ -535,6 +592,11 @@ test.describe("Workouts - active-mutation", () => {
       .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
       .click();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
+    ).toBeVisible();
+
     await page.reload();
 
     await expect(
@@ -549,6 +611,9 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.getByRole("button", { name: "Reorder exercises" }).click();
     await page.getByRole("button", { name: `Move ${fixtures.exercises.facePull.name} up` }).click();
+
+    await expect(exercises.nth(5)).toHaveText(fixtures.exercises.facePull.name);
+
     await page.reload();
 
     await expect(exercises.nth(5)).toHaveText(fixtures.exercises.facePull.name);
@@ -560,6 +625,11 @@ test.describe("Workouts - active-mutation", () => {
     await page
       .getByRole("button", { name: `Remove ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
       .click();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.pecFlyMachine.name, exact: true }),
+    ).toBeHidden();
+
     await page.reload();
 
     await expect(
@@ -577,6 +647,14 @@ test.describe("Workouts - active-mutation", () => {
       })
       .click();
     await page.getByRole("button", { name: "Remove", exact: true }).click();
+
+    await expect(
+      page.getByRole("link", {
+        name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+        exact: true,
+      }),
+    ).toBeHidden();
+
     await page.reload();
 
     await expect(
@@ -601,5 +679,15 @@ test.describe("Workouts - active-mutation", () => {
     await expect(page.getByRole("heading", { name: "Last completed" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "In progress" })).toBeHidden();
     await expect(page.getByText("Nothing scheduled")).toBeHidden();
+  });
+
+  test("shows the stats without the progress chart after the first session", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    await expect(
+      page.getByRole("listitem", { name: "Sessions" }).getByText("1", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("img", { name: "Progress" })).toBeHidden();
+    await expect(page.getByRole("list", { name: "History" }).getByRole("link")).toHaveCount(1);
   });
 });

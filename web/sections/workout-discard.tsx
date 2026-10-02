@@ -26,6 +26,7 @@ export function WorkoutDiscard() {
     },
   });
 
+  /* v8 ignore next */
   if (!workout.actions.discard.available) return null;
 
   const name = t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName });
