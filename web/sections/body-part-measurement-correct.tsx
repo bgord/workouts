@@ -34,6 +34,7 @@ export function BodyPartMeasurementCorrect(
         body: JSON.stringify({
           bodyPartId: props.measurement.bodyPartId,
           measuredOn: measuredOn.value,
+          /* v8 ignore next */
           value: LengthFormat.millimeters(length.value ?? 0),
         }),
       }),
@@ -42,8 +43,6 @@ export function BodyPartMeasurementCorrect(
       await router.invalidate({ filter: (match) => match.routeId === bodyPartsRoute.id, sync: true });
     },
   });
-
-  if (toggle.off) return null;
 
   return (
     <form
