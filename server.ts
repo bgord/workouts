@@ -469,7 +469,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldTimeout.handle(),
     ...new bg.HealthcheckHonoHandler(
       { Env: Env.type, prerequisites: Tools.Prerequisites.healthcheck, redactor },
-      { ...Adapters.System, ...Tools, LoggerStatsProvider: Adapters.System.Logger },
+      {
+        ...Adapters.System,
+        ...Tools,
+        LoggerStatsProvider: Adapters.System.Logger,
+        RuntimeStatsProvider: new bg.RuntimeStatsProviderSystemAdapter(Adapters.System),
+      },
     ).handle(),
   );
   // =============================
