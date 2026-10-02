@@ -290,19 +290,16 @@ test.describe("Workout - active", () => {
   });
 
   test("drops the optimistic set when logging fails", async ({ page }) => {
-    const row = page.getByRole("listitem", {
-      name: fixtures.exercises.overheadPressSeatedDumbbells.name,
-      exact: true,
-    });
+    const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
 
     await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await row.getByRole("button", { name: /^Details: / }).click();
-    await expect(row.getByRole("button", { name: "Remove set 1" })).toBeVisible();
-    const before = await row.getByRole("button", { name: /^Remove set / }).count();
+    await expect(row.getByRole("button", { name: "Log set", exact: true })).toBeVisible();
+    await expect(row.getByRole("button", { name: /^Remove set / })).toHaveCount(0);
 
     await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
       .click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
@@ -311,7 +308,7 @@ test.describe("Workout - active", () => {
     await expect(page.getByText("Could not log the set")).toBeVisible();
     await page.keyboard.press("Escape");
 
-    await expect(row.getByRole("button", { name: /^Remove set / })).toHaveCount(before);
+    await expect(row.getByRole("button", { name: /^Remove set / })).toHaveCount(0);
   });
 
   test("shows the error when correcting a set fails", async ({ page }) => {

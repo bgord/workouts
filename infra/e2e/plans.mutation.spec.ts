@@ -235,6 +235,11 @@ test.describe("Plans - drafter", () => {
     await page.reload();
 
     await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeVisible();
+
+    await page.getByRole("button", { name: "Details: Arms", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Add exercise" })).toBeVisible();
+    await expect(page.getByRole("list", { name: "Exercises" })).toBeHidden();
   });
 
   test("removes a section", async ({ page }) => {

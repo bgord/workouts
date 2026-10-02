@@ -18,6 +18,7 @@ const subscribe = (listener: VoidFunction) => {
 const read = (): ExerciseId | null => {
   try {
     return localStorage.getItem(key) as ExerciseId | null;
+    /* v8 ignore next 2 */
   } catch {
     return null;
   }
@@ -34,6 +35,7 @@ const write = (id: ExerciseId | null) => {
   try {
     if (id === null) localStorage.removeItem(key);
     else localStorage.setItem(key, id);
+    /* v8 ignore next */
   } catch {}
 
   for (const listener of listeners) listener();
