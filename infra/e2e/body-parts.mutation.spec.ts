@@ -77,14 +77,13 @@ test.describe("Body parts - empty-mutation", () => {
       buffer: Buffer.from("id,bodyPartName,value,measuredOn\n,Neck,385,2025-01-01\n,Neck,391,2025-01-08\n"),
     });
     await page.getByRole("button", { name: "Import", exact: true }).click();
-    await expect(page.getByRole("dialog", { name: "Import body part measurements" })).toBeHidden();
 
-    await expect(async () => {
-      await page.reload();
-      await expect(
-        page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first(),
-      ).toBeVisible({ timeout: 1000 });
-    }).toPass();
+    await expect(page.getByRole("dialog", { name: "Import body part measurements" })).toBeHidden();
+    await expect(page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first()).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first()).toBeVisible();
   });
 
   test("rejects a too long new body part name", async ({ page }) => {
@@ -111,6 +110,9 @@ test.describe("Body parts - empty-mutation", () => {
     await page.getByRole("button", { name: "Rename Neck" }).click();
     await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("Neck girth");
     await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Rename Neck girth" })).toBeVisible();
+
     await page.reload();
 
     await expect(page.getByRole("button", { name: "Measure Neck girth" })).toBeVisible();
@@ -123,6 +125,9 @@ test.describe("Body parts - empty-mutation", () => {
     await page.getByRole("button", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Delete Neck girth" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Rename Neck girth" })).toBeHidden();
+
     await page.reload();
 
     await expect(page.getByText("Define a body part first")).toBeVisible();
@@ -232,6 +237,14 @@ test.describe("Body parts - athlete-mutation", () => {
     await page.getByRole("button", { name: /^Correct the measurement/ }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
+        .getByText("39.5 cm")
+        .first(),
+    ).toBeVisible();
+
     await page.reload();
 
     await expect(
@@ -252,6 +265,14 @@ test.describe("Body parts - athlete-mutation", () => {
       .click();
 
     await page.getByRole("button", { name: "Remove the measurement" }).click();
+
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
+        .getByText("Not measured yet")
+        .first(),
+    ).toBeVisible();
+
     await page.reload();
 
     await expect(

@@ -28,6 +28,9 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByRole("button", { name: `Rename ${fixtures.builderMutation.plan.name}` }).click();
     await page.getByLabel("Plan name").fill("PPL v2");
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByRole("heading", { level: 1, name: "PPL v2" })).toBeVisible();
+
     await page.reload();
 
     await expect(page.getByRole("heading", { level: 1, name: "PPL v2" })).toBeVisible();
@@ -102,6 +105,7 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill("Upper");
     await page.getByRole("button", { name: "Save" }).click();
+    await expect(page.getByRole("heading", { level: 2, name: "Upper", exact: true })).toBeVisible();
     await page.reload();
 
     await expect(page.getByRole("button", { name: "Finalize" })).toBeDisabled();
@@ -135,9 +139,12 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: fixtures.drafter.plan.description }).click();
     await page.getByLabel("Description").fill("Upper body twice, legs once.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Upper body twice, legs once." })).toBeVisible();
+
     await page.reload();
 
-    await expect(page.getByText("Upper body twice, legs once.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Upper body twice, legs once." })).toBeVisible();
     await expect(page.getByText(fixtures.drafter.plan.description)).toBeHidden();
   });
 
@@ -161,6 +168,10 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "Rename Push", exact: true }).click();
     await page.getByLabel("Section name").fill("Push A");
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 2, name: "Push", exact: true })).toBeHidden();
+
     await page.reload();
 
     await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
@@ -203,6 +214,9 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill("Arms");
     await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeVisible();
+
     await page.reload();
 
     await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeVisible();
@@ -213,6 +227,10 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "Remove Arms", exact: true }).click();
     await page.getByRole("button", { name: "Remove", exact: true }).click();
+
+    await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeHidden();
+    await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
+
     await page.reload();
 
     await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeHidden();
@@ -226,9 +244,12 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "Warm-up" }).click();
     await page.getByLabel("Warm-up").fill("5 minutes on the rower");
     await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "5 minutes on the rower" })).toBeVisible();
+
     await page.reload();
 
-    await expect(page.getByText("5 minutes on the rower")).toBeVisible();
+    await expect(page.getByRole("button", { name: "5 minutes on the rower" })).toBeVisible();
     await expect(page.getByText("10x Arm Circles forward")).toBeHidden();
   });
 
@@ -239,9 +260,12 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "Cool-down" }).click();
     await page.getByLabel("Cool-down").fill("Chest and lat stretch, 2 minutes each");
     await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Chest and lat stretch, 2 minutes each" })).toBeVisible();
+
     await page.reload();
 
-    await expect(page.getByText("Chest and lat stretch, 2 minutes each")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Chest and lat stretch, 2 minutes each" })).toBeVisible();
   });
 
   test("rejects an exercise instruction with invalid sets and reps range", async ({ page }) => {
@@ -290,6 +314,12 @@ test.describe("Plans - drafter", () => {
       .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
       .click();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
+    ).toBeVisible();
+    await expect(page.getByText("7 exercises")).toBeVisible();
+
     await page.reload();
 
     await expect(
@@ -331,6 +361,10 @@ test.describe("Plans - drafter", () => {
       .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
       .click();
+
+    await expect(row).toContainText("5×6-8");
+    await expect(row).toContainText("Double progression");
+
     await page.reload();
 
     await expect(row).toContainText("5×6-8");
@@ -352,6 +386,11 @@ test.describe("Plans - drafter", () => {
       .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
       .click();
+
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true }),
+    ).toBeVisible();
+
     await page.reload();
 
     await expect(
@@ -371,6 +410,11 @@ test.describe("Plans - drafter", () => {
     ).toBeDisabled();
 
     await page.getByRole("button", { name: `Move ${fixtures.exercises.pecDeck.name} up` }).click();
+
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.pecDeck.name} down` }),
+    ).toBeEnabled();
+
     await page.reload();
 
     await expect(
@@ -382,27 +426,26 @@ test.describe("Plans - drafter", () => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
     await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
 
-    const removed = page.waitForResponse((response) => response.request().method() === "DELETE");
     await page
       .getByRole("button", { name: `Remove ${fixtures.exercises.pecDeck.name}`, exact: true })
       .click();
-    await removed;
 
-    await expect(async () => {
-      await page.reload();
-      await expect(page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true })).toBeHidden(
-        {
-          timeout: 1000,
-        },
-      );
-      await expect(page.getByText("6 exercises").first()).toBeVisible({ timeout: 1000 });
-    }).toPass();
+    await expect(page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true })).toBeHidden();
+    await expect(page.getByText("6 exercises").first()).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true })).toBeHidden();
+    await expect(page.getByText("6 exercises").first()).toBeVisible();
   });
 
   test("finalizes the plan with the edits", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
     await page.getByRole("button", { name: "Finalize" }).click();
+
+    await expect(page.getByText("Finalized", { exact: true })).toBeVisible();
+
     await page.reload();
 
     await expect(page.getByText("Finalized", { exact: true })).toBeVisible();
