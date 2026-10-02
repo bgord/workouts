@@ -486,6 +486,37 @@ test.describe("Plans - drafter", () => {
     await expect(page.getByText("6 exercises").first()).toBeVisible();
   });
 
+  test("changes the exercise and the sets of the instruction in one save", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true });
+
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
+
+    await page
+      .getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true })
+      .getByRole("button", { name: "Edit exercise" })
+      .click();
+    await page
+      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("4");
+    await page
+      .getByRole("dialog", { name: "Edit exercise" })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
+
+    await expect(row).toContainText("4×8-10");
+
+    await page.reload();
+
+    await expect(row).toContainText("4×8-10");
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }),
+    ).toBeHidden();
+  });
+
   test("finalizes the plan with the edits", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 

@@ -65,6 +65,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       Avatar.getEtag(context.request),
     ]);
 
+    /* v8 ignore next */
     if (!(session && i18n)) throw redirect({ href: "/public/login.html", reloadDocument: true });
 
     return { session, i18n, avatarEtag };
