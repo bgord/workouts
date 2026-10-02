@@ -2,6 +2,7 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import { userId } from "./auth";
 import {
@@ -21,7 +22,7 @@ import {
   planSectionName,
   planSectionWarmup,
   progression,
-  reps,
+  repsRange,
   sets,
 } from "./plans";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
@@ -81,7 +82,11 @@ export const anotherWorkoutExerciseId = v.parse(
 export const workoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 0);
 export const anotherWorkoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 1);
 
-export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps, progression });
+export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: repsRange,
+  progression,
+});
 
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
 
@@ -190,7 +195,7 @@ export const workout: Workouts.VO.Workout = {
 };
 
 export const exercisePerformanceWeakestSet = v.parse(Workouts.VO.ExerciseTarget, {
-  sets: v.parse(Workouts.VO.Sets, 2),
+  sets: v.parse(Plans.VO.Sets, 2),
   reps: v.parse(Workouts.VO.Reps, 5),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
 });
@@ -198,12 +203,12 @@ export const exercisePerformanceWeakestSet = v.parse(Workouts.VO.ExerciseTarget,
 export const exerciseTargetProgression: Workouts.VO.ExerciseTargetProgression = {
   last: exercisePerformanceWeakestSet,
   regress: v.parse(Workouts.VO.ExerciseTarget, {
-    sets: v.parse(Workouts.VO.Sets, 2),
+    sets: v.parse(Plans.VO.Sets, 2),
     reps: v.parse(Workouts.VO.Reps, 4),
     load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
   }),
   progress: v.parse(Workouts.VO.ExerciseTarget, {
-    sets: v.parse(Workouts.VO.Sets, 2),
+    sets: v.parse(Plans.VO.Sets, 2),
     reps: v.parse(Workouts.VO.Reps, 6),
     load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
   }),

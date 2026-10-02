@@ -21,7 +21,7 @@ export function BodyWeightProgressChart() {
 
   const layout = LineChartMath.layout(
     chart.map((point) => WeightFormat.kilograms(point.weight, BodyWeightDecimals)),
-    (weight) => t("measurements.body_weight.value", { weight }),
+    (weight) => t("measurements.body_weight.value", { weight: weight.toLocaleString(language) }),
   );
 
   const reference = layout.points[chart.findIndex((point) => point.reference)];
@@ -102,7 +102,7 @@ export function BodyWeightProgressChart() {
         >
           {layout.points.map((coordinates, index) => {
             const point = chart[index]!;
-            const weight = WeightFormat.kilograms(point.weight, BodyWeightDecimals);
+            const weight = WeightFormat.kilograms(point.weight, BodyWeightDecimals).toLocaleString(language);
 
             return (
               <circle cx={coordinates.x} cy={coordinates.y} key={index} r="4">

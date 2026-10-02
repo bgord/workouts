@@ -9,7 +9,6 @@ export * from "./reps";
 export * from "./rir";
 export * from "./rir-limit";
 export * from "./set-number";
-export * from "./sets";
 export * from "./workout";
 export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise";

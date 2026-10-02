@@ -21,7 +21,7 @@ export const PlanSectionExerciseInstructionUpdate =
     const exerciseInstruction = {
       id: exerciseInstructionId,
       sets: v.parse(Plans.VO.Sets, body["sets"]),
-      reps: v.parse(Plans.VO.Reps, body["reps"]),
+      reps: v.parse(Plans.VO.RepsRange, body["reps"]),
       progression: v.parse(Plans.VO.ProgressionMethod, body["progression"]),
     };
 

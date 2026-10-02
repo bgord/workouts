@@ -398,7 +398,7 @@ modules/
 │       ├── plan.ts
 │       ├── progression-method-options.ts
 │       ├── progression-method.ts
-│       ├── reps.ts
+│       ├── reps-range.ts
 │       └── sets.ts
 ├── preferences
 │   ├── command-handlers
@@ -550,7 +550,6 @@ modules/
         ├── rir-limit.ts
         ├── rir.ts
         ├── set-number.ts
-        ├── sets.ts
         ├── workout-draft-limit-for-owner.ts
         ├── workout-exercise-id.ts
         ├── workout-exercise-limit.ts

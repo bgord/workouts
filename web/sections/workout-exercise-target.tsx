@@ -6,6 +6,7 @@ import { WeightFormat } from "../services/weight-format";
 
 export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const { toggle } = bg.extractUseToggle(props);
   const { target, actions } = props.exercise;
 
@@ -36,7 +37,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
               target: t("exercise.sets_reps_load", {
                 sets: target.sets,
                 reps: target.reps,
-                load: WeightFormat.kilograms(target.load),
+                load: WeightFormat.kilograms(target.load).toLocaleString(language),
               }),
             })
           : undefined

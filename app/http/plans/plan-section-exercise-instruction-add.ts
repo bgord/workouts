@@ -22,7 +22,7 @@ export const PlanSectionExerciseInstructionAdd =
       id: v.parse(Plans.VO.ExerciseInstructionId, deps.IdProvider.generate()),
       exerciseId: v.parse(Exercises.VO.ExerciseId, body["exerciseId"]),
       sets: v.parse(Plans.VO.Sets, body["sets"]),
-      reps: v.parse(Plans.VO.Reps, body["reps"]),
+      reps: v.parse(Plans.VO.RepsRange, body["reps"]),
       progression: v.parse(Plans.VO.ProgressionMethod, body["progression"]),
     };
 

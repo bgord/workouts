@@ -89,7 +89,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "reps.type");
+    await testcases.assertErrorResponse(response, 400, "reps.range.type");
   });
 
   test("validation - sets - invalid", async () => {
@@ -121,7 +121,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "reps.range");
+    await testcases.assertErrorResponse(response, 400, "reps.range.invalid");
   });
 
   test("validation - progression - invalid", async () => {
@@ -132,7 +132,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ sets: mocks.sets, reps: mocks.reps, progression: "linear" }),
+        body: JSON.stringify({ sets: mocks.sets, reps: mocks.repsRange, progression: "linear" }),
       },
       mocks.ip,
     );

@@ -13,6 +13,7 @@ export function ExerciseHistoryRow(props: {
   last: boolean;
 }) {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
   return (
@@ -55,7 +56,7 @@ export function ExerciseHistoryRow(props: {
 
             <span data-color="neutral-300" data-fw="medium" data-transform="font-variant-numeric">
               {t("statistics.exercise.one_rep_max_estimate.value", {
-                load: WeightFormat.kilograms(props.performance.bestEstimate),
+                load: WeightFormat.kilograms(props.performance.bestEstimate).toLocaleString(language),
               })}
             </span>
 
@@ -71,7 +72,7 @@ export function ExerciseHistoryRow(props: {
 
             <span data-color="neutral-300" data-fw="medium" data-transform="font-variant-numeric">
               {t("statistics.exercise.history.volume_load.value", {
-                load: WeightFormat.kilograms(props.performance.volume),
+                load: WeightFormat.kilograms(props.performance.volume).toLocaleString(language),
               })}
             </span>
 
@@ -105,7 +106,7 @@ export function ExerciseHistoryRow(props: {
               <small data-stack="x" {...ui.Gap.inline}>
                 <EqualApproximately data-color="neutral-600" data-size="xs" />
                 {t("statistics.exercise.one_rep_max_estimate.value", {
-                  load: WeightFormat.kilograms(set.estimate),
+                  load: WeightFormat.kilograms(set.estimate).toLocaleString(language),
                 })}
               </small>
             </ui.HairlineRow>

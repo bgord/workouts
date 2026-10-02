@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
 
@@ -37,7 +38,7 @@ describe("ExercisePerformanceWeakestSet", () => {
     });
 
     expect(weakest.calculate()).toEqual({
-      sets: v.parse(Workouts.VO.Sets, 3),
+      sets: v.parse(Plans.VO.Sets, 3),
       reps: v.parse(Workouts.VO.Reps, 8),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(70).get()),
     });

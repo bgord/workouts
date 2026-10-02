@@ -137,7 +137,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     );
     const exerciseInstruction = {
       id: mocks.exerciseInstructionId,
-      reps: mocks.reps,
+      reps: mocks.repsRange,
       sets: mocks.anotherSets,
       progression: mocks.progression,
     };
@@ -184,7 +184,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     );
     const exerciseInstruction = {
       id: mocks.exerciseInstructionId,
-      reps: v.parse(Plans.VO.Reps, { min: mocks.reps.min - 1, max: mocks.reps.max }),
+      reps: v.parse(Plans.VO.RepsRange, { min: mocks.repsRange.min - 1, max: mocks.repsRange.max }),
       sets: mocks.sets,
       progression: mocks.progression,
     };
@@ -216,7 +216,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     );
     const exerciseInstruction = {
       id: mocks.exerciseInstructionId,
-      reps: v.parse(Plans.VO.Reps, { min: mocks.reps.min, max: mocks.reps.max + 1 }),
+      reps: v.parse(Plans.VO.RepsRange, { min: mocks.repsRange.min, max: mocks.repsRange.max + 1 }),
       sets: mocks.sets,
       progression: mocks.progression,
     };
@@ -248,7 +248,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     );
     const exerciseInstruction = {
       id: mocks.exerciseInstructionId,
-      reps: mocks.reps,
+      reps: mocks.repsRange,
       sets: mocks.sets,
       progression: Plans.VO.ProgressionMethodOptions.linear_progression,
     };

@@ -5,6 +5,7 @@ import { SetsRepsLoad } from "./sets-reps-load";
 
 export function ExercisePerformanceSummary(props: Pick<ExercisePerformance, "sets">) {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
 
   const reps = props.sets.map((set) => set.reps);
   const load = Math.min(...props.sets.map((set) => set.load));
@@ -16,7 +17,7 @@ export function ExercisePerformanceSummary(props: Pick<ExercisePerformance, "set
     <span>
       {t("workout.previous_performance.reps_load", {
         reps: reps.join("·"),
-        load: WeightFormat.kilograms(load),
+        load: WeightFormat.kilograms(load).toLocaleString(language),
       })}
     </span>
   );

@@ -17,7 +17,9 @@ export function BodyPartHistoryRow(props: {
   const label = t("measurements.body_parts.correct.title", {
     date: DateFormat.plainDay(language, props.measurement.measuredOn),
     value: t("measurements.body_parts.value", {
-      value: LengthFormat.centimeters(props.measurement.value).toFixed(1),
+      value: LengthFormat.centimeters(props.measurement.value).toLocaleString(language, {
+        minimumFractionDigits: 1,
+      }),
     }),
   });
 
