@@ -2,12 +2,12 @@ import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-work
 import { DateFormat } from "./date-format";
 import { WeightFormat } from "./weight-format";
 
-export const WorkoutReport = {
-  create: (
+export class WorkoutReport {
+  static create(
     workout: WorkoutGetResponse["data"] & {
       completedAt: NonNullable<WorkoutGetResponse["data"]["completedAt"]>;
     },
-  ) => {
+  ) {
     const rows = workout.exercises.flatMap((exercise) =>
       exercise.loggedSets.map(
         (loggedSet) =>
@@ -26,5 +26,5 @@ export const WorkoutReport = {
       "| --- | --- | --- | --- | --- |",
       ...rows,
     ].join("\n");
-  },
-};
+  }
+}

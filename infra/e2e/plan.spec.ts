@@ -17,6 +17,30 @@ test.describe("Plan - builder", () => {
     await expect(page.getByRole("button", { name: "Restore" })).toBeHidden();
   });
 
+  test("copies the plan outline to the clipboard", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: "Copy plan" }).click();
+
+    await expect(page.getByRole("button", { name: "Copy plan" })).toHaveAttribute(
+      "title",
+      "Copied to the clipboard",
+    );
+
+    const copied = await page.evaluate(() => navigator.clipboard.readText());
+
+    expect(copied).toContain(`# Plan: ${fixtures.builder.plan.name}`);
+    expect(copied).toContain(fixtures.builder.plan.description);
+    expect(copied).toContain(`## ${fixtures.builder.plan.sections.push.name}`);
+    expect(copied).toContain(
+      `- ${fixtures.exercises.superHorizontalBenchPress.name}: 4 x 5, double_progression`,
+    );
+    expect(copied).toContain(
+      `- ${fixtures.exercises.overheadPressSeatedDumbbells.name}: 3 x 8-10, double_progression`,
+    );
+  });
+
   test("keeps the section expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     const toggle = page.getByRole("button", { name: "Details: Push", exact: true });
@@ -326,6 +350,7 @@ test.describe("Plan - athlete", () => {
 
     await expect(page.getByText("Finalized", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Edit" })).toBeEnabled();
+    await expect(page.getByRole("button", { name: "Copy plan" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Finalize" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Restore" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Delete", exact: true })).toBeHidden();

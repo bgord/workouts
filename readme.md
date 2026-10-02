@@ -782,7 +782,6 @@ infra/
 │   ├── profile.spec.ts
 │   ├── shortcuts.spec.ts
 │   ├── test.ts
-│   ├── vitals.spec.ts
 │   ├── workout.spec.ts
 │   ├── workouts.mobile.mutation.spec.ts
 │   ├── workouts.mutation.spec.ts

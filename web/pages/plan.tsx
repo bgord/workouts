@@ -3,6 +3,7 @@ import * as ui from "../components";
 import { useHydrated } from "../hooks/use-hydrated";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
+import { PlanCopy } from "../sections/plan-copy";
 import { PlanDescription } from "../sections/plan-description";
 import { PlanEditingEnable } from "../sections/plan-editing-enable";
 import { PlanFinalize } from "../sections/plan-finalize";
@@ -38,6 +39,8 @@ export function Plan() {
             <PlanRestore />
 
             <div data-ml="auto" data-stack="x">
+              <PlanCopy />
+
               <PlanArchive />
 
               <PlanRemove />
