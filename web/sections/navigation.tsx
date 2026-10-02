@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { CalendarCheck, Dumbbell, ListChecks, Weight } from "lucide-react";
+import { CalendarCheck, Dumbbell, LayoutDashboard, ListChecks, Weight } from "lucide-react";
 import * as ui from "../components";
 
 const link = {
@@ -10,6 +10,8 @@ const link = {
   "data-hover-color": "brand-300",
   "data-ls": "wide",
 } as const;
+
+const desktopItem = { "data-cross": "center", ...ui.Gap.cluster } as const;
 
 const drawerItem = { "data-grow": "1", "data-py": "4" } as const;
 
@@ -52,17 +54,30 @@ function NavigationDesktop() {
       >
         <ui.Logo to="/" />
 
-        <NavigationLink activeOptions={{ exact: true }} data-ml="auto" to="/">
+        <NavigationLink activeOptions={{ exact: true }} data-ml="auto" to="/" {...desktopItem}>
+          <LayoutDashboard data-size="sm" />
           {t("app.dashboard")}
         </NavigationLink>
 
-        <NavigationLink to="/workouts">{t("app.workouts")}</NavigationLink>
+        <NavigationLink to="/workouts" {...desktopItem}>
+          <CalendarCheck data-size="sm" />
+          {t("app.workouts")}
+        </NavigationLink>
 
-        <NavigationLink to="/catalog">{t("app.catalog")}</NavigationLink>
+        <NavigationLink to="/catalog" {...desktopItem}>
+          <Dumbbell data-size="sm" />
+          {t("app.catalog")}
+        </NavigationLink>
 
-        <NavigationLink to="/plans">{t("app.plans")}</NavigationLink>
+        <NavigationLink to="/plans" {...desktopItem}>
+          <ListChecks data-size="sm" />
+          {t("app.plans")}
+        </NavigationLink>
 
-        <NavigationLink to="/measurements">{t("app.measurements")}</NavigationLink>
+        <NavigationLink to="/measurements" {...desktopItem}>
+          <Weight data-size="sm" />
+          {t("app.measurements")}
+        </NavigationLink>
 
         <NavigationLink aria-label={t("app.profile")} to="/profile">
           <ui.Avatar size={ui.AvatarSize.md} />
@@ -94,7 +109,9 @@ function NavigationMobileDrawer() {
       data-z="3"
       {...ui.Spacing.gutter}
     >
-      <ui.Logo to="/" {...drawerItem} />
+      <NavigationLink activeOptions={{ exact: true }} title={t("app.dashboard")} to="/" {...drawerItem}>
+        <LayoutDashboard data-size="md" />
+      </NavigationLink>
 
       <NavigationLink title={t("app.workouts")} to="/workouts" {...drawerItem}>
         <CalendarCheck data-size="md" />
