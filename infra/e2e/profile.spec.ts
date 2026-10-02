@@ -1,4 +1,4 @@
-// cSpell:ignore Ustawienia profilu Zmiana języka Tygodniowe podsumowanie delet
+// cSpell:ignore Profil Język Tygodniowe podsumowanie delet
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -29,16 +29,12 @@ test.describe("Profile - athlete", () => {
 
     await page.getByRole("combobox", { name: "Language" }).selectOption("pl");
 
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Profil", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Profile" })).toBeHidden();
 
     await page.reload();
 
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Profil", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Profile" })).toBeHidden();
   });
 
@@ -134,10 +130,8 @@ test.describe("Profile - polyglot", () => {
   test("shows the seeded language and weekly summary preferences", async ({ page }) => {
     await page.goto("/profile");
 
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Ustawienia profilu", exact: true }),
-    ).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Zmiana języka" })).toHaveValue("pl");
+    await expect(page.getByRole("heading", { level: 1, name: "Profil", exact: true })).toBeVisible();
+    await expect(page.getByRole("combobox", { name: "Język" })).toHaveValue("pl");
     await expect(page.getByRole("combobox", { name: "Tygodniowe podsumowanie" })).toHaveValue("off");
   });
 });
