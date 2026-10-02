@@ -64,7 +64,9 @@ test.describe("Body parts - athlete", () => {
   });
 
   test("lists the history of a body part", async ({ page }) => {
-    const history = page.getByRole("list", { name: `Details: ${fixtures.athlete.bodyParts.thighRight.name}` });
+    const history = page.getByRole("list", {
+      name: `Details: ${fixtures.athlete.bodyParts.thighRight.name}`,
+    });
 
     await page.goto("/measurements/body-parts");
 
