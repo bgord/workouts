@@ -48,13 +48,13 @@ export const anotherSets = v.parse(Plans.VO.Sets, 4);
 
 export const progression = Plans.VO.ProgressionMethodOptions.double_progression;
 
-export const reps = v.parse(Plans.VO.Reps, { min: 8, max: 12 });
-export const anotherReps = v.parse(Plans.VO.Reps, { min: 6, max: 6 });
+export const repsRange = v.parse(Plans.VO.RepsRange, { min: 8, max: 12 });
+export const anotherRepsRange = v.parse(Plans.VO.RepsRange, { min: 6, max: 6 });
 
 export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: exerciseInstructionId,
   exerciseId,
-  reps,
+  reps: repsRange,
   sets,
   progression,
 };
@@ -62,7 +62,7 @@ export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
 export const anotherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: exerciseInstructionId,
   exerciseId,
-  reps: anotherReps,
+  reps: anotherRepsRange,
   sets: anotherSets,
   progression,
 };
@@ -75,7 +75,7 @@ export const anotherExerciseInstructionAndExercise: Pick<
 export const otherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: anotherExerciseInstructionId,
   exerciseId,
-  reps: anotherReps,
+  reps: anotherRepsRange,
   sets: anotherSets,
   progression,
 };
@@ -83,7 +83,7 @@ export const otherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
 export const otherExerciseInstructionWithAnotherExercise: Plans.VO.ExerciseInstructionType = {
   id: anotherExerciseInstructionId,
   exerciseId: anotherExerciseId,
-  reps: anotherReps,
+  reps: anotherRepsRange,
   sets: anotherSets,
   progression,
 };
@@ -492,7 +492,12 @@ export const GenericPlanSectionExerciseInstructionUpdatedEvent = {
   payload: {
     planId,
     planSectionId,
-    exerciseInstruction: { id: exerciseInstructionId, reps: anotherReps, sets: anotherSets, progression },
+    exerciseInstruction: {
+      id: exerciseInstructionId,
+      reps: anotherRepsRange,
+      sets: anotherSets,
+      progression,
+    },
     requesterId: userId,
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionUpdatedEventType;

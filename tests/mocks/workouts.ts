@@ -21,7 +21,7 @@ import {
   planSectionName,
   planSectionWarmup,
   progression,
-  reps,
+  repsRange,
   sets,
 } from "./plans";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
@@ -81,7 +81,11 @@ export const anotherWorkoutExerciseId = v.parse(
 export const workoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 0);
 export const anotherWorkoutExercisePosition = v.parse(Workouts.VO.WorkoutExercisePosition, 1);
 
-export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, { sets, reps, progression });
+export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: repsRange,
+  progression,
+});
 
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
 

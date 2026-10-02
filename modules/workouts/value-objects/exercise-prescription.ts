@@ -3,7 +3,7 @@ import * as Plans from "+plans";
 
 export const ExercisePrescription = v.object({
   sets: Plans.VO.Sets,
-  reps: Plans.VO.Reps,
+  reps: Plans.VO.RepsRange,
   progression: Plans.VO.ProgressionMethod,
 });
 

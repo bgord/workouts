@@ -10,14 +10,14 @@ import type { PlanSectionNameType } from "./plan-section-name";
 import type { PlanSectionWarmupType } from "./plan-section-warmup";
 import type { PlanStatusEnum } from "./plan-status";
 import type { ProgressionMethodType } from "./progression-method";
-import type { RepsType } from "./reps";
+import type { RepsRangeType } from "./reps-range";
 import type { SetsType } from "./sets";
 
 export type ExerciseInstructionWithExercise = {
   id: ExerciseInstructionIdType;
   exercise: Exercises.VO.Exercise;
   sets: SetsType;
-  reps: RepsType;
+  reps: RepsRangeType;
   progression: ProgressionMethodType;
 };
 

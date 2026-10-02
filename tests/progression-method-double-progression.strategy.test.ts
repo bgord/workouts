@@ -290,7 +290,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       v.parse(Workouts.VO.ExercisePrescription, {
         sets: mocks.sets,
-        reps: mocks.anotherReps,
+        reps: mocks.anotherRepsRange,
         progression: mocks.progression,
       }),
       {

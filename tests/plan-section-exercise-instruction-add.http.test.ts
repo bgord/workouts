@@ -98,7 +98,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "reps.type");
+    await testcases.assertErrorResponse(response, 400, "reps.range.type");
   });
 
   test("validation - sets - invalid", async () => {
@@ -128,7 +128,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "reps.range");
+    await testcases.assertErrorResponse(response, 400, "reps.range.invalid");
   });
 
   test("validation - progression - invalid", async () => {
@@ -141,7 +141,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: "linear",
         }),
       },
@@ -164,7 +164,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
         headers: mocks.revisionHeaders(),
@@ -191,7 +191,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
         headers: mocks.revisionHeaders(events.length),
@@ -218,7 +218,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
         headers: mocks.revisionHeaders(events.length),
@@ -245,7 +245,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
         headers: mocks.revisionHeaders(events.length),
@@ -272,7 +272,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
         headers: mocks.revisionHeaders(events.length),
@@ -299,7 +299,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
         headers: mocks.headers(events.length),
@@ -330,7 +330,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
         headers: mocks.headers(events.length),
@@ -360,7 +360,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
       },
@@ -389,7 +389,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
       },
@@ -423,7 +423,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         body: JSON.stringify({
           exerciseId: mocks.exerciseId,
           sets: mocks.sets,
-          reps: mocks.reps,
+          reps: mocks.repsRange,
           progression: mocks.progression,
         }),
       },
