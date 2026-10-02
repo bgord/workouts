@@ -768,6 +768,8 @@ infra/
 │   ├── body-weight.spec.ts
 │   ├── catalog.mutation.spec.ts
 │   ├── catalog.spec.ts
+│   ├── coverage.teardown.ts
+│   ├── coverage.ts
 │   ├── dashboard.spec.ts
 │   ├── errors.spec.ts
 │   ├── exercise.spec.ts

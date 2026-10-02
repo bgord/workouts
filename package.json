@@ -19,6 +19,7 @@
     "gzip-cli": "1.2.0",
     "lefthook": "2.1.14",
     "lockfile-lint": "5.0.1",
+    "monocart-coverage-reports": "2.13.0",
     "shellcheck": "4.1.0",
     "typescript": "7.0.2"
   },
