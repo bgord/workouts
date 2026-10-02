@@ -720,6 +720,7 @@ infra/
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── system
+│   │   ├── atomic-file-writer.adapter.ts
 │   │   ├── certificate-inspector.adapter.ts
 │   │   ├── clock.adapter.ts
 │   │   ├── csv-parser.adapter.ts
