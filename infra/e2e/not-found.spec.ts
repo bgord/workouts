@@ -25,6 +25,16 @@ test.describe("Not found - athlete", () => {
     await expect(page).toHaveURL("/catalog");
   });
 
+  test("shows the exercise not found for a malformed exercise id", async ({ page }) => {
+    await page.goto("/catalog/exercise/not-a-uuid");
+
+    await expect(page.getByRole("heading", { level: 1, name: "Exercise not found" })).toBeVisible();
+
+    await page.getByRole("link", { name: "Go to catalog" }).click();
+
+    await expect(page).toHaveURL("/catalog");
+  });
+
   test("shows the plan not found for an unknown plan", async ({ page }) => {
     await page.goto("/plans/00000000-0000-4000-8000-000000000000");
 
@@ -35,8 +45,28 @@ test.describe("Not found - athlete", () => {
     await expect(page).toHaveURL("/plans");
   });
 
+  test("shows the plan not found for a malformed plan id", async ({ page }) => {
+    await page.goto("/plans/not-a-uuid");
+
+    await expect(page.getByRole("heading", { level: 1, name: "Plan not found" })).toBeVisible();
+
+    await page.getByRole("link", { name: "Go to plans" }).click();
+
+    await expect(page).toHaveURL("/plans");
+  });
+
   test("shows the workout not found for an unknown workout", async ({ page }) => {
     await page.goto("/workouts/00000000-0000-4000-8000-000000000000");
+
+    await expect(page.getByRole("heading", { level: 1, name: "Workout not found" })).toBeVisible();
+
+    await page.getByRole("link", { name: "Go to workouts" }).click();
+
+    await expect(page).toHaveURL("/workouts");
+  });
+
+  test("shows the workout not found for a malformed workout id", async ({ page }) => {
+    await page.goto("/workouts/not-a-uuid");
 
     await expect(page.getByRole("heading", { level: 1, name: "Workout not found" })).toBeVisible();
 

@@ -59,6 +59,12 @@ test.describe("Body weight - athlete", () => {
     await expect(page.getByRole("combobox", { name: "Group by" })).toHaveValue("daily");
   });
 
+  test("falls back to weekly granularity for an invalid chart", async ({ page }) => {
+    await page.goto("/measurements/body-weight?chart=no-such-granularity");
+
+    await expect(page.getByRole("combobox", { name: "Group by" })).toHaveValue("weekly");
+  });
+
   test("lists the measurement history and filters it by month", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
@@ -72,6 +78,13 @@ test.describe("Body weight - athlete", () => {
 
     await expect(page).toHaveURL("/measurements/body-weight?month=all");
     await expect(page.getByRole("combobox", { name: "Month" })).toHaveValue("all");
+  });
+
+  test("falls back to the default month for an invalid month", async ({ page }) => {
+    await page.goto("/measurements/body-weight?month=2026-13");
+
+    await expect(page.getByRole("combobox", { name: "Month" })).not.toHaveValue("2026-13");
+    await expect(page.getByRole("combobox", { name: "Month" })).not.toHaveValue("all");
   });
 
   test("downloads the body weight export", async ({ page }) => {

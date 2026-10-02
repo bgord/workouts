@@ -52,6 +52,18 @@ test.describe("Workouts - athlete", () => {
     await expect(page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`)).toBeVisible();
   });
 
+  test("falls back to the default period for an invalid filter", async ({ page }) => {
+    await page.goto("/workouts?filter=no-such-period");
+
+    await expect(page.getByLabel("Period")).toHaveValue("last_week");
+  });
+
+  test("shows the empty state for a malformed section", async ({ page }) => {
+    await page.goto("/workouts?filter=all_time&section=not-a-uuid");
+
+    await expect(page.getByText("No workouts match the filters")).toBeVisible();
+  });
+
   test("filters by section, unpresses it and clears the filters", async ({ page }) => {
     await page.goto("/workouts?filter=all_time");
 

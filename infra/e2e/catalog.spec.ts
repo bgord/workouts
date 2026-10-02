@@ -82,6 +82,12 @@ test.describe("Catalog - athlete", () => {
     );
   });
 
+  test("shows the empty state for a malformed category", async ({ page }) => {
+    await page.goto("/catalog?category=not-a-uuid");
+
+    await expect(page.getByText("No exercises match the filters")).toBeVisible();
+  });
+
   test("shows the empty state when nothing matches", async ({ page }) => {
     await page.goto("/catalog");
 
