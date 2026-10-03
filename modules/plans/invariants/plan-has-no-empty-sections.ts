@@ -4,7 +4,9 @@ import type * as VO from "+plans/value-objects";
 class PlanHasNoEmptySectionsError extends Error {}
 
 type PlanHasNoEmptySectionsConfigType = {
-  planSections: ReadonlyArray<VO.PlanSection | VO.PlanSectionSnapshot>;
+  planSections: ReadonlyArray<{
+    exerciseInstructions: ReadonlyArray<Pick<VO.ExerciseInstructionType, "id">>;
+  }>;
 };
 
 class PlanHasNoEmptySectionsFactory extends bg.Invariant<PlanHasNoEmptySectionsConfigType> {

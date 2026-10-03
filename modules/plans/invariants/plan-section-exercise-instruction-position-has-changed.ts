@@ -4,7 +4,7 @@ import type * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionPositionHasChangedError extends Error {}
 
 type PlanSectionExerciseInstructionPositionHasChangedConfigType = {
-  planSection: VO.PlanSection | VO.PlanSectionSnapshot | undefined;
+  planSection: { exerciseInstructions: ReadonlyArray<Pick<VO.ExerciseInstructionType, "id">> } | undefined;
   exerciseInstructionId: VO.ExerciseInstructionIdType;
   position: VO.ExerciseInstructionPositionType;
 };

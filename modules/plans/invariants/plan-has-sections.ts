@@ -4,7 +4,7 @@ import type * as VO from "+plans/value-objects";
 class PlanHasSectionsError extends Error {}
 
 type PlanHasSectionsConfigType = {
-  planSections: ReadonlyArray<VO.PlanSection | VO.PlanSectionSnapshot>;
+  planSections: ReadonlyArray<Pick<VO.PlanSection, "id">>;
 };
 
 class PlanHasSectionsFactory extends bg.Invariant<PlanHasSectionsConfigType> {

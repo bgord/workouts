@@ -5,7 +5,7 @@ class WorkoutExerciseExistsError extends Error {}
 
 type WorkoutExerciseExistsConfigType = {
   workoutExerciseId: VO.WorkoutExerciseIdType;
-  workoutExercises: Array<VO.WorkoutExercise>;
+  workoutExercises: ReadonlyArray<Pick<VO.WorkoutExercise, "id">>;
 };
 
 class WorkoutExerciseExistsFactory extends bg.Invariant<WorkoutExerciseExistsConfigType> {

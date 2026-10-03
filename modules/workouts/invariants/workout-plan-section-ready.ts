@@ -3,7 +3,7 @@ import type * as Plans from "+plans";
 
 class WorkoutPlanSectionReadyError extends Error {}
 
-type WorkoutPlanSectionReadyConfigType = { section: Plans.VO.PlanSectionSnapshot | undefined };
+type WorkoutPlanSectionReadyConfigType = { section: Pick<Plans.VO.PlanSectionSnapshot, "id"> | undefined };
 
 class WorkoutPlanSectionReadyFactory extends bg.Invariant<WorkoutPlanSectionReadyConfigType> {
   passes(config: WorkoutPlanSectionReadyConfigType) {

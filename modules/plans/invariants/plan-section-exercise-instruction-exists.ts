@@ -4,7 +4,7 @@ import type * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionExistsError extends Error {}
 
 type PlanSectionExerciseInstructionExistsConfigType = {
-  planSection: VO.PlanSection | undefined;
+  planSection: { exerciseInstructions: ReadonlyArray<Pick<VO.ExerciseInstructionType, "id">> } | undefined;
   exerciseInstructionId: VO.ExerciseInstructionIdType;
 };
 

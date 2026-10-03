@@ -5,7 +5,7 @@ class PlanSectionNameIsUniqueForPlanError extends Error {}
 
 type PlanSectionNameLimitForPlanConfigType = {
   planSectionName: VO.PlanSectionNameType;
-  planSections: Array<VO.PlanSection>;
+  planSections: ReadonlyArray<Pick<VO.PlanSection, "name">>;
 };
 
 class PlanSectionNameIsUniqueForPlanFactory extends bg.Invariant<PlanSectionNameLimitForPlanConfigType> {

@@ -4,7 +4,7 @@ import type * as VO from "+workouts/value-objects";
 class WorkoutLoggedSetExistsError extends Error {}
 
 type WorkoutLoggedSetExistsConfigType = {
-  workoutExercise?: VO.WorkoutExercise;
+  workoutExercise?: { loggedSets: ReadonlyArray<Pick<VO.LoggedSetType, "id">> };
   loggedSetId: VO.LoggedSetIdType;
 };
 

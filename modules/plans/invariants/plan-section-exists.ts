@@ -5,7 +5,7 @@ class PlanSectionExistsError extends Error {}
 
 type PlanSectionExistsConfigType = {
   planSectionId: VO.PlanSectionIdType;
-  planSections: Array<VO.PlanSection>;
+  planSections: ReadonlyArray<Pick<VO.PlanSection, "id">>;
 };
 
 class PlanSectionExistsFactory extends bg.Invariant<PlanSectionExistsConfigType> {

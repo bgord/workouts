@@ -4,7 +4,7 @@ import type * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionPositionInRangeError extends Error {}
 
 type PlanSectionExerciseInstructionPositionInRangeConfigType = {
-  planSection: VO.PlanSection | VO.PlanSectionSnapshot | undefined;
+  planSection: { exerciseInstructions: ReadonlyArray<Pick<VO.ExerciseInstructionType, "id">> } | undefined;
   position: VO.ExerciseInstructionPositionType;
 };
 
