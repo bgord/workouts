@@ -538,6 +538,7 @@ modules/
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-load-step.ts
+    │   ├── progression-method-none.strategy.ts
     │   ├── progression-method.strategy.ts
     │   ├── workout-export-file-csv.ts
     │   ├── workout-get-actions.ts

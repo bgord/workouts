@@ -22,4 +22,13 @@ describe("ProgressionMethodStrategyFactory", () => {
 
     expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodLinearProgressionStrategy);
   });
+
+  test("none", () => {
+    const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
+      { ...mocks.exercisePrescription, progression: Plans.VO.ProgressionMethodOptions.none },
+      mocks.exercisePerformance,
+    );
+
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodNoneStrategy);
+  });
 });

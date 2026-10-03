@@ -5,6 +5,7 @@ import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-se
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 import { ProgressionMethodDoubleProgressionStrategy } from "./progression-method-double-progression.strategy";
 import { ProgressionMethodLinearProgressionStrategy } from "./progression-method-linear-progression.strategy";
+import { ProgressionMethodNoneStrategy } from "./progression-method-none.strategy";
 
 export class ProgressionMethodStrategyFactory {
   static for(
@@ -18,6 +19,8 @@ export class ProgressionMethodStrategyFactory {
         return new ProgressionMethodDoubleProgressionStrategy(prescription, last);
       case Plans.VO.ProgressionMethodOptions.linear_progression:
         return new ProgressionMethodLinearProgressionStrategy(last);
+      case Plans.VO.ProgressionMethodOptions.none:
+        return new ProgressionMethodNoneStrategy(last);
     }
   }
 }
