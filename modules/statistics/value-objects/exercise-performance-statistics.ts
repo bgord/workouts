@@ -20,6 +20,16 @@ type LoadPerformanceStatistics = {
   bestEstimate: VO.OneRepMaxEstimateType;
 };
 
+export type RepsPerformanceStatisticsSet = Omit<ExercisePerformanceStatisticsSet, "estimate">;
+
+export type RepsPerformanceStatistics = {
+  workoutId: Workouts.VO.WorkoutIdType;
+  scheduledFor: tools.DayIsoIdType;
+  sets: Array<RepsPerformanceStatisticsSet>;
+  bestSet: RepsPerformanceStatisticsSet;
+  totalReps: tools.IntegerPositiveType;
+};
+
 export type ExercisePerformanceStatistics = {
   loading: Exercises.VO.ExerciseLoadingOptions.external;
 } & LoadPerformanceStatistics;

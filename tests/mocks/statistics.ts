@@ -35,3 +35,29 @@ export const calculatedExercisePerformance = {
   },
   bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
 };
+
+export const calculatedRepsExercisePerformance = {
+  workoutId,
+  scheduledFor: workoutScheduledFor,
+  sets: [
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 1),
+      reps: v.parse(Workouts.VO.Reps, 5),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: null,
+    },
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 2),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: null,
+    },
+  ],
+  bestSet: {
+    setNumber: v.parse(Workouts.VO.SetNumber, 2),
+    reps: v.parse(Workouts.VO.Reps, 10),
+    load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    rir: null,
+  },
+  totalReps: tools.Int.positive(15),
+};
