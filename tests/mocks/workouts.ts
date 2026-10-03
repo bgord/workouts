@@ -39,12 +39,26 @@ export const workoutExerciseId = v.parse(
   "1d9b7f60-2c34-4a58-9e1b-7f0a3c5d6e21",
 );
 
+export const workoutPlanName = v.parse(Workouts.VO.WorkoutPlanName, planName);
+export const workoutPlanSectionName = v.parse(Workouts.VO.WorkoutPlanSectionName, planSectionName);
+export const workoutPlanSectionWarmup = v.parse(Workouts.VO.WorkoutPlanSectionWarmup, planSectionWarmup);
+export const workoutPlanSectionCooldown = v.parse(
+  Workouts.VO.WorkoutPlanSectionCooldown,
+  planSectionCooldown,
+);
+export const workoutExerciseName = v.parse(Workouts.VO.WorkoutExerciseName, exerciseName);
+export const anotherWorkoutExerciseName = v.parse(Workouts.VO.WorkoutExerciseName, anotherExerciseName);
+export const workoutExerciseDescription = v.parse(
+  Workouts.VO.WorkoutExerciseDescription,
+  exerciseDescription,
+);
+
 export const workoutSummary: Workouts.VO.WorkoutSummary = {
   id: workoutId,
   planId,
-  planName,
+  planName: workoutPlanName,
   planSectionId,
-  planSectionName,
+  planSectionName: workoutPlanSectionName,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.draft,
   completedAt: null,
@@ -136,9 +150,9 @@ export const exercisePerformance = {
 export const workoutExportRow = {
   workoutId,
   completedAt: T0.ms,
-  planName,
-  planSectionName,
-  exerciseName,
+  planName: workoutPlanName,
+  planSectionName: workoutPlanSectionName,
+  exerciseName: workoutExerciseName,
   setNumber: v.parse(Workouts.VO.SetNumber, 1),
   reps: v.parse(Workouts.VO.Reps, 9),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
@@ -159,7 +173,7 @@ export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
 export const workoutExercise: Workouts.VO.WorkoutExercise = {
   id: workoutExerciseId,
   exerciseId,
-  exerciseName,
+  exerciseName: workoutExerciseName,
   prescription: exercisePrescription,
   target: exerciseTarget,
   loggedSets: [loggedSet],
@@ -168,7 +182,7 @@ export const workoutExercise: Workouts.VO.WorkoutExercise = {
 export const workoutExerciseWithoutTarget: Workouts.VO.WorkoutExercise = {
   id: anotherWorkoutExerciseId,
   exerciseId: anotherExerciseId,
-  exerciseName: anotherExerciseName,
+  exerciseName: anotherWorkoutExerciseName,
   prescription: exercisePrescription,
   loggedSets: [],
 };
@@ -181,11 +195,11 @@ export const workoutExercisesAtLimit: Array<Workouts.VO.WorkoutExercise> = Array
 export const workout: Workouts.VO.Workout = {
   id: workoutId,
   planId,
-  planName,
+  planName: workoutPlanName,
   planSectionId,
-  planSectionName,
-  planSectionWarmup,
-  planSectionCooldown,
+  planSectionName: workoutPlanSectionName,
+  planSectionWarmup: workoutPlanSectionWarmup,
+  planSectionCooldown: workoutPlanSectionCooldown,
   scheduledFor: workoutScheduledFor,
   status: Workouts.VO.WorkoutStatusEnum.in_progress,
   completedAt: null,
@@ -232,7 +246,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     ...exercise,
     target: exerciseTarget,
     exerciseImageEtag,
-    exerciseDescription,
+    exerciseDescription: workoutExerciseDescription,
     loggedSets: exercise.loggedSets.map((set) => ({
       ...set,
       rir: null,
@@ -264,11 +278,11 @@ export const GenericWorkoutCreatedEvent = {
   payload: {
     workoutId,
     planId,
-    planName,
+    planName: workoutPlanName,
     planSectionId,
-    planSectionName,
-    planSectionWarmup,
-    planSectionCooldown,
+    planSectionName: workoutPlanSectionName,
+    planSectionWarmup: workoutPlanSectionWarmup,
+    planSectionCooldown: workoutPlanSectionCooldown,
     scheduledFor: workoutScheduledFor,
     userId,
   },
@@ -285,11 +299,11 @@ export const GenericWorkoutCreatedEventPast = {
   payload: {
     workoutId,
     planId,
-    planName,
+    planName: workoutPlanName,
     planSectionId,
-    planSectionName,
-    planSectionWarmup,
-    planSectionCooldown,
+    planSectionName: workoutPlanSectionName,
+    planSectionWarmup: workoutPlanSectionWarmup,
+    planSectionCooldown: workoutPlanSectionCooldown,
     scheduledFor: pastWorkoutScheduledFor,
     userId,
   },
@@ -307,9 +321,9 @@ export const GenericWorkoutExerciseAddedEvent = {
     workoutId,
     workoutExerciseId,
     exerciseId,
-    exerciseName,
+    exerciseName: workoutExerciseName,
     exerciseImageEtag,
-    exerciseDescription,
+    exerciseDescription: workoutExerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,
   },
@@ -327,9 +341,9 @@ export const GenericWorkoutExerciseAddedEventAnother = {
     workoutId,
     workoutExerciseId: anotherWorkoutExerciseId,
     exerciseId,
-    exerciseName,
+    exerciseName: workoutExerciseName,
     exerciseImageEtag,
-    exerciseDescription,
+    exerciseDescription: workoutExerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,
   },

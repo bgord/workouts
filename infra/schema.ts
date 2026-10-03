@@ -42,10 +42,16 @@ import type { LoggedSetIdType } from "../modules/workouts/value-objects/logged-s
 import type { RepsType as WorkoutRepsType } from "../modules/workouts/value-objects/reps";
 import type { RirType } from "../modules/workouts/value-objects/rir";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
+import type { WorkoutExerciseDescriptionType } from "../modules/workouts/value-objects/workout-exercise-description";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
+import type { WorkoutExerciseNameType } from "../modules/workouts/value-objects/workout-exercise-name";
 import type { WorkoutExercisePositionType } from "../modules/workouts/value-objects/workout-exercise-position";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
 import type { WorkoutNoteType } from "../modules/workouts/value-objects/workout-note";
+import type { WorkoutPlanNameType } from "../modules/workouts/value-objects/workout-plan-name";
+import type { WorkoutPlanSectionCooldownType } from "../modules/workouts/value-objects/workout-plan-section-cooldown";
+import type { WorkoutPlanSectionNameType } from "../modules/workouts/value-objects/workout-plan-section-name";
+import type { WorkoutPlanSectionWarmupType } from "../modules/workouts/value-objects/workout-plan-section-warmup";
 import type { WorkoutScheduledForType } from "../modules/workouts/value-objects/workout-scheduled-for";
 import { WorkoutStatusEnum } from "../modules/workouts/value-objects/workout-status";
 
@@ -328,11 +334,11 @@ export const workouts = sqliteTable(
   {
     id: identifier<WorkoutIdType>(),
     planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
-    planName: text("planName").notNull().$type<PlanNameType>(),
+    planName: text("planName").notNull().$type<WorkoutPlanNameType>(),
     planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
-    planSectionName: text("planSectionName").notNull().$type<PlanSectionNameType>(),
-    planSectionWarmup: text("planSectionWarmup").$type<PlanSectionWarmupType>(),
-    planSectionCooldown: text("planSectionCooldown").$type<PlanSectionCooldownType>(),
+    planSectionName: text("planSectionName").notNull().$type<WorkoutPlanSectionNameType>(),
+    planSectionWarmup: text("planSectionWarmup").$type<WorkoutPlanSectionWarmupType>(),
+    planSectionCooldown: text("planSectionCooldown").$type<WorkoutPlanSectionCooldownType>(),
     scheduledFor: text("scheduledFor").notNull().$type<WorkoutScheduledForType>(),
     status: text("status", toEnumList(WorkoutStatusEnum)).notNull().$type<WorkoutStatusEnum>(),
     completedAt: timestamp("completedAt"),
@@ -353,9 +359,9 @@ export const workoutExercises = sqliteTable(
     id: identifier<WorkoutExerciseIdType>(),
     workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
     exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
-    exerciseName: text("exerciseName").notNull().$type<ExerciseNameType>(),
+    exerciseName: text("exerciseName").notNull().$type<WorkoutExerciseNameType>(),
     exerciseImageEtag: text("exerciseImageEtag").notNull().$type<bg.HashValueType>(),
-    exerciseDescription: text("exerciseDescription").notNull().$type<ExerciseDescriptionType>(),
+    exerciseDescription: text("exerciseDescription").notNull().$type<WorkoutExerciseDescriptionType>(),
     prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
     target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
     position: integer("position", { mode: "number" })

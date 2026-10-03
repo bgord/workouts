@@ -23,7 +23,7 @@ export type ExercisePreviousPerformance = Pick<ExercisePerformance, "scheduledFo
 export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> & {
   target: VO.ExerciseTargetType | null;
   exerciseImageEtag: Exercises.VO.Exercise["imageEtag"];
-  exerciseDescription: Exercises.VO.Exercise["description"];
+  exerciseDescription: VO.WorkoutExerciseDescriptionType;
   loggedSets: Array<LoggedSet>;
   previousPerformance: ExercisePreviousPerformance | null;
   targetProgression: VO.ExerciseTargetProgression | null;

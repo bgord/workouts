@@ -1,8 +1,11 @@
 // biome-ignore-all lint: lint/style/noNonNullAssertion
 import type * as bg from "@bgord/bun";
+import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import { WorkoutCatalogExerciseExists } from "../invariants/workout-catalog-exercise-exists";
+import { WorkoutExerciseDescription } from "../value-objects/workout-exercise-description";
+import { WorkoutExerciseName } from "../value-objects/workout-exercise-name";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -22,9 +25,9 @@ export const handleWorkoutExerciseAddCommand =
     workout.addExercise(
       command.payload.workoutExerciseId,
       exercise!.id,
-      exercise!.name,
+      v.parse(WorkoutExerciseName, exercise!.name),
       exercise!.imageEtag,
-      exercise!.description,
+      v.parse(WorkoutExerciseDescription, exercise!.description),
       command.payload.prescription,
       command.payload.requesterId,
     );

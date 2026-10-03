@@ -551,8 +551,10 @@ modules/
         ├── rir.ts
         ├── set-number.ts
         ├── workout-draft-limit-for-owner.ts
+        ├── workout-exercise-description.ts
         ├── workout-exercise-id.ts
         ├── workout-exercise-limit.ts
+        ├── workout-exercise-name.ts
         ├── workout-exercise-position.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
@@ -561,6 +563,10 @@ modules/
         ├── workout-list-filter.ts
         ├── workout-note.ts
         ├── workout-note.validation.ts
+        ├── workout-plan-name.ts
+        ├── workout-plan-section-cooldown.ts
+        ├── workout-plan-section-name.ts
+        ├── workout-plan-section-warmup.ts
         ├── workout-scheduled-for-horizon.ts
         ├── workout-scheduled-for.ts
         ├── workout-status.ts

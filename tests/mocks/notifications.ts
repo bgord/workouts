@@ -6,7 +6,6 @@ import type * as Auth from "+auth";
 import * as Notifications from "+notifications";
 import * as Workouts from "+workouts";
 import { email, userId } from "./auth";
-import { planName, planSectionName } from "./plans";
 import {
   commit,
   correlationId,
@@ -16,7 +15,7 @@ import {
   revision,
   T0,
 } from "./shared";
-import { workoutId, workoutScheduledFor } from "./workouts";
+import { workoutId, workoutPlanName, workoutPlanSectionName, workoutScheduledFor } from "./workouts";
 
 export const mondaySixAM = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-06T06:00:00Z"));
 export const previousWeekIsoId = tools.Week.fromTimestamp(mondaySixAM).previous().toIsoId();
@@ -71,8 +70,8 @@ export const emailContact: Auth.OHQ.EmailContact = { type: "email", address: ema
 
 export const weekCompletedWorkout: Workouts.Queries.WeekCompletedWorkout = {
   id: workoutId,
-  planName,
-  planSectionName,
+  planName: workoutPlanName,
+  planSectionName: workoutPlanSectionName,
   scheduledFor: workoutScheduledFor,
   loggedSets: [
     {

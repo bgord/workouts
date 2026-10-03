@@ -36,7 +36,7 @@ describe(`QUERY ${url}`, async () => {
     spies.use(
       spyOn(di.Adapters.Workouts.ListWorkoutsQuery, "execute").mockResolvedValue({
         data: [mocks.workoutSummary],
-        sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
+        sections: [{ id: mocks.planSectionId, name: mocks.workoutPlanSectionName }],
         plan: mocks.workoutListPlan,
         actions: {
           create: { available: true, enabled: false, hints: ["workout.draft.limit.for.owner"] },
@@ -57,7 +57,7 @@ describe(`QUERY ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       data: [mocks.workoutSummary],
-      sections: [{ id: mocks.planSectionId, name: mocks.planSectionName }],
+      sections: [{ id: mocks.planSectionId, name: mocks.workoutPlanSectionName }],
       plan: mocks.workoutListPlan,
       actions: { create: { available: true, enabled: false, hints: ["workout.draft.limit.for.owner"] } },
     });

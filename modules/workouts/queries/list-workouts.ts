@@ -5,9 +5,11 @@ import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
 import type * as VO from "+workouts/value-objects";
 
-export type WorkoutSection = { id: Plans.VO.PlanSectionIdType; name: Plans.VO.PlanSectionNameType };
+export type WorkoutSection = { id: Plans.VO.PlanSectionIdType; name: VO.WorkoutPlanSectionNameType };
 
-export type WorkoutListPlanSection = WorkoutSection & {
+export type WorkoutListPlanSection = {
+  id: Plans.VO.PlanSectionIdType;
+  name: Plans.VO.PlanSectionNameType;
   exerciseInstructions: ReadonlyArray<{
     id: Plans.VO.ExerciseInstructionIdType;
     exercise: { name: Exercises.VO.ExerciseNameType };

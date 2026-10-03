@@ -8,7 +8,13 @@ import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 import { WorkoutPlanSectionReady } from "../invariants/workout-plan-section-ready";
 import { WorkoutScheduledForIsWithinHorizon } from "../invariants/workout-scheduled-for-is-within-horizon";
+import { WorkoutExerciseDescription } from "../value-objects/workout-exercise-description";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
+import { WorkoutExerciseName } from "../value-objects/workout-exercise-name";
+import { WorkoutPlanName } from "../value-objects/workout-plan-name";
+import { WorkoutPlanSectionCooldown } from "../value-objects/workout-plan-section-cooldown";
+import { WorkoutPlanSectionName } from "../value-objects/workout-plan-section-name";
+import { WorkoutPlanSectionWarmup } from "../value-objects/workout-plan-section-warmup";
 import { WorkoutScheduledForHorizonDaysMax } from "../value-objects/workout-scheduled-for-horizon";
 import { WorkoutStatusEnum } from "../value-objects/workout-status";
 
@@ -52,11 +58,11 @@ export const handleWorkoutCreateCommand =
     const workout = Workout.create(
       command.payload.workoutId,
       command.payload.planId,
-      plan!.name,
+      v.parse(WorkoutPlanName, plan!.name),
       section!.id,
-      section!.name,
-      section!.warmup ?? undefined,
-      section!.cooldown ?? undefined,
+      v.parse(WorkoutPlanSectionName, section!.name),
+      v.parse(v.optional(WorkoutPlanSectionWarmup), section!.warmup ?? undefined),
+      v.parse(v.optional(WorkoutPlanSectionCooldown), section!.cooldown ?? undefined),
       command.payload.scheduledFor,
       command.payload.userId,
       deps,
@@ -66,9 +72,9 @@ export const handleWorkoutCreateCommand =
       workout.addExercise(
         v.parse(WorkoutExerciseId, deps.IdProvider.generate()),
         instruction.exercise.id,
-        instruction.exercise.name,
+        v.parse(WorkoutExerciseName, instruction.exercise.name),
         instruction.exercise.imageEtag,
-        instruction.exercise.description,
+        v.parse(WorkoutExerciseDescription, instruction.exercise.description),
         { sets: instruction.sets, reps: instruction.reps, progression: instruction.progression },
         command.payload.userId,
       );

@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
+import type { WorkoutExerciseNameType } from "../../modules/workouts/value-objects/workout-exercise-name";
 
 export enum ExerciseImageSize {
   xs = "xs",
@@ -27,7 +28,10 @@ const style = (size: ExerciseImageSize) =>
     ? { ...bg.Rhythm(width[size]).times(1).width, ...bg.Rhythm(height[size]).times(1).height }
     : { width: "100%", aspectRatio: `${width[size]} / ${height[size]}` };
 
-type ExerciseImageProps = Pick<Exercise, "id" | "name" | "imageEtag"> & { size: ExerciseImageSize };
+type ExerciseImageProps = Pick<Exercise, "id" | "imageEtag"> & {
+  name: Exercise["name"] | WorkoutExerciseNameType;
+  size: ExerciseImageSize;
+};
 
 export function ExerciseImagePlaceholder(props: { size: ExerciseImageSize }) {
   return <span data-bg="alpha-subtle" data-br="sm" style={style(props.size)} />;

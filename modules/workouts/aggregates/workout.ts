@@ -79,11 +79,11 @@ export class Workout {
   static create(
     workoutId: VO.WorkoutIdType,
     planId: Plans.VO.PlanIdType,
-    planName: Plans.VO.PlanNameType,
+    planName: VO.WorkoutPlanNameType,
     planSectionId: Plans.VO.PlanSectionIdType,
-    planSectionName: Plans.VO.PlanSectionNameType,
-    planSectionWarmup: Plans.VO.PlanSectionWarmupType | undefined,
-    planSectionCooldown: Plans.VO.PlanSectionCooldownType | undefined,
+    planSectionName: VO.WorkoutPlanSectionNameType,
+    planSectionWarmup: VO.WorkoutPlanSectionWarmupType | undefined,
+    planSectionCooldown: VO.WorkoutPlanSectionCooldownType | undefined,
     scheduledFor: VO.WorkoutScheduledForType,
     userId: Auth.VO.UserIdType,
     deps: Dependencies,
@@ -115,9 +115,9 @@ export class Workout {
   addExercise(
     workoutExerciseId: VO.WorkoutExerciseIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
-    exerciseName: Exercises.VO.ExerciseNameType,
+    exerciseName: VO.WorkoutExerciseNameType,
     exerciseImageEtag: Exercises.VO.Exercise["imageEtag"],
-    exerciseDescription: Exercises.VO.Exercise["description"],
+    exerciseDescription: VO.WorkoutExerciseDescriptionType,
     prescription: VO.ExercisePrescriptionType,
     requesterId: Auth.VO.UserIdType,
   ) {
