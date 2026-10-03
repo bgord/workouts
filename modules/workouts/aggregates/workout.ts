@@ -380,9 +380,10 @@ export class Workout {
   }
 
   private apply(event: WorkoutEventType): void {
+    this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+
     switch (event.name) {
       case Events.WORKOUT_CREATED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.draft;
         this.userId = event.payload.userId;
         this.scheduledFor = event.payload.scheduledFor;
@@ -390,7 +391,6 @@ export class Workout {
       }
 
       case Events.WORKOUT_EXERCISE_ADDED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises.push({
           id: event.payload.workoutExerciseId,
           exerciseId: event.payload.exerciseId,
@@ -402,13 +402,11 @@ export class Workout {
       }
 
       case Events.WORKOUT_EXERCISE_REMOVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.filter((exercise) => exercise.id !== event.payload.workoutExerciseId);
         break;
       }
 
       case Events.WORKOUT_EXERCISE_MOVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         const moved = this.exercises.find((exercise) => exercise.id === event.payload.workoutExerciseId);
         const exercises = this.exercises.filter(
           (exercise) => exercise.id !== event.payload.workoutExerciseId,
@@ -421,7 +419,6 @@ export class Workout {
       }
 
       case Events.WORKOUT_EXERCISE_TARGET_SET_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.map((exercise) =>
           exercise.id === event.payload.workoutExerciseId
             ? { ...exercise, target: event.payload.target }
@@ -431,13 +428,11 @@ export class Workout {
       }
 
       case Events.WORKOUT_STARTED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.in_progress;
         break;
       }
 
       case Events.WORKOUT_SET_LOGGED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.map((exercise) =>
           exercise.id === event.payload.workoutExerciseId
             ? { ...exercise, loggedSets: [...exercise.loggedSets, event.payload.loggedSet] }
@@ -447,7 +442,6 @@ export class Workout {
       }
 
       case Events.WORKOUT_SET_CORRECTED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.map((exercise) =>
           // Stryker disable next-line ConditionalExpression
           exercise.id === event.payload.workoutExerciseId
@@ -463,7 +457,6 @@ export class Workout {
       }
 
       case Events.WORKOUT_SET_REMOVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.exercises = this.exercises.map((exercise) =>
           // Stryker disable next-line ConditionalExpression
           exercise.id === event.payload.workoutExerciseId
@@ -479,25 +472,21 @@ export class Workout {
       }
 
       case Events.WORKOUT_COMPLETED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.completed;
         break;
       }
 
       case Events.WORKOUT_DISCARDED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.WorkoutStatusEnum.discarded;
         break;
       }
 
       case Events.WORKOUT_NOTE_SET_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.note = event.payload.note;
         break;
       }
 
       case Events.WORKOUT_RESCHEDULED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.scheduledFor = event.payload.scheduledFor;
         break;
       }

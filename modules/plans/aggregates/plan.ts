@@ -459,9 +459,10 @@ export class Plan {
   }
 
   private apply(event: PlanEventType): void {
+    this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
+
     switch (event.name) {
       case Events.PLAN_CREATED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.draft;
         this.name = event.payload.planName;
         this.userId = event.payload.userId;
@@ -469,7 +470,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_CREATED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections.push({
           id: event.payload.planSectionId,
           name: event.payload.planSectionName,
@@ -479,7 +479,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_RENAMED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) =>
           section.id === event.payload.planSectionId
             ? { ...section, name: event.payload.planSectionName }
@@ -489,7 +488,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_WARMUP_SET_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) =>
           section.id === event.payload.planSectionId ? { ...section, warmup: event.payload.warmup } : section,
         );
@@ -497,7 +495,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_COOLDOWN_SET_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) =>
           section.id === event.payload.planSectionId
             ? { ...section, cooldown: event.payload.cooldown }
@@ -507,56 +504,47 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_REMOVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.filter((section) => section.id !== event.payload.planSectionId);
         break;
       }
 
       case Events.PLAN_ARCHIVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.archived;
         break;
       }
 
       case Events.PLAN_FINALIZED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.finalized;
         break;
       }
 
       // Stryker disable next-line ConditionalExpression
       case Events.PLAN_RESTORED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.draft;
         break;
       }
 
       case Events.PLAN_REMOVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.removed;
         break;
       }
 
       case Events.PLAN_EDITING_ENABLED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.status = VO.PlanStatusEnum.draft;
         break;
       }
 
       case Events.PLAN_RENAMED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.name = event.payload.planName;
         break;
       }
 
       case Events.PLAN_DESCRIPTION_SET_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.description = event.payload.description;
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) =>
           section.id === event.payload.planSectionId
             ? {
@@ -569,7 +557,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) =>
           section.id === event.payload.planSectionId
             ? {
@@ -584,7 +571,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) =>
           section.id === event.payload.planSectionId
             ? {
@@ -606,7 +592,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) =>
           section.id === event.payload.planSectionId
             ? {
@@ -623,7 +608,6 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT: {
-        this.revision = new tools.Revision(event.revision ?? this.revision.next().value);
         this.sections = this.sections.map((section) => {
           // Stryker disable next-line ConditionalExpression
           if (section.id !== event.payload.planSectionId) return section;
