@@ -454,6 +454,38 @@ test.describe("Workouts - active-mutation", () => {
     await expect(row.getByText("RIR 1")).toBeVisible();
   });
 
+  test("unlocks scrolling after logging a set and closing the panel with Escape", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+    await page
+      .getByRole("dialog", { name: "Logging panel" })
+      .getByRole("button", { name: "Log set", exact: true })
+      .click();
+    await expect(page.locator("[aria-busy=true]")).toHaveCount(0);
+    await page.keyboard.press("Escape");
+
+    await expect(page.getByRole("dialog", { name: "Logging panel" })).toBeHidden();
+    await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
+  });
+
+  test("unlocks scrolling after logging a set and closing the panel by clicking away", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
+    await page
+      .getByRole("dialog", { name: "Logging panel" })
+      .getByRole("button", { name: "Log set", exact: true })
+      .click();
+    await expect(page.locator("[aria-busy=true]")).toHaveCount(0);
+    await page.mouse.click(1, 1);
+
+    await expect(page.getByRole("dialog", { name: "Logging panel" })).toBeHidden();
+    await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
+  });
+
   test("rejects a logged set correction out of range", async ({ page }) => {
     const row = page.getByRole("listitem", {
       name: fixtures.exercises.overheadPressSeatedDumbbells.name,

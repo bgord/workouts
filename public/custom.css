@@ -125,6 +125,10 @@ a {
   }
 }
 
+body:has([data-log-panel]) {
+  overflow: hidden;
+}
+
 [data-log-panel] {
   width: calc(100% - var(--spacing-3) * 2);
   max-width: calc(768px - var(--spacing-3) * 2);

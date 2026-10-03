@@ -31,7 +31,6 @@ function WorkoutLogPanelDialog(props: { children: React.ReactNode }) {
     ref.current?.focus();
   }, []);
 
-  bg.useScrollLock();
   bg.useClickOutside(ref, close);
 
   return (
