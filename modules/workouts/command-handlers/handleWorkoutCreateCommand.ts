@@ -6,7 +6,6 @@ import { Workout } from "../aggregates/workout";
 import { WorkoutDraftLimitForOwner } from "../invariants/workout-draft-limit-for-owner";
 import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 import { WorkoutPlanSectionReady } from "../invariants/workout-plan-section-ready";
-import { WorkoutScheduledForIsWithinHorizon } from "../invariants/workout-scheduled-for-is-within-horizon";
 import { WorkoutExerciseDescription } from "../value-objects/workout-exercise-description";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
 import { WorkoutExerciseName } from "../value-objects/workout-exercise-name";
@@ -27,11 +26,6 @@ type Dependencies = {
 
 export const handleWorkoutCreateCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutCreateCommandType) => {
-    WorkoutScheduledForIsWithinHorizon.enforce({
-      scheduledFor: command.payload.scheduledFor,
-      now: deps.Clock.now(),
-    });
-
     const plan = await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId);
 
     WorkoutPlanReady.enforce({ plan });

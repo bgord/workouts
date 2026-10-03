@@ -76,44 +76,6 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 
-  test("WorkoutScheduledForIsWithinHorizon", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          planId: mocks.planId,
-          planSectionId: mocks.planSectionId,
-          scheduledFor: "2999-12-31",
-        }),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
-  });
-
-  test("WorkoutScheduledForIsWithinHorizon - past", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          planId: mocks.planId,
-          planSectionId: mocks.planSectionId,
-          scheduledFor: "2000-01-01",
-        }),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
-  });
-
   test("WorkoutPlanReady", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
@@ -178,6 +140,54 @@ describe(`POST ${url}`, async () => {
     );
 
     await testcases.assertErrorResponse(response, 403, "workout.draft.limit.for.owner");
+  });
+
+  test("WorkoutScheduledForIsWithinHorizon", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
+    spies
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: "2999-12-31",
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
+  });
+
+  test("WorkoutScheduledForIsWithinHorizon - past", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
+    spies
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: "2000-01-01",
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
   });
 
   test("happy path", async () => {

@@ -88,6 +88,8 @@ export class Workout {
     userId: Auth.VO.UserIdType,
     deps: Dependencies,
   ): Workout {
+    Invariants.WorkoutScheduledForIsWithinHorizon.enforce({ scheduledFor, now: deps.Clock.now() });
+
     const workout = new Workout(workoutId, deps);
 
     const WorkoutCreatedEvent = bg.event(

@@ -1,4 +1,4 @@
-// cSpell:ignore unassigns
+// cSpell:ignore unassigns spinbutton
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
