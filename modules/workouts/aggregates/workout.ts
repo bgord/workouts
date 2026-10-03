@@ -5,6 +5,7 @@ import * as v from "valibot";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
+import * as Entities from "+workouts/entities";
 import * as Events from "+workouts/events";
 import * as Invariants from "+workouts/invariants";
 import * as VO from "+workouts/value-objects";
@@ -55,7 +56,7 @@ export class Workout {
   private userId?: Auth.VO.UserIdType;
   private scheduledFor?: VO.WorkoutScheduledForType;
   private note?: VO.WorkoutNoteType;
-  private exercises: Array<VO.WorkoutExercise> = [];
+  private exercises: Array<Entities.WorkoutExercise> = [];
 
   private readonly pending: Array<WorkoutEventType> = [];
 
@@ -191,11 +192,7 @@ export class Workout {
   ) {
     Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
-    Invariants.WorkoutExerciseTargetHasChanged.enforce({
-      current: this.exercises.find((exercise) => exercise.id === workoutExerciseId)?.target,
-      incoming: target,
-    });
+    this.exercise(workoutExerciseId).guardTargetSet(target);
 
     const event = bg.event(
       Events.WorkoutExerciseTargetSetEvent,
@@ -233,20 +230,13 @@ export class Workout {
   ) {
     Invariants.WorkoutIsInProgress.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
 
-    const exercise = this.exercises.find((exercise) => exercise.id === workoutExerciseId);
-    const setNumber = v.parse(VO.SetNumber, exercise!.loggedSets.length + 1);
+    const loggedSet = this.exercise(workoutExerciseId).nextSet(loggedSetId, reps, load, rir);
 
     const event = bg.event(
       Events.WorkoutSetLoggedEvent,
       Workout.getStream(this.id),
-      {
-        workoutId: this.id,
-        workoutExerciseId,
-        loggedSet: { id: loggedSetId, setNumber, reps, load, rir },
-        requesterId,
-      },
+      { workoutId: this.id, workoutExerciseId, loggedSet, requesterId },
       this.deps,
     );
 
@@ -261,24 +251,15 @@ export class Workout {
     rir: VO.RirType | undefined,
     requesterId: Auth.VO.UserIdType,
   ) {
-    const workoutExercise = this.exercises.find((exercise) => exercise.id === workoutExerciseId);
-
     Invariants.WorkoutIsCorrectable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
-    Invariants.WorkoutLoggedSetExists.enforce({ workoutExercise, loggedSetId });
 
-    const current = workoutExercise?.loggedSets.find((loggedSet) => loggedSet.id === loggedSetId);
+    const loggedSet = this.exercise(workoutExerciseId).correction(loggedSetId, reps, load, rir);
 
     const event = bg.event(
       Events.WorkoutSetCorrectedEvent,
       Workout.getStream(this.id),
-      {
-        workoutId: this.id,
-        workoutExerciseId,
-        loggedSet: { id: loggedSetId, setNumber: current!.setNumber, reps, load, rir },
-        requesterId,
-      },
+      { workoutId: this.id, workoutExerciseId, loggedSet, requesterId },
       this.deps,
     );
 
@@ -290,12 +271,9 @@ export class Workout {
     loggedSetId: VO.LoggedSetIdType,
     requesterId: Auth.VO.UserIdType,
   ) {
-    const workoutExercise = this.exercises.find((exercise) => exercise.id === workoutExerciseId);
-
     Invariants.WorkoutIsCorrectable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
-    Invariants.WorkoutLoggedSetExists.enforce({ workoutExercise, loggedSetId });
+    this.exercise(workoutExerciseId).guardLoggedSetExists(loggedSetId);
     Invariants.WorkoutRetainsLoggedSets.enforce({
       status: this.status,
       count: tools.Int.nonNegative(
@@ -379,6 +357,12 @@ export class Workout {
     return events;
   }
 
+  private exercise(workoutExerciseId: VO.WorkoutExerciseIdType): Entities.WorkoutExercise {
+    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+
+    return this.exercises.find((exercise) => exercise.id === workoutExerciseId)!;
+  }
+
   private record(event: WorkoutEventType): void {
     this.apply(event);
     this.pending.push(event);
@@ -396,13 +380,14 @@ export class Workout {
       }
 
       case Events.WORKOUT_EXERCISE_ADDED_EVENT: {
-        this.exercises.push({
-          id: event.payload.workoutExerciseId,
-          exerciseId: event.payload.exerciseId,
-          exerciseName: event.payload.exerciseName,
-          prescription: event.payload.prescription,
-          loggedSets: [],
-        });
+        this.exercises.push(
+          new Entities.WorkoutExercise(
+            event.payload.workoutExerciseId,
+            event.payload.exerciseId,
+            event.payload.exerciseName,
+            event.payload.prescription,
+          ),
+        );
         break;
       }
 
@@ -424,11 +409,9 @@ export class Workout {
       }
 
       case Events.WORKOUT_EXERCISE_TARGET_SET_EVENT: {
-        this.exercises = this.exercises.map((exercise) =>
-          exercise.id === event.payload.workoutExerciseId
-            ? { ...exercise, target: event.payload.target }
-            : exercise,
-        );
+        this.exercises
+          .find((exercise) => exercise.id === event.payload.workoutExerciseId)
+          ?.setTarget(event.payload.target);
         break;
       }
 
@@ -438,41 +421,23 @@ export class Workout {
       }
 
       case Events.WORKOUT_SET_LOGGED_EVENT: {
-        this.exercises = this.exercises.map((exercise) =>
-          exercise.id === event.payload.workoutExerciseId
-            ? { ...exercise, loggedSets: [...exercise.loggedSets, event.payload.loggedSet] }
-            : exercise,
-        );
+        this.exercises
+          .find((exercise) => exercise.id === event.payload.workoutExerciseId)
+          ?.logSet(event.payload.loggedSet);
         break;
       }
 
       case Events.WORKOUT_SET_CORRECTED_EVENT: {
-        this.exercises = this.exercises.map((exercise) =>
-          // Stryker disable next-line ConditionalExpression
-          exercise.id === event.payload.workoutExerciseId
-            ? {
-                ...exercise,
-                loggedSets: exercise.loggedSets.map((loggedSet) =>
-                  loggedSet.id === event.payload.loggedSet.id ? event.payload.loggedSet : loggedSet,
-                ),
-              }
-            : exercise,
-        );
+        this.exercises
+          .find((exercise) => exercise.id === event.payload.workoutExerciseId)
+          ?.correctSet(event.payload.loggedSet);
         break;
       }
 
       case Events.WORKOUT_SET_REMOVED_EVENT: {
-        this.exercises = this.exercises.map((exercise) =>
-          // Stryker disable next-line ConditionalExpression
-          exercise.id === event.payload.workoutExerciseId
-            ? {
-                ...exercise,
-                loggedSets: exercise.loggedSets
-                  .filter((loggedSet) => loggedSet.id !== event.payload.loggedSetId)
-                  .map((loggedSet, index) => ({ ...loggedSet, setNumber: v.parse(VO.SetNumber, index + 1) })),
-              }
-            : exercise,
-        );
+        this.exercises
+          .find((exercise) => exercise.id === event.payload.workoutExerciseId)
+          ?.removeSet(event.payload.loggedSetId);
         break;
       }
 

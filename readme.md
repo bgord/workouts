@@ -475,6 +475,8 @@ modules/
     │   ├── WORKOUT_SET_LOG_COMMAND.ts
     │   ├── WORKOUT_SET_REMOVE_COMMAND.ts
     │   └── WORKOUT_START_COMMAND.ts
+    ├── entities
+    │   └── workout-exercise.ts
     ├── events
     │   ├── WORKOUT_COMPLETED_EVENT.ts
     │   ├── WORKOUT_CREATED_EVENT.ts
