@@ -533,13 +533,13 @@ modules/
     ├── services
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
-    │   ├── load-step-plates.strategy.ts
+    │   ├── load-step-increment.strategy.ts
+    │   ├── load-step-locked.strategy.ts
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
-    │   ├── progression-method-load-step.ts
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method.strategy.ts
     │   ├── workout-export-file-csv.ts
