@@ -311,6 +311,7 @@
   "progression.method.double_progression": "Double progression",
   "progression.method.label": "Progression",
   "progression.method.linear_progression": "Linear progression",
+  "progression.method.none": "No progression",
   "profile.avatar.change.cta": "Change avatar",
   "profile.avatar.delete.title": "Delete avatar",
   "profile.avatar.header": "Avatar",

@@ -311,6 +311,7 @@
   "progression.method.double_progression": "Podwójna progresja",
   "progression.method.label": "Progresja",
   "progression.method.linear_progression": "Progresja liniowa",
+  "progression.method.none": "Bez progresji",
   "profile.avatar.change.cta": "Zmień awatar",
   "profile.avatar.delete.title": "Usuń awatar",
   "profile.avatar.header": "Awatar",
