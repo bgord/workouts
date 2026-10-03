@@ -126,7 +126,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent]);
-    expect(plan["sections"]).toEqual([
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
       {
         id: mocks.planSectionId,
         name: mocks.planSectionName,

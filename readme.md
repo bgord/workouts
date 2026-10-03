@@ -315,6 +315,8 @@ modules/
 │   │   ├── PLAN_SECTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_RENAME_COMMAND.ts
 │   │   └── PLAN_SECTION_WARMUP_SET_COMMAND.ts
+│   ├── entities
+│   │   └── plan-section.ts
 │   ├── events
 │   │   ├── PLAN_ARCHIVED_EVENT.ts
 │   │   ├── PLAN_CREATED_EVENT.ts

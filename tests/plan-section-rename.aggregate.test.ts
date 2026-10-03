@@ -88,7 +88,7 @@ describe("Plan.renameSection", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionRenamedEvent]);
-    expect(plan["sections"]).toEqual([
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
       { id: mocks.anotherPlanSectionId, name: mocks.thirdPlanSectionName, exerciseInstructions: [] },
       { id: mocks.planSectionId, name: mocks.anotherPlanSectionName, exerciseInstructions: [] },
     ]);

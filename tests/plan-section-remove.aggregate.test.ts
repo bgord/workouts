@@ -60,7 +60,7 @@ describe("Plan.removeSection", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionRemovedEvent]);
-    expect(plan["sections"]).toEqual([
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
       { id: mocks.anotherPlanSectionId, name: mocks.anotherPlanSectionName, exerciseInstructions: [] },
     ]);
   });

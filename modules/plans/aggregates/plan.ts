@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Auth from "+auth";
+import * as Entities from "+plans/entities";
 import * as Events from "+plans/events";
 import * as Invariants from "+plans/invariants";
 import * as VO from "+plans/value-objects";
@@ -64,7 +65,7 @@ export class Plan {
   private status = VO.PlanStatusEnum.initial;
   private name?: VO.PlanNameType;
   private description?: VO.PlanDescriptionType;
-  private sections: Array<VO.PlanSection> = [];
+  private sections: Array<Entities.PlanSection> = [];
   private userId?: Auth.VO.UserIdType;
 
   private readonly pending: Array<PlanEventType> = [];
@@ -148,11 +149,7 @@ export class Plan {
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-    Invariants.PlanSectionNameHasChanged.enforce({
-      current: this.sections.find((section) => section.id === planSectionId)?.name,
-      incoming: planSectionName,
-    });
+    this.section(planSectionId).guardRename(planSectionName);
     Invariants.PlanSectionNameIsUniqueForPlan.enforce({ planSectionName, planSections: this.sections });
 
     const event = bg.event(
@@ -172,11 +169,7 @@ export class Plan {
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-    Invariants.PlanSectionWarmupHasChanged.enforce({
-      current: this.sections.find((section) => section.id === planSectionId)?.warmup,
-      incoming: warmup,
-    });
+    this.section(planSectionId).guardWarmupSet(warmup);
 
     const event = bg.event(
       Events.PlanSectionWarmupSetEvent,
@@ -195,11 +188,7 @@ export class Plan {
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-    Invariants.PlanSectionCooldownHasChanged.enforce({
-      current: this.sections.find((section) => section.id === planSectionId)?.cooldown,
-      incoming: cooldown,
-    });
+    this.section(planSectionId).guardCooldownSet(cooldown);
 
     const event = bg.event(
       Events.PlanSectionCooldownSetEvent,
@@ -320,10 +309,7 @@ export class Plan {
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-    Invariants.PlanSectionExerciseInstructionLimit.enforce({
-      planSection: this.sections.find((section) => section.id === planSectionId),
-    });
+    this.section(planSectionId).guardInstructionAdd();
 
     const event = bg.event(
       Events.PlanSectionExerciseInstructionAddedEvent,
@@ -342,11 +328,7 @@ export class Plan {
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-    Invariants.PlanSectionExerciseInstructionExists.enforce({
-      planSection: this.sections.find((section) => section.id === planSectionId),
-      exerciseInstructionId,
-    });
+    this.section(planSectionId).guardInstructionExists(exerciseInstructionId);
 
     const event = bg.event(
       Events.PlanSectionExerciseInstructionRemovedEvent,
@@ -363,21 +345,9 @@ export class Plan {
     exerciseInstruction: Omit<VO.ExerciseInstructionType, "exerciseId">,
     requesterId: Auth.VO.UserIdType,
   ) {
-    const planSection = this.sections.find((section) => section.id === planSectionId);
-
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-    Invariants.PlanSectionExerciseInstructionExists.enforce({
-      planSection,
-      exerciseInstructionId: exerciseInstruction.id,
-    });
-    Invariants.PlanSectionExerciseInstructionHasChanged.enforce({
-      current: planSection?.exerciseInstructions.find(
-        (instruction) => instruction.id === exerciseInstruction.id,
-      ),
-      incoming: exerciseInstruction,
-    });
+    this.section(planSectionId).guardInstructionUpdate(exerciseInstruction);
 
     const event = bg.event(
       Events.PlanSectionExerciseInstructionUpdatedEvent,
@@ -394,21 +364,9 @@ export class Plan {
     exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">,
     requesterId: Auth.VO.UserIdType,
   ) {
-    const planSection = this.sections.find((section) => section.id === planSectionId);
-
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSections: this.sections, planSectionId });
-    Invariants.PlanSectionExerciseInstructionExists.enforce({
-      planSection,
-      exerciseInstructionId: exerciseInstruction.id,
-    });
-    Invariants.PlanSectionExerciseInstructionExerciseHasChanged.enforce({
-      current: planSection?.exerciseInstructions.find(
-        (instruction) => instruction.id === exerciseInstruction.id,
-      )?.exerciseId,
-      incoming: exerciseInstruction.exerciseId,
-    });
+    this.section(planSectionId).guardInstructionExerciseChange(exerciseInstruction);
 
     const event = bg.event(
       Events.PlanSectionExerciseInstructionExerciseChangedEvent,
@@ -426,18 +384,9 @@ export class Plan {
     position: VO.ExerciseInstructionPositionType,
     requesterId: Auth.VO.UserIdType,
   ) {
-    const planSection = this.sections.find((section) => section.id === planSectionId);
-
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-    Invariants.PlanSectionExerciseInstructionExists.enforce({ planSection, exerciseInstructionId });
-    Invariants.PlanSectionExerciseInstructionPositionInRange.enforce({ planSection, position });
-    Invariants.PlanSectionExerciseInstructionPositionHasChanged.enforce({
-      planSection,
-      exerciseInstructionId,
-      position,
-    });
+    this.section(planSectionId).guardInstructionMove(exerciseInstructionId, position);
 
     const event = bg.event(
       Events.PlanSectionExerciseInstructionMovedEvent,
@@ -457,6 +406,12 @@ export class Plan {
     return events;
   }
 
+  private section(planSectionId: VO.PlanSectionIdType): Entities.PlanSection {
+    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
+
+    return this.sections.find((section) => section.id === planSectionId)!;
+  }
+
   private record(event: PlanEventType): void {
     this.apply(event);
     this.pending.push(event);
@@ -474,36 +429,30 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_CREATED_EVENT: {
-        this.sections.push({
-          id: event.payload.planSectionId,
-          name: event.payload.planSectionName,
-          exerciseInstructions: [],
-        });
+        this.sections.push(
+          new Entities.PlanSection(event.payload.planSectionId, event.payload.planSectionName),
+        );
         break;
       }
 
       case Events.PLAN_SECTION_RENAMED_EVENT: {
-        this.sections = this.sections.map((section) =>
-          section.id === event.payload.planSectionId
-            ? { ...section, name: event.payload.planSectionName }
-            : section,
-        );
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.rename(event.payload.planSectionName);
         break;
       }
 
       case Events.PLAN_SECTION_WARMUP_SET_EVENT: {
-        this.sections = this.sections.map((section) =>
-          section.id === event.payload.planSectionId ? { ...section, warmup: event.payload.warmup } : section,
-        );
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.setWarmup(event.payload.warmup);
         break;
       }
 
       case Events.PLAN_SECTION_COOLDOWN_SET_EVENT: {
-        this.sections = this.sections.map((section) =>
-          section.id === event.payload.planSectionId
-            ? { ...section, cooldown: event.payload.cooldown }
-            : section,
-        );
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.setCooldown(event.payload.cooldown);
         break;
       }
 
@@ -549,84 +498,40 @@ export class Plan {
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT: {
-        this.sections = this.sections.map((section) =>
-          section.id === event.payload.planSectionId
-            ? {
-                ...section,
-                exerciseInstructions: [...section.exerciseInstructions, event.payload.exerciseInstruction],
-              }
-            : section,
-        );
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.addInstruction(event.payload.exerciseInstruction);
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT: {
-        this.sections = this.sections.map((section) =>
-          section.id === event.payload.planSectionId
-            ? {
-                ...section,
-                exerciseInstructions: section.exerciseInstructions.filter(
-                  (exerciseInstruction) => exerciseInstruction.id !== event.payload.exerciseInstructionId,
-                ),
-              }
-            : section,
-        );
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.removeInstruction(event.payload.exerciseInstructionId);
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT: {
-        this.sections = this.sections.map((section) =>
-          section.id === event.payload.planSectionId
-            ? {
-                ...section,
-                exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) =>
-                  exerciseInstruction.id === event.payload.exerciseInstruction.id
-                    ? {
-                        ...exerciseInstruction,
-                        reps: event.payload.exerciseInstruction.reps,
-                        sets: event.payload.exerciseInstruction.sets,
-                        progression: event.payload.exerciseInstruction.progression,
-                      }
-                    : exerciseInstruction,
-                ),
-              }
-            : section,
-        );
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.updateInstruction(event.payload.exerciseInstruction);
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT: {
-        this.sections = this.sections.map((section) =>
-          section.id === event.payload.planSectionId
-            ? {
-                ...section,
-                exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) =>
-                  exerciseInstruction.id === event.payload.exerciseInstruction.id
-                    ? { ...exerciseInstruction, exerciseId: event.payload.exerciseInstruction.exerciseId }
-                    : exerciseInstruction,
-                ),
-              }
-            : section,
-        );
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.changeInstructionExercise(
+            event.payload.exerciseInstruction.id,
+            event.payload.exerciseInstruction.exerciseId,
+          );
         break;
       }
 
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT: {
-        this.sections = this.sections.map((section) => {
-          // Stryker disable next-line ConditionalExpression
-          if (section.id !== event.payload.planSectionId) return section;
-
-          const moved = section.exerciseInstructions.find(
-            (exerciseInstruction) => exerciseInstruction.id === event.payload.exerciseInstructionId,
-          );
-          const exerciseInstructions = section.exerciseInstructions.filter(
-            (exerciseInstruction) => exerciseInstruction.id !== event.payload.exerciseInstructionId,
-          );
-
-          if (moved) exerciseInstructions.splice(event.payload.position, 0, moved);
-
-          return { ...section, exerciseInstructions };
-        });
+        this.sections
+          .find((section) => section.id === event.payload.planSectionId)
+          ?.moveInstruction(event.payload.exerciseInstructionId, event.payload.position);
         break;
       }
     }
