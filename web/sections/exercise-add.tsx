@@ -31,12 +31,11 @@ export function ExerciseAdd() {
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });
     },
-    onSuccess: async (_, context) => {
+    onSuccess: async () => {
       exerciseAdd.disable();
       await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
       bg.Fields.clearAll([name, description]);
       image.actions.clearFile();
-      context.form?.reset();
     },
   });
 

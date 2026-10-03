@@ -16,6 +16,7 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
     <div data-stack="x" data-wrap="wrap" {...bg.Rhythm(36).times(1).style.minHeight} {...ui.Gap.cluster}>
       <ui.Select
         aria-label={t("workout.list.filter.label")}
+        {...bg.Autocomplete.off}
         id={WorkoutHistoryFiltersForm.Form.filter.field.name}
         name={WorkoutHistoryFiltersForm.Form.filter.field.name}
         onChange={(event) => {

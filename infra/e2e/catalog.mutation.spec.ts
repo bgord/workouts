@@ -100,6 +100,10 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("33 of 33")).toBeVisible();
+
+    await page.getByRole("button", { name: "New exercise" }).click();
+
+    await expect(page.getByText("PNG, JPG or WebP, up to 10 MB and 4000 px per side")).toBeVisible();
   });
 
   test("rejects a too short new exercise name", async ({ page }) => {
