@@ -2,6 +2,7 @@ import {
   ExerciseDescriptionMax,
   ExerciseDescriptionMin,
 } from "../../modules/exercises/value-objects/exercise-description.validation";
+import { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
 import {
   ExerciseNameMax,
   ExerciseNameMin,
@@ -13,4 +14,5 @@ export const Form = {
     pattern: { min: ExerciseDescriptionMin, max: ExerciseDescriptionMax },
     field: { name: "description" },
   },
+  loading: { field: { name: "loading", defaultValue: ExerciseLoadingOptions.external } },
 };

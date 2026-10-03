@@ -27,6 +27,7 @@ export function ExerciseAdd() {
 
       form.append("name", name.value ?? "");
       form.append("description", description.value ?? "");
+      form.append("loading", Form.loading.field.defaultValue);
       if (image.data) form.append("file", image.data);
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });

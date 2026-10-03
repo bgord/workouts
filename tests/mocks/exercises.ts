@@ -12,6 +12,7 @@ export const exerciseDescription = v.parse(
   Exercises.VO.ExerciseDescription,
   "Press the barbell upwards, while lying on the horizontal bench.",
 );
+export const exerciseLoading = Exercises.VO.ExerciseLoadingOptions.external;
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 export const exerciseImageEtag = bg.Hash.fromString(
   "0000000000000000000000000000000000000000000000000000000000000000",
@@ -104,13 +105,14 @@ export const GenericExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: exerciseStream,
-  version: 1,
+  version: 2,
   commit,
   name: "EXERCISE_ADDED_EVENT",
   payload: {
     id: exerciseId,
     name: exerciseName,
     description: exerciseDescription,
+    loading: exerciseLoading,
     image: exerciseImageKey,
     imageEtag: exerciseImageEtag,
     userId: Auth.VO.ADMIN_USER_ID,

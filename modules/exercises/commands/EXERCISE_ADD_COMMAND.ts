@@ -3,6 +3,7 @@ import * as v from "valibot";
 import * as Auth from "+auth";
 import { ExerciseDescription } from "../value-objects/exercise-description";
 import { ExerciseId } from "../value-objects/exercise-id";
+import { ExerciseLoading } from "../value-objects/exercise-loading";
 import { ExerciseName } from "../value-objects/exercise-name";
 
 // Stryker disable next-line StringLiteral
@@ -16,6 +17,7 @@ export const ExerciseAddCommand = v.object({
     absoluteFilePath: v.pipe(v.string(), v.minLength(1)),
     name: ExerciseName,
     description: ExerciseDescription,
+    loading: ExerciseLoading,
     userId: Auth.VO.UserId,
   }),
 });
