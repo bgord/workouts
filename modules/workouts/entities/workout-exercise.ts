@@ -3,7 +3,7 @@ import type * as Exercises from "+exercises";
 import * as Invariants from "+workouts/invariants";
 import * as VO from "+workouts/value-objects";
 
-export class WorkoutExercise {
+export class WorkoutExercise implements VO.WorkoutExercise {
   target?: VO.ExerciseTargetType;
   loggedSets: Array<VO.LoggedSetType> = [];
 

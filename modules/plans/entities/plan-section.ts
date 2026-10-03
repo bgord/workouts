@@ -2,7 +2,7 @@ import type * as Exercises from "+exercises";
 import * as Invariants from "+plans/invariants";
 import type * as VO from "+plans/value-objects";
 
-export class PlanSection {
+export class PlanSection implements VO.PlanSection {
   warmup?: VO.PlanSectionWarmupType;
   cooldown?: VO.PlanSectionCooldownType;
   exerciseInstructions: Array<VO.ExerciseInstructionType> = [];
