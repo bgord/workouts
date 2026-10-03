@@ -1,6 +1,7 @@
 import type * as bg from "@bgord/ui";
 import { Form } from "../../app/services/workout-target-form";
 import { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import { NoLoadBadge } from "../components/no-load-badge";
 import { Stepper } from "../components/stepper";
 import { WeightFormat } from "../services/weight-format";
 
@@ -16,6 +17,7 @@ type LoadFieldProps = {
 
 type LoadingKitStrategy = {
   Field: (props: LoadFieldProps) => React.ReactNode;
+  Badge: () => React.ReactNode;
   payload: (field: LoadField) => number;
   ready: (field: LoadField) => boolean;
 };
@@ -41,11 +43,13 @@ function LoadStepper(props: LoadFieldProps) {
 export const LoadingKit = {
   [ExerciseLoadingOptions.external]: {
     Field: LoadStepper,
+    Badge: () => null,
     payload: (field) => WeightFormat.grams(field.value ?? 0),
     ready: (field) => !field.empty,
   },
   [ExerciseLoadingOptions.none]: {
     Field: () => null,
+    Badge: NoLoadBadge,
     payload: () => 0,
     ready: () => true,
   },
