@@ -1,17 +1,13 @@
 import * as v from "valibot";
-import type * as Queries from "+workouts/queries";
 import * as VO from "+workouts/value-objects";
-import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-set";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 import { PROGRESSION_METHOD_LOAD_STEP } from "./progression-method-load-step";
 
 export class ProgressionMethodLinearProgressionStrategy implements ProgressionMethodStrategy {
-  constructor(private readonly previous: Pick<Queries.ExercisePerformance, "sets">) {}
+  constructor(private readonly last: VO.ExerciseTargetType) {}
 
   calculate(): VO.ExerciseTargetProgression {
-    const last = new ExercisePerformanceWeakestSet(this.previous).calculate();
-
-    return { last, regress: this.regress(last), progress: this.progress(last) };
+    return { last: this.last, regress: this.regress(this.last), progress: this.progress(this.last) };
   }
 
   private regress(last: VO.ExerciseTargetType): VO.ExerciseTargetType | undefined {

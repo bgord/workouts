@@ -9,34 +9,25 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   test("below range - one rep either way", () => {
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      mocks.exercisePerformance,
+      mocks.exercisePerformanceWeakestSet,
     );
 
     expect(strategy.calculate()).toEqual(mocks.exerciseTargetProgression);
   });
 
   test("one below range minimum - progress reaches range minimum", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 7),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 7),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 7),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-      }),
+      last,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 6),
@@ -51,27 +42,18 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("mid range - one rep either way", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 10),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 10),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-      }),
+      last,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 9),
@@ -86,27 +68,18 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("range minimum - regress drops load and goes to range maximum", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 8),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 8),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 8),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-      }),
+      last,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 12),
@@ -121,27 +94,18 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("range maximum - progress adds load and goes to range minimum", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 12),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 12),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 12),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-      }),
+      last,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 11),
@@ -156,27 +120,18 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("above range - treated as range maximum", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 14),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 14),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 14),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-      }),
+      last,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 13),
@@ -191,27 +146,18 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("range minimum - no regress below zero load", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 8),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 8),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 8),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2).get()),
-      }),
+      last,
       regress: undefined,
       progress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
@@ -222,27 +168,18 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("range minimum - regress to zero load", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 8),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 8),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 8),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
-      }),
+      last,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 12),
@@ -257,27 +194,18 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("single rep below range - no regress, one rep up", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 1),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       mocks.exercisePrescription,
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 1),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 1),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-      }),
+      last,
       regress: undefined,
       progress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
@@ -288,31 +216,22 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   });
 
   test("fixed rep range - progress and regress both change load", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 6),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+    });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       v.parse(Workouts.VO.ExercisePrescription, {
         sets: mocks.sets,
         reps: mocks.anotherRepsRange,
         progression: mocks.progression,
       }),
-      {
-        ...mocks.exercisePerformance,
-        sets: [
-          {
-            setNumber: v.parse(Workouts.VO.SetNumber, 1),
-            reps: v.parse(Workouts.VO.Reps, 6),
-            load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-            rir: null,
-          },
-        ],
-      },
+      last,
     );
 
     expect(strategy.calculate()).toEqual({
-      last: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 1),
-        reps: v.parse(Workouts.VO.Reps, 6),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
-      }),
+      last,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 6),
