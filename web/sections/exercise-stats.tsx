@@ -1,57 +1,22 @@
 import * as bg from "@bgord/ui";
-import { CalendarCheck, EqualApproximately, Sigma, Trophy } from "lucide-react";
+import { CalendarCheck } from "lucide-react";
 import * as ui from "../components";
+import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
-import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseStats() {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
-  const { performances } = exerciseRoute.useLoaderData();
+  const { exercise, performances } = exerciseRoute.useLoaderData();
+  const Statistics = ExerciseStatisticsKit[exercise.data.loading];
 
-  const best = performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
-  const heaviest = performances.toSorted((a, b) => b.volume - a.volume)[0];
   const latest = performances.at(-1);
 
   /* v8 ignore next */
-  if (!(best && heaviest && latest)) return null;
+  if (!latest) return null;
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
-      <ui.TileLink data-hover-bc="brand-500" params={{ workoutId: best.workoutId }} to="/workouts/$workoutId">
-        <ui.TileHeader>
-          <Trophy data-color="brand-400" data-size="xs" />
-          <span data-stack="x">
-            <EqualApproximately data-color="neutral-600" data-size="xs" />
-            {t("statistics.exercise.one_rep_max_estimate")}
-          </span>
-        </ui.TileHeader>
-
-        <ui.TileValue>
-          {t("statistics.exercise.one_rep_max_estimate.value", {
-            load: WeightFormat.kilograms(best.bestEstimate).toLocaleString(language),
-          })}
-        </ui.TileValue>
-
-        <ui.TileContext>
-          <ui.SetValue load={best.bestSet.load} loading={best.loading} reps={best.bestSet.reps} />
-        </ui.TileContext>
-      </ui.TileLink>
-
-      <ui.Tile>
-        <ui.TileHeader>
-          <Sigma data-size="xs" />
-          {t("statistics.exercise.volume")}
-        </ui.TileHeader>
-
-        <ui.TileValue>
-          {t("statistics.exercise.history.volume_load.value", {
-            load: WeightFormat.kilograms(heaviest.volume).toLocaleString(language),
-          })}
-        </ui.TileValue>
-
-        <ui.TileContext>{heaviest.scheduledFor}</ui.TileContext>
-      </ui.Tile>
+      <Statistics.Tiles performances={performances} />
 
       <ui.Tile>
         <ui.TileHeader>

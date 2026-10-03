@@ -346,7 +346,7 @@
   "statistics.exercise.progress": "Postęp",
   "statistics.exercise.sessions": "Sesje",
   "statistics.exercise.volume": "Najlepsza objętość",
-  "statistics.exercise.progress.point": "{{date}} — {{load}} kg",
+  "statistics.exercise.progress.point": "{{date}} — {{value}}",
   "workout.has.logged.sets": "Najpierw zapisz choć jedną serię",
   "workout.complete.cta": "Zakończ",
   "workout.complete.error": "Nie udało się zakończyć treningu",

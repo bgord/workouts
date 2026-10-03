@@ -346,7 +346,7 @@
   "statistics.exercise.progress": "Progress",
   "statistics.exercise.sessions": "Sessions",
   "statistics.exercise.volume": "Best volume",
-  "statistics.exercise.progress.point": "{{date}} — {{load}} kg",
+  "statistics.exercise.progress.point": "{{date}} — {{value}}",
   "workout.has.logged.sets": "Log at least one set first",
   "workout.complete.cta": "Complete",
   "workout.complete.error": "Could not complete the workout",
