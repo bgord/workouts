@@ -2,6 +2,17 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import { and, asc, desc, eq, gte, inArray, sql } from "drizzle-orm";
 import type { AccountCreatedEventType, AccountDeletedEventType } from "+auth/events";
+import type {
+  ExerciseAddedEventType,
+  ExerciseCategoryAddedEventType,
+  ExerciseCategoryAssignedEventType,
+  ExerciseCategoryDeletedEventType,
+  ExerciseCategoryRenamedEventType,
+  ExerciseCategoryUnassignedEventType,
+  ExerciseDeletedEventType,
+  ExerciseImageChangedEventType,
+  ExerciseUpdatedEventType,
+} from "+exercises/events";
 import { db } from "+infra/db";
 import type { EnvironmentResultType } from "+infra/env";
 import * as schema from "+infra/schema";
@@ -38,6 +49,15 @@ export type AcceptedEventType =
   | bg.System.Events.SecurityViolationDetectedEventType
   | AccountCreatedEventType
   | AccountDeletedEventType
+  | ExerciseAddedEventType
+  | ExerciseUpdatedEventType
+  | ExerciseImageChangedEventType
+  | ExerciseDeletedEventType
+  | ExerciseCategoryAddedEventType
+  | ExerciseCategoryRenamedEventType
+  | ExerciseCategoryDeletedEventType
+  | ExerciseCategoryAssignedEventType
+  | ExerciseCategoryUnassignedEventType
   | PlanEventType
   | WorkoutEventType
   | bg.Preferences.Events.UserLanguageSetEventType
