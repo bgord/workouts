@@ -26,6 +26,7 @@ export class WorkoutExportFileCsv extends bg.FileDraft {
         "planName",
         "planSectionName",
         "exerciseName",
+        "loading",
         "setNumber",
         "reps",
         "load",

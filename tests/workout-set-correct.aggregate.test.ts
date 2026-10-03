@@ -76,6 +76,31 @@ describe("Workout.correctSet", async () => {
     ).toThrow(Workouts.Invariants.WorkoutLoggedSetExists.error);
   });
 
+  test("WorkoutExerciseLoadIsApplicable", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEventUnloaded,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.correctSet(
+        mocks.workoutExerciseId,
+        mocks.correctedLoggedSet.id,
+        mocks.correctedLoggedSet.reps,
+        mocks.correctedLoggedSet.load,
+        mocks.correctedLoggedSet.rir,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseLoadIsApplicable.error);
+  });
+
   test("happy path - in progress", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

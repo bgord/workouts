@@ -201,6 +201,32 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutExerciseLoadIsApplicable", async () => {
+    const events = [
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEventUnloaded,
+      mocks.GenericWorkoutExerciseTargetSetEvent,
+      mocks.GenericWorkoutStartedEvent,
+    ];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify(mocks.loggedSet),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.load.is.applicable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     const events = mocks.workoutInProgressHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);

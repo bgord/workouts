@@ -364,6 +364,11 @@ export const GenericWorkoutExerciseAddedEvent = {
   },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
+export const GenericWorkoutExerciseAddedEventUnloaded = {
+  ...GenericWorkoutExerciseAddedEvent,
+  payload: { ...GenericWorkoutExerciseAddedEvent.payload, loading: Exercises.VO.ExerciseLoadingOptions.none },
+} satisfies Workouts.Events.WorkoutExerciseAddedEventType;
+
 export const GenericWorkoutExerciseAddedEventAnother = {
   id: expectAnyId,
   correlationId,
