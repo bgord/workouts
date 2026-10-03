@@ -75,6 +75,7 @@ modules/
 │   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
+│   │   ├── handleExerciseLoadingChangeCommand.ts
 │   │   ├── handleExerciseUnassignCategoryCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
@@ -85,6 +86,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
+│   │   ├── EXERCISE_LOADING_CHANGE_COMMAND.ts
 │   │   ├── EXERCISE_UNASSIGN_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
 │   ├── events
@@ -96,6 +98,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_UNASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
+│   │   ├── EXERCISE_LOADING_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
 │   │   ├── catalog-is-managed-by-admin.ts
@@ -108,6 +111,7 @@ modules/
 │   │   ├── exercise-is-assigned-to-category.ts
 │   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-is-not-used.ts
+│   │   ├── exercise-loading-has-changed.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── open-host-queries
 │   ├── policies
@@ -612,6 +616,7 @@ app/
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
+│   │   ├── exercise-loading-change.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements

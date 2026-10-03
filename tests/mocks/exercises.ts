@@ -13,6 +13,7 @@ export const exerciseDescription = v.parse(
   "Press the barbell upwards, while lying on the horizontal bench.",
 );
 export const exerciseLoading = Exercises.VO.ExerciseLoadingOptions.external;
+export const anotherExerciseLoading = Exercises.VO.ExerciseLoadingOptions.none;
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 export const exerciseImageEtag = bg.Hash.fromString(
   "0000000000000000000000000000000000000000000000000000000000000000",
@@ -92,6 +93,7 @@ export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
   actions: {
     update: actionAvailable,
     imageChange: actionAvailable,
+    loadingChange: actionAvailable,
     delete: actionAvailable,
     categoryAssign: actionAvailable,
     categoryUnassign: actionAvailable,
@@ -119,6 +121,17 @@ export const GenericExerciseAddedEvent = {
     userId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseAddedEventType;
+
+export const GenericExerciseLoadingChangedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: exerciseStream,
+  version: 1,
+  commit,
+  name: "EXERCISE_LOADING_CHANGED_EVENT",
+  payload: { id: exerciseId, loading: anotherExerciseLoading, requesterId: Auth.VO.ADMIN_USER_ID },
+} satisfies Exercises.Events.ExerciseLoadingChangedEventType;
 
 export const GenericExerciseDeletedEvent = {
   id: expectAnyId,

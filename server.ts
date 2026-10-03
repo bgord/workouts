@@ -74,6 +74,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseUpdate(deps)),
   );
   exercises.patch(
+    "/:exerciseId/loading",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseLoadingChange(deps)),
+  );
+  exercises.patch(
     "/:exerciseId/image",
     Tools.ShieldCaptcha.handle(),
     Tools.ShieldRateLimit.handle(),
