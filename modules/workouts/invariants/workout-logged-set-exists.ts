@@ -18,7 +18,7 @@ class WorkoutLoggedSetExistsFactory extends bg.Invariant<WorkoutLoggedSetExistsC
   // Stryker disable next-line StringLiteral
   message = "workout.logged.set.exists";
   error = WorkoutLoggedSetExistsError;
-  kind = bg.InvariantFailureKind.not_found;
+  kind = bg.InvariantFailureKind.forbidden;
 }
 
 export const WorkoutLoggedSetExists = new WorkoutLoggedSetExistsFactory();

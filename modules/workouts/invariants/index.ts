@@ -6,6 +6,7 @@ export * from "./workout-exercise-exists";
 export * from "./workout-exercise-limit";
 export * from "./workout-exercise-position-has-changed";
 export * from "./workout-exercise-position-in-range";
+export * from "./workout-exercise-target-has-changed";
 export * from "./workout-exercises-have-targets";
 export * from "./workout-exists";
 export * from "./workout-has-exercises";

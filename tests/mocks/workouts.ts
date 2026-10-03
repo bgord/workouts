@@ -170,6 +170,12 @@ export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
 });
 
+export const anotherExerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
+  sets,
+  reps: v.parse(Workouts.VO.Reps, 10),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
+});
+
 export const workoutExercise: Workouts.VO.WorkoutExercise = {
   id: workoutExerciseId,
   exerciseId,
@@ -380,6 +386,17 @@ export const GenericWorkoutExerciseTargetSetEvent = {
   commit,
   name: "WORKOUT_EXERCISE_TARGET_SET_EVENT",
   payload: { workoutId, workoutExerciseId, target: exerciseTarget, requesterId: userId },
+} satisfies Workouts.Events.WorkoutExerciseTargetSetEventType;
+
+export const GenericWorkoutExerciseTargetSetEventAnother = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: workoutStream,
+  version: 1,
+  commit,
+  name: "WORKOUT_EXERCISE_TARGET_SET_EVENT",
+  payload: { workoutId, workoutExerciseId, target: anotherExerciseTarget, requesterId: userId },
 } satisfies Workouts.Events.WorkoutExerciseTargetSetEventType;
 
 export const GenericWorkoutStartedEvent = {

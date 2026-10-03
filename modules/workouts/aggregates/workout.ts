@@ -192,6 +192,10 @@ export class Workout {
     Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
     Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+    Invariants.WorkoutExerciseTargetHasChanged.enforce({
+      current: this.exercises.find((exercise) => exercise.id === workoutExerciseId)?.target,
+      incoming: target,
+    });
 
     const event = bg.event(
       Events.WorkoutExerciseTargetSetEvent,

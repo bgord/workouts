@@ -169,7 +169,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("PlanSectionNameIsUniqueForPlan", async () => {
+  test("PlanSectionNameHasChanged", async () => {
     const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -181,6 +181,27 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
       {
         method: "POST",
         body: JSON.stringify({ planSectionName: mocks.planSectionName }),
+        headers: mocks.headers(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "plan.section.name.has.changed");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanSectionNameIsUniqueForPlan", async () => {
+    const events = [...mocks.planWithSectionHistory, mocks.GenericPlanSectionCreatedEventSecond];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionName }),
         headers: mocks.headers(events.length),
       },
       mocks.ip,

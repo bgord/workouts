@@ -103,7 +103,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logged
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 404, "workout.logged.set.exists");
+    await testcases.assertErrorResponse(response, 403, "workout.logged.set.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

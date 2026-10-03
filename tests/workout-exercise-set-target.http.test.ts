@@ -200,6 +200,27 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutExerciseTargetHasChanged", async () => {
+    const events = mocks.workoutWithTargetHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify(mocks.exerciseTarget),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.target.has.changed");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     const events = mocks.workoutWithExerciseHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -248,12 +269,12 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
       {
         method: "PATCH",
         headers: mocks.headers(events.length),
-        body: JSON.stringify(mocks.exerciseTarget),
+        body: JSON.stringify(mocks.anotherExerciseTarget),
       },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseTargetSetEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseTargetSetEventAnother]);
   });
 });

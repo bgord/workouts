@@ -358,6 +358,7 @@ modules/
 │   │   ├── plan-section-exercise-instruction-position-in-range.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
+│   │   ├── plan-section-name-has-changed.ts
 │   │   ├── plan-section-name-is-unique-for-plan.ts
 │   │   └── plan-section-warmup-has-changed.ts
 │   ├── open-host-queries
@@ -496,6 +497,7 @@ modules/
     │   ├── workout-exercise-limit.ts
     │   ├── workout-exercise-position-has-changed.ts
     │   ├── workout-exercise-position-in-range.ts
+    │   ├── workout-exercise-target-has-changed.ts
     │   ├── workout-exercises-have-targets.ts
     │   ├── workout-exists.ts
     │   ├── workout-has-exercises.ts

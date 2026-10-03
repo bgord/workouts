@@ -98,7 +98,7 @@ describe("DELETE /api/workouts/:workoutId/exercise/:workoutExerciseId/set/:logge
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 404, "workout.logged.set.exists");
+    await testcases.assertErrorResponse(response, 403, "workout.logged.set.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

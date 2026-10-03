@@ -21,5 +21,6 @@ export * from "./plan-section-exercise-instruction-position-has-changed";
 export * from "./plan-section-exercise-instruction-position-in-range";
 export * from "./plan-section-exists";
 export * from "./plan-section-limit-for-plan";
+export * from "./plan-section-name-has-changed";
 export * from "./plan-section-name-is-unique-for-plan";
 export * from "./plan-section-warmup-has-changed";

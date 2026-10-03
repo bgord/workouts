@@ -44,7 +44,7 @@ describe("Plan.renameSection", async () => {
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
   });
 
-  test("PlanSectionNameIsUniqueForPlan", async () => {
+  test("PlanSectionNameHasChanged", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
       [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
@@ -52,6 +52,22 @@ describe("Plan.renameSection", async () => {
     );
 
     expect(() => plan.renameSection(mocks.planSectionId, mocks.planSectionName, mocks.userId)).toThrow(
+      Plans.Invariants.PlanSectionNameHasChanged.error,
+    );
+  });
+
+  test("PlanSectionNameIsUniqueForPlan", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
+      ],
+      deps,
+    );
+
+    expect(() => plan.renameSection(mocks.planSectionId, mocks.anotherPlanSectionName, mocks.userId)).toThrow(
       Plans.Invariants.PlanSectionNameIsUniqueForPlan.error,
     );
   });

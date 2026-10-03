@@ -51,6 +51,22 @@ describe("Workout.setExerciseTarget", async () => {
     ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
   });
 
+  test("WorkoutExerciseTargetHasChanged", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseTargetHasChanged.error);
+  });
+
   test("happy path", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
@@ -78,9 +94,9 @@ describe("Workout.setExerciseTarget", async () => {
     );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.userId),
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.anotherExerciseTarget, mocks.userId),
     );
 
-    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseTargetSetEvent]);
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseTargetSetEventAnother]);
   });
 });
