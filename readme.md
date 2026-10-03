@@ -394,9 +394,9 @@ modules/
 │       ├── plan-section-warmup.ts
 │       ├── plan-section-warmup.validation.ts
 │       ├── plan-section.ts
+│       ├── plan-snapshot.ts
 │       ├── plan-status.ts
 │       ├── plan-summary.ts
-│       ├── plan.ts
 │       ├── progression-method-options.ts
 │       ├── progression-method.ts
 │       ├── reps-range.ts
@@ -571,9 +571,9 @@ modules/
         ├── workout-plan-section-warmup.ts
         ├── workout-scheduled-for-horizon.ts
         ├── workout-scheduled-for.ts
+        ├── workout-snapshot.ts
         ├── workout-status.ts
-        ├── workout-summary.ts
-        └── workout.ts
+        └── workout-summary.ts
 ```
 
 ## App:

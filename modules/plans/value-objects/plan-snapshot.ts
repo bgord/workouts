@@ -13,7 +13,7 @@ import type { ProgressionMethodType } from "./progression-method";
 import type { RepsRangeType } from "./reps-range";
 import type { SetsType } from "./sets";
 
-export type ExerciseInstructionWithExercise = {
+export type ExerciseInstructionSnapshot = {
   id: ExerciseInstructionIdType;
   exercise: Exercises.VO.Exercise;
   sets: SetsType;
@@ -21,20 +21,20 @@ export type ExerciseInstructionWithExercise = {
   progression: ProgressionMethodType;
 };
 
-export type PlanSectionWithExercises = {
+export type PlanSectionSnapshot = {
   id: PlanSectionIdType;
   name: PlanSectionNameType;
   warmup: PlanSectionWarmupType | null;
   cooldown: PlanSectionCooldownType | null;
-  exerciseInstructions: Array<ExerciseInstructionWithExercise>;
+  exerciseInstructions: Array<ExerciseInstructionSnapshot>;
 };
 
-export type Plan = {
+export type PlanSnapshot = {
   id: PlanIdType;
   name: PlanNameType;
   description: PlanDescriptionType | null;
   status: PlanStatusEnum;
   revision: tools.RevisionValueType;
   updatedAt: tools.TimestampValueType;
-  sections: Array<PlanSectionWithExercises>;
+  sections: Array<PlanSectionSnapshot>;
 };

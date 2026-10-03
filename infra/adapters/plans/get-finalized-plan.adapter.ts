@@ -3,7 +3,10 @@ import * as Plans from "+plans";
 import { GetPlanQuery } from "./get-plan.adapter";
 
 class GetFinalizedPlanQueryComposed implements Plans.Queries.GetFinalizedPlan {
-  async execute(planId: Plans.VO.PlanIdType, userId: Auth.VO.UserIdType): Promise<Plans.VO.Plan | null> {
+  async execute(
+    planId: Plans.VO.PlanIdType,
+    userId: Auth.VO.UserIdType,
+  ): Promise<Plans.VO.PlanSnapshot | null> {
     const result = await GetPlanQuery.execute(planId, userId);
 
     if (result?.data.status !== Plans.VO.PlanStatusEnum.finalized) return null;

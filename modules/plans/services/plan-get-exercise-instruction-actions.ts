@@ -8,7 +8,7 @@ import { PlanSectionExerciseInstructionPositionInRange } from "../invariants/pla
 
 type PlanGetExerciseInstructionActionsFacts = {
   status: VO.PlanStatusEnum;
-  section: VO.PlanSectionWithExercises;
+  section: VO.PlanSectionSnapshot;
   exerciseInstructionId: VO.ExerciseInstructionIdType;
 };
 

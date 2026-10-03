@@ -14,7 +14,7 @@ import { PlanSectionLimitForPlan } from "../invariants/plan-section-limit-for-pl
 
 type PlanGetActionsFacts = {
   status: VO.PlanStatusEnum;
-  sections: ReadonlyArray<VO.PlanSectionWithExercises>;
+  sections: ReadonlyArray<VO.PlanSectionSnapshot>;
   activeCount: tools.IntegerNonNegativeType;
 };
 

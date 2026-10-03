@@ -6,7 +6,7 @@ import { PlanSectionExerciseInstructionLimit } from "../invariants/plan-section-
 
 type PlanGetSectionActionsFacts = {
   status: VO.PlanStatusEnum;
-  section: VO.PlanSectionWithExercises;
+  section: VO.PlanSectionSnapshot;
 };
 
 export class PlanGetSectionActions {

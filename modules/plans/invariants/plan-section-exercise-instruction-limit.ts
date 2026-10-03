@@ -4,7 +4,7 @@ import * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionLimitError extends Error {}
 
 type PlanSectionExerciseInstructionLimitConfigType = {
-  planSection: VO.PlanSection | VO.PlanSectionWithExercises | undefined;
+  planSection: VO.PlanSection | VO.PlanSectionSnapshot | undefined;
 };
 
 class PlanSectionExerciseInstructionLimitFactory extends bg.Invariant<PlanSectionExerciseInstructionLimitConfigType> {

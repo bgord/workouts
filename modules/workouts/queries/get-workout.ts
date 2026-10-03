@@ -32,7 +32,7 @@ export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> 
 };
 
 export type WorkoutGetResponse = {
-  data: Omit<VO.Workout, "exercises"> & { exercises: Array<WorkoutExercise> };
+  data: Omit<VO.WorkoutSnapshot, "exercises"> & { exercises: Array<WorkoutExercise> };
   actions: {
     start: bg.ActionState;
     complete: bg.ActionState;

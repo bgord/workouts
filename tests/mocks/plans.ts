@@ -97,7 +97,7 @@ export const planSummary: Plans.VO.PlanSummary = {
   updatedAt: T0.ms,
   sections: tools.Int.nonNegative(2),
 };
-const planSection: Plans.VO.PlanSectionWithExercises = {
+const planSection: Plans.VO.PlanSectionSnapshot = {
   id: planSectionId,
   name: planSectionName,
   warmup: planSectionWarmup,
@@ -112,7 +112,7 @@ const planSection: Plans.VO.PlanSectionWithExercises = {
     },
   ],
 };
-const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
+const anotherPlanSection: Plans.VO.PlanSectionSnapshot = {
   id: anotherPlanSectionId,
   name: anotherPlanSectionName,
   warmup: null,
@@ -128,7 +128,7 @@ const anotherPlanSection: Plans.VO.PlanSectionWithExercises = {
   ],
 };
 
-export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = {
+export const planSectionAtInstructionLimit: Plans.VO.PlanSectionSnapshot = {
   id: planSectionId,
   name: planSectionName,
   warmup: null,
@@ -142,7 +142,7 @@ export const planSectionAtInstructionLimit: Plans.VO.PlanSectionWithExercises = 
   })),
 };
 
-export const planSectionWithTwoExerciseInstructions: Plans.VO.PlanSectionWithExercises = {
+export const planSectionWithTwoExerciseInstructions: Plans.VO.PlanSectionSnapshot = {
   id: planSectionId,
   name: planSectionName,
   warmup: null,
@@ -150,7 +150,7 @@ export const planSectionWithTwoExerciseInstructions: Plans.VO.PlanSectionWithExe
   exerciseInstructions: [...planSection.exerciseInstructions, ...anotherPlanSection.exerciseInstructions],
 };
 
-export const planSectionEmpty: Plans.VO.PlanSectionWithExercises = {
+export const planSectionEmpty: Plans.VO.PlanSectionSnapshot = {
   id: anotherPlanSectionId,
   name: anotherPlanSectionName,
   warmup: null,
@@ -158,12 +158,12 @@ export const planSectionEmpty: Plans.VO.PlanSectionWithExercises = {
   exerciseInstructions: [],
 };
 
-export const planSectionsAtLimit: ReadonlyArray<Plans.VO.PlanSectionWithExercises> = Array.from(
+export const planSectionsAtLimit: ReadonlyArray<Plans.VO.PlanSectionSnapshot> = Array.from(
   { length: Plans.VO.PlanSectionLimitForPlanMax },
   () => planSection,
 );
 
-export const plan: Plans.VO.Plan = {
+export const plan: Plans.VO.PlanSnapshot = {
   id: planId,
   name: planName,
   description: null,
@@ -173,7 +173,7 @@ export const plan: Plans.VO.Plan = {
   sections: [planSection, anotherPlanSection],
 };
 
-export const planAtInstructionLimit: Plans.VO.Plan = {
+export const planAtInstructionLimit: Plans.VO.PlanSnapshot = {
   ...plan,
   sections: [planSectionAtInstructionLimit],
 };

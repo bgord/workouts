@@ -1,7 +1,6 @@
 export * from "./exercise-instruction";
 export * from "./exercise-instruction-id";
 export * from "./exercise-instruction-position";
-export * from "./plan";
 export * from "./plan-description";
 export * from "./plan-id";
 export * from "./plan-name";
@@ -12,6 +11,7 @@ export * from "./plan-section-id";
 export * from "./plan-section-limit-for-plan";
 export * from "./plan-section-name";
 export * from "./plan-section-warmup";
+export * from "./plan-snapshot";
 export * from "./plan-status";
 export * from "./plan-summary";
 export * from "./progression-method";

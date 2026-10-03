@@ -198,7 +198,7 @@ export const workoutExercisesAtLimit: Array<Workouts.VO.WorkoutExercise> = Array
   () => workoutExercise,
 );
 
-export const workout: Workouts.VO.Workout = {
+export const workout: Workouts.VO.WorkoutSnapshot = {
   id: workoutId,
   planId,
   planName: workoutPlanName,

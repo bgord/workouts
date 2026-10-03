@@ -12,17 +12,17 @@ export type ExerciseInstructionActions = {
   remove: bg.ActionState;
 };
 
-export type PlanExerciseInstruction = VO.ExerciseInstructionWithExercise & {
+export type PlanExerciseInstruction = VO.ExerciseInstructionSnapshot & {
   actions: ExerciseInstructionActions;
 };
 
-export type PlanSection = Omit<VO.PlanSectionWithExercises, "exerciseInstructions"> & {
+export type PlanSection = Omit<VO.PlanSectionSnapshot, "exerciseInstructions"> & {
   exerciseInstructions: Array<PlanExerciseInstruction>;
   actions: PlanSectionActions;
 };
 
 export type PlanGetResponse = {
-  data: Omit<VO.Plan, "sections"> & { sections: Array<PlanSection> };
+  data: Omit<VO.PlanSnapshot, "sections"> & { sections: Array<PlanSection> };
   actions: {
     finalize: bg.ActionState;
     rename: bg.ActionState;

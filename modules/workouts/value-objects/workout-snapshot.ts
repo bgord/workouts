@@ -1,11 +1,6 @@
 import type * as tools from "@bgord/tools";
-import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
-import type { ExercisePrescriptionType } from "./exercise-prescription";
-import type { ExerciseTargetType } from "./exercise-target";
-import type { LoggedSetType } from "./logged-set";
-import type { WorkoutExerciseIdType } from "./workout-exercise-id";
-import type { WorkoutExerciseNameType } from "./workout-exercise-name";
+import type { WorkoutExercise } from "./workout-exercise";
 import type { WorkoutIdType } from "./workout-id";
 import type { WorkoutNoteType } from "./workout-note";
 import type { WorkoutPlanNameType } from "./workout-plan-name";
@@ -15,16 +10,7 @@ import type { WorkoutPlanSectionWarmupType } from "./workout-plan-section-warmup
 import type { WorkoutScheduledForType } from "./workout-scheduled-for";
 import type { WorkoutStatusEnum } from "./workout-status";
 
-export type WorkoutExerciseWithSets = {
-  id: WorkoutExerciseIdType;
-  exerciseId: Exercises.VO.ExerciseIdType;
-  exerciseName: WorkoutExerciseNameType;
-  prescription: ExercisePrescriptionType;
-  target?: ExerciseTargetType;
-  loggedSets: Array<LoggedSetType>;
-};
-
-export type Workout = {
+export type WorkoutSnapshot = {
   id: WorkoutIdType;
   planId: Plans.VO.PlanIdType;
   planName: WorkoutPlanNameType;
@@ -37,5 +23,5 @@ export type Workout = {
   completedAt: tools.TimestampValueType | null;
   note: WorkoutNoteType | null;
   revision: tools.RevisionValueType;
-  exercises: Array<WorkoutExerciseWithSets>;
+  exercises: Array<WorkoutExercise>;
 };
