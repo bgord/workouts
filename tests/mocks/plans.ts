@@ -47,6 +47,7 @@ export const sets = v.parse(Plans.VO.Sets, 3);
 export const anotherSets = v.parse(Plans.VO.Sets, 4);
 
 export const progression = Plans.VO.ProgressionMethodOptions.double_progression;
+export const anotherProgression = Plans.VO.ProgressionMethodOptions.linear_progression;
 
 export const repsRange = v.parse(Plans.VO.RepsRange, { min: 8, max: 12 });
 export const anotherRepsRange = v.parse(Plans.VO.RepsRange, { min: 6, max: 6 });

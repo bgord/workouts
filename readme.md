@@ -364,6 +364,7 @@ modules/
 │   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exercise-instruction-position-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-position-in-range.ts
+│   │   ├── plan-section-exercise-instruction-progression-is-applicable.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
 │   │   ├── plan-section-name-has-changed.ts
@@ -373,6 +374,7 @@ modules/
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
+│   │   ├── get-exercise-instruction-loading.ts
 │   │   ├── get-finalized-plan.ts
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
@@ -738,6 +740,7 @@ infra/
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
+│   │   ├── get-exercise-instruction-loading.adapter.ts
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-owner-count.adapter.ts

@@ -19,6 +19,7 @@ export * from "./plan-section-exercise-instruction-has-changed";
 export * from "./plan-section-exercise-instruction-limit";
 export * from "./plan-section-exercise-instruction-position-has-changed";
 export * from "./plan-section-exercise-instruction-position-in-range";
+export * from "./plan-section-exercise-instruction-progression-is-applicable";
 export * from "./plan-section-exists";
 export * from "./plan-section-limit-for-plan";
 export * from "./plan-section-name-has-changed";

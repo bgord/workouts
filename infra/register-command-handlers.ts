@@ -185,6 +185,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionExerciseInstructionUpdateCommand({
       ...deps,
       repo: Adapters.Plans.PlanRepository,
+      GetExerciseInstructionLoadingQuery: Adapters.Plans.GetExerciseInstructionLoadingQuery,
     }),
   );
   Tools.CommandBus.on(

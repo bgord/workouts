@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
+import { applicableProgressionMethod } from "../../modules/plans/value-objects/progression-method-applicability";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { workoutRoute } from "../router";
@@ -99,6 +100,7 @@ export function WorkoutExerciseAdd() {
               onChange={(exercise) => {
                 setPicked(exercise);
                 exerciseId.set(exercise.id);
+                progression.set(applicableProgressionMethod(exercise.loading, progression.value));
               }}
               query={query}
               value={exerciseId.value}

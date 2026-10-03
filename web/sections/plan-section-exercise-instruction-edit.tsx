@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
+import { applicableProgressionMethod } from "../../modules/plans/value-objects/progression-method-applicability";
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
 import { Plans } from "../api";
 import * as ui from "../components";
@@ -187,6 +188,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 onChange={(exercise) => {
                   setPicked(exercise);
                   exerciseId.set(exercise.id);
+                  progression.set(applicableProgressionMethod(exercise.loading, progression.value));
                   planSectionExerciseInstructionPick.disable();
                 }}
                 query={query}

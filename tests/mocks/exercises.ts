@@ -35,6 +35,8 @@ export const exercise: Exercises.VO.Exercise = {
   imageEtag: exerciseImageEtag,
 };
 
+export const unloadedExercise: Exercises.VO.Exercise = { ...exercise, loading: anotherExerciseLoading };
+
 export const exerciseCategoryId = v.parse(
   Exercises.VO.ExerciseCategoryId,
   "b1c4b703-c124-4153-ade8-c0587851334b",
