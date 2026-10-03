@@ -15,6 +15,7 @@ export * from "./plan-snapshot";
 export * from "./plan-status";
 export * from "./plan-summary";
 export * from "./progression-method";
+export * from "./progression-method-applicability";
 export * from "./progression-method-options";
 export * from "./reps-range";
 export * from "./sets";

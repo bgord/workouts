@@ -401,6 +401,7 @@ modules/
 │       ├── plan-snapshot.ts
 │       ├── plan-status.ts
 │       ├── plan-summary.ts
+│       ├── progression-method-applicability.ts
 │       ├── progression-method-options.ts
 │       ├── progression-method.ts
 │       ├── reps-range.ts

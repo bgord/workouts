@@ -1,7 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { Form } from "../../app/services/workout-exercise-add-form";
+import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { workoutRoute } from "../router";
@@ -20,6 +22,9 @@ export function WorkoutExerciseAdd() {
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
   const progression = bg.useTextField(Form.progression.field);
+  const [picked, setPicked] = useState<ExerciseWithCategories | null>(null);
+
+  const exercise = picked?.id === exerciseId.value ? picked : undefined;
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -91,7 +96,10 @@ export function WorkoutExerciseAdd() {
             <ui.ExercisePicker
               exercises={catalog.exercises}
               name={exerciseId.input.props.name}
-              onChange={(exercise) => exerciseId.set(exercise.id)}
+              onChange={(exercise) => {
+                setPicked(exercise);
+                exerciseId.set(exercise.id);
+              }}
               query={query}
               value={exerciseId.value}
             />
@@ -125,7 +133,7 @@ export function WorkoutExerciseAdd() {
             />
           </ui.Prescription>
 
-          <ui.ProgressionMethodSelect field={progression} />
+          <ui.ProgressionMethodSelect field={progression} loading={exercise?.loading} />
 
           {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 

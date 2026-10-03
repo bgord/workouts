@@ -229,7 +229,11 @@ export function PlanSectionExerciseInstructionEdit(props: {
           )}
 
           {actions.update.available && (
-            <ui.ProgressionMethodSelect disabled={!actions.update.enabled} field={progression} />
+            <ui.ProgressionMethodSelect
+              disabled={!actions.update.enabled}
+              field={progression}
+              loading={exercise?.loading}
+            />
           )}
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
