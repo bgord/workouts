@@ -360,7 +360,6 @@ export const workoutExercises = sqliteTable(
     workoutId: text("workoutId", { length: 36 }).notNull().$type<WorkoutIdType>(),
     exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
     exerciseName: text("exerciseName").notNull().$type<WorkoutExerciseNameType>(),
-    exerciseImageEtag: text("exerciseImageEtag").notNull().$type<bg.HashValueType>(),
     exerciseDescription: text("exerciseDescription").notNull().$type<WorkoutExerciseDescriptionType>(),
     prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
     target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),

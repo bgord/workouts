@@ -1,0 +1,1 @@
+ALTER TABLE `workoutExercises` DROP COLUMN `exerciseImageEtag`;

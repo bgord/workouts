@@ -31,5 +31,10 @@ export const EventUpcaster = new bg.EventUpcasterChainAdapter({
       toVersion: 2,
       upcast: (payload) => ({ ...payload, prescription: { ...payload.prescription, progression } }),
     }),
+    new bg.EventUpcasterStep({
+      fromVersion: 2,
+      toVersion: 3,
+      upcast: ({ exerciseImageEtag, ...payload }) => payload,
+    }),
   ],
 });

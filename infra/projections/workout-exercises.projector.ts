@@ -53,7 +53,6 @@ export class WorkoutExercisesProjector {
       workoutId: event.payload.workoutId,
       exerciseId: event.payload.exerciseId,
       exerciseName: event.payload.exerciseName,
-      exerciseImageEtag: event.payload.exerciseImageEtag,
       exerciseDescription: event.payload.exerciseDescription,
       prescription: event.payload.prescription,
       position: sql`(SELECT COUNT(*) FROM ${Schema.workoutExercises} WHERE ${Schema.workoutExercises.workoutId} = ${event.payload.workoutId})`,

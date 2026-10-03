@@ -35,14 +35,13 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               id: true,
               exerciseId: true,
               exerciseName: true,
-              exerciseImageEtag: true,
               exerciseDescription: true,
               prescription: true,
               target: true,
             },
             orderBy: asc(Schema.workoutExercises.position),
             with: {
-              exercise: { columns: { id: true } },
+              exercise: { columns: { imageEtag: true } },
               loggedSets: {
                 columns: { id: true, setNumber: true, reps: true, load: true, rir: true },
                 orderBy: asc(Schema.workoutLoggedSets.setNumber),
@@ -68,6 +67,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
           return {
             ...exercise,
+            exerciseImageEtag: catalogExercise?.imageEtag ?? null,
             loggedSets: exercise.loggedSets.map((loggedSet) => ({
               ...loggedSet,
               actions: new Workouts.Services.WorkoutGetLoggedSetActions({

@@ -27,7 +27,6 @@ export const handleWorkoutExerciseAddCommand =
       command.payload.workoutExerciseId,
       exercise!.id,
       v.parse(WorkoutExerciseName, exercise!.name),
-      exercise!.imageEtag,
       v.parse(WorkoutExerciseDescription, exercise!.description),
       command.payload.prescription,
       command.payload.requesterId,

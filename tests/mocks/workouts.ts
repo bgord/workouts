@@ -321,7 +321,7 @@ export const GenericWorkoutExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 2,
+  version: 3,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -329,7 +329,6 @@ export const GenericWorkoutExerciseAddedEvent = {
     workoutExerciseId,
     exerciseId,
     exerciseName: workoutExerciseName,
-    exerciseImageEtag,
     exerciseDescription: workoutExerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,
@@ -341,7 +340,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 2,
+  version: 3,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -349,7 +348,6 @@ export const GenericWorkoutExerciseAddedEventAnother = {
     workoutExerciseId: anotherWorkoutExerciseId,
     exerciseId,
     exerciseName: workoutExerciseName,
-    exerciseImageEtag,
     exerciseDescription: workoutExerciseDescription,
     prescription: exercisePrescription,
     requesterId: userId,

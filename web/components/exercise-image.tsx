@@ -28,7 +28,8 @@ const style = (size: ExerciseImageSize) =>
     ? { ...bg.Rhythm(width[size]).times(1).width, ...bg.Rhythm(height[size]).times(1).height }
     : { width: "100%", aspectRatio: `${width[size]} / ${height[size]}` };
 
-type ExerciseImageProps = Pick<Exercise, "id" | "imageEtag"> & {
+type ExerciseImageProps = Pick<Exercise, "id"> & {
+  imageEtag: Exercise["imageEtag"] | null;
   name: Exercise["name"] | WorkoutExerciseNameType;
   size: ExerciseImageSize;
 };

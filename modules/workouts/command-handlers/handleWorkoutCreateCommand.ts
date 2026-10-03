@@ -65,7 +65,6 @@ export const handleWorkoutCreateCommand =
         v.parse(WorkoutExerciseId, deps.IdProvider.generate()),
         instruction.exercise.id,
         v.parse(WorkoutExerciseName, instruction.exercise.name),
-        instruction.exercise.imageEtag,
         v.parse(WorkoutExerciseDescription, instruction.exercise.description),
         { sets: instruction.sets, reps: instruction.reps, progression: instruction.progression },
         command.payload.userId,
