@@ -24,7 +24,14 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
                 orderBy: asc(Schema.planSectionExerciseInstructions.position),
                 with: {
                   exercise: {
-                    columns: { id: true, name: true, description: true, image: true, imageEtag: true },
+                    columns: {
+                      id: true,
+                      name: true,
+                      description: true,
+                      loading: true,
+                      image: true,
+                      imageEtag: true,
+                    },
                   },
                 },
               },

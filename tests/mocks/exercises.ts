@@ -29,6 +29,7 @@ export const exercise: Exercises.VO.Exercise = {
   id: exerciseId,
   name: exerciseName,
   description: exerciseDescription,
+  loading: exerciseLoading,
   image: exerciseImageKey,
   imageEtag: exerciseImageEtag,
 };

@@ -1,0 +1,1 @@
+ALTER TABLE `exercises` ADD `loading` text DEFAULT 'external' NOT NULL;

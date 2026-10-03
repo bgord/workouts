@@ -48,7 +48,7 @@ export async function seedCatalog(di: BootstrapType) {
           absoluteFilePath: temporary.get(),
           name: v.parse(Exercises.VO.ExerciseName, exercise.name),
           description: v.parse(Exercises.VO.ExerciseDescription, exercise.description),
-          loading: Exercises.VO.ExerciseLoadingOptions.external,
+          loading: v.parse(Exercises.VO.ExerciseLoading, exercise.loading),
           userId: Auth.VO.ADMIN_USER_ID,
         },
       },

@@ -10,6 +10,7 @@ class GetExerciseQueryDrizzle implements Exercises.Queries.GetExercise {
         id: Schema.exercises.id,
         name: Schema.exercises.name,
         description: Schema.exercises.description,
+        loading: Schema.exercises.loading,
         image: Schema.exercises.image,
         imageEtag: Schema.exercises.imageEtag,
       })

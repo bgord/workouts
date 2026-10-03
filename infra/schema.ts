@@ -9,6 +9,8 @@ import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/
 import type { ExerciseCategoryNameType } from "../modules/exercises/value-objects/exercise-category-name";
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
+import type { ExerciseLoadingType } from "../modules/exercises/value-objects/exercise-loading";
+import { ExerciseLoadingOptions } from "../modules/exercises/value-objects/exercise-loading-options";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
 import type { BodyPartCircumferenceType } from "../modules/measurements/value-objects/body-part-circumference";
 import type { BodyPartIdType } from "../modules/measurements/value-objects/body-part-id";
@@ -213,6 +215,7 @@ export const exercises = sqliteTable("exercises", {
   id: identifier<ExerciseIdType>(),
   name: text("name").notNull().$type<ExerciseNameType>(),
   description: text("description").notNull().$type<ExerciseDescriptionType>(),
+  loading: text("loading").notNull().$type<ExerciseLoadingType>().default(ExerciseLoadingOptions.external),
   image: text("image").notNull().$type<tools.ObjectKeyType>(),
   imageEtag: text("imageEtag").notNull().$type<bg.HashValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
