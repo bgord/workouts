@@ -141,6 +141,8 @@ modules/
 │       ├── exercise-image-max-size.ts
 │       ├── exercise-image-mime-registry.ts
 │       ├── exercise-image-side.ts
+│       ├── exercise-loading-options.ts
+│       ├── exercise-loading.ts
 │       ├── exercise-name.ts
 │       ├── exercise-name.validation.ts
 │       ├── exercise-with-categories.ts
