@@ -1,8 +1,9 @@
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
-import * as Workouts from "+workouts";
+import type * as Workouts from "+workouts";
 import type * as Ports from "+statistics/ports";
 import type * as VO from "+statistics/value-objects";
+import { ExercisePerformanceMetricsStrategyFactory } from "./exercise-performance-metrics-factory.strategy";
 
 type Config = {
   OneRepEstimator: Ports.OneRepEstimatorPort;
@@ -18,21 +19,8 @@ export class ExercisePerformanceCalculator {
   ): Promise<Array<VO.ExercisePerformanceStatistics>> {
     const performances = await this.config.ListExercisePerformancesOHQ.execute(userId, exerciseId);
 
-    return performances.map((performance) => {
-      const sets = performance.sets.map((set) => ({
-        ...set,
-        estimate: this.config.OneRepEstimator.estimate(set),
-      }));
-
-      const bestSet = sets.reduce((best, set) => (set.estimate > best.estimate ? set : best));
-
-      return {
-        ...performance,
-        sets,
-        volume: new Workouts.Services.LoggedSetsVolume(sets).calculate().get(),
-        bestSet,
-        bestEstimate: bestSet.estimate,
-      };
-    });
+    return performances.map((performance) =>
+      ExercisePerformanceMetricsStrategyFactory.for(performance.loading, this.config).calculate(performance),
+    );
   }
 }
