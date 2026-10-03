@@ -427,7 +427,6 @@
   "workout.previous_performance.diff.sets.noun.plural": "serie",
   "workout.previous_performance.diff.sets.noun.singular": "seria",
   "workout.previous_performance.diff.title": "Cel vs ostatnia sesja",
-  "workout.previous_performance.reps_load": "{{reps}}×{{load}} kg",
   "workout.previous_performance.title": "Ostatnia sesja",
   "workout.reschedule.cta": "Zmień datę: {{date}}",
   "workout.reschedule.error": "Nie udało się zmienić daty",

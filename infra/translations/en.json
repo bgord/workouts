@@ -427,7 +427,6 @@
   "workout.previous_performance.diff.sets.noun.plural": "sets",
   "workout.previous_performance.diff.sets.noun.singular": "set",
   "workout.previous_performance.diff.title": "Target vs last session",
-  "workout.previous_performance.reps_load": "{{reps}}×{{load}} kg",
   "workout.previous_performance.title": "Last session",
   "workout.reschedule.cta": "Change date: {{date}}",
   "workout.reschedule.error": "Could not change the date",

@@ -34,7 +34,7 @@ export function ExerciseStats() {
         </ui.TileValue>
 
         <ui.TileContext>
-          <ui.RepsLoad load={best.bestSet.load} reps={best.bestSet.reps} />
+          <ui.SetValue load={best.bestSet.load} loading={best.loading} reps={best.bestSet.reps} />
         </ui.TileContext>
       </ui.TileLink>
 

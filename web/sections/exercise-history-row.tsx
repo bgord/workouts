@@ -98,7 +98,7 @@ export function ExerciseHistoryRow(props: {
               <ui.RowIndex>{set.setNumber}</ui.RowIndex>
 
               <div data-color="neutral-100" data-fw="medium">
-                <ui.RepsLoad load={set.load} reps={set.reps} />
+                <ui.SetValue load={set.load} loading={props.performance.loading} reps={set.reps} />
               </div>
 
               <div data-grow="1">{set.rir !== null && <ui.RirBadge rir={set.rir} />}</div>
