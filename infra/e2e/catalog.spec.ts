@@ -8,10 +8,21 @@ test.describe("Catalog - athlete", () => {
   test("lists the whole catalog", async ({ page }) => {
     await page.goto("/catalog");
 
-    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(page.getByText("33 of 33")).toBeVisible();
     await expect(
       page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }),
     ).toBeVisible();
+  });
+
+  test("marks an exercise without load", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await expect(page.getByRole("link", { name: fixtures.exercises.hangingLegRaise.name })).toContainText(
+      "No load",
+    );
+    await expect(
+      page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }),
+    ).not.toContainText("No load");
   });
 
   test("searches by name", async ({ page }) => {
@@ -19,7 +30,7 @@ test.describe("Catalog - athlete", () => {
 
     await page.getByRole("textbox", { name: "Search by name" }).fill(fixtures.exercises.facePull.name);
 
-    await expect(page.getByText("1 of 32")).toBeVisible();
+    await expect(page.getByText("1 of 33")).toBeVisible();
     await expect(page.getByRole("link", { name: fixtures.exercises.facePull.name })).toBeVisible();
     await expect(
       page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }),
@@ -31,14 +42,14 @@ test.describe("Catalog - athlete", () => {
 
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
 
-    await expect(page.getByText("6 of 32")).toBeVisible();
+    await expect(page.getByText("6 of 33")).toBeVisible();
     await expect(
       page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
 
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
 
-    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(page.getByText("33 of 33")).toBeVisible();
     await expect(
       page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
     ).toHaveAttribute("aria-pressed", "false");
@@ -46,7 +57,7 @@ test.describe("Catalog - athlete", () => {
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
     await page.getByRole("button", { name: "Clear" }).click();
 
-    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(page.getByText("33 of 33")).toBeVisible();
   });
 
   test("combines the search and the category", async ({ page }) => {
@@ -55,7 +66,7 @@ test.describe("Catalog - athlete", () => {
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
     await page.getByRole("textbox", { name: "Search by name" }).fill("Pec");
 
-    await expect(page.getByText("3 of 32")).toBeVisible();
+    await expect(page.getByText("3 of 33")).toBeVisible();
   });
 
   test("shows more and less categories", async ({ page }) => {
@@ -114,7 +125,7 @@ test.describe("Catalog - athlete", () => {
     await page.goBack();
 
     await expect(page).toHaveURL(`/catalog?category=${fixtures.categories.chest.id}`);
-    await expect(page.getByText("6 of 32")).toBeVisible();
+    await expect(page.getByText("6 of 33")).toBeVisible();
     await expect(
       page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
@@ -202,6 +213,6 @@ test.describe("Catalog - admin", () => {
 
     await page.reload();
 
-    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(page.getByText("33 of 33")).toBeVisible();
   });
 });

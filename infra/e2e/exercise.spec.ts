@@ -54,6 +54,37 @@ test.describe("Exercise - athlete", () => {
     await expect(history.getByRole("img", { name: "1RM" })).toHaveCount(1);
   });
 
+  test("shows the reps stats of an exercise without load", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
+
+    await expect(page.getByText("No load", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Sessions" }).getByText("8", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("link", { name: /^Most reps/ })).toContainText("reps");
+    await expect(page.getByRole("listitem", { name: "Best total reps" })).toContainText("reps");
+    await expect(page.getByRole("link", { name: /^1RM/ })).toBeHidden();
+  });
+
+  test("shows the reps progress chart of an exercise without load", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
+
+    const chart = page.getByRole("img", { name: "Progress" });
+
+    await expect(chart).toBeVisible();
+    await expect(chart.getByRole("link")).toHaveCount(8);
+  });
+
+  test("lists the history of an exercise without load", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
+
+    const history = page.getByRole("list", { name: "History" });
+
+    await expect(history.getByRole("link")).toHaveCount(8);
+    await expect(history.getByRole("img", { name: "Most reps" })).toHaveCount(1);
+    await expect(history).not.toContainText("kg");
+  });
+
   test("keeps the history session expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 

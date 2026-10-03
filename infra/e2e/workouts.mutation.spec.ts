@@ -694,6 +694,36 @@ test.describe("Workouts - active-mutation", () => {
     ).toBeHidden();
   });
 
+  test("sets a target without load for an exercise without load", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
+    await page.getByRole("radio", { name: fixtures.exercises.hangingLegRaise.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("10");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+    await row.getByRole("button", { name: "Set target" }).click();
+    await row.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
+
+    await expect(row.getByRole("spinbutton", { name: "Load (kg)" })).toHaveCount(0);
+
+    await row.getByRole("button", { name: "Save" }).click();
+
+    await expect(row).toContainText("3×12");
+    await expect(row).not.toContainText("kg");
+
+    await page.reload();
+
+    await expect(row).toContainText("3×12");
+    await expect(row).not.toContainText("kg");
+  });
+
   test("completes the workout in progress", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
