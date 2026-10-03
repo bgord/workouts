@@ -89,6 +89,14 @@ export const exercises = {
     loading: "external",
     categories: [categories.biceps, categories.forearms],
   },
+  hangingLegRaise: {
+    id: "9b3f6c2e-4d1a-4e8b-a7c5-2f6d8e0b1c3a",
+    name: "Hanging leg raise",
+    description:
+      "Hang from the bar, arms straight. Raise the legs to hip height without swinging, lower slowly.",
+    loading: "none",
+    categories: [categories.abs],
+  },
   hammerStrengthIncline: {
     id: "b28c649e-c58e-400e-9b9c-646181919db4",
     name: "Hammer strength incline",
@@ -287,6 +295,7 @@ export const startingLoads: Record<string, number> = {
   [exercises.legCurlSeated.id]: 40,
   [exercises.legExtensionSingleLeg.id]: 20,
   [exercises.calfRaisesMachine.id]: 60,
+  [exercises.hangingLegRaise.id]: 0,
 };
 
 export const ppl = {
@@ -412,6 +421,12 @@ export const ppl = {
           exercise: exercises.calfRaisesMachine,
           sets: 3,
           reps: { min: 12, max: 15 },
+          progression: "double_progression",
+        },
+        {
+          exercise: exercises.hangingLegRaise,
+          sets: 3,
+          reps: { min: 10, max: 15 },
           progression: "double_progression",
         },
       ],
