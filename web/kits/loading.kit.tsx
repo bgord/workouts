@@ -44,4 +44,9 @@ export const LoadingKit = {
     payload: (field) => WeightFormat.grams(field.value ?? 0),
     ready: (field) => !field.empty,
   },
+  [ExerciseLoadingOptions.none]: {
+    Field: () => null,
+    payload: () => 0,
+    ready: () => true,
+  },
 } satisfies Record<ExerciseLoadingOptions, LoadingKitStrategy>;

@@ -29,4 +29,9 @@ export const LoadingFormat = {
       }),
     report: (load) => String(WeightFormat.kilograms(load)),
   },
+  [ExerciseLoadingOptions.none]: {
+    repsLoad: (t, _language, value) => t("exercise.reps", { reps: value.reps }),
+    setsRepsLoad: (t, _language, value) => t("exercise.sets_reps", { sets: value.sets, reps: value.reps }),
+    report: () => "—",
+  },
 } satisfies Record<ExerciseLoadingOptions, LoadingFormatStrategy>;

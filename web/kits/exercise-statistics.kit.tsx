@@ -1,31 +1,39 @@
 import type * as bg from "@bgord/ui";
 import { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
-import type {
-  ExercisePerformanceStatistics,
-  ExercisePerformanceStatisticsSet,
-} from "../../modules/statistics/value-objects/exercise-performance-statistics";
+import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import { ExerciseStatisticsLoad } from "./exercise-statistics-load";
+import { ExerciseStatisticsReps } from "./exercise-statistics-reps";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 
-type Performances = ReadonlyArray<ExercisePerformanceStatistics>;
-
-type ExerciseStatisticsKitStrategy = {
-  record: (performances: Performances) => ExercisePerformanceStatistics | undefined;
+type ExerciseStatisticsKitStrategy<P extends ExercisePerformanceStatistics> = {
+  record(performances: ReadonlyArray<P>): P | undefined;
   recordLabel: string;
-  Tiles: (props: { performances: Performances }) => React.ReactNode;
+  Tiles(props: { performances: ReadonlyArray<P> }): React.ReactNode;
   progress: {
-    Label: () => React.ReactNode;
-    value: (performance: ExercisePerformanceStatistics) => number;
-    format: (t: Translate, language: string, value: number) => string;
+    Label(): React.ReactNode;
+    value(performance: P): number;
+    format(t: Translate, language: string, value: number): string;
   };
-  HistoryRowMetrics: (props: {
-    performance: ExercisePerformanceStatistics;
-    previous: ExercisePerformanceStatistics | undefined;
-  }) => React.ReactNode;
-  HistorySetExtra: (props: { set: ExercisePerformanceStatisticsSet }) => React.ReactNode;
+  HistoryRowMetrics(props: { performance: P; previous: P | undefined }): React.ReactNode;
+  HistorySetExtra(props: { set: P["sets"][number] }): React.ReactNode;
 };
 
-export const ExerciseStatisticsKit = {
+const kit = {
   [ExerciseLoadingOptions.external]: ExerciseStatisticsLoad,
-} satisfies Record<ExerciseLoadingOptions, ExerciseStatisticsKitStrategy>;
+  [ExerciseLoadingOptions.none]: ExerciseStatisticsReps,
+} satisfies {
+  [K in ExerciseLoadingOptions]: ExerciseStatisticsKitStrategy<
+    Extract<ExercisePerformanceStatistics, { loading: K }>
+  >;
+};
+
+export const ExerciseStatisticsKit: Record<
+  ExerciseLoadingOptions,
+  ExerciseStatisticsKitStrategy<ExercisePerformanceStatistics>
+> = kit;
+
+export const performancesOf = (
+  loading: ExerciseLoadingOptions,
+  performances: ReadonlyArray<ExercisePerformanceStatistics>,
+) => performances.filter((performance) => performance.loading === loading);

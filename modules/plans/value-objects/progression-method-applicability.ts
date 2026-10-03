@@ -7,4 +7,5 @@ export const ProgressionMethodApplicability = {
     ProgressionMethodOptions.linear_progression,
     ProgressionMethodOptions.none,
   ],
+  none: [ProgressionMethodOptions.double_progression, ProgressionMethodOptions.none],
 } satisfies Record<Exercises.VO.ExerciseLoadingOptions, ReadonlyArray<ProgressionMethodOptions>>;

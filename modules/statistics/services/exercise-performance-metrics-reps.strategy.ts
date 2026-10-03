@@ -1,17 +1,18 @@
 import * as tools from "@bgord/tools";
+import * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
+import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-metrics.strategy";
 
-export class ExercisePerformanceMetricsRepsStrategy {
-  calculate(performance: Workouts.Queries.ExercisePerformance): VO.RepsPerformanceStatistics {
-    const { loading, ...rest } = performance;
-
-    const bestSet = rest.sets.reduce((best, set) => (set.reps > best.reps ? set : best));
+export class ExercisePerformanceMetricsRepsStrategy implements ExercisePerformanceMetricsStrategy {
+  calculate(performance: Workouts.Queries.ExercisePerformance): VO.ExercisePerformanceStatistics {
+    const bestSet = performance.sets.reduce((best, set) => (set.reps > best.reps ? set : best));
 
     return {
-      ...rest,
+      ...performance,
+      loading: Exercises.VO.ExerciseLoadingOptions.none,
       bestSet,
-      totalReps: tools.Int.positive(rest.sets.reduce((total, set) => total + set.reps, 0)),
+      totalReps: tools.Int.positive(performance.sets.reduce((total, set) => total + set.reps, 0)),
     };
   }
 }

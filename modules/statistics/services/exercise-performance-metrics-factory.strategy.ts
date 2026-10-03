@@ -3,6 +3,7 @@ import type * as Workouts from "+workouts";
 import type * as Ports from "+statistics/ports";
 import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-metrics.strategy";
 import { ExercisePerformanceMetricsLoadStrategy } from "./exercise-performance-metrics-load.strategy";
+import { ExercisePerformanceMetricsRepsStrategy } from "./exercise-performance-metrics-reps.strategy";
 
 type Dependencies = { OneRepEstimator: Ports.OneRepEstimatorPort };
 
@@ -14,6 +15,8 @@ export class ExercisePerformanceMetricsStrategyFactory {
     switch (loading) {
       case Exercises.VO.ExerciseLoadingOptions.external:
         return new ExercisePerformanceMetricsLoadStrategy(deps);
+      case Exercises.VO.ExerciseLoadingOptions.none:
+        return new ExercisePerformanceMetricsRepsStrategy();
     }
   }
 }

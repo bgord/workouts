@@ -2,6 +2,7 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Exercises from "+exercises";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import { userId } from "./auth";
@@ -151,6 +152,26 @@ export const exercisePerformance = {
     },
   ],
 };
+
+export const unloadedExercisePerformance = {
+  workoutId,
+  scheduledFor: workoutScheduledFor,
+  loading: Exercises.VO.ExerciseLoadingOptions.none,
+  sets: [
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 1),
+      reps: v.parse(Workouts.VO.Reps, 12),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+      rir: null,
+    },
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 2),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+      rir: null,
+    },
+  ],
+} satisfies Workouts.Queries.ExercisePerformance;
 
 export const workoutExportRow = {
   workoutId,

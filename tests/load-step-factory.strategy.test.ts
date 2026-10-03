@@ -10,4 +10,10 @@ describe("LoadStepStrategyFactory", () => {
 
     expect(strategy).toBeInstanceOf(Workouts.Services.LoadStepIncrementStrategy);
   });
+
+  test("none", () => {
+    const strategy = Workouts.Services.LoadStepStrategyFactory.for(Exercises.VO.ExerciseLoadingOptions.none);
+
+    expect(strategy).toBeInstanceOf(Workouts.Services.LoadStepLockedStrategy);
+  });
 });

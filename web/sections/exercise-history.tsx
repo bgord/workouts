@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
+import { ExerciseStatisticsKit, performancesOf } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
 import { ExerciseHistoryRow } from "./exercise-history-row";
 
@@ -9,7 +9,7 @@ export function ExerciseHistory() {
   const Statistics = ExerciseStatisticsKit[exercise.data.loading];
 
   const history = performances.toReversed();
-  const record = Statistics.record(performances);
+  const record = Statistics.record(performancesOf(exercise.data.loading, performances));
 
   return (
     <ul aria-label={t("statistics.exercise.history")} data-stack="y">

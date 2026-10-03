@@ -74,4 +74,18 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
       }),
     });
   });
+
+  test("locked load - last only", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 8),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+    });
+    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
+      { last },
+      { LoadStep: new Workouts.Services.LoadStepLockedStrategy() },
+    );
+
+    expect(strategy.calculate()).toEqual({ last, regress: undefined, progress: undefined });
+  });
 });

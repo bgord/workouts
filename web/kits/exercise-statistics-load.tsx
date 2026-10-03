@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { EqualApproximately, Sigma, Trophy } from "lucide-react";
 import type {
-  ExercisePerformanceStatistics,
   ExercisePerformanceStatisticsSet,
+  LoadExercisePerformanceStatistics,
 } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
@@ -12,7 +12,7 @@ import { WeightFormat } from "../services/weight-format";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 
-type Performances = ReadonlyArray<ExercisePerformanceStatistics>;
+type Performances = ReadonlyArray<LoadExercisePerformanceStatistics>;
 
 const loadRecord = (performances: Performances) =>
   performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
@@ -79,8 +79,8 @@ function LoadProgressLabel() {
 }
 
 function LoadHistoryRowMetrics(props: {
-  performance: ExercisePerformanceStatistics;
-  previous: ExercisePerformanceStatistics | undefined;
+  performance: LoadExercisePerformanceStatistics;
+  previous: LoadExercisePerformanceStatistics | undefined;
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
@@ -138,7 +138,8 @@ export const ExerciseStatisticsLoad = {
   Tiles: LoadTiles,
   progress: {
     Label: LoadProgressLabel,
-    value: (performance: ExercisePerformanceStatistics) => WeightFormat.kilograms(performance.bestEstimate),
+    value: (performance: LoadExercisePerformanceStatistics) =>
+      WeightFormat.kilograms(performance.bestEstimate),
     format: (t: Translate, language: string, value: number) =>
       t("statistics.exercise.one_rep_max_estimate.value", { load: value.toLocaleString(language) }),
   },

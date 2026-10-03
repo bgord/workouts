@@ -30,6 +30,14 @@ export type RepsPerformanceStatistics = {
   totalReps: tools.IntegerPositiveType;
 };
 
-export type ExercisePerformanceStatistics = {
+export type LoadExercisePerformanceStatistics = {
   loading: Exercises.VO.ExerciseLoadingOptions.external;
 } & LoadPerformanceStatistics;
+
+export type RepsExercisePerformanceStatistics = {
+  loading: Exercises.VO.ExerciseLoadingOptions.none;
+} & RepsPerformanceStatistics;
+
+export type ExercisePerformanceStatistics =
+  | LoadExercisePerformanceStatistics
+  | RepsExercisePerformanceStatistics;

@@ -12,4 +12,13 @@ describe("ExercisePerformanceMetricsStrategyFactory", () => {
 
     expect(strategy).toBeInstanceOf(Statistics.Services.ExercisePerformanceMetricsLoadStrategy);
   });
+
+  test("none", () => {
+    const strategy = Statistics.Services.ExercisePerformanceMetricsStrategyFactory.for(
+      Exercises.VO.ExerciseLoadingOptions.none,
+      { OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley() },
+    );
+
+    expect(strategy).toBeInstanceOf(Statistics.Services.ExercisePerformanceMetricsRepsStrategy);
+  });
 });

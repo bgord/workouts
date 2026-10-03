@@ -247,4 +247,48 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       }),
     });
   });
+
+  test("range maximum - locked load - no progress", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 12),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+    });
+    const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepLockedStrategy() },
+    );
+
+    expect(strategy.calculate()).toEqual({
+      last,
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 11),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+      }),
+      progress: undefined,
+    });
+  });
+
+  test("range minimum - locked load - no regress", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 8),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+    });
+    const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepLockedStrategy() },
+    );
+
+    expect(strategy.calculate()).toEqual({
+      last,
+      regress: undefined,
+      progress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 9),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+      }),
+    });
+  });
 });
