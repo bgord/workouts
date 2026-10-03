@@ -2,8 +2,10 @@ import * as bg from "@bgord/ui";
 import type { ProgressionMethodType } from "../../modules/plans/value-objects/progression-method";
 import type { ExerciseTargetType } from "../../modules/workouts/value-objects/exercise-target";
 import type { ExerciseTargetProgression } from "../../modules/workouts/value-objects/exercise-target-progression";
+import type { WorkoutExerciseLoadingType } from "../../modules/workouts/value-objects/workout-exercise-loading";
 import * as ui from "../components";
 import { useTargetDiffLabel } from "../hooks/use-target-diff-label";
+import { LoadingKit } from "../kits/loading.kit";
 import { WeightFormat } from "../services/weight-format";
 
 type Fields = {
@@ -16,18 +18,19 @@ export function WorkoutExerciseTargetProgression(
   props: {
     progression: ExerciseTargetProgression;
     method: ProgressionMethodType;
+    loading: WorkoutExerciseLoadingType;
     disabled: boolean;
   } & Fields,
 ) {
-  const { progression, method, disabled, sets, reps, load } = props;
+  const { progression, method, loading, disabled, sets, reps, load } = props;
   const t = bg.useTranslations();
   const label = useTargetDiffLabel();
 
   const pressed = (option: ExerciseTargetType) =>
     sets.value === option.sets &&
     reps.value === option.reps &&
-    load.value !== bg.NumberField.EMPTY &&
-    WeightFormat.grams(load.value) === option.load;
+    LoadingKit[loading].ready(load) &&
+    LoadingKit[loading].payload(load) === option.load;
 
   const apply = (option: ExerciseTargetType) => () => {
     sets.set(option.sets);

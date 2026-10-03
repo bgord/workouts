@@ -27,7 +27,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
         <>
           <ui.SetDots sets={previous.sets} target={previous.sets.length} />
           <span data-color="neutral-400" data-fw="medium">
-            <ui.ExercisePerformanceSummary sets={previous.sets} />
+            <ui.PerformanceValue loading={props.loading} sets={previous.sets} />
           </span>
         </>
       )}

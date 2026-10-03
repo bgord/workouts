@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
-import { WeightFormat } from "../services/weight-format";
+import { LoadingFormat } from "../kits/loading.format";
 
 export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
@@ -24,7 +24,12 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
         {...ui.Gap.inline}
       >
         <Target data-color="neutral-500" data-size="xs" />
-        <ui.SetsRepsLoad load={target.load} reps={target.reps} sets={target.sets} />
+        <ui.TargetValue
+          load={target.load}
+          loading={props.exercise.loading}
+          reps={target.reps}
+          sets={target.sets}
+        />
       </div>
     );
   }
@@ -34,10 +39,10 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       aria-label={
         target
           ? t("workout.target.edit", {
-              target: t("exercise.sets_reps_load", {
+              target: LoadingFormat[props.exercise.loading].setsRepsLoad(t, language, {
                 sets: target.sets,
-                reps: target.reps,
-                load: WeightFormat.kilograms(target.load).toLocaleString(language),
+                reps: String(target.reps),
+                load: target.load,
               }),
             })
           : undefined
@@ -67,7 +72,12 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
 
       {target && (
         <>
-          <ui.SetsRepsLoad load={target.load} reps={target.reps} sets={target.sets} />
+          <ui.TargetValue
+            load={target.load}
+            loading={props.exercise.loading}
+            reps={target.reps}
+            sets={target.sets}
+          />
         </>
       )}
 
