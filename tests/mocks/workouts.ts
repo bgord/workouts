@@ -102,6 +102,8 @@ export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
   progression,
 });
 
+export const loadStep = tools.Weight.fromKilograms(2.5);
+
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
 
 export const anotherLoggedSetId = v.parse(Workouts.VO.LoggedSetId, "6a2d0c8f-4b3e-4d9c-8f7a-2b3c4d5e6f70");

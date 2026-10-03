@@ -533,6 +533,8 @@ modules/
     ├── services
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
+    │   ├── load-step-plates.strategy.ts
+    │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts

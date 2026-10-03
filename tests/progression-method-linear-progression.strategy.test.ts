@@ -8,7 +8,8 @@ import * as mocks from "./mocks";
 describe("ProgressionMethodLinearProgressionStrategy", () => {
   test("load step either way, reps unchanged", () => {
     const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
-      mocks.exercisePerformanceWeakestSet,
+      { last: mocks.exercisePerformanceWeakestSet },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -32,7 +33,10 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
       reps: v.parse(Workouts.VO.Reps, 8),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
     });
-    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(last);
+    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
+      { last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+    );
 
     expect(strategy.calculate()).toEqual({
       last,
@@ -55,7 +59,10 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
       reps: v.parse(Workouts.VO.Reps, 8),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
     });
-    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(last);
+    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
+      { last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+    );
 
     expect(strategy.calculate()).toEqual({
       last,

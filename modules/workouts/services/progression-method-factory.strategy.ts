@@ -2,6 +2,7 @@ import * as Plans from "+plans";
 import type * as Queries from "+workouts/queries";
 import type * as VO from "+workouts/value-objects";
 import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-set";
+import { LoadStepIncrementStrategy } from "./load-step-increment.strategy";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 import { ProgressionMethodDoubleProgressionStrategy } from "./progression-method-double-progression.strategy";
 import { ProgressionMethodLinearProgressionStrategy } from "./progression-method-linear-progression.strategy";
@@ -13,14 +14,15 @@ export class ProgressionMethodStrategyFactory {
     previous: Pick<Queries.ExercisePerformance, "sets">,
   ): ProgressionMethodStrategy {
     const last = new ExercisePerformanceWeakestSet(previous).calculate();
+    const LoadStep = new LoadStepIncrementStrategy();
 
     switch (prescription.progression) {
       case Plans.VO.ProgressionMethodOptions.double_progression:
-        return new ProgressionMethodDoubleProgressionStrategy(prescription, last);
+        return new ProgressionMethodDoubleProgressionStrategy({ prescription, last }, { LoadStep });
       case Plans.VO.ProgressionMethodOptions.linear_progression:
-        return new ProgressionMethodLinearProgressionStrategy(last);
+        return new ProgressionMethodLinearProgressionStrategy({ last }, { LoadStep });
       case Plans.VO.ProgressionMethodOptions.none:
-        return new ProgressionMethodNoneStrategy(last);
+        return new ProgressionMethodNoneStrategy({ last });
     }
   }
 }
