@@ -3,11 +3,12 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Statistics from "+statistics";
 import * as Workouts from "+workouts";
-import { workoutId, workoutScheduledFor } from "./workouts";
+import { workoutExerciseLoading, workoutId, workoutScheduledFor } from "./workouts";
 
 export const calculatedExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
+  loading: workoutExerciseLoading,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),

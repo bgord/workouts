@@ -13,6 +13,7 @@ export type ExercisePerformanceStatisticsSet = {
 export type ExercisePerformanceStatistics = {
   workoutId: Workouts.VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
+  loading: Workouts.VO.WorkoutExerciseLoadingType;
   sets: Array<ExercisePerformanceStatisticsSet>;
   volume: tools.WeightGramsType;
   bestSet: ExercisePerformanceStatisticsSet;

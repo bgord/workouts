@@ -135,6 +135,7 @@ export const loggedSetWithRir = v.parse(Workouts.VO.LoggedSet, {
 export const exercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
+  loading: workoutExerciseLoading,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
