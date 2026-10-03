@@ -11,6 +11,9 @@ type Dependencies = {
 
 export const handlePlanRenameCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanRenameCommandType) => {
+    const plan = await deps.repo.load(command.payload.planId);
+    command.revision.validate(plan.revision.value);
+
     const count = await deps.GetPlanNameForOwnerCountQuery.execute(
       command.payload.planName,
       command.payload.requesterId,
@@ -19,8 +22,6 @@ export const handlePlanRenameCommand =
 
     PlanNameIsUniqueForOwner.enforce({ count });
 
-    const plan = await deps.repo.load(command.payload.planId);
-    command.revision.validate(plan.revision.value);
     plan.rename(command.payload.planName, command.payload.requesterId);
     await deps.repo.save(plan);
   };

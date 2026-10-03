@@ -359,6 +359,7 @@ export class Workout {
     Invariants.WorkoutIsDraft.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
     Invariants.WorkoutScheduledForHasChanged.enforce({ current: this.scheduledFor, incoming: scheduledFor });
+    Invariants.WorkoutScheduledForIsWithinHorizon.enforce({ scheduledFor, now: this.deps.Clock.now() });
 
     const event = bg.event(
       Events.WorkoutRescheduledEvent,

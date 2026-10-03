@@ -151,38 +151,12 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     await testcases.assertErrorResponse(response, 400, "progression.method.invalid");
   });
 
-  test("PlanSectionExerciseExists", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
-
-    const response = await server.request(
-      url,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          exerciseId: mocks.exerciseId,
-          sets: mocks.sets,
-          reps: mocks.repsRange,
-          progression: mocks.progression,
-        }),
-        headers: mocks.revisionHeaders(),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(response, 403, "plan.section.exercise.exists");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
   test("PlanExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -200,6 +174,33 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     );
 
     await testcases.assertErrorResponse(response, 404, "plan.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanSectionExerciseExists", async () => {
+    const events = mocks.planWithSectionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.repsRange,
+          progression: mocks.progression,
+        }),
+        headers: mocks.revisionHeaders(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "plan.section.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

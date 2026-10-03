@@ -61,36 +61,11 @@ describe("POST /api/plans/:planId/rename", async () => {
     await testcases.assertErrorResponse(response, 400, "plan.name.invalid");
   });
 
-  test("PlanNameIsUniqueForOwner", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
-      .mockResolvedValue(tools.Int.nonNegative(1));
-
-    const response = await server.request(
-      url,
-      {
-        method: "POST",
-        headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ planName: mocks.anotherPlanName }),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(response, 403, "plan.name.is.unique.for.owner");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
   test("PlanExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies
-      .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
-      .mockResolvedValue(tools.Int.nonNegative(0));
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
@@ -104,6 +79,30 @@ describe("POST /api/plans/:planId/rename", async () => {
     );
 
     await testcases.assertErrorResponse(response, 404, "plan.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("PlanNameIsUniqueForOwner", async () => {
+    const events = [mocks.GenericPlanCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Plans.GetPlanNameForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(1));
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify({ planName: mocks.anotherPlanName }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "plan.name.is.unique.for.owner");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

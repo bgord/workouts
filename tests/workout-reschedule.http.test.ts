@@ -61,38 +61,6 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
     await testcases.assertErrorResponse(response, 400, tools.DayIsoIdError.BadChars);
   });
 
-  test("WorkoutScheduledForIsWithinHorizon", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "PATCH",
-        headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ scheduledFor: "2999-12-31" }),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
-  });
-
-  test("WorkoutScheduledForIsWithinHorizon - past", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-
-    const response = await server.request(
-      url,
-      {
-        method: "PATCH",
-        headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ scheduledFor: "2000-01-01" }),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
-  });
-
   test("WorkoutExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -174,6 +142,48 @@ describe("PATCH /api/workouts/:workoutId/scheduled-for", async () => {
     );
 
     await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.has.changed");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutScheduledForIsWithinHorizon", async () => {
+    const events = [mocks.GenericWorkoutCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify({ scheduledFor: "2999-12-31" }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutScheduledForIsWithinHorizon - past", async () => {
+    const events = [mocks.GenericWorkoutCreatedEvent];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify({ scheduledFor: "2000-01-01" }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.scheduled.for.is.within.horizon");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

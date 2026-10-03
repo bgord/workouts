@@ -12,12 +12,13 @@ type Dependencies = {
 
 export const handlePlanSectionExerciseInstructionAddCommand =
   (deps: Dependencies) => async (command: Plans.Commands.PlanSectionExerciseInstructionAddCommandType) => {
+    const plan = await deps.repo.load(command.payload.planId);
+    command.revision.validate(plan.revision.value);
+
     const exercise = await deps.GetExerciseOHQ.execute(command.payload.exerciseInstruction.exerciseId);
 
     PlanSectionExerciseExists.enforce({ exercise });
 
-    const plan = await deps.repo.load(command.payload.planId);
-    command.revision.validate(plan.revision.value);
     plan.addSectionExerciseInstruction(
       command.payload.planSectionId,
       command.payload.exerciseInstruction,

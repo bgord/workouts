@@ -59,28 +59,11 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
-  test("WorkoutCatalogExerciseExists", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
-
-    const response = await server.request(
-      url,
-      { method: "POST", headers: mocks.revisionHeaders(draft.length), body },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(response, 403, "workout.catalog.exercise.exists");
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
   test("WorkoutExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(
@@ -90,6 +73,23 @@ describe(`POST ${url}`, async () => {
     );
 
     await testcases.assertErrorResponse(response, 404, "workout.exists");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("WorkoutCatalogExerciseExists", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.revisionHeaders(draft.length), body },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.catalog.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 

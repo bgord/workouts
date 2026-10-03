@@ -1,5 +1,4 @@
 import type * as bg from "@bgord/bun";
-import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Plans from "+plans";
 import type * as Workouts from "+workouts";
@@ -15,7 +14,6 @@ import { WorkoutPlanName } from "../value-objects/workout-plan-name";
 import { WorkoutPlanSectionCooldown } from "../value-objects/workout-plan-section-cooldown";
 import { WorkoutPlanSectionName } from "../value-objects/workout-plan-section-name";
 import { WorkoutPlanSectionWarmup } from "../value-objects/workout-plan-section-warmup";
-import { WorkoutScheduledForHorizonDaysMax } from "../value-objects/workout-scheduled-for-horizon";
 import { WorkoutStatusEnum } from "../value-objects/workout-status";
 
 type Dependencies = {
@@ -29,15 +27,9 @@ type Dependencies = {
 
 export const handleWorkoutCreateCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutCreateCommandType) => {
-    const today = tools.Day.fromTimestamp(deps.Clock.now());
-
-    const earliest = today.shift(v.parse(tools.Integer, -WorkoutScheduledForHorizonDaysMax)).toIsoId();
-    const latest = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
-
     WorkoutScheduledForIsWithinHorizon.enforce({
       scheduledFor: command.payload.scheduledFor,
-      earliest,
-      latest,
+      now: deps.Clock.now(),
     });
 
     const plan = await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId);

@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import * as bg from "@bgord/bun";
+import * as v from "valibot";
 import * as Workouts from "+workouts";
 import { bootstrap } from "+infra/bootstrap";
 import * as mocks from "./mocks";
@@ -47,6 +48,30 @@ describe("Workout.reschedule", async () => {
     expect(() => workout.reschedule(mocks.workoutScheduledFor, mocks.userId)).toThrow(
       Workouts.Invariants.WorkoutScheduledForHasChanged.error,
     );
+  });
+
+  test("WorkoutScheduledForIsWithinHorizon", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.reschedule(v.parse(Workouts.VO.WorkoutScheduledFor, "2999-12-31"), mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutScheduledForIsWithinHorizon.error);
+  });
+
+  test("WorkoutScheduledForIsWithinHorizon - past", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.reschedule(v.parse(Workouts.VO.WorkoutScheduledFor, "2000-01-01"), mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutScheduledForIsWithinHorizon.error);
   });
 
   test("happy path", async () => {

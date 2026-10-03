@@ -16,12 +16,13 @@ type Dependencies = {
 
 export const handleWorkoutExerciseAddCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutExerciseAddCommandType) => {
+    const workout = await deps.repo.load(command.payload.workoutId);
+    command.revision.validate(workout.revision.value);
+
     const exercise = await deps.GetExerciseOHQ.execute(command.payload.exerciseId);
 
     WorkoutCatalogExerciseExists.enforce({ exercise });
 
-    const workout = await deps.repo.load(command.payload.workoutId);
-    command.revision.validate(workout.revision.value);
     workout.addExercise(
       command.payload.workoutExerciseId,
       exercise!.id,

@@ -1,18 +1,24 @@
 import * as bg from "@bgord/bun";
-import type * as tools from "@bgord/tools";
+import * as tools from "@bgord/tools";
+import * as v from "valibot";
 import type * as VO from "+workouts/value-objects";
+import { WorkoutScheduledForHorizonDaysMax } from "../value-objects/workout-scheduled-for-horizon";
 
 class WorkoutScheduledForIsWithinHorizonError extends Error {}
 
 type WorkoutScheduledForIsWithinHorizonConfigType = {
   scheduledFor: VO.WorkoutScheduledForType;
-  earliest: tools.DayIsoIdType;
-  latest: tools.DayIsoIdType;
+  now: tools.Timestamp;
 };
 
 class WorkoutScheduledForIsWithinHorizonFactory extends bg.Invariant<WorkoutScheduledForIsWithinHorizonConfigType> {
   passes(config: WorkoutScheduledForIsWithinHorizonConfigType) {
-    return config.scheduledFor >= config.earliest && config.scheduledFor <= config.latest;
+    const today = tools.Day.fromTimestamp(config.now);
+
+    const earliest = today.shift(v.parse(tools.Integer, -WorkoutScheduledForHorizonDaysMax)).toIsoId();
+    const latest = today.shift(v.parse(tools.Integer, WorkoutScheduledForHorizonDaysMax)).toIsoId();
+
+    return config.scheduledFor >= earliest && config.scheduledFor <= latest;
   }
 
   // Stryker disable next-line StringLiteral
