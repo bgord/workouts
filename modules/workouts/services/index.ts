@@ -1,6 +1,7 @@
 export * from "./exercise-performance-weakest-set";
 export * from "./exercise-target-diff-calculator";
 export * from "./load-step.strategy";
+export * from "./load-step-factory.strategy";
 export * from "./load-step-increment.strategy";
 export * from "./load-step-locked.strategy";
 export * from "./logged-sets-volume";

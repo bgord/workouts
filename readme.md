@@ -535,6 +535,7 @@ modules/
     ├── services
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
+    │   ├── load-step-factory.strategy.ts
     │   ├── load-step-increment.strategy.ts
     │   ├── load-step-locked.strategy.ts
     │   ├── load-step.strategy.ts

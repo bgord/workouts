@@ -49,8 +49,11 @@ export async function targetWorkout(
     const previous = history.get(exercise.exerciseId)?.at(-1);
 
     const target = previous
-      ? Workouts.Services.ProgressionMethodStrategyFactory.for(exercise.prescription, previous).calculate()
-          .progress
+      ? Workouts.Services.ProgressionMethodStrategyFactory.for(
+          exercise.prescription,
+          exercise.loading,
+          previous,
+        ).calculate().progress
       : undefined;
 
     const command = bg.command(
