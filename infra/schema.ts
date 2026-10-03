@@ -46,6 +46,7 @@ import type { RirType } from "../modules/workouts/value-objects/rir";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseDescriptionType } from "../modules/workouts/value-objects/workout-exercise-description";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
+import type { WorkoutExerciseLoadingType } from "../modules/workouts/value-objects/workout-exercise-loading";
 import type { WorkoutExerciseNameType } from "../modules/workouts/value-objects/workout-exercise-name";
 import type { WorkoutExercisePositionType } from "../modules/workouts/value-objects/workout-exercise-position";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
@@ -364,6 +365,10 @@ export const workoutExercises = sqliteTable(
     exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
     exerciseName: text("exerciseName").notNull().$type<WorkoutExerciseNameType>(),
     exerciseDescription: text("exerciseDescription").notNull().$type<WorkoutExerciseDescriptionType>(),
+    loading: text("loading")
+      .notNull()
+      .$type<WorkoutExerciseLoadingType>()
+      .default(ExerciseLoadingOptions.external),
     prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
     target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
     position: integer("position", { mode: "number" })

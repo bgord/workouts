@@ -11,6 +11,7 @@ export class WorkoutExercise implements VO.WorkoutExercise {
     readonly id: VO.WorkoutExerciseIdType,
     readonly exerciseId: Exercises.VO.ExerciseIdType,
     readonly exerciseName: VO.WorkoutExerciseNameType,
+    readonly loading: VO.WorkoutExerciseLoadingType,
     readonly prescription: VO.ExercisePrescriptionType,
   ) {}
 

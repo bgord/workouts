@@ -5,6 +5,7 @@ import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import { WorkoutCatalogExerciseExists } from "../invariants/workout-catalog-exercise-exists";
 import { WorkoutExerciseDescription } from "../value-objects/workout-exercise-description";
+import { WorkoutExerciseLoading } from "../value-objects/workout-exercise-loading";
 import { WorkoutExerciseName } from "../value-objects/workout-exercise-name";
 
 type Dependencies = {
@@ -28,6 +29,7 @@ export const handleWorkoutExerciseAddCommand =
       exercise!.id,
       v.parse(WorkoutExerciseName, exercise!.name),
       v.parse(WorkoutExerciseDescription, exercise!.description),
+      v.parse(WorkoutExerciseLoading, exercise!.loading),
       command.payload.prescription,
       command.payload.requesterId,
     );

@@ -14,6 +14,7 @@ export * from "./workout-exercise";
 export * from "./workout-exercise-description";
 export * from "./workout-exercise-id";
 export * from "./workout-exercise-limit";
+export * from "./workout-exercise-loading";
 export * from "./workout-exercise-name";
 export * from "./workout-exercise-position";
 export * from "./workout-id";

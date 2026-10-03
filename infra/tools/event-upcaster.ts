@@ -44,5 +44,10 @@ export const EventUpcaster = new bg.EventUpcasterChainAdapter({
       toVersion: 3,
       upcast: ({ exerciseImageEtag, ...payload }) => payload,
     }),
+    new bg.EventUpcasterStep({
+      fromVersion: 3,
+      toVersion: 4,
+      upcast: (payload) => ({ ...payload, loading: Exercises.VO.ExerciseLoadingOptions.external }),
+    }),
   ],
 });

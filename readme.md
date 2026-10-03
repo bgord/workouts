@@ -565,6 +565,7 @@ modules/
         ├── workout-exercise-description.ts
         ├── workout-exercise-id.ts
         ├── workout-exercise-limit.ts
+        ├── workout-exercise-loading.ts
         ├── workout-exercise-name.ts
         ├── workout-exercise-position.ts
         ├── workout-exercise.ts

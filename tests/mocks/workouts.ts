@@ -11,6 +11,7 @@ import {
   exerciseDescription,
   exerciseId,
   exerciseImageEtag,
+  exerciseLoading,
   exerciseName,
 } from "./exercises";
 import {
@@ -52,6 +53,7 @@ export const workoutExerciseDescription = v.parse(
   Workouts.VO.WorkoutExerciseDescription,
   exerciseDescription,
 );
+export const workoutExerciseLoading = v.parse(Workouts.VO.WorkoutExerciseLoading, exerciseLoading);
 
 export const workoutSummary: Workouts.VO.WorkoutSummary = {
   id: workoutId,
@@ -182,6 +184,7 @@ export const workoutExercise: Workouts.VO.WorkoutExercise = {
   id: workoutExerciseId,
   exerciseId,
   exerciseName: workoutExerciseName,
+  loading: workoutExerciseLoading,
   prescription: exercisePrescription,
   target: exerciseTarget,
   loggedSets: [loggedSet],
@@ -191,6 +194,7 @@ export const workoutExerciseWithoutTarget: Workouts.VO.WorkoutExercise = {
   id: anotherWorkoutExerciseId,
   exerciseId: anotherExerciseId,
   exerciseName: anotherWorkoutExerciseName,
+  loading: workoutExerciseLoading,
   prescription: exercisePrescription,
   loggedSets: [],
 };
@@ -323,7 +327,7 @@ export const GenericWorkoutExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 3,
+  version: 4,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -332,6 +336,7 @@ export const GenericWorkoutExerciseAddedEvent = {
     exerciseId,
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
+    loading: workoutExerciseLoading,
     prescription: exercisePrescription,
     requesterId: userId,
   },
@@ -342,7 +347,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 3,
+  version: 4,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -351,6 +356,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
     exerciseId,
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
+    loading: workoutExerciseLoading,
     prescription: exercisePrescription,
     requesterId: userId,
   },
