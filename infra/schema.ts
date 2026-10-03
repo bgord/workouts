@@ -225,7 +225,10 @@ export const exerciseCategoryAssignments = sqliteTable(
     exerciseCategoryId: text("exerciseCategoryId", { length: 36 }).notNull().$type<ExerciseCategoryIdType>(),
     createdAt: timestamp("createdAt").notNull(),
   },
-  (table) => [primaryKey({ columns: [table.exerciseId, table.exerciseCategoryId] })],
+  (table) => [
+    primaryKey({ columns: [table.exerciseId, table.exerciseCategoryId] }),
+    index("exercise_category_assignments_exerciseCategoryId_idx").on(table.exerciseCategoryId),
+  ],
 );
 
 export const exercisesRelations = relations(exercises, ({ many }) => ({
@@ -251,36 +254,47 @@ export const plans = sqliteTable("plans", {
   updatedAt: timestamp("updatedAt").notNull(),
 });
 
-export const planSections = sqliteTable("planSections", {
-  id: identifier<PlanSectionIdType>(),
-  planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
-  name: text("name").notNull().$type<PlanSectionNameType>(),
-  warmup: text("warmup").$type<PlanSectionWarmupType>(),
-  cooldown: text("cooldown").$type<PlanSectionCooldownType>(),
-  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
-  createdAt: timestamp("createdAt").notNull(),
-  updatedAt: timestamp("updatedAt").notNull(),
-});
+export const planSections = sqliteTable(
+  "planSections",
+  {
+    id: identifier<PlanSectionIdType>(),
+    planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
+    name: text("name").notNull().$type<PlanSectionNameType>(),
+    warmup: text("warmup").$type<PlanSectionWarmupType>(),
+    cooldown: text("cooldown").$type<PlanSectionCooldownType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [index("planSections_planId_idx").on(table.planId)],
+);
 
-export const planSectionExerciseInstructions = sqliteTable("planSectionExerciseInstructions", {
-  id: identifier<ExerciseInstructionIdType>(),
-  planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
-  planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
-  exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
-  sets: integer("sets", { mode: "number" }).notNull().$type<SetsType>(),
-  reps: text("reps", { mode: "json" }).notNull().$type<RepsRangeType>(),
-  progression: text("progression", toEnumList(ProgressionMethodOptions))
-    .notNull()
-    .default(ProgressionMethodOptions.double_progression)
-    .$type<ProgressionMethodType>(),
-  position: integer("position", { mode: "number" })
-    .notNull()
-    .default(0)
-    .$type<ExerciseInstructionPositionType>(),
-  userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
-  createdAt: timestamp("createdAt").notNull(),
-  updatedAt: timestamp("updatedAt").notNull(),
-});
+export const planSectionExerciseInstructions = sqliteTable(
+  "planSectionExerciseInstructions",
+  {
+    id: identifier<ExerciseInstructionIdType>(),
+    planId: text("planId", { length: 36 }).notNull().$type<PlanIdType>(),
+    planSectionId: text("planSectionId", { length: 36 }).notNull().$type<PlanSectionIdType>(),
+    exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
+    sets: integer("sets", { mode: "number" }).notNull().$type<SetsType>(),
+    reps: text("reps", { mode: "json" }).notNull().$type<RepsRangeType>(),
+    progression: text("progression", toEnumList(ProgressionMethodOptions))
+      .notNull()
+      .default(ProgressionMethodOptions.double_progression)
+      .$type<ProgressionMethodType>(),
+    position: integer("position", { mode: "number" })
+      .notNull()
+      .default(0)
+      .$type<ExerciseInstructionPositionType>(),
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [
+    index("planSectionExerciseInstructions_planSectionId_idx").on(table.planSectionId),
+    index("planSectionExerciseInstructions_exerciseId_idx").on(table.exerciseId),
+  ],
+);
 
 export const plansRelations = relations(plans, ({ many }) => ({
   sections: many(planSections),
@@ -348,7 +362,10 @@ export const workoutExercises = sqliteTable(
     createdAt: timestamp("createdAt").notNull(),
     updatedAt: timestamp("updatedAt").notNull(),
   },
-  (table) => [index("workoutExercises_userId_exerciseId_idx").on(table.userId, table.exerciseId)],
+  (table) => [
+    index("workoutExercises_workoutId_idx").on(table.workoutId),
+    index("workoutExercises_userId_exerciseId_idx").on(table.userId, table.exerciseId),
+  ],
 );
 
 export const workoutLoggedSets = sqliteTable(
@@ -366,6 +383,7 @@ export const workoutLoggedSets = sqliteTable(
   },
   (table) => [
     index("workoutLoggedSets_workoutExerciseId_idx").on(table.workoutExerciseId),
+    index("workoutLoggedSets_workoutId_idx").on(table.workoutId),
     index("workoutLoggedSets_userId_idx").on(table.userId),
   ],
 );
