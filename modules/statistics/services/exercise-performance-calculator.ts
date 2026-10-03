@@ -15,7 +15,7 @@ export class ExercisePerformanceCalculator {
   async calculate(
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
-  ): Promise<Array<VO.ExercisePerformance>> {
+  ): Promise<Array<VO.ExercisePerformanceStatistics>> {
     const performances = await this.config.ListExercisePerformancesOHQ.execute(userId, exerciseId);
 
     return performances.map((performance) => {

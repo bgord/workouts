@@ -2,7 +2,7 @@ import type * as tools from "@bgord/tools";
 import type * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
 
-export type ExercisePerformanceSet = {
+export type ExercisePerformanceStatisticsSet = {
   setNumber: Workouts.VO.SetNumberType;
   reps: Workouts.VO.RepsType;
   load: Workouts.VO.LoadType;
@@ -10,11 +10,11 @@ export type ExercisePerformanceSet = {
   estimate: VO.OneRepMaxEstimateType;
 };
 
-export type ExercisePerformance = {
+export type ExercisePerformanceStatistics = {
   workoutId: Workouts.VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
-  sets: Array<ExercisePerformanceSet>;
+  sets: Array<ExercisePerformanceStatisticsSet>;
   volume: tools.WeightGramsType;
-  bestSet: ExercisePerformanceSet;
+  bestSet: ExercisePerformanceStatisticsSet;
   bestEstimate: VO.OneRepMaxEstimateType;
 };

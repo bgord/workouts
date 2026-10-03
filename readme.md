@@ -440,7 +440,7 @@ modules/
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
-│       ├── exercise-performance.ts
+│       ├── exercise-performance-statistics.ts
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts

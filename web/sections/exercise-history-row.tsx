@@ -1,13 +1,13 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { EqualApproximately, Sigma, Trophy } from "lucide-react";
-import type { ExercisePerformance } from "../../modules/statistics/value-objects/exercise-performance";
+import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import * as ui from "../components";
 import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseHistoryRow(props: {
-  performance: ExercisePerformance;
-  previous: ExercisePerformance | undefined;
+  performance: ExercisePerformanceStatistics;
+  previous: ExercisePerformanceStatistics | undefined;
   record: boolean;
   index: number;
   last: boolean;
