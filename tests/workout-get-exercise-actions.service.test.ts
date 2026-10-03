@@ -8,6 +8,7 @@ describe("WorkoutGetExerciseActions", () => {
       status: Workouts.VO.WorkoutStatusEnum.draft,
       exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       exercise: mocks.workoutExercise,
+      catalogExerciseExists: true,
     });
 
     expect(actions.calculate()).toEqual({
@@ -16,6 +17,7 @@ describe("WorkoutGetExerciseActions", () => {
       moveUp: { available: true, enabled: false, hints: ["workout.exercise.position.has.changed"] },
       moveDown: mocks.actionAvailable,
       setLog: mocks.actionUnavailable,
+      catalogView: mocks.actionAvailable,
     });
   });
 
@@ -24,6 +26,7 @@ describe("WorkoutGetExerciseActions", () => {
       status: Workouts.VO.WorkoutStatusEnum.draft,
       exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       exercise: mocks.workoutExerciseWithoutTarget,
+      catalogExerciseExists: true,
     });
 
     expect(actions.calculate()).toEqual({
@@ -32,6 +35,7 @@ describe("WorkoutGetExerciseActions", () => {
       moveUp: mocks.actionAvailable,
       moveDown: { available: true, enabled: false, hints: ["workout.exercise.position.in.range"] },
       setLog: mocks.actionUnavailable,
+      catalogView: mocks.actionAvailable,
     });
   });
 
@@ -40,6 +44,7 @@ describe("WorkoutGetExerciseActions", () => {
       status: Workouts.VO.WorkoutStatusEnum.in_progress,
       exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       exercise: mocks.workoutExercise,
+      catalogExerciseExists: true,
     });
 
     expect(actions.calculate()).toEqual({
@@ -48,6 +53,7 @@ describe("WorkoutGetExerciseActions", () => {
       moveUp: { available: true, enabled: false, hints: ["workout.exercise.position.has.changed"] },
       moveDown: mocks.actionAvailable,
       setLog: mocks.actionAvailable,
+      catalogView: mocks.actionAvailable,
     });
   });
 
@@ -56,6 +62,7 @@ describe("WorkoutGetExerciseActions", () => {
       status: Workouts.VO.WorkoutStatusEnum.in_progress,
       exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       exercise: mocks.workoutExerciseWithoutTarget,
+      catalogExerciseExists: true,
     });
 
     expect(actions.calculate().targetSet).toEqual(mocks.actionAvailable);
@@ -66,6 +73,7 @@ describe("WorkoutGetExerciseActions", () => {
       status: Workouts.VO.WorkoutStatusEnum.in_progress,
       exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       exercise: { id: mocks.anotherWorkoutExerciseId, target: null },
+      catalogExerciseExists: true,
     });
 
     expect(actions.calculate().targetSet).toEqual(mocks.actionAvailable);
@@ -76,6 +84,7 @@ describe("WorkoutGetExerciseActions", () => {
       status: Workouts.VO.WorkoutStatusEnum.completed,
       exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       exercise: mocks.workoutExercise,
+      catalogExerciseExists: true,
     });
 
     expect(actions.calculate()).toEqual({
@@ -84,6 +93,18 @@ describe("WorkoutGetExerciseActions", () => {
       moveUp: mocks.actionUnavailable,
       moveDown: mocks.actionUnavailable,
       setLog: mocks.actionUnavailable,
+      catalogView: mocks.actionAvailable,
     });
+  });
+
+  test("catalog exercise deleted", () => {
+    const actions = new Workouts.Services.WorkoutGetExerciseActions({
+      status: Workouts.VO.WorkoutStatusEnum.completed,
+      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
+      exercise: mocks.workoutExercise,
+      catalogExerciseExists: false,
+    });
+
+    expect(actions.calculate().catalogView).toEqual(mocks.actionUnavailable);
   });
 });

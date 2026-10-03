@@ -93,33 +93,59 @@ export function WorkoutExerciseRow(props: {
           {...workoutExerciseDescription.props.controller}
         >
           <span data-md-disp="none" data-stack="x">
-            <ui.ExerciseImage
-              id={props.exercise.exerciseId}
-              imageEtag={props.exercise.exerciseImageEtag}
-              name={props.exercise.exerciseName}
-              size={ui.ExerciseImageSize.sm}
-            />
+            {props.exercise.actions.catalogView.available && (
+              <ui.ExerciseImage
+                id={props.exercise.exerciseId}
+                imageEtag={props.exercise.exerciseImageEtag}
+                name={props.exercise.exerciseName}
+                size={ui.ExerciseImageSize.sm}
+              />
+            )}
+
+            {!props.exercise.actions.catalogView.available && (
+              <ui.ExerciseImagePlaceholder size={ui.ExerciseImageSize.sm} />
+            )}
           </span>
 
           <span data-disp="none" data-md-disp="flex" data-stack="x">
-            <ui.ExerciseImage
-              id={props.exercise.exerciseId}
-              imageEtag={props.exercise.exerciseImageEtag}
-              name={props.exercise.exerciseName}
-              size={ui.ExerciseImageSize.xs}
-            />
+            {props.exercise.actions.catalogView.available && (
+              <ui.ExerciseImage
+                id={props.exercise.exerciseId}
+                imageEtag={props.exercise.exerciseImageEtag}
+                name={props.exercise.exerciseName}
+                size={ui.ExerciseImageSize.xs}
+              />
+            )}
+
+            {!props.exercise.actions.catalogView.available && (
+              <ui.ExerciseImagePlaceholder size={ui.ExerciseImageSize.xs} />
+            )}
           </span>
         </button>
 
         <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-          <ui.ExerciseLink
-            id={label}
-            params={{ exerciseId: props.exercise.exerciseId }}
-            title={props.exercise.exerciseName}
-            to="/catalog/exercise/$exerciseId"
-          >
-            {props.exercise.exerciseName}
-          </ui.ExerciseLink>
+          {props.exercise.actions.catalogView.available && (
+            <ui.ExerciseLink
+              id={label}
+              params={{ exerciseId: props.exercise.exerciseId }}
+              title={props.exercise.exerciseName}
+              to="/catalog/exercise/$exerciseId"
+            >
+              {props.exercise.exerciseName}
+            </ui.ExerciseLink>
+          )}
+
+          {!props.exercise.actions.catalogView.available && (
+            <span
+              data-color="neutral-100"
+              data-fw="medium"
+              data-transform="truncate"
+              id={label}
+              title={props.exercise.exerciseName}
+            >
+              {props.exercise.exerciseName}
+            </span>
+          )}
 
           <div data-stack="x" {...ui.Gap.cluster}>
             <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />

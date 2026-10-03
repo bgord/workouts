@@ -1,8 +1,6 @@
 // cSpell:ignore Aparts
 export const password = "1234567890";
 
-export const admin = { email: "admin@example.com" };
-
 export const categories = {
   abs: { id: "cfee8759-23b3-4ab5-92de-d4eacccf13cd", name: "Abs" },
   biceps: { id: "08f888d0-8b58-4419-808f-c9691df8fefa", name: "Biceps" },
@@ -421,6 +419,19 @@ export const fullBody = {
           progression: "double_progression",
         },
       ],
+    },
+  },
+};
+
+export const admin = {
+  email: "admin@example.com",
+  scheduledWorkout: { id: "205aca4e-f3ed-4425-ba74-3a010fbcc92c" },
+  plan: {
+    id: "557a288a-5d7a-4294-bf15-2558074e123a",
+    name: fullBody.name,
+    description: fullBody.description,
+    sections: {
+      fullBody: { id: "41b2b2f7-9bc8-4836-acb5-02d73a97dc24", ...fullBody.sections.fullBody },
     },
   },
 };

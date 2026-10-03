@@ -12,6 +12,7 @@ type WorkoutGetExerciseActionsFacts = {
   status: VO.WorkoutStatusEnum;
   exercises: Array<Pick<VO.WorkoutExercise, "id">>;
   exercise: Pick<VO.WorkoutExercise, "id"> & { target?: VO.ExerciseTargetType | null };
+  catalogExerciseExists: boolean;
 };
 
 export class WorkoutGetExerciseActions {
@@ -41,6 +42,7 @@ export class WorkoutGetExerciseActions {
         }),
       ]),
       setLog: bg.ActionState.of(inProgress),
+      catalogView: bg.ActionState.of(this.facts.catalogExerciseExists),
     };
   }
 }

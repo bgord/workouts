@@ -10,6 +10,7 @@ export type WorkoutExerciseActions = {
   moveUp: bg.ActionState;
   moveDown: bg.ActionState;
   setLog: bg.ActionState;
+  catalogView: bg.ActionState;
 };
 
 export type LoggedSetActions = { correct: bg.ActionState; remove: bg.ActionState };

@@ -264,16 +264,34 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByText("No categories assigned")).toBeVisible();
   });
 
-  test("deletes the unused exercise", async ({ page }) => {
+  test("deletes an exercise used only by a workout", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: "Neck flexion", exact: true });
+
+    await page.goto(`/workouts/${fixtures.admin.scheduledWorkout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill("Neck flexion");
+    await page.getByRole("radio", { name: "Neck flexion" }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+    await expect(row.getByRole("link", { name: "Neck flexion", exact: true })).toBeVisible();
     await page.goto("/catalog");
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();
 
     await page.getByRole("button", { name: "Delete Neck flexion" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
-
     await expect(page).toHaveURL("/catalog");
     await expect(page.getByText("32 of 32")).toBeVisible();
+    await page.goto(`/workouts/${fixtures.admin.scheduledWorkout.id}`);
+
+    await expect(row.getByText("Neck flexion", { exact: true })).toBeVisible();
+    await expect(row.getByRole("img", { name: "Neck flexion" })).toHaveCount(0);
+    await expect(row.getByRole("link", { name: "Neck flexion", exact: true })).toBeHidden();
   });
 
   test("deletes the unused category", async ({ page }) => {

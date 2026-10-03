@@ -12,6 +12,7 @@ import { seedCatalog } from "./seed/catalog";
 import { Clock, now, withClock } from "./seed/clock";
 import * as fixtures from "./seed/fixtures";
 import { seedActive } from "./seed/personas/active";
+import { seedAdmin } from "./seed/personas/admin";
 import { seedArchivist } from "./seed/personas/archivist";
 import { seedAthlete } from "./seed/personas/athlete";
 import { seedBuilder } from "./seed/personas/builder";
@@ -38,6 +39,8 @@ void (async function main() {
 
   await bg.CorrelationStorage.run(correlationId, async () => {
     await withClock(new bg.ClockFixedAdapter(now.subtract(tools.Duration.Weeks(10))), () => seedCatalog(di));
+
+    await seedAdmin(di);
 
     await seedEmpty(di, fixtures.empty);
     await seedEmpty(di, fixtures.emptyMutation);

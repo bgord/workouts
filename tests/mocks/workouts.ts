@@ -269,6 +269,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
       moveUp: { available: true, enabled: true, hints: [] },
       moveDown: { available: true, enabled: true, hints: [] },
       setLog: { available: false, enabled: false, hints: [] },
+      catalogView: { available: true, enabled: true, hints: [] },
     },
   })),
 };

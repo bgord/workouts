@@ -85,12 +85,18 @@ function WorkoutLogPanelContent(props: { exercise: WorkoutExercise }) {
       <WorkoutSetLog exercise={exercise} onPending={setPendingSet} />
 
       <div data-cross="center" data-pt="3" data-stack="x" {...ui.Gap.related}>
-        <ui.ExerciseImage
-          id={exercise.exerciseId}
-          imageEtag={exercise.exerciseImageEtag}
-          name={exercise.exerciseName}
-          size={ui.ExerciseImageSize.xs}
-        />
+        {exercise.actions.catalogView.available && (
+          <ui.ExerciseImage
+            id={exercise.exerciseId}
+            imageEtag={exercise.exerciseImageEtag}
+            name={exercise.exerciseName}
+            size={ui.ExerciseImageSize.xs}
+          />
+        )}
+
+        {!exercise.actions.catalogView.available && (
+          <ui.ExerciseImagePlaceholder size={ui.ExerciseImageSize.xs} />
+        )}
 
         <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
           <strong data-color="neutral-100" data-transform="truncate">

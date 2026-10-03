@@ -42,6 +42,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             },
             orderBy: asc(Schema.workoutExercises.position),
             with: {
+              exercise: { columns: { id: true } },
               loggedSets: {
                 columns: { id: true, setNumber: true, reps: true, load: true, rir: true },
                 orderBy: asc(Schema.workoutLoggedSets.setNumber),
@@ -58,7 +59,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
     const data = {
       ...workout,
       exercises: await Promise.all(
-        workout.exercises.map(async (exercise) => {
+        workout.exercises.map(async ({ exercise: catalogExercise, ...exercise }) => {
           const previous = await GetExercisePreviousPerformanceQuery.execute(
             userId,
             exercise.exerciseId,
@@ -93,6 +94,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               status: workout.status,
               exercises: workout.exercises,
               exercise,
+              catalogExerciseExists: catalogExercise !== null,
             }).calculate(),
           };
         }),
