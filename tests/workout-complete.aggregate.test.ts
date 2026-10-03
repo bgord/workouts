@@ -75,6 +75,6 @@ describe("Workout.complete", async () => {
     await bg.CorrelationStorage.run(mocks.correlationId, () => workout.complete(mocks.userId));
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutCompletedEvent]);
-    expect(workout.status).toEqual(Workouts.VO.WorkoutStatusEnum.completed);
+    expect(workout["status"]).toEqual(Workouts.VO.WorkoutStatusEnum.completed);
   });
 });

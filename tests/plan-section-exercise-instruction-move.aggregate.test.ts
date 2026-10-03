@@ -154,7 +154,7 @@ describe("Plan.moveSectionExerciseInstruction", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionMovedEvent]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       {
         id: mocks.planSectionId,
         name: mocks.planSectionName,
@@ -199,7 +199,7 @@ describe("Plan.moveSectionExerciseInstruction", async () => {
         },
       },
     ]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       {
         id: mocks.planSectionId,
         name: mocks.planSectionName,

@@ -88,7 +88,7 @@ describe("Plan.setSectionWarmup", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionWarmupSetEvent]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       { id: mocks.anotherPlanSectionId, name: mocks.thirdPlanSectionName, exerciseInstructions: [] },
       {
         id: mocks.planSectionId,
@@ -140,7 +140,7 @@ describe("Plan.setSectionWarmup", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionWarmupUnsetEvent]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       { id: mocks.planSectionId, name: mocks.planSectionName, warmup: undefined, exerciseInstructions: [] },
     ]);
   });

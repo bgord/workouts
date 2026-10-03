@@ -45,7 +45,7 @@ export async function targetWorkout(
   const deps = { ...di.Adapters.System, ...di.Tools };
   const workout = await di.Adapters.Workouts.WorkoutRepository.load(workoutId);
 
-  for (const exercise of workout.exercises) {
+  for (const exercise of workout["exercises"]) {
     const previous = history.get(exercise.exerciseId)?.at(-1);
 
     const target = previous

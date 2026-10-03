@@ -170,11 +170,11 @@ describe("Workout.correctSet", async () => {
         },
       },
     ]);
-    expect(workout.exercises.find((exercise) => exercise.id === mocks.workoutExerciseId)?.loggedSets).toEqual(
-      [],
-    );
     expect(
-      workout.exercises.find((exercise) => exercise.id === mocks.anotherWorkoutExerciseId)?.loggedSets,
+      workout["exercises"].find((exercise) => exercise.id === mocks.workoutExerciseId)?.loggedSets,
+    ).toEqual([]);
+    expect(
+      workout["exercises"].find((exercise) => exercise.id === mocks.anotherWorkoutExerciseId)?.loggedSets,
     ).toEqual([mocks.correctedLoggedSet]);
   });
 
@@ -203,7 +203,7 @@ describe("Workout.correctSet", async () => {
       ),
     );
 
-    expect(workout.exercises[0]?.loggedSets).toEqual([
+    expect(workout["exercises"][0]?.loggedSets).toEqual([
       mocks.loggedSet,
       {
         ...mocks.correctedLoggedSet,

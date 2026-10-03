@@ -61,11 +61,11 @@ export class Plan {
 
   readonly id: VO.PlanIdType;
   revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
-  status = VO.PlanStatusEnum.initial;
-  name?: VO.PlanNameType;
-  description?: VO.PlanDescriptionType;
-  sections: Array<VO.PlanSection> = [];
-  userId?: Auth.VO.UserIdType;
+  private status = VO.PlanStatusEnum.initial;
+  private name?: VO.PlanNameType;
+  private description?: VO.PlanDescriptionType;
+  private sections: Array<VO.PlanSection> = [];
+  private userId?: Auth.VO.UserIdType;
 
   private readonly pending: Array<PlanEventType> = [];
 

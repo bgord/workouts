@@ -75,7 +75,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
       clock.advanceBy(tools.Duration.Minutes(5));
       await startWorkout(di, userId, workoutId);
 
-      for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId)).exercises) {
+      for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId))["exercises"]) {
         const target = exercise.target;
 
         if (target === undefined) continue;
@@ -103,7 +103,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
       await completeWorkout(di, userId, workoutId);
     });
 
-    for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId)).exercises) {
+    for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId))["exercises"]) {
       const sets = exercise.loggedSets.map((set) => ({ ...set, rir: set.rir ?? null }));
 
       history.set(exercise.exerciseId, [...(history.get(exercise.exerciseId) ?? []), { sets }]);

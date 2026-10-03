@@ -88,7 +88,7 @@ describe("Plan.setSectionCooldown", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCooldownSetEvent]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       { id: mocks.anotherPlanSectionId, name: mocks.thirdPlanSectionName, exerciseInstructions: [] },
       {
         id: mocks.planSectionId,
@@ -140,7 +140,7 @@ describe("Plan.setSectionCooldown", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCooldownUnsetEvent]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       { id: mocks.planSectionId, name: mocks.planSectionName, cooldown: undefined, exerciseInstructions: [] },
     ]);
   });

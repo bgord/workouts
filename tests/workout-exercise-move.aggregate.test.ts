@@ -104,7 +104,7 @@ describe("Workout.moveExercise", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseMovedEvent]);
-    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([
+    expect(workout["exercises"].map((exercise) => exercise.id)).toEqual([
       mocks.anotherWorkoutExerciseId,
       mocks.workoutExerciseId,
     ]);
@@ -122,7 +122,7 @@ describe("Workout.moveExercise", async () => {
       deps,
     );
 
-    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([
+    expect(workout["exercises"].map((exercise) => exercise.id)).toEqual([
       mocks.anotherWorkoutExerciseId,
       mocks.workoutExerciseId,
     ]);
@@ -140,7 +140,7 @@ describe("Workout.moveExercise", async () => {
         },
       },
     ]);
-    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([
+    expect(workout["exercises"].map((exercise) => exercise.id)).toEqual([
       mocks.workoutExerciseId,
       mocks.anotherWorkoutExerciseId,
     ]);
@@ -165,7 +165,9 @@ describe("Workout.moveExercise", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseMovedEvent]);
-    expect(workout.exercises[1]?.id).toEqual(mocks.workoutExerciseId);
-    expect(workout.exercises[1]?.loggedSets).toEqual([mocks.GenericWorkoutSetLoggedEvent.payload.loggedSet]);
+    expect(workout["exercises"][1]?.id).toEqual(mocks.workoutExerciseId);
+    expect(workout["exercises"][1]?.loggedSets).toEqual([
+      mocks.GenericWorkoutSetLoggedEvent.payload.loggedSet,
+    ]);
   });
 });

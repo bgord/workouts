@@ -63,7 +63,7 @@ describe("Workout.removeExercise", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseRemovedEvent]);
-    expect(workout.exercises).toEqual([]);
+    expect(workout["exercises"]).toEqual([]);
   });
 
   test("happy path - in progress", async () => {
@@ -83,7 +83,7 @@ describe("Workout.removeExercise", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseRemovedEvent]);
-    expect(workout.exercises).toEqual([]);
+    expect(workout["exercises"]).toEqual([]);
   });
 
   test("happy path - keeps the other exercises", async () => {
@@ -101,7 +101,7 @@ describe("Workout.removeExercise", async () => {
       workout.removeExercise(mocks.workoutExerciseId, mocks.userId),
     );
 
-    expect(workout.exercises.map((exercise) => exercise.id)).toEqual([mocks.anotherWorkoutExerciseId]);
+    expect(workout["exercises"].map((exercise) => exercise.id)).toEqual([mocks.anotherWorkoutExerciseId]);
   });
 
   test("happy path - drops the logged sets along with the exercise", async () => {
@@ -117,12 +117,14 @@ describe("Workout.removeExercise", async () => {
       deps,
     );
 
-    expect(workout.exercises[0]?.loggedSets).toEqual([mocks.GenericWorkoutSetLoggedEvent.payload.loggedSet]);
+    expect(workout["exercises"][0]?.loggedSets).toEqual([
+      mocks.GenericWorkoutSetLoggedEvent.payload.loggedSet,
+    ]);
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       workout.removeExercise(mocks.workoutExerciseId, mocks.userId),
     );
 
-    expect(workout.exercises).toEqual([]);
+    expect(workout["exercises"]).toEqual([]);
   });
 });

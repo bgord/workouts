@@ -118,7 +118,7 @@ describe("Workout.removeSet", async () => {
     );
 
     expect(
-      workout.exercises.find((exercise) => exercise.id === mocks.anotherWorkoutExerciseId)?.loggedSets,
+      workout["exercises"].find((exercise) => exercise.id === mocks.anotherWorkoutExerciseId)?.loggedSets,
     ).toEqual([]);
   });
 
@@ -138,7 +138,7 @@ describe("Workout.removeSet", async () => {
     );
 
     // the id is stable, the ordinal is not: set 2 becomes set 1
-    expect(workout.exercises[0]?.loggedSets).toEqual([
+    expect(workout["exercises"][0]?.loggedSets).toEqual([
       { ...mocks.anotherLoggedSet, setNumber: mocks.loggedSet.setNumber },
     ]);
   });

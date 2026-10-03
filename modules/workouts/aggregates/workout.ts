@@ -51,11 +51,11 @@ export class Workout {
 
   readonly id: VO.WorkoutIdType;
   revision: tools.Revision = new tools.Revision(tools.Revision.INITIAL);
-  status = VO.WorkoutStatusEnum.initial;
-  userId?: Auth.VO.UserIdType;
-  scheduledFor?: VO.WorkoutScheduledForType;
-  note?: VO.WorkoutNoteType;
-  exercises: Array<VO.WorkoutExercise> = [];
+  private status = VO.WorkoutStatusEnum.initial;
+  private userId?: Auth.VO.UserIdType;
+  private scheduledFor?: VO.WorkoutScheduledForType;
+  private note?: VO.WorkoutNoteType;
+  private exercises: Array<VO.WorkoutExercise> = [];
 
   private readonly pending: Array<WorkoutEventType> = [];
 

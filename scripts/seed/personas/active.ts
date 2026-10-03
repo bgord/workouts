@@ -29,7 +29,7 @@ export async function seedActive(di: BootstrapType, persona: typeof fixtures.act
     clock.advanceBy(tools.Duration.Minutes(5));
     await startWorkout(di, userId, workoutId);
 
-    const [first, second] = (await di.Adapters.Workouts.WorkoutRepository.load(workoutId)).exercises;
+    const [first, second] = (await di.Adapters.Workouts.WorkoutRepository.load(workoutId))["exercises"];
     const firstTarget = first?.target;
     const secondTarget = second?.target;
 

@@ -155,7 +155,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
         },
       },
     ]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       {
         id: mocks.planSectionId,
         name: mocks.planSectionName,

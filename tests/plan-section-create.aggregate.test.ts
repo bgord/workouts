@@ -65,7 +65,7 @@ describe("Plan.createSection", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionCreatedEvent]);
-    expect(plan.sections).toEqual([
+    expect(plan["sections"]).toEqual([
       { id: mocks.planSectionId, name: mocks.planSectionName, exerciseInstructions: [] },
     ]);
   });
