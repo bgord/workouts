@@ -1,8 +1,7 @@
 import * as bg from "@bgord/ui";
-import { Triangle } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import { WeightFormat } from "../services/weight-format";
-import { Gap } from "./gap";
+import { Delta } from "./delta";
 
 const color = (positive: boolean, goal: BodyWeightGoalOptions | undefined) => {
   if (goal === BodyWeightGoalOptions.maintain) return "neutral-300";
@@ -18,33 +17,14 @@ export function WeightDelta(
     decimals?: number;
   } & React.JSX.IntrinsicElements["span"],
 ) {
-  const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const { previous, current, goal, decimals, ...rest } = props;
-
-  if (previous === undefined) return null;
-
-  const difference = current - previous;
-
-  if (difference === 0) return null;
-
-  const positive = difference > 0;
+  const { goal, decimals, ...rest } = props;
 
   return (
-    <span data-color={color(positive, goal)} data-stack="x" data-transform="nowrap" {...Gap.inline} {...rest}>
-      <Triangle
-        aria-label={t(positive ? "app.delta.increase" : "app.delta.decrease")}
-        data-mt={positive ? "0" : "0-5"}
-        data-rotate={positive ? "0" : "180"}
-        fill="currentColor"
-        role="img"
-        size={9}
-        strokeWidth={0}
-      />
-
-      {WeightFormat.kilograms(Math.abs(difference), decimals).toLocaleString(language)}
-
-      {" kg"}
-    </span>
+    <Delta
+      format={(difference) => `${WeightFormat.kilograms(difference, decimals).toLocaleString(language)} kg`}
+      tone={(positive) => color(positive, goal)}
+      {...rest}
+    />
   );
 }
