@@ -5,6 +5,7 @@ export const PlanSectionNameError = { Type: "plan.section.name.type", Invalid: "
 
 export const PlanSectionName = v.pipe(
   v.string(PlanSectionNameError.Type),
+  v.trim(),
   v.minLength(PlanSectionNameMin, PlanSectionNameError.Invalid),
   v.maxLength(PlanSectionNameMax, PlanSectionNameError.Invalid),
   // Stryker disable next-line StringLiteral

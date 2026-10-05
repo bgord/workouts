@@ -8,6 +8,7 @@ export const PlanSectionCooldownError = {
 
 export const PlanSectionCooldown = v.pipe(
   v.string(PlanSectionCooldownError.Type),
+  v.trim(),
   v.minLength(PlanSectionCooldownMin, PlanSectionCooldownError.Invalid),
   v.maxLength(PlanSectionCooldownMax, PlanSectionCooldownError.Invalid),
   // Stryker disable next-line StringLiteral

@@ -10,6 +10,12 @@ describe("PlanDescription", () => {
     ).toEqual(true);
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Plans.VO.PlanDescription, "  Push/pull/legs\n")).toEqual(
+      v.parse(Plans.VO.PlanDescription, "Push/pull/legs"),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Plans.VO.PlanDescription, null)).toThrow("plan.description.type");
   });
@@ -20,6 +26,10 @@ describe("PlanDescription", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Plans.VO.PlanDescription, "")).toThrow("plan.description.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Plans.VO.PlanDescription, " \n\t ")).toThrow("plan.description.invalid");
   });
 
   test("rejects too long", () => {

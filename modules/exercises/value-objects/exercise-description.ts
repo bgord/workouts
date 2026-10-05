@@ -8,6 +8,7 @@ export const ExerciseDescriptionError = {
 
 export const ExerciseDescription = v.pipe(
   v.string(ExerciseDescriptionError.Type),
+  v.trim(),
   v.minLength(ExerciseDescriptionMin, ExerciseDescriptionError.Invalid),
   v.maxLength(ExerciseDescriptionMax, ExerciseDescriptionError.Invalid),
   // Stryker disable next-line StringLiteral

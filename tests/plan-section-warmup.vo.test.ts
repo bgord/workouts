@@ -8,6 +8,12 @@ describe("PlanSectionWarmup", () => {
     expect(v.safeParse(Plans.VO.PlanSectionWarmup, "5 min bike\nband pull-apart 2x15").success).toEqual(true);
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Plans.VO.PlanSectionWarmup, "  5 min bike\n")).toEqual(
+      v.parse(Plans.VO.PlanSectionWarmup, "5 min bike"),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Plans.VO.PlanSectionWarmup, null)).toThrow("plan.section.warmup.type");
   });
@@ -18,6 +24,10 @@ describe("PlanSectionWarmup", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Plans.VO.PlanSectionWarmup, "")).toThrow("plan.section.warmup.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Plans.VO.PlanSectionWarmup, " \n\t ")).toThrow("plan.section.warmup.invalid");
   });
 
   test("rejects too long", () => {

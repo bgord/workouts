@@ -5,6 +5,7 @@ export const BodyPartNameError = { Type: "body.part.name.type", Invalid: "body.p
 
 export const BodyPartName = v.pipe(
   v.string(BodyPartNameError.Type),
+  v.trim(),
   v.minLength(BodyPartNameMin, BodyPartNameError.Invalid),
   v.maxLength(BodyPartNameMax, BodyPartNameError.Invalid),
   // Stryker disable next-line StringLiteral

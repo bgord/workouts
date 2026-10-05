@@ -10,6 +10,12 @@ describe("PlanSectionCooldown", () => {
     );
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Plans.VO.PlanSectionCooldown, "  5 min bike\n")).toEqual(
+      v.parse(Plans.VO.PlanSectionCooldown, "5 min bike"),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Plans.VO.PlanSectionCooldown, null)).toThrow("plan.section.cooldown.type");
   });
@@ -20,6 +26,10 @@ describe("PlanSectionCooldown", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Plans.VO.PlanSectionCooldown, "")).toThrow("plan.section.cooldown.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Plans.VO.PlanSectionCooldown, " \n\t ")).toThrow("plan.section.cooldown.invalid");
   });
 
   test("rejects too long", () => {

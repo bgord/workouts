@@ -17,6 +17,12 @@ describe("ExerciseDescription", () => {
     ).toEqual(true);
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Exercises.VO.ExerciseDescription, "  Press the barbell upwards.\n")).toEqual(
+      v.parse(Exercises.VO.ExerciseDescription, "Press the barbell upwards."),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Exercises.VO.ExerciseDescription, null)).toThrow("exercise.description.type");
   });
@@ -27,6 +33,10 @@ describe("ExerciseDescription", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Exercises.VO.ExerciseDescription, "")).toThrow("exercise.description.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Exercises.VO.ExerciseDescription, " \n\t ")).toThrow("exercise.description.invalid");
   });
 
   test("rejects too long", () => {

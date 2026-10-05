@@ -5,6 +5,7 @@ export const PlanNameError = { Type: "plan.name.type", Invalid: "plan.name.inval
 
 export const PlanName = v.pipe(
   v.string(PlanNameError.Type),
+  v.trim(),
   v.minLength(PlanNameMin, PlanNameError.Invalid),
   v.maxLength(PlanNameMax, PlanNameError.Invalid),
   // Stryker disable next-line StringLiteral

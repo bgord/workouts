@@ -10,6 +10,12 @@ describe("WorkoutNote", () => {
     );
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Workouts.VO.WorkoutNote, "  Felt heavy\n")).toEqual(
+      v.parse(Workouts.VO.WorkoutNote, "Felt heavy"),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Workouts.VO.WorkoutNote, null)).toThrow("workout.note.type");
   });
@@ -20,6 +26,10 @@ describe("WorkoutNote", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Workouts.VO.WorkoutNote, "")).toThrow("workout.note.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Workouts.VO.WorkoutNote, " \n\t ")).toThrow("workout.note.invalid");
   });
 
   test("rejects too long", () => {

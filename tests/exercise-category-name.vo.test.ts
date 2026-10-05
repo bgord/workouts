@@ -9,6 +9,12 @@ describe("ExerciseCategoryName", () => {
     expect(v.safeParse(Exercises.VO.ExerciseCategoryName, "Chest & Triceps").success).toEqual(true);
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Exercises.VO.ExerciseCategoryName, "  Upper Chest\n")).toEqual(
+      v.parse(Exercises.VO.ExerciseCategoryName, "Upper Chest"),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Exercises.VO.ExerciseCategoryName, null)).toThrow("exercise.category.name.type");
   });
@@ -19,6 +25,12 @@ describe("ExerciseCategoryName", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Exercises.VO.ExerciseCategoryName, "")).toThrow("exercise.category.name.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Exercises.VO.ExerciseCategoryName, " \n\t ")).toThrow(
+      "exercise.category.name.invalid",
+    );
   });
 
   test("rejects too long", () => {

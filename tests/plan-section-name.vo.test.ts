@@ -9,6 +9,12 @@ describe("PlanSectionName", () => {
     expect(v.safeParse(Plans.VO.PlanSectionName, "Upper / Lower").success).toEqual(true);
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Plans.VO.PlanSectionName, "  Upper / Lower\n")).toEqual(
+      v.parse(Plans.VO.PlanSectionName, "Upper / Lower"),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Plans.VO.PlanSectionName, null)).toThrow("plan.section.name.type");
   });
@@ -19,6 +25,10 @@ describe("PlanSectionName", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Plans.VO.PlanSectionName, "")).toThrow("plan.section.name.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Plans.VO.PlanSectionName, " \n\t ")).toThrow("plan.section.name.invalid");
   });
 
   test("rejects too long", () => {

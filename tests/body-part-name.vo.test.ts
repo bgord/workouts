@@ -9,6 +9,12 @@ describe("BodyPartName", () => {
     expect(v.safeParse(Measurements.VO.BodyPartName, "Chest").success).toEqual(true);
   });
 
+  test("happy path - trimmed", () => {
+    expect(v.parse(Measurements.VO.BodyPartName, "  Chest\n")).toEqual(
+      v.parse(Measurements.VO.BodyPartName, "Chest"),
+    );
+  });
+
   test("rejects non-string - null", () => {
     expect(() => v.parse(Measurements.VO.BodyPartName, null)).toThrow("body.part.name.type");
   });
@@ -19,6 +25,10 @@ describe("BodyPartName", () => {
 
   test("rejects empty", () => {
     expect(() => v.parse(Measurements.VO.BodyPartName, "")).toThrow("body.part.name.invalid");
+  });
+
+  test("rejects whitespace only", () => {
+    expect(() => v.parse(Measurements.VO.BodyPartName, " \n\t ")).toThrow("body.part.name.invalid");
   });
 
   test("rejects too long", () => {

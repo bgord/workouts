@@ -223,11 +223,25 @@ test.describe("Plans - drafter", () => {
     ).toHaveCount(1);
   });
 
+  test("rejects a blank new section name", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+
+    await page.getByRole("button", { name: "New section" }).click();
+    await page.getByLabel("New section").fill("   ");
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect(page.getByText("Could not create a section")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("heading", { level: 2 })).toHaveCount(3);
+  });
+
   test("adds a section", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
     await page.getByRole("button", { name: "New section" }).click();
-    await page.getByLabel("New section").fill("Arms");
+    await page.getByLabel("New section").fill("  Arms  ");
     await page.getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeVisible();

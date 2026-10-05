@@ -8,6 +8,7 @@ export const PlanSectionWarmupError = {
 
 export const PlanSectionWarmup = v.pipe(
   v.string(PlanSectionWarmupError.Type),
+  v.trim(),
   v.minLength(PlanSectionWarmupMin, PlanSectionWarmupError.Invalid),
   v.maxLength(PlanSectionWarmupMax, PlanSectionWarmupError.Invalid),
   // Stryker disable next-line StringLiteral

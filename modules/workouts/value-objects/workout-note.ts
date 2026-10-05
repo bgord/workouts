@@ -5,6 +5,7 @@ export const WorkoutNoteError = { Type: "workout.note.type", Invalid: "workout.n
 
 export const WorkoutNote = v.pipe(
   v.string(WorkoutNoteError.Type),
+  v.trim(),
   v.minLength(WorkoutNoteMin, WorkoutNoteError.Invalid),
   v.maxLength(WorkoutNoteMax, WorkoutNoteError.Invalid),
   // Stryker disable next-line StringLiteral
