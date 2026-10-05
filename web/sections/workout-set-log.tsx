@@ -46,7 +46,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.currentTarget;
+    const request = mutation.mutate(event.currentTarget);
 
     startTransition(async () => {
       props.onPending({
@@ -60,7 +60,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
           remove: { available: true, enabled: false, hints: [] },
         },
       });
-      await mutation.mutate(form);
+      await request;
     });
   };
 
