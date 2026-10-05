@@ -67,10 +67,13 @@ export function PlanCreate() {
             <label {...name.label.props}>{t("plan.create.name.label")}</label>
 
             <input
+              autoFocus
               className="c-input"
               data-width="100%"
+              maxLength={Form.name.pattern.max}
+              minLength={Form.name.pattern.min}
               placeholder={t("plan.create.name.placeholder")}
-              {...bg.Form.input(Form.name.pattern)}
+              required
               {...name.input.props}
             />
           </div>

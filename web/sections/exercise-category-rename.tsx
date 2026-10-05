@@ -63,10 +63,13 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
       <div data-stack="x" {...ui.Gap.inline}>
         <input
           aria-label={t("exercise.category.rename.label")}
+          autoFocus
           className="c-input"
           data-grow="1"
           data-minw="0"
-          {...bg.Form.input(Form.name.pattern)}
+          maxLength={Form.name.pattern.max}
+          minLength={Form.name.pattern.min}
+          required
           {...name.input.props}
         />
 

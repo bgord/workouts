@@ -99,6 +99,7 @@ export function PlanSectionCooldown(props: PlanSection) {
 
           <textarea
             aria-label={t("plan.section.cooldown.label")}
+            autoFocus
             className="c-textarea"
             data-width="100%"
             placeholder={t("plan.section.cooldown.placeholder")}

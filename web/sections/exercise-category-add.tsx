@@ -40,8 +40,10 @@ export function ExerciseCategoryAdd() {
           className="c-input"
           data-grow="1"
           data-minw="0"
+          maxLength={Form.name.pattern.max}
+          minLength={Form.name.pattern.min}
           placeholder={t("exercise.category.add.name.placeholder")}
-          {...bg.Form.input(Form.name.pattern)}
+          required
           {...name.input.props}
         />
 

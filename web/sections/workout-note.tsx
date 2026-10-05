@@ -67,6 +67,7 @@ export function WorkoutNote() {
         >
           <textarea
             aria-label={t("workout.note.label")}
+            autoFocus
             className="c-textarea"
             data-width="100%"
             placeholder={t("workout.note.placeholder")}

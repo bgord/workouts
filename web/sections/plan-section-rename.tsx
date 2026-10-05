@@ -71,10 +71,13 @@ export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggle
       <div data-stack="x" {...ui.Gap.inline}>
         <input
           aria-label={t("plan.section.rename.label")}
+          autoFocus
           className="c-input"
           data-grow="1"
           data-minw="0"
-          {...bg.Form.input(Form.planSectionName.pattern)}
+          maxLength={Form.planSectionName.pattern.max}
+          minLength={Form.planSectionName.pattern.min}
+          required
           {...planSectionName.input.props}
         />
 

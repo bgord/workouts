@@ -63,6 +63,7 @@ export function ExerciseDescription() {
         >
           <textarea
             aria-label={t("exercise.update.description.label")}
+            autoFocus
             className="c-textarea"
             data-width="100%"
             style={{ fieldSizing: "content" }}

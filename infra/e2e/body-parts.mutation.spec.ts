@@ -6,18 +6,13 @@ test.describe("Body parts - empty-mutation", () => {
   test.use({ storageState: ".auth/empty-mutation.json" });
   test.describe.configure({ mode: "serial" });
 
-  test("rejects a too long body part name", async ({ page }) => {
+  test("caps a body part name at the maximum length", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Manage" }).click();
     await page.getByLabel("Body part name").fill("a".repeat(65));
-    await page.getByRole("button", { name: "Add", exact: true }).click();
 
-    await expect(page.getByLabel("Body part name").and(page.locator(":invalid"))).toHaveCount(1);
-
-    await page.reload();
-
-    await expect(page.getByText("Add a body part first")).toBeVisible();
+    await expect(page.getByLabel("Body part name")).toHaveValue("a".repeat(64));
   });
 
   test("blocks defining a body part with an empty name", async ({ page }) => {
@@ -90,7 +85,7 @@ test.describe("Body parts - empty-mutation", () => {
     ).toBeVisible();
   });
 
-  test("rejects a too long new body part name", async ({ page }) => {
+  test("caps a new body part name at the maximum length", async ({ page }) => {
     const field = page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name");
 
     await page.goto("/measurements/body-parts");
@@ -98,13 +93,8 @@ test.describe("Body parts - empty-mutation", () => {
     await page.getByRole("button", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Rename Neck" }).click();
     await field.fill("a".repeat(65));
-    await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(field.and(page.locator(":invalid"))).toHaveCount(1);
-
-    await page.reload();
-
-    await expect(page.getByRole("button", { name: "Measure Neck", exact: true })).toBeVisible();
+    await expect(field).toHaveValue("a".repeat(64));
   });
 
   test("renames the body part", async ({ page }) => {

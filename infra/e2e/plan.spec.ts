@@ -119,6 +119,30 @@ test.describe("Plan - builder", () => {
     ).toBeEnabled();
   });
 
+  test("focuses the plan name when renaming", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: `Rename ${fixtures.builder.plan.name}` }).click();
+
+    await expect(page.getByLabel("Plan name")).toBeFocused();
+  });
+
+  test("focuses the plan description when editing", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: fixtures.builder.plan.description }).click();
+
+    await expect(page.getByLabel("Description")).toBeFocused();
+  });
+
+  test("focuses the new section name", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: "New section" }).click();
+
+    await expect(page.getByLabel("New section")).toBeFocused();
+  });
+
   test("shows the error when finalizing the plan fails", async ({ page }) => {
     await page.route("**/api/plans/*/finalize", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/plans/${fixtures.builder.plan.id}`);

@@ -99,6 +99,7 @@ export function PlanSectionWarmup(props: PlanSection) {
 
           <textarea
             aria-label={t("plan.section.warmup.label")}
+            autoFocus
             className="c-textarea"
             data-width="100%"
             placeholder={t("plan.section.warmup.placeholder")}

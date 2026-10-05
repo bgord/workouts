@@ -73,6 +73,7 @@ export function PlanDescription() {
         >
           <textarea
             aria-label={t("plan.description.label")}
+            autoFocus
             className="c-textarea"
             data-width="100%"
             placeholder={t("plan.description.placeholder")}

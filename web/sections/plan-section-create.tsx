@@ -64,11 +64,14 @@ export function PlanSectionCreate() {
 
             <input
               aria-label={t("plan.section.create.cta")}
+              autoFocus
               className="c-input"
               data-grow="1"
               data-minw="0"
+              maxLength={Form.planSectionName.pattern.max}
+              minLength={Form.planSectionName.pattern.min}
               placeholder={t("plan.section.create.placeholder")}
-              {...bg.Form.input(Form.planSectionName.pattern)}
+              required
               {...planSectionName.input.props}
             />
 
