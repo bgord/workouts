@@ -1,29 +1,21 @@
 import * as bg from "@bgord/ui";
 import { ChevronsUp, Sigma, Trophy } from "lucide-react";
 import type { BodyweightExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
+import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
 import { CountDelta } from "../components/count-delta";
 import { Gap } from "../components/gap";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 
-type Performances = ReadonlyArray<BodyweightExercisePerformanceStatistics>;
-
-const repsRecord = (performances: Performances) =>
-  performances.toSorted((a, b) => b.bestSet.reps - a.bestSet.reps)[0];
-
 const repsValue = (t: Translate, language: string, value: number) =>
   t("statistics.exercise.reps.value", { value: value.toLocaleString(language) });
 
-function RepsTiles(props: { performances: Performances }) {
+function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerformanceStatistics> }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
 
-  const best = repsRecord(props.performances);
-  const highest = props.performances.toSorted((a, b) => b.totalReps - a.totalReps)[0];
-
-  /* v8 ignore next */
-  if (!(best && highest)) return null;
+  const { peak: best, total: highest } = props.records;
 
   return (
     <>
@@ -95,7 +87,6 @@ function RepsHistoryRowMetrics(props: {
 }
 
 export const ExerciseStatisticsBodyweight = {
-  record: repsRecord,
   recordLabel: "statistics.exercise.max_reps",
   Tiles: RepsTiles,
   progress: {

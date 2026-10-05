@@ -30,6 +30,7 @@ import {
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
 
 export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");
+export const anotherWorkoutId = v.parse(Workouts.VO.WorkoutId, "3b9d7e21-5c4a-4f6b-8e2d-1a7c9f0b4d58");
 export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
 export const workoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-01");

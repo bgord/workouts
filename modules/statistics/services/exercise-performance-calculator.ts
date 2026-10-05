@@ -16,13 +16,15 @@ export class ExercisePerformanceCalculator {
   async calculate(
     userId: Auth.VO.UserIdType,
     exerciseId: Exercises.VO.ExerciseIdType,
-  ): Promise<Array<VO.ExercisePerformanceStatistics>> {
+  ): Promise<VO.ExerciseStatistics> {
     const performances = await this.config.ListExercisePerformancesOHQ.execute(userId, exerciseId);
+    const [first] = performances;
 
-    return performances.map((performance) =>
-      ExercisePerformanceMetricsStrategyFactory.for(performance.resistance, this.config).calculate(
-        performance,
-      ),
-    );
+    if (!first) return { performances: [], records: null };
+
+    const strategy = ExercisePerformanceMetricsStrategyFactory.for(first.resistance, this.config);
+    const calculated = performances.map((performance) => strategy.calculate(performance));
+
+    return { performances: calculated, records: strategy.records(calculated) };
   }
 }

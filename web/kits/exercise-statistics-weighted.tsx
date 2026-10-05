@@ -4,6 +4,7 @@ import type {
   ExercisePerformanceStatisticsSet,
   WeightedExercisePerformanceStatistics,
 } from "../../modules/statistics/value-objects/exercise-performance-statistics";
+import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
 import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
@@ -12,20 +13,11 @@ import { WeightFormat } from "../services/weight-format";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 
-type Performances = ReadonlyArray<WeightedExercisePerformanceStatistics>;
-
-const loadRecord = (performances: Performances) =>
-  performances.toSorted((a, b) => b.bestEstimate - a.bestEstimate)[0];
-
-function LoadTiles(props: { performances: Performances }) {
+function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformanceStatistics> }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
 
-  const best = loadRecord(props.performances);
-  const heaviest = props.performances.toSorted((a, b) => b.volume - a.volume)[0];
-
-  /* v8 ignore next */
-  if (!(best && heaviest)) return null;
+  const { peak: best, total: heaviest } = props.records;
 
   return (
     <>
@@ -133,7 +125,6 @@ function LoadHistorySetExtra(props: { set: ExercisePerformanceStatisticsSet }) {
 }
 
 export const ExerciseStatisticsWeighted = {
-  record: loadRecord,
   recordLabel: "statistics.exercise.one_rep_max_estimate",
   Tiles: LoadTiles,
   progress: {

@@ -29,7 +29,10 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ performances: [mocks.calculatedExercisePerformance] });
+    expect(json).toEqual({
+      performances: [mocks.calculatedExercisePerformance],
+      records: { peak: mocks.calculatedExercisePerformance, total: mocks.calculatedExercisePerformance },
+    });
   });
 
   test("happy path - no performances", async () => {
@@ -41,6 +44,6 @@ describe(`GET ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ performances: [] });
+    expect(json).toEqual({ performances: [], records: null });
   });
 });

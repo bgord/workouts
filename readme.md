@@ -451,6 +451,8 @@ modules/
 │   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
 │       ├── exercise-performance-statistics.ts
+│       ├── exercise-records.ts
+│       ├── exercise-statistics.ts
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts

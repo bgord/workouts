@@ -17,9 +17,10 @@ describe("ExercisePerformanceCalculator", async () => {
       mocks.exercisePerformance,
     ]);
 
-    expect(await calculator.calculate(mocks.userId, mocks.exerciseId)).toEqual([
-      mocks.calculatedExercisePerformance,
-    ]);
+    expect(await calculator.calculate(mocks.userId, mocks.exerciseId)).toEqual({
+      performances: [mocks.calculatedExercisePerformance],
+      records: { peak: mocks.calculatedExercisePerformance, total: mocks.calculatedExercisePerformance },
+    });
   });
 
   test("happy path - bodyweight", async () => {
@@ -27,14 +28,21 @@ describe("ExercisePerformanceCalculator", async () => {
       mocks.bodyweightExercisePerformance,
     ]);
 
-    expect(await calculator.calculate(mocks.userId, mocks.exerciseId)).toEqual([
-      mocks.calculatedRepsExercisePerformance,
-    ]);
+    expect(await calculator.calculate(mocks.userId, mocks.exerciseId)).toEqual({
+      performances: [mocks.calculatedRepsExercisePerformance],
+      records: {
+        peak: mocks.calculatedRepsExercisePerformance,
+        total: mocks.calculatedRepsExercisePerformance,
+      },
+    });
   });
 
   test("no performances", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExercisePerformancesQuery, "execute").mockResolvedValue([]);
 
-    expect(await calculator.calculate(mocks.userId, mocks.exerciseId)).toEqual([]);
+    expect(await calculator.calculate(mocks.userId, mocks.exerciseId)).toEqual({
+      performances: [],
+      records: null,
+    });
   });
 });

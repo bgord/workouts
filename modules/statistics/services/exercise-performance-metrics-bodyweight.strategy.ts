@@ -4,8 +4,10 @@ import type * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
 import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-metrics.strategy";
 
-export class ExercisePerformanceMetricsBodyweightStrategy implements ExercisePerformanceMetricsStrategy {
-  calculate(performance: Workouts.Queries.ExercisePerformance): VO.ExercisePerformanceStatistics {
+export class ExercisePerformanceMetricsBodyweightStrategy
+  implements ExercisePerformanceMetricsStrategy<VO.BodyweightExercisePerformanceStatistics>
+{
+  calculate(performance: Workouts.Queries.ExercisePerformance): VO.BodyweightExercisePerformanceStatistics {
     const bestSet = performance.sets.reduce((best, set) => (set.reps > best.reps ? set : best));
 
     return {
@@ -13,6 +15,19 @@ export class ExercisePerformanceMetricsBodyweightStrategy implements ExercisePer
       resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
       bestSet,
       totalReps: tools.Int.positive(performance.sets.reduce((total, set) => total + set.reps, 0)),
+    };
+  }
+
+  records(
+    performances: ReadonlyArray<VO.BodyweightExercisePerformanceStatistics>,
+  ): VO.ExerciseRecords<VO.BodyweightExercisePerformanceStatistics> {
+    return {
+      peak: performances.reduce((best, performance) =>
+        performance.bestSet.reps > best.bestSet.reps ? performance : best,
+      ),
+      total: performances.reduce((best, performance) =>
+        performance.totalReps > best.totalReps ? performance : best,
+      ),
     };
   }
 }

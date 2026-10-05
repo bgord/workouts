@@ -1,17 +1,15 @@
 import * as bg from "@bgord/ui";
-import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
+import type { ExerciseStatistics } from "../../modules/statistics/value-objects/exercise-statistics";
 
 export class Statistics {
   static async getExercisePerformances(
     request: Request | null,
     params: { exerciseId: string },
-  ): Promise<Array<ExercisePerformanceStatistics>> {
-    const result = await bg.ApiClient.json<{ performances: Array<ExercisePerformanceStatistics> }>(
+  ): Promise<ExerciseStatistics> {
+    return bg.ApiClient.json<ExerciseStatistics>(
       `/api/statistics/exercises/${params.exerciseId}/performances`,
       request,
-      { performances: [] },
+      { performances: [], records: null },
     );
-
-    return result.performances;
   }
 }

@@ -49,3 +49,38 @@ describe("ExercisePerformanceMetricsWeightedStrategy", () => {
     expect(result.bestSet.setNumber).toEqual(v.parse(Workouts.VO.SetNumber, 1));
   });
 });
+
+describe("ExercisePerformanceMetricsWeightedStrategy.records", () => {
+  test("happy path", () => {
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsWeightedStrategy({
+      OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
+    });
+    const heaviest = {
+      ...mocks.calculatedExercisePerformance,
+      workoutId: mocks.anotherWorkoutId,
+      scheduledFor: mocks.anotherWorkoutScheduledFor,
+      volume: v.parse(tools.WeightGrams, 2_000_000),
+      bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 100_000),
+    };
+
+    const result = strategy.records([mocks.calculatedExercisePerformance, heaviest]);
+
+    expect(result).toEqual({ peak: mocks.calculatedExercisePerformance, total: heaviest });
+  });
+
+  test("happy path - ties go to the earliest", () => {
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsWeightedStrategy({
+      OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
+    });
+
+    const result = strategy.records([
+      mocks.calculatedExercisePerformance,
+      { ...mocks.calculatedExercisePerformance, workoutId: mocks.anotherWorkoutId },
+    ]);
+
+    expect(result).toEqual({
+      peak: mocks.calculatedExercisePerformance,
+      total: mocks.calculatedExercisePerformance,
+    });
+  });
+});

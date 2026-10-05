@@ -6,10 +6,12 @@ import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-
 
 type Dependencies = { OneRepEstimator: Ports.OneRepEstimatorPort };
 
-export class ExercisePerformanceMetricsWeightedStrategy implements ExercisePerformanceMetricsStrategy {
+export class ExercisePerformanceMetricsWeightedStrategy
+  implements ExercisePerformanceMetricsStrategy<VO.WeightedExercisePerformanceStatistics>
+{
   constructor(private readonly deps: Dependencies) {}
 
-  calculate(performance: Workouts.Queries.ExercisePerformance): VO.ExercisePerformanceStatistics {
+  calculate(performance: Workouts.Queries.ExercisePerformance): VO.WeightedExercisePerformanceStatistics {
     const sets = performance.sets.map((set) => ({
       ...set,
       estimate: this.deps.OneRepEstimator.estimate(set),
@@ -24,6 +26,19 @@ export class ExercisePerformanceMetricsWeightedStrategy implements ExercisePerfo
       volume: new Workouts.Services.LoggedSetsVolume(sets).calculate().get(),
       bestSet,
       bestEstimate: bestSet.estimate,
+    };
+  }
+
+  records(
+    performances: ReadonlyArray<VO.WeightedExercisePerformanceStatistics>,
+  ): VO.ExerciseRecords<VO.WeightedExercisePerformanceStatistics> {
+    return {
+      peak: performances.reduce((best, performance) =>
+        performance.bestEstimate > best.bestEstimate ? performance : best,
+      ),
+      total: performances.reduce((best, performance) =>
+        performance.volume > best.volume ? performance : best,
+      ),
     };
   }
 }

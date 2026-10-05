@@ -1,15 +1,12 @@
 import * as bg from "@bgord/ui";
-import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
 import { ExerciseHistoryRow } from "./exercise-history-row";
 
 export function ExerciseHistory() {
   const t = bg.useTranslations();
-  const { exercise, performances } = exerciseRoute.useLoaderData();
-  const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
+  const { performances, records } = exerciseRoute.useLoaderData();
 
   const history = performances.toReversed();
-  const record = Statistics.record(performances);
 
   return (
     <ul aria-label={t("statistics.exercise.history")} data-stack="y">
@@ -20,7 +17,7 @@ export function ExerciseHistory() {
           last={index === history.length - 1}
           performance={performance}
           previous={history[index + 1]}
-          record={performance.workoutId === record?.workoutId}
+          record={performance.workoutId === records?.peak.workoutId}
         />
       ))}
     </ul>

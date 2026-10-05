@@ -44,3 +44,34 @@ describe("ExercisePerformanceMetricsBodyweightStrategy", () => {
     expect(result.bestSet.setNumber).toEqual(v.parse(Workouts.VO.SetNumber, 1));
   });
 });
+
+describe("ExercisePerformanceMetricsBodyweightStrategy.records", () => {
+  test("happy path", () => {
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
+    const highest = {
+      ...mocks.calculatedRepsExercisePerformance,
+      workoutId: mocks.anotherWorkoutId,
+      scheduledFor: mocks.anotherWorkoutScheduledFor,
+      bestSet: { ...mocks.calculatedRepsExercisePerformance.bestSet, reps: v.parse(Workouts.VO.Reps, 10) },
+      totalReps: tools.Int.positive(30),
+    };
+
+    const result = strategy.records([mocks.calculatedRepsExercisePerformance, highest]);
+
+    expect(result).toEqual({ peak: mocks.calculatedRepsExercisePerformance, total: highest });
+  });
+
+  test("happy path - ties go to the earliest", () => {
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
+
+    const result = strategy.records([
+      mocks.calculatedRepsExercisePerformance,
+      { ...mocks.calculatedRepsExercisePerformance, workoutId: mocks.anotherWorkoutId },
+    ]);
+
+    expect(result).toEqual({
+      peak: mocks.calculatedRepsExercisePerformance,
+      total: mocks.calculatedRepsExercisePerformance,
+    });
+  });
+});
