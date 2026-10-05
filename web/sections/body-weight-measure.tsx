@@ -81,7 +81,7 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
           />
         }
         max={500}
-        min={0}
+        min={0.05}
         step={0.05}
         unit={t("measurements.body_weight.measure.weight.unit")}
         width={72}

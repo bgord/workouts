@@ -41,6 +41,18 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, tools.WeightGramsError.Invalid);
   });
 
+  test("validation - weight - zero", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ weight: 0 }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "body.weight.invalid");
+  });
+
   test("validation - measuredOn - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 

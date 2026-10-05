@@ -73,6 +73,20 @@ test.describe("Body weight - athlete-mutation", () => {
     await expect(page.getByRole("button", { name: "501 kg" })).toBeHidden();
   });
 
+  test("rejects a zero body weight", async ({ page }) => {
+    await page.goto("/measurements/body-weight");
+
+    await page.getByRole("spinbutton", { name: "Weight (kg)" }).fill("0");
+
+    await expect(
+      page.getByRole("spinbutton", { name: "Weight (kg)" }).and(page.locator(":invalid")),
+    ).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "0 kg" })).toBeHidden();
+  });
+
   test("rejects a body weight date in the future", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 

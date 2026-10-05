@@ -52,6 +52,18 @@ describe("POST /api/measurements/body-part/:bodyPartId/measure", async () => {
     await testcases.assertErrorResponse(response, 400, "height.millimeters.invalid");
   });
 
+  test("validation - value - zero", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ value: 0 }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "body.part.circumference.invalid");
+  });
+
   test("validation - measuredOn - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
