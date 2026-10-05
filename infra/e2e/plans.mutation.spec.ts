@@ -370,14 +370,14 @@ test.describe("Plans - drafter", () => {
     await expect(
       page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeVisible();
-    await expect(page.getByText("7 exercises")).toBeVisible();
+    await expect(page.getByText("7 exercises").first()).toBeVisible();
 
     await page.reload();
 
     await expect(
       page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeVisible();
-    await expect(page.getByText("7 exercises")).toBeVisible();
+    await expect(page.getByText("7 exercises").first()).toBeVisible();
   });
 
   test("blocks saving an exercise instruction edit with no sets", async ({ page }) => {

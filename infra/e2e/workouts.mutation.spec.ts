@@ -238,14 +238,14 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await row.getByRole("button", { name: /^Edit target/ }).click();
-    await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
+    await row.getByRole("spinbutton", { name: "Reps" }).fill("1");
     await row.getByRole("button", { name: "Save" }).click();
 
-    await expect(row).toContainText("×5 ");
+    await expect(row).toContainText("×1 ");
 
     await page.reload();
 
-    await expect(row).toContainText("×5 ");
+    await expect(row).toContainText("×1 ");
   });
 
   test("shows the error when starting the workout fails", async ({ page }) => {
