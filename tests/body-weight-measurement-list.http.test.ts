@@ -29,7 +29,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Measurements.ListBodyWeightMonthsQuery, "execute").mockResolvedValue([
@@ -63,7 +63,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path - month", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Measurements.ListBodyWeightMonthsQuery, "execute").mockResolvedValue([
@@ -101,7 +101,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path - all", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Measurements.ListBodyWeightMonthsQuery, "execute").mockResolvedValue([
@@ -138,7 +138,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path - empty", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(spyOn(di.Adapters.Measurements.ListBodyWeightMonthsQuery, "execute").mockResolvedValue([]));
     spies.use(

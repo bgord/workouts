@@ -25,7 +25,7 @@ describe("GET /api/exercises/:exerciseId", async () => {
   });
 
   test("not found", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseWithCategoriesQuery, "execute").mockResolvedValue(null));
 
@@ -35,7 +35,7 @@ describe("GET /api/exercises/:exerciseId", async () => {
   });
 
   test("happy path", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Exercises.GetExerciseWithCategoriesQuery, "execute").mockResolvedValue(
