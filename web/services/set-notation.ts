@@ -1,7 +1,7 @@
+import type * as bg from "@bgord/ui";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import { ResistanceFormat } from "../kits/resistance.format";
 import { EffortFormat } from "./effort-format";
-import type { Translate } from "./translate";
 
 type SetFigures = { reps: number; load: number };
 
@@ -13,7 +13,7 @@ export const SetNotation = {
     join("", [EffortFormat.set(value.reps), ResistanceFormat[value.resistance].set(value.load, language)]),
 
   target: (
-    t: Translate,
+    t: bg.TranslateType,
     language: string,
     value: { resistance: ExerciseResistanceOptions; sets: number } & SetFigures,
   ) =>
@@ -23,7 +23,7 @@ export const SetNotation = {
     ]),
 
   performance: (
-    t: Translate,
+    t: bg.TranslateType,
     language: string,
     value: { resistance: ExerciseResistanceOptions; sets: ReadonlyArray<SetFigures> },
   ) => {

@@ -1,7 +1,7 @@
+import type * as bg from "@bgord/ui";
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
-import type { Translate } from "../services/translate";
 import { ExerciseStatisticsBodyweight } from "./exercise-statistics-bodyweight.kit";
 import { ExerciseStatisticsWeighted } from "./exercise-statistics-weighted.kit";
 
@@ -11,7 +11,7 @@ type ExerciseStatisticsKitStrategy<P extends ExercisePerformanceStatistics> = {
   progress: {
     Label(): React.ReactNode;
     value(performance: P): number;
-    format(t: Translate, language: string, value: number): string;
+    format(t: bg.TranslateType, language: string, value: number): string;
   };
   HistoryRowMetrics(props: { performance: P; previous: P | undefined }): React.ReactNode;
   HistorySetExtra(props: { set: P["sets"][number] }): React.ReactNode;

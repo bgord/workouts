@@ -5,9 +5,8 @@ import type { ExerciseRecords } from "../../modules/statistics/value-objects/exe
 import { CountDelta } from "../components/count-delta";
 import { Gap } from "../components/gap";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
-import type { Translate } from "../services/translate";
 
-const repsValue = (t: Translate, language: string, value: number) =>
+const repsValue = (t: bg.TranslateType, language: string, value: number) =>
   t("statistics.exercise.reps.value", { value: value.toLocaleString(language) });
 
 function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerformanceStatistics> }) {

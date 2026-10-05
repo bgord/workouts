@@ -9,7 +9,6 @@ import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 import { WeightDelta } from "../components/weight-delta";
-import type { Translate } from "../services/translate";
 import { WeightFormat } from "../services/weight-format";
 
 function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformanceStatistics> }) {
@@ -130,7 +129,7 @@ export const ExerciseStatisticsWeighted = {
     Label: LoadProgressLabel,
     value: (performance: WeightedExercisePerformanceStatistics) =>
       WeightFormat.kilograms(performance.bestEstimate),
-    format: (t: Translate, language: string, value: number) =>
+    format: (t: bg.TranslateType, language: string, value: number) =>
       t("statistics.exercise.one_rep_max_estimate.value", { load: value.toLocaleString(language) }),
   },
   HistoryRowMetrics: LoadHistoryRowMetrics,
