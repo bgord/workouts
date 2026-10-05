@@ -44,11 +44,10 @@ export function WorkoutScheduledFor() {
         aria-label={t("workout.reschedule.cta", { date: scheduledOn })}
         className="c-button"
         data-fs="xs"
-        data-px="2"
+        data-px="3"
         data-self="start"
         data-variant="ghost"
         onClick={workoutReschedule.enable}
-        style={{ marginInlineStart: "calc(-1 * var(--spacing-2))" }}
         title={t("workout.reschedule.cta", { date: scheduledOn })}
         type="button"
         {...workoutReschedule.props.controller}

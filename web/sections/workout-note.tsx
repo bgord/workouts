@@ -38,11 +38,15 @@ export function WorkoutNote() {
       {workoutNoteUpdate.off && (
         <>
           <button
-            className="c-prose"
+            className="c-textarea"
+            data-bc="alpha-subtle"
             data-color={workout.data.note ? undefined : "neutral-500"}
             data-cursor="pointer"
-            data-self="start"
+            data-hover-bc="alpha-medium"
+            data-shadow="none"
+            data-stack="y"
             data-ta="start"
+            data-transform="pre-line"
             disabled={!workout.actions.noteSet.enabled}
             onClick={workoutNoteUpdate.enable}
             title={t("workout.note.label")}
@@ -65,36 +69,39 @@ export function WorkoutNote() {
           {...ui.Gap.cluster}
           {...workoutNoteUpdate.props.target}
         >
-          <textarea
-            aria-label={t("workout.note.label")}
-            autoFocus
-            className="c-textarea"
-            data-width="100%"
-            placeholder={t("workout.note.placeholder")}
-            style={{ fieldSizing: "content" }}
-            {...bg.Form.textarea(Form.note.pattern)}
-            {...note.input.props}
-            {...metaEnterSubmit}
-          />
+          <div data-cross="start" data-md-cross="stretch" data-md-stack="y" data-stack="x" {...ui.Gap.inline}>
+            <textarea
+              aria-label={t("workout.note.label")}
+              autoFocus
+              className="c-textarea"
+              data-grow="1"
+              data-minw="0"
+              placeholder={t("workout.note.placeholder")}
+              style={{ fieldSizing: "content" }}
+              {...bg.Form.textarea(Form.note.pattern)}
+              {...note.input.props}
+              {...metaEnterSubmit}
+            />
 
-          <div data-main="end" data-stack="x" {...ui.Gap.inline}>
-            <ui.IconButton
-              aria-label={t("app.save")}
-              disabled={note.unchanged || mutation.isLoading}
-              title={t("app.save")}
-              tone="positive"
-              type="submit"
-            >
-              <Check data-size="sm" />
-            </ui.IconButton>
+            <div data-md-self="end" data-stack="x" {...ui.Gap.inline}>
+              <ui.IconButton
+                aria-label={t("app.save")}
+                disabled={note.unchanged || mutation.isLoading}
+                title={t("app.save")}
+                tone="positive"
+                type="submit"
+              >
+                <Check data-size="sm" />
+              </ui.IconButton>
 
-            <ui.IconButton
-              aria-label={t("app.cancel")}
-              onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])}
-              title={t("app.cancel")}
-            >
-              <X data-size="sm" />
-            </ui.IconButton>
+              <ui.IconButton
+                aria-label={t("app.cancel")}
+                onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])}
+                title={t("app.cancel")}
+              >
+                <X data-size="sm" />
+              </ui.IconButton>
+            </div>
           </div>
 
           {mutation.isError && (
