@@ -48,8 +48,6 @@ export const DateFormat = {
 
   month: (language: string, date: string) => format(language, date, { month: "long", year: "numeric" }),
 
-  weekday: (language: string, date: string) => format(language, date, { weekday: "short" }),
-
   shortDay: (language: string, date: string) => format(language, date, { day: "numeric", month: "short" }),
 
   weekdayWithDay: (language: string, date: string) =>

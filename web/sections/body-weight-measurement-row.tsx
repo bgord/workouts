@@ -48,15 +48,9 @@ export function BodyWeightMeasurementRow(props: {
             type="button"
             {...ui.Gap.inline}
           >
-            <span
-              data-shrink="0"
-              data-transform="font-variant-numeric"
-              {...bg.Rhythm(100).times(1).style.width}
-            >
-              {DateFormat.day(language, props.measurement.measuredOn)}
+            <span data-transform="font-variant-numeric">
+              {DateFormat.dayWithWeekday(language, props.measurement.measuredOn)}
             </span>
-
-            <small>{DateFormat.weekday(language, props.measurement.measuredOn)}</small>
           </button>
 
           <button

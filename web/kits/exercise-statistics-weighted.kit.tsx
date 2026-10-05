@@ -9,6 +9,7 @@ import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 import { WeightDelta } from "../components/weight-delta";
+import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
 function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformanceStatistics> }) {
@@ -51,7 +52,7 @@ function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformance
           })}
         </TileValue>
 
-        <TileContext>{total.scheduledFor}</TileContext>
+        <TileContext>{DateFormat.plainDay(language, total.scheduledFor)}</TileContext>
       </Tile>
     </>
   );

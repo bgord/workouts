@@ -4,6 +4,7 @@ import { Trophy } from "lucide-react";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import * as ui from "../components";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
+import { DateFormat } from "../services/date-format";
 
 export function ExerciseHistoryRow(props: {
   performance: ExercisePerformanceStatistics;
@@ -13,13 +14,16 @@ export function ExerciseHistoryRow(props: {
   last: boolean;
 }) {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const Statistics = ExerciseStatisticsKit[props.performance.resistance];
   const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
+
+  const scheduledOn = DateFormat.dayWithWeekday(language, props.performance.scheduledFor);
 
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div data-stack="x" {...ui.Gap.related}>
-        <ui.ChevronToggle label={t("app.details", { name: props.performance.scheduledFor })} {...open} />
+        <ui.ChevronToggle label={t("app.details", { name: scheduledOn })} {...open} />
 
         <Link
           data-color="neutral-100"
@@ -31,7 +35,7 @@ export function ExerciseHistoryRow(props: {
           to="/workouts/$workoutId"
           {...ui.Gap.cluster}
         >
-          {props.performance.scheduledFor}
+          {scheduledOn}
 
           {props.record && (
             <Trophy aria-label={t(Statistics.recordLabel)} data-color="brand-400" data-size="xs" />
