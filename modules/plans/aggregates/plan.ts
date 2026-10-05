@@ -361,7 +361,7 @@ export class Plan {
         {
           planId: this.id,
           planSectionId,
-          exerciseInstruction: { id: prescription.id, exerciseId },
+          exerciseInstruction: { id: exerciseInstruction.id, exerciseId },
           requesterId,
         },
         this.deps,

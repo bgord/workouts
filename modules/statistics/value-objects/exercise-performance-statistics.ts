@@ -3,40 +3,30 @@ import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
 
-export type ExercisePerformanceStatisticsSet = {
-  setNumber: Workouts.VO.SetNumberType;
-  reps: Workouts.VO.RepsType;
-  load: Workouts.VO.LoadType;
-  rir: Workouts.VO.RirType | null;
+type ExercisePerformanceSet = Workouts.Queries.ExercisePerformance["sets"][number];
+
+export type WeightedExercisePerformanceStatisticsSet = ExercisePerformanceSet & {
   estimate: VO.OneRepMaxEstimateType;
-};
-
-type WeightedPerformanceStatistics = {
-  workoutId: Workouts.VO.WorkoutIdType;
-  scheduledFor: tools.DayIsoIdType;
-  sets: Array<ExercisePerformanceStatisticsSet>;
-  volume: tools.WeightGramsType;
-  bestSet: ExercisePerformanceStatisticsSet;
-  bestEstimate: VO.OneRepMaxEstimateType;
-};
-
-export type BodyweightPerformanceStatisticsSet = Omit<ExercisePerformanceStatisticsSet, "estimate">;
-
-export type BodyweightPerformanceStatistics = {
-  workoutId: Workouts.VO.WorkoutIdType;
-  scheduledFor: tools.DayIsoIdType;
-  sets: Array<BodyweightPerformanceStatisticsSet>;
-  bestSet: BodyweightPerformanceStatisticsSet;
-  totalReps: tools.IntegerPositiveType;
 };
 
 export type WeightedExercisePerformanceStatistics = {
   resistance: Exercises.VO.ExerciseResistanceOptions.weighted;
-} & WeightedPerformanceStatistics;
+  workoutId: Workouts.VO.WorkoutIdType;
+  scheduledFor: tools.DayIsoIdType;
+  sets: Array<WeightedExercisePerformanceStatisticsSet>;
+  volume: tools.WeightGramsType;
+  bestSet: WeightedExercisePerformanceStatisticsSet;
+  bestEstimate: VO.OneRepMaxEstimateType;
+};
 
 export type BodyweightExercisePerformanceStatistics = {
   resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight;
-} & BodyweightPerformanceStatistics;
+  workoutId: Workouts.VO.WorkoutIdType;
+  scheduledFor: tools.DayIsoIdType;
+  sets: Array<ExercisePerformanceSet>;
+  bestSet: ExercisePerformanceSet;
+  totalReps: tools.IntegerPositiveType;
+};
 
 export type ExercisePerformanceStatistics =
   | WeightedExercisePerformanceStatistics

@@ -1,3 +1,4 @@
+import * as tools from "@bgord/tools";
 import * as Exercises from "+exercises";
 import type * as VO from "+workouts/value-objects";
 import type { LoadStepStrategy } from "./load-step.strategy";
@@ -8,7 +9,7 @@ export class LoadStepStrategyFactory {
   static for(resistance: VO.WorkoutExerciseResistanceType): LoadStepStrategy {
     switch (resistance) {
       case Exercises.VO.ExerciseResistanceOptions.weighted:
-        return new LoadStepIncrementStrategy();
+        return new LoadStepIncrementStrategy({ step: tools.Weight.fromKilograms(2.5) });
       case Exercises.VO.ExerciseResistanceOptions.bodyweight:
         return new LoadStepLockedStrategy();
     }

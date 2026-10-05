@@ -1,27 +1,26 @@
 import * as bg from "@bgord/ui";
 import { EqualApproximately, Sigma, Trophy } from "lucide-react";
 import type {
-  ExercisePerformanceStatisticsSet,
   WeightedExercisePerformanceStatistics,
+  WeightedExercisePerformanceStatisticsSet,
 } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
 import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 import { WeightDelta } from "../components/weight-delta";
+import type { Translate } from "../services/translate";
 import { WeightFormat } from "../services/weight-format";
-
-type Translate = ReturnType<typeof bg.useTranslations>;
 
 function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformanceStatistics> }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
 
-  const { peak: best, total: heaviest } = props.records;
+  const { peak, total } = props.records;
 
   return (
     <>
-      <TileLink data-hover-bc="brand-500" params={{ workoutId: best.workoutId }} to="/workouts/$workoutId">
+      <TileLink data-hover-bc="brand-500" params={{ workoutId: peak.workoutId }} to="/workouts/$workoutId">
         <TileHeader>
           <Trophy data-color="brand-400" data-size="xs" />
           <span data-stack="x">
@@ -32,12 +31,12 @@ function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformance
 
         <TileValue>
           {t("statistics.exercise.one_rep_max_estimate.value", {
-            load: WeightFormat.kilograms(best.bestEstimate).toLocaleString(language),
+            load: WeightFormat.kilograms(peak.bestEstimate).toLocaleString(language),
           })}
         </TileValue>
 
         <TileContext>
-          <SetValue load={best.bestSet.load} reps={best.bestSet.reps} resistance={best.resistance} />
+          <SetValue load={peak.bestSet.load} reps={peak.bestSet.reps} resistance={peak.resistance} />
         </TileContext>
       </TileLink>
 
@@ -49,11 +48,11 @@ function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformance
 
         <TileValue>
           {t("statistics.exercise.history.volume_load.value", {
-            load: WeightFormat.kilograms(heaviest.volume).toLocaleString(language),
+            load: WeightFormat.kilograms(total.volume).toLocaleString(language),
           })}
         </TileValue>
 
-        <TileContext>{heaviest.scheduledFor}</TileContext>
+        <TileContext>{total.scheduledFor}</TileContext>
       </Tile>
     </>
   );
@@ -110,7 +109,7 @@ function LoadHistoryRowMetrics(props: {
   );
 }
 
-function LoadHistorySetExtra(props: { set: ExercisePerformanceStatisticsSet }) {
+function LoadHistorySetExtra(props: { set: WeightedExercisePerformanceStatisticsSet }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
 

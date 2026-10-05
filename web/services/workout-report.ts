@@ -1,6 +1,6 @@
 import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-workout";
+import { ResistanceFormat } from "../kits/resistance.format";
 import { DateFormat } from "./date-format";
-import { ResistanceFormat } from "./resistance-format";
 
 export class WorkoutReport {
   static create(

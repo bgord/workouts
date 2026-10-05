@@ -9,7 +9,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
   test("below range - one rep either way", () => {
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last: mocks.exercisePerformanceWeakestSet },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual(mocks.exerciseTargetProgression);
@@ -23,7 +23,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -49,7 +49,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -75,7 +75,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -101,7 +101,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -127,7 +127,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -153,7 +153,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -175,7 +175,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -201,7 +201,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
       { prescription: mocks.exercisePrescription, last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -230,7 +230,7 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
         }),
         last,
       },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({

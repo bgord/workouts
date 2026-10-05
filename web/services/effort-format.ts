@@ -1,6 +1,4 @@
-import type * as bg from "@bgord/ui";
-
-type Translate = ReturnType<typeof bg.useTranslations>;
+import type { Translate } from "./translate";
 
 export const EffortFormat = {
   set: (reps: number) => String(reps),

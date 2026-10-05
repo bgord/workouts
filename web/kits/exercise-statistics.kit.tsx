@@ -1,11 +1,9 @@
-import type * as bg from "@bgord/ui";
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
-import { ExerciseStatisticsBodyweight } from "./exercise-statistics-bodyweight";
-import { ExerciseStatisticsWeighted } from "./exercise-statistics-weighted";
-
-type Translate = ReturnType<typeof bg.useTranslations>;
+import type { Translate } from "../services/translate";
+import { ExerciseStatisticsBodyweight } from "./exercise-statistics-bodyweight.kit";
+import { ExerciseStatisticsWeighted } from "./exercise-statistics-weighted.kit";
 
 type ExerciseStatisticsKitStrategy<P extends ExercisePerformanceStatistics> = {
   recordLabel: string;

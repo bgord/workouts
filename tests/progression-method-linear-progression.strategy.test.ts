@@ -9,7 +9,7 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
   test("load step either way, reps unchanged", () => {
     const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
       { last: mocks.exercisePerformanceWeakestSet },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -35,7 +35,7 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
       { last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -61,7 +61,7 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
     });
     const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
       { last },
-      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep) },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({

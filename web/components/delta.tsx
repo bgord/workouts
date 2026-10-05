@@ -4,8 +4,6 @@ import { Gap } from "./gap";
 
 type DeltaColor = React.JSX.IntrinsicElements["span"]["data-color"];
 
-const tone = (positive: boolean): DeltaColor => (positive ? "positive-400" : "danger-400");
-
 export function Delta(
   props: {
     current: number;
@@ -15,7 +13,7 @@ export function Delta(
   } & React.JSX.IntrinsicElements["span"],
 ) {
   const t = bg.useTranslations();
-  const { previous, current, format, tone: color = tone, ...rest } = props;
+  const { previous, current, format, tone, ...rest } = props;
 
   if (previous === undefined) return null;
 
@@ -26,7 +24,13 @@ export function Delta(
   const positive = difference > 0;
 
   return (
-    <span data-color={color(positive)} data-stack="x" data-transform="nowrap" {...Gap.inline} {...rest}>
+    <span
+      data-color={tone?.(positive) ?? (positive ? "positive-400" : "danger-400")}
+      data-stack="x"
+      data-transform="nowrap"
+      {...Gap.inline}
+      {...rest}
+    >
       <Triangle
         aria-label={t(positive ? "app.delta.increase" : "app.delta.decrease")}
         data-mt={positive ? "0" : "0-5"}

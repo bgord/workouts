@@ -5,8 +5,7 @@ import type { ExerciseRecords } from "../../modules/statistics/value-objects/exe
 import { CountDelta } from "../components/count-delta";
 import { Gap } from "../components/gap";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
-
-type Translate = ReturnType<typeof bg.useTranslations>;
+import type { Translate } from "../services/translate";
 
 const repsValue = (t: Translate, language: string, value: number) =>
   t("statistics.exercise.reps.value", { value: value.toLocaleString(language) });
@@ -15,19 +14,19 @@ function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerforman
   const t = bg.useTranslations();
   const language = bg.useLanguage();
 
-  const { peak: best, total: highest } = props.records;
+  const { peak, total } = props.records;
 
   return (
     <>
-      <TileLink data-hover-bc="brand-500" params={{ workoutId: best.workoutId }} to="/workouts/$workoutId">
+      <TileLink data-hover-bc="brand-500" params={{ workoutId: peak.workoutId }} to="/workouts/$workoutId">
         <TileHeader>
           <Trophy data-color="brand-400" data-size="xs" />
           {t("statistics.exercise.max_reps")}
         </TileHeader>
 
-        <TileValue>{repsValue(t, language, best.bestSet.reps)}</TileValue>
+        <TileValue>{repsValue(t, language, peak.bestSet.reps)}</TileValue>
 
-        <TileContext>{best.scheduledFor}</TileContext>
+        <TileContext>{peak.scheduledFor}</TileContext>
       </TileLink>
 
       <Tile>
@@ -36,9 +35,9 @@ function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerforman
           {t("statistics.exercise.total_reps")}
         </TileHeader>
 
-        <TileValue>{repsValue(t, language, highest.totalReps)}</TileValue>
+        <TileValue>{repsValue(t, language, total.totalReps)}</TileValue>
 
-        <TileContext>{highest.scheduledFor}</TileContext>
+        <TileContext>{total.scheduledFor}</TileContext>
       </Tile>
     </>
   );

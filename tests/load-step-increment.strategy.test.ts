@@ -6,7 +6,7 @@ import * as mocks from "./mocks";
 
 describe("LoadStepIncrementStrategy", () => {
   test("increase", () => {
-    const strategy = new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep);
+    const strategy = new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep });
 
     const result = strategy.increase(v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()));
 
@@ -14,7 +14,7 @@ describe("LoadStepIncrementStrategy", () => {
   });
 
   test("increase - from zero", () => {
-    const strategy = new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep);
+    const strategy = new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep });
 
     const result = strategy.increase(v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()));
 
@@ -22,7 +22,7 @@ describe("LoadStepIncrementStrategy", () => {
   });
 
   test("decrease", () => {
-    const strategy = new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep);
+    const strategy = new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep });
 
     const result = strategy.decrease(v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()));
 
@@ -30,7 +30,7 @@ describe("LoadStepIncrementStrategy", () => {
   });
 
   test("decrease - at the step reaches zero", () => {
-    const strategy = new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep);
+    const strategy = new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep });
 
     const result = strategy.decrease(v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()));
 
@@ -38,7 +38,7 @@ describe("LoadStepIncrementStrategy", () => {
   });
 
   test("decrease - below the step", () => {
-    const strategy = new Workouts.Services.LoadStepIncrementStrategy(mocks.loadStep);
+    const strategy = new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep });
 
     const result = strategy.decrease(v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2).get()));
 
