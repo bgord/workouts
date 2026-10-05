@@ -12,6 +12,7 @@ export * from "./button-clear";
 export * from "./button-close";
 export * from "./chevron-toggle";
 export * from "./chip";
+export * from "./copy-button";
 export * from "./count-delta";
 export * from "./delta";
 export * from "./dialog";

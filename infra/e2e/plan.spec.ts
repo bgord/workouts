@@ -38,6 +38,14 @@ test.describe("Plan - builder", () => {
     );
   });
 
+  test("shows the error when copying the plan outline fails", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: "Copy plan" }).click();
+
+    await expect(page.getByRole("button", { name: "Copy plan" })).toHaveAttribute("title", "Could not copy");
+  });
+
   test("keeps the section expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     const toggle = page.getByRole("button", { name: "Details: Push", exact: true });

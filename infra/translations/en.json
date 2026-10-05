@@ -4,6 +4,7 @@
   "app.cancel": "Cancel",
   "app.clear": "Clear",
   "app.close": "Close",
+  "app.copy.error": "Could not copy",
   "app.details": "Details: {{name}}",
   "app.dashboard": "Dashboard",
   "app.delta.decrease": "Decrease",
