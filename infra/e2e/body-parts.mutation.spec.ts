@@ -32,6 +32,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await expect(page.getByText("Add a body part first")).toBeHidden();
     await expect(page.getByRole("button", { name: "Measure Neck" })).toBeVisible();
+    await expect(page.getByLabel("Body part name")).toHaveValue("");
   });
 
   test("rejects a duplicate body part name", async ({ page }) => {

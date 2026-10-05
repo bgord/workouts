@@ -31,6 +31,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(dialog.getByText("Neck", { exact: true })).toBeVisible();
+    await expect(page.getByLabel("Category name")).toHaveValue("");
 
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();

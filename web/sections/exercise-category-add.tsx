@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
+import { Check } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import * as ui from "../components";
 import { catalogRoute } from "../router";
@@ -55,15 +55,6 @@ export function ExerciseCategoryAdd() {
           type="submit"
         >
           <Check data-size="sm" />
-        </ui.IconButton>
-
-        <ui.IconButton
-          aria-label={t("app.clear")}
-          disabled={name.unchanged}
-          onClick={bg.exec([name.clear, mutation.reset])}
-          title={t("app.clear")}
-        >
-          <X data-size="sm" />
         </ui.IconButton>
       </div>
 
