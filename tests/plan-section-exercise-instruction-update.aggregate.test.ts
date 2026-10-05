@@ -16,6 +16,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -28,6 +29,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -40,6 +42,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
+        mocks.exerciseResistance,
         mocks.anotherUserId,
       ),
     ).toThrow(Plans.Invariants.PlanBelongsToUser.error);
@@ -56,6 +59,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.anotherPlanSectionId,
         mocks.anotherExerciseInstruction,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
@@ -78,6 +82,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
@@ -96,8 +101,26 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     );
 
     expect(() =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        mocks.exerciseInstruction,
+        mocks.exerciseResistance,
+        mocks.userId,
+      ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionHasChanged.error);
+  });
+
+  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planWithExerciseInstructionHistory, deps);
+
+    expect(() =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...mocks.anotherExerciseInstructionAndExercise, progression: mocks.anotherProgression },
+        mocks.anotherExerciseResistance,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionProgressionIsApplicable.error);
   });
 
   test("happy path", async () => {
@@ -115,6 +138,7 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     );
@@ -143,7 +167,12 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.exerciseResistance,
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -190,7 +219,12 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.exerciseResistance,
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -222,7 +256,12 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.exerciseResistance,
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -254,7 +293,12 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.exerciseResistance,
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -264,6 +308,72 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
           ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
           exerciseInstruction,
         },
+      },
+    ]);
+  });
+
+  test("happy path - only the exercise changed", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.exerciseResistance,
+        mocks.userId,
+      ),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent]);
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [
+          { ...mocks.exerciseInstruction, exerciseId: mocks.anotherExerciseId },
+          mocks.otherExerciseInstruction,
+        ],
+      },
+      {
+        id: mocks.anotherPlanSectionId,
+        name: mocks.anotherPlanSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
+      },
+    ]);
+  });
+
+  test("happy path - the exercise and the progression changed", async () => {
+    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planWithLinearExerciseInstructionHistory, deps);
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...mocks.anotherExerciseInstruction, exerciseId: mocks.anotherExerciseId },
+        mocks.anotherExerciseResistance,
+        mocks.userId,
+      ),
+    );
+
+    expect(plan.pullEvents()).toEqual([
+      mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent,
+      mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+    ]);
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [{ ...mocks.anotherExerciseInstruction, exerciseId: mocks.anotherExerciseId }],
       },
     ]);
   });

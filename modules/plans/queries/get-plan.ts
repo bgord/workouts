@@ -6,7 +6,6 @@ export type PlanSectionActions = { exerciseInstructionAdd: bg.ActionState };
 
 export type ExerciseInstructionActions = {
   update: bg.ActionState;
-  exerciseChange: bg.ActionState;
   moveUp: bg.ActionState;
   moveDown: bg.ActionState;
   remove: bg.ActionState;

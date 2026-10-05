@@ -6,9 +6,9 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}/instruction`;
+const url = `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}`;
 
-describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/instruction", async () => {
+describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
@@ -24,7 +24,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/plans/id/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}/instruction`,
+      `/api/plans/id/section/${mocks.planSectionId}/exercise-instruction/${mocks.exerciseInstructionId}`,
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
@@ -36,7 +36,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/plans/${mocks.planId}/section/id/exercise-instruction/${mocks.exerciseInstructionId}/instruction`,
+      `/api/plans/${mocks.planId}/section/id/exercise-instruction/${mocks.exerciseInstructionId}`,
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
@@ -48,8 +48,32 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
-      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/id/instruction`,
+      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/id`,
       { method: "PATCH", body: JSON.stringify({}) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
+  });
+
+  test("validation - exerciseId - missing", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "uuid.type");
+  });
+
+  test("validation - exerciseId - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ exerciseId: 0 }) },
       mocks.ip,
     );
 
@@ -61,7 +85,11 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
 
     const response = await server.request(
       url,
-      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({}) },
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(),
+        body: JSON.stringify({ exerciseId: mocks.exerciseId }),
+      },
       mocks.ip,
     );
 
@@ -73,7 +101,11 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
 
     const response = await server.request(
       url,
-      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: 0 }) },
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(),
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: 0 }),
+      },
       mocks.ip,
     );
 
@@ -85,7 +117,11 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
 
     const response = await server.request(
       url,
-      { method: "PATCH", headers: mocks.revisionHeaders(), body: JSON.stringify({ sets: mocks.sets }) },
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(),
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets }),
+      },
       mocks.ip,
     );
 
@@ -100,7 +136,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ sets: mocks.sets, reps: { min: 0, max: 0 } }),
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: { min: 0, max: 0 } }),
       },
       mocks.ip,
     );
@@ -116,7 +152,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ sets: mocks.sets, reps: { min: 2, max: 1 } }),
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, sets: mocks.sets, reps: { min: 2, max: 1 } }),
       },
       mocks.ip,
     );
@@ -132,7 +168,12 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
       {
         method: "PATCH",
         headers: mocks.revisionHeaders(),
-        body: JSON.stringify({ sets: mocks.sets, reps: mocks.repsRange, progression: "linear" }),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.repsRange,
+          progression: "linear",
+        }),
       },
       mocks.ip,
     );
@@ -161,31 +202,25 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
+  test("PlanSectionExerciseExists", async () => {
     const events = mocks.planWithExerciseInstructionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
-    spies
-      .use(spyOn(di.Adapters.Plans.GetExerciseInstructionResistanceQuery, "execute"))
-      .mockResolvedValue(mocks.anotherExerciseResistance);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(
       url,
       {
         method: "PATCH",
-        body: JSON.stringify({ ...mocks.anotherExerciseInstruction, progression: mocks.anotherProgression }),
-        headers: mocks.headers(events.length),
+        body: JSON.stringify(mocks.anotherExerciseInstructionAndExercise),
+        headers: mocks.revisionHeaders(events.length),
       },
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(
-      response,
-      403,
-      "plan.section.exercise.instruction.progression.is.applicable",
-    );
+    await testcases.assertErrorResponse(response, 403, "plan.section.exercise.exists");
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
@@ -195,6 +230,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -216,6 +252,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -237,6 +274,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -258,6 +296,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -279,9 +318,10 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
-      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}/instruction`,
+      `/api/plans/${mocks.planId}/section/${mocks.planSectionId}/exercise-instruction/${mocks.anotherExerciseInstructionId}`,
       {
         method: "PATCH",
         body: JSON.stringify(mocks.anotherExerciseInstruction),
@@ -300,6 +340,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -315,11 +356,43 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
+    const events = mocks.planWithExerciseInstructionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
+      .mockResolvedValue(mocks.unloadedExercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        body: JSON.stringify({
+          ...mocks.anotherExerciseInstructionAndExercise,
+          progression: mocks.anotherProgression,
+        }),
+        headers: mocks.headers(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(
+      response,
+      403,
+      "plan.section.exercise.instruction.progression.is.applicable",
+    );
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     const events = mocks.planWithExerciseInstructionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -340,6 +413,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
@@ -353,5 +427,56 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionExerciseInstructionUpdatedEvent]);
+  });
+
+  test("happy path - only the exercise changed", async () => {
+    const events = mocks.planWithExerciseInstructionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.headers(events.length),
+        body: JSON.stringify(mocks.anotherExerciseInstructionAndExercise),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent,
+    ]);
+  });
+
+  test("happy path - the exercise and the progression changed", async () => {
+    const events = mocks.planWithLinearExerciseInstructionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
+      .mockResolvedValue(mocks.unloadedExercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.headers(events.length),
+        body: JSON.stringify({ ...mocks.anotherExerciseInstruction, exerciseId: mocks.anotherExerciseId }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent,
+      mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+    ]);
   });
 });

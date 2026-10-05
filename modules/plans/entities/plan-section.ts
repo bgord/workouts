@@ -32,26 +32,20 @@ export class PlanSection implements VO.PlanSection {
     Invariants.PlanSectionExerciseInstructionExists.enforce({ planSection: this, exerciseInstructionId });
   }
 
-  guardInstructionUpdate(exerciseInstruction: Omit<VO.ExerciseInstructionType, "exerciseId">) {
-    this.guardInstructionExists(exerciseInstruction.id);
-    Invariants.PlanSectionExerciseInstructionHasChanged.enforce({
-      current: this.instruction(exerciseInstruction.id),
-      incoming: exerciseInstruction,
-    });
-  }
-
-  guardInstructionExerciseChange(
-    exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">,
+  guardInstructionUpdate(
+    exerciseInstruction: VO.ExerciseInstructionType,
     resistance: Exercises.VO.ExerciseResistanceType,
   ) {
     this.guardInstructionExists(exerciseInstruction.id);
-    Invariants.PlanSectionExerciseInstructionExerciseHasChanged.enforce({
-      current: this.instruction(exerciseInstruction.id)?.exerciseId,
-      incoming: exerciseInstruction.exerciseId,
-    });
+    if (!this.instructionExerciseChanged(exerciseInstruction)) {
+      Invariants.PlanSectionExerciseInstructionHasChanged.enforce({
+        current: this.instruction(exerciseInstruction.id),
+        incoming: exerciseInstruction,
+      });
+    }
     Invariants.PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
       resistance,
-      progression: this.instruction(exerciseInstruction.id)!.progression,
+      progression: exerciseInstruction.progression,
     });
   }
 
@@ -121,6 +115,17 @@ export class PlanSection implements VO.PlanSection {
     if (moved) others.splice(position, 0, moved);
 
     this.exerciseInstructions = others;
+  }
+
+  instructionExerciseChanged(exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">) {
+    return this.instruction(exerciseInstruction.id)?.exerciseId !== exerciseInstruction.exerciseId;
+  }
+
+  instructionPrescriptionChanged(exerciseInstruction: VO.ExerciseInstructionType) {
+    return Invariants.PlanSectionExerciseInstructionHasChanged.passes({
+      current: this.instruction(exerciseInstruction.id),
+      incoming: exerciseInstruction,
+    });
   }
 
   private instruction(exerciseInstructionId: VO.ExerciseInstructionIdType) {

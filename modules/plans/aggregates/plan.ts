@@ -343,41 +343,45 @@ export class Plan {
 
   updateSectionExerciseInstruction(
     planSectionId: VO.PlanSectionIdType,
-    exerciseInstruction: Omit<VO.ExerciseInstructionType, "exerciseId">,
-    requesterId: Auth.VO.UserIdType,
-  ) {
-    Invariants.PlanIsEditable.enforce({ status: this.status });
-    Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    this.section(planSectionId).guardInstructionUpdate(exerciseInstruction);
-
-    const event = bg.event(
-      Events.PlanSectionExerciseInstructionUpdatedEvent,
-      Plan.getStream(this.id),
-      { planId: this.id, planSectionId, exerciseInstruction, requesterId },
-      this.deps,
-    );
-
-    this.record(event);
-  }
-
-  changeSectionExerciseInstructionExercise(
-    planSectionId: VO.PlanSectionIdType,
-    exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">,
+    exerciseInstruction: VO.ExerciseInstructionType,
     resistance: Exercises.VO.ExerciseResistanceType,
     requesterId: Auth.VO.UserIdType,
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    this.section(planSectionId).guardInstructionExerciseChange(exerciseInstruction, resistance);
+    const section = this.section(planSectionId);
+    section.guardInstructionUpdate(exerciseInstruction, resistance);
 
-    const event = bg.event(
-      Events.PlanSectionExerciseInstructionExerciseChangedEvent,
-      Plan.getStream(this.id),
-      { planId: this.id, planSectionId, exerciseInstruction, requesterId },
-      this.deps,
-    );
+    const { exerciseId, ...prescription } = exerciseInstruction;
+    const exerciseChanged = section.instructionExerciseChanged(exerciseInstruction);
+    const prescriptionChanged = section.instructionPrescriptionChanged(exerciseInstruction);
 
-    this.record(event);
+    if (exerciseChanged) {
+      const event = bg.event(
+        Events.PlanSectionExerciseInstructionExerciseChangedEvent,
+        Plan.getStream(this.id),
+        {
+          planId: this.id,
+          planSectionId,
+          exerciseInstruction: { id: prescription.id, exerciseId },
+          requesterId,
+        },
+        this.deps,
+      );
+
+      this.record(event);
+    }
+
+    if (prescriptionChanged) {
+      const event = bg.event(
+        Events.PlanSectionExerciseInstructionUpdatedEvent,
+        Plan.getStream(this.id),
+        { planId: this.id, planSectionId, exerciseInstruction: prescription, requesterId },
+        this.deps,
+      );
+
+      this.record(event);
+    }
   }
 
   moveSectionExerciseInstruction(

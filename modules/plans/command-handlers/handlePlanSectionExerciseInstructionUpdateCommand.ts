@@ -1,12 +1,13 @@
 import type * as bg from "@bgord/bun";
+import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
-import { PlanSectionExerciseInstructionProgressionIsApplicable } from "../invariants/plan-section-exercise-instruction-progression-is-applicable";
+import { PlanSectionExerciseExists } from "../invariants/plan-section-exercise-exists";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   repo: Plans.Ports.PlanRepositoryPort;
-  GetExerciseInstructionResistanceQuery: Plans.Queries.GetExerciseInstructionResistance;
+  GetExerciseOHQ: Exercises.OHQ.GetExerciseOHQ;
 };
 
 export const handlePlanSectionExerciseInstructionUpdateCommand =
@@ -14,18 +15,14 @@ export const handlePlanSectionExerciseInstructionUpdateCommand =
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);
 
-    const resistance = await deps.GetExerciseInstructionResistanceQuery.execute(
-      command.payload.exerciseInstruction.id,
-    );
+    const exercise = await deps.GetExerciseOHQ.execute(command.payload.exerciseInstruction.exerciseId);
 
-    PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
-      resistance,
-      progression: command.payload.exerciseInstruction.progression,
-    });
+    PlanSectionExerciseExists.enforce({ exercise });
 
     plan.updateSectionExerciseInstruction(
       command.payload.planSectionId,
       command.payload.exerciseInstruction,
+      exercise!.resistance,
       command.payload.requesterId,
     );
     await deps.repo.save(plan);

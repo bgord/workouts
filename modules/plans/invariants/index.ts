@@ -13,7 +13,6 @@ export * from "./plan-name-has-changed";
 export * from "./plan-name-is-unique-for-owner";
 export * from "./plan-section-cooldown-has-changed";
 export * from "./plan-section-exercise-exists";
-export * from "./plan-section-exercise-instruction-exercise-has-changed";
 export * from "./plan-section-exercise-instruction-exists";
 export * from "./plan-section-exercise-instruction-has-changed";
 export * from "./plan-section-exercise-instruction-limit";

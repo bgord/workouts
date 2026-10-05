@@ -1,6 +1,5 @@
 import type * as bg from "@bgord/bun";
 import type * as Plans from "+plans";
-import { GetExerciseInstructionResistanceQuery } from "./get-exercise-instruction-resistance.adapter";
 import { GetFinalizedPlanQuery } from "./get-finalized-plan.adapter";
 import { GetPlanQuery } from "./get-plan.adapter";
 import { GetPlanEditableForOwnerCountQuery } from "./get-plan-editable-for-owner-count.adapter";
@@ -21,7 +20,6 @@ export function createPlansAdapters(deps: Dependencies) {
     GetPlanEditableForOwnerCountQuery,
     GetPlanQuery,
     GetFinalizedPlanQuery,
-    GetExerciseInstructionResistanceQuery,
     ListPlansQuery,
     PlanRepository: createPlanRepository(deps),
   };

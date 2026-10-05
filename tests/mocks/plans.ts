@@ -68,10 +68,13 @@ export const anotherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   progression,
 };
 
-export const anotherExerciseInstructionAndExercise: Pick<
-  Plans.VO.ExerciseInstructionType,
-  "id" | "exerciseId"
-> = { id: exerciseInstructionId, exerciseId: anotherExerciseId };
+export const anotherExerciseInstructionAndExercise: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId: anotherExerciseId,
+  reps: repsRange,
+  sets,
+  progression,
+};
 
 export const otherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: anotherExerciseInstructionId,
@@ -195,7 +198,6 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
       ...exerciseInstruction,
       actions: {
         update: { available: true, enabled: true, hints: [] },
-        exerciseChange: { available: true, enabled: true, hints: [] },
         moveUp: { available: true, enabled: true, hints: [] },
         moveDown: { available: true, enabled: true, hints: [] },
         remove: { available: true, enabled: true, hints: [] },

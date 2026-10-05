@@ -7,7 +7,6 @@ import type { ExerciseWithCategories } from "../../modules/exercises/value-objec
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import { applicableProgressionMethod } from "../../modules/plans/value-objects/progression-method-applicability";
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
-import { Plans } from "../api";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { planRoute } from "../router";
@@ -23,7 +22,6 @@ export function PlanSectionExerciseInstructionEdit(props: {
   const [picked, setPicked] = useState<ExerciseWithCategories | null>(null);
   const { exerciseInstruction } = props;
   const { actions } = exerciseInstruction;
-  const editable = actions.update.available || actions.exerciseChange.available;
 
   const planSectionExerciseInstructionEdit = bg.useToggle({
     name: `plan-section-exercise-instruction-edit-${exerciseInstruction.id}`,
@@ -66,48 +64,22 @@ export function PlanSectionExerciseInstructionEdit(props: {
   const instructionUnchanged =
     sets.unchanged && repsMin.unchanged && repsMax.unchanged && progression.unchanged;
 
-  const base = `/api/plans/${plan.data.id}/section/${props.section.id}/exercise-instruction/${exerciseInstruction.id}`;
-
-  const changeExercise = (revision: number) =>
-    fetch(`${base}/exercise`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: bg.WeakETag.fromRevision(revision),
-      body: JSON.stringify({ exerciseId: exerciseId.value }),
-    });
-
-  const updateInstruction = (revision: number) =>
-    fetch(`${base}/instruction`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: bg.WeakETag.fromRevision(revision),
-      body: JSON.stringify({
-        sets: sets.value,
-        reps: { min: repsMin.value, max: repsMax.value },
-        progression: progression.value,
-      }),
-    });
-
   const mutation = bg.useMutation({
-    perform: async () => {
-      if (exerciseId.unchanged) return updateInstruction(plan.data.revision);
-      if (instructionUnchanged) return changeExercise(plan.data.revision);
-
-      const instructionFirst =
-        applicableProgressionMethod(exerciseInstruction.exercise.resistance, progression.value) ===
-        progression.value;
-      const [first, second] = instructionFirst
-        ? [updateInstruction, changeExercise]
-        : [changeExercise, updateInstruction];
-
-      const response = await first(plan.data.revision);
-
-      if (!response.ok) return response;
-
-      const fresh = await Plans.get(null, { planId: plan.data.id });
-
-      return second(fresh?.data?.revision ?? plan.data.revision);
-    },
+    perform: () =>
+      fetch(
+        `/api/plans/${plan.data.id}/section/${props.section.id}/exercise-instruction/${exerciseInstruction.id}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: bg.WeakETag.fromRevision(plan.data.revision),
+          body: JSON.stringify({
+            exerciseId: exerciseId.value,
+            sets: sets.value,
+            reps: { min: repsMin.value, max: repsMax.value },
+            progression: progression.value,
+          }),
+        },
+      ),
     onSuccess: async () => {
       planSectionExerciseInstructionEdit.disable();
       planSectionExerciseInstructionPick.disable();
@@ -130,7 +102,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     planSectionExerciseInstructionEdit.disable,
   ]);
 
-  if (!editable) return null;
+  if (!actions.update.available) return null;
 
   return (
     <>
@@ -163,11 +135,11 @@ export function PlanSectionExerciseInstructionEdit(props: {
               data-br="md"
               data-bw="hairline"
               data-color="neutral-100"
-              data-cursor={actions.exerciseChange.enabled ? "pointer" : undefined}
-              data-hover-bc={actions.exerciseChange.enabled ? "brand-500" : undefined}
+              data-cursor={actions.update.enabled ? "pointer" : undefined}
+              data-hover-bc={actions.update.enabled ? "brand-500" : undefined}
               data-px="3"
               data-stack="x"
-              disabled={!actions.exerciseChange.enabled}
+              disabled={!actions.update.enabled}
               onClick={bg.exec([catalog.load, planSectionExerciseInstructionPick.enable])}
               onFocus={catalog.load}
               onPointerEnter={catalog.load}
@@ -184,9 +156,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 {exercise.name}
               </span>
 
-              {actions.exerciseChange.available && (
-                <ArrowLeftRight data-color="neutral-500" data-shrink="0" data-size="sm" />
-              )}
+              <ArrowLeftRight data-color="neutral-500" data-shrink="0" data-size="sm" />
             </button>
           )}
 
@@ -208,46 +178,42 @@ export function PlanSectionExerciseInstructionEdit(props: {
             </div>
           )}
 
-          {actions.update.available && (
-            <ui.Prescription>
-              <ui.Stepper
-                disabled={!actions.update.enabled}
-                field={sets}
-                label={t("plan.section.exercise.add.sets.label")}
-                variant="fill"
-                {...Form.sets.pattern}
-              />
-
-              <ui.Separator>×</ui.Separator>
-
-              <ui.Stepper
-                disabled={!actions.update.enabled}
-                field={repsMin}
-                label={t("plan.section.exercise.add.reps.label")}
-                variant="fill"
-                {...Form.repsMin.pattern}
-              />
-
-              <ui.Separator>–</ui.Separator>
-
-              <ui.Stepper
-                disabled={!actions.update.enabled}
-                field={repsMax}
-                label={t("plan.section.exercise.add.reps.max.label")}
-                variant="fill"
-                {...Form.repsMax.pattern}
-                min={repsMin.value ?? Form.repsMax.pattern.min}
-              />
-            </ui.Prescription>
-          )}
-
-          {actions.update.available && (
-            <ui.ProgressionMethodSelect
+          <ui.Prescription>
+            <ui.Stepper
               disabled={!actions.update.enabled}
-              field={progression}
-              resistance={exercise?.resistance}
+              field={sets}
+              label={t("plan.section.exercise.add.sets.label")}
+              variant="fill"
+              {...Form.sets.pattern}
             />
-          )}
+
+            <ui.Separator>×</ui.Separator>
+
+            <ui.Stepper
+              disabled={!actions.update.enabled}
+              field={repsMin}
+              label={t("plan.section.exercise.add.reps.label")}
+              variant="fill"
+              {...Form.repsMin.pattern}
+            />
+
+            <ui.Separator>–</ui.Separator>
+
+            <ui.Stepper
+              disabled={!actions.update.enabled}
+              field={repsMax}
+              label={t("plan.section.exercise.add.reps.max.label")}
+              variant="fill"
+              {...Form.repsMax.pattern}
+              min={repsMin.value ?? Form.repsMax.pattern.min}
+            />
+          </ui.Prescription>
+
+          <ui.ProgressionMethodSelect
+            disabled={!actions.update.enabled}
+            field={progression}
+            resistance={exercise?.resistance}
+          />
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
 

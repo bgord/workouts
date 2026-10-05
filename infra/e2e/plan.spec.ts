@@ -266,7 +266,7 @@ test.describe("Plan - builder", () => {
   });
 
   test("shows the error when saving an exercise instruction fails", async ({ page }) => {
-    await page.route("**/api/plans/*/section/*/exercise-instruction/*/instruction", (route) =>
+    await page.route("**/api/plans/*/section/*/exercise-instruction/*", (route) =>
       route.fulfill({ status: 500 }),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
@@ -292,7 +292,7 @@ test.describe("Plan - builder", () => {
   });
 
   test("shows the error when changing the exercise of an instruction fails", async ({ page }) => {
-    await page.route("**/api/plans/*/section/*/exercise-instruction/*/exercise", (route) =>
+    await page.route("**/api/plans/*/section/*/exercise-instruction/*", (route) =>
       route.fulfill({ status: 500 }),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);

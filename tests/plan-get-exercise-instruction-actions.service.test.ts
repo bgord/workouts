@@ -12,7 +12,6 @@ describe("PlanGetExerciseInstructionActions", () => {
 
     expect(actions.calculate()).toEqual({
       update: mocks.actionAvailable,
-      exerciseChange: mocks.actionAvailable,
       moveUp: {
         available: true,
         enabled: false,
@@ -32,7 +31,6 @@ describe("PlanGetExerciseInstructionActions", () => {
 
     expect(actions.calculate()).toEqual({
       update: mocks.actionAvailable,
-      exerciseChange: mocks.actionAvailable,
       moveUp: mocks.actionAvailable,
       moveDown: {
         available: true,
@@ -52,7 +50,6 @@ describe("PlanGetExerciseInstructionActions", () => {
 
     expect(actions.calculate()).toEqual({
       update: mocks.actionUnavailable,
-      exerciseChange: mocks.actionUnavailable,
       moveUp: mocks.actionUnavailable,
       moveDown: mocks.actionUnavailable,
       remove: mocks.actionUnavailable,

@@ -295,7 +295,6 @@ modules/
 │   │   ├── handlePlanSectionCooldownSetCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
-│   │   ├── handlePlanSectionExerciseInstructionExerciseChangeCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionMoveCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionRemoveCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionUpdateCommand.ts
@@ -314,7 +313,6 @@ modules/
 │   │   ├── PLAN_SECTION_COOLDOWN_SET_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
-│   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_MOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND.ts
@@ -358,7 +356,6 @@ modules/
 │   │   ├── plan-name-is-unique-for-owner.ts
 │   │   ├── plan-section-cooldown-has-changed.ts
 │   │   ├── plan-section-exercise-exists.ts
-│   │   ├── plan-section-exercise-instruction-exercise-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-exists.ts
 │   │   ├── plan-section-exercise-instruction-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-limit.ts
@@ -374,7 +371,6 @@ modules/
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
-│   │   ├── get-exercise-instruction-resistance.ts
 │   │   ├── get-finalized-plan.ts
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
@@ -655,7 +651,6 @@ app/
 │   │   ├── plan-section-cooldown-set.ts
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
-│   │   ├── plan-section-exercise-instruction-exercise-change.ts
 │   │   ├── plan-section-exercise-instruction-move.ts
 │   │   ├── plan-section-exercise-instruction-remove.ts
 │   │   ├── plan-section-exercise-instruction-update.ts
@@ -741,7 +736,6 @@ infra/
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
-│   │   ├── get-exercise-instruction-resistance.adapter.ts
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-owner-count.adapter.ts

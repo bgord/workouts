@@ -168,19 +168,14 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionAdd(deps)),
   );
   plans.patch(
-    "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/instruction",
-    Tools.ShieldCaptcha.handle(),
-    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionUpdate(deps)),
-  );
-  plans.patch(
-    "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/exercise",
-    Tools.ShieldCaptcha.handle(),
-    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionExerciseChange(deps)),
-  );
-  plans.patch(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId/position",
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionMove(deps)),
+  );
+  plans.patch(
+    "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanSectionExerciseInstructionUpdate(deps)),
   );
   plans.delete(
     "/:planId/section/:planSectionId/exercise-instruction/:exerciseInstructionId",
