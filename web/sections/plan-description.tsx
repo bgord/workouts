@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-description-form";
 import * as ui from "../components";
 import { planRoute } from "../router";
@@ -43,25 +42,16 @@ export function PlanDescription() {
     <div data-stack="y" {...ui.Gap.cluster}>
       {planDescriptionUpdate.off && (
         <>
-          <button
-            className="c-textarea"
-            data-bc="alpha-subtle"
+          <ui.TextareaTrigger
             data-color={plan.data.description ? undefined : "neutral-500"}
-            data-cursor="pointer"
-            data-hover-bc="alpha-medium"
-            data-shadow="none"
-            data-stack="y"
-            data-ta="start"
-            data-transform="pre-line"
             disabled={!plan.actions.descriptionSet.enabled}
             onClick={planDescriptionUpdate.enable}
             title={t("plan.description.label")}
-            type="button"
             {...ui.describedByHint(plan.actions.descriptionSet, "plan-description-hint")}
             {...planDescriptionUpdate.props.controller}
           >
             {plan.data.description ?? t("plan.description.placeholder")}
-          </button>
+          </ui.TextareaTrigger>
 
           <ui.ActionHint {...plan.actions.descriptionSet} id="plan-description-hint" />
         </>
@@ -89,25 +79,11 @@ export function PlanDescription() {
               {...metaEnterSubmit}
             />
 
-            <div data-md-self="end" data-stack="x" {...ui.Gap.inline}>
-              <ui.IconButton
-                aria-label={t("app.save")}
-                disabled={description.unchanged || mutation.isLoading}
-                title={t("app.save")}
-                tone="positive"
-                type="submit"
-              >
-                <Check data-size="sm" />
-              </ui.IconButton>
-
-              <ui.IconButton
-                aria-label={t("app.cancel")}
-                onClick={bg.exec([description.clear, mutation.reset, planDescriptionUpdate.disable])}
-                title={t("app.cancel")}
-              >
-                <X data-size="sm" />
-              </ui.IconButton>
-            </div>
+            <ui.InlineEditActions
+              data-md-self="end"
+              disabled={description.unchanged || mutation.isLoading}
+              onCancel={bg.exec([description.clear, mutation.reset, planDescriptionUpdate.disable])}
+            />
           </div>
 
           {mutation.isError && (

@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/workout-note-form";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
@@ -37,25 +36,16 @@ export function WorkoutNote() {
     <div data-stack="y" {...ui.Gap.cluster}>
       {workoutNoteUpdate.off && (
         <>
-          <button
-            className="c-textarea"
-            data-bc="alpha-subtle"
+          <ui.TextareaTrigger
             data-color={workout.data.note ? undefined : "neutral-500"}
-            data-cursor="pointer"
-            data-hover-bc="alpha-medium"
-            data-shadow="none"
-            data-stack="y"
-            data-ta="start"
-            data-transform="pre-line"
             disabled={!workout.actions.noteSet.enabled}
             onClick={workoutNoteUpdate.enable}
             title={t("workout.note.label")}
-            type="button"
             {...ui.describedByHint(workout.actions.noteSet, "workout-note-hint")}
             {...workoutNoteUpdate.props.controller}
           >
             {workout.data.note ?? t("workout.note.placeholder")}
-          </button>
+          </ui.TextareaTrigger>
 
           <ui.ActionHint {...workout.actions.noteSet} id="workout-note-hint" />
         </>
@@ -83,25 +73,11 @@ export function WorkoutNote() {
               {...metaEnterSubmit}
             />
 
-            <div data-md-self="end" data-stack="x" {...ui.Gap.inline}>
-              <ui.IconButton
-                aria-label={t("app.save")}
-                disabled={note.unchanged || mutation.isLoading}
-                title={t("app.save")}
-                tone="positive"
-                type="submit"
-              >
-                <Check data-size="sm" />
-              </ui.IconButton>
-
-              <ui.IconButton
-                aria-label={t("app.cancel")}
-                onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])}
-                title={t("app.cancel")}
-              >
-                <X data-size="sm" />
-              </ui.IconButton>
-            </div>
+            <ui.InlineEditActions
+              data-md-self="end"
+              disabled={note.unchanged || mutation.isLoading}
+              onCancel={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])}
+            />
           </div>
 
           {mutation.isError && (

@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
@@ -39,18 +38,13 @@ export function ExerciseDescription() {
       {!exercise.actions.update.available && <p className="c-prose">{exercise.data.description}</p>}
 
       {exercise.actions.update.available && exerciseDescriptionUpdate.off && (
-        <button
-          className="c-prose"
-          data-cursor="pointer"
-          data-self="start"
-          data-ta="start"
+        <ui.TextareaTrigger
           onClick={exerciseDescriptionUpdate.enable}
           title={t("exercise.update.description.cta")}
-          type="button"
           {...exerciseDescriptionUpdate.props.controller}
         >
           {exercise.data.description}
-        </button>
+        </ui.TextareaTrigger>
       )}
 
       {exercise.actions.update.available && exerciseDescriptionUpdate.on && (
@@ -61,35 +55,24 @@ export function ExerciseDescription() {
           {...ui.Gap.cluster}
           {...exerciseDescriptionUpdate.props.target}
         >
-          <textarea
-            aria-label={t("exercise.update.description.label")}
-            autoFocus
-            className="c-textarea"
-            data-width="100%"
-            style={{ fieldSizing: "content" }}
-            {...bg.Form.textarea(Form.description.pattern)}
-            {...description.input.props}
-            {...metaEnterSubmit}
-          />
+          <div data-cross="start" data-md-cross="stretch" data-md-stack="y" data-stack="x" {...ui.Gap.inline}>
+            <textarea
+              aria-label={t("exercise.update.description.label")}
+              autoFocus
+              className="c-textarea"
+              data-grow="1"
+              data-minw="0"
+              style={{ fieldSizing: "content" }}
+              {...bg.Form.textarea(Form.description.pattern)}
+              {...description.input.props}
+              {...metaEnterSubmit}
+            />
 
-          <div data-main="end" data-stack="x" {...ui.Gap.inline}>
-            <ui.IconButton
-              aria-label={t("app.save")}
+            <ui.InlineEditActions
+              data-md-self="end"
               disabled={description.unchanged || mutation.isLoading}
-              title={t("app.save")}
-              tone="positive"
-              type="submit"
-            >
-              <Check data-size="sm" />
-            </ui.IconButton>
-
-            <ui.IconButton
-              aria-label={t("app.cancel")}
-              onClick={bg.exec([description.clear, mutation.reset, exerciseDescriptionUpdate.disable])}
-              title={t("app.cancel")}
-            >
-              <X data-size="sm" />
-            </ui.IconButton>
+              onCancel={bg.exec([description.clear, mutation.reset, exerciseDescriptionUpdate.disable])}
+            />
           </div>
 
           {mutation.isError && (

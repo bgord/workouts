@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-warmup-form";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
@@ -47,21 +46,16 @@ export function PlanSectionWarmup(props: PlanSection) {
     <div data-mb="3" data-stack="y" {...ui.Gap.cluster}>
       {planSectionWarmupUpdate.off && !props.warmup && (
         <>
-          <button
-            className="c-prose"
+          <ui.TextareaTrigger
             data-color="neutral-500"
-            data-cursor="pointer"
-            data-self="start"
-            data-ta="start"
             disabled={!plan.actions.sectionWarmupSet.enabled}
             onClick={planSectionWarmupUpdate.enable}
             title={t("plan.section.warmup.label")}
-            type="button"
             {...ui.describedByHint(plan.actions.sectionWarmupSet, `plan-section-warmup-hint-${props.id}`)}
             {...planSectionWarmupUpdate.props.controller}
           >
             {t("plan.section.warmup.placeholder")}
-          </button>
+          </ui.TextareaTrigger>
 
           <ui.ActionHint {...plan.actions.sectionWarmupSet} id={`plan-section-warmup-hint-${props.id}`} />
         </>
@@ -95,38 +89,27 @@ export function PlanSectionWarmup(props: PlanSection) {
           {...ui.Gap.field}
           {...planSectionWarmupUpdate.props.target}
         >
-          <h3>{t("plan.section.warmup.label")}</h3>
+          {props.warmup && <h3>{t("plan.section.warmup.label")}</h3>}
 
-          <textarea
-            aria-label={t("plan.section.warmup.label")}
-            autoFocus
-            className="c-textarea"
-            data-width="100%"
-            placeholder={t("plan.section.warmup.placeholder")}
-            style={{ fieldSizing: "content" }}
-            {...bg.Form.textarea(Form.warmup.pattern)}
-            {...warmup.input.props}
-            {...metaEnterSubmit}
-          />
+          <div data-cross="start" data-md-cross="stretch" data-md-stack="y" data-stack="x" {...ui.Gap.inline}>
+            <textarea
+              aria-label={t("plan.section.warmup.label")}
+              autoFocus
+              className="c-textarea"
+              data-grow="1"
+              data-minw="0"
+              placeholder={t("plan.section.warmup.placeholder")}
+              style={{ fieldSizing: "content" }}
+              {...bg.Form.textarea(Form.warmup.pattern)}
+              {...warmup.input.props}
+              {...metaEnterSubmit}
+            />
 
-          <div data-main="end" data-stack="x" {...ui.Gap.inline}>
-            <ui.IconButton
-              aria-label={t("app.save")}
+            <ui.InlineEditActions
+              data-md-self="end"
               disabled={warmup.unchanged || mutation.isLoading}
-              title={t("app.save")}
-              tone="positive"
-              type="submit"
-            >
-              <Check data-size="sm" />
-            </ui.IconButton>
-
-            <ui.IconButton
-              aria-label={t("app.cancel")}
-              onClick={bg.exec([warmup.clear, mutation.reset, planSectionWarmupUpdate.disable])}
-              title={t("app.cancel")}
-            >
-              <X data-size="sm" />
-            </ui.IconButton>
+              onCancel={bg.exec([warmup.clear, mutation.reset, planSectionWarmupUpdate.disable])}
+            />
           </div>
 
           {mutation.isError && (

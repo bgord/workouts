@@ -576,6 +576,21 @@ test.describe("Workouts - active-mutation", () => {
     await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
   });
 
+  test("clears the note", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+
+    await page.getByRole("button", { name: "Shoulder felt tight on the last set." }).click();
+    await page.getByLabel("Note").fill("");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Add a note…" })).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Add a note…" })).toBeVisible();
+    await expect(page.getByText("Shoulder felt tight on the last set.")).toBeHidden();
+  });
+
   test("rejects an exercise with invalid sets and reps range", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 

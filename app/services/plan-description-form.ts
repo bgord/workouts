@@ -5,7 +5,7 @@ import {
 
 export const Form = {
   description: {
-    pattern: { min: PlanDescriptionMin, max: PlanDescriptionMax },
+    pattern: { min: PlanDescriptionMin, max: PlanDescriptionMax, required: false },
     field: { name: "planDescription" },
   },
 };

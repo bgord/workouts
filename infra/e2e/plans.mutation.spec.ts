@@ -119,20 +119,6 @@ test.describe("Plans - drafter", () => {
   test.use({ storageState: ".auth/drafter.json" });
   test.describe.configure({ mode: "serial" });
 
-  test("rejects an empty plan description", async ({ page }) => {
-    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-
-    await page.getByRole("button", { name: fixtures.drafter.plan.description }).click();
-    await page.getByLabel("Description").fill("");
-    await page.getByRole("button", { name: "Save", exact: true }).click();
-
-    await expect(page.getByLabel("Description").and(page.locator(":invalid"))).toHaveCount(1);
-
-    await page.reload();
-
-    await expect(page.getByText(fixtures.drafter.plan.description)).toBeVisible();
-  });
-
   test("edits the plan description", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
@@ -152,7 +138,7 @@ test.describe("Plans - drafter", () => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
     await page.getByRole("button", { name: "Upper body twice, legs once." }).click();
-    await page.getByLabel("Description").fill(" ");
+    await page.getByLabel("Description").fill("");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByRole("button", { name: "Add a description…" })).toBeVisible();

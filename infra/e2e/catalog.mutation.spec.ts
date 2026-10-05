@@ -195,6 +195,26 @@ test.describe("Catalog - admin", () => {
     await expect(categories.getByText("Neck and traps", { exact: true })).toBeVisible();
   });
 
+  test("rejects an empty exercise description", async ({ page }) => {
+    await page.goto("/catalog");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
+    await page.getByRole("link", { name: /Neck flexion/ }).click();
+
+    await page
+      .getByRole("button", { name: "Lie on your back, curl the head up with a plate on the forehead." })
+      .click();
+    await page.getByLabel("Description").fill("");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByLabel("Description").and(page.locator(":invalid"))).toHaveCount(1);
+
+    await page.reload();
+
+    await expect(
+      page.getByRole("button", { name: "Lie on your back, curl the head up with a plate on the forehead." }),
+    ).toBeVisible();
+  });
+
   test("rejects a too short exercise description", async ({ page }) => {
     await page.goto("/catalog");
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
