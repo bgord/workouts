@@ -31,11 +31,11 @@ export type RepsPerformanceStatistics = {
 };
 
 export type LoadExercisePerformanceStatistics = {
-  loading: Exercises.VO.ExerciseLoadingOptions.external;
+  resistance: Exercises.VO.ExerciseResistanceOptions.weighted;
 } & LoadPerformanceStatistics;
 
 export type RepsExercisePerformanceStatistics = {
-  loading: Exercises.VO.ExerciseLoadingOptions.none;
+  resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight;
 } & RepsPerformanceStatistics;
 
 export type ExercisePerformanceStatistics =

@@ -1,6 +1,6 @@
 import type * as bg from "@bgord/ui";
 import { Form } from "../../app/services/workout-target-form";
-import { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import { NoLoadBadge } from "../components/no-load-badge";
 import { Stepper } from "../components/stepper";
 import { WeightFormat } from "../services/weight-format";
@@ -15,7 +15,7 @@ type LoadFieldProps = {
   variant?: "default" | "compact";
 };
 
-type LoadingKitStrategy = {
+type ResistanceKitStrategy = {
   Field: (props: LoadFieldProps) => React.ReactNode;
   Badge: () => React.ReactNode;
   payload: (field: LoadField) => number;
@@ -40,17 +40,17 @@ function LoadStepper(props: LoadFieldProps) {
   );
 }
 
-export const LoadingKit = {
-  [ExerciseLoadingOptions.external]: {
+export const ResistanceKit = {
+  [ExerciseResistanceOptions.weighted]: {
     Field: LoadStepper,
     Badge: () => null,
     payload: (field) => WeightFormat.grams(field.value ?? 0),
     ready: (field) => !field.empty,
   },
-  [ExerciseLoadingOptions.none]: {
+  [ExerciseResistanceOptions.bodyweight]: {
     Field: () => null,
     Badge: NoLoadBadge,
     payload: () => 0,
     ready: () => true,
   },
-} satisfies Record<ExerciseLoadingOptions, LoadingKitStrategy>;
+} satisfies Record<ExerciseResistanceOptions, ResistanceKitStrategy>;

@@ -6,10 +6,10 @@ import { ExerciseHistoryRow } from "./exercise-history-row";
 export function ExerciseHistory() {
   const t = bg.useTranslations();
   const { exercise, performances } = exerciseRoute.useLoaderData();
-  const Statistics = ExerciseStatisticsKit[exercise.data.loading];
+  const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
 
   const history = performances.toReversed();
-  const record = Statistics.record(performancesOf(exercise.data.loading, performances));
+  const record = Statistics.record(performancesOf(exercise.data.resistance, performances));
 
   return (
     <ul aria-label={t("statistics.exercise.history")} data-stack="y">

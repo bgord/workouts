@@ -5,11 +5,11 @@ import { LoadStepIncrementStrategy } from "./load-step-increment.strategy";
 import { LoadStepLockedStrategy } from "./load-step-locked.strategy";
 
 export class LoadStepStrategyFactory {
-  static for(loading: VO.WorkoutExerciseLoadingType): LoadStepStrategy {
-    switch (loading) {
-      case Exercises.VO.ExerciseLoadingOptions.external:
+  static for(resistance: VO.WorkoutExerciseResistanceType): LoadStepStrategy {
+    switch (resistance) {
+      case Exercises.VO.ExerciseResistanceOptions.weighted:
         return new LoadStepIncrementStrategy();
-      case Exercises.VO.ExerciseLoadingOptions.none:
+      case Exercises.VO.ExerciseResistanceOptions.bodyweight:
         return new LoadStepLockedStrategy();
     }
   }

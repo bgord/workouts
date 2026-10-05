@@ -6,7 +6,7 @@ import type * as VO from "+workouts/value-objects";
 export type ExercisePerformance = {
   workoutId: VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
-  loading: VO.WorkoutExerciseLoadingType;
+  resistance: VO.WorkoutExerciseResistanceType;
   sets: Array<{
     setNumber: VO.SetNumberType;
     reps: VO.RepsType;

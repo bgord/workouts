@@ -10,7 +10,7 @@ export class ExercisePerformanceMetricsRepsStrategy implements ExercisePerforman
 
     return {
       ...performance,
-      loading: Exercises.VO.ExerciseLoadingOptions.none,
+      resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
       bestSet,
       totalReps: tools.Int.positive(performance.sets.reduce((total, set) => total + set.reps, 0)),
     };

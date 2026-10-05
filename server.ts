@@ -74,9 +74,9 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseUpdate(deps)),
   );
   exercises.patch(
-    "/:exerciseId/loading",
+    "/:exerciseId/resistance",
     Tools.ShieldCaptcha.handle(),
-    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseLoadingChange(deps)),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseResistanceChange(deps)),
   );
   exercises.patch(
     "/:exerciseId/image",

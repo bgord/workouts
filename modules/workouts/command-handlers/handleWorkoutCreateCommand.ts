@@ -8,8 +8,8 @@ import { WorkoutPlanReady } from "../invariants/workout-plan-ready";
 import { WorkoutPlanSectionReady } from "../invariants/workout-plan-section-ready";
 import { WorkoutExerciseDescription } from "../value-objects/workout-exercise-description";
 import { WorkoutExerciseId } from "../value-objects/workout-exercise-id";
-import { WorkoutExerciseLoading } from "../value-objects/workout-exercise-loading";
 import { WorkoutExerciseName } from "../value-objects/workout-exercise-name";
+import { WorkoutExerciseResistance } from "../value-objects/workout-exercise-resistance";
 import { WorkoutPlanName } from "../value-objects/workout-plan-name";
 import { WorkoutPlanSectionCooldown } from "../value-objects/workout-plan-section-cooldown";
 import { WorkoutPlanSectionName } from "../value-objects/workout-plan-section-name";
@@ -61,7 +61,7 @@ export const handleWorkoutCreateCommand =
         instruction.exercise.id,
         v.parse(WorkoutExerciseName, instruction.exercise.name),
         v.parse(WorkoutExerciseDescription, instruction.exercise.description),
-        v.parse(WorkoutExerciseLoading, instruction.exercise.loading),
+        v.parse(WorkoutExerciseResistance, instruction.exercise.resistance),
         { sets: instruction.sets, reps: instruction.reps, progression: instruction.progression },
         command.payload.userId,
       );

@@ -6,10 +6,10 @@ import { ExerciseCategories } from "../sections/exercise-categories";
 import { ExerciseDelete } from "../sections/exercise-delete";
 import { ExerciseDescription } from "../sections/exercise-description";
 import { ExerciseImageChange } from "../sections/exercise-image-change";
-import { ExerciseLoading } from "../sections/exercise-loading";
 import { ExerciseName } from "../sections/exercise-name";
 import { ExercisePerformanceHistory } from "../sections/exercise-performance-history";
 import { ExercisePerformancesEmpty } from "../sections/exercise-performances-empty";
+import { ExerciseResistance } from "../sections/exercise-resistance";
 
 export function Exercise() {
   const { exercise } = exerciseRoute.useLoaderData();
@@ -51,7 +51,7 @@ export function Exercise() {
 
           <ExerciseDescription />
 
-          <ExerciseLoading />
+          <ExerciseResistance />
         </div>
       </div>
 

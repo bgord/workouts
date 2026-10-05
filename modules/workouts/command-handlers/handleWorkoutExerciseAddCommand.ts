@@ -5,8 +5,8 @@ import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import { WorkoutCatalogExerciseExists } from "../invariants/workout-catalog-exercise-exists";
 import { WorkoutExerciseDescription } from "../value-objects/workout-exercise-description";
-import { WorkoutExerciseLoading } from "../value-objects/workout-exercise-loading";
 import { WorkoutExerciseName } from "../value-objects/workout-exercise-name";
+import { WorkoutExerciseResistance } from "../value-objects/workout-exercise-resistance";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -29,7 +29,7 @@ export const handleWorkoutExerciseAddCommand =
       exercise!.id,
       v.parse(WorkoutExerciseName, exercise!.name),
       v.parse(WorkoutExerciseDescription, exercise!.description),
-      v.parse(WorkoutExerciseLoading, exercise!.loading),
+      v.parse(WorkoutExerciseResistance, exercise!.resistance),
       command.payload.prescription,
       command.payload.requesterId,
     );

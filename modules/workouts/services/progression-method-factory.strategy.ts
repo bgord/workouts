@@ -11,11 +11,11 @@ import { ProgressionMethodNoneStrategy } from "./progression-method-none.strateg
 export class ProgressionMethodStrategyFactory {
   static for(
     prescription: VO.ExercisePrescriptionType,
-    loading: VO.WorkoutExerciseLoadingType,
+    resistance: VO.WorkoutExerciseResistanceType,
     previous: Pick<Queries.ExercisePerformance, "sets">,
   ): ProgressionMethodStrategy {
     const last = new ExercisePerformanceWeakestSet(previous).calculate();
-    const LoadStep = LoadStepStrategyFactory.for(loading);
+    const LoadStep = LoadStepStrategyFactory.for(resistance);
 
     switch (prescription.progression) {
       case Plans.VO.ProgressionMethodOptions.double_progression:

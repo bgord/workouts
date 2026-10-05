@@ -1,7 +1,7 @@
 import type * as bg from "@bgord/ui";
-import type { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import { EffortFormat } from "../kits/effort.format";
-import { LoadingFormat } from "../kits/loading.format";
+import { ResistanceFormat } from "../kits/resistance.format";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 
@@ -11,23 +11,23 @@ const join = (separator: string, parts: ReadonlyArray<string | null>) =>
   parts.filter((part) => part !== null).join(separator);
 
 export const SetNotation = {
-  set: (language: string, value: { loading: ExerciseLoadingOptions } & SetFigures) =>
-    join("", [EffortFormat.set(value.reps), LoadingFormat[value.loading].set(value.load, language)]),
+  set: (language: string, value: { resistance: ExerciseResistanceOptions } & SetFigures) =>
+    join("", [EffortFormat.set(value.reps), ResistanceFormat[value.resistance].set(value.load, language)]),
 
   target: (
     t: Translate,
     language: string,
-    value: { loading: ExerciseLoadingOptions; sets: number } & SetFigures,
+    value: { resistance: ExerciseResistanceOptions; sets: number } & SetFigures,
   ) =>
     join(" ", [
       EffortFormat.target(t, value.sets, value.reps),
-      LoadingFormat[value.loading].target(value.load, language),
+      ResistanceFormat[value.resistance].target(value.load, language),
     ]),
 
   performance: (
     t: Translate,
     language: string,
-    value: { loading: ExerciseLoadingOptions; sets: ReadonlyArray<SetFigures> },
+    value: { resistance: ExerciseResistanceOptions; sets: ReadonlyArray<SetFigures> },
   ) => {
     const reps = value.sets.map((set) => set.reps);
     const load = Math.min(...value.sets.map((set) => set.load));
@@ -35,13 +35,13 @@ export const SetNotation = {
 
     if (uniform) {
       return SetNotation.target(t, language, {
-        loading: value.loading,
+        resistance: value.resistance,
         sets: value.sets.length,
         reps: reps[0] ?? 0,
         load,
       });
     }
 
-    return join("", [EffortFormat.performance(reps), LoadingFormat[value.loading].set(load, language)]);
+    return join("", [EffortFormat.performance(reps), ResistanceFormat[value.resistance].set(load, language)]);
   },
 };

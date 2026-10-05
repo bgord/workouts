@@ -4,7 +4,7 @@ import { startTransition, useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
-import { LoadingKit } from "../kits/loading.kit";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -13,7 +13,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
   const action = props.exercise.actions.setLog;
-  const Loading = LoadingKit[props.exercise.loading];
+  const Resistance = ResistanceKit[props.exercise.resistance];
 
   const reps = bg.useNumberField<number>({
     name: `logged-reps-${props.exercise.id}`,
@@ -37,7 +37,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
         headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           reps: reps.value,
-          load: Loading.payload(load),
+          load: Resistance.payload(load),
           rir: rir.current,
         }),
       }),
@@ -53,7 +53,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
         id: crypto.randomUUID() as LoggedSet["id"],
         setNumber: (props.exercise.loggedSets.length + 1) as LoggedSet["setNumber"],
         reps: reps.value as LoggedSet["reps"],
-        load: Loading.payload(load) as LoggedSet["load"],
+        load: Resistance.payload(load) as LoggedSet["load"],
         rir: (rir.current ?? null) as LoggedSet["rir"],
         actions: {
           correct: { available: true, enabled: false, hints: [] },
@@ -89,7 +89,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
           {...Form.reps.pattern}
         />
 
-        <Loading.Field
+        <Resistance.Field
           disabled={busy}
           field={load}
           label={t("workout.set.load.label")}
@@ -98,7 +98,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
       </div>
 
       <ui.RirSubmit
-        disabled={busy || reps.empty || !Loading.ready(load)}
+        disabled={busy || reps.empty || !Resistance.ready(load)}
         onSelect={(value) => {
           rir.current = value;
         }}

@@ -94,7 +94,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
       if (instructionUnchanged) return changeExercise(plan.data.revision);
 
       const instructionFirst =
-        applicableProgressionMethod(exerciseInstruction.exercise.loading, progression.value) ===
+        applicableProgressionMethod(exerciseInstruction.exercise.resistance, progression.value) ===
         progression.value;
       const [first, second] = instructionFirst
         ? [updateInstruction, changeExercise]
@@ -199,7 +199,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 onChange={(exercise) => {
                   setPicked(exercise);
                   exerciseId.set(exercise.id);
-                  progression.set(applicableProgressionMethod(exercise.loading, progression.value));
+                  progression.set(applicableProgressionMethod(exercise.resistance, progression.value));
                   planSectionExerciseInstructionPick.disable();
                 }}
                 query={query}
@@ -245,7 +245,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
             <ui.ProgressionMethodSelect
               disabled={!actions.update.enabled}
               field={progression}
-              loading={exercise?.loading}
+              resistance={exercise?.resistance}
             />
           )}
 

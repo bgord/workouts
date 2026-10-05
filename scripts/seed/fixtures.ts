@@ -23,7 +23,7 @@ export const exercises = {
     name: "Biceps curl bar straight",
     description:
       "Stand tall, elbows pinned to your sides. Curl the bar up without swinging, lower under control.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms],
   },
   bulgarianSplitSquatDumbbell: {
@@ -31,7 +31,7 @@ export const exercises = {
     name: "Bulgarian split squat dumbbell",
     description:
       "Rear foot on a bench, dumbbells at your sides. Drop the back knee straight down, drive through the front heel.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.glutes, categories.hamstrings, categories.quads],
   },
   calfRaisesLegPress: {
@@ -39,7 +39,7 @@ export const exercises = {
     name: "Calf raises leg press",
     description:
       "Balls of the feet on the platform edge. Push through the toes to full extension, lower into a deep stretch.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.calves],
   },
   calfRaisesMachine: {
@@ -47,14 +47,14 @@ export const exercises = {
     name: "Calf raises machine",
     description:
       "Shoulders under the pads, heels off the step. Rise as high as possible, pause, lower slowly.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.calves],
   },
   calfRaisesSeatedDumbbells: {
     id: "57a93a3c-fcc7-4f56-a851-3bb5c90adee0",
     name: "Calf raises seated dumbbells",
     description: "Seated, dumbbells resting on the knees. Lift the heels high, lower into a full stretch.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.calves],
   },
   calfRaisesStandingDumbbellSingleLeg: {
@@ -62,7 +62,7 @@ export const exercises = {
     name: "Calf raises standing dumbbell single leg",
     description:
       "One foot on a step, dumbbell in the same-side hand. Rise onto the toes, lower the heel below the step.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.calves],
   },
   concentrationCurlDumbbell: {
@@ -70,7 +70,7 @@ export const exercises = {
     name: "Concentration curl dumbbell",
     description:
       "Seated, elbow braced against the inner thigh. Curl without moving the upper arm, squeeze at the top.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms],
   },
   facePull: {
@@ -78,7 +78,7 @@ export const exercises = {
     name: "Face pull",
     description:
       "Rope at face height. Pull towards the forehead with high elbows, spreading the rope apart at the end.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.shoulders, categories.upperMidBack],
   },
   hammerCurlDumbbells: {
@@ -86,7 +86,7 @@ export const exercises = {
     name: "Hammer curl dumbbells",
     description:
       "Neutral grip, palms facing each other. Curl without rotating the wrists, keep the elbows still.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms],
   },
   hangingLegRaise: {
@@ -94,7 +94,7 @@ export const exercises = {
     name: "Hanging leg raise",
     description:
       "Hang from the bar, arms straight. Raise the legs to hip height without swinging, lower slowly.",
-    loading: "none",
+    resistance: "bodyweight",
     categories: [categories.abs],
   },
   hammerStrengthIncline: {
@@ -102,14 +102,14 @@ export const exercises = {
     name: "Hammer strength incline",
     description:
       "Handles in line with the upper chest. Press up and slightly in, lower until the chest is stretched.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.chest, categories.shoulders, categories.triceps],
   },
   independentChestPress: {
     id: "4171e0ed-844f-46b9-9946-c4c562f57a0d",
     name: "Independent chest press",
     description: "Handles at mid-chest, shoulder blades back. Press both arms evenly, control the return.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.chest, categories.shoulders, categories.triceps],
   },
   latPullDownCable: {
@@ -117,14 +117,14 @@ export const exercises = {
     name: "Lat pull-down cable",
     description:
       "Grip slightly wider than the shoulders. Pull the bar to the upper chest leading with the elbows, no leaning back.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   lateralRaiseDumbbells: {
     id: "867680bc-73d3-4827-930f-47795690ca8e",
     name: "Lateral raise dumbbells",
     description: "Slight bend in the elbows. Raise to shoulder height leading with the elbows, lower slowly.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.shoulders, categories.upperMidBack],
   },
   legCurlLying: {
@@ -132,14 +132,14 @@ export const exercises = {
     name: "Leg curl lying",
     description:
       "Knees just off the pad edge, hips pressed down. Curl the heels towards the glutes, lower under control.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.hamstrings],
   },
   legCurlSeated: {
     id: "dec297bd-5e97-4fae-904c-c614147769d2",
     name: "Leg curl seated",
     description: "Thigh pad locked down, knees in line with the pivot. Curl fully, pause, return slowly.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.hamstrings],
   },
   legExtensionBothLegs: {
@@ -147,14 +147,14 @@ export const exercises = {
     name: "Leg extension both legs",
     description:
       "Knees in line with the pivot, back against the pad. Extend fully, pause, lower under control.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.quads],
   },
   legExtensionSingleLeg: {
     id: "3aea56d2-b58c-4838-9ade-7ee3349fe03a",
     name: "Leg extension single leg",
     description: "One leg at a time, knee in line with the pivot. Extend fully and hold briefly at the top.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.quads],
   },
   legPressBridge: {
@@ -162,7 +162,7 @@ export const exercises = {
     name: "Leg press bridge",
     description:
       "Feet high and wide on the platform to bias glutes and hamstrings. Press through the heels, control the descent.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.glutes, categories.hamstrings, categories.quads],
   },
   legPressHorizontal: {
@@ -170,7 +170,7 @@ export const exercises = {
     name: "Leg press horizontal",
     description:
       "Feet shoulder-width apart on the platform. Bend the knees to about 90 degrees, press back without locking out.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.glutes, categories.hamstrings, categories.quads],
   },
   lowRowCable: {
@@ -178,7 +178,7 @@ export const exercises = {
     name: "Low row cable",
     description:
       "Chest up, slight forward lean at the start. Row the handle to the lower ribs, squeeze the shoulder blades.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   lowRowIsoLateral: {
@@ -186,7 +186,7 @@ export const exercises = {
     name: "Low row iso-lateral",
     description:
       "Chest against the pad. Row each handle towards the hip, squeeze the shoulder blades together.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   lowRowMachine: {
@@ -194,7 +194,7 @@ export const exercises = {
     name: "Low row machine",
     description:
       "Chest against the pad, arms fully extended. Pull the handles to the torso, pause, return slowly.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   overheadPressSeatedDumbbells: {
@@ -202,7 +202,7 @@ export const exercises = {
     name: "Overhead press seated dumbbells",
     description:
       "Back against an upright bench, dumbbells at shoulder height. Press overhead without arching, lower to the ears.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.shoulders, categories.triceps, categories.upperMidBack],
   },
   pecDeck: {
@@ -210,7 +210,7 @@ export const exercises = {
     name: "Pec deck",
     description:
       "Elbows slightly bent, handles at chest height. Bring the arms together in an arc, squeeze, open slowly.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.chest, categories.shoulders],
   },
   pecFlyCable: {
@@ -218,21 +218,21 @@ export const exercises = {
     name: "Pec fly cable",
     description:
       "Cables at shoulder height, one step forward. Sweep the hands together in a wide arc, control the stretch.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.chest, categories.shoulders],
   },
   pecFlyMachine: {
     id: "0cdd77e8-ab97-4b01-8f6e-6a6e26574f62",
     name: "Pec fly machine",
     description: "Handles in line with the chest. Hug the handles together, pause, return to a full stretch.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.chest, categories.shoulders],
   },
   pullUp: {
     id: "68c6c2e7-2c01-46a8-9dc0-e0e49b892657",
     name: "Pull-up",
     description: "Hang with an overhand grip. Pull until the chin clears the bar, lower to a full hang.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   romanianDeadliftDumbbellSingleLeg: {
@@ -240,7 +240,7 @@ export const exercises = {
     name: "Romanian deadlift dumbbell single leg",
     description:
       "Dumbbell in the opposite hand. Hinge at the hip with the back leg rising, stop when the hamstring is stretched.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.glutes, categories.hamstrings, categories.lowerBack],
   },
   straightArmPulldownBar: {
@@ -248,7 +248,7 @@ export const exercises = {
     name: "Straight-arm pulldown bar",
     description:
       "Arms straight, slight hip hinge. Sweep the bar down to the thighs using the lats, return slowly.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.lats, categories.upperMidBack],
   },
   superHorizontalBenchPress: {
@@ -256,7 +256,7 @@ export const exercises = {
     name: "Super horizontal bench press",
     description:
       "Handles at mid-chest, feet flat. Press forward to near lockout, lower until the chest is stretched.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.chest, categories.shoulders, categories.triceps],
   },
   tricepsExtensionOverheadCable: {
@@ -264,14 +264,14 @@ export const exercises = {
     name: "Triceps extension overhead cable",
     description:
       "Facing away from the stack, rope behind the head. Extend the elbows fully, keep the upper arms still.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.triceps],
   },
   tricepsPushDownBar: {
     id: "6748ac08-f295-45d9-8698-a55cfa7b7cd8",
     name: "Triceps push-down bar",
     description: "Elbows pinned to the sides. Push the bar down to full lockout, return to about 90 degrees.",
-    loading: "external",
+    resistance: "weighted",
     categories: [categories.triceps],
   },
 };

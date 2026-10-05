@@ -5,7 +5,7 @@ export function NoLoadBadge() {
 
   return (
     <span className="c-badge" data-tone="soft" data-variant="outline">
-      {t("exercise.loading.none")}
+      {t("exercise.resistance.bodyweight")}
     </span>
   );
 }

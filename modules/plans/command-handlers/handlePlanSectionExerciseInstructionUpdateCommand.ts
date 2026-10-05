@@ -6,7 +6,7 @@ type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   repo: Plans.Ports.PlanRepositoryPort;
-  GetExerciseInstructionLoadingQuery: Plans.Queries.GetExerciseInstructionLoading;
+  GetExerciseInstructionResistanceQuery: Plans.Queries.GetExerciseInstructionResistance;
 };
 
 export const handlePlanSectionExerciseInstructionUpdateCommand =
@@ -14,12 +14,12 @@ export const handlePlanSectionExerciseInstructionUpdateCommand =
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);
 
-    const loading = await deps.GetExerciseInstructionLoadingQuery.execute(
+    const resistance = await deps.GetExerciseInstructionResistanceQuery.execute(
       command.payload.exerciseInstruction.id,
     );
 
     PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
-      loading,
+      resistance,
       progression: command.payload.exerciseInstruction.progression,
     });
 

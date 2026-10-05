@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/workout-target-form";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
-import { LoadingKit } from "../kits/loading.kit";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 import { WorkoutExerciseTargetProgression } from "./workout-exercise-target-progression";
@@ -16,7 +16,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
   const { toggle } = bg.extractUseToggle(props);
   const action = props.exercise.actions.targetSet;
   const progression = props.exercise.targetProgression;
-  const Loading = LoadingKit[props.exercise.loading];
+  const Resistance = ResistanceKit[props.exercise.resistance];
 
   const sets = bg.useNumberField<number>({
     name: `sets-${props.exercise.id}`,
@@ -47,7 +47,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         body: JSON.stringify({
           sets: sets.value,
           reps: reps.value,
-          load: Loading.payload(load),
+          load: Resistance.payload(load),
         }),
       }),
     onSuccess: async () => {
@@ -95,7 +95,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
             {...Form.reps.pattern}
           />
 
-          <Loading.Field
+          <Resistance.Field
             disabled={mutation.isLoading}
             field={load}
             label={t("workout.target.load.label")}
@@ -111,7 +111,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
               !action.enabled ||
               sets.empty ||
               reps.empty ||
-              !Loading.ready(load) ||
+              !Resistance.ready(load) ||
               unchanged ||
               mutation.isLoading
             }
@@ -141,10 +141,10 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         <WorkoutExerciseTargetProgression
           disabled={mutation.isLoading}
           load={load}
-          loading={props.exercise.loading}
           method={props.exercise.prescription.progression}
           progression={progression}
           reps={reps}
+          resistance={props.exercise.resistance}
           sets={sets}
         />
       )}

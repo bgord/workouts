@@ -20,7 +20,9 @@ export class ExercisePerformanceCalculator {
     const performances = await this.config.ListExercisePerformancesOHQ.execute(userId, exerciseId);
 
     return performances.map((performance) =>
-      ExercisePerformanceMetricsStrategyFactory.for(performance.loading, this.config).calculate(performance),
+      ExercisePerformanceMetricsStrategyFactory.for(performance.resistance, this.config).calculate(
+        performance,
+      ),
     );
   }
 }

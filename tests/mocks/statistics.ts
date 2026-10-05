@@ -9,7 +9,7 @@ import { workoutId, workoutScheduledFor } from "./workouts";
 export const calculatedExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
-  loading: Exercises.VO.ExerciseLoadingOptions.external,
+  resistance: Exercises.VO.ExerciseResistanceOptions.weighted,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -40,7 +40,7 @@ export const calculatedExercisePerformance = {
 export const calculatedRepsExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
-  loading: Exercises.VO.ExerciseLoadingOptions.none,
+  resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),

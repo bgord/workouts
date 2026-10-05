@@ -19,7 +19,7 @@ export class ExercisePerformanceMetricsLoadStrategy implements ExercisePerforman
 
     return {
       ...performance,
-      loading: Exercises.VO.ExerciseLoadingOptions.external,
+      resistance: Exercises.VO.ExerciseResistanceOptions.weighted,
       sets,
       volume: new Workouts.Services.LoggedSetsVolume(sets).calculate().get(),
       bestSet,

@@ -363,12 +363,12 @@ export class Plan {
   changeSectionExerciseInstructionExercise(
     planSectionId: VO.PlanSectionIdType,
     exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">,
-    loading: Exercises.VO.ExerciseLoadingType,
+    resistance: Exercises.VO.ExerciseResistanceType,
     requesterId: Auth.VO.UserIdType,
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    this.section(planSectionId).guardInstructionExerciseChange(exerciseInstruction, loading);
+    this.section(planSectionId).guardInstructionExerciseChange(exerciseInstruction, resistance);
 
     const event = bg.event(
       Events.PlanSectionExerciseInstructionExerciseChangedEvent,

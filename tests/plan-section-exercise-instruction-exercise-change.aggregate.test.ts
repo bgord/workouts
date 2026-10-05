@@ -15,7 +15,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.exerciseLoading,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -28,7 +28,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.exerciseLoading,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -41,7 +41,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.exerciseLoading,
+        mocks.exerciseResistance,
         mocks.anotherUserId,
       ),
     ).toThrow(Plans.Invariants.PlanBelongsToUser.error);
@@ -58,7 +58,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.anotherPlanSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.exerciseLoading,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
@@ -81,7 +81,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.exerciseLoading,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
@@ -103,7 +103,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.exerciseInstruction,
-        mocks.exerciseLoading,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExerciseHasChanged.error);
@@ -120,7 +120,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.anotherExerciseLoading,
+        mocks.anotherExerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionProgressionIsApplicable.error);
@@ -144,7 +144,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.exerciseLoading,
+        mocks.exerciseResistance,
         mocks.userId,
       ),
     );

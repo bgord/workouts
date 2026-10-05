@@ -23,7 +23,7 @@ export const handlePlanSectionExerciseInstructionExerciseChangeCommand =
     plan.changeSectionExerciseInstructionExercise(
       command.payload.planSectionId,
       command.payload.exerciseInstruction,
-      exercise!.loading,
+      exercise!.resistance,
       command.payload.requesterId,
     );
     await deps.repo.save(plan);

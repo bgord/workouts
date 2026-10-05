@@ -6,9 +6,9 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = `/api/exercises/${mocks.exerciseId}/loading`;
+const url = `/api/exercises/${mocks.exerciseId}/resistance`;
 
-describe("PATCH /api/exercises/:exerciseId/loading", async () => {
+describe("PATCH /api/exercises/:exerciseId/resistance", async () => {
   const di = await bootstrap();
   registerEventHandlers(di.Env, di);
   registerCommandHandlers(di);
@@ -24,7 +24,7 @@ describe("PATCH /api/exercises/:exerciseId/loading", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request(
-      "/api/exercises/id/loading",
+      "/api/exercises/id/resistance",
       { method: "PATCH", body: JSON.stringify({}) },
       mocks.ip,
     );
@@ -32,24 +32,24 @@ describe("PATCH /api/exercises/:exerciseId/loading", async () => {
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
-  test("validation - loading - missing", async () => {
+  test("validation - resistance - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request(url, { method: "PATCH", body: JSON.stringify({}) }, mocks.ip);
 
-    await testcases.assertErrorResponse(response, 400, "exercise.loading.invalid");
+    await testcases.assertErrorResponse(response, 400, "exercise.resistance.invalid");
   });
 
-  test("validation - loading - invalid", async () => {
+  test("validation - resistance - invalid", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const response = await server.request(
       url,
-      { method: "PATCH", body: JSON.stringify({ loading: "invalid" }) },
+      { method: "PATCH", body: JSON.stringify({ resistance: "invalid" }) },
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "exercise.loading.invalid");
+    await testcases.assertErrorResponse(response, 400, "exercise.resistance.invalid");
   });
 
   test("CatalogIsManagedByAdmin", async () => {
@@ -58,7 +58,7 @@ describe("PATCH /api/exercises/:exerciseId/loading", async () => {
 
     const response = await server.request(
       url,
-      { method: "PATCH", body: JSON.stringify({ loading: mocks.anotherExerciseLoading }) },
+      { method: "PATCH", body: JSON.stringify({ resistance: mocks.anotherExerciseResistance }) },
       mocks.ip,
     );
 
@@ -73,25 +73,25 @@ describe("PATCH /api/exercises/:exerciseId/loading", async () => {
 
     const response = await server.request(
       url,
-      { method: "PATCH", body: JSON.stringify({ loading: mocks.anotherExerciseLoading }) },
+      { method: "PATCH", body: JSON.stringify({ resistance: mocks.anotherExerciseResistance }) },
       mocks.ip,
     );
 
     await testcases.assertErrorResponse(response, 403, "exercise.exists");
   });
 
-  test("ExerciseLoadingHasChanged", async () => {
+  test("ExerciseResistanceHasChanged", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
 
     const response = await server.request(
       url,
-      { method: "PATCH", body: JSON.stringify({ loading: mocks.exerciseLoading }) },
+      { method: "PATCH", body: JSON.stringify({ resistance: mocks.exerciseResistance }) },
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 403, "exercise.loading.has.changed");
+    await testcases.assertErrorResponse(response, 403, "exercise.resistance.has.changed");
   });
 
   test("happy path", async () => {
@@ -105,12 +105,12 @@ describe("PATCH /api/exercises/:exerciseId/loading", async () => {
       {
         method: "PATCH",
         headers: mocks.correlationIdHeaders,
-        body: JSON.stringify({ loading: mocks.anotherExerciseLoading }),
+        body: JSON.stringify({ resistance: mocks.anotherExerciseResistance }),
       },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseLoadingChangedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseResistanceChangedEvent]);
   });
 });

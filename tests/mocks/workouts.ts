@@ -12,8 +12,8 @@ import {
   exerciseDescription,
   exerciseId,
   exerciseImageEtag,
-  exerciseLoading,
   exerciseName,
+  exerciseResistance,
 } from "./exercises";
 import {
   exerciseInstructionId,
@@ -54,7 +54,7 @@ export const workoutExerciseDescription = v.parse(
   Workouts.VO.WorkoutExerciseDescription,
   exerciseDescription,
 );
-export const workoutExerciseLoading = v.parse(Workouts.VO.WorkoutExerciseLoading, exerciseLoading);
+export const workoutExerciseResistance = v.parse(Workouts.VO.WorkoutExerciseResistance, exerciseResistance);
 
 export const workoutSummary: Workouts.VO.WorkoutSummary = {
   id: workoutId,
@@ -136,7 +136,7 @@ export const loggedSetWithRir = v.parse(Workouts.VO.LoggedSet, {
 export const exercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
-  loading: workoutExerciseLoading,
+  resistance: workoutExerciseResistance,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -156,7 +156,7 @@ export const exercisePerformance = {
 export const unloadedExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
-  loading: Exercises.VO.ExerciseLoadingOptions.none,
+  resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -179,7 +179,7 @@ export const workoutExportRow = {
   planName: workoutPlanName,
   planSectionName: workoutPlanSectionName,
   exerciseName: workoutExerciseName,
-  loading: workoutExerciseLoading,
+  resistance: workoutExerciseResistance,
   setNumber: v.parse(Workouts.VO.SetNumber, 1),
   reps: v.parse(Workouts.VO.Reps, 9),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
@@ -187,8 +187,8 @@ export const workoutExportRow = {
 };
 
 export const workoutCsv = [
-  "workoutId,completedAt,planName,planSectionName,exerciseName,loading,setNumber,reps,load,rir",
-  `${workoutId},${T0.ms},${planName},${planSectionName},${exerciseName},${exerciseLoading},1,9,80000,2`,
+  "workoutId,completedAt,planName,planSectionName,exerciseName,resistance,setNumber,reps,load,rir",
+  `${workoutId},${T0.ms},${planName},${planSectionName},${exerciseName},${exerciseResistance},1,9,80000,2`,
 ].join("");
 
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
@@ -207,7 +207,7 @@ export const workoutExercise: Workouts.VO.WorkoutExercise = {
   id: workoutExerciseId,
   exerciseId,
   exerciseName: workoutExerciseName,
-  loading: workoutExerciseLoading,
+  resistance: workoutExerciseResistance,
   prescription: exercisePrescription,
   target: exerciseTarget,
   loggedSets: [loggedSet],
@@ -217,7 +217,7 @@ export const workoutExerciseWithoutTarget: Workouts.VO.WorkoutExercise = {
   id: anotherWorkoutExerciseId,
   exerciseId: anotherExerciseId,
   exerciseName: anotherWorkoutExerciseName,
-  loading: workoutExerciseLoading,
+  resistance: workoutExerciseResistance,
   prescription: exercisePrescription,
   loggedSets: [],
 };
@@ -359,7 +359,7 @@ export const GenericWorkoutExerciseAddedEvent = {
     exerciseId,
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
-    loading: workoutExerciseLoading,
+    resistance: workoutExerciseResistance,
     prescription: exercisePrescription,
     requesterId: userId,
   },
@@ -367,7 +367,10 @@ export const GenericWorkoutExerciseAddedEvent = {
 
 export const GenericWorkoutExerciseAddedEventUnloaded = {
   ...GenericWorkoutExerciseAddedEvent,
-  payload: { ...GenericWorkoutExerciseAddedEvent.payload, loading: Exercises.VO.ExerciseLoadingOptions.none },
+  payload: {
+    ...GenericWorkoutExerciseAddedEvent.payload,
+    resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
+  },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
 export const GenericWorkoutExerciseAddedEventAnother = {
@@ -384,7 +387,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
     exerciseId,
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
-    loading: workoutExerciseLoading,
+    resistance: workoutExerciseResistance,
     prescription: exercisePrescription,
     requesterId: userId,
   },

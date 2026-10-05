@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
-import { LoadingKit } from "../kits/loading.kit";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { Chip } from "./chip";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 import { Gap } from "./gap";
@@ -12,7 +12,7 @@ const VISIBLE_CATEGORIES = 2;
 export function ExerciseCard(props: ExerciseWithCategories) {
   const visible = props.categories.slice(0, VISIBLE_CATEGORIES);
   const rest = props.categories.length - visible.length;
-  const Loading = LoadingKit[props.loading];
+  const Resistance = ResistanceKit[props.resistance];
 
   return (
     <li data-maxw="100%" data-md-grow="1" data-stack="y" {...bg.Rhythm(232).times(1).style.width}>
@@ -34,7 +34,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
           {props.name}
         </h2>
 
-        <Loading.Badge />
+        <Resistance.Badge />
 
         <ul data-mt="auto" data-overflow="hidden" data-stack="x" {...Gap.cluster}>
           {visible.map((category) => (

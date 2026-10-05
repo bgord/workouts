@@ -5,7 +5,7 @@ import * as Plans from "+plans";
 describe("applicableProgressionMethod", () => {
   test("happy path", () => {
     const result = Plans.VO.applicableProgressionMethod(
-      Exercises.VO.ExerciseLoadingOptions.external,
+      Exercises.VO.ExerciseResistanceOptions.weighted,
       Plans.VO.ProgressionMethodOptions.linear_progression,
     );
 
@@ -14,7 +14,7 @@ describe("applicableProgressionMethod", () => {
 
   test("not applicable - falls back to double progression", () => {
     const result = Plans.VO.applicableProgressionMethod(
-      Exercises.VO.ExerciseLoadingOptions.none,
+      Exercises.VO.ExerciseResistanceOptions.bodyweight,
       Plans.VO.ProgressionMethodOptions.linear_progression,
     );
 
@@ -22,7 +22,10 @@ describe("applicableProgressionMethod", () => {
   });
 
   test("empty - falls back to double progression", () => {
-    const result = Plans.VO.applicableProgressionMethod(Exercises.VO.ExerciseLoadingOptions.none, undefined);
+    const result = Plans.VO.applicableProgressionMethod(
+      Exercises.VO.ExerciseResistanceOptions.bodyweight,
+      undefined,
+    );
 
     expect(result).toEqual(Plans.VO.ProgressionMethodOptions.double_progression);
   });

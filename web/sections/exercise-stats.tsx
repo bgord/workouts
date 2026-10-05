@@ -7,7 +7,7 @@ import { exerciseRoute } from "../router";
 export function ExerciseStats() {
   const t = bg.useTranslations();
   const { exercise, performances } = exerciseRoute.useLoaderData();
-  const Statistics = ExerciseStatisticsKit[exercise.data.loading];
+  const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
 
   const latest = performances.at(-1);
 
@@ -16,7 +16,7 @@ export function ExerciseStats() {
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
-      <Statistics.Tiles performances={performancesOf(exercise.data.loading, performances)} />
+      <Statistics.Tiles performances={performancesOf(exercise.data.resistance, performances)} />
 
       <ui.Tile>
         <ui.TileHeader>

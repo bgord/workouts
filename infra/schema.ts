@@ -9,9 +9,9 @@ import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/
 import type { ExerciseCategoryNameType } from "../modules/exercises/value-objects/exercise-category-name";
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
-import type { ExerciseLoadingType } from "../modules/exercises/value-objects/exercise-loading";
-import { ExerciseLoadingOptions } from "../modules/exercises/value-objects/exercise-loading-options";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
+import type { ExerciseResistanceType } from "../modules/exercises/value-objects/exercise-resistance";
+import { ExerciseResistanceOptions } from "../modules/exercises/value-objects/exercise-resistance-options";
 import type { BodyPartCircumferenceType } from "../modules/measurements/value-objects/body-part-circumference";
 import type { BodyPartIdType } from "../modules/measurements/value-objects/body-part-id";
 import type { BodyPartMeasuredOnType } from "../modules/measurements/value-objects/body-part-measured-on";
@@ -46,9 +46,9 @@ import type { RirType } from "../modules/workouts/value-objects/rir";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseDescriptionType } from "../modules/workouts/value-objects/workout-exercise-description";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
-import type { WorkoutExerciseLoadingType } from "../modules/workouts/value-objects/workout-exercise-loading";
 import type { WorkoutExerciseNameType } from "../modules/workouts/value-objects/workout-exercise-name";
 import type { WorkoutExercisePositionType } from "../modules/workouts/value-objects/workout-exercise-position";
+import type { WorkoutExerciseResistanceType } from "../modules/workouts/value-objects/workout-exercise-resistance";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
 import type { WorkoutNoteType } from "../modules/workouts/value-objects/workout-note";
 import type { WorkoutPlanNameType } from "../modules/workouts/value-objects/workout-plan-name";
@@ -216,7 +216,10 @@ export const exercises = sqliteTable("exercises", {
   id: identifier<ExerciseIdType>(),
   name: text("name").notNull().$type<ExerciseNameType>(),
   description: text("description").notNull().$type<ExerciseDescriptionType>(),
-  loading: text("loading").notNull().$type<ExerciseLoadingType>().default(ExerciseLoadingOptions.external),
+  resistance: text("resistance")
+    .notNull()
+    .$type<ExerciseResistanceType>()
+    .default(ExerciseResistanceOptions.weighted),
   image: text("image").notNull().$type<tools.ObjectKeyType>(),
   imageEtag: text("imageEtag").notNull().$type<bg.HashValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
@@ -365,10 +368,10 @@ export const workoutExercises = sqliteTable(
     exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
     exerciseName: text("exerciseName").notNull().$type<WorkoutExerciseNameType>(),
     exerciseDescription: text("exerciseDescription").notNull().$type<WorkoutExerciseDescriptionType>(),
-    loading: text("loading")
+    resistance: text("resistance")
       .notNull()
-      .$type<WorkoutExerciseLoadingType>()
-      .default(ExerciseLoadingOptions.external),
+      .$type<WorkoutExerciseResistanceType>()
+      .default(ExerciseResistanceOptions.weighted),
     prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
     target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
     position: integer("position", { mode: "number" })

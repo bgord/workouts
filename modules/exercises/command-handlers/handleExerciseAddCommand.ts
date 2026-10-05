@@ -62,7 +62,7 @@ export const handleExerciseAddCommand =
         id: command.payload.id,
         name: command.payload.name,
         description: command.payload.description,
-        loading: command.payload.loading,
+        resistance: command.payload.resistance,
         image: key,
         imageEtag: object.etag.get(),
         userId: command.payload.userId,

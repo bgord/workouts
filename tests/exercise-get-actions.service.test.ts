@@ -16,7 +16,7 @@ describe("ExerciseGetActions", () => {
     expect(actions.calculate()).toEqual({
       update: mocks.actionAvailable,
       imageChange: mocks.actionAvailable,
-      loadingChange: mocks.actionAvailable,
+      resistanceChange: mocks.actionAvailable,
       delete: mocks.actionAvailable,
       categoryAssign: mocks.actionAvailable,
       categoryUnassign: mocks.actionAvailable,
@@ -39,7 +39,7 @@ describe("ExerciseGetActions", () => {
     expect(actions.calculate()).toEqual({
       update: mocks.actionAvailable,
       imageChange: mocks.actionAvailable,
-      loadingChange: mocks.actionAvailable,
+      resistanceChange: mocks.actionAvailable,
       delete: { available: true, enabled: false, hints: ["exercise.is.not.used"] },
       categoryAssign: {
         available: true,
@@ -61,7 +61,7 @@ describe("ExerciseGetActions", () => {
     expect(actions.calculate()).toEqual({
       update: mocks.actionUnavailable,
       imageChange: mocks.actionUnavailable,
-      loadingChange: mocks.actionUnavailable,
+      resistanceChange: mocks.actionUnavailable,
       delete: mocks.actionUnavailable,
       categoryAssign: mocks.actionUnavailable,
       categoryUnassign: mocks.actionUnavailable,

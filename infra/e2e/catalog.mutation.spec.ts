@@ -256,7 +256,7 @@ test.describe("Catalog - admin", () => {
     await expect(image).not.toHaveAttribute("src", before ?? "");
   });
 
-  test("changes the exercise loading", async ({ page }) => {
+  test("changes the exercise resistance", async ({ page }) => {
     await page.goto("/catalog");
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: /Neck flexion/ }).click();

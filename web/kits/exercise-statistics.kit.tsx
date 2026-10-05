@@ -1,5 +1,5 @@
 import type * as bg from "@bgord/ui";
-import { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import { ExerciseStatisticsLoad } from "./exercise-statistics-load";
 import { ExerciseStatisticsReps } from "./exercise-statistics-reps";
@@ -20,20 +20,20 @@ type ExerciseStatisticsKitStrategy<P extends ExercisePerformanceStatistics> = {
 };
 
 const kit = {
-  [ExerciseLoadingOptions.external]: ExerciseStatisticsLoad,
-  [ExerciseLoadingOptions.none]: ExerciseStatisticsReps,
+  [ExerciseResistanceOptions.weighted]: ExerciseStatisticsLoad,
+  [ExerciseResistanceOptions.bodyweight]: ExerciseStatisticsReps,
 } satisfies {
-  [K in ExerciseLoadingOptions]: ExerciseStatisticsKitStrategy<
-    Extract<ExercisePerformanceStatistics, { loading: K }>
+  [K in ExerciseResistanceOptions]: ExerciseStatisticsKitStrategy<
+    Extract<ExercisePerformanceStatistics, { resistance: K }>
   >;
 };
 
 export const ExerciseStatisticsKit: Record<
-  ExerciseLoadingOptions,
+  ExerciseResistanceOptions,
   ExerciseStatisticsKitStrategy<ExercisePerformanceStatistics>
 > = kit;
 
 export const performancesOf = (
-  loading: ExerciseLoadingOptions,
+  resistance: ExerciseResistanceOptions,
   performances: ReadonlyArray<ExercisePerformanceStatistics>,
-) => performances.filter((performance) => performance.loading === loading);
+) => performances.filter((performance) => performance.resistance === resistance);

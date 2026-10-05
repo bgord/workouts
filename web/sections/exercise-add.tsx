@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ImageUp, Plus } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
-import type { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import * as ui from "../components";
 import { catalogRoute } from "../router";
 
@@ -18,7 +18,7 @@ export function ExerciseAdd() {
 
   const name = bg.useTextField(Form.name.field);
   const description = bg.useTextField(Form.description.field);
-  const loading = bg.useTextField<ExerciseLoadingOptions>(Form.loading.field);
+  const resistance = bg.useTextField<ExerciseResistanceOptions>(Form.resistance.field);
 
   const metaEnterSubmit = bg.useMetaEnterSubmit();
   const image = bg.useFile("exercise-image", { mimeTypes, maxSizeBytes });
@@ -29,7 +29,7 @@ export function ExerciseAdd() {
 
       form.append("name", name.value ?? "");
       form.append("description", description.value ?? "");
-      form.append("loading", loading.value ?? Form.loading.field.defaultValue);
+      form.append("resistance", resistance.value ?? Form.resistance.field.defaultValue);
       if (image.data) form.append("file", image.data);
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });
@@ -37,7 +37,7 @@ export function ExerciseAdd() {
     onSuccess: async () => {
       exerciseAdd.disable();
       await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
-      bg.Fields.clearAll([name, description, loading]);
+      bg.Fields.clearAll([name, description, resistance]);
       image.actions.clearFile();
     },
   });
@@ -142,17 +142,17 @@ export function ExerciseAdd() {
             />
           </div>
 
-          <ui.ExerciseLoadingPicker disabled={mutation.isLoading} field={loading} />
+          <ui.ExerciseResistancePicker disabled={mutation.isLoading} field={resistance} />
 
           {mutation.isError && <ui.DialogError>{t("exercise.add.error")}</ui.DialogError>}
 
           <ui.DialogFooter disabled={mutation.isLoading} onCancel={exerciseAdd.disable}>
             <ui.ButtonClear
-              disabled={bg.Fields.allUnchanged([name, description, loading]) && !image.isSelected}
+              disabled={bg.Fields.allUnchanged([name, description, resistance]) && !image.isSelected}
               onClick={bg.exec([
                 name.clear,
                 description.clear,
-                loading.clear,
+                resistance.clear,
                 image.actions.clearFile,
                 mutation.reset,
               ])}

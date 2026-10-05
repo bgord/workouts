@@ -508,13 +508,13 @@
           "notNull": true,
           "autoincrement": false
         },
-        "loading": {
-          "name": "loading",
+        "resistance": {
+          "name": "resistance",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'external'"
+          "default": "'weighted'"
         },
         "image": {
           "name": "image",
@@ -1227,13 +1227,13 @@
           "notNull": true,
           "autoincrement": false
         },
-        "loading": {
-          "name": "loading",
+        "resistance": {
+          "name": "resistance",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'external'"
+          "default": "'weighted'"
         },
         "prescription": {
           "name": "prescription",

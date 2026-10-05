@@ -4,18 +4,18 @@ import * as Exercises from "+exercises";
 import * as Statistics from "+statistics";
 
 describe("ExercisePerformanceMetricsStrategyFactory", () => {
-  test("external", () => {
+  test("weighted", () => {
     const strategy = Statistics.Services.ExercisePerformanceMetricsStrategyFactory.for(
-      Exercises.VO.ExerciseLoadingOptions.external,
+      Exercises.VO.ExerciseResistanceOptions.weighted,
       { OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley() },
     );
 
     expect(strategy).toBeInstanceOf(Statistics.Services.ExercisePerformanceMetricsLoadStrategy);
   });
 
-  test("none", () => {
+  test("bodyweight", () => {
     const strategy = Statistics.Services.ExercisePerformanceMetricsStrategyFactory.for(
-      Exercises.VO.ExerciseLoadingOptions.none,
+      Exercises.VO.ExerciseResistanceOptions.bodyweight,
       { OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley() },
     );
 

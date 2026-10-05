@@ -100,7 +100,7 @@ export function WorkoutExerciseAdd() {
               onChange={(exercise) => {
                 setPicked(exercise);
                 exerciseId.set(exercise.id);
-                progression.set(applicableProgressionMethod(exercise.loading, progression.value));
+                progression.set(applicableProgressionMethod(exercise.resistance, progression.value));
               }}
               query={query}
               value={exerciseId.value}
@@ -135,7 +135,7 @@ export function WorkoutExerciseAdd() {
             />
           </ui.Prescription>
 
-          <ui.ProgressionMethodSelect field={progression} loading={exercise?.loading} />
+          <ui.ProgressionMethodSelect field={progression} resistance={exercise?.resistance} />
 
           {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 

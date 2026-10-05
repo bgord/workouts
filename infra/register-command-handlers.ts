@@ -32,8 +32,8 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
-    ExercisesCommands.EXERCISE_LOADING_CHANGE_COMMAND,
-    ExercisesCommandHandlers.handleExerciseLoadingChangeCommand({
+    ExercisesCommands.EXERCISE_RESISTANCE_CHANGE_COMMAND,
+    ExercisesCommandHandlers.handleExerciseResistanceChangeCommand({
       ...deps,
       GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
     }),
@@ -185,7 +185,7 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionExerciseInstructionUpdateCommand({
       ...deps,
       repo: Adapters.Plans.PlanRepository,
-      GetExerciseInstructionLoadingQuery: Adapters.Plans.GetExerciseInstructionLoadingQuery,
+      GetExerciseInstructionResistanceQuery: Adapters.Plans.GetExerciseInstructionResistanceQuery,
     }),
   );
   Tools.CommandBus.on(

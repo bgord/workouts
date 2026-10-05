@@ -1,20 +1,20 @@
 import * as bg from "@bgord/ui";
-import { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import { Gap } from "./gap";
 import { RadioTile } from "./radio-tile";
 
-export function ExerciseLoadingPicker(props: {
-  field: bg.UseTextFieldReturnType<ExerciseLoadingOptions>;
+export function ExerciseResistancePicker(props: {
+  field: bg.UseTextFieldReturnType<ExerciseResistanceOptions>;
   disabled?: boolean;
 }) {
   const t = bg.useTranslations();
 
   return (
     <fieldset disabled={props.disabled}>
-      <legend>{t("exercise.loading.label")}</legend>
+      <legend>{t("exercise.resistance.label")}</legend>
 
       <ul data-stack="x" data-wrap="wrap" {...Gap.cluster}>
-        {Object.values(ExerciseLoadingOptions).map((option) => {
+        {Object.values(ExerciseResistanceOptions).map((option) => {
           const selected = option === props.field.value;
 
           return (
@@ -31,10 +31,10 @@ export function ExerciseLoadingPicker(props: {
 
                 <div data-stack="y" {...Gap.inline}>
                   <div data-color="neutral-100" data-fw="medium">
-                    {t(`exercise.loading.${option}`)}
+                    {t(`exercise.resistance.${option}`)}
                   </div>
 
-                  <small>{t(`exercise.loading.${option}.hint`)}</small>
+                  <small>{t(`exercise.resistance.${option}.hint`)}</small>
                 </div>
               </RadioTile>
             </li>

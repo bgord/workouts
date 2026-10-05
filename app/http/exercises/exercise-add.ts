@@ -24,13 +24,13 @@ export const ExerciseAdd =
     const id = v.parse(Exercises.VO.ExerciseId, deps.IdProvider.generate());
     const name = v.parse(Exercises.VO.ExerciseName, form.get("name"));
     const description = v.parse(Exercises.VO.ExerciseDescription, form.get("description"));
-    const loading = v.parse(Exercises.VO.ExerciseLoading, form.get("loading"));
+    const resistance = v.parse(Exercises.VO.ExerciseResistance, form.get("resistance"));
 
     const temporary = await deps.TemporaryFile.write(filename, file);
 
     const command = bg.command(
       Exercises.Commands.ExerciseAddCommand,
-      { payload: { id, absoluteFilePath: temporary.get(), name, description, loading, userId } },
+      { payload: { id, absoluteFilePath: temporary.get(), name, description, resistance, userId } },
       deps,
     );
 

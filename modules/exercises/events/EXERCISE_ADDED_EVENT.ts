@@ -14,7 +14,7 @@ export const ExerciseAddedEvent = v.object({
     id: VO.ExerciseId,
     name: VO.ExerciseName,
     description: VO.ExerciseDescription,
-    loading: VO.ExerciseLoading,
+    resistance: VO.ExerciseResistance,
     image: tools.ObjectKey,
     imageEtag: bg.HashValue,
     userId: Auth.VO.UserId,

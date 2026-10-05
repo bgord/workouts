@@ -9,13 +9,13 @@ type Dependencies = { OneRepEstimator: Ports.OneRepEstimatorPort };
 
 export class ExercisePerformanceMetricsStrategyFactory {
   static for(
-    loading: Workouts.VO.WorkoutExerciseLoadingType,
+    resistance: Workouts.VO.WorkoutExerciseResistanceType,
     deps: Dependencies,
   ): ExercisePerformanceMetricsStrategy {
-    switch (loading) {
-      case Exercises.VO.ExerciseLoadingOptions.external:
+    switch (resistance) {
+      case Exercises.VO.ExerciseResistanceOptions.weighted:
         return new ExercisePerformanceMetricsLoadStrategy(deps);
-      case Exercises.VO.ExerciseLoadingOptions.none:
+      case Exercises.VO.ExerciseResistanceOptions.bodyweight:
         return new ExercisePerformanceMetricsRepsStrategy();
     }
   }

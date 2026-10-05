@@ -75,7 +75,7 @@ modules/
 │   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
-│   │   ├── handleExerciseLoadingChangeCommand.ts
+│   │   ├── handleExerciseResistanceChangeCommand.ts
 │   │   ├── handleExerciseUnassignCategoryCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
@@ -86,7 +86,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
-│   │   ├── EXERCISE_LOADING_CHANGE_COMMAND.ts
+│   │   ├── EXERCISE_RESISTANCE_CHANGE_COMMAND.ts
 │   │   ├── EXERCISE_UNASSIGN_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
 │   ├── events
@@ -98,7 +98,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_UNASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
-│   │   ├── EXERCISE_LOADING_CHANGED_EVENT.ts
+│   │   ├── EXERCISE_RESISTANCE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
 │   │   ├── catalog-is-managed-by-admin.ts
@@ -111,8 +111,8 @@ modules/
 │   │   ├── exercise-is-assigned-to-category.ts
 │   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-is-not-used.ts
-│   │   ├── exercise-loading-has-changed.ts
 │   │   ├── exercise-name-is-unique.ts
+│   │   ├── exercise-resistance-has-changed.ts
 │   ├── open-host-queries
 │   ├── policies
 │   │   ├── exercise-deleter.ts
@@ -145,10 +145,10 @@ modules/
 │       ├── exercise-image-max-size.ts
 │       ├── exercise-image-mime-registry.ts
 │       ├── exercise-image-side.ts
-│       ├── exercise-loading-options.ts
-│       ├── exercise-loading.ts
 │       ├── exercise-name.ts
 │       ├── exercise-name.validation.ts
+│       ├── exercise-resistance-options.ts
+│       ├── exercise-resistance.ts
 │       ├── exercise-with-categories.ts
 │       ├── exercise.ts
 ├── languages.ts
@@ -374,7 +374,7 @@ modules/
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
-│   │   ├── get-exercise-instruction-loading.ts
+│   │   ├── get-exercise-instruction-resistance.ts
 │   │   ├── get-finalized-plan.ts
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
@@ -578,9 +578,9 @@ modules/
         ├── workout-exercise-description.ts
         ├── workout-exercise-id.ts
         ├── workout-exercise-limit.ts
-        ├── workout-exercise-loading.ts
         ├── workout-exercise-name.ts
         ├── workout-exercise-position.ts
+        ├── workout-exercise-resistance.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts
@@ -619,7 +619,7 @@ app/
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
-│   │   ├── exercise-loading-change.ts
+│   │   ├── exercise-resistance-change.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements
@@ -741,7 +741,7 @@ infra/
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
-│   │   ├── get-exercise-instruction-loading.adapter.ts
+│   │   ├── get-exercise-instruction-resistance.adapter.ts
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-owner-count.adapter.ts

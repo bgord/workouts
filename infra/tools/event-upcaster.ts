@@ -10,7 +10,7 @@ export const EventUpcaster = new bg.EventUpcasterChainAdapter({
     new bg.EventUpcasterStep({
       fromVersion: 1,
       toVersion: 2,
-      upcast: (payload) => ({ ...payload, loading: Exercises.VO.ExerciseLoadingOptions.external }),
+      upcast: (payload) => ({ ...payload, resistance: Exercises.VO.ExerciseResistanceOptions.weighted }),
     }),
   ],
   [Plans.Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT]: [
@@ -47,7 +47,7 @@ export const EventUpcaster = new bg.EventUpcasterChainAdapter({
     new bg.EventUpcasterStep({
       fromVersion: 3,
       toVersion: 4,
-      upcast: (payload) => ({ ...payload, loading: Exercises.VO.ExerciseLoadingOptions.external }),
+      upcast: (payload) => ({ ...payload, resistance: Exercises.VO.ExerciseResistanceOptions.weighted }),
     }),
   ],
 });

@@ -10,7 +10,7 @@ type Dependencies = {
     | Exercises.Events.ExerciseDeletedEventType
     | Exercises.Events.ExerciseUpdatedEventType
     | Exercises.Events.ExerciseImageChangedEventType
-    | Exercises.Events.ExerciseLoadingChangedEventType
+    | Exercises.Events.ExerciseResistanceChangedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -30,8 +30,8 @@ export class ExercisesProjector {
       deps.EventHandler.handle(this.onExerciseImageChangedEvent.bind(this)),
     );
     deps.EventBus.on(
-      Exercises.Events.EXERCISE_LOADING_CHANGED_EVENT,
-      deps.EventHandler.handle(this.onExerciseLoadingChangedEvent.bind(this)),
+      Exercises.Events.EXERCISE_RESISTANCE_CHANGED_EVENT,
+      deps.EventHandler.handle(this.onExerciseResistanceChangedEvent.bind(this)),
     );
     deps.EventBus.on(
       Exercises.Events.EXERCISE_DELETED_EVENT,
@@ -44,7 +44,7 @@ export class ExercisesProjector {
       id: event.payload.id,
       name: event.payload.name,
       description: event.payload.description,
-      loading: event.payload.loading,
+      resistance: event.payload.resistance,
       image: event.payload.image,
       imageEtag: event.payload.imageEtag,
       userId: event.payload.userId,
@@ -71,10 +71,10 @@ export class ExercisesProjector {
       .where(eq(Schema.exercises.id, event.payload.id));
   }
 
-  async onExerciseLoadingChangedEvent(event: Exercises.Events.ExerciseLoadingChangedEventType) {
+  async onExerciseResistanceChangedEvent(event: Exercises.Events.ExerciseResistanceChangedEventType) {
     await db
       .update(Schema.exercises)
-      .set({ loading: event.payload.loading, updatedAt: event.createdAt })
+      .set({ resistance: event.payload.resistance, updatedAt: event.createdAt })
       .where(eq(Schema.exercises.id, event.payload.id));
   }
 

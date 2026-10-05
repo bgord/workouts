@@ -45,7 +45,7 @@ function LoadTiles(props: { performances: Performances }) {
         </TileValue>
 
         <TileContext>
-          <SetValue load={best.bestSet.load} loading={best.loading} reps={best.bestSet.reps} />
+          <SetValue load={best.bestSet.load} reps={best.bestSet.reps} resistance={best.resistance} />
         </TileContext>
       </TileLink>
 

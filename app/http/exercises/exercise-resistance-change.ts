@@ -5,10 +5,10 @@ import * as Exercises from "+exercises";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseLoadingChangeCommandType>;
+  CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseResistanceChangeCommandType>;
 };
 
-export const ExerciseLoadingChange =
+export const ExerciseResistanceChange =
   (deps: Dependencies): bg.EndpointPort =>
   async (context) => {
     const params = context.request.params();
@@ -16,11 +16,11 @@ export const ExerciseLoadingChange =
 
     const requesterId = context.identity.authenticatedUserId();
     const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
-    const loading = v.parse(Exercises.VO.ExerciseLoading, body["loading"]);
+    const resistance = v.parse(Exercises.VO.ExerciseResistance, body["resistance"]);
 
     const command = bg.command(
-      Exercises.Commands.ExerciseLoadingChangeCommand,
-      { payload: { id, loading, requesterId } },
+      Exercises.Commands.ExerciseResistanceChangeCommand,
+      { payload: { id, resistance, requesterId } },
       deps,
     );
 

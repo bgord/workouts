@@ -12,8 +12,8 @@ export const exerciseDescription = v.parse(
   Exercises.VO.ExerciseDescription,
   "Press the barbell upwards, while lying on the horizontal bench.",
 );
-export const exerciseLoading = Exercises.VO.ExerciseLoadingOptions.external;
-export const anotherExerciseLoading = Exercises.VO.ExerciseLoadingOptions.none;
+export const exerciseResistance = Exercises.VO.ExerciseResistanceOptions.weighted;
+export const anotherExerciseResistance = Exercises.VO.ExerciseResistanceOptions.bodyweight;
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 export const exerciseImageEtag = bg.Hash.fromString(
   "0000000000000000000000000000000000000000000000000000000000000000",
@@ -30,12 +30,12 @@ export const exercise: Exercises.VO.Exercise = {
   id: exerciseId,
   name: exerciseName,
   description: exerciseDescription,
-  loading: exerciseLoading,
+  resistance: exerciseResistance,
   image: exerciseImageKey,
   imageEtag: exerciseImageEtag,
 };
 
-export const unloadedExercise: Exercises.VO.Exercise = { ...exercise, loading: anotherExerciseLoading };
+export const unloadedExercise: Exercises.VO.Exercise = { ...exercise, resistance: anotherExerciseResistance };
 
 export const exerciseCategoryId = v.parse(
   Exercises.VO.ExerciseCategoryId,
@@ -95,7 +95,7 @@ export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
   actions: {
     update: actionAvailable,
     imageChange: actionAvailable,
-    loadingChange: actionAvailable,
+    resistanceChange: actionAvailable,
     delete: actionAvailable,
     categoryAssign: actionAvailable,
     categoryUnassign: actionAvailable,
@@ -117,23 +117,23 @@ export const GenericExerciseAddedEvent = {
     id: exerciseId,
     name: exerciseName,
     description: exerciseDescription,
-    loading: exerciseLoading,
+    resistance: exerciseResistance,
     image: exerciseImageKey,
     imageEtag: exerciseImageEtag,
     userId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseAddedEventType;
 
-export const GenericExerciseLoadingChangedEvent = {
+export const GenericExerciseResistanceChangedEvent = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
   stream: exerciseStream,
   version: 1,
   commit,
-  name: "EXERCISE_LOADING_CHANGED_EVENT",
-  payload: { id: exerciseId, loading: anotherExerciseLoading, requesterId: Auth.VO.ADMIN_USER_ID },
-} satisfies Exercises.Events.ExerciseLoadingChangedEventType;
+  name: "EXERCISE_RESISTANCE_CHANGED_EVENT",
+  payload: { id: exerciseId, resistance: anotherExerciseResistance, requesterId: Auth.VO.ADMIN_USER_ID },
+} satisfies Exercises.Events.ExerciseResistanceChangedEventType;
 
 export const GenericExerciseDeletedEvent = {
   id: expectAnyId,

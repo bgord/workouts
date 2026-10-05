@@ -5,15 +5,15 @@ import * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionProgressionIsApplicableError extends Error {}
 
 type PlanSectionExerciseInstructionProgressionIsApplicableConfigType = {
-  loading: Exercises.VO.ExerciseLoadingType | null;
+  resistance: Exercises.VO.ExerciseResistanceType | null;
   progression: VO.ProgressionMethodType;
 };
 
 class PlanSectionExerciseInstructionProgressionIsApplicableFactory extends bg.Invariant<PlanSectionExerciseInstructionProgressionIsApplicableConfigType> {
   passes(config: PlanSectionExerciseInstructionProgressionIsApplicableConfigType) {
-    if (config.loading === null) return true;
+    if (config.resistance === null) return true;
 
-    return VO.ProgressionMethodApplicability[config.loading].includes(config.progression);
+    return VO.ProgressionMethodApplicability[config.resistance].includes(config.progression);
   }
 
   // Stryker disable next-line StringLiteral

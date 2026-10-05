@@ -5,18 +5,18 @@ import type * as VO from "+workouts/value-objects";
 class WorkoutExerciseLoadIsApplicableError extends Error {}
 
 type WorkoutExerciseLoadIsApplicableConfigType = {
-  loading: VO.WorkoutExerciseLoadingType;
+  resistance: VO.WorkoutExerciseResistanceType;
   load: VO.LoadType;
 };
 
 const accepts = {
-  [Exercises.VO.ExerciseLoadingOptions.external]: () => true,
-  [Exercises.VO.ExerciseLoadingOptions.none]: (load: VO.LoadType) => load === 0,
-} satisfies Record<Exercises.VO.ExerciseLoadingOptions, (load: VO.LoadType) => boolean>;
+  [Exercises.VO.ExerciseResistanceOptions.weighted]: () => true,
+  [Exercises.VO.ExerciseResistanceOptions.bodyweight]: (load: VO.LoadType) => load === 0,
+} satisfies Record<Exercises.VO.ExerciseResistanceOptions, (load: VO.LoadType) => boolean>;
 
 class WorkoutExerciseLoadIsApplicableFactory extends bg.Invariant<WorkoutExerciseLoadIsApplicableConfigType> {
   passes(config: WorkoutExerciseLoadIsApplicableConfigType) {
-    return accepts[config.loading](config.load);
+    return accepts[config.resistance](config.load);
   }
 
   // Stryker disable next-line StringLiteral

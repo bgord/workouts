@@ -10,8 +10,8 @@ export function ExerciseProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const { exercise, ...data } = exerciseRoute.useLoaderData();
-  const Statistics = ExerciseStatisticsKit[exercise.data.loading];
-  const performances = performancesOf(exercise.data.loading, data.performances);
+  const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
+  const performances = performancesOf(exercise.data.resistance, data.performances);
 
   if (performances.length < LineChartMath.MINIMAL_POINTS) return null;
 

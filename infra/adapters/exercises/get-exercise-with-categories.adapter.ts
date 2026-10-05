@@ -12,7 +12,7 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
   ): Promise<Exercises.Queries.ExerciseGetResponse | null> {
     const [exercise, usageCount, assignableCategories] = await Promise.all([
       db.query.exercises.findFirst({
-        columns: { id: true, name: true, description: true, loading: true, image: true, imageEtag: true },
+        columns: { id: true, name: true, description: true, resistance: true, image: true, imageEtag: true },
         where: eq(Schema.exercises.id, exerciseId),
         with: {
           categoryAssignments: {

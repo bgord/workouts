@@ -26,8 +26,8 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
         <Target data-color="neutral-500" data-size="xs" />
         <ui.TargetValue
           load={target.load}
-          loading={props.exercise.loading}
           reps={target.reps}
+          resistance={props.exercise.resistance}
           sets={target.sets}
         />
       </div>
@@ -39,7 +39,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       aria-label={
         target
           ? t("workout.target.edit", {
-              target: SetNotation.target(t, language, { loading: props.exercise.loading, ...target }),
+              target: SetNotation.target(t, language, { resistance: props.exercise.resistance, ...target }),
             })
           : undefined
       }
@@ -70,8 +70,8 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
         <>
           <ui.TargetValue
             load={target.load}
-            loading={props.exercise.loading}
             reps={target.reps}
+            resistance={props.exercise.resistance}
             sets={target.sets}
           />
         </>

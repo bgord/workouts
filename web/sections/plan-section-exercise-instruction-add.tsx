@@ -114,7 +114,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
               onChange={(exercise) => {
                 setPicked(exercise);
                 exerciseId.set(exercise.id);
-                progression.set(applicableProgressionMethod(exercise.loading, progression.value));
+                progression.set(applicableProgressionMethod(exercise.resistance, progression.value));
               }}
               query={query}
               value={exerciseId.value}
@@ -149,7 +149,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
             />
           </ui.Prescription>
 
-          <ui.ProgressionMethodSelect field={progression} loading={exercise?.loading} />
+          <ui.ProgressionMethodSelect field={progression} resistance={exercise?.resistance} />
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.add.error")}</ui.DialogError>}
 

@@ -1,7 +1,7 @@
-import { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import { WeightFormat } from "../services/weight-format";
 
-type LoadingFormatStrategy = {
+type ResistanceFormatStrategy = {
   set: (load: number, language: string) => string | null;
   target: (load: number, language: string) => string | null;
   report: (load: number) => string;
@@ -10,15 +10,15 @@ type LoadingFormatStrategy = {
 const kilograms = (load: number, language: string) =>
   `${WeightFormat.kilograms(load).toLocaleString(language)} kg`;
 
-export const LoadingFormat = {
-  [ExerciseLoadingOptions.external]: {
+export const ResistanceFormat = {
+  [ExerciseResistanceOptions.weighted]: {
     set: (load, language) => `×${kilograms(load, language)}`,
     target: kilograms,
     report: (load) => String(WeightFormat.kilograms(load)),
   },
-  [ExerciseLoadingOptions.none]: {
+  [ExerciseResistanceOptions.bodyweight]: {
     set: () => null,
     target: () => null,
     report: () => "—",
   },
-} satisfies Record<ExerciseLoadingOptions, LoadingFormatStrategy>;
+} satisfies Record<ExerciseResistanceOptions, ResistanceFormatStrategy>;

@@ -51,7 +51,7 @@ export async function targetWorkout(
     const target = previous
       ? Workouts.Services.ProgressionMethodStrategyFactory.for(
           exercise.prescription,
-          exercise.loading,
+          exercise.resistance,
           previous,
         ).calculate().progress
       : undefined;

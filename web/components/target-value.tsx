@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
-import type { ExerciseLoadingOptions } from "../../modules/exercises/value-objects/exercise-loading-options";
+import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import { SetNotation } from "../services/set-notation";
 
 export function TargetValue(props: {
-  loading: ExerciseLoadingOptions;
+  resistance: ExerciseResistanceOptions;
   sets: number;
   reps: number;
   load: number;

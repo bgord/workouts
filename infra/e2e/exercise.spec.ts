@@ -201,8 +201,8 @@ test.describe("Exercise - admin", () => {
     await expect(image).toHaveAttribute("src", before ?? "");
   });
 
-  test("shows the error when changing the loading fails", async ({ page }) => {
-    await page.route("**/api/exercises/*/loading", (route) => route.fulfill({ status: 500 }));
+  test("shows the error when changing the resistance fails", async ({ page }) => {
+    await page.route("**/api/exercises/*/resistance", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
 
     await page.getByRole("button", { name: "With load", exact: true }).click();

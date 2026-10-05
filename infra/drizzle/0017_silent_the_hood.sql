@@ -1,2 +1,2 @@
-ALTER TABLE `exercises` ADD `loading` text DEFAULT 'external' NOT NULL;--> statement-breakpoint
-ALTER TABLE `workoutExercises` ADD `loading` text DEFAULT 'external' NOT NULL;
+ALTER TABLE `exercises` ADD `resistance` text DEFAULT 'weighted' NOT NULL;--> statement-breakpoint
+ALTER TABLE `workoutExercises` ADD `resistance` text DEFAULT 'weighted' NOT NULL;

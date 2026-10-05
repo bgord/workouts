@@ -8,7 +8,7 @@ export type ExerciseGetResponse = {
   actions: {
     update: bg.ActionState;
     imageChange: bg.ActionState;
-    loadingChange: bg.ActionState;
+    resistanceChange: bg.ActionState;
     delete: bg.ActionState;
     categoryAssign: bg.ActionState;
     categoryUnassign: bg.ActionState;

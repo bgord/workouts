@@ -28,7 +28,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
                       id: true,
                       name: true,
                       description: true,
-                      loading: true,
+                      resistance: true,
                       image: true,
                       imageEtag: true,
                     },

@@ -20,7 +20,7 @@ export const handlePlanSectionExerciseInstructionAddCommand =
 
     PlanSectionExerciseExists.enforce({ exercise });
     PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
-      loading: exercise!.loading,
+      resistance: exercise!.resistance,
       progression: command.payload.exerciseInstruction.progression,
     });
 

@@ -15,7 +15,7 @@ const form = new FormData();
 form.append("file", mocks.png);
 form.append("name", mocks.exerciseName);
 form.append("description", mocks.exerciseDescription);
-form.append("loading", mocks.exerciseLoading);
+form.append("resistance", mocks.exerciseResistance);
 
 const temporary = tools.Filename.fromString(`${mocks.temporaryFileId}.png`);
 const final = temporary.withExtension(v.parse(tools.Extension, "webp"));
@@ -98,7 +98,7 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, "exercise.description.invalid");
   });
 
-  test("validation - loading - missing", async () => {
+  test("validation - resistance - missing", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const form = new FormData();
@@ -108,21 +108,21 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
-    await testcases.assertErrorResponse(response, 400, "exercise.loading.invalid");
+    await testcases.assertErrorResponse(response, 400, "exercise.resistance.invalid");
   });
 
-  test("validation - loading - invalid", async () => {
+  test("validation - resistance - invalid", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
 
     const form = new FormData();
     form.append("file", mocks.png);
     form.append("name", mocks.exerciseName);
     form.append("description", mocks.exerciseDescription);
-    form.append("loading", "invalid");
+    form.append("resistance", "invalid");
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
-    await testcases.assertErrorResponse(response, 400, "exercise.loading.invalid");
+    await testcases.assertErrorResponse(response, 400, "exercise.resistance.invalid");
   });
 
   test("CatalogIsManagedByAdmin", async () => {

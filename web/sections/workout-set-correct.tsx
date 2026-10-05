@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
-import { LoadingKit } from "../kits/loading.kit";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -17,7 +17,7 @@ export function WorkoutSetCorrect(
   const { workout } = workoutRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
   const action = props.loggedSet.actions.correct;
-  const Loading = LoadingKit[props.exercise.loading];
+  const Resistance = ResistanceKit[props.exercise.resistance];
 
   const reps = bg.useNumberField<number>({
     name: `corrected-reps-${props.loggedSet.id}`,
@@ -39,7 +39,7 @@ export function WorkoutSetCorrect(
         headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           reps: reps.value,
-          load: Loading.payload(load),
+          load: Resistance.payload(load),
           rir: rir.current,
         }),
       }),
@@ -94,7 +94,7 @@ export function WorkoutSetCorrect(
           {...Form.reps.pattern}
         />
 
-        <Loading.Field
+        <Resistance.Field
           disabled={mutation.isLoading}
           field={load}
           label={t("workout.set.load.label")}
@@ -103,7 +103,7 @@ export function WorkoutSetCorrect(
       </div>
 
       <ui.RirSubmit
-        disabled={reps.empty || !Loading.ready(load) || mutation.isLoading}
+        disabled={reps.empty || !Resistance.ready(load) || mutation.isLoading}
         onSelect={(value) => {
           rir.current = value;
         }}

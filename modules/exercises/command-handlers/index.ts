@@ -5,6 +5,6 @@ export * from "./handleExerciseCategoryDeleteCommand";
 export * from "./handleExerciseCategoryRenameCommand";
 export * from "./handleExerciseDeleteCommand";
 export * from "./handleExerciseImageChangeCommand";
-export * from "./handleExerciseLoadingChangeCommand";
+export * from "./handleExerciseResistanceChangeCommand";
 export * from "./handleExerciseUnassignCategoryCommand";
 export * from "./handleExerciseUpdateCommand";

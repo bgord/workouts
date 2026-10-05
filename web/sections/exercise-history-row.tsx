@@ -13,7 +13,7 @@ export function ExerciseHistoryRow(props: {
   last: boolean;
 }) {
   const t = bg.useTranslations();
-  const Statistics = ExerciseStatisticsKit[props.performance.loading];
+  const Statistics = ExerciseStatisticsKit[props.performance.resistance];
   const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
   return (
@@ -64,7 +64,7 @@ export function ExerciseHistoryRow(props: {
               <ui.RowIndex>{set.setNumber}</ui.RowIndex>
 
               <div data-color="neutral-100" data-fw="medium">
-                <ui.SetValue load={set.load} loading={props.performance.loading} reps={set.reps} />
+                <ui.SetValue load={set.load} reps={set.reps} resistance={props.performance.resistance} />
               </div>
 
               <div data-grow="1">{set.rir !== null && <ui.RirBadge rir={set.rir} />}</div>
