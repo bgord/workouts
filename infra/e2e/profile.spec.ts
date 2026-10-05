@@ -89,7 +89,6 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await page.getByRole("combobox", { name: "Weekly summary" }).selectOption("off");
-    await page.getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByText("Could not save the preference")).toBeVisible();
 

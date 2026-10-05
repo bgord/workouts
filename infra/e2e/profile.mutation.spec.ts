@@ -1,4 +1,4 @@
-// cSpell:ignore Tygodniowe podsumowanie Zapisz Wyloguj
+// cSpell:ignore Tygodniowe podsumowanie Wyloguj
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -10,7 +10,6 @@ test.describe("Profile - polyglot-mutation", () => {
 
     const updated = page.waitForResponse("**/api/preferences/weekly-summary/update");
     await page.getByRole("combobox", { name: "Tygodniowe podsumowanie" }).selectOption("on");
-    await page.getByRole("button", { name: "Zapisz" }).click();
     await updated;
 
     await page.reload();

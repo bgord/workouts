@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { WeeklySummaryOptions } from "../../modules/preferences/value-objects/weekly-summary-options";
 import * as ui from "../components";
 import { profileRoute } from "../router";
@@ -22,15 +22,22 @@ export function ProfileWeeklySummary() {
       fetch("/api/preferences/weekly-summary/update", {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify({ weeklySummary: field.value }),
+        body: JSON.stringify({ weeklySummary: options.find((option) => option !== weeklySummary) }),
       }),
     onSuccess: async () => {
       await router.invalidate({ filter: (match) => match.routeId === profileRoute.id, sync: true });
     },
+    onError: field.clear,
   });
 
   return (
-    <section className="c-card" data-variant="flat" {...ui.Spacing.surface} {...ui.Gap.related}>
+    <section
+      aria-busy={mutation.isLoading}
+      className="c-card"
+      data-variant="flat"
+      {...ui.Spacing.surface}
+      {...ui.Gap.related}
+    >
       <div data-stack="x" {...ui.Gap.cluster}>
         <Mail data-color="neutral-400" data-size="sm" />
         <h2>{t("profile.weekly_summary.header")}</h2>
@@ -38,35 +45,21 @@ export function ProfileWeeklySummary() {
 
       <div data-color="neutral-500">{t("profile.weekly_summary.hint")}</div>
 
-      <form
-        aria-busy={mutation.isLoading}
-        data-stack="x"
-        data-wrap="wrap"
-        onSubmit={mutation.handleSubmit}
-        {...ui.Gap.inline}
+      <ui.Select
+        aria-label={t("profile.weekly_summary.header")}
+        {...bg.Autocomplete.off}
+        {...field.input.props}
+        onChange={(event) => {
+          field.handleChange(event);
+          mutation.mutate();
+        }}
       >
-        <ui.Select
-          aria-label={t("profile.weekly_summary.header")}
-          {...bg.Autocomplete.off}
-          {...field.input.props}
-        >
-          {options.map((option) => (
-            <option key={option} value={option}>
-              {t(`profile.weekly_summary.${option}.value`)}
-            </option>
-          ))}
-        </ui.Select>
-
-        <ui.IconButton
-          aria-label={t("app.save")}
-          disabled={field.unchanged || mutation.isLoading}
-          title={t("app.save")}
-          tone="positive"
-          type="submit"
-        >
-          <Check data-size="sm" />
-        </ui.IconButton>
-      </form>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {t(`profile.weekly_summary.${option}.value`)}
+          </option>
+        ))}
+      </ui.Select>
 
       {mutation.isError && (
         <output aria-live="assertive" data-tone="danger">
