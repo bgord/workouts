@@ -56,13 +56,11 @@ export function ExerciseCategories() {
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      <div data-main="between" data-stack="x" {...bg.Rhythm().times(3).style.minHeight} {...ui.Gap.related}>
-        <h3>{t("exercise.categories.header")}</h3>
+      <div data-stack="y" {...ui.Gap.inline}>
+        <div data-main="between" data-stack="x" {...bg.Rhythm().times(3).style.minHeight} {...ui.Gap.related}>
+          <h3>{t("exercise.categories.header")}</h3>
 
-        {assignment.off && (
-          <div data-stack="x" {...ui.Gap.related}>
-            <ui.ActionHint {...action} id="exercise-category-assign-hint" />
-
+          {assignment.off && (
             <button
               className="c-button"
               data-variant="ghost"
@@ -75,57 +73,58 @@ export function ExerciseCategories() {
               <Plus data-size="sm" />
               {t("exercise.category.assign.cta")}
             </button>
-          </div>
-        )}
+          )}
 
-        {action.enabled && assignment.on && (
-          <form
-            aria-busy={assign.isLoading}
-            data-stack="x"
-            data-wrap="wrap"
-            onSubmit={assign.handleSubmit}
-            {...ui.Gap.inline}
-            {...assignment.props.target}
-          >
-            <div data-md-grow="1">
-              <ui.Select
-                aria-label={t("exercise.category.assign.label")}
-                disabled={!action.enabled}
-                {...exerciseCategoryId.input.props}
+          {action.enabled && assignment.on && (
+            <form
+              aria-busy={assign.isLoading}
+              data-stack="x"
+              data-wrap="wrap"
+              onSubmit={assign.handleSubmit}
+              {...ui.Gap.inline}
+              {...assignment.props.target}
+            >
+              <div data-md-grow="1">
+                <ui.Select
+                  aria-label={t("exercise.category.assign.label")}
+                  disabled={!action.enabled}
+                  {...exerciseCategoryId.input.props}
+                >
+                  {exercise.assignableCategories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </ui.Select>
+              </div>
+
+              <ui.IconButton
+                aria-label={t("exercise.category.assign.cta")}
+                disabled={!action.enabled || assign.isLoading}
+                title={t("exercise.category.assign.cta")}
+                tone="positive"
+                type="submit"
               >
-                {exercise.assignableCategories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </ui.Select>
-            </div>
+                <Check data-size="sm" />
+              </ui.IconButton>
 
-            <ui.IconButton
-              aria-label={t("exercise.category.assign.cta")}
-              disabled={!action.enabled || assign.isLoading}
-              title={t("exercise.category.assign.cta")}
-              tone="positive"
-              type="submit"
-            >
-              <Check data-size="sm" />
-            </ui.IconButton>
+              <ui.IconButton
+                aria-label={t("app.cancel")}
+                onClick={bg.exec([exerciseCategoryId.clear, assign.reset, assignment.disable])}
+                title={t("app.cancel")}
+              >
+                <X data-size="sm" />
+              </ui.IconButton>
 
-            <ui.IconButton
-              aria-label={t("app.cancel")}
-              onClick={bg.exec([exerciseCategoryId.clear, assign.reset, assignment.disable])}
-              title={t("app.cancel")}
-            >
-              <X data-size="sm" />
-            </ui.IconButton>
-
-            {assign.isError && (
-              <output aria-live="assertive" data-tone="danger" data-width="100%">
-                {t("exercise.category.assign.error")}
-              </output>
-            )}
-          </form>
-        )}
+              {assign.isError && (
+                <output aria-live="assertive" data-tone="danger" data-width="100%">
+                  {t("exercise.category.assign.error")}
+                </output>
+              )}
+            </form>
+          )}
+        </div>
+        {assignment.off && <ui.ActionHint {...action} id="exercise-category-assign-hint" />}
       </div>
 
       <ul aria-label={t("exercise.categories.header")} data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
