@@ -24,7 +24,6 @@ export class PlanGetExerciseInstructionActions {
 
     return {
       update: bg.ActionState.of(editable),
-      exerciseChange: bg.ActionState.of(editable),
       moveUp: bg.ActionState.of(editable, [
         bg.ActionBlocker.from(PlanSectionExerciseInstructionPositionHasChanged, {
           planSection: this.facts.section,

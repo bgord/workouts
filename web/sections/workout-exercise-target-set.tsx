@@ -4,6 +4,7 @@ import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/workout-target-form";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 import { WorkoutExerciseTargetProgression } from "./workout-exercise-target-progression";
@@ -15,6 +16,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
   const { toggle } = bg.extractUseToggle(props);
   const action = props.exercise.actions.targetSet;
   const progression = props.exercise.targetProgression;
+  const Resistance = ResistanceKit[props.exercise.resistance];
 
   const sets = bg.useNumberField<number>({
     name: `sets-${props.exercise.id}`,
@@ -45,7 +47,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         body: JSON.stringify({
           sets: sets.value,
           reps: reps.value,
-          load: WeightFormat.grams(load.value ?? 0),
+          load: Resistance.payload(load),
         }),
       }),
     onSuccess: async () => {
@@ -93,16 +95,12 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
             {...Form.reps.pattern}
           />
 
-          <ui.Separator>@</ui.Separator>
-
-          <ui.Stepper
+          <Resistance.Field
             disabled={mutation.isLoading}
             field={load}
             label={t("workout.target.load.label")}
-            unit="kg"
+            separator={<ui.Separator>@</ui.Separator>}
             variant="compact"
-            width={52}
-            {...Form.load.pattern}
           />
         </div>
 
@@ -110,7 +108,12 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           <ui.IconButton
             aria-label={t("app.save")}
             disabled={
-              !action.enabled || sets.empty || reps.empty || load.empty || unchanged || mutation.isLoading
+              !action.enabled ||
+              sets.empty ||
+              reps.empty ||
+              !Resistance.ready(load) ||
+              unchanged ||
+              mutation.isLoading
             }
             title={t("app.save")}
             tone="positive"
@@ -141,6 +144,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           method={props.exercise.prescription.progression}
           progression={progression}
           reps={reps}
+          resistance={props.exercise.resistance}
           sets={sets}
         />
       )}

@@ -30,7 +30,11 @@ export function WorkoutSetRow(props: {
         {workoutSetCorrect.off && (
           <>
             <div data-color="neutral-100" data-fw="medium">
-              <ui.RepsLoad load={props.loggedSet.load} reps={props.loggedSet.reps} />
+              <ui.SetValue
+                load={props.loggedSet.load}
+                reps={props.loggedSet.reps}
+                resistance={props.exercise.resistance}
+              />
             </div>
 
             <div data-grow="1">

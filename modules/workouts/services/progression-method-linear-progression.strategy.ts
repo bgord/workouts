@@ -1,22 +1,35 @@
 import * as v from "valibot";
 import * as VO from "+workouts/value-objects";
+import type { LoadStepStrategy } from "./load-step.strategy";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
-import { PROGRESSION_METHOD_LOAD_STEP } from "./progression-method-load-step";
+
+type Config = { last: VO.ExerciseTargetType };
+
+type Dependencies = { LoadStep: LoadStepStrategy };
 
 export class ProgressionMethodLinearProgressionStrategy implements ProgressionMethodStrategy {
-  constructor(private readonly last: VO.ExerciseTargetType) {}
+  constructor(
+    private readonly config: Config,
+    private readonly deps: Dependencies,
+  ) {}
 
   calculate(): VO.ExerciseTargetProgression {
-    return { last: this.last, regress: this.regress(this.last), progress: this.progress(this.last) };
+    return { last: this.config.last, regress: this.regress(), progress: this.progress() };
   }
 
-  private regress(last: VO.ExerciseTargetType): VO.ExerciseTargetType | undefined {
-    if (last.load < PROGRESSION_METHOD_LOAD_STEP) return undefined;
+  private regress(): VO.ExerciseTargetType | undefined {
+    const load = this.deps.LoadStep.decrease(this.config.last.load);
 
-    return v.parse(VO.ExerciseTarget, { ...last, load: last.load - PROGRESSION_METHOD_LOAD_STEP });
+    if (load === undefined) return undefined;
+
+    return v.parse(VO.ExerciseTarget, { ...this.config.last, load });
   }
 
-  private progress(last: VO.ExerciseTargetType): VO.ExerciseTargetType {
-    return v.parse(VO.ExerciseTarget, { ...last, load: last.load + PROGRESSION_METHOD_LOAD_STEP });
+  private progress(): VO.ExerciseTargetType | undefined {
+    const load = this.deps.LoadStep.increase(this.config.last.load);
+
+    if (load === undefined) return undefined;
+
+    return v.parse(VO.ExerciseTarget, { ...this.config.last, load });
   }
 }

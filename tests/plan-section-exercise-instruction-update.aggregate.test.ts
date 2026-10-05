@@ -143,7 +143,11 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -190,7 +194,11 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -222,7 +230,11 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -254,7 +266,11 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
-      plan.updateSectionExerciseInstruction(mocks.planSectionId, exerciseInstruction, mocks.userId),
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.userId,
+      ),
     );
 
     expect(plan.pullEvents()).toEqual([
@@ -264,6 +280,74 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
           ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
           exerciseInstruction,
         },
+      },
+    ]);
+  });
+
+  test("happy path - only the exercise changed", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.userId,
+      ),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent]);
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [
+          { ...mocks.exerciseInstruction, exerciseId: mocks.anotherExerciseId },
+          mocks.otherExerciseInstruction,
+        ],
+      },
+      {
+        id: mocks.anotherPlanSectionId,
+        name: mocks.anotherPlanSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
+      },
+    ]);
+  });
+
+  test("happy path - the exercise and the progression changed", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      mocks.planWithLinearExerciseInstructionHistory,
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...mocks.anotherExerciseInstruction, exerciseId: mocks.anotherExerciseId },
+        mocks.userId,
+      ),
+    );
+
+    expect(plan.pullEvents()).toEqual([
+      mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent,
+      mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+    ]);
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [{ ...mocks.anotherExerciseInstruction, exerciseId: mocks.anotherExerciseId }],
       },
     ]);
   });

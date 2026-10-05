@@ -1,0 +1,22 @@
+import * as Exercises from "+exercises";
+import type * as Workouts from "+workouts";
+import type * as Ports from "+statistics/ports";
+import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-metrics.strategy";
+import { ExercisePerformanceMetricsBodyweightStrategy } from "./exercise-performance-metrics-bodyweight.strategy";
+import { ExercisePerformanceMetricsWeightedStrategy } from "./exercise-performance-metrics-weighted.strategy";
+
+type Dependencies = { OneRepEstimator: Ports.OneRepEstimatorPort };
+
+export class ExercisePerformanceMetricsStrategyFactory {
+  static for(
+    resistance: Workouts.VO.WorkoutExerciseResistanceType,
+    deps: Dependencies,
+  ): ExercisePerformanceMetricsStrategy {
+    switch (resistance) {
+      case Exercises.VO.ExerciseResistanceOptions.weighted:
+        return new ExercisePerformanceMetricsWeightedStrategy(deps);
+      case Exercises.VO.ExerciseResistanceOptions.bodyweight:
+        return new ExercisePerformanceMetricsBodyweightStrategy();
+    }
+  }
+}

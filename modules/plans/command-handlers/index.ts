@@ -9,7 +9,6 @@ export * from "./handlePlanRestoreCommand";
 export * from "./handlePlanSectionCooldownSetCommand";
 export * from "./handlePlanSectionCreateCommand";
 export * from "./handlePlanSectionExerciseInstructionAddCommand";
-export * from "./handlePlanSectionExerciseInstructionExerciseChangeCommand";
 export * from "./handlePlanSectionExerciseInstructionMoveCommand";
 export * from "./handlePlanSectionExerciseInstructionRemoveCommand";
 export * from "./handlePlanSectionExerciseInstructionUpdateCommand";

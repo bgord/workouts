@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
+import type { ExerciseCatalogResponse } from "../../modules/plans/queries/list-exercise-catalog";
 import type { PlanListResponse } from "../../modules/plans/queries/list-plans";
 
 export class Plans {
@@ -12,5 +13,9 @@ export class Plans {
 
   static async get(request: Request | null, params: { planId: string }): Promise<PlanGetResponse | null> {
     return bg.ApiClient.json<PlanGetResponse | null>(`/api/plans/${params.planId}`, request, null);
+  }
+
+  static async exerciseCatalog(request: Request | null): Promise<ExerciseCatalogResponse> {
+    return bg.ApiClient.json<ExerciseCatalogResponse>("/api/plans/exercise-catalog", request, { data: [] });
   }
 }

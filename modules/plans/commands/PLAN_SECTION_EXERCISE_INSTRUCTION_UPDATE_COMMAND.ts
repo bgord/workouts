@@ -15,7 +15,7 @@ export const PlanSectionExerciseInstructionUpdateCommand = v.object({
   payload: v.object({
     planId: VO.PlanId,
     planSectionId: VO.PlanSectionId,
-    exerciseInstruction: v.omit(VO.ExerciseInstruction, ["exerciseId"]),
+    exerciseInstruction: VO.ExerciseInstruction,
     requesterId: Auth.VO.UserId,
   }),
 });

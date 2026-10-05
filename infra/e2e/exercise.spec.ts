@@ -54,6 +54,25 @@ test.describe("Exercise - athlete", () => {
     await expect(history.getByRole("img", { name: "1RM" })).toHaveCount(1);
   });
 
+  test("shows the reps statistics of a bodyweight exercise", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
+
+    await expect(page.getByText("Bodyweight", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /^Most reps/ }).getByText("15 reps", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Best total reps" }).getByText("45 reps", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: "Most reps", exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("img", { name: "Progress" }).getByRole("link", { name: / — 15 reps$/ }),
+    ).toHaveCount(2);
+    await expect(
+      page.getByRole("list", { name: "History" }).getByRole("img", { name: "Most reps" }),
+    ).toHaveCount(1);
+  });
+
   test("keeps the history session expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 

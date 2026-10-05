@@ -16,7 +16,13 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
   const planSectionRename = bg.useToggle({ name: `plan-section-rename-${props.section.id}` });
 
   return (
-    <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
+    <ui.HairlineRow
+      aria-label={props.section.name}
+      data-stack="y"
+      first={props.index === 0}
+      last={props.last}
+      {...ui.Spacing.row}
+    >
       <div data-stack="x" {...bg.Rhythm().times(3).style.minHeight} {...ui.Gap.related}>
         <ui.ChevronToggle label={t("app.details", { name: props.section.name })} {...planSectionVisibility} />
 

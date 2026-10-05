@@ -233,6 +233,24 @@ test.describe("Workout - active", () => {
     ).toBeHidden();
   });
 
+  test("offers only the applicable progressions for a bodyweight exercise", async ({ page }) => {
+    const progression = page.getByRole("combobox", { name: "Progression" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await progression.selectOption("linear_progression");
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
+    await page
+      .getByRole("radio", {
+        name: `${fixtures.exercises.hangingLegRaise.name} ${fixtures.categories.abs.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(progression).toHaveValue("double_progression");
+    await expect(progression.getByRole("option")).toHaveText(["Double progression", "No progression"]);
+  });
+
   test("shows the error when moving an exercise fails", async ({ page }) => {
     await page.route("**/api/workouts/*/exercise/*/position", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);

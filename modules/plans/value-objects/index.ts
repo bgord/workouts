@@ -1,6 +1,7 @@
 export * from "./exercise-instruction";
 export * from "./exercise-instruction-id";
 export * from "./exercise-instruction-position";
+export * from "./exercise-with-progression-methods";
 export * from "./plan-description";
 export * from "./plan-id";
 export * from "./plan-name";
@@ -15,6 +16,7 @@ export * from "./plan-snapshot";
 export * from "./plan-status";
 export * from "./plan-summary";
 export * from "./progression-method";
+export * from "./progression-method-applicability";
 export * from "./progression-method-options";
 export * from "./reps-range";
 export * from "./sets";

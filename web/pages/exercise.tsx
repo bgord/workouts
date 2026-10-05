@@ -9,6 +9,7 @@ import { ExerciseImageChange } from "../sections/exercise-image-change";
 import { ExerciseName } from "../sections/exercise-name";
 import { ExercisePerformanceHistory } from "../sections/exercise-performance-history";
 import { ExercisePerformancesEmpty } from "../sections/exercise-performances-empty";
+import { ExerciseResistance } from "../sections/exercise-resistance";
 
 export function Exercise() {
   const { exercise } = exerciseRoute.useLoaderData();
@@ -49,6 +50,8 @@ export function Exercise() {
           <ExerciseCategories />
 
           <ExerciseDescription />
+
+          <ExerciseResistance />
         </div>
       </div>
 

@@ -116,14 +116,14 @@ export const exerciseRoute = createRoute({
   component: ExercisePage,
   notFoundComponent: ExerciseNotFound,
   loader: async ({ context, params }) => {
-    const [exercise, performances] = await Promise.all([
+    const [exercise, statistics] = await Promise.all([
       Exercises.get(context.request, params),
       Statistics.getExercisePerformances(context.request, params),
     ]);
 
     if (!exercise) throw notFound();
 
-    return { exercise, performances };
+    return { exercise, ...statistics };
   },
 });
 

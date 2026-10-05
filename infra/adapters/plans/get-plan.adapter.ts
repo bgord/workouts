@@ -24,7 +24,14 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
                 orderBy: asc(Schema.planSectionExerciseInstructions.position),
                 with: {
                   exercise: {
-                    columns: { id: true, name: true, description: true, image: true, imageEtag: true },
+                    columns: {
+                      id: true,
+                      name: true,
+                      description: true,
+                      resistance: true,
+                      image: true,
+                      imageEtag: true,
+                    },
                   },
                 },
               },
@@ -43,6 +50,11 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         ...section,
         exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
           ...exerciseInstruction,
+          exercise: {
+            ...exerciseInstruction.exercise,
+            progressionMethods:
+              Plans.VO.ProgressionMethodApplicability[exerciseInstruction.exercise.resistance],
+          },
           actions: new Plans.Services.PlanGetExerciseInstructionActions({
             status: plan.status,
             section,

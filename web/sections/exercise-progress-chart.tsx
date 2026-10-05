@@ -1,22 +1,21 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { EqualApproximately } from "lucide-react";
 import * as ui from "../components";
+import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { LineChartMath } from "../services/line-chart";
-import { WeightFormat } from "../services/weight-format";
 
 export function ExerciseProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const { performances } = exerciseRoute.useLoaderData();
+  const { exercise, performances } = exerciseRoute.useLoaderData();
+  const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
 
   if (performances.length < LineChartMath.MINIMAL_POINTS) return null;
 
-  const layout = LineChartMath.layout(
-    performances.map((performance) => WeightFormat.kilograms(performance.bestEstimate)),
-    (load) => t("statistics.exercise.one_rep_max_estimate.value", { load: load.toLocaleString(language) }),
+  const layout = LineChartMath.layout(performances.map(Statistics.progress.value), (value) =>
+    Statistics.progress.format(t, language, value),
   );
 
   return (
@@ -25,8 +24,7 @@ export function ExerciseProgressChart() {
         <h2>{t("statistics.exercise.progress")}</h2>
 
         <h3 data-stack="x">
-          <EqualApproximately data-color="neutral-600" data-size="xs" />
-          {t("statistics.exercise.one_rep_max_estimate")}
+          <Statistics.progress.Label />
         </h3>
       </div>
 
@@ -52,7 +50,7 @@ export function ExerciseProgressChart() {
               <title>
                 {t("statistics.exercise.progress.point", {
                   date: DateFormat.plainDay(language, performance.scheduledFor),
-                  load: WeightFormat.kilograms(performance.bestEstimate).toLocaleString(language),
+                  value: Statistics.progress.format(t, language, Statistics.progress.value(performance)),
                 })}
               </title>
 

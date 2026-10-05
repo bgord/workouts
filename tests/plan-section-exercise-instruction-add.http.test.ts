@@ -204,6 +204,39 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
+    const events = mocks.planWithSectionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
+      .mockResolvedValue(mocks.bodyweightExercise);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.repsRange,
+          progression: mocks.anotherProgression,
+        }),
+        headers: mocks.revisionHeaders(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(
+      response,
+      403,
+      "plan.section.exercise.instruction.progression.is.applicable",
+    );
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("PlanIsEditable - archived", async () => {
     const events = mocks.planArchivedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);

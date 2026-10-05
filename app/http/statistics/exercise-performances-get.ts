@@ -13,7 +13,7 @@ export const ExercisePerformancesGet =
 
     const exerciseId = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
 
-    const performances = await deps.ExercisePerformanceCalculator.calculate(userId, exerciseId);
+    const statistics = await deps.ExercisePerformanceCalculator.calculate(userId, exerciseId);
 
-    return Response.json({ performances });
+    return Response.json(statistics);
   };

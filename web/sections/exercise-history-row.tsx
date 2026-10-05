@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { EqualApproximately, Sigma, Trophy } from "lucide-react";
+import { Trophy } from "lucide-react";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import * as ui from "../components";
-import { WeightFormat } from "../services/weight-format";
+import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 
 export function ExerciseHistoryRow(props: {
   performance: ExercisePerformanceStatistics;
@@ -13,7 +13,7 @@ export function ExerciseHistoryRow(props: {
   last: boolean;
 }) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
+  const Statistics = ExerciseStatisticsKit[props.performance.resistance];
   const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
   return (
@@ -34,11 +34,7 @@ export function ExerciseHistoryRow(props: {
           {props.performance.scheduledFor}
 
           {props.record && (
-            <Trophy
-              aria-label={t("statistics.exercise.one_rep_max_estimate")}
-              data-color="brand-400"
-              data-size="xs"
-            />
+            <Trophy aria-label={t(Statistics.recordLabel)} data-color="brand-400" data-size="xs" />
           )}
         </Link>
 
@@ -51,37 +47,7 @@ export function ExerciseHistoryRow(props: {
           data-stack="x"
           {...ui.Gap.related}
         >
-          <div data-cross="baseline" data-stack="x" {...ui.Gap.field}>
-            <EqualApproximately data-color="neutral-600" data-self="center" data-size="xs" />
-
-            <span data-color="neutral-300" data-fw="medium" data-transform="font-variant-numeric">
-              {t("statistics.exercise.one_rep_max_estimate.value", {
-                load: WeightFormat.kilograms(props.performance.bestEstimate).toLocaleString(language),
-              })}
-            </span>
-
-            <ui.WeightDelta
-              current={props.performance.bestEstimate}
-              data-fs="xs"
-              previous={props.previous?.bestEstimate}
-            />
-          </div>
-
-          <div data-cross="baseline" data-stack="x" {...ui.Gap.inline}>
-            <Sigma data-color="neutral-600" data-self="center" data-size="xs" />
-
-            <span data-color="neutral-300" data-fw="medium" data-transform="font-variant-numeric">
-              {t("statistics.exercise.history.volume_load.value", {
-                load: WeightFormat.kilograms(props.performance.volume).toLocaleString(language),
-              })}
-            </span>
-
-            <ui.WeightDelta
-              current={props.performance.volume}
-              data-fs="xs"
-              previous={props.previous?.volume}
-            />
-          </div>
+          <Statistics.HistoryRowMetrics performance={props.performance} previous={props.previous} />
         </div>
       </div>
 
@@ -98,17 +64,12 @@ export function ExerciseHistoryRow(props: {
               <ui.RowIndex>{set.setNumber}</ui.RowIndex>
 
               <div data-color="neutral-100" data-fw="medium">
-                <ui.RepsLoad load={set.load} reps={set.reps} />
+                <ui.SetValue load={set.load} reps={set.reps} resistance={props.performance.resistance} />
               </div>
 
               <div data-grow="1">{set.rir !== null && <ui.RirBadge rir={set.rir} />}</div>
 
-              <small data-stack="x" {...ui.Gap.inline}>
-                <EqualApproximately data-color="neutral-600" data-size="xs" />
-                {t("statistics.exercise.one_rep_max_estimate.value", {
-                  load: WeightFormat.kilograms(set.estimate).toLocaleString(language),
-                })}
-              </small>
+              <Statistics.HistorySetExtra set={set} />
             </ui.HairlineRow>
           ))}
         </ul>

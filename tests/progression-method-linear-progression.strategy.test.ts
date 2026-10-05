@@ -8,7 +8,8 @@ import * as mocks from "./mocks";
 describe("ProgressionMethodLinearProgressionStrategy", () => {
   test("load step either way, reps unchanged", () => {
     const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
-      mocks.exercisePerformanceWeakestSet,
+      { last: mocks.exercisePerformanceWeakestSet },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -32,7 +33,10 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
       reps: v.parse(Workouts.VO.Reps, 8),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
     });
-    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(last);
+    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
+      { last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
+    );
 
     expect(strategy.calculate()).toEqual({
       last,
@@ -55,7 +59,10 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
       reps: v.parse(Workouts.VO.Reps, 8),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
     });
-    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(last);
+    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
+      { last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
+    );
 
     expect(strategy.calculate()).toEqual({
       last,
@@ -66,5 +73,19 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
       }),
     });
+  });
+
+  test("locked load - last only", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 8),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+    });
+    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
+      { last },
+      { LoadStep: new Workouts.Services.LoadStepLockedStrategy() },
+    );
+
+    expect(strategy.calculate()).toEqual({ last, regress: undefined, progress: undefined });
   });
 });

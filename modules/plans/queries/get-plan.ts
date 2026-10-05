@@ -6,13 +6,13 @@ export type PlanSectionActions = { exerciseInstructionAdd: bg.ActionState };
 
 export type ExerciseInstructionActions = {
   update: bg.ActionState;
-  exerciseChange: bg.ActionState;
   moveUp: bg.ActionState;
   moveDown: bg.ActionState;
   remove: bg.ActionState;
 };
 
-export type PlanExerciseInstruction = VO.ExerciseInstructionSnapshot & {
+export type PlanExerciseInstruction = Omit<VO.ExerciseInstructionSnapshot, "exercise"> & {
+  exercise: VO.ExerciseWithProgressionMethods;
   actions: ExerciseInstructionActions;
 };
 

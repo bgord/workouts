@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
+import * as Exercises from "+exercises";
 import * as Plans from "+plans";
 
 type Dependencies = {
@@ -20,6 +21,7 @@ export const PlanSectionExerciseInstructionUpdate =
     const exerciseInstructionId = v.parse(Plans.VO.ExerciseInstructionId, params["exerciseInstructionId"]);
     const exerciseInstruction = {
       id: exerciseInstructionId,
+      exerciseId: v.parse(Exercises.VO.ExerciseId, body["exerciseId"]),
       sets: v.parse(Plans.VO.Sets, body["sets"]),
       reps: v.parse(Plans.VO.RepsRange, body["reps"]),
       progression: v.parse(Plans.VO.ProgressionMethod, body["progression"]),

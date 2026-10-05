@@ -2,6 +2,7 @@ import type * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
 import type * as Plans from "+plans";
 import { PlanSectionExerciseExists } from "../invariants/plan-section-exercise-exists";
+import { PlanSectionExerciseInstructionProgressionIsApplicable } from "../invariants/plan-section-exercise-instruction-progression-is-applicable";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -18,6 +19,10 @@ export const handlePlanSectionExerciseInstructionAddCommand =
     const exercise = await deps.GetExerciseOHQ.execute(command.payload.exerciseInstruction.exerciseId);
 
     PlanSectionExerciseExists.enforce({ exercise });
+    PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
+      resistance: exercise!.resistance,
+      progression: command.payload.exerciseInstruction.progression,
+    });
 
     plan.addSectionExerciseInstruction(
       command.payload.planSectionId,

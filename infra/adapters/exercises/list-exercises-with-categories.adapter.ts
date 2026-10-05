@@ -7,7 +7,7 @@ import * as Schema from "+infra/schema";
 class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListExercisesWithCategories {
   async execute(requesterId: Auth.VO.UserIdType): Promise<Exercises.Queries.ExerciseListResponse> {
     const exercises = await db.query.exercises.findMany({
-      columns: { id: true, name: true, description: true, image: true, imageEtag: true },
+      columns: { id: true, name: true, description: true, resistance: true, image: true, imageEtag: true },
       orderBy: asc(Schema.exercises.name),
       with: {
         categoryAssignments: {

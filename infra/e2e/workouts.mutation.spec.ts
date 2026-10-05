@@ -238,14 +238,14 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await row.getByRole("button", { name: /^Edit target/ }).click();
-    await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
+    await row.getByRole("spinbutton", { name: "Reps" }).fill("1");
     await row.getByRole("button", { name: "Save" }).click();
 
-    await expect(row).toContainText("×5 ");
+    await expect(row).toContainText("×1 ");
 
     await page.reload();
 
-    await expect(row).toContainText("×5 ");
+    await expect(row).toContainText("×1 ");
   });
 
   test("shows the error when starting the workout fails", async ({ page }) => {
@@ -718,5 +718,108 @@ test.describe("Workouts - active-mutation", () => {
     ).toBeVisible();
     await expect(page.getByRole("img", { name: "Progress" })).toBeHidden();
     await expect(page.getByRole("list", { name: "History" }).getByRole("link")).toHaveCount(1);
+  });
+});
+
+test.describe("Workouts - hanger", () => {
+  test.use({ storageState: ".auth/hanger.json" });
+  test.describe.configure({ mode: "serial" });
+
+  test("summarizes the previous bodyweight session", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
+
+    await expect(
+      row.getByRole("note", { name: "Last session" }).getByText("3×15", { exact: true }),
+    ).toBeVisible();
+  });
+
+  test("sets a bodyweight target from the last session", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+    const suggestion = row.getByRole("group", {
+      name: "Based on the last session · Double progression",
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
+    await row.getByRole("button", { name: "Set target" }).click();
+
+    await expect(suggestion.getByRole("button")).toHaveText(["−1 rep", "Last"]);
+    await expect(suggestion.getByRole("button", { name: "Last", exact: true })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await expect(row.getByRole("spinbutton", { name: "Load (kg)" })).toBeHidden();
+
+    await row.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×15", exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×15", exact: true })).toBeVisible();
+  });
+
+  test("logs a bodyweight set", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
+    await page.getByRole("button", { name: "Start" }).click();
+    await page
+      .getByRole("button", { name: `Open panel: ${fixtures.exercises.hangingLegRaise.name}` })
+      .click();
+
+    await expect(panel.getByRole("spinbutton", { name: "Load (kg)" })).toBeHidden();
+
+    await panel.getByRole("button", { name: "Log set", exact: true }).click();
+    await expect(page.locator("[aria-busy=true]")).toHaveCount(0);
+    await page.keyboard.press("Escape");
+    await row
+      .getByRole("button", { name: `Details: ${fixtures.exercises.hangingLegRaise.name}`, exact: true })
+      .click();
+
+    await expect(row.getByText("15", { exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByText("15", { exact: true })).toBeVisible();
+  });
+
+  test("corrects a bodyweight set", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+    const form = row.getByRole("form", { name: "Correct set 1" });
+
+    await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
+    await row
+      .getByRole("button", { name: `Details: ${fixtures.exercises.hangingLegRaise.name}`, exact: true })
+      .click();
+    await row.getByRole("button", { name: "Correct set 1" }).click();
+
+    await expect(form.getByRole("spinbutton", { name: "Load (kg)" })).toBeHidden();
+
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("12");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
+
+    await expect(row.getByText("12", { exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByText("12", { exact: true })).toBeVisible();
+  });
+
+  test("copies the completed bodyweight workout", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
+    await page.getByRole("button", { name: "Complete" }).click();
+
+    await page.getByRole("button", { name: "Copy workout" }).click();
+
+    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute("title", "Copied");
+
+    const copied = await page.evaluate(() => navigator.clipboard.readText());
+
+    expect(copied).toContain(`| ${fixtures.exercises.hangingLegRaise.name} | 1 | 12 | — | not recorded |`);
   });
 });

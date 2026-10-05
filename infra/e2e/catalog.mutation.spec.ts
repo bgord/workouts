@@ -67,7 +67,7 @@ test.describe("Catalog - admin", () => {
 
     await page.reload();
 
-    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(page.getByText("33 of 33")).toBeVisible();
   });
 
   test("rejects a duplicate exercise name", async ({ page }) => {
@@ -85,7 +85,7 @@ test.describe("Catalog - admin", () => {
 
     await page.reload();
 
-    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(page.getByText("33 of 33")).toBeVisible();
   });
 
   test("adds an exercise", async ({ page }) => {
@@ -97,9 +97,11 @@ test.describe("Catalog - admin", () => {
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page.getByRole("dialog", { name: "New exercise" }).getByText("Bodyweight", { exact: true }).click();
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
-    await expect(page.getByText("33 of 33")).toBeVisible();
+    await expect(page.getByText("34 of 34")).toBeVisible();
+    await expect(page.getByRole("link", { name: "Neck curl Bodyweight", exact: true })).toBeVisible();
 
     await page.getByRole("button", { name: "New exercise" }).click();
 
@@ -290,7 +292,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Delete Neck flexion" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
     await expect(page).toHaveURL("/catalog");
-    await expect(page.getByText("32 of 32")).toBeVisible();
+    await expect(page.getByText("33 of 33")).toBeVisible();
     await page.goto(`/workouts/${fixtures.admin.scheduledWorkout.id}`);
 
     await expect(row.getByText("Neck flexion", { exact: true })).toBeVisible();

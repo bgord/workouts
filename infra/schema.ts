@@ -10,6 +10,8 @@ import type { ExerciseCategoryNameType } from "../modules/exercises/value-object
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
+import type { ExerciseResistanceType } from "../modules/exercises/value-objects/exercise-resistance";
+import { ExerciseResistanceOptions } from "../modules/exercises/value-objects/exercise-resistance-options";
 import type { BodyPartCircumferenceType } from "../modules/measurements/value-objects/body-part-circumference";
 import type { BodyPartIdType } from "../modules/measurements/value-objects/body-part-id";
 import type { BodyPartMeasuredOnType } from "../modules/measurements/value-objects/body-part-measured-on";
@@ -46,6 +48,7 @@ import type { WorkoutExerciseDescriptionType } from "../modules/workouts/value-o
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
 import type { WorkoutExerciseNameType } from "../modules/workouts/value-objects/workout-exercise-name";
 import type { WorkoutExercisePositionType } from "../modules/workouts/value-objects/workout-exercise-position";
+import type { WorkoutExerciseResistanceType } from "../modules/workouts/value-objects/workout-exercise-resistance";
 import type { WorkoutIdType } from "../modules/workouts/value-objects/workout-id";
 import type { WorkoutNoteType } from "../modules/workouts/value-objects/workout-note";
 import type { WorkoutPlanNameType } from "../modules/workouts/value-objects/workout-plan-name";
@@ -213,6 +216,10 @@ export const exercises = sqliteTable("exercises", {
   id: identifier<ExerciseIdType>(),
   name: text("name").notNull().$type<ExerciseNameType>(),
   description: text("description").notNull().$type<ExerciseDescriptionType>(),
+  resistance: text("resistance")
+    .notNull()
+    .$type<ExerciseResistanceType>()
+    .default(ExerciseResistanceOptions.weighted),
   image: text("image").notNull().$type<tools.ObjectKeyType>(),
   imageEtag: text("imageEtag").notNull().$type<bg.HashValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
@@ -361,6 +368,10 @@ export const workoutExercises = sqliteTable(
     exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
     exerciseName: text("exerciseName").notNull().$type<WorkoutExerciseNameType>(),
     exerciseDescription: text("exerciseDescription").notNull().$type<WorkoutExerciseDescriptionType>(),
+    resistance: text("resistance")
+      .notNull()
+      .$type<WorkoutExerciseResistanceType>()
+      .default(ExerciseResistanceOptions.weighted),
     prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
     target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
     position: integer("position", { mode: "number" })

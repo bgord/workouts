@@ -11,11 +11,13 @@ export class WorkoutExercise implements VO.WorkoutExercise {
     readonly id: VO.WorkoutExerciseIdType,
     readonly exerciseId: Exercises.VO.ExerciseIdType,
     readonly exerciseName: VO.WorkoutExerciseNameType,
+    readonly resistance: VO.WorkoutExerciseResistanceType,
     readonly prescription: VO.ExercisePrescriptionType,
   ) {}
 
   guardTargetSet(target: VO.ExerciseTargetType) {
     Invariants.WorkoutExerciseTargetHasChanged.enforce({ current: this.target, incoming: target });
+    Invariants.WorkoutExerciseLoadIsApplicable.enforce({ resistance: this.resistance, load: target.load });
   }
 
   nextSet(
@@ -24,6 +26,8 @@ export class WorkoutExercise implements VO.WorkoutExercise {
     load: VO.LoadType,
     rir: VO.RirType | undefined,
   ): VO.LoggedSetType {
+    Invariants.WorkoutExerciseLoadIsApplicable.enforce({ resistance: this.resistance, load });
+
     return { id, setNumber: v.parse(VO.SetNumber, this.loggedSets.length + 1), reps, load, rir };
   }
 
@@ -38,6 +42,7 @@ export class WorkoutExercise implements VO.WorkoutExercise {
     rir: VO.RirType | undefined,
   ): VO.LoggedSetType {
     this.guardLoggedSetExists(id);
+    Invariants.WorkoutExerciseLoadIsApplicable.enforce({ resistance: this.resistance, load });
 
     const current = this.loggedSets.find((loggedSet) => loggedSet.id === id)!;
 

@@ -17,7 +17,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
       .use(spyOn(di.Adapters.Measurements.ListBodyPartsQuery, "execute"))
@@ -31,7 +31,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path - empty", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
       .use(spyOn(di.Adapters.Measurements.ListBodyPartsQuery, "execute"))

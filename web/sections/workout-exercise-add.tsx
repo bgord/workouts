@@ -5,6 +5,7 @@ import { Form } from "../../app/services/workout-exercise-add-form";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { workoutRoute } from "../router";
+import { ProgressionMethodChoice } from "../services/progression-method-choice";
 
 export function WorkoutExerciseAdd() {
   const t = bg.useTranslations();
@@ -20,6 +21,7 @@ export function WorkoutExerciseAdd() {
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
   const progression = bg.useTextField(Form.progression.field);
+  const exercise = catalog.find(exerciseId.value);
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -91,7 +93,10 @@ export function WorkoutExerciseAdd() {
             <ui.ExercisePicker
               exercises={catalog.exercises}
               name={exerciseId.input.props.name}
-              onChange={(exercise) => exerciseId.set(exercise.id)}
+              onChange={(exercise) => {
+                exerciseId.set(exercise.id);
+                progression.set(ProgressionMethodChoice.keep(exercise.progressionMethods, progression.value));
+              }}
               query={query}
               value={exerciseId.value}
             />
@@ -125,7 +130,7 @@ export function WorkoutExerciseAdd() {
             />
           </ui.Prescription>
 
-          <ui.ProgressionMethodSelect field={progression} />
+          <ui.ProgressionMethodSelect field={progression} options={exercise?.progressionMethods} />
 
           {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 

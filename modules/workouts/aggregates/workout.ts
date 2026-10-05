@@ -120,6 +120,7 @@ export class Workout {
     exerciseId: Exercises.VO.ExerciseIdType,
     exerciseName: VO.WorkoutExerciseNameType,
     exerciseDescription: VO.WorkoutExerciseDescriptionType,
+    resistance: VO.WorkoutExerciseResistanceType,
     prescription: VO.ExercisePrescriptionType,
     requesterId: Auth.VO.UserIdType,
   ) {
@@ -136,6 +137,7 @@ export class Workout {
         exerciseId,
         exerciseName,
         exerciseDescription,
+        resistance,
         prescription,
         requesterId,
       },
@@ -385,6 +387,7 @@ export class Workout {
             event.payload.workoutExerciseId,
             event.payload.exerciseId,
             event.payload.exerciseName,
+            event.payload.resistance,
             event.payload.prescription,
           ),
         );

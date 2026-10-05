@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -16,6 +17,7 @@ export function WorkoutSetCorrect(
   const { workout } = workoutRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
   const action = props.loggedSet.actions.correct;
+  const Resistance = ResistanceKit[props.exercise.resistance];
 
   const reps = bg.useNumberField<number>({
     name: `corrected-reps-${props.loggedSet.id}`,
@@ -37,7 +39,7 @@ export function WorkoutSetCorrect(
         headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           reps: reps.value,
-          load: WeightFormat.grams(load.value ?? 0),
+          load: Resistance.payload(load),
           rir: rir.current,
         }),
       }),
@@ -92,20 +94,16 @@ export function WorkoutSetCorrect(
           {...Form.reps.pattern}
         />
 
-        <ui.Separator>×</ui.Separator>
-
-        <ui.Stepper
+        <Resistance.Field
           disabled={mutation.isLoading}
           field={load}
           label={t("workout.set.load.label")}
-          unit="kg"
-          width={52}
-          {...Form.load.pattern}
+          separator={<ui.Separator>×</ui.Separator>}
         />
       </div>
 
       <ui.RirSubmit
-        disabled={reps.empty || load.empty || mutation.isLoading}
+        disabled={reps.empty || !Resistance.ready(load) || mutation.isLoading}
         onSelect={(value) => {
           rir.current = value;
         }}

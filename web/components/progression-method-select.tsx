@@ -4,12 +4,12 @@ import { Gap } from "./gap";
 import { Select } from "./select";
 
 export function ProgressionMethodSelect(
-  props: { field: bg.UseTextFieldReturnType<ProgressionMethodOptions> } & Omit<
-    React.JSX.IntrinsicElements["select"],
-    "id" | "name" | "value" | "onChange"
-  >,
+  props: {
+    field: bg.UseTextFieldReturnType<ProgressionMethodOptions>;
+    options: ReadonlyArray<ProgressionMethodOptions> | undefined;
+  } & Omit<React.JSX.IntrinsicElements["select"], "id" | "name" | "value" | "onChange">,
 ) {
-  const { field, ...rest } = props;
+  const { field, options = Object.values(ProgressionMethodOptions), ...rest } = props;
   const t = bg.useTranslations();
 
   return (
@@ -17,7 +17,7 @@ export function ProgressionMethodSelect(
       <label {...field.label.props}>{t("progression.method.label")}</label>
 
       <Select {...rest} {...field.input.props}>
-        {Object.values(ProgressionMethodOptions).map((option) => (
+        {options.map((option) => (
           <option key={option} value={option}>
             {t(`progression.method.${option}`)}
           </option>

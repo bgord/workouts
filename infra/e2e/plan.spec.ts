@@ -55,6 +55,36 @@ test.describe("Plan - builder", () => {
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeHidden();
   });
 
+  test("marks a bodyweight exercise instruction", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
+
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true })
+        .getByText("Bodyweight", { exact: true }),
+    ).toBeVisible();
+  });
+
+  test("offers only the applicable progressions for a bodyweight exercise", async ({ page }) => {
+    const progression = page.getByRole("combobox", { name: "Progression" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await progression.selectOption("linear_progression");
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
+    await page
+      .getByRole("radio", {
+        name: `${fixtures.exercises.hangingLegRaise.name} ${fixtures.categories.abs.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(progression).toHaveValue("double_progression");
+    await expect(progression.getByRole("option")).toHaveText(["Double progression", "No progression"]);
+  });
+
   test("shows the empty state when no exercise matches", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
@@ -240,7 +270,7 @@ test.describe("Plan - builder", () => {
   });
 
   test("shows the error when saving an exercise instruction fails", async ({ page }) => {
-    await page.route("**/api/plans/*/section/*/exercise-instruction/*/instruction", (route) =>
+    await page.route("**/api/plans/*/section/*/exercise-instruction/*", (route) =>
       route.fulfill({ status: 500 }),
     );
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
@@ -263,36 +293,6 @@ test.describe("Plan - builder", () => {
     await expect(
       page.getByRole("listitem", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
     ).toContainText("4×5");
-  });
-
-  test("shows the error when changing the exercise of an instruction fails", async ({ page }) => {
-    await page.route("**/api/plans/*/section/*/exercise-instruction/*/exercise", (route) =>
-      route.fulfill({ status: 500 }),
-    );
-    await page.goto(`/plans/${fixtures.builder.plan.id}`);
-    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
-
-    await page
-      .getByRole("listitem", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true })
-      .getByRole("button", { name: "Edit exercise" })
-      .click();
-    await page
-      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.superHorizontalBenchPress.name}` })
-      .click();
-    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
-    await page.getByRole("radio", { name: fixtures.exercises.pecDeck.name }).click();
-    await page
-      .getByRole("dialog", { name: "Edit exercise" })
-      .getByRole("button", { name: "Save", exact: true })
-      .click();
-
-    await expect(page.getByText("Could not save the exercise")).toBeVisible();
-
-    await page.reload();
-
-    await expect(
-      page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
-    ).toBeVisible();
   });
 
   test("shows the error when moving an exercise instruction fails", async ({ page }) => {

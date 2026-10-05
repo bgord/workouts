@@ -4,7 +4,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Plans from "+plans";
 import { userId } from "./auth";
-import { anotherExerciseId, exercise, exerciseId } from "./exercises";
+import { anotherExerciseId, exercise, exerciseId, exerciseWithCategories } from "./exercises";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
 
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");
@@ -47,6 +47,19 @@ export const sets = v.parse(Plans.VO.Sets, 3);
 export const anotherSets = v.parse(Plans.VO.Sets, 4);
 
 export const progression = Plans.VO.ProgressionMethodOptions.double_progression;
+export const anotherProgression = Plans.VO.ProgressionMethodOptions.linear_progression;
+
+export const exerciseProgressionMethods = [
+  Plans.VO.ProgressionMethodOptions.double_progression,
+  Plans.VO.ProgressionMethodOptions.linear_progression,
+  Plans.VO.ProgressionMethodOptions.none,
+];
+
+export const exerciseCatalogResponse: Plans.Queries.ExerciseCatalogResponse = {
+  data: [{ ...exerciseWithCategories, progressionMethods: exerciseProgressionMethods }],
+};
+
+export const exerciseCatalogResponseEmpty: Plans.Queries.ExerciseCatalogResponse = { data: [] };
 
 export const repsRange = v.parse(Plans.VO.RepsRange, { min: 8, max: 12 });
 export const anotherRepsRange = v.parse(Plans.VO.RepsRange, { min: 6, max: 6 });
@@ -67,10 +80,13 @@ export const anotherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   progression,
 };
 
-export const anotherExerciseInstructionAndExercise: Pick<
-  Plans.VO.ExerciseInstructionType,
-  "id" | "exerciseId"
-> = { id: exerciseInstructionId, exerciseId: anotherExerciseId };
+export const anotherExerciseInstructionAndExercise: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId: anotherExerciseId,
+  reps: repsRange,
+  sets,
+  progression,
+};
 
 export const otherExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: anotherExerciseInstructionId,
@@ -86,6 +102,14 @@ export const otherExerciseInstructionWithAnotherExercise: Plans.VO.ExerciseInstr
   reps: anotherRepsRange,
   sets: anotherSets,
   progression,
+};
+
+export const linearExerciseInstruction: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId,
+  reps: repsRange,
+  sets,
+  progression: anotherProgression,
 };
 
 export const planSummary: Plans.VO.PlanSummary = {
@@ -184,9 +208,9 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
     ...section,
     exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
       ...exerciseInstruction,
+      exercise: { ...exerciseInstruction.exercise, progressionMethods: exerciseProgressionMethods },
       actions: {
         update: { available: true, enabled: true, hints: [] },
-        exerciseChange: { available: true, enabled: true, hints: [] },
         moveUp: { available: true, enabled: true, hints: [] },
         moveDown: { available: true, enabled: true, hints: [] },
         remove: { available: true, enabled: true, hints: [] },
@@ -470,6 +494,17 @@ export const GenericPlanSectionExerciseInstructionAddedEventAnother = {
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
+export const GenericPlanSectionExerciseInstructionAddedEventLinear = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 2,
+  commit,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  payload: { planId, planSectionId, exerciseInstruction: linearExerciseInstruction, requesterId: userId },
+} satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
+
 export const GenericPlanSectionExerciseInstructionRemovedEvent = {
   id: expectAnyId,
   correlationId,
@@ -540,6 +575,11 @@ export const planWithSectionHistory = [GenericPlanCreatedEvent, GenericPlanSecti
 export const planWithExerciseInstructionHistory = [
   ...planWithSectionHistory,
   GenericPlanSectionExerciseInstructionAddedEvent,
+];
+
+export const planWithLinearExerciseInstructionHistory = [
+  ...planWithSectionHistory,
+  GenericPlanSectionExerciseInstructionAddedEventLinear,
 ];
 
 export const planArchivedHistory = [GenericPlanCreatedEvent, GenericPlanArchivedEvent];

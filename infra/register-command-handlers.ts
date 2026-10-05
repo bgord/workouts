@@ -178,13 +178,6 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     PlansCommandHandlers.handlePlanSectionExerciseInstructionUpdateCommand({
       ...deps,
       repo: Adapters.Plans.PlanRepository,
-    }),
-  );
-  Tools.CommandBus.on(
-    PlansCommands.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND,
-    PlansCommandHandlers.handlePlanSectionExerciseInstructionExerciseChangeCommand({
-      ...deps,
-      repo: Adapters.Plans.PlanRepository,
       GetExerciseOHQ: Adapters.Exercises.GetExerciseQuery,
     }),
   );

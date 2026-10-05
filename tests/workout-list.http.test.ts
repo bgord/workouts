@@ -18,7 +18,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("validation - filter - invalid", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
 
     const response = await server.request(
@@ -31,7 +31,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Workouts.ListWorkoutsQuery, "execute").mockResolvedValue({
@@ -64,7 +64,7 @@ describe(`QUERY ${url}`, async () => {
   });
 
   test("happy path - empty", async () => {
-    const spies = new DisposableStack();
+    using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(
       spyOn(di.Adapters.Workouts.ListWorkoutsQuery, "execute").mockResolvedValue({

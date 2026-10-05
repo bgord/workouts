@@ -4,7 +4,9 @@ import * as mocks from "./mocks";
 
 describe("ProgressionMethodNoneStrategy", () => {
   test("last only, no regress and no progress", () => {
-    const strategy = new Workouts.Services.ProgressionMethodNoneStrategy(mocks.exercisePerformanceWeakestSet);
+    const strategy = new Workouts.Services.ProgressionMethodNoneStrategy({
+      last: mocks.exercisePerformanceWeakestSet,
+    });
 
     expect(strategy.calculate()).toEqual({ last: mocks.exercisePerformanceWeakestSet });
   });

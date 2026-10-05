@@ -4,6 +4,7 @@ import { startTransition, useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
@@ -12,6 +13,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
   const action = props.exercise.actions.setLog;
+  const Resistance = ResistanceKit[props.exercise.resistance];
 
   const reps = bg.useNumberField<number>({
     name: `logged-reps-${props.exercise.id}`,
@@ -35,7 +37,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
         headers: bg.WeakETag.fromRevision(workout.data.revision),
         body: JSON.stringify({
           reps: reps.value,
-          load: WeightFormat.grams(load.value ?? 0),
+          load: Resistance.payload(load),
           rir: rir.current,
         }),
       }),
@@ -51,7 +53,7 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
         id: crypto.randomUUID() as LoggedSet["id"],
         setNumber: (props.exercise.loggedSets.length + 1) as LoggedSet["setNumber"],
         reps: reps.value as LoggedSet["reps"],
-        load: WeightFormat.grams(load.value ?? 0) as LoggedSet["load"],
+        load: Resistance.payload(load) as LoggedSet["load"],
         rir: (rir.current ?? null) as LoggedSet["rir"],
         actions: {
           correct: { available: true, enabled: false, hints: [] },
@@ -87,20 +89,16 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
           {...Form.reps.pattern}
         />
 
-        <ui.Separator data-md-disp="none">×</ui.Separator>
-
-        <ui.Stepper
+        <Resistance.Field
           disabled={busy}
           field={load}
           label={t("workout.set.load.label")}
-          unit="kg"
-          width={52}
-          {...Form.load.pattern}
+          separator={<ui.Separator data-md-disp="none">×</ui.Separator>}
         />
       </div>
 
       <ui.RirSubmit
-        disabled={busy || reps.empty || load.empty}
+        disabled={busy || reps.empty || !Resistance.ready(load)}
         onSelect={(value) => {
           rir.current = value;
         }}

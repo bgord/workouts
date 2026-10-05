@@ -4,6 +4,7 @@ import * as Auth from "+auth";
 import { ExerciseDescription } from "../value-objects/exercise-description";
 import { ExerciseId } from "../value-objects/exercise-id";
 import { ExerciseName } from "../value-objects/exercise-name";
+import { ExerciseResistance } from "../value-objects/exercise-resistance";
 
 // Stryker disable next-line StringLiteral
 export const EXERCISE_ADD_COMMAND = "EXERCISE_ADD_COMMAND";
@@ -16,6 +17,7 @@ export const ExerciseAddCommand = v.object({
     absoluteFilePath: v.pipe(v.string(), v.minLength(1)),
     name: ExerciseName,
     description: ExerciseDescription,
+    resistance: ExerciseResistance,
     userId: Auth.VO.UserId,
   }),
 });

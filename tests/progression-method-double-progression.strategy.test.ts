@@ -8,8 +8,8 @@ import * as mocks from "./mocks";
 describe("ProgressionMethodDoubleProgressionStrategy", () => {
   test("below range - one rep either way", () => {
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      mocks.exercisePerformanceWeakestSet,
+      { prescription: mocks.exercisePrescription, last: mocks.exercisePerformanceWeakestSet },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual(mocks.exerciseTargetProgression);
@@ -22,8 +22,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -48,8 +48,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -74,8 +74,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -100,8 +100,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -126,8 +126,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -152,8 +152,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -174,8 +174,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(2.5).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -200,8 +200,8 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      mocks.exercisePrescription,
-      last,
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -222,12 +222,15 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
     });
     const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
-      v.parse(Workouts.VO.ExercisePrescription, {
-        sets: mocks.sets,
-        reps: mocks.anotherRepsRange,
-        progression: mocks.progression,
-      }),
-      last,
+      {
+        prescription: v.parse(Workouts.VO.ExercisePrescription, {
+          sets: mocks.sets,
+          reps: mocks.anotherRepsRange,
+          progression: mocks.progression,
+        }),
+        last,
+      },
+      { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
     );
 
     expect(strategy.calculate()).toEqual({
@@ -241,6 +244,50 @@ describe("ProgressionMethodDoubleProgressionStrategy", () => {
         sets: v.parse(Plans.VO.Sets, 1),
         reps: v.parse(Workouts.VO.Reps, 6),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(82.5).get()),
+      }),
+    });
+  });
+
+  test("range maximum - locked load - no progress", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 12),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+    });
+    const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepLockedStrategy() },
+    );
+
+    expect(strategy.calculate()).toEqual({
+      last,
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 11),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+      }),
+      progress: undefined,
+    });
+  });
+
+  test("range minimum - locked load - no regress", () => {
+    const last = v.parse(Workouts.VO.ExerciseTarget, {
+      sets: v.parse(Plans.VO.Sets, 1),
+      reps: v.parse(Workouts.VO.Reps, 8),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+    });
+    const strategy = new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
+      { prescription: mocks.exercisePrescription, last },
+      { LoadStep: new Workouts.Services.LoadStepLockedStrategy() },
+    );
+
+    expect(strategy.calculate()).toEqual({
+      last,
+      regress: undefined,
+      progress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 1),
+        reps: v.parse(Workouts.VO.Reps, 9),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
       }),
     });
   });

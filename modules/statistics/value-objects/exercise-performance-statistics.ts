@@ -1,20 +1,33 @@
 import type * as tools from "@bgord/tools";
+import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
 
-export type ExercisePerformanceStatisticsSet = {
-  setNumber: Workouts.VO.SetNumberType;
-  reps: Workouts.VO.RepsType;
-  load: Workouts.VO.LoadType;
-  rir: Workouts.VO.RirType | null;
+type ExercisePerformanceSet = Workouts.Queries.ExercisePerformance["sets"][number];
+
+export type WeightedExercisePerformanceStatisticsSet = ExercisePerformanceSet & {
   estimate: VO.OneRepMaxEstimateType;
 };
 
-export type ExercisePerformanceStatistics = {
+export type WeightedExercisePerformanceStatistics = {
+  resistance: Exercises.VO.ExerciseResistanceOptions.weighted;
   workoutId: Workouts.VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
-  sets: Array<ExercisePerformanceStatisticsSet>;
+  sets: Array<WeightedExercisePerformanceStatisticsSet>;
   volume: tools.WeightGramsType;
-  bestSet: ExercisePerformanceStatisticsSet;
+  bestSet: WeightedExercisePerformanceStatisticsSet;
   bestEstimate: VO.OneRepMaxEstimateType;
 };
+
+export type BodyweightExercisePerformanceStatistics = {
+  resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight;
+  workoutId: Workouts.VO.WorkoutIdType;
+  scheduledFor: tools.DayIsoIdType;
+  sets: Array<ExercisePerformanceSet>;
+  bestSet: ExercisePerformanceSet;
+  totalReps: tools.IntegerPositiveType;
+};
+
+export type ExercisePerformanceStatistics =
+  | WeightedExercisePerformanceStatistics
+  | BodyweightExercisePerformanceStatistics;

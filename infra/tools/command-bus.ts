@@ -33,7 +33,6 @@ type AcceptedCommand =
   | PlansCommands.PlanSectionExerciseInstructionAddCommandType
   | PlansCommands.PlanSectionExerciseInstructionRemoveCommandType
   | PlansCommands.PlanSectionExerciseInstructionUpdateCommandType
-  | PlansCommands.PlanSectionExerciseInstructionExerciseChangeCommandType
   | PlansCommands.PlanSectionExerciseInstructionMoveCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | PreferencesCommands.UpdateProfileAvatarCommandType

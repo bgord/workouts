@@ -36,6 +36,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               exerciseId: true,
               exerciseName: true,
               exerciseDescription: true,
+              resistance: true,
               prescription: true,
               target: true,
             },
@@ -88,6 +89,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               previous &&
               Workouts.Services.ProgressionMethodStrategyFactory.for(
                 exercise.prescription,
+                exercise.resistance,
                 previous,
               ).calculate(),
             actions: new Workouts.Services.WorkoutGetExerciseActions({

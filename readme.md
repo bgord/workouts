@@ -143,6 +143,8 @@ modules/
 │       ├── exercise-image-side.ts
 │       ├── exercise-name.ts
 │       ├── exercise-name.validation.ts
+│       ├── exercise-resistance-options.ts
+│       ├── exercise-resistance.ts
 │       ├── exercise-with-categories.ts
 │       ├── exercise.ts
 ├── languages.ts
@@ -289,7 +291,6 @@ modules/
 │   │   ├── handlePlanSectionCooldownSetCommand.ts
 │   │   ├── handlePlanSectionCreateCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionAddCommand.ts
-│   │   ├── handlePlanSectionExerciseInstructionExerciseChangeCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionMoveCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionRemoveCommand.ts
 │   │   ├── handlePlanSectionExerciseInstructionUpdateCommand.ts
@@ -308,7 +309,6 @@ modules/
 │   │   ├── PLAN_SECTION_COOLDOWN_SET_COMMAND.ts
 │   │   ├── PLAN_SECTION_CREATE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_ADD_COMMAND.ts
-│   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_MOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVE_COMMAND.ts
 │   │   ├── PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATE_COMMAND.ts
@@ -352,12 +352,12 @@ modules/
 │   │   ├── plan-name-is-unique-for-owner.ts
 │   │   ├── plan-section-cooldown-has-changed.ts
 │   │   ├── plan-section-exercise-exists.ts
-│   │   ├── plan-section-exercise-instruction-exercise-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-exists.ts
 │   │   ├── plan-section-exercise-instruction-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exercise-instruction-position-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-position-in-range.ts
+│   │   ├── plan-section-exercise-instruction-progression-is-applicable.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
 │   │   ├── plan-section-name-has-changed.ts
@@ -371,6 +371,7 @@ modules/
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
 │   │   ├── get-plan.ts
+│   │   ├── list-exercise-catalog.ts
 │   │   └── list-plans.ts
 │   ├── services
 │   │   ├── plan-get-actions.ts
@@ -381,6 +382,7 @@ modules/
 │       ├── exercise-instruction-id.ts
 │       ├── exercise-instruction-position.ts
 │       ├── exercise-instruction.ts
+│       ├── exercise-with-progression-methods.ts
 │       ├── plan-description.ts
 │       ├── plan-description.validation.ts
 │       ├── plan-id.ts
@@ -399,6 +401,7 @@ modules/
 │       ├── plan-snapshot.ts
 │       ├── plan-status.ts
 │       ├── plan-summary.ts
+│       ├── progression-method-applicability.ts
 │       ├── progression-method-options.ts
 │       ├── progression-method.ts
 │       ├── reps-range.ts
@@ -440,10 +443,16 @@ modules/
 │   │   └── one-rep-estimator.port.ts
 │   ├── services
 │   │   ├── exercise-performance-calculator.ts
+│   │   ├── exercise-performance-metrics-bodyweight.strategy.ts
+│   │   ├── exercise-performance-metrics-factory.strategy.ts
+│   │   ├── exercise-performance-metrics-weighted.strategy.ts
+│   │   ├── exercise-performance-metrics.strategy.ts
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts
 │   └── value-objects
 │       ├── exercise-performance-statistics.ts
+│       ├── exercise-records.ts
+│       ├── exercise-statistics.ts
 │       └── one-rep-max-estimate.ts
 ├── supported-languages.ts
 └── workouts
@@ -499,8 +508,10 @@ modules/
     │   ├── workout-draft-limit-for-owner.ts
     │   ├── workout-exercise-exists.ts
     │   ├── workout-exercise-limit.ts
+    │   ├── workout-exercise-load-is-applicable.ts
     │   ├── workout-exercise-position-has-changed.ts
     │   ├── workout-exercise-position-in-range.ts
+    │   ├── workout-exercise-progression-is-applicable.ts
     │   ├── workout-exercise-target-has-changed.ts
     │   ├── workout-exercises-have-targets.ts
     │   ├── workout-exists.ts
@@ -533,11 +544,14 @@ modules/
     ├── services
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
+    │   ├── load-step-factory.strategy.ts
+    │   ├── load-step-increment.strategy.ts
+    │   ├── load-step-locked.strategy.ts
+    │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
-    │   ├── progression-method-load-step.ts
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method.strategy.ts
     │   ├── workout-export-file-csv.ts
@@ -563,6 +577,7 @@ modules/
         ├── workout-exercise-limit.ts
         ├── workout-exercise-name.ts
         ├── workout-exercise-position.ts
+        ├── workout-exercise-resistance.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts
@@ -627,6 +642,7 @@ app/
 │   │   ├── plan-create.ts
 │   │   ├── plan-description-set.ts
 │   │   ├── plan-editing-enable.ts
+│   │   ├── plan-exercise-catalog.ts
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-get.ts
 │   │   ├── plan-list.ts
@@ -636,7 +652,6 @@ app/
 │   │   ├── plan-section-cooldown-set.ts
 │   │   ├── plan-section-create.ts
 │   │   ├── plan-section-exercise-instruction-add.ts
-│   │   ├── plan-section-exercise-instruction-exercise-change.ts
 │   │   ├── plan-section-exercise-instruction-move.ts
 │   │   ├── plan-section-exercise-instruction-remove.ts
 │   │   ├── plan-section-exercise-instruction-update.ts
@@ -726,6 +741,7 @@ infra/
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-owner-count.adapter.ts
 │   │   ├── get-plan.adapter.ts
+│   │   ├── list-exercise-catalog.adapter.ts
 │   │   ├── list-plans.adapter.ts
 │   │   └── plan-repository.adapter.ts
 │   ├── preferences

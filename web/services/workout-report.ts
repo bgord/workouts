@@ -1,6 +1,6 @@
 import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-workout";
+import { ResistanceFormat } from "../kits/resistance.format";
 import { DateFormat } from "./date-format";
-import { WeightFormat } from "./weight-format";
 
 export class WorkoutReport {
   static create(
@@ -11,7 +11,7 @@ export class WorkoutReport {
     const rows = workout.exercises.flatMap((exercise) =>
       exercise.loggedSets.map(
         (loggedSet) =>
-          `| ${exercise.exerciseName} | ${loggedSet.setNumber} | ${loggedSet.reps} | ${WeightFormat.kilograms(loggedSet.load)} | ${loggedSet.rir ?? "not recorded"} |`,
+          `| ${exercise.exerciseName} | ${loggedSet.setNumber} | ${loggedSet.reps} | ${ResistanceFormat[exercise.resistance].report(loggedSet.load)} | ${loggedSet.rir ?? "not recorded"} |`,
       ),
     );
 

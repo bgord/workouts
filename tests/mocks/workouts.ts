@@ -2,6 +2,7 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Exercises from "+exercises";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import { userId } from "./auth";
@@ -12,6 +13,7 @@ import {
   exerciseId,
   exerciseImageEtag,
   exerciseName,
+  exerciseResistance,
 } from "./exercises";
 import {
   exerciseInstructionId,
@@ -28,6 +30,7 @@ import {
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
 
 export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");
+export const anotherWorkoutId = v.parse(Workouts.VO.WorkoutId, "3b9d7e21-5c4a-4f6b-8e2d-1a7c9f0b4d58");
 export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
 export const workoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-01");
@@ -52,6 +55,7 @@ export const workoutExerciseDescription = v.parse(
   Workouts.VO.WorkoutExerciseDescription,
   exerciseDescription,
 );
+export const workoutExerciseResistance = v.parse(Workouts.VO.WorkoutExerciseResistance, exerciseResistance);
 
 export const workoutSummary: Workouts.VO.WorkoutSummary = {
   id: workoutId,
@@ -102,6 +106,8 @@ export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
   progression,
 });
 
+export const loadStep = tools.Weight.fromKilograms(2.5);
+
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
 
 export const anotherLoggedSetId = v.parse(Workouts.VO.LoggedSetId, "6a2d0c8f-4b3e-4d9c-8f7a-2b3c4d5e6f70");
@@ -131,6 +137,7 @@ export const loggedSetWithRir = v.parse(Workouts.VO.LoggedSet, {
 export const exercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
+  resistance: workoutExerciseResistance,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -147,12 +154,33 @@ export const exercisePerformance = {
   ],
 };
 
+export const bodyweightExercisePerformance = {
+  workoutId,
+  scheduledFor: workoutScheduledFor,
+  resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
+  sets: [
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 1),
+      reps: v.parse(Workouts.VO.Reps, 12),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+      rir: null,
+    },
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 2),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+      rir: null,
+    },
+  ],
+} satisfies Workouts.Queries.ExercisePerformance;
+
 export const workoutExportRow = {
   workoutId,
   completedAt: T0.ms,
   planName: workoutPlanName,
   planSectionName: workoutPlanSectionName,
   exerciseName: workoutExerciseName,
+  resistance: workoutExerciseResistance,
   setNumber: v.parse(Workouts.VO.SetNumber, 1),
   reps: v.parse(Workouts.VO.Reps, 9),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
@@ -160,8 +188,8 @@ export const workoutExportRow = {
 };
 
 export const workoutCsv = [
-  "workoutId,completedAt,planName,planSectionName,exerciseName,setNumber,reps,load,rir",
-  `${workoutId},${T0.ms},${planName},${planSectionName},${exerciseName},1,9,80000,2`,
+  "workoutId,completedAt,planName,planSectionName,exerciseName,resistance,setNumber,reps,load,rir",
+  `${workoutId},${T0.ms},${planName},${planSectionName},${exerciseName},${exerciseResistance},1,9,80000,2`,
 ].join("");
 
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
@@ -180,6 +208,7 @@ export const workoutExercise: Workouts.VO.WorkoutExercise = {
   id: workoutExerciseId,
   exerciseId,
   exerciseName: workoutExerciseName,
+  resistance: workoutExerciseResistance,
   prescription: exercisePrescription,
   target: exerciseTarget,
   loggedSets: [loggedSet],
@@ -189,6 +218,7 @@ export const workoutExerciseWithoutTarget: Workouts.VO.WorkoutExercise = {
   id: anotherWorkoutExerciseId,
   exerciseId: anotherExerciseId,
   exerciseName: anotherWorkoutExerciseName,
+  resistance: workoutExerciseResistance,
   prescription: exercisePrescription,
   loggedSets: [],
 };
@@ -321,7 +351,7 @@ export const GenericWorkoutExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 3,
+  version: 4,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -330,8 +360,17 @@ export const GenericWorkoutExerciseAddedEvent = {
     exerciseId,
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
+    resistance: workoutExerciseResistance,
     prescription: exercisePrescription,
     requesterId: userId,
+  },
+} satisfies Workouts.Events.WorkoutExerciseAddedEventType;
+
+export const GenericWorkoutExerciseAddedEventBodyweight = {
+  ...GenericWorkoutExerciseAddedEvent,
+  payload: {
+    ...GenericWorkoutExerciseAddedEvent.payload,
+    resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
   },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
@@ -340,7 +379,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 3,
+  version: 4,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -349,6 +388,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
     exerciseId,
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
+    resistance: workoutExerciseResistance,
     prescription: exercisePrescription,
     requesterId: userId,
   },
