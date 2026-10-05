@@ -23,25 +23,29 @@ export function WorkoutSetRow(props: {
       {...ui.Gap.inline}
     >
       <div data-stack="x" {...ui.Gap.related}>
-        <ui.RowIndex data-md-disp={workoutSetCorrect.on ? "none" : undefined}>
-          {props.loggedSet.setNumber}
-        </ui.RowIndex>
+        <div
+          data-cross="baseline"
+          data-grow={workoutSetCorrect.off ? "1" : undefined}
+          data-md-disp={workoutSetCorrect.on ? "none" : undefined}
+          data-stack="x"
+          {...ui.Gap.related}
+        >
+          <ui.RowIndex>{props.loggedSet.setNumber}</ui.RowIndex>
 
-        {workoutSetCorrect.off && (
-          <>
-            <div data-color="neutral-100" data-fw="medium">
-              <ui.SetValue
-                load={props.loggedSet.load}
-                reps={props.loggedSet.reps}
-                resistance={props.exercise.resistance}
-              />
-            </div>
+          {workoutSetCorrect.off && (
+            <>
+              <div data-color="neutral-100" data-fw="medium">
+                <ui.SetValue
+                  load={props.loggedSet.load}
+                  reps={props.loggedSet.reps}
+                  resistance={props.exercise.resistance}
+                />
+              </div>
 
-            <div data-grow="1">
               {props.loggedSet.rir !== null && <ui.RirBadge rir={props.loggedSet.rir} />}
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
 
         <div
           data-grow={workoutSetCorrect.on ? "1" : undefined}

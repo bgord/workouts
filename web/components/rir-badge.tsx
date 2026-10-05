@@ -8,6 +8,7 @@ export function RirBadge(props: { rir: number }) {
   return (
     <span
       data-color={RirColor(props.rir)}
+      data-cross="baseline"
       data-fs="xs"
       data-fw="medium"
       data-stack="x"
@@ -15,7 +16,12 @@ export function RirBadge(props: { rir: number }) {
       title={t("workout.set.rir.title")}
       {...Gap.inline}
     >
-      <span data-bg={RirColor(props.rir)} data-br="circle" style={{ width: 6, height: 6 }} />
+      <span
+        data-bg={RirColor(props.rir)}
+        data-br="circle"
+        data-self="center"
+        style={{ width: 6, height: 6 }}
+      />
       {t("workout.set.rir.label")} {props.rir}
     </span>
   );

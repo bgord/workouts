@@ -55,6 +55,7 @@ export function ExerciseHistoryRow(props: {
         <ul data-stack="y" {...ui.Spacing.inset} {...open.props.target}>
           {props.performance.sets.map((set) => (
             <ui.HairlineRow
+              data-cross="baseline"
               data-stack="x"
               data-wrap="wrap"
               key={set.setNumber}

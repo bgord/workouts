@@ -113,8 +113,8 @@ function LoadHistorySetExtra(props: { set: WeightedExercisePerformanceStatistics
   const language = bg.useLanguage();
 
   return (
-    <small data-stack="x" {...Gap.inline}>
-      <EqualApproximately data-color="neutral-600" data-size="xs" />
+    <small data-cross="baseline" data-stack="x" {...Gap.inline}>
+      <EqualApproximately data-color="neutral-600" data-self="center" data-size="xs" />
       {t("statistics.exercise.one_rep_max_estimate.value", {
         load: WeightFormat.kilograms(props.set.estimate).toLocaleString(language),
       })}
