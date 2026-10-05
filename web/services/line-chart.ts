@@ -1,12 +1,9 @@
 // cSpell:ignore GRIDLINE GRIDLINES
 const WIDTH = 600;
 const HEIGHT = 200;
-const PADDING = { top: 12, right: 0, bottom: 26 };
-const LABEL_FONT_SIZE = 11;
-const LABEL_CHAR_WIDTH = LABEL_FONT_SIZE * 0.6;
+const PADDING = { top: 8, right: 6, bottom: 8, left: 6 };
 const SCALE_MARGIN = 1;
 const GRIDLINES_LIMIT = 5;
-const GRIDLINE_LABEL_GAP = 8;
 const COORDINATE_PRECISION = 10;
 
 const round = (coordinate: number) => Math.round(coordinate * COORDINATE_PRECISION) / COORDINATE_PRECISION;
@@ -16,8 +13,6 @@ export type LineChartLayout = ReturnType<typeof LineChartMath.layout>;
 export const LineChartMath = {
   WIDTH,
   HEIGHT,
-  LABEL_FONT_SIZE,
-  DATE_LABEL_BASELINE: HEIGHT - 6,
   AREA_OPACITY: 0.08,
   MINIMAL_POINTS: 2,
 
@@ -33,15 +28,12 @@ export const LineChartMath = {
       return { value, text: format(value) };
     });
 
-    const left =
-      Math.max(...labels.map((label) => label.text.length)) * LABEL_CHAR_WIDTH + GRIDLINE_LABEL_GAP;
-
     const plot = {
       top: PADDING.top,
       right: WIDTH - PADDING.right,
       bottom: HEIGHT - PADDING.bottom,
-      left,
-      width: WIDTH - left - PADDING.right,
+      left: PADDING.left,
+      width: WIDTH - PADDING.left - PADDING.right,
       height: HEIGHT - PADDING.top - PADDING.bottom,
     };
 

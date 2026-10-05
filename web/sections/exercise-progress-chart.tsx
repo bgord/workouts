@@ -28,13 +28,12 @@ export function ExerciseProgressChart() {
         </h3>
       </div>
 
-      <ui.LineChart aria-label={t("statistics.exercise.progress")}>
-        <ui.LineChartGrid
-          end={performances.at(-1)!.scheduledFor}
-          layout={layout}
-          start={performances[0]!.scheduledFor}
-        />
-
+      <ui.LineChart
+        aria-label={t("statistics.exercise.progress")}
+        end={DateFormat.plainDay(language, performances.at(-1)!.scheduledFor)}
+        layout={layout}
+        start={DateFormat.plainDay(language, performances[0]!.scheduledFor)}
+      >
         <ui.LineChartArea layout={layout} />
 
         {layout.points.map((point, index) => {

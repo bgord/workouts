@@ -75,13 +75,12 @@ export function BodyWeightProgressChart() {
         </ui.IconButton>
       </div>
 
-      <ui.LineChart aria-label={t("measurements.body_weight.progress")}>
-        <ui.LineChartGrid
-          end={DateFormat.plainDay(language, chart.at(-1)!.to)}
-          layout={layout}
-          start={DateFormat.plainDay(language, chart[0]!.from)}
-        />
-
+      <ui.LineChart
+        aria-label={t("measurements.body_weight.progress")}
+        end={DateFormat.plainDay(language, chart.at(-1)!.to)}
+        layout={layout}
+        start={DateFormat.plainDay(language, chart[0]!.from)}
+      >
         {reference && (
           <g data-color="brand-300" stroke="currentColor" strokeDasharray="4 4">
             <title>{t("measurements.body_weight.stats.since_reference")}</title>

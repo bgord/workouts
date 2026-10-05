@@ -162,3 +162,33 @@ body:has([data-log-panel]) {
     animation: none;
   }
 }
+
+.line-chart {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-1) var(--spacing-2);
+  color: var(--color-neutral-500);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+.line-chart-axis {
+  position: relative;
+}
+.line-chart-axis > [data-sizer] {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  white-space: nowrap;
+}
+.line-chart-axis > [data-tick] {
+  position: absolute;
+  inset-inline-end: 0;
+  translate: 0 -50%;
+  white-space: nowrap;
+}
+.line-chart-dates {
+  display: flex;
+  grid-column: 2;
+  justify-content: space-between;
+}
