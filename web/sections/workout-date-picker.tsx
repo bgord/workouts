@@ -38,7 +38,15 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
             </ui.ChipButton>
           ))}
 
-          <ui.ChipButton onClick={custom.enable} pressed={custom.on} {...custom.props.controller}>
+          <ui.ChipButton
+            onClick={() => {
+              if (custom.on) return;
+              custom.enable();
+              field.set(DateFormat.addDays(today, predefined.length));
+            }}
+            pressed={custom.on}
+            {...custom.props.controller}
+          >
             <CalendarDays data-size="xs" />
             {t("workout.create.when.custom")}
           </ui.ChipButton>

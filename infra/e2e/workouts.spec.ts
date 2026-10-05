@@ -1,5 +1,6 @@
 // cSpell:ignore unpresses
 import * as fixtures from "../../scripts/seed/fixtures";
+import { DateFormat } from "../../web/services/date-format";
 import { expect, test } from "./test";
 
 test.describe("Workouts - empty", () => {
@@ -117,6 +118,7 @@ test.describe("Workouts - athlete", () => {
     await expect(dialog.getByRole("radio")).toHaveCount(3);
     await expect(dialog.getByRole("radio").first()).toBeChecked();
     await expect(dialog.getByRole("textbox", { name: "Date" })).toBeHidden();
+    await expect(dialog.getByRole("button", { name: "Today" })).toHaveAttribute("aria-pressed", "true");
 
     await dialog.getByRole("button", { name: "Tomorrow" }).click();
 
@@ -124,7 +126,9 @@ test.describe("Workouts - athlete", () => {
 
     await dialog.getByRole("button", { name: "Other" }).click();
 
-    await expect(dialog.getByRole("textbox", { name: "Date" })).toBeVisible();
+    await expect(dialog.getByRole("textbox", { name: "Date" })).toHaveValue(
+      DateFormat.addDays(DateFormat.todayISO(), 3),
+    );
     await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "false");
   });
 
