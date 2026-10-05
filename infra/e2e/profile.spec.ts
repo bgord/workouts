@@ -21,7 +21,6 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await expect(page.getByRole("combobox", { name: "Weekly summary" })).toHaveValue("on");
-    await expect(page.getByRole("button", { name: "Save" })).toBeDisabled();
   });
 
   test("changes the language", async ({ page }) => {

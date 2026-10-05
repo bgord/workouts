@@ -4,6 +4,7 @@ import { expect, test } from "./test";
 
 test.describe("Profile - polyglot-mutation", () => {
   test.use({ storageState: ".auth/polyglot-mutation.json" });
+  test.describe.configure({ mode: "serial" });
 
   test("turns the weekly summary on", async ({ page }) => {
     await page.goto("/profile");
