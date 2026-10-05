@@ -128,6 +128,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await expect(page.getByRole("button", { name: "82 kg" })).toBeVisible();
     await expect(page.getByRole("button", { name: "81.5 kg" })).toBeHidden();
+    await expect(page.getByRole("spinbutton", { name: "Weight (kg)" })).toHaveValue("82");
 
     await page.reload();
 

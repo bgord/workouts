@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
+import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { bodyWeightRoute } from "../router";
 import { DateFormat } from "../services/date-format";
@@ -8,17 +9,23 @@ import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 export function BodyWeightMeasure() {
-  const t = bg.useTranslations();
-  const router = useRouter();
   const { bodyWeightStats } = bodyWeightRoute.useLoaderData();
 
   const latest = bodyWeightStats?.latest;
+
+  return <BodyWeightMeasureForm key={latest?.weight} latest={latest} />;
+}
+
+function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefined }) {
+  const t = bg.useTranslations();
+  const router = useRouter();
+
   const today = DateFormat.todayISO();
 
   const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
   const weight = bg.useNumberField({
     name: "body-weight",
-    defaultValue: latest ? WeightFormat.kilograms(latest.weight, BodyWeightDecimals) : undefined,
+    defaultValue: props.latest ? WeightFormat.kilograms(props.latest.weight, BodyWeightDecimals) : undefined,
   });
 
   bg.useShortcuts({
