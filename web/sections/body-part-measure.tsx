@@ -110,14 +110,18 @@ export function BodyPartMeasure(props: BodyPartSummary) {
 
               <small data-color="neutral-600" data-cross="center" data-stack="x" {...ui.Gap.inline}>
                 {t("measurements.body_parts.measure.change")}
-                {latest && value.changed && !value.empty ? (
+                {latest && value.changed && !value.empty && (
                   <ui.LengthDelta
                     current={LengthFormat.millimeters(value.value ?? 0)}
                     previous={latest.value}
                   />
-                ) : (
-                  <span>—</span>
                 )}
+                {latest && value.unchanged && (
+                  <span>
+                    <ui.LengthValue millimeters={0} />
+                  </span>
+                )}
+                {(!latest || value.empty) && <span>—</span>}
               </small>
             </div>
 

@@ -20,6 +20,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
         className="c-card"
         data-grow="1"
         data-hover-bc="brand-500"
+        data-position="relative"
         params={{ exerciseId: props.id }}
         title={props.name}
         to="/catalog/exercise/$exerciseId"
@@ -34,7 +35,7 @@ export function ExerciseCard(props: ExerciseWithCategories) {
           {props.name}
         </h2>
 
-        <Resistance.Badge />
+        <Resistance.Marker />
 
         <ul data-mt="auto" data-overflow="hidden" data-stack="x" {...Gap.cluster}>
           {visible.map((category) => (

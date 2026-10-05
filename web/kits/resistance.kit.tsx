@@ -1,7 +1,7 @@
 import type * as bg from "@bgord/ui";
 import { Form } from "../../app/services/workout-target-form";
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
-import { BodyweightBadge } from "../components/bodyweight-badge";
+import { BodyweightBadge, BodyweightMarker } from "../components/bodyweight-badge";
 import { Stepper } from "../components/stepper";
 import { WeightFormat } from "../services/weight-format";
 
@@ -18,6 +18,7 @@ type LoadFieldProps = {
 type ResistanceKitStrategy = {
   Field: (props: LoadFieldProps) => React.ReactNode;
   Badge: () => React.ReactNode;
+  Marker: () => React.ReactNode;
   payload: (field: LoadField) => number;
   ready: (field: LoadField) => boolean;
 };
@@ -44,12 +45,14 @@ export const ResistanceKit = {
   [ExerciseResistanceOptions.weighted]: {
     Field: LoadStepper,
     Badge: () => null,
+    Marker: () => null,
     payload: (field) => WeightFormat.grams(field.value ?? 0),
     ready: (field) => !field.empty,
   },
   [ExerciseResistanceOptions.bodyweight]: {
     Field: () => null,
     Badge: BodyweightBadge,
+    Marker: BodyweightMarker,
     payload: () => 0,
     ready: () => true,
   },

@@ -101,6 +101,18 @@ test.describe("Body parts - athlete", () => {
     expect((await download).suggestedFilename()).toMatch(/\.csv$/);
   });
 
+  test("shows no change before the new measurement is typed", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` }).click();
+
+    await expect(
+      page
+        .getByRole("dialog", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` })
+        .getByText("0.0 cm", { exact: true }),
+    ).toBeVisible();
+  });
+
   test("shows the error when measuring a body part fails", async ({ page }) => {
     await page.route("**/api/measurements/body-part/*/measure", (route) => route.fulfill({ status: 500 }));
     await page.goto("/measurements/body-parts");
