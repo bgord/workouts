@@ -211,7 +211,7 @@ test.describe("Plans - drafter", () => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
     await page.getByRole("button", { name: "New section" }).click();
-    await page.getByLabel("New section").fill(fixtures.drafter.plan.sections.pull.name);
+    await page.getByLabel("New section").fill(fixtures.drafter.plan.sections.pull.name.toUpperCase());
     await page.getByRole("button", { name: "Save" }).click();
 
     await expect(page.getByText("Could not create a section")).toBeVisible();

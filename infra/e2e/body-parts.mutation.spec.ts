@@ -43,7 +43,7 @@ test.describe("Body parts - empty-mutation", () => {
     await page.goto("/measurements/body-parts");
 
     await page.getByRole("button", { name: "Manage" }).click();
-    await page.getByLabel("Body part name").fill("Neck");
+    await page.getByLabel("Body part name").fill("NECK");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the body part")).toBeVisible();
@@ -121,6 +121,24 @@ test.describe("Body parts - empty-mutation", () => {
 
     await expect(page.getByRole("button", { name: "Measure Neck girth" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Measure Neck", exact: true })).toBeHidden();
+  });
+
+  test("renames the body part changing only the case", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Rename Neck girth", exact: true }).click();
+    await page
+      .getByRole("form", { name: "Rename Neck girth", exact: true })
+      .getByLabel("Body part name")
+      .fill("Neck Girth");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Rename Neck Girth", exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Measure Neck Girth", exact: true })).toBeVisible();
   });
 
   test("deletes the body part", async ({ page }) => {

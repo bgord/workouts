@@ -72,6 +72,22 @@ describe("Plan.renameSection", async () => {
     );
   });
 
+  test("PlanSectionNameIsUniqueForPlan - case insensitive", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCreatedEventSecond,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      plan.renameSection(mocks.planSectionId, mocks.anotherPlanSectionNameLowercase, mocks.userId),
+    ).toThrow(Plans.Invariants.PlanSectionNameIsUniqueForPlan.error);
+  });
+
   test("happy path", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -91,6 +107,23 @@ describe("Plan.renameSection", async () => {
     expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
       { id: mocks.anotherPlanSectionId, name: mocks.thirdPlanSectionName, exerciseInstructions: [] },
       { id: mocks.planSectionId, name: mocks.anotherPlanSectionName, exerciseInstructions: [] },
+    ]);
+  });
+
+  test("happy path - case only", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.renameSection(mocks.planSectionId, mocks.planSectionNameLowercase, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionRenamedEventLowercase]);
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
+      { id: mocks.planSectionId, name: mocks.planSectionNameLowercase, exerciseInstructions: [] },
     ]);
   });
 });

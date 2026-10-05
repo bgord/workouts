@@ -10,7 +10,9 @@ type PlanSectionNameLimitForPlanConfigType = {
 
 class PlanSectionNameIsUniqueForPlanFactory extends bg.Invariant<PlanSectionNameLimitForPlanConfigType> {
   passes(config: PlanSectionNameLimitForPlanConfigType) {
-    return !config.planSections.find((section) => section.name === config.planSectionName);
+    const name = config.planSectionName.toLowerCase();
+
+    return !config.planSections.find((section) => section.name.toLowerCase() === name);
   }
 
   // Stryker disable next-line StringLiteral

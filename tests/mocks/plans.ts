@@ -14,6 +14,7 @@ export const anotherPlanName = v.parse(Plans.VO.PlanName, "Push Pull Legs");
 
 export const planSectionId = v.parse(Plans.VO.PlanSectionId, "a47013e9-23b1-4ce5-ab1e-eb95e5399636");
 export const planSectionName = v.parse(Plans.VO.PlanSectionName, "Push");
+export const planSectionNameLowercase = v.parse(Plans.VO.PlanSectionName, "push");
 
 export const planSectionWarmup = v.parse(
   Plans.VO.PlanSectionWarmup,
@@ -27,6 +28,7 @@ export const planSectionCooldown = v.parse(
 
 export const anotherPlanSectionId = v.parse(Plans.VO.PlanSectionId, "a792b3cd-e519-4db4-8b99-c0b18aadb44b");
 export const anotherPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Push A");
+export const anotherPlanSectionNameLowercase = v.parse(Plans.VO.PlanSectionName, "push a");
 export const thirdPlanSectionId = v.parse(Plans.VO.PlanSectionId, "b0f0f0f7-6a0e-4c58-9a05-2f0c39e4a2f1");
 export const thirdPlanSectionName = v.parse(Plans.VO.PlanSectionName, "Pull");
 
@@ -296,6 +298,11 @@ export const GenericPlanSectionRenamedEvent = {
   commit,
   name: "PLAN_SECTION_RENAMED_EVENT",
   payload: { planId, planSectionId, planSectionName: anotherPlanSectionName, requesterId: userId },
+} satisfies Plans.Events.PlanSectionRenamedEventType;
+
+export const GenericPlanSectionRenamedEventLowercase = {
+  ...GenericPlanSectionRenamedEvent,
+  payload: { planId, planSectionId, planSectionName: planSectionNameLowercase, requesterId: userId },
 } satisfies Plans.Events.PlanSectionRenamedEventType;
 
 export const GenericPlanSectionWarmupSetEvent = {

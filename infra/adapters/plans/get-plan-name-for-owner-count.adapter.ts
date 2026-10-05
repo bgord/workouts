@@ -11,16 +11,19 @@ class GetPlanNameForOwnerCountQueryDrizzle implements Plans.Queries.GetPlanNameF
     userId: Auth.VO.UserIdType,
     excludedPlanId?: Plans.VO.PlanIdType,
   ): Promise<tools.IntegerNonNegativeType> {
-    const count = await db.$count(
-      Schema.plans,
-      and(
-        eq(Schema.plans.name, planName),
-        eq(Schema.plans.userId, userId),
-        excludedPlanId ? ne(Schema.plans.id, excludedPlanId) : undefined,
-      ),
-    );
+    const rows = await db
+      .select({ name: Schema.plans.name })
+      .from(Schema.plans)
+      .where(
+        and(
+          eq(Schema.plans.userId, userId),
+          excludedPlanId ? ne(Schema.plans.id, excludedPlanId) : undefined,
+        ),
+      );
 
-    return tools.Int.nonNegative(count);
+    const name = planName.toLowerCase();
+
+    return tools.Int.nonNegative(rows.filter((row) => row.name.toLowerCase() === name).length);
   }
 }
 

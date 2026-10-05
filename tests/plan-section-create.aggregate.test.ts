@@ -57,6 +57,18 @@ describe("Plan.createSection", async () => {
     );
   });
 
+  test("PlanSectionNameIsUniqueForPlan - case insensitive", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      plan.createSection(mocks.planSectionId, mocks.planSectionNameLowercase, mocks.userId),
+    ).toThrow(Plans.Invariants.PlanSectionNameIsUniqueForPlan.error);
+  });
+
   test("happy path - first", async () => {
     const plan = Plans.Aggregates.Plan.build(mocks.planId, [mocks.GenericPlanCreatedEvent], deps);
 

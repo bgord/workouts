@@ -6,5 +6,6 @@ export interface GetBodyPartNameCount {
   execute(
     userId: Auth.VO.UserIdType,
     bodyPartName: VO.BodyPartNameType,
+    excludedBodyPartId?: VO.BodyPartIdType,
   ): Promise<tools.IntegerNonNegativeType>;
 }

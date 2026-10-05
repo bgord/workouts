@@ -211,6 +211,27 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanSectionNameIsUniqueForPlan - case insensitive", async () => {
+    const events = [...mocks.planWithSectionHistory, mocks.GenericPlanSectionCreatedEventSecond];
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ planSectionName: mocks.anotherPlanSectionNameLowercase }),
+        headers: mocks.headers(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "plan.section.name.is.unique.for.plan");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -251,5 +272,26 @@ describe("POST /api/plans/:planId/section/:planSectionId/rename", async () => {
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionRenamedEvent]);
+  });
+
+  test("happy path - case only", async () => {
+    const events = mocks.planWithSectionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.headers(events.length),
+        body: JSON.stringify({ planSectionName: mocks.planSectionNameLowercase }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionRenamedEventLowercase]);
   });
 });

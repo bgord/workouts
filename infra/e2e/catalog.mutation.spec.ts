@@ -42,7 +42,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByLabel("Category name").fill(fixtures.categories.abs.name);
+    await page.getByLabel("Category name").fill(fixtures.categories.abs.name.toUpperCase());
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the category")).toBeVisible();
@@ -75,7 +75,7 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "New exercise" }).click();
     await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
-    await page.getByLabel("Exercise name").fill(fixtures.exercises.facePull.name);
+    await page.getByLabel("Exercise name").fill(fixtures.exercises.facePull.name.toUpperCase());
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");

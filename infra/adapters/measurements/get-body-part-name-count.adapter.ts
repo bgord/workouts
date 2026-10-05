@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { and, eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Measurements from "+measurements";
 import { db } from "+infra/db";
@@ -9,13 +9,21 @@ class GetBodyPartNameCountQueryDrizzle implements Measurements.Queries.GetBodyPa
   async execute(
     userId: Auth.VO.UserIdType,
     bodyPartName: Measurements.VO.BodyPartNameType,
+    excludedBodyPartId?: Measurements.VO.BodyPartIdType,
   ): Promise<tools.IntegerNonNegativeType> {
-    const count = await db.$count(
-      Schema.bodyParts,
-      and(eq(Schema.bodyParts.userId, userId), eq(Schema.bodyParts.name, bodyPartName)),
-    );
+    const rows = await db
+      .select({ name: Schema.bodyParts.name })
+      .from(Schema.bodyParts)
+      .where(
+        and(
+          eq(Schema.bodyParts.userId, userId),
+          excludedBodyPartId ? ne(Schema.bodyParts.id, excludedBodyPartId) : undefined,
+        ),
+      );
 
-    return tools.Int.nonNegative(count);
+    const name = bodyPartName.toLowerCase();
+
+    return tools.Int.nonNegative(rows.filter((row) => row.name.toLowerCase() === name).length);
   }
 }
 

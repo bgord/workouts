@@ -26,6 +26,7 @@ export const handleBodyPartRenameCommand =
     const count = await deps.GetBodyPartNameCountQuery.execute(
       command.payload.requesterId,
       command.payload.name,
+      command.payload.id,
     );
 
     BodyPartNameIsUnique.enforce({ count });

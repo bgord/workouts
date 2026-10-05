@@ -1,5 +1,5 @@
 import * as tools from "@bgord/tools";
-import { eq } from "drizzle-orm";
+import { ne } from "drizzle-orm";
 import type * as Exercises from "+exercises";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -7,13 +7,18 @@ import * as Schema from "+infra/schema";
 class GetExerciseCategoryNameCountQueryDrizzle implements Exercises.Queries.GetExerciseCategoryNameCount {
   async execute(
     exerciseCategoryName: Exercises.VO.ExerciseCategoryNameType,
+    excludedExerciseCategoryId?: Exercises.VO.ExerciseCategoryIdType,
   ): Promise<tools.IntegerNonNegativeType> {
-    const count = await db.$count(
-      Schema.exerciseCategories,
-      eq(Schema.exerciseCategories.name, exerciseCategoryName),
-    );
+    const rows = await db
+      .select({ name: Schema.exerciseCategories.name })
+      .from(Schema.exerciseCategories)
+      .where(
+        excludedExerciseCategoryId ? ne(Schema.exerciseCategories.id, excludedExerciseCategoryId) : undefined,
+      );
 
-    return tools.Int.nonNegative(count);
+    const name = exerciseCategoryName.toLowerCase();
+
+    return tools.Int.nonNegative(rows.filter((row) => row.name.toLowerCase() === name).length);
   }
 }
 

@@ -150,7 +150,10 @@ export class Plan {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
     this.section(planSectionId).guardRename(planSectionName);
-    Invariants.PlanSectionNameIsUniqueForPlan.enforce({ planSectionName, planSections: this.sections });
+    Invariants.PlanSectionNameIsUniqueForPlan.enforce({
+      planSectionName,
+      planSections: this.sections.filter((section) => section.id !== planSectionId),
+    });
 
     const event = bg.event(
       Events.PlanSectionRenamedEvent,

@@ -22,7 +22,10 @@ export const handleExerciseCategoryRenameCommand =
 
     ExerciseCategoryExists.enforce({ exerciseCategory });
 
-    const count = await deps.GetExerciseCategoryNameCountQuery.execute(command.payload.name);
+    const count = await deps.GetExerciseCategoryNameCountQuery.execute(
+      command.payload.name,
+      command.payload.id,
+    );
 
     ExerciseCategoryNameIsUnique.enforce({ count });
 
