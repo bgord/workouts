@@ -22,9 +22,9 @@ describe("ExercisePerformanceCalculator", async () => {
     ]);
   });
 
-  test("happy path - unloaded", async () => {
+  test("happy path - bodyweight", async () => {
     using _ = spyOn(di.Adapters.Workouts.ListExercisePerformancesQuery, "execute").mockResolvedValue([
-      mocks.unloadedExercisePerformance,
+      mocks.bodyweightExercisePerformance,
     ]);
 
     expect(await calculator.calculate(mocks.userId, mocks.exerciseId)).toEqual([

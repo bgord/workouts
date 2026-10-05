@@ -32,8 +32,3 @@ export const ExerciseStatisticsKit: Record<
   ExerciseResistanceOptions,
   ExerciseStatisticsKitStrategy<ExercisePerformanceStatistics>
 > = kit;
-
-export const performancesOf = (
-  resistance: ExerciseResistanceOptions,
-  performances: ReadonlyArray<ExercisePerformanceStatistics>,
-) => performances.filter((performance) => performance.resistance === resistance);

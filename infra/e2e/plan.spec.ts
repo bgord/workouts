@@ -55,7 +55,7 @@ test.describe("Plan - builder", () => {
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeHidden();
   });
 
-  test("marks an exercise instruction without load", async ({ page }) => {
+  test("marks a bodyweight exercise instruction", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
 
@@ -67,7 +67,7 @@ test.describe("Plan - builder", () => {
     ).not.toContainText("Bodyweight");
   });
 
-  test("offers only the applicable progressions for an exercise without load", async ({ page }) => {
+  test("offers only the applicable progressions for a bodyweight exercise", async ({ page }) => {
     const progression = page.getByRole("combobox", { name: "Progression" });
 
     await page.goto(`/plans/${fixtures.builder.plan.id}`);

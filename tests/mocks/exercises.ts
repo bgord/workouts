@@ -35,7 +35,10 @@ export const exercise: Exercises.VO.Exercise = {
   imageEtag: exerciseImageEtag,
 };
 
-export const unloadedExercise: Exercises.VO.Exercise = { ...exercise, resistance: anotherExerciseResistance };
+export const bodyweightExercise: Exercises.VO.Exercise = {
+  ...exercise,
+  resistance: anotherExerciseResistance,
+};
 
 export const exerciseCategoryId = v.parse(
   Exercises.VO.ExerciseCategoryId,
@@ -95,7 +98,6 @@ export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
   actions: {
     update: actionAvailable,
     imageChange: actionAvailable,
-    resistanceChange: actionAvailable,
     delete: actionAvailable,
     categoryAssign: actionAvailable,
     categoryUnassign: actionAvailable,
@@ -123,17 +125,6 @@ export const GenericExerciseAddedEvent = {
     userId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseAddedEventType;
-
-export const GenericExerciseResistanceChangedEvent = {
-  id: expectAnyId,
-  correlationId,
-  createdAt: T0.ms,
-  stream: exerciseStream,
-  version: 1,
-  commit,
-  name: "EXERCISE_RESISTANCE_CHANGED_EVENT",
-  payload: { id: exerciseId, resistance: anotherExerciseResistance, requesterId: Auth.VO.ADMIN_USER_ID },
-} satisfies Exercises.Events.ExerciseResistanceChangedEventType;
 
 export const GenericExerciseDeletedEvent = {
   id: expectAnyId,

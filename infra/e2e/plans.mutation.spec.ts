@@ -522,7 +522,7 @@ test.describe("Plans - drafter", () => {
     ).toBeHidden();
   });
 
-  test("changes the exercise of a linear instruction to one without load", async ({ page }) => {
+  test("changes the exercise of a linear instruction to a bodyweight one", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
@@ -552,7 +552,7 @@ test.describe("Plans - drafter", () => {
     await expect(row).toContainText("Bodyweight");
   });
 
-  test("changes the exercise without load to a linear one", async ({ page }) => {
+  test("changes the bodyweight exercise to a linear one", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.legCurlLying.name, exact: true });
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);

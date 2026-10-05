@@ -23,7 +23,6 @@ export class ExerciseGetActions {
     return {
       update: bg.ActionState.of(managed),
       imageChange: bg.ActionState.of(managed),
-      resistanceChange: bg.ActionState.of(managed),
       delete: bg.ActionState.of(managed, [
         bg.ActionBlocker.from(ExerciseIsNotUsed, { count: this.facts.usageCount }),
       ]),

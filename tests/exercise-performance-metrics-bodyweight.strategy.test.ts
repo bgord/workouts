@@ -9,7 +9,7 @@ describe("ExercisePerformanceMetricsBodyweightStrategy", () => {
   test("happy path", () => {
     const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
 
-    const result = strategy.calculate(mocks.unloadedExercisePerformance);
+    const result = strategy.calculate(mocks.bodyweightExercisePerformance);
 
     expect(result).toEqual(mocks.calculatedRepsExercisePerformance);
   });
@@ -18,7 +18,7 @@ describe("ExercisePerformanceMetricsBodyweightStrategy", () => {
     const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
 
     const result = strategy.calculate({
-      ...mocks.unloadedExercisePerformance,
+      ...mocks.bodyweightExercisePerformance,
       sets: [
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),

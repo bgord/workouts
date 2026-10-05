@@ -90,8 +90,6 @@
   "exercise.category.rename.error": "Nie udało się zmienić nazwy kategorii",
   "exercise.category.rename.label": "Nazwa kategorii",
   "exercise.category.unassign.cta": "Odłącz {{name}}",
-  "exercise.resistance.change.cta": "Zmień rodzaj obciążenia",
-  "exercise.resistance.change.error": "Nie udało się zmienić rodzaju obciążenia",
   "exercise.resistance.weighted": "Z ciężarem",
   "exercise.resistance.weighted.hint": "Zapisuj ciężar każdej serii",
   "exercise.resistance.label": "Rodzaj obciążenia",

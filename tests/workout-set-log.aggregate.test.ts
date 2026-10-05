@@ -84,7 +84,7 @@ describe("Workout.logSet", async () => {
       mocks.workoutId,
       [
         mocks.GenericWorkoutCreatedEvent,
-        mocks.GenericWorkoutExerciseAddedEventUnloaded,
+        mocks.GenericWorkoutExerciseAddedEventBodyweight,
         mocks.GenericWorkoutExerciseTargetSetEvent,
         mocks.GenericWorkoutStartedEvent,
       ],

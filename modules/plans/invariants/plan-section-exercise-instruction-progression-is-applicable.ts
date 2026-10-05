@@ -5,14 +5,12 @@ import * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionProgressionIsApplicableError extends Error {}
 
 type PlanSectionExerciseInstructionProgressionIsApplicableConfigType = {
-  resistance: Exercises.VO.ExerciseResistanceType | null;
+  resistance: Exercises.VO.ExerciseResistanceType;
   progression: VO.ProgressionMethodType;
 };
 
 class PlanSectionExerciseInstructionProgressionIsApplicableFactory extends bg.Invariant<PlanSectionExerciseInstructionProgressionIsApplicableConfigType> {
   passes(config: PlanSectionExerciseInstructionProgressionIsApplicableConfigType) {
-    if (config.resistance === null) return true;
-
     return VO.ProgressionMethodApplicability[config.resistance].includes(config.progression);
   }
 

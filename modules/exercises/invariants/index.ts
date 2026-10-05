@@ -9,4 +9,3 @@ export * from "./exercise-is-assigned-to-category";
 export * from "./exercise-is-not-assigned-to-category";
 export * from "./exercise-is-not-used";
 export * from "./exercise-name-is-unique";
-export * from "./exercise-resistance-has-changed";

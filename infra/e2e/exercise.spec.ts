@@ -54,11 +54,10 @@ test.describe("Exercise - athlete", () => {
     await expect(history.getByRole("img", { name: "1RM" })).toHaveCount(1);
   });
 
-  test("shows the reps stats of an exercise without load", async ({ page }) => {
+  test("shows the reps stats of a bodyweight exercise", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
 
     await expect(page.getByText("Bodyweight", { exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Bodyweight", exact: true })).toBeHidden();
     await expect(
       page.getByRole("listitem", { name: "Sessions" }).getByText("8", { exact: true }),
     ).toBeVisible();
@@ -67,7 +66,7 @@ test.describe("Exercise - athlete", () => {
     await expect(page.getByRole("link", { name: /^1RM/ })).toBeHidden();
   });
 
-  test("shows the reps progress chart of an exercise without load", async ({ page }) => {
+  test("shows the reps progress chart of a bodyweight exercise", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
 
     const chart = page.getByRole("img", { name: "Progress" });
@@ -76,7 +75,7 @@ test.describe("Exercise - athlete", () => {
     await expect(chart.getByRole("link")).toHaveCount(8);
   });
 
-  test("lists the history of an exercise without load", async ({ page }) => {
+  test("lists the history of a bodyweight exercise", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
 
     const history = page.getByRole("list", { name: "History" });
@@ -199,21 +198,6 @@ test.describe("Exercise - admin", () => {
     await page.reload();
 
     await expect(image).toHaveAttribute("src", before ?? "");
-  });
-
-  test("shows the error when changing the resistance fails", async ({ page }) => {
-    await page.route("**/api/exercises/*/resistance", (route) => route.fulfill({ status: 500 }));
-    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
-
-    await page.getByRole("button", { name: "Weighted", exact: true }).click();
-    await page.getByText("Bodyweight", { exact: true }).click();
-    await page.getByRole("button", { name: "Save", exact: true }).click();
-
-    await expect(page.getByText("Could not change the load")).toBeVisible();
-
-    await page.reload();
-
-    await expect(page.getByRole("button", { name: "Weighted", exact: true })).toBeVisible();
   });
 
   test("shows the error when deleting an exercise fails", async ({ page }) => {

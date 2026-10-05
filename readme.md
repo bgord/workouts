@@ -75,7 +75,6 @@ modules/
 │   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
-│   │   ├── handleExerciseResistanceChangeCommand.ts
 │   │   ├── handleExerciseUnassignCategoryCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
@@ -86,7 +85,6 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
-│   │   ├── EXERCISE_RESISTANCE_CHANGE_COMMAND.ts
 │   │   ├── EXERCISE_UNASSIGN_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
 │   ├── events
@@ -98,7 +96,6 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_UNASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
-│   │   ├── EXERCISE_RESISTANCE_CHANGED_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
 │   │   ├── catalog-is-managed-by-admin.ts
@@ -112,7 +109,6 @@ modules/
 │   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-is-not-used.ts
 │   │   ├── exercise-name-is-unique.ts
-│   │   ├── exercise-resistance-has-changed.ts
 │   ├── open-host-queries
 │   ├── policies
 │   │   ├── exercise-deleter.ts
@@ -617,7 +613,6 @@ app/
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
-│   │   ├── exercise-resistance-change.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements

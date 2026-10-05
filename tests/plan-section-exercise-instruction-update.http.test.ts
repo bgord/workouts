@@ -224,6 +224,37 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
+    const events = mocks.planWithExerciseInstructionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
+      .mockResolvedValue(mocks.bodyweightExercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        body: JSON.stringify({
+          ...mocks.anotherExerciseInstructionAndExercise,
+          progression: mocks.anotherProgression,
+        }),
+        headers: mocks.headers(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(
+      response,
+      403,
+      "plan.section.exercise.instruction.progression.is.applicable",
+    );
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("PlanIsEditable - archived", async () => {
     const events = mocks.planArchivedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -356,37 +387,6 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
-    const events = mocks.planWithExerciseInstructionHistory;
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
-    spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
-      .mockResolvedValue(mocks.unloadedExercise);
-
-    const response = await server.request(
-      url,
-      {
-        method: "PATCH",
-        body: JSON.stringify({
-          ...mocks.anotherExerciseInstructionAndExercise,
-          progression: mocks.anotherProgression,
-        }),
-        headers: mocks.headers(events.length),
-      },
-      mocks.ip,
-    );
-
-    await testcases.assertErrorResponse(
-      response,
-      403,
-      "plan.section.exercise.instruction.progression.is.applicable",
-    );
-    expect(eventStoreSave).not.toHaveBeenCalled();
-  });
-
   test("revision mismatch", async () => {
     const events = mocks.planWithExerciseInstructionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -461,7 +461,7 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
     spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
-      .mockResolvedValue(mocks.unloadedExercise);
+      .mockResolvedValue(mocks.bodyweightExercise);
 
     const response = await server.request(
       url,

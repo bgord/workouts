@@ -16,7 +16,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -29,7 +28,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -42,7 +40,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
-        mocks.exerciseResistance,
         mocks.anotherUserId,
       ),
     ).toThrow(Plans.Invariants.PlanBelongsToUser.error);
@@ -59,7 +56,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.anotherPlanSectionId,
         mocks.anotherExerciseInstruction,
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
@@ -82,7 +78,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
@@ -101,26 +96,8 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     );
 
     expect(() =>
-      plan.updateSectionExerciseInstruction(
-        mocks.planSectionId,
-        mocks.exerciseInstruction,
-        mocks.exerciseResistance,
-        mocks.userId,
-      ),
+      plan.updateSectionExerciseInstruction(mocks.planSectionId, mocks.exerciseInstruction, mocks.userId),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionHasChanged.error);
-  });
-
-  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planWithExerciseInstructionHistory, deps);
-
-    expect(() =>
-      plan.updateSectionExerciseInstruction(
-        mocks.planSectionId,
-        { ...mocks.anotherExerciseInstructionAndExercise, progression: mocks.anotherProgression },
-        mocks.anotherExerciseResistance,
-        mocks.userId,
-      ),
-    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionProgressionIsApplicable.error);
   });
 
   test("happy path", async () => {
@@ -138,7 +115,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstruction,
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     );
@@ -170,7 +146,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         { ...exerciseInstruction, exerciseId: mocks.exerciseId },
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     );
@@ -222,7 +197,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         { ...exerciseInstruction, exerciseId: mocks.exerciseId },
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     );
@@ -259,7 +233,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         { ...exerciseInstruction, exerciseId: mocks.exerciseId },
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     );
@@ -296,7 +269,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         { ...exerciseInstruction, exerciseId: mocks.exerciseId },
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     );
@@ -330,7 +302,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
-        mocks.exerciseResistance,
         mocks.userId,
       ),
     );
@@ -364,7 +335,6 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       plan.updateSectionExerciseInstruction(
         mocks.planSectionId,
         { ...mocks.anotherExerciseInstruction, exerciseId: mocks.anotherExerciseId },
-        mocks.anotherExerciseResistance,
         mocks.userId,
       ),
     );

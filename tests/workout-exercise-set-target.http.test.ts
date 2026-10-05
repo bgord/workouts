@@ -201,7 +201,7 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
   });
 
   test("WorkoutExerciseLoadIsApplicable", async () => {
-    const events = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEventUnloaded];
+    const events = [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEventBodyweight];
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();

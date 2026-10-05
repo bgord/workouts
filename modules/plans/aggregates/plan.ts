@@ -2,7 +2,6 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Auth from "+auth";
-import type * as Exercises from "+exercises";
 import * as Entities from "+plans/entities";
 import * as Events from "+plans/events";
 import * as Invariants from "+plans/invariants";
@@ -344,13 +343,12 @@ export class Plan {
   updateSectionExerciseInstruction(
     planSectionId: VO.PlanSectionIdType,
     exerciseInstruction: VO.ExerciseInstructionType,
-    resistance: Exercises.VO.ExerciseResistanceType,
     requesterId: Auth.VO.UserIdType,
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
     const section = this.section(planSectionId);
-    section.guardInstructionUpdate(exerciseInstruction, resistance);
+    section.guardInstructionUpdate(exerciseInstruction);
 
     const { exerciseId, ...prescription } = exerciseInstruction;
     const exerciseChanged = section.instructionExerciseChanged(exerciseInstruction);

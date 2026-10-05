@@ -256,22 +256,6 @@ test.describe("Catalog - admin", () => {
     await expect(image).not.toHaveAttribute("src", before ?? "");
   });
 
-  test("changes the exercise resistance", async ({ page }) => {
-    await page.goto("/catalog");
-    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
-    await page.getByRole("link", { name: /Neck flexion/ }).click();
-
-    await page.getByRole("button", { name: "Bodyweight", exact: true }).click();
-    await page.getByText("Weighted", { exact: true }).click();
-    await page.getByRole("button", { name: "Save", exact: true }).click();
-
-    await expect(page.getByRole("button", { name: "Weighted", exact: true })).toBeVisible();
-
-    await page.reload();
-
-    await expect(page.getByRole("button", { name: "Weighted", exact: true })).toBeVisible();
-  });
-
   test("unassigns the category from the exercise", async ({ page }) => {
     await page.goto("/catalog");
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");

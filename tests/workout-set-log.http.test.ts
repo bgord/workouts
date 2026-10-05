@@ -204,7 +204,7 @@ describe("POST /api/workouts/:workoutId/exercise/:workoutExerciseId/set", async 
   test("WorkoutExerciseLoadIsApplicable", async () => {
     const events = [
       mocks.GenericWorkoutCreatedEvent,
-      mocks.GenericWorkoutExerciseAddedEventUnloaded,
+      mocks.GenericWorkoutExerciseAddedEventBodyweight,
       mocks.GenericWorkoutExerciseTargetSetEvent,
       mocks.GenericWorkoutStartedEvent,
     ];

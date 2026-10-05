@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { CalendarCheck } from "lucide-react";
 import * as ui from "../components";
-import { ExerciseStatisticsKit, performancesOf } from "../kits/exercise-statistics.kit";
+import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
 
 export function ExerciseStats() {
@@ -16,7 +16,7 @@ export function ExerciseStats() {
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
-      <Statistics.Tiles performances={performancesOf(exercise.data.resistance, performances)} />
+      <Statistics.Tiles performances={performances} />
 
       <ui.Tile>
         <ui.TileHeader>

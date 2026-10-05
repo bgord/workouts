@@ -14,7 +14,7 @@ test.describe("Catalog - athlete", () => {
     ).toBeVisible();
   });
 
-  test("marks an exercise without load", async ({ page }) => {
+  test("marks a bodyweight exercise", async ({ page }) => {
     await page.goto("/catalog");
 
     await expect(page.getByRole("link", { name: fixtures.exercises.hangingLegRaise.name })).toContainText(

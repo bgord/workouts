@@ -694,7 +694,7 @@ test.describe("Workouts - active-mutation", () => {
     ).toBeHidden();
   });
 
-  test("adds an exercise without load with the applicable progressions only", async ({ page }) => {
+  test("adds a bodyweight exercise with the applicable progressions only", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
     const progression = page.getByRole("combobox", { name: "Progression" });
 
@@ -751,7 +751,7 @@ test.describe("Workouts - hanger", () => {
   test.use({ storageState: ".auth/hanger.json" });
   test.describe.configure({ mode: "serial" });
 
-  test("summarizes the previous session without load", async ({ page }) => {
+  test("summarizes the previous bodyweight session", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
 
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
@@ -774,7 +774,7 @@ test.describe("Workouts - hanger", () => {
     await expect(suggestion.getByRole("button", { name: /^\+/ })).toHaveCount(0);
   });
 
-  test("sets a target without load", async ({ page }) => {
+  test("sets a bodyweight target", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
 
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
@@ -800,7 +800,7 @@ test.describe("Workouts - hanger", () => {
     await expect(page.getByText("In progress", { exact: true })).toBeVisible();
   });
 
-  test("logs a set without load", async ({ page }) => {
+  test("logs a bodyweight set", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
@@ -825,7 +825,7 @@ test.describe("Workouts - hanger", () => {
     await expect(row.getByText("15", { exact: true })).toBeVisible();
   });
 
-  test("corrects a set without load", async ({ page }) => {
+  test("corrects a bodyweight set", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
     const form = row.getByRole("form", { name: "Correct set 1" });
 
@@ -853,7 +853,7 @@ test.describe("Workouts - hanger", () => {
     await expect(page.getByText("Completed", { exact: true })).toBeVisible();
   });
 
-  test("copies the completed workout without load", async ({ page, context }) => {
+  test("copies the completed bodyweight workout", async ({ page, context }) => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
 

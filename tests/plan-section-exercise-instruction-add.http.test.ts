@@ -211,7 +211,7 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
-      .mockResolvedValue(mocks.unloadedExercise);
+      .mockResolvedValue(mocks.bodyweightExercise);
     spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
 
     const response = await server.request(

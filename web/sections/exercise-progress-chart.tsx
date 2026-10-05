@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import * as ui from "../components";
-import { ExerciseStatisticsKit, performancesOf } from "../kits/exercise-statistics.kit";
+import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { LineChartMath } from "../services/line-chart";
@@ -9,9 +9,8 @@ import { LineChartMath } from "../services/line-chart";
 export function ExerciseProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const { exercise, ...data } = exerciseRoute.useLoaderData();
+  const { exercise, performances } = exerciseRoute.useLoaderData();
   const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
-  const performances = performancesOf(exercise.data.resistance, data.performances);
 
   if (performances.length < LineChartMath.MINIMAL_POINTS) return null;
 

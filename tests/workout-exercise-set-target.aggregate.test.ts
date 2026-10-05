@@ -54,7 +54,7 @@ describe("Workout.setExerciseTarget", async () => {
   test("WorkoutExerciseLoadIsApplicable", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
-      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEventUnloaded],
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEventBodyweight],
       deps,
     );
 

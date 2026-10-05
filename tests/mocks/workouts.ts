@@ -153,7 +153,7 @@ export const exercisePerformance = {
   ],
 };
 
-export const unloadedExercisePerformance = {
+export const bodyweightExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
   resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
@@ -365,7 +365,7 @@ export const GenericWorkoutExerciseAddedEvent = {
   },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
-export const GenericWorkoutExerciseAddedEventUnloaded = {
+export const GenericWorkoutExerciseAddedEventBodyweight = {
   ...GenericWorkoutExerciseAddedEvent,
   payload: {
     ...GenericWorkoutExerciseAddedEvent.payload,

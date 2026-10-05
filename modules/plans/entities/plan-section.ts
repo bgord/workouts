@@ -32,10 +32,7 @@ export class PlanSection implements VO.PlanSection {
     Invariants.PlanSectionExerciseInstructionExists.enforce({ planSection: this, exerciseInstructionId });
   }
 
-  guardInstructionUpdate(
-    exerciseInstruction: VO.ExerciseInstructionType,
-    resistance: Exercises.VO.ExerciseResistanceType,
-  ) {
+  guardInstructionUpdate(exerciseInstruction: VO.ExerciseInstructionType) {
     this.guardInstructionExists(exerciseInstruction.id);
     if (!this.instructionExerciseChanged(exerciseInstruction)) {
       Invariants.PlanSectionExerciseInstructionHasChanged.enforce({
@@ -43,10 +40,6 @@ export class PlanSection implements VO.PlanSection {
         incoming: exerciseInstruction,
       });
     }
-    Invariants.PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
-      resistance,
-      progression: exerciseInstruction.progression,
-    });
   }
 
   guardInstructionMove(
