@@ -25,7 +25,7 @@ export async function bootstrap() {
   const Measurements = createMeasurementsAdapters();
   const Notifications = createNotificationsAdapters();
 
-  const { JobQueue, JobQueueStatsProvider, JobPruner } = await createJobQueue(Env, {
+  const { JobQueue, JobDispatcher, JobQueueStatsProvider, JobPruner } = await createJobQueue(Env, {
     ...System,
     ...Tools,
     GetWeeklySummaryStatusQuery: Notifications.GetWeeklySummaryStatusQuery,
@@ -39,7 +39,7 @@ export async function bootstrap() {
   return {
     Env,
     Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts, Measurements, Notifications },
-    Tools: { ...Tools, JobQueue, JobQueueStatsProvider, JobPruner },
+    Tools: { ...Tools, JobQueue, JobDispatcher, JobQueueStatsProvider, JobPruner },
   };
 }
 

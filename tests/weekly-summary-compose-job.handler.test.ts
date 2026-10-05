@@ -18,7 +18,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     {
       ...di.Adapters.System,
       ...di.Tools,
-      JobDispatcher: di.Tools.JobQueue,
+      JobDispatcher: di.Tools.JobDispatcher,
       GetWeeklySummaryStatusQuery: di.Adapters.Notifications.GetWeeklySummaryStatusQuery,
       WeeklySummaryOHQ: di.Adapters.Preferences.GetWeeklySummaryQuery,
       UserContactOHQ: di.Adapters.Auth.UserContactOHQ,
@@ -37,7 +37,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       ),
     );
     using preference = spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute");
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
     await handler(mocks.GenericWeeklySummaryComposeJob);
@@ -58,7 +58,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       ),
     );
     using contact = spyOn(di.Adapters.Auth.UserContactOHQ, "getPrimary");
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
     await handler(mocks.GenericWeeklySummaryComposeJob);
@@ -80,7 +80,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     );
     spies.use(spyOn(di.Adapters.Auth.UserContactOHQ, "getPrimary").mockResolvedValue(undefined));
     using workouts = spyOn(di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery, "execute");
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
     await handler(mocks.GenericWeeklySummaryComposeJob);
@@ -105,7 +105,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     spies.use(
       spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
     );
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
@@ -136,7 +136,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
     spies.use(
       spyOn(di.Adapters.Measurements.ListBodyWeightMeasurementsQuery, "execute").mockResolvedValue([]),
     );
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using render = spyOn(WeeklySummaryEmailRenderer, "render");
 

@@ -33,7 +33,6 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
   new Exercises.Policies.ExerciseDeleter(deps);
   new Notifications.Policies.WeeklySummaryScheduler({
     ...deps,
-    JobDispatcher: Tools.JobQueue,
     UserDirectoryOHQ: Adapters.Auth.UserDirectoryOHQ,
   });
 }

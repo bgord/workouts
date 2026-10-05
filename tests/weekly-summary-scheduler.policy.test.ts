@@ -9,12 +9,12 @@ describe("WeeklySummaryScheduler", async () => {
   const policy = new Notifications.Policies.WeeklySummaryScheduler({
     ...di.Tools,
     ...di.Adapters.System,
-    JobDispatcher: di.Tools.JobQueue,
+    JobDispatcher: di.Tools.JobDispatcher,
     UserDirectoryOHQ: di.Adapters.Auth.UserDirectoryOHQ,
   });
 
   test("onHourHasPassedEvent - outside schedule", async () => {
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using listActiveUserIds = spyOn(di.Adapters.Auth.UserDirectoryOHQ, "listActiveUserIds");
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
@@ -26,7 +26,7 @@ describe("WeeklySummaryScheduler", async () => {
   });
 
   test("onHourHasPassedEvent - no users", async () => {
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using _ = spyOn(di.Adapters.Auth.UserDirectoryOHQ, "listActiveUserIds").mockResolvedValue([]);
 
     await bg.CorrelationStorage.run(mocks.correlationId, async () =>
@@ -37,7 +37,7 @@ describe("WeeklySummaryScheduler", async () => {
   });
 
   test("onHourHasPassedEvent - one failed enqueue does not stop the others", async () => {
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue")
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue")
       .mockRejectedValueOnce(new Error("busy"))
       .mockResolvedValueOnce(mocks.GenericWeeklySummaryComposeJob);
     using loggerError = spyOn(di.Adapters.System.Logger, "error");
@@ -63,7 +63,7 @@ describe("WeeklySummaryScheduler", async () => {
   });
 
   test("onHourHasPassedEvent - one job per user", async () => {
-    using enqueue = spyOn(di.Tools.JobQueue, "enqueue");
+    using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using _ = spyOn(di.Adapters.Auth.UserDirectoryOHQ, "listActiveUserIds").mockResolvedValue([
       mocks.userId,
       mocks.anotherUserId,
