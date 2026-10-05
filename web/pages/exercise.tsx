@@ -49,9 +49,9 @@ export function Exercise() {
         <div data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width} {...ui.Gap.block}>
           <ExerciseCategories />
 
-          <ExerciseDescription />
-
           <ExerciseResistance />
+
+          <ExerciseDescription />
         </div>
       </div>
 
