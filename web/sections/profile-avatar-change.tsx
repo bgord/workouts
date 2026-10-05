@@ -78,7 +78,7 @@ export function ProfileAvatarChange() {
             {...profileAvatarChange.props.target}
           >
             <div data-stack="x" {...ui.Gap.inline}>
-              <ui.FileButton data-md-grow="1" file={avatar}>
+              <ui.FileButton data-md-grow="1" file={avatar} title={t("profile.avatar.hint")}>
                 {avatar.isSelected ? (
                   <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />
                 ) : (
@@ -110,8 +110,6 @@ export function ProfileAvatarChange() {
                 <X data-size="sm" />
               </ui.IconButton>
             </div>
-
-            <small>{t("profile.avatar.hint")}</small>
 
             {mutation.isError && (
               <output aria-live="assertive" data-tone="danger">

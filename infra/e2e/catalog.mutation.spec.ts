@@ -211,7 +211,7 @@ test.describe("Catalog - admin", () => {
     await page.reload();
 
     await expect(
-      page.getByText("Lie on your back, curl the head up with a plate on the forehead."),
+      page.getByRole("button", { name: "Lie on your back, curl the head up with a plate on the forehead." }),
     ).toBeVisible();
   });
 

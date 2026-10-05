@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/workout-note-form";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
@@ -69,23 +70,30 @@ export function WorkoutNote() {
             className="c-textarea"
             data-width="100%"
             placeholder={t("workout.note.placeholder")}
-            rows={3}
+            style={{ fieldSizing: "content" }}
             {...bg.Form.textarea(Form.note.pattern)}
             {...note.input.props}
             {...metaEnterSubmit}
           />
 
-          <div data-stack="x" data-wrap="wrap" {...ui.Gap.inline}>
-            <button
-              className="c-button"
-              data-variant="secondary"
+          <div data-main="end" data-stack="x" {...ui.Gap.inline}>
+            <ui.IconButton
+              aria-label={t("app.save")}
               disabled={note.unchanged || mutation.isLoading}
+              title={t("app.save")}
+              tone="positive"
               type="submit"
             >
-              {t("app.save")}
-            </button>
+              <Check data-size="sm" />
+            </ui.IconButton>
 
-            <ui.ButtonCancel onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])} />
+            <ui.IconButton
+              aria-label={t("app.cancel")}
+              onClick={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])}
+              title={t("app.cancel")}
+            >
+              <X data-size="sm" />
+            </ui.IconButton>
           </div>
 
           {mutation.isError && (

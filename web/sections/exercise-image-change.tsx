@@ -77,7 +77,7 @@ export function ExerciseImageChange() {
           {...exerciseImageChange.props.target}
         >
           <div data-stack="x" {...ui.Gap.inline}>
-            <ui.FileButton data-grow="1" file={image}>
+            <ui.FileButton data-grow="1" file={image} title={t("exercise.image.change.hint")}>
               {image.isSelected ? (
                 <FileImage data-color="neutral-400" data-shrink="0" data-size="sm" />
               ) : (
@@ -109,8 +109,6 @@ export function ExerciseImageChange() {
               <X data-size="sm" />
             </ui.IconButton>
           </div>
-
-          <small>{t("exercise.image.change.hint")}</small>
 
           {mutation.isError && (
             <output aria-live="assertive" data-tone="danger">

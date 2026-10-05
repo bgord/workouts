@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-description-form";
 import * as ui from "../components";
 import { planRoute } from "../router";
@@ -75,25 +76,30 @@ export function PlanDescription() {
             className="c-textarea"
             data-width="100%"
             placeholder={t("plan.description.placeholder")}
-            rows={3}
+            style={{ fieldSizing: "content" }}
             {...bg.Form.textarea(Form.description.pattern)}
             {...description.input.props}
             {...metaEnterSubmit}
           />
 
-          <div data-stack="x" data-wrap="wrap" {...ui.Gap.inline}>
-            <button
-              className="c-button"
-              data-variant="secondary"
+          <div data-main="end" data-stack="x" {...ui.Gap.inline}>
+            <ui.IconButton
+              aria-label={t("app.save")}
               disabled={description.unchanged || mutation.isLoading}
+              title={t("app.save")}
+              tone="positive"
               type="submit"
             >
-              {t("app.save")}
-            </button>
+              <Check data-size="sm" />
+            </ui.IconButton>
 
-            <ui.ButtonCancel
+            <ui.IconButton
+              aria-label={t("app.cancel")}
               onClick={bg.exec([description.clear, mutation.reset, planDescriptionUpdate.disable])}
-            />
+              title={t("app.cancel")}
+            >
+              <X data-size="sm" />
+            </ui.IconButton>
           </div>
 
           {mutation.isError && (
