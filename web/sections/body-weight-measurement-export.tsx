@@ -12,16 +12,12 @@ export function BodyWeightMeasurementExport() {
     <a
       aria-label={t("measurements.body_weight.export.cta")}
       className="c-button"
-      data-color="neutral-400"
-      data-hover-color="neutral-0"
-      data-px="0"
-      data-variant="ghost"
+      data-variant="icon"
       download
       href="/api/measurements/body-weight/export"
       rel="noopener"
       target="_blank"
       title={t("measurements.body_weight.export.cta")}
-      {...bg.Rhythm().times(3).style.width}
     >
       <Download data-size="sm" />
     </a>

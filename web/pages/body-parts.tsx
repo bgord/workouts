@@ -16,19 +16,17 @@ export function BodyParts() {
 
         <h1 data-grow="1">{t("measurements.body_parts.header")}</h1>
 
+        <div data-stack="x" {...ui.Gap.inline}>
+          <BodyPartMeasurementImport />
+
+          <BodyPartMeasurementExport />
+        </div>
+
         <BodyPartManage />
       </div>
 
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-cross="center" data-stack="x" {...ui.Gap.related}>
-          <h2 data-grow="1">{t("measurements.body_parts.latest")}</h2>
-
-          <div data-stack="x" {...ui.Gap.inline}>
-            <BodyPartMeasurementImport />
-
-            <BodyPartMeasurementExport />
-          </div>
-        </div>
+        <h2>{t("measurements.body_parts.latest")}</h2>
 
         <BodyPartsEmpty />
 

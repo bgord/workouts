@@ -16,7 +16,7 @@ export function BodyPartManage() {
       <button
         className="c-button"
         data-md-grow="1"
-        data-variant="ghost"
+        data-variant="secondary"
         onClick={bodyPartManage.enable}
         type="button"
         {...bodyPartManage.props.controller}
