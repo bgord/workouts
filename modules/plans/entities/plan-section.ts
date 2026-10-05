@@ -40,11 +40,18 @@ export class PlanSection implements VO.PlanSection {
     });
   }
 
-  guardInstructionExerciseChange(exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">) {
+  guardInstructionExerciseChange(
+    exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">,
+    loading: Exercises.VO.ExerciseLoadingType,
+  ) {
     this.guardInstructionExists(exerciseInstruction.id);
     Invariants.PlanSectionExerciseInstructionExerciseHasChanged.enforce({
       current: this.instruction(exerciseInstruction.id)?.exerciseId,
       incoming: exerciseInstruction.exerciseId,
+    });
+    Invariants.PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
+      loading,
+      progression: this.instruction(exerciseInstruction.id)!.progression,
     });
   }
 

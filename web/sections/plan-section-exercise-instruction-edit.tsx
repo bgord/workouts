@@ -68,34 +68,45 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
   const base = `/api/plans/${plan.data.id}/section/${props.section.id}/exercise-instruction/${exerciseInstruction.id}`;
 
+  const changeExercise = (revision: number) =>
+    fetch(`${base}/exercise`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: bg.WeakETag.fromRevision(revision),
+      body: JSON.stringify({ exerciseId: exerciseId.value }),
+    });
+
+  const updateInstruction = (revision: number) =>
+    fetch(`${base}/instruction`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: bg.WeakETag.fromRevision(revision),
+      body: JSON.stringify({
+        sets: sets.value,
+        reps: { min: repsMin.value, max: repsMax.value },
+        progression: progression.value,
+      }),
+    });
+
   const mutation = bg.useMutation({
     perform: async () => {
-      let revision = plan.data.revision;
+      if (exerciseId.unchanged) return updateInstruction(plan.data.revision);
+      if (instructionUnchanged) return changeExercise(plan.data.revision);
 
-      if (!exerciseId.unchanged) {
-        const response = await fetch(`${base}/exercise`, {
-          method: "PATCH",
-          credentials: "include",
-          headers: bg.WeakETag.fromRevision(revision),
-          body: JSON.stringify({ exerciseId: exerciseId.value }),
-        });
+      const instructionFirst =
+        applicableProgressionMethod(exerciseInstruction.exercise.loading, progression.value) ===
+        progression.value;
+      const [first, second] = instructionFirst
+        ? [updateInstruction, changeExercise]
+        : [changeExercise, updateInstruction];
 
-        if (!response.ok || instructionUnchanged) return response;
+      const response = await first(plan.data.revision);
 
-        const fresh = await Plans.get(null, { planId: plan.data.id });
-        revision = fresh?.data?.revision ?? revision;
-      }
+      if (!response.ok) return response;
 
-      return fetch(`${base}/instruction`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: bg.WeakETag.fromRevision(revision),
-        body: JSON.stringify({
-          sets: sets.value,
-          reps: { min: repsMin.value, max: repsMax.value },
-          progression: progression.value,
-        }),
-      });
+      const fresh = await Plans.get(null, { planId: plan.data.id });
+
+      return second(fresh?.data?.revision ?? plan.data.revision);
     },
     onSuccess: async () => {
       planSectionExerciseInstructionEdit.disable();

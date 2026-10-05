@@ -15,6 +15,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
+        mocks.exerciseLoading,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -27,6 +28,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
+        mocks.exerciseLoading,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanIsEditable.error);
@@ -39,6 +41,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
+        mocks.exerciseLoading,
         mocks.anotherUserId,
       ),
     ).toThrow(Plans.Invariants.PlanBelongsToUser.error);
@@ -55,6 +58,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.anotherPlanSectionId,
         mocks.anotherExerciseInstructionAndExercise,
+        mocks.exerciseLoading,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExists.error);
@@ -77,6 +81,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
+        mocks.exerciseLoading,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExists.error);
@@ -98,9 +103,27 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.exerciseInstruction,
+        mocks.exerciseLoading,
         mocks.userId,
       ),
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionExerciseHasChanged.error);
+  });
+
+  test("PlanSectionExerciseInstructionProgressionIsApplicable", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      mocks.planWithLinearExerciseInstructionHistory,
+      deps,
+    );
+
+    expect(() =>
+      plan.changeSectionExerciseInstructionExercise(
+        mocks.planSectionId,
+        mocks.anotherExerciseInstructionAndExercise,
+        mocks.anotherExerciseLoading,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionProgressionIsApplicable.error);
   });
 
   test("happy path", async () => {
@@ -121,6 +144,7 @@ describe("Plan.changeSectionExerciseInstructionExercise", async () => {
       plan.changeSectionExerciseInstructionExercise(
         mocks.planSectionId,
         mocks.anotherExerciseInstructionAndExercise,
+        mocks.exerciseLoading,
         mocks.userId,
       ),
     );
