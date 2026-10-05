@@ -3,6 +3,7 @@ import type * as Exercises from "+exercises";
 import { ExerciseCategoryRenamedEvent } from "../events/EXERCISE_CATEGORY_RENAMED_EVENT";
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
+import { ExerciseCategoryNameHasChanged } from "../invariants/exercise-category-name-has-changed";
 import { ExerciseCategoryNameIsUnique } from "../invariants/exercise-category-name-is-unique";
 
 type Dependencies = {
@@ -21,6 +22,10 @@ export const handleExerciseCategoryRenameCommand =
     const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
 
     ExerciseCategoryExists.enforce({ exerciseCategory });
+    ExerciseCategoryNameHasChanged.enforce({
+      current: exerciseCategory!.name,
+      incoming: command.payload.name,
+    });
 
     const count = await deps.GetExerciseCategoryNameCountQuery.execute(
       command.payload.name,

@@ -1,6 +1,7 @@
 export * from "./catalog-is-managed-by-admin";
 export * from "./exercise-category-exists";
 export * from "./exercise-category-limit";
+export * from "./exercise-category-name-has-changed";
 export * from "./exercise-category-name-is-unique";
 export * from "./exercise-exists";
 export * from "./exercise-has-changed";

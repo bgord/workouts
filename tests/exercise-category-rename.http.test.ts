@@ -81,6 +81,24 @@ describe("PATCH /api/exercises/category/:exerciseCategoryId", async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("ExerciseCategoryNameHasChanged", async () => {
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth));
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
+      .mockResolvedValue(mocks.exerciseCategory);
+
+    const response = await server.request(
+      url,
+      { method: "PATCH", body: JSON.stringify({ name: mocks.exerciseCategoryName }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "exercise.category.name.has.changed");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("ExerciseCategoryNameIsUnique", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth));

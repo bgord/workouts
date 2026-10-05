@@ -101,6 +101,7 @@ modules/
 │   │   ├── catalog-is-managed-by-admin.ts
 │   │   ├── exercise-category-exists.ts
 │   │   ├── exercise-category-limit.ts
+│   │   ├── exercise-category-name-has-changed.ts
 │   │   ├── exercise-category-name-is-unique.ts
 │   │   ├── exercise-exists.ts
 │   │   ├── exercise-has-changed.ts
