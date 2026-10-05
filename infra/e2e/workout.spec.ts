@@ -233,6 +233,17 @@ test.describe("Workout - active", () => {
     ).toBeHidden();
   });
 
+  test("closes the add exercise dialog with a single Escape after picking an exercise", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await page.keyboard.press("Escape");
+
+    await expect(dialog).toBeHidden();
+  });
+
   test("offers only the applicable progressions for a bodyweight exercise", async ({ page }) => {
     const progression = page.getByRole("combobox", { name: "Progression" });
 
