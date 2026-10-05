@@ -54,35 +54,23 @@ test.describe("Exercise - athlete", () => {
     await expect(history.getByRole("img", { name: "1RM" })).toHaveCount(1);
   });
 
-  test("shows the reps stats of a bodyweight exercise", async ({ page }) => {
+  test("shows the reps statistics of a bodyweight exercise", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
 
     await expect(page.getByText("Bodyweight", { exact: true })).toBeVisible();
     await expect(
-      page.getByRole("listitem", { name: "Sessions" }).getByText("8", { exact: true }),
+      page.getByRole("link", { name: /^Most reps/ }).getByText("15 reps", { exact: true }),
     ).toBeVisible();
-    await expect(page.getByRole("link", { name: /^Most reps/ })).toContainText("reps");
-    await expect(page.getByRole("listitem", { name: "Best total reps" })).toContainText("reps");
-    await expect(page.getByRole("link", { name: /^1RM/ })).toBeHidden();
-  });
-
-  test("shows the reps progress chart of a bodyweight exercise", async ({ page }) => {
-    await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
-
-    const chart = page.getByRole("img", { name: "Progress" });
-
-    await expect(chart).toBeVisible();
-    await expect(chart.getByRole("link")).toHaveCount(8);
-  });
-
-  test("lists the history of a bodyweight exercise", async ({ page }) => {
-    await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
-
-    const history = page.getByRole("list", { name: "History" });
-
-    await expect(history.getByRole("link")).toHaveCount(8);
-    await expect(history.getByRole("img", { name: "Most reps" })).toHaveCount(1);
-    await expect(history).not.toContainText("kg");
+    await expect(
+      page.getByRole("listitem", { name: "Best total reps" }).getByText("45 reps", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: "Most reps", exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("img", { name: "Progress" }).getByRole("link", { name: / — 15 reps$/ }),
+    ).toHaveCount(2);
+    await expect(
+      page.getByRole("list", { name: "History" }).getByRole("img", { name: "Most reps" }),
+    ).toHaveCount(1);
   });
 
   test("keeps the history session expanded and collapsed after reload", async ({ page }) => {

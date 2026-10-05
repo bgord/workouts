@@ -48,13 +48,14 @@ export async function targetWorkout(
   for (const exercise of workout["exercises"]) {
     const previous = history.get(exercise.exerciseId)?.at(-1);
 
-    const target = previous
+    const progression = previous
       ? Workouts.Services.ProgressionMethodStrategyFactory.for(
           exercise.prescription,
           exercise.resistance,
           previous,
-        ).calculate().progress
+        ).calculate()
       : undefined;
+    const target = progression?.progress ?? progression?.last;
 
     const command = bg.command(
       Workouts.Commands.WorkoutExerciseSetTargetCommand,

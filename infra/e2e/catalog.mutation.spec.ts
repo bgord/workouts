@@ -101,7 +101,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("34 of 34")).toBeVisible();
-    await expect(page.getByRole("link", { name: /Neck curl/ })).toContainText("Bodyweight");
+    await expect(page.getByRole("link", { name: "Neck curl Bodyweight", exact: true })).toBeVisible();
 
     await page.getByRole("button", { name: "New exercise" }).click();
 

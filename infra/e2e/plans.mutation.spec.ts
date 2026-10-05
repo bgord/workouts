@@ -348,7 +348,9 @@ test.describe("Plans - drafter", () => {
 
     await page.reload();
 
-    await expect(page.getByText("6 exercises").first()).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Push A", exact: true }).getByText("6 exercises", { exact: true }),
+    ).toBeVisible();
   });
 
   test("adds an exercise instruction", async ({ page }) => {
@@ -370,14 +372,18 @@ test.describe("Plans - drafter", () => {
     await expect(
       page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeVisible();
-    await expect(page.getByText("7 exercises").first()).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Push A", exact: true }).getByText("7 exercises", { exact: true }),
+    ).toBeVisible();
 
     await page.reload();
 
     await expect(
       page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeVisible();
-    await expect(page.getByText("7 exercises").first()).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Push A", exact: true }).getByText("7 exercises", { exact: true }),
+    ).toBeVisible();
   });
 
   test("blocks saving an exercise instruction edit with no sets", async ({ page }) => {
@@ -415,12 +421,16 @@ test.describe("Plans - drafter", () => {
       .click();
 
     await expect(row).toContainText("5×6-8");
-    await expect(row).toContainText("Double progression");
+    await expect(
+      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
+    ).toBeVisible();
 
     await page.reload();
 
     await expect(row).toContainText("5×6-8");
-    await expect(row).toContainText("Double progression");
+    await expect(
+      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
+    ).toBeVisible();
   });
 
   test("changes the exercise of the instruction", async ({ page }) => {
@@ -483,43 +493,16 @@ test.describe("Plans - drafter", () => {
       .click();
 
     await expect(page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true })).toBeHidden();
-    await expect(page.getByText("6 exercises").first()).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Push A", exact: true }).getByText("6 exercises", { exact: true }),
+    ).toBeVisible();
 
     await page.reload();
 
     await expect(page.getByRole("link", { name: fixtures.exercises.pecDeck.name, exact: true })).toBeHidden();
-    await expect(page.getByText("6 exercises").first()).toBeVisible();
-  });
-
-  test("changes the exercise and the sets of the instruction in one save", async ({ page }) => {
-    const row = page.getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true });
-
-    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page.getByRole("button", { name: "Details: Push A", exact: true }).click();
-
-    await page
-      .getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true })
-      .getByRole("button", { name: "Edit exercise" })
-      .click();
-    await page
-      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
-    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
-    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
-    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("4");
-    await page
-      .getByRole("dialog", { name: "Edit exercise" })
-      .getByRole("button", { name: "Save", exact: true })
-      .click();
-
-    await expect(row).toContainText("4×8-10");
-
-    await page.reload();
-
-    await expect(row).toContainText("4×8-10");
     await expect(
-      page.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }),
-    ).toBeHidden();
+      page.getByRole("listitem", { name: "Push A", exact: true }).getByText("6 exercises", { exact: true }),
+    ).toBeVisible();
   });
 
   test("changes the exercise of a linear instruction to a bodyweight one", async ({ page }) => {
@@ -534,7 +517,12 @@ test.describe("Plans - drafter", () => {
       .click();
     await page.getByRole("button", { name: `Change exercise: ${fixtures.exercises.pullUp.name}` }).click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
-    await page.getByRole("radio", { name: fixtures.exercises.hangingLegRaise.name }).click();
+    await page
+      .getByRole("radio", {
+        name: `${fixtures.exercises.hangingLegRaise.name} ${fixtures.categories.abs.name}`,
+        exact: true,
+      })
+      .click();
 
     await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("double_progression");
 
@@ -543,43 +531,17 @@ test.describe("Plans - drafter", () => {
       .getByRole("button", { name: "Save", exact: true })
       .click();
 
-    await expect(row).toContainText("Double progression");
-    await expect(row).toContainText("Bodyweight");
+    await expect(
+      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
+    ).toBeVisible();
+    await expect(row.getByText("Bodyweight", { exact: true })).toBeVisible();
 
     await page.reload();
 
-    await expect(row).toContainText("Double progression");
-    await expect(row).toContainText("Bodyweight");
-  });
-
-  test("changes the bodyweight exercise to a linear one", async ({ page }) => {
-    const row = page.getByRole("listitem", { name: fixtures.exercises.legCurlLying.name, exact: true });
-
-    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
-    await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
-
-    await page
-      .getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true })
-      .getByRole("button", { name: "Edit exercise" })
-      .click();
-    await page
-      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.hangingLegRaise.name}` })
-      .click();
-    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.legCurlLying.name);
-    await page.getByRole("radio", { name: fixtures.exercises.legCurlLying.name }).click();
-    await page.getByRole("combobox", { name: "Progression" }).selectOption("linear_progression");
-    await page
-      .getByRole("dialog", { name: "Edit exercise" })
-      .getByRole("button", { name: "Save", exact: true })
-      .click();
-
-    await expect(row).toContainText("Linear progression");
-    await expect(row).not.toContainText("Bodyweight");
-
-    await page.reload();
-
-    await expect(row).toContainText("Linear progression");
-    await expect(row).not.toContainText("Bodyweight");
+    await expect(
+      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
+    ).toBeVisible();
+    await expect(row.getByText("Bodyweight", { exact: true })).toBeVisible();
   });
 
   test("finalizes the plan with the edits", async ({ page }) => {

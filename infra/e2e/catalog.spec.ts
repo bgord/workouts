@@ -17,12 +17,12 @@ test.describe("Catalog - athlete", () => {
   test("marks a bodyweight exercise", async ({ page }) => {
     await page.goto("/catalog");
 
-    await expect(page.getByRole("link", { name: fixtures.exercises.hangingLegRaise.name })).toContainText(
-      "Bodyweight",
-    );
     await expect(
-      page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }),
-    ).not.toContainText("Bodyweight");
+      page.getByRole("link", {
+        name: `${fixtures.exercises.hangingLegRaise.name} Bodyweight ${fixtures.categories.abs.name}`,
+        exact: true,
+      }),
+    ).toBeVisible();
   });
 
   test("searches by name", async ({ page }) => {

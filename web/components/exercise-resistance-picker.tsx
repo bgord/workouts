@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { useId } from "react";
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import { Gap } from "./gap";
 import { RadioTile } from "./radio-tile";
@@ -8,6 +9,7 @@ export function ExerciseResistancePicker(props: {
   disabled?: boolean;
 }) {
   const t = bg.useTranslations();
+  const id = useId();
 
   return (
     <fieldset disabled={props.disabled}>
@@ -18,6 +20,8 @@ export function ExerciseResistancePicker(props: {
           <li data-grow="1" key={option}>
             <RadioTile selected={option === props.field.value}>
               <input
+                aria-describedby={`${id}-${option}-hint`}
+                aria-labelledby={`${id}-${option}`}
                 checked={option === props.field.value}
                 className="c-visually-hidden"
                 name={props.field.input.props.name}
@@ -27,11 +31,11 @@ export function ExerciseResistancePicker(props: {
               />
 
               <div data-stack="y" {...Gap.inline}>
-                <div data-color="neutral-100" data-fw="medium">
+                <div data-color="neutral-100" data-fw="medium" id={`${id}-${option}`}>
                   {t(`exercise.resistance.${option}`)}
                 </div>
 
-                <small>{t(`exercise.resistance.${option}.hint`)}</small>
+                <small id={`${id}-${option}-hint`}>{t(`exercise.resistance.${option}.hint`)}</small>
               </div>
             </RadioTile>
           </li>
