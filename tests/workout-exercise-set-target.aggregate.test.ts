@@ -51,18 +51,6 @@ describe("Workout.setExerciseTarget", async () => {
     ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
   });
 
-  test("WorkoutExerciseLoadIsApplicable", async () => {
-    const workout = Workouts.Aggregates.Workout.build(
-      mocks.workoutId,
-      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEventBodyweight],
-      deps,
-    );
-
-    expect(() =>
-      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.userId),
-    ).toThrow(Workouts.Invariants.WorkoutExerciseLoadIsApplicable.error);
-  });
-
   test("WorkoutExerciseTargetHasChanged", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
@@ -77,6 +65,18 @@ describe("Workout.setExerciseTarget", async () => {
     expect(() =>
       workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.userId),
     ).toThrow(Workouts.Invariants.WorkoutExerciseTargetHasChanged.error);
+  });
+
+  test("WorkoutExerciseLoadIsApplicable", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEventBodyweight],
+      deps,
+    );
+
+    expect(() =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTarget, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseLoadIsApplicable.error);
   });
 
   test("happy path", async () => {

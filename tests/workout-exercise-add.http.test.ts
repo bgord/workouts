@@ -93,6 +93,34 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutExerciseProgressionIsApplicable", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
+      .mockResolvedValue(mocks.bodyweightExercise);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.revisionHeaders(draft.length),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.exercisePrescription.sets,
+          reps: mocks.exercisePrescription.reps,
+          progression: mocks.anotherProgression,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.progression.is.applicable");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("WorkoutIsEditable - completed", async () => {
     const events = mocks.workoutCompletedHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);

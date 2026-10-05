@@ -16,8 +16,8 @@ export class WorkoutExercise implements VO.WorkoutExercise {
   ) {}
 
   guardTargetSet(target: VO.ExerciseTargetType) {
-    Invariants.WorkoutExerciseLoadIsApplicable.enforce({ resistance: this.resistance, load: target.load });
     Invariants.WorkoutExerciseTargetHasChanged.enforce({ current: this.target, incoming: target });
+    Invariants.WorkoutExerciseLoadIsApplicable.enforce({ resistance: this.resistance, load: target.load });
   }
 
   nextSet(
