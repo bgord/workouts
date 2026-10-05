@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { Pencil, Target } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
-import { LoadingFormat } from "../kits/loading.format";
+import { SetNotation } from "../services/set-notation";
 
 export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
@@ -39,11 +39,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       aria-label={
         target
           ? t("workout.target.edit", {
-              target: LoadingFormat[props.exercise.loading].setsRepsLoad(t, language, {
-                sets: target.sets,
-                reps: String(target.reps),
-                load: target.load,
-              }),
+              target: SetNotation.target(t, language, { loading: props.exercise.loading, ...target }),
             })
           : undefined
       }
