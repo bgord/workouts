@@ -18,11 +18,11 @@ test.describe("Catalog - athlete", () => {
     await page.goto("/catalog");
 
     await expect(page.getByRole("link", { name: fixtures.exercises.hangingLegRaise.name })).toContainText(
-      "No load",
+      "Bodyweight",
     );
     await expect(
       page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name }),
-    ).not.toContainText("No load");
+    ).not.toContainText("Bodyweight");
   });
 
   test("searches by name", async ({ page }) => {

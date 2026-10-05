@@ -61,10 +61,10 @@ test.describe("Plan - builder", () => {
 
     await expect(
       page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true }),
-    ).toContainText("No load");
+    ).toContainText("Bodyweight");
     await expect(
       page.getByRole("listitem", { name: fixtures.exercises.legCurlSeated.name, exact: true }),
-    ).not.toContainText("No load");
+    ).not.toContainText("Bodyweight");
   });
 
   test("offers only the applicable progressions for an exercise without load", async ({ page }) => {

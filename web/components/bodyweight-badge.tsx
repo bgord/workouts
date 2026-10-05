@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 
-export function NoLoadBadge() {
+export function BodyweightBadge() {
   const t = bg.useTranslations();
 
   return (

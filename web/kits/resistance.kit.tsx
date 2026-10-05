@@ -1,7 +1,7 @@
 import type * as bg from "@bgord/ui";
 import { Form } from "../../app/services/workout-target-form";
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
-import { NoLoadBadge } from "../components/no-load-badge";
+import { BodyweightBadge } from "../components/bodyweight-badge";
 import { Stepper } from "../components/stepper";
 import { WeightFormat } from "../services/weight-format";
 
@@ -49,7 +49,7 @@ export const ResistanceKit = {
   },
   [ExerciseResistanceOptions.bodyweight]: {
     Field: () => null,
-    Badge: NoLoadBadge,
+    Badge: BodyweightBadge,
     payload: () => 0,
     ready: () => true,
   },

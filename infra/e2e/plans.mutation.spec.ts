@@ -544,12 +544,12 @@ test.describe("Plans - drafter", () => {
       .click();
 
     await expect(row).toContainText("Double progression");
-    await expect(row).toContainText("No load");
+    await expect(row).toContainText("Bodyweight");
 
     await page.reload();
 
     await expect(row).toContainText("Double progression");
-    await expect(row).toContainText("No load");
+    await expect(row).toContainText("Bodyweight");
   });
 
   test("changes the exercise without load to a linear one", async ({ page }) => {
@@ -574,12 +574,12 @@ test.describe("Plans - drafter", () => {
       .click();
 
     await expect(row).toContainText("Linear progression");
-    await expect(row).not.toContainText("No load");
+    await expect(row).not.toContainText("Bodyweight");
 
     await page.reload();
 
     await expect(row).toContainText("Linear progression");
-    await expect(row).not.toContainText("No load");
+    await expect(row).not.toContainText("Bodyweight");
   });
 
   test("finalizes the plan with the edits", async ({ page }) => {
