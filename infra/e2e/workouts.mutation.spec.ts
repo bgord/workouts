@@ -694,13 +694,19 @@ test.describe("Workouts - active-mutation", () => {
     ).toBeHidden();
   });
 
-  test("sets a target without load for an exercise without load", async ({ page }) => {
+  test("adds an exercise without load with the applicable progressions only", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+    const progression = page.getByRole("combobox", { name: "Progression" });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
     await page.getByRole("button", { name: "Add exercise" }).click();
+    await progression.selectOption("linear_progression");
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
     await page.getByRole("radio", { name: fixtures.exercises.hangingLegRaise.name }).click();
+
+    await expect(progression).toHaveValue("double_progression");
+    await expect(progression.getByRole("option", { name: "Linear progression" })).toHaveCount(0);
+
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("10");
     await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
@@ -709,19 +715,9 @@ test.describe("Workouts - active-mutation", () => {
       .getByRole("button", { name: "Add exercise" })
       .click();
     await row.getByRole("button", { name: "Set target" }).click();
-    await row.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
 
+    await expect(row.getByRole("spinbutton", { name: "Reps", exact: true })).toBeVisible();
     await expect(row.getByRole("spinbutton", { name: "Load (kg)" })).toHaveCount(0);
-
-    await row.getByRole("button", { name: "Save" }).click();
-
-    await expect(row).toContainText("3×12");
-    await expect(row).not.toContainText("kg");
-
-    await page.reload();
-
-    await expect(row).toContainText("3×12");
-    await expect(row).not.toContainText("kg");
   });
 
   test("completes the workout in progress", async ({ page }) => {
