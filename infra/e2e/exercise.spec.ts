@@ -58,6 +58,7 @@ test.describe("Exercise - athlete", () => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
 
     await expect(page.getByText("No load", { exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "No load", exact: true })).toBeHidden();
     await expect(
       page.getByRole("listitem", { name: "Sessions" }).getByText("8", { exact: true }),
     ).toBeVisible();
@@ -198,6 +199,21 @@ test.describe("Exercise - admin", () => {
     await page.reload();
 
     await expect(image).toHaveAttribute("src", before ?? "");
+  });
+
+  test("shows the error when changing the loading fails", async ({ page }) => {
+    await page.route("**/api/exercises/*/loading", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await page.getByRole("button", { name: "With load", exact: true }).click();
+    await page.getByText("No load", { exact: true }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not change the load")).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "With load", exact: true })).toBeVisible();
   });
 
   test("shows the error when deleting an exercise fails", async ({ page }) => {

@@ -97,9 +97,11 @@ test.describe("Catalog - admin", () => {
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page.getByRole("dialog", { name: "New exercise" }).getByText("No load", { exact: true }).click();
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("34 of 34")).toBeVisible();
+    await expect(page.getByRole("link", { name: /Neck curl/ })).toContainText("No load");
 
     await page.getByRole("button", { name: "New exercise" }).click();
 
@@ -252,6 +254,22 @@ test.describe("Catalog - admin", () => {
     await page.reload();
 
     await expect(image).not.toHaveAttribute("src", before ?? "");
+  });
+
+  test("changes the exercise loading", async ({ page }) => {
+    await page.goto("/catalog");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
+    await page.getByRole("link", { name: /Neck flexion/ }).click();
+
+    await page.getByRole("button", { name: "No load", exact: true }).click();
+    await page.getByText("With load", { exact: true }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "With load", exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "With load", exact: true })).toBeVisible();
   });
 
   test("unassigns the category from the exercise", async ({ page }) => {

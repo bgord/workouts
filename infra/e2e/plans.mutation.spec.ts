@@ -522,6 +522,66 @@ test.describe("Plans - drafter", () => {
     ).toBeHidden();
   });
 
+  test("changes the exercise of a linear instruction to one without load", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page.getByRole("button", { name: "Details: Pull", exact: true }).click();
+
+    await page
+      .getByRole("listitem", { name: fixtures.exercises.pullUp.name, exact: true })
+      .getByRole("button", { name: "Edit exercise" })
+      .click();
+    await page.getByRole("button", { name: `Change exercise: ${fixtures.exercises.pullUp.name}` }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
+    await page.getByRole("radio", { name: fixtures.exercises.hangingLegRaise.name }).click();
+
+    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("double_progression");
+
+    await page
+      .getByRole("dialog", { name: "Edit exercise" })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
+
+    await expect(row).toContainText("Double progression");
+    await expect(row).toContainText("No load");
+
+    await page.reload();
+
+    await expect(row).toContainText("Double progression");
+    await expect(row).toContainText("No load");
+  });
+
+  test("changes the exercise without load to a linear one", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.legCurlLying.name, exact: true });
+
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
+
+    await page
+      .getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true })
+      .getByRole("button", { name: "Edit exercise" })
+      .click();
+    await page
+      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.hangingLegRaise.name}` })
+      .click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.legCurlLying.name);
+    await page.getByRole("radio", { name: fixtures.exercises.legCurlLying.name }).click();
+    await page.getByRole("combobox", { name: "Progression" }).selectOption("linear_progression");
+    await page
+      .getByRole("dialog", { name: "Edit exercise" })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
+
+    await expect(row).toContainText("Linear progression");
+    await expect(row).not.toContainText("No load");
+
+    await page.reload();
+
+    await expect(row).toContainText("Linear progression");
+    await expect(row).not.toContainText("No load");
+  });
+
   test("finalizes the plan with the edits", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 

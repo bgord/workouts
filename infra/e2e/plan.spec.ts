@@ -55,6 +55,32 @@ test.describe("Plan - builder", () => {
     await expect(page.getByRole("button", { name: "Add exercise" })).toBeHidden();
   });
 
+  test("marks an exercise instruction without load", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
+
+    await expect(
+      page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true }),
+    ).toContainText("No load");
+    await expect(
+      page.getByRole("listitem", { name: fixtures.exercises.legCurlSeated.name, exact: true }),
+    ).not.toContainText("No load");
+  });
+
+  test("offers only the applicable progressions for an exercise without load", async ({ page }) => {
+    const progression = page.getByRole("combobox", { name: "Progression" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await progression.selectOption("linear_progression");
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
+    await page.getByRole("radio", { name: fixtures.exercises.hangingLegRaise.name }).click();
+
+    await expect(progression).toHaveValue("double_progression");
+    await expect(progression.getByRole("option", { name: "Linear progression" })).toHaveCount(0);
+  });
+
   test("shows the empty state when no exercise matches", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
