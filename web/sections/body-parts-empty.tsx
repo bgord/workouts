@@ -1,8 +1,10 @@
+import * as bg from "@bgord/ui";
 import { Ruler } from "lucide-react";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
 
 export function BodyPartsEmpty() {
+  const t = bg.useTranslations();
   const { bodyParts } = bodyPartsRoute.useLoaderData();
 
   if (bodyParts.actions.import.enabled) return null;
@@ -11,12 +13,9 @@ export function BodyPartsEmpty() {
     <ui.EmptyState>
       <ui.EmptyStateIcon icon={Ruler} />
 
-      <ui.ActionHint
-        {...bodyParts.actions.import}
-        data-color="neutral-300"
-        data-mt="2"
-        id="body-part-import-hint"
-      />
+      <ui.EmptyStateMessage>{t("measurements.body_parts.list.empty")}</ui.EmptyStateMessage>
+
+      <ui.ActionHint {...bodyParts.actions.import} id="body-part-import-hint" />
     </ui.EmptyState>
   );
 }

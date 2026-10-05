@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
+import { SearchX } from "lucide-react";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
@@ -16,13 +16,15 @@ export function WorkoutNotFound() {
           <h1>{t("workout.not_found")}</h1>
         </div>
 
-        <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
-          <small>{t("workout.not_found.hint")}</small>
+        <ui.EmptyState>
+          <ui.EmptyStateIcon icon={SearchX} />
 
-          <Link className="c-link" data-mr="auto" search={search} to="/workouts">
+          <ui.EmptyStateMessage>{t("workout.not_found.hint")}</ui.EmptyStateMessage>
+
+          <ui.EmptyStateLink search={search} to="/workouts">
             {t("workout.not_found.cta")}
-          </Link>
-        </div>
+          </ui.EmptyStateLink>
+        </ui.EmptyState>
       </div>
     </ui.Main>
   );

@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Link } from "@tanstack/react-router";
+import { SearchX } from "lucide-react";
 import * as ui from "../components";
 
 export function PlanNotFound() {
@@ -14,13 +14,13 @@ export function PlanNotFound() {
           <h1>{t("plan.not_found")}</h1>
         </div>
 
-        <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
-          <small>{t("plan.not_found.hint")}</small>
+        <ui.EmptyState>
+          <ui.EmptyStateIcon icon={SearchX} />
 
-          <Link className="c-link" data-mr="auto" to="/plans">
-            {t("plan.not_found.cta")}
-          </Link>
-        </div>
+          <ui.EmptyStateMessage>{t("plan.not_found.hint")}</ui.EmptyStateMessage>
+
+          <ui.EmptyStateLink to="/plans">{t("plan.not_found.cta")}</ui.EmptyStateLink>
+        </ui.EmptyState>
       </div>
     </ui.Main>
   );
