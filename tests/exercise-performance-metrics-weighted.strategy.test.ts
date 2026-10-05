@@ -55,6 +55,12 @@ describe("ExercisePerformanceMetricsWeightedStrategy.records", () => {
     const strategy = new Statistics.Services.ExercisePerformanceMetricsWeightedStrategy({
       OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
     });
+    const lightest = {
+      ...mocks.calculatedExercisePerformance,
+      workoutId: mocks.anotherWorkoutId,
+      volume: v.parse(tools.WeightGrams, 500_000),
+      bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 90_000),
+    };
     const heaviest = {
       ...mocks.calculatedExercisePerformance,
       workoutId: mocks.anotherWorkoutId,
@@ -63,7 +69,7 @@ describe("ExercisePerformanceMetricsWeightedStrategy.records", () => {
       bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 100_000),
     };
 
-    const result = strategy.records([mocks.calculatedExercisePerformance, heaviest]);
+    const result = strategy.records([lightest, mocks.calculatedExercisePerformance, heaviest]);
 
     expect(result).toEqual({ peak: mocks.calculatedExercisePerformance, total: heaviest });
   });

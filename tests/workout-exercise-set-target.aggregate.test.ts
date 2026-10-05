@@ -82,7 +82,11 @@ describe("Workout.setExerciseTarget", async () => {
   test("happy path", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
-      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEvent],
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEventAnother,
+        mocks.GenericWorkoutExerciseAddedEvent,
+      ],
       deps,
     );
 
@@ -91,6 +95,10 @@ describe("Workout.setExerciseTarget", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseTargetSetEvent]);
+    expect(workout["exercises"].map((exercise) => exercise.target)).toEqual([
+      undefined,
+      mocks.exerciseTarget,
+    ]);
   });
 
   test("happy path - in progress", async () => {
@@ -110,5 +118,53 @@ describe("Workout.setExerciseTarget", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseTargetSetEventAnother]);
+  });
+
+  test("happy path - only the load changed", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+      ],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.exerciseTargetWithAnotherLoad, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([
+      {
+        ...mocks.GenericWorkoutExerciseTargetSetEvent,
+        payload: {
+          ...mocks.GenericWorkoutExerciseTargetSetEvent.payload,
+          target: mocks.exerciseTargetWithAnotherLoad,
+        },
+      },
+    ]);
+  });
+
+  test("happy path - bodyweight", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent, mocks.GenericWorkoutExerciseAddedEventBodyweight],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.bodyweightExerciseTarget, mocks.userId),
+    );
+
+    expect(workout.pullEvents()).toEqual([
+      {
+        ...mocks.GenericWorkoutExerciseTargetSetEvent,
+        payload: {
+          ...mocks.GenericWorkoutExerciseTargetSetEvent.payload,
+          target: mocks.bodyweightExerciseTarget,
+        },
+      },
+    ]);
   });
 });

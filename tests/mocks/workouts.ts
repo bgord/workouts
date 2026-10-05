@@ -204,6 +204,18 @@ export const anotherExerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
 });
 
+export const exerciseTargetWithAnotherLoad = v.parse(Workouts.VO.ExerciseTarget, {
+  sets,
+  reps: v.parse(Workouts.VO.Reps, 9),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(85).get()),
+});
+
+export const bodyweightExerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {
+  sets,
+  reps: v.parse(Workouts.VO.Reps, 9),
+  load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0).get()),
+});
+
 export const workoutExercise: Workouts.VO.WorkoutExercise = {
   id: workoutExerciseId,
   exerciseId,

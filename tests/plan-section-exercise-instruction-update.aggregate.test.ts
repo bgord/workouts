@@ -127,8 +127,8 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionCreatedEventSecond,
+        mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
         mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
@@ -161,17 +161,17 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     ]);
     expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
       {
+        id: mocks.anotherPlanSectionId,
+        name: mocks.anotherPlanSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
+      },
+      {
         id: mocks.planSectionId,
         name: mocks.planSectionName,
         exerciseInstructions: [
           { ...mocks.exerciseInstruction, sets: mocks.anotherSets },
           mocks.otherExerciseInstruction,
         ],
-      },
-      {
-        id: mocks.anotherPlanSectionId,
-        name: mocks.anotherPlanSectionName,
-        exerciseInstructions: [mocks.exerciseInstruction],
       },
     ]);
   });
@@ -289,8 +289,8 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionCreatedEventSecond,
+        mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEventThird,
         mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
@@ -309,17 +309,17 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent]);
     expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
       {
+        id: mocks.anotherPlanSectionId,
+        name: mocks.anotherPlanSectionName,
+        exerciseInstructions: [mocks.exerciseInstruction],
+      },
+      {
         id: mocks.planSectionId,
         name: mocks.planSectionName,
         exerciseInstructions: [
           { ...mocks.exerciseInstruction, exerciseId: mocks.anotherExerciseId },
           mocks.otherExerciseInstruction,
         ],
-      },
-      {
-        id: mocks.anotherPlanSectionId,
-        name: mocks.anotherPlanSectionName,
-        exerciseInstructions: [mocks.exerciseInstruction],
       },
     ]);
   });

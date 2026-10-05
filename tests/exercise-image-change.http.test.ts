@@ -46,6 +46,17 @@ describe("PATCH /api/exercises/:exerciseId/image", async () => {
     await testcases.assertErrorResponse(response, 400, "extension.type");
   });
 
+  test("validation - file - extension - trailing dot", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
+
+    const form = new FormData();
+    form.append("file", mocks.fileWithTrailingDot);
+
+    const response = await server.request(url, { method: "PATCH", body: form }, mocks.ip);
+
+    await testcases.assertErrorResponse(response, 400, "extension.type");
+  });
+
   test("ExerciseExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");

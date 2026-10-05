@@ -75,8 +75,8 @@ describe("Plan.removeSectionExerciseInstruction", async () => {
       mocks.planId,
       [
         mocks.GenericPlanCreatedEvent,
-        mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionCreatedEventSecond,
+        mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEventSecond,
         mocks.GenericPlanSectionExerciseInstructionAddedEventAnother,
@@ -91,14 +91,14 @@ describe("Plan.removeSectionExerciseInstruction", async () => {
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionRemovedEvent]);
     expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
       {
-        id: mocks.planSectionId,
-        name: mocks.planSectionName,
-        exerciseInstructions: [mocks.otherExerciseInstructionWithAnotherExercise],
-      },
-      {
         id: mocks.anotherPlanSectionId,
         name: mocks.anotherPlanSectionName,
         exerciseInstructions: [mocks.exerciseInstruction],
+      },
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [mocks.otherExerciseInstructionWithAnotherExercise],
       },
     ]);
   });

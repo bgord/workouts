@@ -35,6 +35,17 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, "extension.type");
   });
 
+  test("validation - file - extension - trailing dot", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const form = new FormData();
+    form.append("file", mocks.fileWithTrailingDot);
+
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
+
+    await testcases.assertErrorResponse(response, 400, "extension.type");
+  });
+
   test("ProfileAvatarConstraints - maxSide - width", async () => {
     using temporaryFileWrite = spyOn(di.Adapters.System.TemporaryFile, "write");
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
