@@ -101,6 +101,11 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("dialog", { name: "New exercise" }).getByText("Bodyweight", { exact: true }).click();
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
+    await expect(page).toHaveURL(/\/catalog\/exercise\/[0-9a-f-]{36}$/);
+    await expect(page.getByRole("heading", { level: 1, name: "Neck curl" })).toBeVisible();
+
+    await page.goto("/catalog");
+
     await expect(page.getByText("34 of 34")).toBeVisible();
     await expect(page.getByRole("link", { name: "Neck curl Bodyweight", exact: true })).toBeVisible();
 

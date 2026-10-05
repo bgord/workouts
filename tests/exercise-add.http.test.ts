@@ -271,6 +271,7 @@ describe(`POST ${url}`, async () => {
     );
 
     expect(response.status).toEqual(200);
+    expect(await response.json()).toEqual({ id: mocks.exerciseId });
     expect(temporaryFileWrite).toHaveBeenCalledWith(temporary, mocks.png);
     expect(temporaryFileCleanup).toHaveBeenCalledWith(final);
     expect(imageProcessorProcess).toHaveBeenCalledWith({

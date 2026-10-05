@@ -12,6 +12,7 @@ const maxSizeBytes = 10_000_000;
 export function ExerciseAdd() {
   const t = bg.useTranslations();
   const router = useRouter();
+  const navigate = catalogRoute.useNavigate();
   const { exercises } = catalogRoute.useLoaderData();
 
   const exerciseAdd = bg.useToggle({ name: "exercise-add" });
@@ -34,11 +35,15 @@ export function ExerciseAdd() {
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });
     },
-    onSuccess: async () => {
+    onSuccess: async (response) => {
+      const { id } = await response.json();
+
       exerciseAdd.disable();
-      await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
       bg.Fields.clearAll([name, description, resistance]);
       image.actions.clearFile();
+
+      await navigate({ params: { exerciseId: id }, to: "/catalog/exercise/$exerciseId" });
+      await router.invalidate({ filter: (match) => match.routeId === catalogRoute.id, sync: true });
     },
   });
 

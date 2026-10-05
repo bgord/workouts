@@ -169,6 +169,7 @@ body:has([data-log-panel]) {
   gap: var(--spacing-1) var(--spacing-2);
   color: var(--color-neutral-500);
   font-size: var(--font-size-xs);
+  /* cspell:disable-next-line */
   font-variant-numeric: tabular-nums;
 }
 .line-chart-axis {

@@ -36,5 +36,5 @@ export const ExerciseAdd =
 
     await deps.CommandBus.emit(command);
 
-    return new Response();
+    return Response.json({ id });
   };
