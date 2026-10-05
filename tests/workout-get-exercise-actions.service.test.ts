@@ -39,6 +39,24 @@ describe("WorkoutGetExerciseActions", () => {
     });
   });
 
+  test("draft - single", () => {
+    const actions = new Workouts.Services.WorkoutGetExerciseActions({
+      status: Workouts.VO.WorkoutStatusEnum.draft,
+      exercises: [mocks.workoutExercise],
+      exercise: mocks.workoutExercise,
+      catalogExerciseExists: true,
+    });
+
+    expect(actions.calculate()).toEqual({
+      targetSet: mocks.actionAvailable,
+      remove: mocks.actionAvailable,
+      moveUp: mocks.actionUnavailable,
+      moveDown: mocks.actionUnavailable,
+      setLog: mocks.actionUnavailable,
+      catalogView: mocks.actionAvailable,
+    });
+  });
+
   test("in progress", () => {
     const actions = new Workouts.Services.WorkoutGetExerciseActions({
       status: Workouts.VO.WorkoutStatusEnum.in_progress,

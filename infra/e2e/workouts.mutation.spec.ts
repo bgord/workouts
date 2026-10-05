@@ -556,7 +556,7 @@ test.describe("Workouts - active-mutation", () => {
   test("blocks saving an empty note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "How did it go?" }).click();
+    await page.getByRole("button", { name: "Add a note…" }).click();
 
     await expect(page.getByLabel("Note")).toHaveValue("");
     await expect(page.getByRole("button", { name: "Save", exact: true })).toBeDisabled();
@@ -565,7 +565,7 @@ test.describe("Workouts - active-mutation", () => {
   test("adds a note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "How did it go?" }).click();
+    await page.getByRole("button", { name: "Add a note…" }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
@@ -733,6 +733,20 @@ test.describe("Workouts - hanger", () => {
     await expect(
       row.getByRole("note", { name: "Last session" }).getByText("3×15", { exact: true }),
     ).toBeVisible();
+  });
+
+  test("hides reordering for a single exercise", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
+
+    await expect(row).toBeVisible();
+    await expect(
+      row.getByRole("button", { name: `Move ${fixtures.exercises.hangingLegRaise.name} up` }),
+    ).toBeHidden();
+    await expect(
+      row.getByRole("button", { name: `Move ${fixtures.exercises.hangingLegRaise.name} down` }),
+    ).toBeHidden();
   });
 
   test("sets a bodyweight target from the last session", async ({ page }) => {

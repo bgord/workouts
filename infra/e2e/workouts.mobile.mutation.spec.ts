@@ -76,7 +76,7 @@ test.describe("Mobile - pocket", () => {
   test("adds a note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: "How did it go?" }).tap();
+    await page.getByRole("button", { name: "Add a note…" }).tap();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).tap();
 

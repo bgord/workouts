@@ -423,7 +423,7 @@
   "workout.not_found.hint": "It may have been discarded, or the link is wrong",
   "workout.note.error": "Could not save the note",
   "workout.note.label": "Note",
-  "workout.note.placeholder": "How did it go?",
+  "workout.note.placeholder": "Add a note…",
   "workout.previous_performance.diff.load": "{{value}} kg",
   "workout.previous_performance.diff.reps": "{{value}} {{noun}}",
   "workout.previous_performance.diff.reps.noun.genitive": "reps",

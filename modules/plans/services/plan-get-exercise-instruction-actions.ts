@@ -17,6 +17,7 @@ export class PlanGetExerciseInstructionActions {
 
   calculate(): Queries.ExerciseInstructionActions {
     const editable = PlanIsEditable.passes({ status: this.facts.status });
+    const reorderable = editable && this.facts.section.exerciseInstructions.length > 1;
 
     const current = this.facts.section.exerciseInstructions.findIndex(
       (exerciseInstruction) => exerciseInstruction.id === this.facts.exerciseInstructionId,
@@ -24,14 +25,14 @@ export class PlanGetExerciseInstructionActions {
 
     return {
       update: bg.ActionState.of(editable),
-      moveUp: bg.ActionState.of(editable, [
+      moveUp: bg.ActionState.of(reorderable, [
         bg.ActionBlocker.from(PlanSectionExerciseInstructionPositionHasChanged, {
           planSection: this.facts.section,
           exerciseInstructionId: this.facts.exerciseInstructionId,
           position: v.parse(VO.ExerciseInstructionPosition, Math.max(current - 1, 0)),
         }),
       ]),
-      moveDown: bg.ActionState.of(editable, [
+      moveDown: bg.ActionState.of(reorderable, [
         bg.ActionBlocker.from(PlanSectionExerciseInstructionPositionInRange, {
           planSection: this.facts.section,
           position: v.parse(VO.ExerciseInstructionPosition, current + 1),

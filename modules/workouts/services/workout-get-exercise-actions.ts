@@ -22,20 +22,21 @@ export class WorkoutGetExerciseActions {
     const draft = WorkoutIsDraft.passes({ status: this.facts.status });
     const editable = WorkoutIsEditable.passes({ status: this.facts.status });
     const inProgress = WorkoutIsInProgress.passes({ status: this.facts.status });
+    const reorderable = editable && this.facts.exercises.length > 1;
 
     const current = this.facts.exercises.findIndex((exercise) => exercise.id === this.facts.exercise.id);
 
     return {
       targetSet: bg.ActionState.of(draft || (inProgress && !this.facts.exercise.target)),
       remove: bg.ActionState.of(editable),
-      moveUp: bg.ActionState.of(editable, [
+      moveUp: bg.ActionState.of(reorderable, [
         bg.ActionBlocker.from(WorkoutExercisePositionHasChanged, {
           workoutExerciseId: this.facts.exercise.id,
           workoutExercises: this.facts.exercises,
           position: v.parse(VO.WorkoutExercisePosition, Math.max(current - 1, 0)),
         }),
       ]),
-      moveDown: bg.ActionState.of(editable, [
+      moveDown: bg.ActionState.of(reorderable, [
         bg.ActionBlocker.from(WorkoutExercisePositionInRange, {
           workoutExercises: this.facts.exercises,
           position: v.parse(VO.WorkoutExercisePosition, current + 1),

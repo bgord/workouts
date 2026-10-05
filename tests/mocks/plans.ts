@@ -123,7 +123,7 @@ export const planSummary: Plans.VO.PlanSummary = {
   updatedAt: T0.ms,
   sections: tools.Int.nonNegative(2),
 };
-const planSection: Plans.VO.PlanSectionSnapshot = {
+export const planSection: Plans.VO.PlanSectionSnapshot = {
   id: planSectionId,
   name: planSectionName,
   warmup: planSectionWarmup,

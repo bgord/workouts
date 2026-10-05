@@ -41,6 +41,21 @@ describe("PlanGetExerciseInstructionActions", () => {
     });
   });
 
+  test("draft - single", () => {
+    const actions = new Plans.Services.PlanGetExerciseInstructionActions({
+      status: Plans.VO.PlanStatusEnum.draft,
+      section: mocks.planSection,
+      exerciseInstructionId: mocks.exerciseInstruction.id,
+    });
+
+    expect(actions.calculate()).toEqual({
+      update: mocks.actionAvailable,
+      moveUp: mocks.actionUnavailable,
+      moveDown: mocks.actionUnavailable,
+      remove: mocks.actionAvailable,
+    });
+  });
+
   test("finalized", () => {
     const actions = new Plans.Services.PlanGetExerciseInstructionActions({
       status: Plans.VO.PlanStatusEnum.finalized,
