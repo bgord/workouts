@@ -4,27 +4,13 @@ import * as Notifications from "+notifications";
 import * as Preferences from "+preferences";
 import type { BootstrapType } from "+infra/bootstrap";
 import type { EnvironmentResultType } from "+infra/env";
-import * as Projections from "+infra/projections";
+import { registerProjectors } from "+infra/register-projectors";
 
 export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, Tools }: BootstrapType) {
   const deps = { ...Adapters.System, ...Tools };
 
   // Projections
-  new Projections.PreferencesProjector(deps);
-  new Projections.ProfileAvatarsProjector(deps);
-  new Projections.ExercisesProjector(deps);
-  new Projections.ExerciseCategoriesProjector(deps);
-  new Projections.ExerciseCategoryAssignmentsProjector(deps);
-  new Projections.PlansProjector(deps);
-  new Projections.PlanSectionsProjector(deps);
-  new Projections.PlanSectionExerciseInstructionProjector(deps);
-  new Projections.WorkoutsProjector(deps);
-  new Projections.WorkoutExercisesProjector(deps);
-  new Projections.WorkoutLoggedSetsProjector(deps);
-  new Projections.BodyPartMeasurementsProjector(deps);
-  new Projections.BodyPartsProjector(deps);
-  new Projections.BodyWeightMeasurementsProjector(deps);
-  new Projections.WeeklySummariesProjector(deps);
+  registerProjectors({ Adapters, Tools });
 
   // Policies
   new Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);

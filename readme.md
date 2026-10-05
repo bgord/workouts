@@ -834,6 +834,7 @@ infra/
 ├── register-command-handlers.ts
 ├── register-cron-tasks.ts
 ├── register-event-handlers.ts
+├── register-projectors.ts
 ├── schema.ts
 ├── tools
 │   ├── build-info-config.adapter.ts
