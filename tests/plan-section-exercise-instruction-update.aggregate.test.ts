@@ -354,7 +354,11 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
   });
 
   test("happy path - the exercise and the progression changed", async () => {
-    const plan = Plans.Aggregates.Plan.build(mocks.planId, mocks.planWithLinearExerciseInstructionHistory, deps);
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      mocks.planWithLinearExerciseInstructionHistory,
+      deps,
+    );
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>
       plan.updateSectionExerciseInstruction(

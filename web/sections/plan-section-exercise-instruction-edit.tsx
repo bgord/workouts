@@ -1,15 +1,13 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ArrowLeftRight, Pencil } from "lucide-react";
-import { useState } from "react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
-import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
-import { applicableProgressionMethod } from "../../modules/plans/value-objects/progression-method-applicability";
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { planRoute } from "../router";
+import { ProgressionMethodChoice } from "../services/progression-method-choice";
 
 export function PlanSectionExerciseInstructionEdit(props: {
   section: PlanSection;
@@ -19,7 +17,6 @@ export function PlanSectionExerciseInstructionEdit(props: {
   const router = useRouter();
   const { plan } = planRoute.useLoaderData();
   const catalog = useExerciseCatalog();
-  const [picked, setPicked] = useState<ExerciseWithCategories | null>(null);
   const { exerciseInstruction } = props;
   const { actions } = exerciseInstruction;
 
@@ -57,9 +54,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     defaultValue: exerciseInstruction.progression,
   });
 
-  const exercise = [exerciseInstruction.exercise, picked].find(
-    (candidate) => candidate?.id === exerciseId.value,
-  );
+  const exercise = catalog.find(exerciseId.value) ?? exerciseInstruction.exercise;
 
   const instructionUnchanged =
     sets.unchanged && repsMin.unchanged && repsMax.unchanged && progression.unchanged;
@@ -128,7 +123,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.section}
         >
-          {planSectionExerciseInstructionPick.off && exercise && (
+          {planSectionExerciseInstructionPick.off && (
             <button
               aria-label={t("plan.section.exercise.edit.change", { name: exercise.name })}
               data-bc="alpha-medium"
@@ -167,9 +162,10 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 name={exerciseId.input.props.name}
                 onCancel={bg.exec([query.clear, planSectionExerciseInstructionPick.disable])}
                 onChange={(exercise) => {
-                  setPicked(exercise);
                   exerciseId.set(exercise.id);
-                  progression.set(applicableProgressionMethod(exercise.resistance, progression.value));
+                  progression.set(
+                    ProgressionMethodChoice.keep(exercise.progressionMethods, progression.value),
+                  );
                   planSectionExerciseInstructionPick.disable();
                 }}
                 query={query}
@@ -212,7 +208,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           <ui.ProgressionMethodSelect
             disabled={!actions.update.enabled}
             field={progression}
-            resistance={exercise?.resistance}
+            options={exercise.progressionMethods}
           />
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}

@@ -375,6 +375,7 @@ modules/
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-name-for-owner-count.ts
 │   │   ├── get-plan.ts
+│   │   ├── list-exercise-catalog.ts
 │   │   └── list-plans.ts
 │   ├── services
 │   │   ├── plan-get-actions.ts
@@ -385,6 +386,7 @@ modules/
 │       ├── exercise-instruction-id.ts
 │       ├── exercise-instruction-position.ts
 │       ├── exercise-instruction.ts
+│       ├── exercise-with-progression-methods.ts
 │       ├── plan-description.ts
 │       ├── plan-description.validation.ts
 │       ├── plan-id.ts
@@ -642,6 +644,7 @@ app/
 │   │   ├── plan-create.ts
 │   │   ├── plan-description-set.ts
 │   │   ├── plan-editing-enable.ts
+│   │   ├── plan-exercise-catalog.ts
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-get.ts
 │   │   ├── plan-list.ts
@@ -740,6 +743,7 @@ infra/
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-name-for-owner-count.adapter.ts
 │   │   ├── get-plan.adapter.ts
+│   │   ├── list-exercise-catalog.adapter.ts
 │   │   ├── list-plans.adapter.ts
 │   │   └── plan-repository.adapter.ts
 │   ├── preferences

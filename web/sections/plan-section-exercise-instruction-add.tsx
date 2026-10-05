@@ -1,14 +1,12 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { useState } from "react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
-import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
-import { applicableProgressionMethod } from "../../modules/plans/value-objects/progression-method-applicability";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { planRoute } from "../router";
+import { ProgressionMethodChoice } from "../services/progression-method-choice";
 
 export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
   const t = bg.useTranslations();
@@ -26,9 +24,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
   const progression = bg.useTextField(Form.progression.field);
-  const [picked, setPicked] = useState<ExerciseWithCategories | null>(null);
-
-  const exercise = picked?.id === exerciseId.value ? picked : undefined;
+  const exercise = catalog.find(exerciseId.value);
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -112,9 +108,8 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
               exercises={catalog.exercises}
               name={exerciseId.input.props.name}
               onChange={(exercise) => {
-                setPicked(exercise);
                 exerciseId.set(exercise.id);
-                progression.set(applicableProgressionMethod(exercise.resistance, progression.value));
+                progression.set(ProgressionMethodChoice.keep(exercise.progressionMethods, progression.value));
               }}
               query={query}
               value={exerciseId.value}
@@ -149,7 +144,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
             />
           </ui.Prescription>
 
-          <ui.ProgressionMethodSelect field={progression} resistance={exercise?.resistance} />
+          <ui.ProgressionMethodSelect field={progression} options={exercise?.progressionMethods} />
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.add.error")}</ui.DialogError>}
 

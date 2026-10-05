@@ -2,6 +2,7 @@ export * from "./plan-archive";
 export * from "./plan-create";
 export * from "./plan-description-set";
 export * from "./plan-editing-enable";
+export * from "./plan-exercise-catalog";
 export * from "./plan-finalize";
 export * from "./plan-get";
 export * from "./plan-list";

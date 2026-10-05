@@ -1,8 +1,10 @@
 import * as bg from "@bgord/ui";
 import { Check, Search } from "lucide-react";
 import { Suspense, use } from "react";
-import type { ExerciseListResponse } from "../../modules/exercises/queries/list-exercises-with-categories";
-import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
+import type {
+  ExerciseCatalogItem,
+  ExerciseCatalogResponse,
+} from "../../modules/plans/queries/list-exercise-catalog";
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 import { ExercisePickerLoading } from "./exercise-picker-loading";
@@ -11,11 +13,11 @@ import { HairlineRow } from "./hairline";
 import { Spacing } from "./spacing";
 
 type ExercisePickerOptionsProps = {
-  exercises: Promise<ExerciseListResponse>;
+  exercises: Promise<ExerciseCatalogResponse>;
   name: string;
   query: bg.UseTextFieldReturnType;
   value: string | null | undefined;
-  onChange: (exercise: ExerciseWithCategories) => void;
+  onChange: (exercise: ExerciseCatalogItem) => void;
 };
 
 export function ExercisePicker(props: ExercisePickerOptionsProps & { onCancel?: () => void }) {

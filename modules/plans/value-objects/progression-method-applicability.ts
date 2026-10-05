@@ -12,11 +12,3 @@ export const ProgressionMethodApplicability: Record<
   ],
   bodyweight: [ProgressionMethodOptions.double_progression, ProgressionMethodOptions.none],
 };
-
-export const applicableProgressionMethod = (
-  resistance: Exercises.VO.ExerciseResistanceOptions,
-  current: ProgressionMethodOptions | undefined,
-): ProgressionMethodOptions =>
-  current && ProgressionMethodApplicability[resistance].includes(current)
-    ? current
-    : ProgressionMethodOptions.double_progression;

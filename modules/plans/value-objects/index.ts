@@ -1,6 +1,7 @@
 export * from "./exercise-instruction";
 export * from "./exercise-instruction-id";
 export * from "./exercise-instruction-position";
+export * from "./exercise-with-progression-methods";
 export * from "./plan-description";
 export * from "./plan-id";
 export * from "./plan-name";

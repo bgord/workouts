@@ -131,6 +131,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
 
   plans.use("*", Tools.Auth.ShieldAuth.attach, Tools.Auth.ShieldAuth.verify);
   plans.get("/list", bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanList(Adapters.Plans)));
+  plans.get(
+    "/exercise-catalog",
+    bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanExerciseCatalog(Adapters.Plans)),
+  );
   plans.get("/:planId", bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanGet(Adapters.Plans)));
   plans.post(
     "/create",

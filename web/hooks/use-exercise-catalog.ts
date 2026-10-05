@@ -1,11 +1,25 @@
-import { useState } from "react";
-import type { ExerciseListResponse } from "../../modules/exercises/queries/list-exercises-with-categories";
-import { Exercises } from "../api";
+import { useRef, useState } from "react";
+import type {
+  ExerciseCatalogItem,
+  ExerciseCatalogResponse,
+} from "../../modules/plans/queries/list-exercise-catalog";
+import { Plans } from "../api";
 
 export function useExerciseCatalog() {
-  const [exercises, setExercises] = useState<Promise<ExerciseListResponse> | null>(null);
+  const request = useRef<Promise<ExerciseCatalogResponse> | null>(null);
+  const [exercises, setExercises] = useState<Promise<ExerciseCatalogResponse> | null>(null);
+  const [loaded, setLoaded] = useState<ReadonlyArray<ExerciseCatalogItem>>([]);
 
-  const load = () => setExercises((current) => current ?? Exercises.list(null));
+  const load = () => {
+    if (request.current) return;
 
-  return { exercises, load };
+    request.current = Plans.exerciseCatalog(null);
+    request.current.then((response) => setLoaded(response.data));
+    setExercises(request.current);
+  };
+
+  const find = (exerciseId: string | null | undefined) =>
+    loaded.find((exercise) => exercise.id === exerciseId);
+
+  return { exercises, load, find };
 }

@@ -11,7 +11,8 @@ export type ExerciseInstructionActions = {
   remove: bg.ActionState;
 };
 
-export type PlanExerciseInstruction = VO.ExerciseInstructionSnapshot & {
+export type PlanExerciseInstruction = Omit<VO.ExerciseInstructionSnapshot, "exercise"> & {
+  exercise: VO.ExerciseWithProgressionMethods;
   actions: ExerciseInstructionActions;
 };
 

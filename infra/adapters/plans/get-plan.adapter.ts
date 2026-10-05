@@ -50,6 +50,11 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         ...section,
         exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
           ...exerciseInstruction,
+          exercise: {
+            ...exerciseInstruction.exercise,
+            progressionMethods:
+              Plans.VO.ProgressionMethodApplicability[exerciseInstruction.exercise.resistance],
+          },
           actions: new Plans.Services.PlanGetExerciseInstructionActions({
             status: plan.status,
             section,

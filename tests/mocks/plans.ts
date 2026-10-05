@@ -4,7 +4,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Plans from "+plans";
 import { userId } from "./auth";
-import { anotherExerciseId, exercise, exerciseId } from "./exercises";
+import { anotherExerciseId, exercise, exerciseId, exerciseWithCategories } from "./exercises";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
 
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");
@@ -48,6 +48,18 @@ export const anotherSets = v.parse(Plans.VO.Sets, 4);
 
 export const progression = Plans.VO.ProgressionMethodOptions.double_progression;
 export const anotherProgression = Plans.VO.ProgressionMethodOptions.linear_progression;
+
+export const exerciseProgressionMethods = [
+  Plans.VO.ProgressionMethodOptions.double_progression,
+  Plans.VO.ProgressionMethodOptions.linear_progression,
+  Plans.VO.ProgressionMethodOptions.none,
+];
+
+export const exerciseCatalogResponse: Plans.Queries.ExerciseCatalogResponse = {
+  data: [{ ...exerciseWithCategories, progressionMethods: exerciseProgressionMethods }],
+};
+
+export const exerciseCatalogResponseEmpty: Plans.Queries.ExerciseCatalogResponse = { data: [] };
 
 export const repsRange = v.parse(Plans.VO.RepsRange, { min: 8, max: 12 });
 export const anotherRepsRange = v.parse(Plans.VO.RepsRange, { min: 6, max: 6 });
@@ -196,6 +208,7 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
     ...section,
     exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
       ...exerciseInstruction,
+      exercise: { ...exerciseInstruction.exercise, progressionMethods: exerciseProgressionMethods },
       actions: {
         update: { available: true, enabled: true, hints: [] },
         moveUp: { available: true, enabled: true, hints: [] },
