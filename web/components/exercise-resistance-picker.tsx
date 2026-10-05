@@ -14,32 +14,28 @@ export function ExerciseResistancePicker(props: {
       <legend>{t("exercise.resistance.label")}</legend>
 
       <ul data-stack="x" data-wrap="wrap" {...Gap.cluster}>
-        {Object.values(ExerciseResistanceOptions).map((option) => {
-          const selected = option === props.field.value;
+        {Object.values(ExerciseResistanceOptions).map((option) => (
+          <li data-grow="1" key={option}>
+            <RadioTile selected={option === props.field.value}>
+              <input
+                checked={option === props.field.value}
+                className="c-visually-hidden"
+                name={props.field.input.props.name}
+                onChange={props.field.input.props.onChange}
+                type="radio"
+                value={option}
+              />
 
-          return (
-            <li data-grow="1" key={option}>
-              <RadioTile selected={selected}>
-                <input
-                  checked={selected}
-                  className="c-visually-hidden"
-                  name={props.field.input.props.name}
-                  onChange={props.field.input.props.onChange}
-                  type="radio"
-                  value={option}
-                />
-
-                <div data-stack="y" {...Gap.inline}>
-                  <div data-color="neutral-100" data-fw="medium">
-                    {t(`exercise.resistance.${option}`)}
-                  </div>
-
-                  <small>{t(`exercise.resistance.${option}.hint`)}</small>
+              <div data-stack="y" {...Gap.inline}>
+                <div data-color="neutral-100" data-fw="medium">
+                  {t(`exercise.resistance.${option}`)}
                 </div>
-              </RadioTile>
-            </li>
-          );
-        })}
+
+                <small>{t(`exercise.resistance.${option}.hint`)}</small>
+              </div>
+            </RadioTile>
+          </li>
+        ))}
       </ul>
     </fieldset>
   );
