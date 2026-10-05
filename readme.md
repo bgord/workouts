@@ -449,9 +449,9 @@ modules/
 │   │   └── one-rep-estimator.port.ts
 │   ├── services
 │   │   ├── exercise-performance-calculator.ts
+│   │   ├── exercise-performance-metrics-bodyweight.strategy.ts
 │   │   ├── exercise-performance-metrics-factory.strategy.ts
-│   │   ├── exercise-performance-metrics-load.strategy.ts
-│   │   ├── exercise-performance-metrics-reps.strategy.ts
+│   │   ├── exercise-performance-metrics-weighted.strategy.ts
 │   │   ├── exercise-performance-metrics.strategy.ts
 │   │   ├── one-rep-estimator-brzycki.adapter.ts
 │   │   └── one-rep-estimator-epley.adapter.ts

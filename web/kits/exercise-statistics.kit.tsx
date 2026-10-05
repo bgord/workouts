@@ -1,8 +1,8 @@
 import type * as bg from "@bgord/ui";
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
-import { ExerciseStatisticsLoad } from "./exercise-statistics-load";
-import { ExerciseStatisticsReps } from "./exercise-statistics-reps";
+import { ExerciseStatisticsBodyweight } from "./exercise-statistics-bodyweight";
+import { ExerciseStatisticsWeighted } from "./exercise-statistics-weighted";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 
@@ -20,8 +20,8 @@ type ExerciseStatisticsKitStrategy<P extends ExercisePerformanceStatistics> = {
 };
 
 const kit = {
-  [ExerciseResistanceOptions.weighted]: ExerciseStatisticsLoad,
-  [ExerciseResistanceOptions.bodyweight]: ExerciseStatisticsReps,
+  [ExerciseResistanceOptions.weighted]: ExerciseStatisticsWeighted,
+  [ExerciseResistanceOptions.bodyweight]: ExerciseStatisticsBodyweight,
 } satisfies {
   [K in ExerciseResistanceOptions]: ExerciseStatisticsKitStrategy<
     Extract<ExercisePerformanceStatistics, { resistance: K }>

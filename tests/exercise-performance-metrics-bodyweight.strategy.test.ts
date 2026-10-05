@@ -5,9 +5,9 @@ import * as Statistics from "+statistics";
 import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
 
-describe("ExercisePerformanceMetricsRepsStrategy", () => {
+describe("ExercisePerformanceMetricsBodyweightStrategy", () => {
   test("happy path", () => {
-    const strategy = new Statistics.Services.ExercisePerformanceMetricsRepsStrategy();
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
 
     const result = strategy.calculate(mocks.unloadedExercisePerformance);
 
@@ -15,7 +15,7 @@ describe("ExercisePerformanceMetricsRepsStrategy", () => {
   });
 
   test("happy path - best set is the first with the most reps, not the last", () => {
-    const strategy = new Statistics.Services.ExercisePerformanceMetricsRepsStrategy();
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
 
     const result = strategy.calculate({
       ...mocks.unloadedExercisePerformance,

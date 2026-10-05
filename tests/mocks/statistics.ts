@@ -35,7 +35,7 @@ export const calculatedExercisePerformance = {
     estimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
   },
   bestEstimate: v.parse(Statistics.VO.OneRepMaxEstimate, 120_000),
-} satisfies Statistics.VO.LoadExercisePerformanceStatistics;
+} satisfies Statistics.VO.WeightedExercisePerformanceStatistics;
 
 export const calculatedRepsExercisePerformance = {
   workoutId,
@@ -62,4 +62,4 @@ export const calculatedRepsExercisePerformance = {
     rir: null,
   },
   totalReps: tools.Int.positive(22),
-} satisfies Statistics.VO.RepsExercisePerformanceStatistics;
+} satisfies Statistics.VO.BodyweightExercisePerformanceStatistics;

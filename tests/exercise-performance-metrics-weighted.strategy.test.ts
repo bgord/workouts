@@ -6,9 +6,9 @@ import * as Statistics from "+statistics";
 import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
 
-describe("ExercisePerformanceMetricsLoadStrategy", () => {
+describe("ExercisePerformanceMetricsWeightedStrategy", () => {
   test("happy path", () => {
-    const strategy = new Statistics.Services.ExercisePerformanceMetricsLoadStrategy({
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsWeightedStrategy({
       OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
     });
 
@@ -18,7 +18,7 @@ describe("ExercisePerformanceMetricsLoadStrategy", () => {
   });
 
   test("happy path - best set is the first with the highest estimate, not the last", () => {
-    const strategy = new Statistics.Services.ExercisePerformanceMetricsLoadStrategy({
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsWeightedStrategy({
       OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
     });
 

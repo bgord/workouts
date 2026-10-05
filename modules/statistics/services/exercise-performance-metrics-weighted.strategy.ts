@@ -6,7 +6,7 @@ import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-
 
 type Dependencies = { OneRepEstimator: Ports.OneRepEstimatorPort };
 
-export class ExercisePerformanceMetricsLoadStrategy implements ExercisePerformanceMetricsStrategy {
+export class ExercisePerformanceMetricsWeightedStrategy implements ExercisePerformanceMetricsStrategy {
   constructor(private readonly deps: Dependencies) {}
 
   calculate(performance: Workouts.Queries.ExercisePerformance): VO.ExercisePerformanceStatistics {

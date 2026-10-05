@@ -1,7 +1,7 @@
 import type * as bg from "@bgord/ui";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
-import { EffortFormat } from "../kits/effort.format";
-import { ResistanceFormat } from "../kits/resistance.format";
+import { EffortFormat } from "./effort-format";
+import { ResistanceFormat } from "./resistance-format";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 

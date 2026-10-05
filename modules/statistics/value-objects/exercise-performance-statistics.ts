@@ -11,7 +11,7 @@ export type ExercisePerformanceStatisticsSet = {
   estimate: VO.OneRepMaxEstimateType;
 };
 
-type LoadPerformanceStatistics = {
+type WeightedPerformanceStatistics = {
   workoutId: Workouts.VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
   sets: Array<ExercisePerformanceStatisticsSet>;
@@ -20,24 +20,24 @@ type LoadPerformanceStatistics = {
   bestEstimate: VO.OneRepMaxEstimateType;
 };
 
-export type RepsPerformanceStatisticsSet = Omit<ExercisePerformanceStatisticsSet, "estimate">;
+export type BodyweightPerformanceStatisticsSet = Omit<ExercisePerformanceStatisticsSet, "estimate">;
 
-export type RepsPerformanceStatistics = {
+export type BodyweightPerformanceStatistics = {
   workoutId: Workouts.VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
-  sets: Array<RepsPerformanceStatisticsSet>;
-  bestSet: RepsPerformanceStatisticsSet;
+  sets: Array<BodyweightPerformanceStatisticsSet>;
+  bestSet: BodyweightPerformanceStatisticsSet;
   totalReps: tools.IntegerPositiveType;
 };
 
-export type LoadExercisePerformanceStatistics = {
+export type WeightedExercisePerformanceStatistics = {
   resistance: Exercises.VO.ExerciseResistanceOptions.weighted;
-} & LoadPerformanceStatistics;
+} & WeightedPerformanceStatistics;
 
-export type RepsExercisePerformanceStatistics = {
+export type BodyweightExercisePerformanceStatistics = {
   resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight;
-} & RepsPerformanceStatistics;
+} & BodyweightPerformanceStatistics;
 
 export type ExercisePerformanceStatistics =
-  | LoadExercisePerformanceStatistics
-  | RepsExercisePerformanceStatistics;
+  | WeightedExercisePerformanceStatistics
+  | BodyweightExercisePerformanceStatistics;

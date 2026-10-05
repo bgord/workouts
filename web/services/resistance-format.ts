@@ -1,5 +1,5 @@
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
-import { WeightFormat } from "../services/weight-format";
+import { WeightFormat } from "./weight-format";
 
 type ResistanceFormatStrategy = {
   set: (load: number, language: string) => string | null;

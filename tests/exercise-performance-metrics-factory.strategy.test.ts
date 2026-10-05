@@ -10,7 +10,7 @@ describe("ExercisePerformanceMetricsStrategyFactory", () => {
       { OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley() },
     );
 
-    expect(strategy).toBeInstanceOf(Statistics.Services.ExercisePerformanceMetricsLoadStrategy);
+    expect(strategy).toBeInstanceOf(Statistics.Services.ExercisePerformanceMetricsWeightedStrategy);
   });
 
   test("bodyweight", () => {
@@ -19,6 +19,6 @@ describe("ExercisePerformanceMetricsStrategyFactory", () => {
       { OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley() },
     );
 
-    expect(strategy).toBeInstanceOf(Statistics.Services.ExercisePerformanceMetricsRepsStrategy);
+    expect(strategy).toBeInstanceOf(Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy);
   });
 });

@@ -1,13 +1,13 @@
 import * as bg from "@bgord/ui";
 import { ChevronsUp, Sigma, Trophy } from "lucide-react";
-import type { RepsExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
+import type { BodyweightExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import { CountDelta } from "../components/count-delta";
 import { Gap } from "../components/gap";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 
 type Translate = ReturnType<typeof bg.useTranslations>;
 
-type Performances = ReadonlyArray<RepsExercisePerformanceStatistics>;
+type Performances = ReadonlyArray<BodyweightExercisePerformanceStatistics>;
 
 const repsRecord = (performances: Performances) =>
   performances.toSorted((a, b) => b.bestSet.reps - a.bestSet.reps)[0];
@@ -59,8 +59,8 @@ function RepsProgressLabel() {
 }
 
 function RepsHistoryRowMetrics(props: {
-  performance: RepsExercisePerformanceStatistics;
-  previous: RepsExercisePerformanceStatistics | undefined;
+  performance: BodyweightExercisePerformanceStatistics;
+  previous: BodyweightExercisePerformanceStatistics | undefined;
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
@@ -94,13 +94,13 @@ function RepsHistoryRowMetrics(props: {
   );
 }
 
-export const ExerciseStatisticsReps = {
+export const ExerciseStatisticsBodyweight = {
   record: repsRecord,
   recordLabel: "statistics.exercise.max_reps",
   Tiles: RepsTiles,
   progress: {
     Label: RepsProgressLabel,
-    value: (performance: RepsExercisePerformanceStatistics) => performance.bestSet.reps,
+    value: (performance: BodyweightExercisePerformanceStatistics) => performance.bestSet.reps,
     format: repsValue,
   },
   HistoryRowMetrics: RepsHistoryRowMetrics,
