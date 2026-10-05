@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
+import { CalendarDays, Check, X } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
@@ -42,16 +42,18 @@ export function WorkoutScheduledFor() {
     return (
       <button
         aria-label={t("workout.reschedule.cta", { date: scheduledOn })}
-        data-color="neutral-500"
-        data-cursor="pointer"
+        className="c-button"
         data-fs="xs"
-        data-hover-color="neutral-200"
+        data-px="2"
         data-self="start"
+        data-variant="ghost"
         onClick={workoutReschedule.enable}
+        style={{ marginInlineStart: "calc(-1 * var(--spacing-2))" }}
         title={t("workout.reschedule.cta", { date: scheduledOn })}
         type="button"
         {...workoutReschedule.props.controller}
       >
+        <CalendarDays data-size="sm" />
         {scheduledOn}
       </button>
     );
