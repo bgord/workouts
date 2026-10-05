@@ -470,6 +470,24 @@ export const fullBody = {
   },
 };
 
+export const core = {
+  name: "Core",
+  description: "Hanging work after every session.",
+  sections: {
+    core: {
+      name: "Core",
+      instructions: [
+        {
+          exercise: exercises.hangingLegRaise,
+          sets: 3,
+          reps: { min: 10, max: 15 },
+          progression: "double_progression",
+        },
+      ],
+    },
+  },
+};
+
 export const admin = {
   email: "admin@example.com",
   scheduledWorkout: { id: "205aca4e-f3ed-4425-ba74-3a010fbcc92c" },
@@ -735,6 +753,20 @@ export const pocket = {
       push: { id: "f5eb314c-bce0-484d-bcac-068960c072e3", ...ppl.sections.push },
       pull: { id: "34092112-fa7c-4db7-80b9-0286dd32bc25", ...ppl.sections.pull },
       legs: { id: "58e79dbd-6558-44ae-9880-26749217272a", ...ppl.sections.legs },
+    },
+  },
+};
+
+export const hanger = {
+  email: "hanger@example.com",
+  completedWorkout: { id: "beee0d1e-9899-49ae-85b6-618db067c62e" },
+  scheduledWorkout: { id: "30c52cc3-93f0-41b8-94e8-bb820132c086" },
+  plan: {
+    id: "edca0413-1962-4233-b801-0d1cf6676f31",
+    name: core.name,
+    description: core.description,
+    sections: {
+      core: { id: "b5c226f5-a1a0-40db-97cf-dfc651aa3273", ...core.sections.core },
     },
   },
 };
