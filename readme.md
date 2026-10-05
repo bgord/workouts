@@ -742,8 +742,7 @@ infra/
 │   │   ├── get-plan-name-for-owner-count.adapter.ts
 │   │   ├── get-plan.adapter.ts
 │   │   ├── list-exercise-catalog.adapter.ts
-│   │   ├── list-plans.adapter.ts
-│   │   └── plan-repository.adapter.ts
+│   │   └── list-plans.adapter.ts
 │   ├── preferences
 │   │   ├── get-weekly-summary.adapter.ts
 │   │   ├── user-language-ohq.adapter.ts
@@ -784,8 +783,7 @@ infra/
 │       ├── list-exercise-performances.adapter.ts
 │       ├── list-week-completed-workouts.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts
-│       ├── list-workouts.adapter.ts
-│       └── workout-repository.adapter.ts
+│       └── list-workouts.adapter.ts
 ├── bootstrap.ts
 ├── config.ts
 ├── db.ts

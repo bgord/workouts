@@ -1,5 +1,5 @@
-import type * as bg from "@bgord/bun";
-import type * as Workouts from "+workouts";
+import * as bg from "@bgord/bun";
+import * as Workouts from "+workouts";
 import { GetWorkoutQuery } from "./get-workout.adapter";
 import { GetWorkoutDashboardQuery } from "./get-workout-dashboard.adapter";
 import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
@@ -7,7 +7,6 @@ import { ListExercisePerformancesQuery } from "./list-exercise-performances.adap
 import { ListWeekCompletedWorkoutsQuery } from "./list-week-completed-workouts.adapter";
 import { ListWorkoutExportRowsQuery } from "./list-workout-export-rows.adapter";
 import { ListWorkoutsQuery } from "./list-workouts.adapter";
-import { createWorkoutRepository } from "./workout-repository.adapter";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -25,6 +24,6 @@ export function createWorkoutsAdapters(deps: Dependencies) {
     ListWeekCompletedWorkoutsQuery,
     ListWorkoutExportRowsQuery,
     ListWorkoutsQuery,
-    WorkoutRepository: createWorkoutRepository(deps),
+    WorkoutRepository: new bg.EventSourcedRepositoryAdapter({ aggregate: Workouts.Aggregates.Workout }, deps),
   };
 }

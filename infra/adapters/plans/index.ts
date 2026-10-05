@@ -1,12 +1,11 @@
-import type * as bg from "@bgord/bun";
-import type * as Plans from "+plans";
+import * as bg from "@bgord/bun";
+import * as Plans from "+plans";
 import { GetFinalizedPlanQuery } from "./get-finalized-plan.adapter";
 import { GetPlanQuery } from "./get-plan.adapter";
 import { GetPlanEditableForOwnerCountQuery } from "./get-plan-editable-for-owner-count.adapter";
 import { GetPlanNameForOwnerCountQuery } from "./get-plan-name-for-owner-count.adapter";
 import { ListExerciseCatalogQuery } from "./list-exercise-catalog.adapter";
 import { ListPlansQuery } from "./list-plans.adapter";
-import { createPlanRepository } from "./plan-repository.adapter";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -23,6 +22,6 @@ export function createPlansAdapters(deps: Dependencies) {
     GetFinalizedPlanQuery,
     ListExerciseCatalogQuery,
     ListPlansQuery,
-    PlanRepository: createPlanRepository(deps),
+    PlanRepository: new bg.EventSourcedRepositoryAdapter({ aggregate: Plans.Aggregates.Plan }, deps),
   };
 }
