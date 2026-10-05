@@ -40,5 +40,5 @@ export function RowTitle(props: React.JSX.IntrinsicElements["h2"]) {
 }
 
 export function RowChevron() {
-  return <ChevronRight data-color="neutral-500" data-size="sm" />;
+  return <ChevronRight data-color="neutral-500" data-shrink="0" data-size="sm" />;
 }
