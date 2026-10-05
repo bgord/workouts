@@ -1,9 +1,11 @@
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
+import type { useSetCorrection } from "../hooks/use-set-correction";
 import { WorkoutSetRow } from "./workout-set-row";
 
 export function WorkoutSetList(props: {
   exercise: WorkoutExercise;
   pendingSet: LoggedSet | null;
+  correction: ReturnType<typeof useSetCorrection>;
   flushTop?: boolean;
 }) {
   if (props.exercise.loggedSets.length === 0) return null;
@@ -12,6 +14,7 @@ export function WorkoutSetList(props: {
     <ul data-stack="y">
       {props.exercise.loggedSets.map((loggedSet, index) => (
         <WorkoutSetRow
+          correct={props.correction.toggle(loggedSet.id)}
           exercise={props.exercise}
           first={props.flushTop && index === 0}
           key={loggedSet.id}

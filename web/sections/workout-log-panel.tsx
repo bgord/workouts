@@ -5,6 +5,7 @@ import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout
 import * as ui from "../components";
 import { useLogPanel } from "../hooks/use-log-panel";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
+import { useSetCorrection } from "../hooks/use-set-correction";
 import { WorkoutLogPanelStep } from "./workout-log-panel-step";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
@@ -70,6 +71,7 @@ function WorkoutLogPanelContent(props: { exercise: WorkoutExercise }) {
   const t = bg.useTranslations();
   const { close } = useLogPanel();
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
+  const correction = useSetCorrection();
 
   const title = t("workout.exercise.log_panel.close.title", { name: exercise.exerciseName });
 
@@ -77,11 +79,11 @@ function WorkoutLogPanelContent(props: { exercise: WorkoutExercise }) {
     <>
       {exercise.loggedSets.length > 0 && (
         <div data-minh="0" data-overflow="auto">
-          <WorkoutSetList exercise={exercise} flushTop pendingSet={pendingSet} />
+          <WorkoutSetList correction={correction} exercise={exercise} flushTop pendingSet={pendingSet} />
         </div>
       )}
 
-      <WorkoutSetLog exercise={exercise} onPending={setPendingSet} />
+      <WorkoutSetLog correcting={correction.active !== null} exercise={exercise} onPending={setPendingSet} />
 
       <div data-cross="center" data-pt="3" data-stack="x" {...ui.Gap.related}>
         {exercise.actions.catalogView.available && (

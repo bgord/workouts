@@ -8,7 +8,11 @@ import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
 
-export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (set: LoggedSet) => void }) {
+export function WorkoutSetLog(props: {
+  exercise: WorkoutExercise;
+  onPending: (set: LoggedSet) => void;
+  correcting: boolean;
+}) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
@@ -66,11 +70,12 @@ export function WorkoutSetLog(props: { exercise: WorkoutExercise; onPending: (se
 
   if (!action.available) return null;
 
-  const busy = !action.enabled || mutation.isLoading;
+  const busy = !action.enabled || props.correcting || mutation.isLoading;
 
   return (
     <form
       aria-busy={mutation.isLoading}
+      data-opacity={props.correcting ? "medium" : undefined}
       data-stack="x"
       data-wrap="wrap"
       onSubmit={handleSubmit}

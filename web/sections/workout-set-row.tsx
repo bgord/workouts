@@ -1,4 +1,4 @@
-import * as bg from "@bgord/ui";
+import type * as bg from "@bgord/ui";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { WorkoutSetCorrect } from "./workout-set-correct";
@@ -9,8 +9,9 @@ export function WorkoutSetRow(props: {
   loggedSet: LoggedSet;
   pending: boolean;
   first?: boolean;
+  correct: bg.UseToggleReturnType;
 }) {
-  const workoutSetCorrect = bg.useToggle({ name: `correct-${props.loggedSet.id}` });
+  const workoutSetCorrect = props.correct;
 
   return (
     <ui.HairlineRow

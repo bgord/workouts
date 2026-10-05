@@ -5,6 +5,7 @@ import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-
 import * as ui from "../components";
 import { useLogPanel } from "../hooks/use-log-panel";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
+import { useSetCorrection } from "../hooks/use-set-correction";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseLogPanel } from "./workout-exercise-log-panel";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
@@ -32,6 +33,7 @@ export function WorkoutExerciseRow(props: {
   });
 
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
+  const correction = useSetCorrection();
   const { active } = useLogPanel();
 
   const isDraft = workout.data.status === WorkoutStatusEnum.draft;
@@ -194,9 +196,13 @@ export function WorkoutExerciseRow(props: {
 
       {isExpandable && workoutExerciseVisibility.on && !isInLogPanel && (
         <div data-stack="y" {...ui.Spacing.inset} {...workoutExerciseVisibility.props.target}>
-          <WorkoutSetList exercise={exercise} pendingSet={pendingSet} />
+          <WorkoutSetList correction={correction} exercise={exercise} pendingSet={pendingSet} />
 
-          <WorkoutSetLog exercise={exercise} onPending={setPendingSet} />
+          <WorkoutSetLog
+            correcting={correction.active !== null}
+            exercise={exercise}
+            onPending={setPendingSet}
+          />
         </div>
       )}
     </ui.HairlineRow>

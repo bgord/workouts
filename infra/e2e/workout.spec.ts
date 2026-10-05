@@ -362,6 +362,34 @@ test.describe("Workout - active", () => {
     await expect(row).not.toContainText("9×");
   });
 
+  test("disables the log form while a set is being corrected, one set at a time", async ({ page }) => {
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.superHorizontalBenchPress.name,
+      exact: true,
+    });
+    const log = row.locator("form:not([aria-label])");
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await row.getByRole("button", { name: /^Details: / }).click();
+
+    await expect(log.getByRole("spinbutton", { name: "Reps" })).toBeEnabled();
+
+    await row.getByRole("button", { name: "Correct set 1" }).click();
+
+    await expect(row.getByRole("form", { name: "Correct set 1" })).toBeVisible();
+    await expect(log.getByRole("spinbutton", { name: "Reps" })).toBeDisabled();
+
+    await row.getByRole("button", { name: "Correct set 2" }).click();
+
+    await expect(row.getByRole("form", { name: "Correct set 2" })).toBeVisible();
+    await expect(row.getByRole("form", { name: "Correct set 1" })).toBeHidden();
+    await expect(log.getByRole("spinbutton", { name: "Reps" })).toBeDisabled();
+
+    await row.getByRole("button", { name: "Cancel" }).click();
+
+    await expect(log.getByRole("spinbutton", { name: "Reps" })).toBeEnabled();
+  });
+
   test("shows the error when removing a set fails", async ({ page }) => {
     const row = page.getByRole("listitem", {
       name: fixtures.exercises.superHorizontalBenchPress.name,
