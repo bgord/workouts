@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { Gap } from "./gap";
+import { LogoMark } from "./logo-mark";
 
 function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
   const t = bg.useTranslations();
@@ -8,18 +8,7 @@ function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
   return (
     <a data-main="center" data-stack="x" {...props}>
       <span className="c-visually-hidden">{t("app.home")}</span>
-      <div
-        className="logo"
-        data-color="brand-500"
-        data-cross="center"
-        data-fs="2xl"
-        data-fw="bold"
-        data-lh="none"
-        data-ls="wider"
-        data-stack="x"
-        data-transform="uppercase"
-        {...Gap.cluster}
-      />
+      <LogoMark data-color="brand-500" data-fs="2xl" />
     </a>
   );
 }

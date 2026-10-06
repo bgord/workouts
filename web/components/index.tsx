@@ -34,6 +34,7 @@ export * from "./length-delta";
 export * from "./length-value";
 export * from "./line-chart";
 export * from "./logo";
+export * from "./logo-mark";
 export * from "./logout";
 export * from "./main";
 export * from "./menu";
