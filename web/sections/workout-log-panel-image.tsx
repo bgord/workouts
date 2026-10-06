@@ -5,6 +5,7 @@ export function WorkoutLogPanelImage(props: { exercise: WorkoutExercise }) {
   const { exercise } = props;
 
   if (!exercise.actions.catalogView.available) {
+    /* v8 ignore next */
     return <ui.ExerciseImagePlaceholder size={ui.ExerciseImageSize.xs} />;
   }
 

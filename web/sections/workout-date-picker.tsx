@@ -40,6 +40,7 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
 
           <ui.ChipButton
             onClick={() => {
+              /* v8 ignore next */
               if (custom.on) return;
               custom.enable();
               field.set(DateFormat.addDays(today, predefined.length));

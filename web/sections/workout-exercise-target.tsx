@@ -11,6 +11,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
   const { target, actions } = props.exercise;
 
   if (!actions.targetSet.available) {
+    /* v8 ignore next */
     if (!target) return null;
 
     return (

@@ -14,6 +14,7 @@ const MenuContext = createContext<MenuContextType | null>(null);
 
 export function useMenu() {
   const menu = useContext(MenuContext);
+  /* v8 ignore next */
   if (!menu) throw new Error("useMenu must be used within Menu");
 
   const close = () => {

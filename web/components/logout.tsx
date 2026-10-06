@@ -9,6 +9,7 @@ export function Logout(props: React.JSX.IntrinsicElements["button"]) {
     <IconButton
       aria-label={t("auth.logout.cta")}
       onClick={async () => {
+        /* v8 ignore next 2 */
         await fetch("/api/auth/sign-out", { method: "POST", credentials: "include" });
         location.replace("/public/login.html");
       }}

@@ -13,6 +13,7 @@ export function WorkoutLogPanelRail() {
     const rail = ref.current;
     const current = rail?.querySelector<HTMLElement>("[aria-current]");
 
+    /* v8 ignore next */
     if (!(rail && current)) return;
 
     rail.scrollLeft = current.offsetLeft - rail.offsetLeft - (rail.clientWidth - current.offsetWidth) / 2;

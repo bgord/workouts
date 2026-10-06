@@ -56,6 +56,72 @@ test.describe("Body parts - athlete", () => {
     ).toBeVisible();
   });
 
+  test("opens the menu with ArrowDown and focuses the first item", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).focus();
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+
+    await page.getByRole("button", { name: "More actions" }).focus();
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+  });
+
+  test("moves through the menu items with the keyboard", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Import body parts" })).toBeFocused();
+
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+
+    await page.keyboard.press("ArrowUp");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("Home");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+
+    await page.keyboard.press("ArrowUp");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("Home");
+    await page.keyboard.press("End");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("a");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+  });
+
+  test("closes the menu with Escape and returns focus to the trigger", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.keyboard.press("Escape");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "More actions" })).toBeFocused();
+
+    await page.keyboard.press("Escape");
+
+    await expect(page.getByRole("button", { name: "More actions" })).toBeFocused();
+  });
+
   test("marks the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
