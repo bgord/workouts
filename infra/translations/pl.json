@@ -399,6 +399,8 @@
   "workout.exercise.remove.header": "Usuń ćwiczenie",
   "workout.exercise.remove.info": "Usunięcie {{name}} skasuje też wszystkie zapisane dla niego serie.",
   "workout.exercise.remove.title": "Usuń {{name}}",
+  "workout.exercise.reorder.active": "Zmiana kolejności ćwiczeń",
+  "workout.exercise.reorder.done": "Gotowe",
   "workout.exercise.reorder.start.title": "Zmień kolejność ćwiczeń",
   "workout.exercise.reorder.stop.title": "Zakończ zmianę kolejności",
   "workout.exercise.skipped": "Pominięte",

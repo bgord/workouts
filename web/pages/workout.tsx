@@ -11,7 +11,7 @@ import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
 import { WorkoutIdentity } from "../sections/workout-identity";
 import { WorkoutLogPanel } from "../sections/workout-log-panel";
 import { WorkoutNote } from "../sections/workout-note";
-import { WorkoutReorder } from "../sections/workout-reorder";
+import { WorkoutReorder, WorkoutReorderStrip } from "../sections/workout-reorder";
 import { WorkoutStatus } from "../sections/workout-status";
 import { WorkoutWarmup } from "../sections/workout-warmup";
 
@@ -24,7 +24,7 @@ export function Workout() {
 
   return (
     <ui.Main>
-      <div data-stack="y" {...ui.Gap.related}>
+      <div data-stack="y" {...ui.Gap.block}>
         <div data-main="between" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack search={search} to="/workouts">
             {t("app.workouts")}
@@ -38,7 +38,9 @@ export function Workout() {
 
               <WorkoutReorder {...workoutReorder} />
 
-              {(workout.data.completedAt || workout.actions.reorder.available) && <ui.MenuSeparator />}
+              {(workout.data.completedAt || (workout.actions.reorder.available && workoutReorder.off)) && (
+                <ui.MenuSeparator />
+              )}
 
               <WorkoutDiscard />
             </ui.MenuContent>
@@ -50,6 +52,8 @@ export function Workout() {
         <WorkoutStatus />
 
         <WorkoutNote />
+
+        <WorkoutReorderStrip {...workoutReorder} />
       </div>
 
       <WorkoutWarmup />
