@@ -105,6 +105,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     return {
       data,
+      progress: new Workouts.Services.WorkoutProgress({ exercises: workout.exercises }).calculate(),
       actions: new Workouts.Services.WorkoutGetActions({
         status: workout.status,
         exercises: data.exercises,

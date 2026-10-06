@@ -1,4 +1,5 @@
 import { describe, expect, spyOn, test } from "bun:test";
+import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { createServer } from "../server";
 import * as mocks from "./mocks";
@@ -40,6 +41,7 @@ describe("GET /api/workouts/:workoutId", async () => {
     spies.use(
       spyOn(di.Adapters.Workouts.GetWorkoutQuery, "execute").mockResolvedValue({
         data: mocks.workoutWithExerciseActions,
+        progress: { logged: tools.Int.nonNegative(1), total: tools.Int.nonNegative(2) },
         actions: {
           start: { available: true, enabled: false, hints: ["workout.exercises.have.targets"] },
           complete: { available: true, enabled: true, hints: [] },
@@ -58,6 +60,7 @@ describe("GET /api/workouts/:workoutId", async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       data: mocks.workoutWithExerciseActions,
+      progress: { logged: 1, total: 2 },
       actions: {
         start: { available: true, enabled: false, hints: ["workout.exercises.have.targets"] },
         complete: { available: true, enabled: true, hints: [] },

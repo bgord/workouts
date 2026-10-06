@@ -558,7 +558,8 @@ modules/
     │   ├── workout-get-actions.ts
     │   ├── workout-get-exercise-actions.ts
     │   ├── workout-get-logged-set-actions.ts
-    │   └── workout-list-actions.ts
+    │   ├── workout-list-actions.ts
+    │   └── workout-progress.ts
     └── value-objects
         ├── exercise-prescription.ts
         ├── exercise-target-diff.ts

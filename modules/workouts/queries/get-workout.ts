@@ -1,4 +1,5 @@
 import type * as bg from "@bgord/bun";
+import type * as tools from "@bgord/tools";
 import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as VO from "+workouts/value-objects";
@@ -33,6 +34,7 @@ export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> 
 
 export type WorkoutGetResponse = {
   data: Omit<VO.WorkoutSnapshot, "exercises"> & { exercises: Array<WorkoutExercise> };
+  progress: { logged: tools.IntegerNonNegativeType; total: tools.IntegerNonNegativeType };
   actions: {
     start: bg.ActionState;
     complete: bg.ActionState;

@@ -15,3 +15,4 @@ export * from "./workout-get-actions";
 export * from "./workout-get-exercise-actions";
 export * from "./workout-get-logged-set-actions";
 export * from "./workout-list-actions";
+export * from "./workout-progress";
