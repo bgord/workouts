@@ -12,7 +12,7 @@ export const Gap = {
   // (ActionHint, Logo, profile card headings, DialogStatus/DialogError, MenuItem), inline form → Output,
   // StatusPanel dot → text, StatusPanelAction buttons
   cluster: { "data-gap": "2" },
-  // Row items (index + image + body + controls), header rows (ButtonBack + h1 + actions),
+  // Row items (index + image + body + controls), header bars (ButtonBack + Menu),
   // StatusPanel summary → action, h2 → content, card content (profile cards, ExerciseCard, DialogHeader),
   // stats tiles (BodyWeightStats, ExerciseStats), dialog info + status, chart header,
   // DateTile → workout names, workout identity → reschedule form
@@ -20,6 +20,7 @@ export const Gap = {
   // Toolbar → list (WorkoutHistory, ExerciseCatalog, BodyWeightMeasurementList),
   // ExerciseCatalog card grid, exercise page sidebar, shortcuts overlay card, history row metrics,
   // plan header (bar → name + description → StatusPanel),
+  // measurements header (bar → h1),
   // workout header (bar → identity → StatusPanel → note → reorder strip)
   block: { "data-gap": "4" },
   // Main page sections (Exercise, Measurements), form fields (PlanCreate, ExerciseAdd, WorkoutCreate,

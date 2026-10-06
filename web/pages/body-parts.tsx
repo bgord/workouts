@@ -11,18 +11,26 @@ export function BodyParts() {
 
   return (
     <ui.Main>
-      <div data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
-        <ui.ButtonBack to="/measurements" />
+      <div data-stack="y" {...ui.Gap.block}>
+        <div data-main="between" data-stack="x" {...ui.Gap.related}>
+          <ui.ButtonBack to="/measurements">{t("app.measurements")}</ui.ButtonBack>
 
-        <h1 data-grow="1">{t("measurements.body_parts.header")}</h1>
+          <ui.Menu name="body-parts-menu">
+            <ui.MenuTrigger />
 
-        <div data-stack="x" {...ui.Gap.inline}>
-          <BodyPartMeasurementImport />
+            <ui.MenuContent>
+              <BodyPartManage />
 
-          <BodyPartMeasurementExport />
+              <ui.MenuSeparator />
+
+              <BodyPartMeasurementImport />
+
+              <BodyPartMeasurementExport />
+            </ui.MenuContent>
+          </ui.Menu>
         </div>
 
-        <BodyPartManage />
+        <h1>{t("measurements.body_parts.header")}</h1>
       </div>
 
       <div data-stack="y" {...ui.Gap.related}>

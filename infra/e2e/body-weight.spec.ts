@@ -90,8 +90,10 @@ test.describe("Body weight - athlete", () => {
   test("downloads the body weight export", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
+    await page.getByRole("button", { name: "More actions" }).click();
+
     const download = page.waitForEvent("download");
-    await page.getByRole("link", { name: "Export", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Export" }).click();
 
     expect((await download).suggestedFilename()).toMatch(/\.csv$/);
   });
@@ -99,7 +101,8 @@ test.describe("Body weight - athlete", () => {
   test("downloads the body weight import template", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Import body weight" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Import body weight" }).click();
 
     const download = page.waitForEvent("download");
     await page.getByRole("link", { name: "CSV template" }).click();

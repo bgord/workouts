@@ -13,17 +13,10 @@ export function BodyPartManage() {
 
   return (
     <>
-      <button
-        className="c-button"
-        data-md-grow="1"
-        data-variant="secondary"
-        onClick={bodyPartManage.enable}
-        type="button"
-        {...bodyPartManage.props.controller}
-      >
+      <ui.MenuItem aria-haspopup="dialog" onClick={bodyPartManage.enable}>
         <Ruler data-size="sm" />
         {t("measurements.body_parts.manage.cta")}
-      </button>
+      </ui.MenuItem>
 
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...bodyPartManage}>
         <ui.DialogHeader onClose={bodyPartManage.disable}>

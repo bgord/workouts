@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Download } from "lucide-react";
+import * as ui from "../components";
 import { bodyWeightRoute } from "../router";
 
 export function BodyWeightMeasurementExport() {
@@ -9,17 +10,9 @@ export function BodyWeightMeasurementExport() {
   if (!bodyWeightStats) return null;
 
   return (
-    <a
-      aria-label={t("measurements.body_weight.export.cta")}
-      className="c-button"
-      data-variant="icon"
-      download
-      href="/api/measurements/body-weight/export"
-      rel="noopener"
-      target="_blank"
-      title={t("measurements.body_weight.export.cta")}
-    >
+    <ui.MenuLink download href="/api/measurements/body-weight/export" rel="noopener" target="_blank">
       <Download data-size="sm" />
-    </a>
+      {t("measurements.body_weight.export.cta")}
+    </ui.MenuLink>
   );
 }

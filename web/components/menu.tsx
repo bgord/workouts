@@ -142,30 +142,51 @@ export function MenuContent(props: React.JSX.IntrinsicElements["div"]) {
   );
 }
 
+const item = (tone: MenuItemTone) =>
+  ({
+    "data-br": "sm",
+    "data-color": colors[tone],
+    "data-cursor": "pointer",
+    "data-focus-bg": "neutral-800",
+    "data-fs": "sm",
+    "data-hover-bg": "neutral-800",
+    "data-px": "2-5",
+    "data-stack": "x",
+    "data-transform": "truncate",
+    role: "menuitem",
+    style: { outline: "none", ...bg.Rhythm().times(3).minHeight },
+    tabIndex: -1,
+    ...Gap.cluster,
+  }) as const;
+
 export function MenuItem(props: React.JSX.IntrinsicElements["button"] & { tone?: MenuItemTone }) {
   const menu = useMenu();
   const { tone = "neutral", onClick, ...rest } = props;
 
   return (
     <button
-      data-br="sm"
-      data-color={colors[tone]}
-      data-cursor="pointer"
-      data-focus-bg="neutral-800"
-      data-fs="sm"
-      data-hover-bg="neutral-800"
-      data-px="2-5"
-      data-stack="x"
-      data-transform="truncate"
       onClick={(event) => {
         onClick?.(event);
         if (!event.defaultPrevented) menu.close();
       }}
-      role="menuitem"
-      style={{ outline: "none", ...bg.Rhythm().times(3).minHeight }}
-      tabIndex={-1}
       type="button"
-      {...Gap.cluster}
+      {...item(tone)}
+      {...rest}
+    />
+  );
+}
+
+export function MenuLink(props: React.JSX.IntrinsicElements["a"] & { tone?: MenuItemTone }) {
+  const menu = useMenu();
+  const { tone = "neutral", onClick, ...rest } = props;
+
+  return (
+    <a
+      onClick={(event) => {
+        onClick?.(event);
+        if (!event.defaultPrevented) menu.close();
+      }}
+      {...item(tone)}
       {...rest}
     />
   );
