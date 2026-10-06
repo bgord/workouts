@@ -56,7 +56,7 @@ export function WorkoutStatus() {
           <ui.StatusPanelLabel>{panel.label}</ui.StatusPanelLabel>
 
           {panel.action.hints[0] ? (
-            <ui.ActionHint {...panel.action} id={panel.id} />
+            <ui.ActionHint {...panel.action} icon={false} id={panel.id} />
           ) : (
             <ui.StatusPanelDescription>{panel.progress}</ui.StatusPanelDescription>
           )}

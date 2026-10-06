@@ -32,7 +32,7 @@ export function PlanStatus() {
           <ui.StatusPanelLabel>{t(`plan.status.${plan.data.status}`)}</ui.StatusPanelLabel>
 
           {hint ? (
-            <ui.ActionHint {...hint.action} id={hint.id} />
+            <ui.ActionHint {...hint.action} icon={false} id={hint.id} />
           ) : (
             <ui.StatusPanelDescription>
               {t(`plan.status.${plan.data.status}.description`)}
