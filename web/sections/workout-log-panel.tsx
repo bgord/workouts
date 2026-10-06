@@ -1,12 +1,12 @@
 import * as bg from "@bgord/ui";
-import { PanelBottomClose } from "lucide-react";
 import { useLayoutEffect, useRef } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { useLogPanel } from "../hooks/use-log-panel";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import { useSetCorrection } from "../hooks/use-set-correction";
-import { WorkoutLogPanelStep } from "./workout-log-panel-step";
+import { WorkoutLogPanelHead } from "./workout-log-panel-head";
+import { WorkoutLogPanelRail } from "./workout-log-panel-rail";
 import { WorkoutSetList } from "./workout-set-list";
 import { WorkoutSetLog } from "./workout-set-log";
 
@@ -68,15 +68,13 @@ function WorkoutLogPanelDialog(props: { children: React.ReactNode }) {
 }
 
 function WorkoutLogPanelContent(props: { exercise: WorkoutExercise }) {
-  const t = bg.useTranslations();
-  const { close } = useLogPanel();
   const { exercise, pendingSet, setPendingSet } = useOptimisticSet(props.exercise);
   const correction = useSetCorrection();
 
-  const title = t("workout.exercise.log_panel.close.title", { name: exercise.exerciseName });
-
   return (
     <>
+      <WorkoutLogPanelHead exercise={exercise} />
+
       {exercise.loggedSets.length > 0 && (
         <div data-minh="0" data-overflow="auto">
           <WorkoutSetList correction={correction} exercise={exercise} flushTop pendingSet={pendingSet} />
@@ -85,38 +83,7 @@ function WorkoutLogPanelContent(props: { exercise: WorkoutExercise }) {
 
       <WorkoutSetLog correcting={correction.active !== null} exercise={exercise} onPending={setPendingSet} />
 
-      <div data-cross="center" data-pt="3" data-stack="x" {...ui.Gap.related}>
-        {exercise.actions.catalogView.available && (
-          <ui.ExerciseImage
-            id={exercise.exerciseId}
-            imageEtag={exercise.exerciseImageEtag}
-            name={exercise.exerciseName}
-            size={ui.ExerciseImageSize.xs}
-          />
-        )}
-
-        {!exercise.actions.catalogView.available && (
-          <ui.ExerciseImagePlaceholder size={ui.ExerciseImageSize.xs} />
-        )}
-
-        <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-          <strong data-color="neutral-100" data-transform="truncate">
-            {exercise.exerciseName}
-          </strong>
-
-          {exercise.target && <ui.SetDots sets={exercise.loggedSets} target={exercise.target.sets} />}
-        </div>
-
-        <div data-shrink="0" data-stack="x">
-          <WorkoutLogPanelStep direction="previous" />
-
-          <WorkoutLogPanelStep direction="next" />
-        </div>
-
-        <ui.IconButton aria-label={title} onClick={close} title={title}>
-          <PanelBottomClose data-size="sm" />
-        </ui.IconButton>
-      </div>
+      <WorkoutLogPanelRail />
     </>
   );
 }

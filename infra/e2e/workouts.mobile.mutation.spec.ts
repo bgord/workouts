@@ -43,7 +43,11 @@ test.describe("Mobile - pocket", () => {
     await panel.getByRole("button", { name: "Log set", exact: true }).tap();
     await panel.getByRole("button", { name: "Log set · RIR 1" }).tap();
     await panel
-      .getByRole("button", { name: `Next: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
+      .getByRole("group", { name: "Exercises" })
+      .getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      })
       .tap();
     await panel.getByRole("button", { name: "Log set", exact: true }).tap();
 

@@ -32,5 +32,13 @@ export function useLogPanel() {
   const previous = active && available[index - 1];
   const next = active && available[index + 1];
 
-  return { active, previous, next, open: write, close: () => write(null) };
+  return {
+    active,
+    available,
+    position: index + 1,
+    previous,
+    next,
+    open: write,
+    close: () => write(null),
+  };
 }

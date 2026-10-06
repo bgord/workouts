@@ -115,26 +115,168 @@ test.describe("Workout - active", () => {
     await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeHidden();
   });
 
-  test("steps between exercises in the log panel", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+  test("switches exercises from the log panel rail", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const current = rail.getByRole("button", {
+      name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`,
+      exact: true,
+    });
+    const next = rail.getByRole("button", {
+      name: `4. ${fixtures.exercises.pecFlyMachine.name}`,
+      exact: true,
+    });
 
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.getByRole("button", { name: "Log sets" }).click();
 
+    await expect(panel.getByText(fixtures.exercises.tricepsPushDownBar.name, { exact: true })).toBeVisible();
+    await expect(current).toHaveAttribute("aria-current", "step");
+    await expect(next).not.toHaveAttribute("aria-current", "step");
+
+    await next.click();
+
+    await expect(panel.getByText(fixtures.exercises.pecFlyMachine.name, { exact: true })).toBeVisible();
+    await expect(panel.getByText(fixtures.exercises.tricepsPushDownBar.name, { exact: true })).toBeHidden();
+    await expect(next).toHaveAttribute("aria-current", "step");
+    await expect(current).not.toHaveAttribute("aria-current", "step");
+    await expect(panel.getByText("4 of 6", { exact: true })).toBeVisible();
+  });
+
+  test("shows the position, target and progress in the log panel head", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const head = panel.getByRole("group", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+
+    await expect(head.getByText("3 of 6", { exact: true })).toBeVisible();
+    await expect(head.getByText("3×8 25 kg", { exact: true })).toBeVisible();
+    await expect(head.getByRole("img", { name: "0 / 3" })).toBeVisible();
+  });
+
+  test("lists every exercise with its progress in the log panel rail", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const completed = rail.getByRole("button", {
+      name: `1. ${fixtures.exercises.superHorizontalBenchPress.name}`,
+      exact: true,
+    });
+    const started = rail.getByRole("button", {
+      name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+      exact: true,
+    });
+    const current = rail.getByRole("button", {
+      name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`,
+      exact: true,
+    });
+    const untouched = rail.getByRole("button", {
+      name: `4. ${fixtures.exercises.pecFlyMachine.name}`,
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+
+    await expect(rail.getByRole("button")).toHaveCount(6);
+    await expect(completed.getByRole("img", { name: "4 / 4" })).toBeVisible();
+    await expect(started.getByRole("img", { name: "1 / 3" })).toBeVisible();
+    await expect(current.getByRole("img", { name: "0 / 3" })).toBeVisible();
+    await expect(untouched.getByRole("img", { name: "0 / 3" })).toBeVisible();
+    await expect(completed).toHaveCSS("opacity", "1");
+    await expect(started).toHaveCSS("opacity", "1");
+    await expect(current).toHaveCSS("opacity", "1");
+    await expect(untouched).not.toHaveCSS("opacity", "1");
+  });
+
+  test("closes the log panel with the close button", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
-    await expect(panel.getByText(fixtures.exercises.tricepsPushDownBar.name, { exact: true })).toBeVisible();
-    await expect(
-      panel.getByRole("button", {
-        name: `Previous: ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
-      }),
-    ).toBeEnabled();
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
 
-    await panel.getByRole("button", { name: /^Next: / }).click();
+    await panel
+      .getByRole("button", { name: `Close panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
+      .click();
 
-    await expect(
-      panel.getByRole("button", { name: `Previous: ${fixtures.exercises.tricepsPushDownBar.name}` }),
-    ).toBeEnabled();
-    await expect(panel.getByText(fixtures.exercises.tricepsPushDownBar.name, { exact: true })).toBeHidden();
+    await expect(panel).toBeHidden();
+  });
+
+  test("switches exercises in the log panel rail with the keyboard", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const current = rail.getByRole("button", {
+      name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`,
+      exact: true,
+    });
+    const next = rail.getByRole("button", {
+      name: `4. ${fixtures.exercises.pecFlyMachine.name}`,
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await current.focus();
+    await page.keyboard.press("Tab");
+
+    await expect(next).toBeFocused();
+
+    await page.keyboard.press("Enter");
+
+    await expect(next).toHaveAttribute("aria-current", "step");
+    await expect(panel.getByText("4 of 6", { exact: true })).toBeVisible();
+  });
+
+  test("resets the log form when switching exercises in the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const reps = panel.getByRole("spinbutton", { name: "Reps" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await reps.fill("9");
+
+    await expect(reps).toHaveValue("9");
+
+    await rail
+      .getByRole("button", { name: `4. ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
+      .click();
+
+    await expect(reps).toHaveValue("10");
+
+    await rail
+      .getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true })
+      .click();
+
+    await expect(reps).toHaveValue("8");
+  });
+
+  test("enables the log form after switching away from a set being corrected in the log panel", async ({
+    page,
+  }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const log = panel.getByRole("form", { name: "Log set" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await rail
+      .getByRole("button", { name: `1. ${fixtures.exercises.superHorizontalBenchPress.name}`, exact: true })
+      .click();
+    await panel.getByRole("button", { name: "Correct set 1" }).click();
+
+    await expect(panel.getByRole("form", { name: "Correct set 1" })).toBeVisible();
+    await expect(log.getByRole("spinbutton", { name: "Reps" })).toBeDisabled();
+
+    await rail
+      .getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(panel.getByRole("form", { name: "Correct set 1" })).toBeHidden();
+    await expect(log.getByRole("spinbutton", { name: "Reps" })).toBeEnabled();
   });
 
   test("keeps the warm-up expanded and collapsed after reload", async ({ page }) => {
@@ -349,6 +491,11 @@ test.describe("Workout - active", () => {
 
   test("drops the optimistic set when logging fails", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const head = panel.getByRole("group", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
+    const current = panel
+      .getByRole("group", { name: "Exercises" })
+      .getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true });
 
     await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
@@ -357,11 +504,10 @@ test.describe("Workout - active", () => {
     await expect(row.getByRole("button", { name: /^Remove set / })).toHaveCount(0);
 
     await page.getByRole("button", { name: "Log sets" }).click();
-    await page
-      .getByRole("dialog", { name: "Logging panel" })
-      .getByRole("button", { name: "Log set · RIR 1" })
-      .click();
+    await panel.getByRole("button", { name: "Log set · RIR 1" }).click();
     await expect(page.getByText("Could not log the set")).toBeVisible();
+    await expect(head.getByRole("img", { name: "0 / 3" })).toBeVisible();
+    await expect(current.getByRole("img", { name: "0 / 3" })).toBeVisible();
     await page.keyboard.press("Escape");
 
     await expect(row.getByRole("button", { name: /^Remove set / })).toHaveCount(0);

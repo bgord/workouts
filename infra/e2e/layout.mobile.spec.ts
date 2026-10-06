@@ -146,6 +146,39 @@ test.describe("Mobile - active", () => {
     expect(open).toBeLessThanOrEqual(0);
   });
 
+  test("keeps the log panel close button and current exercise within the viewport", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).tap();
+
+    await expect(
+      panel.getByRole("button", { name: `Close panel: ${fixtures.exercises.tricepsPushDownBar.name}` }),
+    ).toBeInViewport({ ratio: 1 });
+    await expect(
+      panel.getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true }),
+    ).toBeInViewport({ ratio: 1 });
+
+    await panel
+      .getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      })
+      .tap();
+
+    await expect(
+      panel.getByRole("button", {
+        name: `Close panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+      }),
+    ).toBeInViewport({ ratio: 1 });
+    await expect(
+      panel.getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      }),
+    ).toBeInViewport({ ratio: 1 });
+  });
+
   test("fits the add exercise dialog on the screen", async ({ page }) => {
     const dialog = page.getByRole("dialog", { name: "Add exercise" });
 

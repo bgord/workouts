@@ -148,6 +148,17 @@ body:has([data-log-panel]) {
   }
 }
 
+[data-rail] {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+[data-rail]::-webkit-scrollbar {
+  display: none;
+}
+[data-rail] > button:not([aria-current]) {
+  border-color: transparent;
+}
+
 .c-button[data-variant="ghost"][data-tone="danger"] {
   color: var(--color-danger-400);
 }

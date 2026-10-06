@@ -532,6 +532,55 @@ test.describe("Workouts - active-mutation", () => {
     await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
   });
 
+  test("corrects a logged set from the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const overhead = rail.getByRole("button", {
+      name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+      exact: true,
+    });
+    const form = panel.getByRole("form", { name: "Correct set 1" });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await overhead.click();
+    await panel.getByRole("button", { name: "Correct set 1" }).click();
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("10");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
+
+    await expect(panel.getByText("10×22.5 kg", { exact: true })).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await overhead.click();
+
+    await expect(panel.getByText("10×22.5 kg", { exact: true })).toBeVisible();
+  });
+
+  test("removes a logged set from the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const bench = rail.getByRole("button", {
+      name: `1. ${fixtures.exercises.superHorizontalBenchPress.name}`,
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await bench.click();
+    await panel.getByRole("button", { name: "Remove set 3" }).click();
+
+    await expect(panel.getByRole("button", { name: "Remove set 3" })).toBeHidden();
+    await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await bench.click();
+
+    await expect(panel.getByRole("button", { name: "Remove set 3" })).toBeHidden();
+    await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeVisible();
+  });
+
   test("blocks saving an empty note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
@@ -652,17 +701,17 @@ test.describe("Workouts - active-mutation", () => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page
-      .getByRole("button", { name: `Remove ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
+      .getByRole("button", { name: `Remove ${fixtures.exercises.facePull.name}`, exact: true })
       .click();
 
     await expect(
-      page.getByRole("link", { name: fixtures.exercises.pecFlyMachine.name, exact: true }),
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeHidden();
 
     await page.reload();
 
     await expect(
-      page.getByRole("link", { name: fixtures.exercises.pecFlyMachine.name, exact: true }),
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeHidden();
   });
 
