@@ -30,6 +30,8 @@ export function PlanName() {
     },
   });
 
+  const cancel = bg.exec([planName.clear, mutation.reset, planRename.disable]);
+
   if (!plan.actions.rename.available) {
     return (
       <h1 data-transform="line-clamp" title={plan.data.name}>
@@ -61,6 +63,9 @@ export function PlanName() {
     <form
       aria-busy={mutation.isLoading}
       data-stack="y"
+      onKeyDown={(event) => {
+        if (event.key === "Escape") cancel();
+      }}
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}
       {...planRename.props.target}
@@ -78,10 +83,7 @@ export function PlanName() {
           {...planName.input.props}
         />
 
-        <ui.InlineEditActions
-          disabled={planName.unchanged || mutation.isLoading}
-          onCancel={bg.exec([planName.clear, mutation.reset, planRename.disable])}
-        />
+        <ui.InlineEditActions disabled={planName.unchanged || mutation.isLoading} onCancel={cancel} />
       </div>
 
       {mutation.isError && (

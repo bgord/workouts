@@ -179,6 +179,16 @@ test.describe("Mobile - active", () => {
 test.describe("Mobile - builder", () => {
   test.use({ storageState: ".auth/builder.json" });
 
+  test("keeps the plan header actions within the viewport", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await expect(page.getByRole("button", { name: "Finalize" })).toBeInViewport({ ratio: 1 });
+
+    await page.getByRole("button", { name: "More actions" }).tap();
+
+    await expect(page.getByRole("menu")).toBeInViewport({ ratio: 1 });
+  });
+
   test("keeps the plan with an expanded section within the viewport width", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();

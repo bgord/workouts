@@ -10,6 +10,7 @@ test.describe("Plan - builder", () => {
 
     await expect(page.getByRole("heading", { level: 1, name: fixtures.builder.plan.name })).toBeVisible();
     await expect(page.getByText("Draft", { exact: true })).toBeVisible();
+    await expect(page.getByText("Finalize to lock the outline.", { exact: true })).toBeVisible();
     await expect(page.getByText(fixtures.builder.plan.sections.push.name, { exact: true })).toBeVisible();
     await expect(page.getByText(fixtures.builder.plan.sections.pull.name, { exact: true })).toBeVisible();
     await expect(page.getByText(fixtures.builder.plan.sections.legs.name, { exact: true })).toBeVisible();
@@ -135,6 +136,17 @@ test.describe("Plan - builder", () => {
     await page.getByRole("button", { name: `Rename ${fixtures.builder.plan.name}` }).click();
 
     await expect(page.getByLabel("Plan name")).toBeFocused();
+  });
+
+  test("cancels renaming the plan with Escape", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: `Rename ${fixtures.builder.plan.name}` }).click();
+    await page.getByLabel("Plan name").fill("Arms");
+
+    await page.getByLabel("Plan name").press("Escape");
+
+    await expect(page.getByLabel("Plan name")).toBeHidden();
+    await expect(page.getByRole("heading", { level: 1, name: fixtures.builder.plan.name })).toBeVisible();
   });
 
   test("focuses the plan description when editing", async ({ page }) => {
@@ -383,6 +395,7 @@ test.describe("Plan - athlete", () => {
     await page.getByRole("button", { name: "More actions" }).click();
 
     await expect(page.getByText("Finalized", { exact: true })).toBeVisible();
+    await expect(page.getByText("Edit to change the outline.", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Edit" })).toBeEnabled();
     await expect(page.getByRole("menuitem", { name: "Copy plan" })).toBeVisible();
     await expect(page.getByRole("menuitem", { name: "Archive" })).toBeVisible();
@@ -427,6 +440,7 @@ test.describe("Plan - archivist", () => {
     await page.goto(`/plans/${fixtures.archivist.archivedPlan.id}`);
 
     await expect(page.getByText("Archived", { exact: true })).toBeVisible();
+    await expect(page.getByText("Restore to use it again.", { exact: true })).toBeHidden();
     await expect(page.getByRole("button", { name: "Restore" })).toHaveAccessibleDescription(
       "Archive the current plan first",
     );
