@@ -21,9 +21,10 @@ test.describe("Plan - builder", () => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
 
-    await page.getByRole("button", { name: "Copy plan" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Copy plan" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy plan" })).toHaveAttribute("title", "Copied");
+    await expect(page.getByRole("menuitem", { name: "Copied" })).toBeVisible();
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
@@ -41,9 +42,10 @@ test.describe("Plan - builder", () => {
   test("shows the error when copying the plan outline fails", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
 
-    await page.getByRole("button", { name: "Copy plan" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Copy plan" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy plan" })).toHaveAttribute("title", "Could not copy");
+    await expect(page.getByRole("menuitem", { name: "Could not copy" })).toBeVisible();
   });
 
   test("keeps the section expanded and collapsed after reload", async ({ page }) => {
@@ -378,13 +380,15 @@ test.describe("Plan - athlete", () => {
 
   test("shows the finalized plan as read-only", async ({ page }) => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
+    await page.getByRole("button", { name: "More actions" }).click();
 
     await expect(page.getByText("Finalized", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Edit" })).toBeEnabled();
-    await expect(page.getByRole("button", { name: "Copy plan" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Copy plan" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Archive" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Finalize" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Restore" })).toBeHidden();
-    await expect(page.getByRole("button", { name: "Delete", exact: true })).toBeHidden();
+    await expect(page.getByRole("menuitem", { name: "Delete" })).toBeHidden();
   });
 
   test("shows the error when enabling editing fails", async ({ page }) => {
@@ -404,7 +408,8 @@ test.describe("Plan - athlete", () => {
     await page.route("**/api/plans/*/archive", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
 
-    await page.getByRole("button", { name: "Archive", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Archive" }).click();
     await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Could not archive the plan")).toBeVisible();

@@ -30,16 +30,22 @@ export function PlanName() {
     },
   });
 
-  if (!plan.actions.rename.available) return <h1 data-minw="0">{plan.data.name}</h1>;
+  if (!plan.actions.rename.available) {
+    return (
+      <h1 data-transform="line-clamp" title={plan.data.name}>
+        {plan.data.name}
+      </h1>
+    );
+  }
 
   if (planRename.off) {
     return (
-      <h1 aria-label={plan.data.name} data-minw="0">
+      <h1 aria-label={plan.data.name}>
         <button
           aria-label={t("plan.rename.cta", { name: plan.data.name })}
           data-cursor="pointer"
           data-maxw="100%"
-          data-transform="truncate"
+          data-transform="line-clamp"
           onClick={planRename.enable}
           title={t("plan.rename.cta", { name: plan.data.name })}
           type="button"
@@ -54,8 +60,6 @@ export function PlanName() {
   return (
     <form
       aria-busy={mutation.isLoading}
-      data-grow="1"
-      data-minw="0"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}

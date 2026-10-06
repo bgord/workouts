@@ -22,14 +22,38 @@ export function Plan() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack to="/plans" />
+        <div data-main="between" data-stack="x" {...ui.Gap.related}>
+          <ui.ButtonBack to="/plans">{t("app.plans")}</ui.ButtonBack>
 
-          <div data-basis="0" data-grow="1" data-minw="0" data-stack="x" {...ui.Gap.related}>
-            <PlanName />
+          <ui.Menu name="plan-menu">
+            <ui.MenuTrigger />
 
-            <ui.PlanStatusBadge status={plan.data.status} />
-          </div>
+            <ui.MenuContent>
+              <PlanCopy />
+
+              <PlanArchive />
+
+              {plan.actions.remove.available && <ui.MenuSeparator />}
+
+              <PlanRemove />
+
+              <ui.MenuSeparator />
+
+              <ui.MenuFooter>
+                {t("plan.updated_at", {
+                  date: DateFormat.dayWithTime(language, plan.data.updatedAt, hydrated ? undefined : "UTC"),
+                })}
+              </ui.MenuFooter>
+            </ui.MenuContent>
+          </ui.Menu>
+        </div>
+
+        <PlanName />
+
+        <PlanDescription />
+
+        <div data-main="between" data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
+          <ui.PlanStatusBadge status={plan.data.status} />
 
           <div data-md-width="100%" data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
             <PlanFinalize />
@@ -37,33 +61,13 @@ export function Plan() {
             <PlanEditingEnable />
 
             <PlanRestore />
-
-            <div data-ml="auto" data-stack="x">
-              <PlanCopy />
-
-              <PlanArchive />
-
-              <PlanRemove />
-            </div>
           </div>
         </div>
 
-        <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
-          <small data-transform="truncate">
-            {t("plan.updated_at", {
-              date: DateFormat.dayWithTime(language, plan.data.updatedAt, hydrated ? undefined : "UTC"),
-            })}
-          </small>
-
-          <PlanDescription />
-
-          {plan.actions.finalize.available && (
-            <ui.ActionHint {...plan.actions.finalize} id="plan-finalize-hint" />
-          )}
-          {plan.actions.restore.available && (
-            <ui.ActionHint {...plan.actions.restore} id="plan-restore-hint" />
-          )}
-        </div>
+        {plan.actions.finalize.available && (
+          <ui.ActionHint {...plan.actions.finalize} id="plan-finalize-hint" />
+        )}
+        {plan.actions.restore.available && <ui.ActionHint {...plan.actions.restore} id="plan-restore-hint" />}
       </div>
 
       <PlanSectionList />

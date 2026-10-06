@@ -231,7 +231,6 @@
   "plan.archive.info": "Archiwizacja {{name}} zablokuje edycję i zwolni miejsce na nowy plan.",
   "plan.copy.cta": "Kopiuj plan",
   "plan.copy.done": "Skopiowano",
-  "plan.copy.title": "Kopiuj zarys",
   "plan.create.cta": "Nowy plan",
   "plan.updated_at": "Zaktualizowano {{date}}",
   "plan.create.error": "Nie udało się utworzyć planu",

@@ -8,11 +8,8 @@ export function PlanCopy() {
   const { plan } = planRoute.useLoaderData();
 
   return (
-    <ui.CopyButton
-      aria-label={t("plan.copy.cta")}
-      done={t("plan.copy.done")}
-      text={() => PlanReport.create(plan.data)}
-      title={t("plan.copy.title")}
-    />
+    <ui.CopyMenuItem done={t("plan.copy.done")} text={() => PlanReport.create(plan.data)}>
+      {t("plan.copy.cta")}
+    </ui.CopyMenuItem>
   );
 }

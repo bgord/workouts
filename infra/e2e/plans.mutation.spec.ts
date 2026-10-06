@@ -57,7 +57,8 @@ test.describe("Plans - builder-mutation", () => {
   test("archives the plan", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builderMutation.plan.id}`);
 
-    await page.getByRole("button", { name: "Archive", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Archive" }).click();
     await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Archived", { exact: true })).toBeVisible();
@@ -567,7 +568,8 @@ test.describe("Plans - archivist-mutation", () => {
   test("archives the draft plan", async ({ page }) => {
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
-    await page.getByRole("button", { name: "Archive", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Archive" }).click();
     await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Archived", { exact: true })).toBeVisible();
@@ -601,7 +603,8 @@ test.describe("Plans - archivist-mutation", () => {
     );
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
-    await page.getByRole("button", { name: "Delete", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Delete" }).click();
     await page
       .getByRole("dialog", { name: "Delete plan" })
       .getByRole("button", { name: "Delete", exact: true })
@@ -617,7 +620,8 @@ test.describe("Plans - archivist-mutation", () => {
   test("deletes the archived plan", async ({ page }) => {
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
-    await page.getByRole("button", { name: "Delete", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Delete" }).click();
     await page
       .getByRole("dialog", { name: "Delete plan" })
       .getByRole("button", { name: "Delete", exact: true })

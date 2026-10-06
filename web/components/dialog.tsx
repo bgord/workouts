@@ -1,6 +1,8 @@
 import * as bg from "@bgord/ui";
 import { CircleAlert, RotateCcw } from "lucide-react";
 import { createContext, useContext } from "react";
+import { createPortal } from "react-dom";
+import { useHydrated } from "../hooks/use-hydrated";
 import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
 import { Gap } from "./gap";
@@ -8,9 +10,12 @@ import { Gap } from "./gap";
 const DialogHeaderId = createContext<string | undefined>(undefined);
 
 export function Dialog(props: bg.DialogPropsType) {
+  const hydrated = useHydrated();
   const header = `${props.props.target.id}-header`;
 
-  return (
+  if (!hydrated) return null;
+
+  return createPortal(
     <DialogHeaderId.Provider value={header}>
       <bg.Dialog
         aria-labelledby={header}
@@ -32,7 +37,8 @@ export function Dialog(props: bg.DialogPropsType) {
         {...Gap.stack}
         {...props}
       />
-    </DialogHeaderId.Provider>
+    </DialogHeaderId.Provider>,
+    document.body,
   );
 }
 

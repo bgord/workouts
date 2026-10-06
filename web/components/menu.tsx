@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Ellipsis } from "lucide-react";
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 import { Gap } from "./gap";
 import { IconButton, type IconButtonTone } from "./icon-button";
 
@@ -24,6 +24,10 @@ export function useMenu() {
   return { ...menu, close };
 }
 
+const colors = { neutral: "neutral-200", brand: "brand-400", danger: "danger-400" } as const;
+
+type MenuItemTone = keyof typeof colors;
+
 function items(content: HTMLDivElement | null) {
   return Array.from(content?.querySelectorAll<HTMLElement>('[role="menuitem"]:not(:disabled)') ?? []);
 }
@@ -46,6 +50,12 @@ export function Menu(props: React.JSX.IntrinsicElements["div"] & { name: string 
         onBlur={(event) => {
           if (!root.current?.contains(event.relatedTarget)) toggle.disable();
         }}
+        onKeyDown={(event) => {
+          if (event.key !== "Escape" || toggle.off) return;
+          event.preventDefault();
+          trigger.current?.focus();
+          toggle.disable();
+        }}
         ref={root}
         {...rest}
       />
@@ -58,11 +68,6 @@ export function MenuTrigger(props: React.JSX.IntrinsicElements["button"] & { ton
   const menu = useMenu();
   const { "aria-label": label = t("app.menu"), children, ...rest } = props;
 
-  const open = () => {
-    menu.toggle.enable();
-    requestAnimationFrame(() => items(menu.content.current)[0]?.focus());
-  };
-
   return (
     <IconButton
       aria-controls={menu.toggle.props.controller["aria-controls"]}
@@ -70,11 +75,12 @@ export function MenuTrigger(props: React.JSX.IntrinsicElements["button"] & { ton
       aria-haspopup="menu"
       aria-label={label}
       data-bg={menu.toggle.on ? "neutral-800" : undefined}
-      onClick={menu.toggle.on ? menu.close : open}
+      onClick={menu.toggle.on ? menu.close : menu.toggle.enable}
       onKeyDown={(event) => {
         if (event.key !== "ArrowDown") return;
         event.preventDefault();
-        open();
+        if (menu.toggle.on) items(menu.content.current)[0]?.focus();
+        else menu.toggle.enable();
       }}
       ref={menu.trigger}
       title={label}
@@ -88,6 +94,10 @@ export function MenuTrigger(props: React.JSX.IntrinsicElements["button"] & { ton
 export function MenuContent(props: React.JSX.IntrinsicElements["div"]) {
   const menu = useMenu();
 
+  useEffect(() => {
+    if (menu.toggle.on) items(menu.content.current)[0]?.focus();
+  }, [menu.toggle.on, menu.content]);
+
   const move = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const list = items(menu.content.current);
     const current = list.indexOf(document.activeElement as HTMLElement);
@@ -98,11 +108,6 @@ export function MenuContent(props: React.JSX.IntrinsicElements["div"]) {
       Home: 0,
       End: list.length - 1,
     };
-
-    if (event.key === "Escape") {
-      event.preventDefault();
-      return menu.close();
-    }
 
     const target = targets[event.key];
     if (target === undefined) return;
@@ -137,14 +142,14 @@ export function MenuContent(props: React.JSX.IntrinsicElements["div"]) {
   );
 }
 
-export function MenuItem(props: React.JSX.IntrinsicElements["button"] & { tone?: "danger" }) {
+export function MenuItem(props: React.JSX.IntrinsicElements["button"] & { tone?: MenuItemTone }) {
   const menu = useMenu();
-  const { tone, onClick, ...rest } = props;
+  const { tone = "neutral", onClick, ...rest } = props;
 
   return (
     <button
       data-br="sm"
-      data-color={tone === "danger" ? "danger-400" : "neutral-200"}
+      data-color={colors[tone]}
       data-cursor="pointer"
       data-focus-bg="neutral-800"
       data-fs="sm"
