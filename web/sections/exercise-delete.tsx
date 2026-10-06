@@ -33,12 +33,7 @@ export function ExerciseDelete() {
         {t("exercise.delete.cta")}
       </ui.MenuItem>
 
-      <ui.ActionHint
-        {...exercise.actions.delete}
-        data-px="2-5"
-        data-py="1-5"
-        id="exercise-delete-hint"
-      />
+      <ui.ActionHint {...exercise.actions.delete} data-px="2-5" data-py="1-5" id="exercise-delete-hint" />
 
       <ui.Dialog {...exerciseDelete}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={exerciseDelete.disable}>

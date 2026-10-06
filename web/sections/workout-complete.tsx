@@ -22,10 +22,17 @@ export function WorkoutComplete() {
   if (!workout.actions.complete.available) return null;
 
   return (
-    <form aria-busy={mutation.isLoading} data-stack="y" onSubmit={mutation.handleSubmit} {...ui.Gap.cluster}>
+    <form
+      aria-busy={mutation.isLoading}
+      data-md-basis="0"
+      data-md-grow="1"
+      data-stack="y"
+      onSubmit={mutation.handleSubmit}
+      {...ui.Gap.cluster}
+    >
       <button
         className="c-button"
-        data-variant="primary"
+        data-variant="secondary"
         disabled={!workout.actions.complete.enabled || mutation.isLoading}
         type="submit"
         {...ui.describedByHint(workout.actions.complete, "workout-complete-hint")}

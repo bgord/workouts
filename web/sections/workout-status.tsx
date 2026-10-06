@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutComplete } from "./workout-complete";
+import { WorkoutLogPanelOpen } from "./workout-log-panel-open";
 import { WorkoutStart } from "./workout-start";
 
 export function WorkoutStatus() {
@@ -65,6 +66,8 @@ export function WorkoutStatus() {
 
       <ui.StatusPanelAction>
         <WorkoutStart />
+
+        <WorkoutLogPanelOpen />
 
         <WorkoutComplete />
       </ui.StatusPanelAction>

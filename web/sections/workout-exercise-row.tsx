@@ -7,7 +7,6 @@ import { useLogPanel } from "../hooks/use-log-panel";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import { useSetCorrection } from "../hooks/use-set-correction";
 import { workoutRoute } from "../router";
-import { WorkoutExerciseLogPanel } from "./workout-exercise-log-panel";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";
 import { WorkoutExerciseRemove } from "./workout-exercise-remove";
@@ -62,16 +61,10 @@ export function WorkoutExerciseRow(props: {
           position={props.index}
         >
           {isExpandable && (
-            <div data-cross="center" data-shrink="0" data-stack="y">
-              <ui.ChevronToggle
-                aria-label={t("app.details", { name: props.exercise.exerciseName })}
-                {...workoutExerciseVisibility}
-              />
-
-              {props.exercise.actions.setLog.available && (
-                <WorkoutExerciseLogPanel exercise={props.exercise} />
-              )}
-            </div>
+            <ui.ChevronToggle
+              aria-label={t("app.details", { name: props.exercise.exerciseName })}
+              {...workoutExerciseVisibility}
+            />
           )}
 
           {!isExpandable && (
