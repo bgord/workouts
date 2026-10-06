@@ -136,6 +136,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("button", { name: `Rename ${fixtures.builder.plan.name}` }).click();
 
     await expect(page.getByLabel("Plan name")).toBeFocused();
+    await expect(page.getByRole("button", { name: "More actions" })).toBeHidden();
   });
 
   test("cancels renaming the plan with Escape", async ({ page }) => {
@@ -147,6 +148,7 @@ test.describe("Plan - builder", () => {
 
     await expect(page.getByLabel("Plan name")).toBeHidden();
     await expect(page.getByRole("heading", { level: 1, name: fixtures.builder.plan.name })).toBeVisible();
+    await expect(page.getByRole("button", { name: "More actions" })).toBeVisible();
   });
 
   test("focuses the plan description when editing", async ({ page }) => {

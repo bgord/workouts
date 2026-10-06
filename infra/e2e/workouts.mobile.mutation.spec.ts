@@ -59,7 +59,6 @@ test.describe("Mobile - pocket", () => {
   });
 
   test("logs a single set on a double tap", async ({ page }) => {
-    const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
@@ -71,10 +70,9 @@ test.describe("Mobile - pocket", () => {
     await expect(panel.getByText("Could not log the set")).toBeHidden();
 
     await page.reload();
-    await row.getByRole("button", { name: /^Details: / }).tap();
 
-    await expect(row.getByRole("button", { name: "Remove set 1" })).toBeVisible();
-    await expect(row.getByRole("button", { name: "Remove set 2" })).toBeHidden();
+    await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeVisible();
+    await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeHidden();
   });
 
   test("adds a note", async ({ page }) => {

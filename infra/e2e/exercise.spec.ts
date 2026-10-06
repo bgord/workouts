@@ -135,6 +135,15 @@ test.describe("Exercise - admin", () => {
     await expect(categories.getByText("Abs", { exact: true })).toBeHidden();
   });
 
+  test("focuses the exercise name when renaming", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await page.getByRole("button", { name: `Rename ${fixtures.exercises.pecDeck.name}` }).click();
+
+    await expect(page.getByLabel("Exercise name")).toBeFocused();
+    await expect(page.getByRole("button", { name: "More actions" })).toBeHidden();
+  });
+
   test("shows the error when renaming an exercise fails", async ({ page }) => {
     await page.route("**/api/exercises/*", (route) =>
       route.request().method() === "PATCH" ? route.fulfill({ status: 500 }) : route.continue(),

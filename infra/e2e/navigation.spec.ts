@@ -81,7 +81,7 @@ test.describe("Navigation - athlete", () => {
   test("goes back from the exercise to the catalog", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
-    await page.getByRole("main").getByRole("link", { name: "Catalog", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 
     await expect(page).toHaveURL("/catalog");
   });
@@ -89,7 +89,7 @@ test.describe("Navigation - athlete", () => {
   test("goes back from the plan to the plans", async ({ page }) => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
 
-    await page.getByRole("main").getByRole("link", { name: "Plans", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 
     await expect(page).toHaveURL("/plans");
   });
@@ -98,7 +98,7 @@ test.describe("Navigation - athlete", () => {
     await page.goto("/workouts?filter=all_time");
     await page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`).click();
 
-    await page.getByRole("main").getByRole("link", { name: "Workouts", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 
     await expect(page).toHaveURL("/workouts?filter=all_time");
   });
@@ -106,12 +106,12 @@ test.describe("Navigation - athlete", () => {
   test("goes back from the exercise to the workout it was opened from", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
     await page.getByRole("list", { name: "Exercises" }).getByRole("link").first().click();
-    await expect(page.getByRole("main").getByRole("link", { name: "Catalog", exact: true })).toHaveAttribute(
+    await expect(page.getByRole("main").getByRole("link", { name: "Back", exact: true })).toHaveAttribute(
       "href",
       "/catalog",
     );
 
-    await page.getByRole("main").getByRole("link", { name: "Catalog", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 
     await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
   });
@@ -120,12 +120,12 @@ test.describe("Navigation - athlete", () => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();
     await page.getByRole("list", { name: "Exercises" }).getByRole("link").first().click();
-    await expect(page.getByRole("main").getByRole("link", { name: "Catalog", exact: true })).toHaveAttribute(
+    await expect(page.getByRole("main").getByRole("link", { name: "Back", exact: true })).toHaveAttribute(
       "href",
       "/catalog",
     );
 
-    await page.getByRole("main").getByRole("link", { name: "Catalog", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 
     await expect(page).toHaveURL(`/plans/${fixtures.athlete.plan.id}`);
   });
@@ -141,13 +141,13 @@ test.describe("Navigation - athlete", () => {
   test("goes back from body weight and body parts to the measurements", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("main").getByRole("link", { name: "Measurements", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 
     await expect(page).toHaveURL("/measurements");
 
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("main").getByRole("link", { name: "Measurements", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 
     await expect(page).toHaveURL("/measurements");
   });

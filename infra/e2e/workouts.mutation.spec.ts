@@ -551,8 +551,6 @@ test.describe("Workouts - active-mutation", () => {
     await expect(panel.getByText("10×22.5 kg", { exact: true })).toBeVisible();
 
     await page.reload();
-    await page.getByRole("button", { name: "Log sets" }).click();
-    await overhead.click();
 
     await expect(panel.getByText("10×22.5 kg", { exact: true })).toBeVisible();
   });
@@ -574,8 +572,6 @@ test.describe("Workouts - active-mutation", () => {
     await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeVisible();
 
     await page.reload();
-    await page.getByRole("button", { name: "Log sets" }).click();
-    await bench.click();
 
     await expect(panel.getByRole("button", { name: "Remove set 3" })).toBeHidden();
     await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeVisible();
