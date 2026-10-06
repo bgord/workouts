@@ -25,8 +25,8 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
     >
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
         <ui.ChevronToggle
+          aria-label={t("app.details", { name: props.name })}
           disabled={!latest}
-          label={t("app.details", { name: props.name })}
           {...bodyPartHistory}
         />
 

@@ -3,9 +3,11 @@ import { CalendarCheck } from "lucide-react";
 import * as ui from "../components";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
+import { DateFormat } from "../services/date-format";
 
 export function ExerciseStats() {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
   const { exercise, performances, records } = exerciseRoute.useLoaderData();
   const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
 
@@ -26,7 +28,7 @@ export function ExerciseStats() {
 
         <ui.TileValue>{performances.length}</ui.TileValue>
 
-        <ui.TileContext>{latest.scheduledFor}</ui.TileContext>
+        <ui.TileContext>{DateFormat.plainDay(language, latest.scheduledFor)}</ui.TileContext>
       </ui.Tile>
     </ul>
   );

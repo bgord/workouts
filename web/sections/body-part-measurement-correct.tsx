@@ -68,9 +68,9 @@ export function BodyPartMeasurementCorrect(
       />
 
       <ui.Stepper
+        aria-label={t("measurements.body_parts.correct.value.label")}
         disabled={mutation.isLoading}
         field={length}
-        label={t("measurements.body_parts.correct.value.label")}
         max={300}
         min={0.1}
         step={0.1}

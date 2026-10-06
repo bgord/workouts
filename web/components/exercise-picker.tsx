@@ -22,6 +22,7 @@ type ExercisePickerOptionsProps = {
 
 export function ExercisePicker(props: ExercisePickerOptionsProps & { onCancel?: () => void }) {
   const t = bg.useTranslations();
+  const { onCancel, ...options } = props;
 
   return (
     <div data-minh="0" data-stack="y" data-wrap="nowrap" {...Gap.cluster}>
@@ -40,7 +41,7 @@ export function ExercisePicker(props: ExercisePickerOptionsProps & { onCancel?: 
           />
         </div>
 
-        {props.onCancel && <ButtonCancel data-shrink="0" onClick={props.onCancel} />}
+        {onCancel && <ButtonCancel data-shrink="0" onClick={onCancel} />}
       </div>
 
       <ul
@@ -55,13 +56,7 @@ export function ExercisePicker(props: ExercisePickerOptionsProps & { onCancel?: 
         style={{ maxHeight: "40vh" }}
       >
         <Suspense fallback={<ExercisePickerLoading />}>
-          <ExercisePickerOptions
-            exercises={props.exercises}
-            name={props.name}
-            onChange={props.onChange}
-            query={props.query}
-            value={props.value}
-          />
+          <ExercisePickerOptions {...options} />
         </Suspense>
       </ul>
     </div>

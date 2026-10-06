@@ -8,17 +8,16 @@ import { WeightFormat } from "../services/weight-format";
 type LoadField = bg.UseNumberFieldReturnType<number>;
 
 type LoadFieldProps = {
+  "aria-label": string;
   field: LoadField;
-  label: string;
   separator: React.ReactNode;
-  disabled?: boolean;
   variant?: "default" | "compact";
-};
+} & Pick<React.JSX.IntrinsicElements["input"], "disabled">;
 
 type ResistanceKitStrategy = {
   Field: (props: LoadFieldProps) => React.ReactNode;
-  Badge: () => React.ReactNode;
-  Marker: () => React.ReactNode;
+  Badge: (props: React.JSX.IntrinsicElements["span"]) => React.ReactNode;
+  Marker: (props: React.JSX.IntrinsicElements["span"]) => React.ReactNode;
   payload: (field: LoadField) => number;
   ready: (field: LoadField) => boolean;
 };
@@ -29,9 +28,9 @@ function LoadStepper(props: LoadFieldProps) {
       {props.separator}
 
       <Stepper
+        aria-label={props["aria-label"]}
         disabled={props.disabled}
         field={props.field}
-        label={props.label}
         unit="kg"
         variant={props.variant}
         width={52}

@@ -64,9 +64,9 @@ export function BodyWeightMeasurementCorrect(
       />
 
       <ui.Stepper
+        aria-label={t("measurements.body_weight.measure.weight.label")}
         disabled={mutation.isLoading}
         field={weight}
-        label={t("measurements.body_weight.measure.weight.label")}
         max={500}
         min={0.05}
         step={0.05}

@@ -60,9 +60,9 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
       </label>
 
       <ui.Stepper
+        aria-label={t("measurements.body_weight.measure.weight.label")}
         disabled={mutation.isLoading}
         field={weight}
-        label={t("measurements.body_weight.measure.weight.label")}
         leading={
           <input
             className="c-input"

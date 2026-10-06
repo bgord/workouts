@@ -102,9 +102,9 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                   <label {...value.label.props}>{t("measurements.body_parts.measure.value.label")}</label>
 
                   <ui.Stepper
+                    aria-label={t("measurements.body_parts.measure.value.label")}
                     disabled={mutation.isLoading}
                     field={value}
-                    label={t("measurements.body_parts.measure.value.label")}
                     max={300}
                     min={0.1}
                     step={0.1}

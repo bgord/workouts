@@ -36,15 +36,18 @@ export function Dialog(props: bg.DialogPropsType) {
   );
 }
 
-export function DialogHeader(props: { disabled?: boolean; onClose: () => void; children: React.ReactNode }) {
+export function DialogHeader(
+  props: React.JSX.IntrinsicElements["div"] & { disabled?: boolean; onClose: () => void },
+) {
   const id = useContext(DialogHeaderId);
+  const { disabled, onClose, children, ...rest } = props;
 
   return (
-    <div data-main="between" data-stack="x" {...Gap.related}>
+    <div data-main="between" data-stack="x" {...Gap.related} {...rest}>
       <strong data-color="neutral-100" data-transform="truncate" id={id}>
-        {props.children}
+        {children}
       </strong>
-      <ButtonClose disabled={props.disabled} onClick={props.onClose} />
+      <ButtonClose disabled={disabled} onClick={onClose} />
     </div>
   );
 }
@@ -53,12 +56,8 @@ export function DialogBody(props: React.JSX.IntrinsicElements["div"]) {
   return <div data-stack="y" {...Gap.related} {...props} />;
 }
 
-export function DialogInfo(props: { children: React.ReactNode }) {
-  return (
-    <p data-color="neutral-300" data-lh="loose">
-      {props.children}
-    </p>
-  );
+export function DialogInfo(props: React.JSX.IntrinsicElements["p"]) {
+  return <p data-color="neutral-300" data-lh="loose" {...props} />;
 }
 
 export function DialogStatus(
@@ -81,20 +80,26 @@ export function DialogStatus(
   );
 }
 
-export function DialogError(props: { children: React.ReactNode }) {
+export function DialogError(props: React.JSX.IntrinsicElements["output"]) {
+  const { children, ...rest } = props;
+
   return (
-    <output aria-live="assertive" data-color="danger-400" data-stack="x" {...Gap.cluster}>
+    <output aria-live="assertive" data-color="danger-400" data-stack="x" {...Gap.cluster} {...rest}>
       <CircleAlert data-shrink="0" data-size="md" />
-      <span>{props.children}</span>
+      <span>{children}</span>
     </output>
   );
 }
 
-export function DialogFooter(props: { disabled?: boolean; onCancel: () => void; children: React.ReactNode }) {
+export function DialogFooter(
+  props: React.JSX.IntrinsicElements["div"] & { disabled?: boolean; onCancel: () => void },
+) {
+  const { disabled, onCancel, children, ...rest } = props;
+
   return (
-    <div data-main="end" data-stack="x" data-wrap="wrap" {...Gap.inline}>
-      <ButtonCancel disabled={props.disabled} onClick={props.onCancel} />
-      {props.children}
+    <div data-main="end" data-stack="x" data-wrap="wrap" {...Gap.inline} {...rest}>
+      <ButtonCancel disabled={disabled} onClick={onCancel} />
+      {children}
     </div>
   );
 }

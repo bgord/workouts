@@ -4,10 +4,14 @@ import type { ExercisePerformance } from "../../modules/workouts/queries/list-ex
 import { SetNotation } from "../services/set-notation";
 
 export function PerformanceValue(
-  props: { resistance: ExerciseResistanceOptions } & Pick<ExercisePerformance, "sets">,
+  props: React.JSX.IntrinsicElements["span"] & { resistance: ExerciseResistanceOptions } & Pick<
+      ExercisePerformance,
+      "sets"
+    >,
 ) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const { resistance, sets, ...span } = props;
 
-  return <span>{SetNotation.performance(t, language, props)}</span>;
+  return <span {...span}>{SetNotation.performance(t, language, { resistance, sets })}</span>;
 }

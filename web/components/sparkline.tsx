@@ -1,14 +1,15 @@
 // cSpell:ignore sparkline
 import { SparklineMath } from "../services/sparkline";
 
-export function Sparkline(props: { values: ReadonlyArray<number> }) {
+export function Sparkline(props: Omit<React.JSX.IntrinsicElements["svg"], "values"> & { values: ReadonlyArray<number> }) {
+  const { values, ...svg } = props;
   const style = { width: SparklineMath.WIDTH, height: SparklineMath.HEIGHT };
 
-  if (props.values.length < SparklineMath.MINIMAL_POINTS) {
-    return <span aria-hidden data-shrink="0" style={style} />;
+  if (values.length < SparklineMath.MINIMAL_POINTS) {
+    return <svg aria-hidden data-shrink="0" style={style} {...svg} />;
   }
 
-  const points = SparklineMath.points(props.values);
+  const points = SparklineMath.points(values);
   const last = points.at(-1)!;
 
   return (
@@ -17,6 +18,7 @@ export function Sparkline(props: { values: ReadonlyArray<number> }) {
       data-shrink="0"
       style={style}
       viewBox={`0 0 ${SparklineMath.WIDTH} ${SparklineMath.HEIGHT}`}
+      {...svg}
     >
       <polyline
         data-color="neutral-500"

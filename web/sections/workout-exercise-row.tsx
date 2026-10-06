@@ -64,7 +64,7 @@ export function WorkoutExerciseRow(props: {
           {isExpandable && (
             <div data-cross="center" data-shrink="0" data-stack="y">
               <ui.ChevronToggle
-                label={t("app.details", { name: props.exercise.exerciseName })}
+                aria-label={t("app.details", { name: props.exercise.exerciseName })}
                 {...workoutExerciseVisibility}
               />
 

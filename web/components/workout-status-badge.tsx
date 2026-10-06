@@ -1,22 +1,13 @@
 import * as bg from "@bgord/ui";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
+import type { BadgeVariant } from "./badge-variant";
 
-type Variant = "primary" | "outline" | "positive" | "danger";
-
-const variant: Record<WorkoutStatusEnum, Variant> = {
+const variant: Record<WorkoutStatusEnum, BadgeVariant> = {
   [WorkoutStatusEnum.initial]: "outline",
   [WorkoutStatusEnum.draft]: "outline",
   [WorkoutStatusEnum.in_progress]: "primary",
   [WorkoutStatusEnum.completed]: "positive",
   [WorkoutStatusEnum.discarded]: "outline",
-};
-
-const label: Record<WorkoutStatusEnum, string> = {
-  [WorkoutStatusEnum.initial]: "workout.status.initial",
-  [WorkoutStatusEnum.draft]: "workout.status.draft",
-  [WorkoutStatusEnum.in_progress]: "workout.status.in_progress",
-  [WorkoutStatusEnum.completed]: "workout.status.completed",
-  [WorkoutStatusEnum.discarded]: "workout.status.discarded",
 };
 
 export function WorkoutStatusBadge(
@@ -27,7 +18,7 @@ export function WorkoutStatusBadge(
 
   return (
     <div className="c-badge" data-variant={variant[status]} {...rest}>
-      {t(label[status])}
+      {t(`workout.status.${status}`)}
     </div>
   );
 }

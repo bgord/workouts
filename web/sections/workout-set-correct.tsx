@@ -87,17 +87,17 @@ export function WorkoutSetCorrect(
     >
       <div data-md-width="100%" data-stack="x" {...ui.Gap.cluster}>
         <ui.Stepper
+          aria-label={t("workout.set.reps.label")}
           disabled={mutation.isLoading}
           field={reps}
-          label={t("workout.set.reps.label")}
           width={40}
           {...Form.reps.pattern}
         />
 
         <Resistance.Field
+          aria-label={t("workout.set.load.label")}
           disabled={mutation.isLoading}
           field={load}
-          label={t("workout.set.load.label")}
           separator={<ui.Separator>×</ui.Separator>}
         />
       </div>

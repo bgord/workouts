@@ -88,17 +88,17 @@ export function WorkoutSetLog(props: {
 
       <div data-md-grow="1" data-stack="x" {...ui.Gap.cluster}>
         <ui.Stepper
+          aria-label={t("workout.set.reps.label")}
           disabled={busy}
           field={reps}
-          label={t("workout.set.reps.label")}
           width={40}
           {...Form.reps.pattern}
         />
 
         <Resistance.Field
+          aria-label={t("workout.set.load.label")}
           disabled={busy}
           field={load}
-          label={t("workout.set.load.label")}
           separator={<ui.Separator data-md-disp="none">×</ui.Separator>}
         />
       </div>

@@ -1,10 +1,11 @@
-import type * as bg from "@bgord/ui";
+import * as bg from "@bgord/ui";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
-export function ChevronToggle(props: { label: string; disabled?: boolean } & bg.UseToggleReturnType) {
+export function ChevronToggle(props: React.JSX.IntrinsicElements["button"] & bg.UseToggleReturnType) {
+  const { toggle, rest } = bg.extractUseToggle(props);
+
   return (
     <button
-      aria-label={props.label}
       data-color="neutral-400"
       data-cursor="pointer"
       data-hover-color="neutral-0"
@@ -12,13 +13,13 @@ export function ChevronToggle(props: { label: string; disabled?: boolean } & bg.
       data-p="2-5"
       data-shrink="0"
       data-stack="x"
-      disabled={props.disabled}
-      onClick={props.toggle}
-      title={props.label}
+      onClick={toggle.toggle}
+      title={rest["aria-label"]}
       type="button"
-      {...props.props.controller}
+      {...toggle.props.controller}
+      {...rest}
     >
-      {props.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
+      {toggle.on ? <ChevronDown data-size="sm" /> : <ChevronRight data-size="sm" />}
     </button>
   );
 }

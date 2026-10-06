@@ -23,7 +23,7 @@ export function ExerciseHistoryRow(props: {
   return (
     <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
       <div data-stack="x" {...ui.Gap.related}>
-        <ui.ChevronToggle label={t("app.details", { name: scheduledOn })} {...open} />
+        <ui.ChevronToggle aria-label={t("app.details", { name: scheduledOn })} {...open} />
 
         <Link
           data-color="neutral-100"
@@ -68,9 +68,13 @@ export function ExerciseHistoryRow(props: {
             >
               <ui.RowIndex>{set.setNumber}</ui.RowIndex>
 
-              <div data-color="neutral-100" data-fw="medium">
-                <ui.SetValue load={set.load} reps={set.reps} resistance={props.performance.resistance} />
-              </div>
+              <ui.SetValue
+                data-color="neutral-100"
+                data-fw="medium"
+                load={set.load}
+                reps={set.reps}
+                resistance={props.performance.resistance}
+              />
 
               <div data-grow="1">{set.rir !== null && <ui.RirBadge rir={set.rir} />}</div>
 

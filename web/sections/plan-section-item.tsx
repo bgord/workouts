@@ -24,7 +24,10 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
       {...ui.Spacing.row}
     >
       <div data-stack="x" {...bg.Rhythm().times(3).style.minHeight} {...ui.Gap.related}>
-        <ui.ChevronToggle label={t("app.details", { name: props.section.name })} {...planSectionVisibility} />
+        <ui.ChevronToggle
+          aria-label={t("app.details", { name: props.section.name })}
+          {...planSectionVisibility}
+        />
 
         <div data-grow="1" data-minw="0">
           <PlanSectionRename section={props.section} {...planSectionRename} />

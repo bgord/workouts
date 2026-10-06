@@ -2,18 +2,18 @@ import * as bg from "@bgord/ui";
 import { PersonStanding } from "lucide-react";
 import { Gap } from "./gap";
 
-export function BodyweightBadge() {
+export function BodyweightBadge(props: React.JSX.IntrinsicElements["span"]) {
   const t = bg.useTranslations();
 
   return (
-    <span data-stack="x" {...Gap.inline}>
+    <span data-stack="x" {...Gap.inline} {...props}>
       <PersonStanding data-size="xs" />
       {t("exercise.resistance.bodyweight")}
     </span>
   );
 }
 
-export function BodyweightMarker() {
+export function BodyweightMarker(props: React.JSX.IntrinsicElements["span"]) {
   const t = bg.useTranslations();
 
   return (
@@ -29,6 +29,7 @@ export function BodyweightMarker() {
       data-top="4"
       role="img"
       title={t("exercise.resistance.bodyweight")}
+      {...props}
     >
       <PersonStanding data-size="sm" />
     </span>

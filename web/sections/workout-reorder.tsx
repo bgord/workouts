@@ -3,7 +3,7 @@ import { ArrowUpDown, Check } from "lucide-react";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutReorder(props: ReturnType<typeof bg.useToggle>) {
+export function WorkoutReorder(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
 

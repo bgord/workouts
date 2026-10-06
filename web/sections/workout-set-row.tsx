@@ -9,9 +9,9 @@ export function WorkoutSetRow(props: {
   loggedSet: LoggedSet;
   pending: boolean;
   first?: boolean;
-  correct: bg.UseToggleReturnType;
+  workoutSetCorrect: bg.UseToggleReturnType;
 }) {
-  const workoutSetCorrect = props.correct;
+  const { workoutSetCorrect } = props;
 
   return (
     <ui.HairlineRow
@@ -35,13 +35,13 @@ export function WorkoutSetRow(props: {
 
           {workoutSetCorrect.off && (
             <>
-              <div data-color="neutral-100" data-fw="medium">
-                <ui.SetValue
-                  load={props.loggedSet.load}
-                  reps={props.loggedSet.reps}
-                  resistance={props.exercise.resistance}
-                />
-              </div>
+              <ui.SetValue
+                data-color="neutral-100"
+                data-fw="medium"
+                load={props.loggedSet.load}
+                reps={props.loggedSet.reps}
+                resistance={props.exercise.resistance}
+              />
 
               {props.loggedSet.rir !== null && <ui.RirBadge rir={props.loggedSet.rir} />}
             </>

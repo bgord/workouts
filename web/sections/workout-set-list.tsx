@@ -14,12 +14,12 @@ export function WorkoutSetList(props: {
     <ul data-stack="y">
       {props.exercise.loggedSets.map((loggedSet, index) => (
         <WorkoutSetRow
-          correct={props.correction.toggle(loggedSet.id)}
           exercise={props.exercise}
           first={props.flushTop && index === 0}
           key={loggedSet.id}
           loggedSet={loggedSet}
           pending={loggedSet === props.pendingSet}
+          workoutSetCorrect={props.correction.toggle(loggedSet.id)}
         />
       ))}
     </ul>

@@ -6,25 +6,26 @@ const inputs = { ...control, textAlign: "center" as const, minWidth: 0, paddingI
 const width = (value?: number): React.CSSProperties | undefined =>
   value ? ({ "--stepper-input": bg.Rhythm(value).times(1).width.width } as React.CSSProperties) : undefined;
 
-export function Stepper(props: {
+type StepperProps = Omit<React.JSX.IntrinsicElements["input"], "min" | "max" | "step" | "width"> & {
+  "aria-label": string;
   field: bg.UseNumberFieldReturnType;
-  label: string;
   min: number;
   max: number;
   step: number;
   unit?: string;
   width?: number;
-  disabled?: boolean;
   variant?: "default" | "compact" | "fill";
   leading?: React.ReactNode;
-  children?: React.ReactNode;
-}) {
-  const variant = props.variant ?? "default";
-  const value = props.field.value ?? props.min;
+};
+
+export function Stepper(props: StepperProps) {
+  const { field, unit, width: inputWidth, variant = "default", leading, children, ...input } = props;
+  const label = props["aria-label"];
+  const value = field.value ?? props.min;
   const round = (next: number) => Number(next.toFixed(2));
 
-  const decrement = () => props.field.set(round(Math.max(props.min, value - props.step)));
-  const increment = () => props.field.set(round(Math.min(props.max, value + props.step)));
+  const decrement = () => field.set(round(Math.max(props.min, value - props.step)));
+  const increment = () => field.set(round(Math.min(props.max, value + props.step)));
 
   return (
     <div
@@ -38,12 +39,12 @@ export function Stepper(props: {
       data-shrink={variant === "fill" ? undefined : "0"}
       data-stack="x"
       data-stepper={variant}
-      style={width(props.width)}
+      style={width(inputWidth)}
     >
-      {props.leading}
+      {leading}
 
       <button
-        aria-label={`${props.label} −${props.step}`}
+        aria-label={`${label} −${props.step}`}
         data-color="neutral-400"
         data-cursor="pointer"
         data-focus-ring-offset="inset"
@@ -61,7 +62,6 @@ export function Stepper(props: {
       </button>
 
       <input
-        aria-label={props.label}
         className="c-input"
         data-br="none"
         data-bs="none"
@@ -72,23 +72,20 @@ export function Stepper(props: {
         data-md-grow={variant === "compact" ? undefined : "1"}
         data-spin="none"
         data-transform="font-variant-numeric"
-        disabled={props.disabled}
-        max={props.max}
-        min={props.min}
-        step={props.step}
         type="number"
-        {...props.field.input.props}
+        {...input}
+        {...field.input.props}
         style={{ ...inputs, ...(variant === "fill" ? { width: 0 } : {}) }}
       />
 
-      {props.unit && (
+      {unit && (
         <span data-color="neutral-500" data-fs="xs" data-pr="2" data-shrink="0" data-unit>
-          {props.unit}
+          {unit}
         </span>
       )}
 
       <button
-        aria-label={`${props.label} +${props.step}`}
+        aria-label={`${label} +${props.step}`}
         data-color="neutral-400"
         data-cursor="pointer"
         data-focus-ring-offset="inset"
@@ -105,7 +102,7 @@ export function Stepper(props: {
         <Plus data-size="sm" />
       </button>
 
-      {props.children}
+      {children}
     </div>
   );
 }

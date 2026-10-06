@@ -104,8 +104,8 @@ export function WorkoutExerciseAdd() {
 
           <ui.Prescription>
             <ui.Stepper
+              aria-label={t("workout.exercise.add.sets.label")}
               field={sets}
-              label={t("workout.exercise.add.sets.label")}
               variant="fill"
               {...Form.sets.pattern}
             />
@@ -113,8 +113,8 @@ export function WorkoutExerciseAdd() {
             <ui.Separator>×</ui.Separator>
 
             <ui.Stepper
+              aria-label={t("workout.exercise.add.reps.label")}
               field={repsMin}
-              label={t("workout.exercise.add.reps.label")}
               variant="fill"
               {...Form.repsMin.pattern}
             />
@@ -122,8 +122,8 @@ export function WorkoutExerciseAdd() {
             <ui.Separator>–</ui.Separator>
 
             <ui.Stepper
+              aria-label={t("workout.exercise.add.reps.max.label")}
               field={repsMax}
-              label={t("workout.exercise.add.reps.max.label")}
               variant="fill"
               {...Form.repsMax.pattern}
               min={repsMin.value ?? Form.repsMax.pattern.min}

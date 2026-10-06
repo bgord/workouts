@@ -76,9 +76,9 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
       >
         <div data-stack="x" {...ui.Gap.cluster}>
           <ui.Stepper
+            aria-label={t("workout.target.sets.label")}
             disabled={mutation.isLoading}
             field={sets}
-            label={t("workout.target.sets.label")}
             variant="compact"
             width={40}
             {...Form.sets.pattern}
@@ -87,18 +87,18 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           <ui.Separator>×</ui.Separator>
 
           <ui.Stepper
+            aria-label={t("workout.target.reps.label")}
             disabled={mutation.isLoading}
             field={reps}
-            label={t("workout.target.reps.label")}
             variant="compact"
             width={40}
             {...Form.reps.pattern}
           />
 
           <Resistance.Field
+            aria-label={t("workout.target.load.label")}
             disabled={mutation.isLoading}
             field={load}
-            label={t("workout.target.load.label")}
             separator={<ui.Separator>@</ui.Separator>}
             variant="compact"
           />
