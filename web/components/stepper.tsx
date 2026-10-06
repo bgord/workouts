@@ -79,7 +79,13 @@ export function Stepper(props: StepperProps) {
       />
 
       {unit && (
-        <span data-color="neutral-500" data-fs="xs" data-pr="2" data-shrink="0" data-unit>
+        <span
+          data-color="neutral-500"
+          data-fs="xs"
+          data-md-disp={variant === "default" ? "none" : undefined}
+          data-pr="2"
+          data-shrink="0"
+        >
           {unit}
         </span>
       )}

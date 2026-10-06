@@ -87,9 +87,6 @@ a {
   [data-stepper="default"] > input[type="number"] {
     inline-size: 0;
   }
-  [data-stepper="default"] > [data-unit] {
-    display: none;
-  }
   [data-rir="dense"] > button {
     inline-size: 34px;
   }
@@ -138,17 +135,9 @@ body:has([data-log-panel]) {
   background-color: color-mix(in oklch, var(--color-brand-400) 10%, transparent);
 }
 
-.c-button[data-variant="ghost"][data-tone="danger"] {
-  color: var(--color-danger-400);
-}
-.c-button[data-variant="ghost"][data-tone="danger"]:hover:not(:disabled) {
-  color: var(--color-danger-200);
-  background-color: var(--color-danger-900);
-}
-
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 120ms;
+  animation-duration: var(--motion-fast);
 }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),

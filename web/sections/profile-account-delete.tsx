@@ -36,8 +36,10 @@ export function ProfileAccountDelete() {
 
       <button
         className="c-button"
+        data-color="danger-400"
+        data-hover-bg="danger-900"
+        data-hover-color="danger-200"
         data-shrink="0"
-        data-tone="danger"
         data-variant="ghost"
         onClick={deleteAccount.enable}
         type="button"
