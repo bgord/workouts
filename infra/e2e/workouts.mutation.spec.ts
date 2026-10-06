@@ -545,7 +545,8 @@ test.describe("Workouts - active-mutation", () => {
   test("blocks saving an empty note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Add a note…" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Add note" }).click();
 
     await expect(page.getByLabel("Note")).toHaveValue("");
     await expect(page.getByRole("button", { name: "Save", exact: true })).toBeDisabled();
@@ -554,7 +555,8 @@ test.describe("Workouts - active-mutation", () => {
   test("adds a note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Add a note…" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Add note" }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
@@ -572,11 +574,12 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByLabel("Note").fill("");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "Add a note…" })).toBeVisible();
+    await expect(page.getByText("Shoulder felt tight on the last set.")).toBeHidden();
 
     await page.reload();
+    await page.getByRole("button", { name: "More actions" }).click();
 
-    await expect(page.getByRole("button", { name: "Add a note…" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Add note" })).toBeVisible();
     await expect(page.getByText("Shoulder felt tight on the last set.")).toBeHidden();
   });
 

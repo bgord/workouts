@@ -213,7 +213,8 @@ test.describe("Workout - active", () => {
     await page.route("**/api/workouts/*/note", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page.getByRole("button", { name: "Add a note…" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Add note" }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 

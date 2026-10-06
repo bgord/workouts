@@ -10,7 +10,7 @@ import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
 import { WorkoutIdentity } from "../sections/workout-identity";
 import { WorkoutLogPanel } from "../sections/workout-log-panel";
-import { WorkoutNote } from "../sections/workout-note";
+import { WorkoutNote, WorkoutNoteMenuItem } from "../sections/workout-note";
 import { WorkoutReorder, WorkoutReorderStrip } from "../sections/workout-reorder";
 import { WorkoutStatus } from "../sections/workout-status";
 import { WorkoutWarmup } from "../sections/workout-warmup";
@@ -21,6 +21,7 @@ export function Workout() {
   const search = workoutRoute.useSearch();
 
   const workoutReorder = bg.useToggle({ name: `workout-reorder-${workout.data.id}` });
+  const workoutNoteUpdate = bg.useToggle({ name: `workout-note-update-${workout.data.id}` });
 
   return (
     <ui.Main>
@@ -34,13 +35,15 @@ export function Workout() {
             <ui.MenuTrigger />
 
             <ui.MenuContent>
+              <WorkoutNoteMenuItem {...workoutNoteUpdate} />
+
               <WorkoutCopy />
 
               <WorkoutReorder {...workoutReorder} />
 
-              {(workout.data.completedAt || (workout.actions.reorder.available && workoutReorder.off)) && (
-                <ui.MenuSeparator />
-              )}
+              {(workoutNoteUpdate.off ||
+                workout.data.completedAt ||
+                (workout.actions.reorder.available && workoutReorder.off)) && <ui.MenuSeparator />}
 
               <WorkoutDiscard />
             </ui.MenuContent>
@@ -51,7 +54,7 @@ export function Workout() {
 
         <WorkoutStatus />
 
-        <WorkoutNote />
+        <WorkoutNote {...workoutNoteUpdate} />
 
         <WorkoutReorderStrip {...workoutReorder} />
       </div>
