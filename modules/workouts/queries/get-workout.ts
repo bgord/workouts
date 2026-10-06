@@ -34,7 +34,11 @@ export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> 
 
 export type WorkoutGetResponse = {
   data: Omit<VO.WorkoutSnapshot, "exercises"> & { exercises: Array<WorkoutExercise> };
-  progress: { logged: tools.IntegerNonNegativeType; total: tools.IntegerNonNegativeType };
+  progress: {
+    logged: tools.IntegerNonNegativeType;
+    total: tools.IntegerNonNegativeType;
+    next: VO.WorkoutExerciseIdType | null;
+  };
   actions: {
     start: bg.ActionState;
     complete: bg.ActionState;

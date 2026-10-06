@@ -10,6 +10,7 @@ describe("WorkoutProgress", () => {
     expect(progress.calculate()).toEqual({
       logged: tools.Int.nonNegative(0),
       total: tools.Int.nonNegative(0),
+      next: null,
     });
   });
 
@@ -21,6 +22,7 @@ describe("WorkoutProgress", () => {
     expect(progress.calculate()).toEqual({
       logged: tools.Int.nonNegative(0),
       total: tools.Int.nonNegative(1),
+      next: mocks.anotherWorkoutExerciseId,
     });
   });
 
@@ -32,6 +34,19 @@ describe("WorkoutProgress", () => {
     expect(progress.calculate()).toEqual({
       logged: tools.Int.nonNegative(1),
       total: tools.Int.nonNegative(2),
+      next: mocks.anotherWorkoutExerciseId,
+    });
+  });
+
+  test("calculate - all exercises logged", () => {
+    const progress = new Workouts.Services.WorkoutProgress({
+      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTargetLogged],
+    });
+
+    expect(progress.calculate()).toEqual({
+      logged: tools.Int.nonNegative(2),
+      total: tools.Int.nonNegative(2),
+      next: mocks.anotherWorkoutExerciseId,
     });
   });
 });
