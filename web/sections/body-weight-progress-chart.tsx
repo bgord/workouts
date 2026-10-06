@@ -92,19 +92,20 @@ export function BodyWeightProgressChart() {
 
         <ui.LineChartArea layout={layout} />
 
-        <g
-          className="chart-points"
-          data-color="brand-300"
-          fill="currentColor"
-          stroke="transparent"
-          strokeWidth={POINT_HIT_RADIUS}
-        >
+        <g data-color="brand-300" fill="currentColor" stroke="transparent" strokeWidth={POINT_HIT_RADIUS}>
           {layout.points.map((coordinates, index) => {
             const point = chart[index]!;
             const weight = WeightFormat.kilograms(point.weight, BodyWeightDecimals).toLocaleString(language);
 
             return (
-              <circle cx={coordinates.x} cy={coordinates.y} key={index} r="4">
+              <circle
+                cx={coordinates.x}
+                cy={coordinates.y}
+                data-hover-opacity="full"
+                data-opacity="none"
+                key={index}
+                r="4"
+              >
                 <title>
                   {point.count === 1
                     ? t("measurements.body_weight.progress.point", {

@@ -16,6 +16,7 @@ function LogoAnchor(props: React.JSX.IntrinsicElements["a"]) {
         data-fw="bold"
         data-lh="none"
         data-ls="wider"
+        data-stack="x"
         data-transform="uppercase"
         {...Gap.cluster}
       />

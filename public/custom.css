@@ -28,10 +28,6 @@
     background-repeat: no-repeat;
   }
 
-  .logo {
-    display: flex;
-  }
-
   .logo::before {
     content: "";
     inline-size: 0.55em;
@@ -70,13 +66,6 @@ body {
 
 a {
   text-decoration: none;
-}
-
-.chart-points > circle {
-  fill-opacity: 0;
-}
-.chart-points > circle:hover {
-  fill-opacity: 1;
 }
 
 [data-spin="none"] {
@@ -181,13 +170,6 @@ body:has([data-log-panel]) {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: var(--spacing-1) var(--spacing-2);
-  color: var(--color-neutral-500);
-  font-size: var(--font-size-xs);
-  /* cspell:disable-next-line */
-  font-variant-numeric: tabular-nums;
-}
-.line-chart-axis {
-  position: relative;
 }
 .line-chart-axis > [data-sizer] {
   display: block;
@@ -197,13 +179,8 @@ body:has([data-log-panel]) {
   white-space: nowrap;
 }
 .line-chart-axis > [data-tick] {
-  position: absolute;
-  inset-inline-end: 0;
   translate: 0 -50%;
-  white-space: nowrap;
 }
 .line-chart-dates {
-  display: flex;
   grid-column: 2;
-  justify-content: space-between;
 }

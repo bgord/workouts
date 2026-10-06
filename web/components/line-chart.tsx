@@ -7,12 +7,19 @@ export function LineChart(
   const widest = layout.gridLines.reduce((a, b) => (b.text.length > a.text.length ? b : a));
 
   return (
-    <div className="line-chart">
-      <div aria-hidden className="line-chart-axis">
+    <div className="line-chart" data-color="neutral-500" data-fs="xs" data-transform="font-variant-numeric">
+      <div aria-hidden className="line-chart-axis" data-position="relative">
         <span data-sizer>{widest.text}</span>
 
         {layout.gridLines.map((gridLine) => (
-          <span data-tick key={gridLine.value} style={{ top: `${(gridLine.y / Chart.HEIGHT) * 100}%` }}>
+          <span
+            data-position="absolute"
+            data-right="0"
+            data-tick
+            data-transform="nowrap"
+            key={gridLine.value}
+            style={{ top: `${(gridLine.y / Chart.HEIGHT) * 100}%` }}
+          >
             {gridLine.text}
           </span>
         ))}
@@ -34,7 +41,7 @@ export function LineChart(
         {children}
       </svg>
 
-      <div aria-hidden className="line-chart-dates">
+      <div aria-hidden className="line-chart-dates" data-main="between" data-stack="x">
         <span>{start}</span>
 
         <span>{end}</span>
