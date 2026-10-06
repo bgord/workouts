@@ -12,6 +12,7 @@ export function WorkoutCard(props: WorkoutSummary) {
 
   return (
     <RowLink
+      data-testid={`workout-${props.id}`}
       params={{ workoutId: props.id }}
       search={(prev) => ({ section: prev.section, filter: prev.filter })}
       to="/workouts/$workoutId"

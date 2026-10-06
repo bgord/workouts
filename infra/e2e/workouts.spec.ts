@@ -50,7 +50,7 @@ test.describe("Workouts - athlete", () => {
 
     await expect(page.getByLabel("Period")).toHaveValue("all_time");
     await expect(page.getByText("25 of 25")).toBeVisible();
-    await expect(page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`)).toBeVisible();
+    await expect(page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`)).toBeVisible();
   });
 
   test("falls back to the default period for an invalid filter", async ({ page }) => {
@@ -73,7 +73,7 @@ test.describe("Workouts - athlete", () => {
     await expect(
       page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }),
     ).toHaveAttribute("aria-pressed", "true");
-    await expect(page.getByText(/^[89] of 25$/)).toBeVisible();
+    await expect(page.getByText("8 of 25")).toBeVisible();
 
     await page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }).click();
 
@@ -83,22 +83,22 @@ test.describe("Workouts - athlete", () => {
     ).toHaveAttribute("aria-pressed", "false");
 
     await page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }).click();
-    await page.getByRole("button", { name: "Clear" }).click();
+    await page.getByRole("button", { name: "Clear", exact: true }).click();
 
     await expect(page.getByLabel("Period")).toHaveValue("last_week");
     await expect(
       page.getByRole("button", { name: fixtures.athlete.plan.sections.push.name }),
     ).toHaveAttribute("aria-pressed", "false");
-    await expect(page.getByRole("button", { name: "Clear" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "Clear", exact: true })).toBeHidden();
   });
 
   test("opens the scheduled workout", async ({ page }) => {
     await page.goto("/workouts?filter=all_time");
 
-    await page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`).click();
+    await page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`).click();
 
     await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}?filter=all_time`);
-    await expect(page.getByRole("button", { name: "Start" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Start", exact: true })).toBeVisible();
   });
 
   test("allows scheduling", async ({ page }) => {
@@ -116,7 +116,7 @@ test.describe("Workouts - athlete", () => {
     const dialog = page.getByRole("dialog", { name: "New workout" });
 
     await expect(dialog.getByRole("radio")).toHaveCount(3);
-    await expect(dialog.getByRole("radio").first()).toBeChecked();
+    await expect(dialog.getByRole("radio", { name: fixtures.athlete.plan.sections.push.name })).toBeChecked();
     await expect(dialog.getByRole("textbox", { name: "Date" })).toBeHidden();
     await expect(dialog.getByRole("button", { name: "Today" })).toHaveAttribute("aria-pressed", "true");
 

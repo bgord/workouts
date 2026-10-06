@@ -55,7 +55,7 @@ test.describe("Catalog - athlete", () => {
     ).toHaveAttribute("aria-pressed", "false");
 
     await page.getByRole("button", { name: fixtures.categories.chest.name, exact: true }).click();
-    await page.getByRole("button", { name: "Clear" }).click();
+    await page.getByRole("button", { name: "Clear", exact: true }).click();
 
     await expect(page.getByText("33 of 33")).toBeVisible();
   });
@@ -169,7 +169,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Categories", exact: true }).click();
     await page.getByRole("button", { name: "Rename Abs" }).click();
     await page.getByRole("form", { name: "Rename Abs" }).getByLabel("Category name").fill("Abs and core");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not rename the category")).toBeVisible();
 

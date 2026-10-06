@@ -138,7 +138,7 @@ test.describe("Body weight - athlete-mutation", () => {
       .getByRole("form", { name: "Correct measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("82");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByRole("button", { name: "82 kg" })).toBeVisible();
     await expect(page.getByRole("button", { name: "81.5 kg" })).toBeHidden();
@@ -167,7 +167,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.getByRole("button", { name: "Set as reference" }).first().click();
     await page.getByRole("form", { name: "Set as reference" }).getByRole("button", { name: "Cut" }).click();
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText(/^Cut since /)).toBeVisible();
 

@@ -38,7 +38,7 @@ test.describe("Dashboard - athlete", () => {
     await page.goto("/");
 
     await expect(page.getByRole("heading", { name: "Next up" })).toBeVisible();
-    await expect(page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`)).toBeVisible();
+    await expect(page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`)).toBeVisible();
     await expect(page.getByRole("heading", { name: "In progress" })).toBeHidden();
   });
 
@@ -93,7 +93,7 @@ test.describe("Dashboard - active", () => {
     await page.goto("/");
 
     await expect(page.getByRole("heading", { name: "In progress" })).toBeVisible();
-    await expect(page.locator(`a[href^="/workouts/${fixtures.active.workout.id}"]`)).toBeVisible();
+    await expect(page.getByTestId(`workout-${fixtures.active.workout.id}`)).toBeVisible();
     await expect(page.getByRole("heading", { name: "Next up" })).toBeHidden();
   });
 

@@ -56,108 +56,116 @@ export function BodyPartMeasure(props: BodyPartSummary) {
       </ui.IconButton>
 
       <ui.Dialog {...bodyPartMeasure}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([mutation.reset, close])}>
-          {t("measurements.body_parts.measure.header", { name: props.name })}
-        </ui.DialogHeader>
+        {bodyPartMeasure.on && (
+          <>
+            <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([mutation.reset, close])}>
+              {t("measurements.body_parts.measure.header", { name: props.name })}
+            </ui.DialogHeader>
 
-        <ul data-stack="x">
-          <ui.Tile>
-            <ui.TileHeader>
-              <Ruler data-size="xs" />
-              {t("measurements.body_parts.measure.previous")}
-            </ui.TileHeader>
+            <ul data-stack="x">
+              <ui.Tile>
+                <ui.TileHeader>
+                  <Ruler data-size="xs" />
+                  {t("measurements.body_parts.measure.previous")}
+                </ui.TileHeader>
 
-            <ui.TileValue>
-              {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
+                <ui.TileValue>
+                  {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
 
-              {latest && <ui.LengthDelta current={latest.value} data-fs="xs" previous={previous?.value} />}
-            </ui.TileValue>
+                  {latest && (
+                    <ui.LengthDelta current={latest.value} data-fs="xs" previous={previous?.value} />
+                  )}
+                </ui.TileValue>
 
-            <ui.TileContext>
-              {latest
-                ? DateFormat.dayWithWeekday(language, latest.measuredOn)
-                : t("measurements.body_parts.measure.never")}
-            </ui.TileContext>
-          </ui.Tile>
-        </ul>
+                <ui.TileContext>
+                  {latest
+                    ? DateFormat.dayWithWeekday(language, latest.measuredOn)
+                    : t("measurements.body_parts.measure.never")}
+                </ui.TileContext>
+              </ui.Tile>
+            </ul>
 
-        <form
-          aria-busy={mutation.isLoading}
-          data-stack="y"
-          onSubmit={mutation.handleSubmit}
-          {...ui.Gap.stack}
-        >
-          <div
-            data-cross="start"
-            data-md-cross="stretch"
-            data-md-stack="y"
-            data-stack="x"
-            {...ui.Gap.related}
-          >
-            <div data-stack="y" {...ui.Gap.field}>
-              <label {...value.label.props}>{t("measurements.body_parts.measure.value.label")}</label>
-
-              <ui.Stepper
-                disabled={mutation.isLoading}
-                field={value}
-                label={t("measurements.body_parts.measure.value.label")}
-                max={300}
-                min={0.1}
-                step={0.1}
-                unit={t("measurements.body_parts.measure.unit")}
-                width={72}
-              />
-
-              <small data-color="neutral-600" data-cross="center" data-stack="x" {...ui.Gap.inline}>
-                {t("measurements.body_parts.measure.change")}
-                {latest && value.changed && !value.empty && (
-                  <ui.LengthDelta
-                    current={LengthFormat.millimeters(value.value ?? 0)}
-                    previous={latest.value}
-                  />
-                )}
-                {latest && value.unchanged && (
-                  <span>
-                    <ui.LengthValue millimeters={0} />
-                  </span>
-                )}
-                {(!latest || value.empty) && <span>—</span>}
-              </small>
-            </div>
-
-            <div data-stack="y" {...ui.Gap.field}>
-              <label {...measuredOn.label.props}>{t("measurements.body_parts.measure.date.label")}</label>
-
-              <input
-                className="c-input"
-                data-md-width="100%"
-                data-width="auto"
-                disabled={mutation.isLoading}
-                type="date"
-                {...measuredOn.input.props}
-                max={today}
-              />
-            </div>
-          </div>
-
-          {mutation.isError && <ui.DialogError>{t("measurements.body_parts.measure.error")}</ui.DialogError>}
-
-          <ui.DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([mutation.reset, close])}>
-            <ui.ButtonClear
-              disabled={bg.Fields.allUnchanged([value, measuredOn])}
-              onClick={bg.exec([value.clear, measuredOn.clear, mutation.reset])}
-            />
-
-            <button
-              className="c-button"
-              data-variant="primary"
-              disabled={bg.Fields.anyEmpty([value, measuredOn]) || mutation.isLoading}
-              type="submit"
+            <form
+              aria-busy={mutation.isLoading}
+              data-stack="y"
+              onSubmit={mutation.handleSubmit}
+              {...ui.Gap.stack}
             >
-              {t("measurements.body_parts.measure.cta")}
-            </button>
-          </ui.DialogFooter>
-        </form>
+              <div
+                data-cross="start"
+                data-md-cross="stretch"
+                data-md-stack="y"
+                data-stack="x"
+                {...ui.Gap.related}
+              >
+                <div data-stack="y" {...ui.Gap.field}>
+                  <label {...value.label.props}>{t("measurements.body_parts.measure.value.label")}</label>
+
+                  <ui.Stepper
+                    disabled={mutation.isLoading}
+                    field={value}
+                    label={t("measurements.body_parts.measure.value.label")}
+                    max={300}
+                    min={0.1}
+                    step={0.1}
+                    unit={t("measurements.body_parts.measure.unit")}
+                    width={72}
+                  />
+
+                  <small data-color="neutral-600" data-cross="center" data-stack="x" {...ui.Gap.inline}>
+                    {t("measurements.body_parts.measure.change")}
+                    {latest && value.changed && !value.empty && (
+                      <ui.LengthDelta
+                        current={LengthFormat.millimeters(value.value ?? 0)}
+                        previous={latest.value}
+                      />
+                    )}
+                    {latest && value.unchanged && (
+                      <span>
+                        <ui.LengthValue millimeters={0} />
+                      </span>
+                    )}
+                    {(!latest || value.empty) && <span>—</span>}
+                  </small>
+                </div>
+
+                <div data-stack="y" {...ui.Gap.field}>
+                  <label {...measuredOn.label.props}>{t("measurements.body_parts.measure.date.label")}</label>
+
+                  <input
+                    className="c-input"
+                    data-md-width="100%"
+                    data-width="auto"
+                    disabled={mutation.isLoading}
+                    type="date"
+                    {...measuredOn.input.props}
+                    max={today}
+                  />
+                </div>
+              </div>
+
+              {mutation.isError && (
+                <ui.DialogError>{t("measurements.body_parts.measure.error")}</ui.DialogError>
+              )}
+
+              <ui.DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([mutation.reset, close])}>
+                <ui.ButtonClear
+                  disabled={bg.Fields.allUnchanged([value, measuredOn])}
+                  onClick={bg.exec([value.clear, measuredOn.clear, mutation.reset])}
+                />
+
+                <button
+                  className="c-button"
+                  data-variant="primary"
+                  disabled={bg.Fields.anyEmpty([value, measuredOn]) || mutation.isLoading}
+                  type="submit"
+                >
+                  {t("measurements.body_parts.measure.cta")}
+                </button>
+              </ui.DialogFooter>
+            </form>
+          </>
+        )}
       </ui.Dialog>
     </>
   );

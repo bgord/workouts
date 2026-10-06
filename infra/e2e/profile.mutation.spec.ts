@@ -40,7 +40,10 @@ test.describe("Profile - disposable", () => {
 
     await page.getByRole("button", { name: "Change avatar" }).click();
     await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
-    await page.getByRole("region", { name: "Avatar" }).getByRole("button", { name: "Save" }).click();
+    await page
+      .getByRole("region", { name: "Avatar" })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
 
     await expect(page.getByRole("button", { name: "Delete avatar" })).toBeVisible();
   });

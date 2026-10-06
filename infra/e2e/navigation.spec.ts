@@ -96,7 +96,7 @@ test.describe("Navigation - athlete", () => {
 
   test("goes back from the workout to the filtered workouts list", async ({ page }) => {
     await page.goto("/workouts?filter=all_time");
-    await page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`).click();
+    await page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`).click();
 
     await page.getByRole("link", { name: "Back", exact: true }).click();
 
@@ -166,7 +166,7 @@ test.describe("Navigation - athlete", () => {
   });
 
   test("goes forward again after going back", async ({ page }) => {
-    const card = page.locator(`a[href^="/workouts/${fixtures.athlete.scheduledWorkout.id}"]`);
+    const card = page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`);
 
     await page.goto("/workouts");
     const title = (await card.getByRole("heading", { level: 2 }).textContent()) ?? "";

@@ -5,10 +5,12 @@ import { ProgressionMethodIcon } from "./progression-method-icon";
 export function ProgressionMethodBadge(props: { method: ProgressionMethodOptions }) {
   const t = bg.useTranslations();
 
+  const label = t(`progression.method.${props.method}`);
+
   return (
-    <span className="c-badge" data-tone="soft" data-variant="outline">
+    <span aria-label={label} className="c-badge" data-tone="soft" data-variant="outline" role="note">
       <ProgressionMethodIcon method={props.method} size="xs" />
-      {t(`progression.method.${props.method}`)}
+      {label}
     </span>
   );
 }

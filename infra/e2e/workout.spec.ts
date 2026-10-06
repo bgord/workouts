@@ -10,7 +10,7 @@ test.describe("Workout - athlete", () => {
 
     await expect(page.getByRole("note", { name: "Last session" }).first()).toBeVisible();
     await expect(page.getByRole("note", { name: "Last session" })).toHaveCount(
-      await page.getByRole("button", { name: "Set target" }).count(),
+      await page.getByRole("button", { name: "Set target", exact: true }).count(),
     );
   });
 
@@ -22,7 +22,7 @@ test.describe("Workout - athlete", () => {
 
     await page.getByRole("button", { name: /^Change date/ }).click();
     await scheduledFor.fill((await scheduledFor.getAttribute("min")) ?? "");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not change the date")).toBeVisible();
 
@@ -37,10 +37,10 @@ test.describe("Workout - athlete", () => {
     );
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: "Discard" }).click();
+    await page.getByRole("button", { name: "Discard", exact: true }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
-      .getByRole("button", { name: "Discard" })
+      .getByRole("button", { name: "Discard", exact: true })
       .click();
 
     await expect(page.getByText("Could not discard the workout")).toBeVisible();
@@ -51,20 +51,20 @@ test.describe("Workout - athlete", () => {
   });
 
   test("shows the error when setting a target fails", async ({ page }) => {
-    const row = page.getByRole("list", { name: "Exercises" }).getByRole("listitem").first();
+    const row = page.getByRole("listitem", { name: fixtures.exercises.pullUp.name, exact: true });
 
     await page.route("**/api/workouts/*/exercise/*/target", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await row.getByRole("button", { name: "Set target" }).click();
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
     await row.getByRole("spinbutton", { name: "Reps" }).fill("5");
-    await row.getByRole("button", { name: "Save" }).click();
+    await row.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not set the target")).toBeVisible();
 
     await page.reload();
 
-    await expect(row.getByRole("button", { name: "Set target" })).toBeVisible();
+    await expect(row.getByRole("button", { name: "Set target", exact: true })).toBeVisible();
   });
 });
 
@@ -76,7 +76,7 @@ test.describe("Workout - active", () => {
 
     await expect(page.getByText("In progress", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Complete" })).toBeEnabled();
-    await expect(page.getByRole("button", { name: "Start" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "Start", exact: true })).toBeHidden();
   });
 
   test("steps between exercises in the log panel", async ({ page }) => {
@@ -367,7 +367,7 @@ test.describe("Workout - active", () => {
       name: fixtures.exercises.superHorizontalBenchPress.name,
       exact: true,
     });
-    const log = row.locator("form:not([aria-label])");
+    const log = row.getByRole("form", { name: "Log set" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await row.getByRole("button", { name: /^Details: / }).click();
@@ -438,9 +438,9 @@ test.describe("Workout - hoarder", () => {
   test("blocks starting a second workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.hoarder.draftWorkouts.today.id}`);
 
-    await expect(page.getByRole("button", { name: "Start" })).toHaveAccessibleDescription(
+    await expect(page.getByRole("button", { name: "Start", exact: true })).toHaveAccessibleDescription(
       "Complete the workout in progress first",
     );
-    await expect(page.getByRole("button", { name: "Start" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Start", exact: true })).toBeDisabled();
   });
 });

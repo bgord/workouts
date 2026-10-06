@@ -102,10 +102,18 @@ test.describe("Exercise - admin", () => {
   test("blocks deleting an exercise used in a plan", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
-    await expect(page.getByRole("button", { name: "Delete" })).toHaveAccessibleDescription(
-      "Remove it from plans first",
-    );
-    await expect(page.getByRole("button", { name: "Delete" })).toBeDisabled();
+    await expect(
+      page.getByRole("button", {
+        name: `Delete ${fixtures.exercises.superHorizontalBenchPress.name}`,
+        exact: true,
+      }),
+    ).toHaveAccessibleDescription("Remove it from plans first");
+    await expect(
+      page.getByRole("button", {
+        name: `Delete ${fixtures.exercises.superHorizontalBenchPress.name}`,
+        exact: true,
+      }),
+    ).toBeDisabled();
   });
 
   test("blocks assigning a fifth category", async ({ page }) => {
@@ -125,7 +133,7 @@ test.describe("Exercise - admin", () => {
 
     await page.getByRole("button", { name: "Assign", exact: true }).click();
     await page.getByLabel("Category to assign").selectOption({ label: "Abs" });
-    await page.getByRole("button", { name: "Assign", exact: true }).last().click();
+    await page.getByRole("button", { name: "Assign", exact: true }).click();
 
     await expect(page.getByText("Could not change the categories")).toBeVisible();
 
@@ -142,7 +150,7 @@ test.describe("Exercise - admin", () => {
 
     await page.getByRole("button", { name: `Rename ${fixtures.exercises.pecDeck.name}` }).click();
     await page.getByLabel("Exercise name").fill("Pec deck fly");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not update the exercise")).toBeVisible();
 
@@ -171,7 +179,7 @@ test.describe("Exercise - admin", () => {
   });
 
   test("shows the error when changing the image fails", async ({ page }) => {
-    const image = page.getByRole("img", { name: fixtures.exercises.pecDeck.name }).first();
+    const image = page.getByRole("img", { name: fixtures.exercises.pecDeck.name });
 
     await page.route("**/api/exercises/*/image", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);

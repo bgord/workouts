@@ -9,7 +9,7 @@ test.describe("Body weight - empty", () => {
 
     await expect(page.getByText("No measurements yet")).toBeVisible();
     await expect(page.getByText("Log your body weight to track progress here")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Log" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Log", exact: true })).toBeDisabled();
     await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeHidden();
   });
 });
@@ -132,7 +132,7 @@ test.describe("Body weight - athlete", () => {
       .getByRole("form", { name: "Correct measurement" })
       .getByRole("spinbutton", { name: "Weight (kg)" })
       .fill("85");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not correct the measurement")).toBeVisible();
 
@@ -149,7 +149,7 @@ test.describe("Body weight - athlete", () => {
 
     await page.getByRole("button", { name: "Set as reference" }).first().click();
     await page.getByRole("form", { name: "Set as reference" }).getByRole("button", { name: "Cut" }).click();
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not set the reference point")).toBeVisible();
 

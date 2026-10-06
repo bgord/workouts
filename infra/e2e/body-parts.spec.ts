@@ -18,7 +18,7 @@ test.describe("Body parts - empty", () => {
     await page.route("**/api/measurements/body-part", (route) => route.fulfill({ status: 500 }));
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByLabel("Body part name").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
@@ -57,7 +57,7 @@ test.describe("Body parts - athlete", () => {
   test("marks the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await expect(page.getByText("Not measured yet").first()).toBeVisible();
+    await expect(page.getByText("Not measured yet")).toBeVisible();
     await expect(
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
     ).toBeVisible();
@@ -75,8 +75,8 @@ test.describe("Body parts - athlete", () => {
       .click();
 
     await expect(history.getByRole("listitem")).toHaveCount(12);
-    await expect(history.getByRole("listitem").first()).toContainText("59.2 cm");
-    await expect(history.getByRole("listitem").last()).toContainText("58.0 cm");
+    await expect(history.getByRole("listitem").first().getByText("59.2 cm", { exact: true })).toBeVisible();
+    await expect(history.getByRole("listitem").last().getByText("58.0 cm", { exact: true })).toBeVisible();
     await expect(history.getByRole("img", { name: "Increase" })).toHaveCount(4);
     await expect(history.getByRole("img", { name: "Decrease" })).toHaveCount(3);
   });
@@ -85,7 +85,7 @@ test.describe("Body parts - athlete", () => {
     await page.goto("/measurements/body-parts");
 
     const download = page.waitForEvent("download");
-    await page.getByRole("link", { name: "Export" }).click();
+    await page.getByRole("link", { name: "Export", exact: true }).click();
 
     expect((await download).suggestedFilename()).toMatch(/\.csv$/);
   });
@@ -128,8 +128,7 @@ test.describe("Body parts - athlete", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athlete.bodyParts.calfRight.name, exact: true })
-        .getByText("Not measured yet")
-        .first(),
+        .getByText("Not measured yet"),
     ).toBeVisible();
   });
 
@@ -147,7 +146,7 @@ test.describe("Body parts - athlete", () => {
       .first()
       .click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not correct the measurement")).toBeVisible();
 
@@ -166,7 +165,7 @@ test.describe("Body parts - athlete", () => {
     );
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByRole("button", { name: `Rename ${fixtures.athlete.bodyParts.waist.name}` }).click();
     await page
       .getByRole("form", { name: `Rename ${fixtures.athlete.bodyParts.waist.name}` })
@@ -189,7 +188,7 @@ test.describe("Body parts - athlete", () => {
     );
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByRole("button", { name: `Delete ${fixtures.athlete.bodyParts.waist.name}` }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
 

@@ -9,7 +9,7 @@ test.describe("Profile - athlete", () => {
     await page.goto("/profile");
 
     await expect(page.getByRole("heading", { level: 1, name: "Profile" })).toBeVisible();
-    await expect(page.getByText(fixtures.athlete.email, { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(fixtures.athlete.email, { exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Avatar" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Language" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Weekly summary" })).toBeVisible();
@@ -74,7 +74,10 @@ test.describe("Profile - athlete", () => {
 
     await page.getByRole("button", { name: "Change avatar" }).click();
     await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
-    await page.getByRole("region", { name: "Avatar" }).getByRole("button", { name: "Save" }).click();
+    await page
+      .getByRole("region", { name: "Avatar" })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
 
     await expect(page.getByText("Could not upload the avatar")).toBeVisible();
 

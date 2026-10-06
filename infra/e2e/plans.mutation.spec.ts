@@ -11,7 +11,7 @@ test.describe("Plans - builder-mutation", () => {
 
     await page.getByRole("button", { name: `Rename ${fixtures.builderMutation.plan.name}` }).click();
     await page.getByLabel("Plan name").fill("ab");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByLabel("Plan name").and(page.locator(":invalid"))).toHaveCount(1);
 
@@ -27,7 +27,7 @@ test.describe("Plans - builder-mutation", () => {
 
     await page.getByRole("button", { name: `Rename ${fixtures.builderMutation.plan.name}` }).click();
     await page.getByLabel("Plan name").fill("PPL v2");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByRole("heading", { level: 1, name: "PPL v2" })).toBeVisible();
 
@@ -104,7 +104,7 @@ test.describe("Plans - builder-mutation", () => {
     await page.getByRole("link", { name: "Upper lower" }).click();
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill("Upper");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
     await expect(page.getByRole("heading", { level: 2, name: "Upper", exact: true })).toBeVisible();
     await page.reload();
 
@@ -154,7 +154,7 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "Rename Push", exact: true }).click();
     await page.getByLabel("Section name").fill("ab");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByLabel("Section name").and(page.locator(":invalid"))).toHaveCount(1);
 
@@ -168,7 +168,7 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "Rename Push", exact: true }).click();
     await page.getByLabel("Section name").fill("Push A");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByRole("heading", { level: 2, name: "Push A", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { level: 2, name: "Push", exact: true })).toBeHidden();
@@ -184,7 +184,7 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill("ab");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByLabel("New section").and(page.locator(":invalid"))).toHaveCount(1);
 
@@ -198,7 +198,7 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill(fixtures.drafter.plan.sections.pull.name.toUpperCase());
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not create a section")).toBeVisible();
 
@@ -214,7 +214,7 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill("   ");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not create a section")).toBeVisible();
 
@@ -228,7 +228,7 @@ test.describe("Plans - drafter", () => {
 
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill("  Arms  ");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByRole("heading", { level: 2, name: "Arms", exact: true })).toBeVisible();
 
@@ -401,7 +401,7 @@ test.describe("Plans - drafter", () => {
 
     await page.reload();
 
-    await expect(row).toContainText("3×12-15");
+    await expect(row.getByText("3×12-15", { exact: true })).toBeVisible();
   });
 
   test("edits the exercise instruction", async ({ page }) => {
@@ -420,17 +420,13 @@ test.describe("Plans - drafter", () => {
       .getByRole("button", { name: "Save", exact: true })
       .click();
 
-    await expect(row).toContainText("5×6-8");
-    await expect(
-      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
-    ).toBeVisible();
+    await expect(row.getByText("5×6-8", { exact: true })).toBeVisible();
+    await expect(row.getByRole("note", { name: "Double progression" })).toBeVisible();
 
     await page.reload();
 
-    await expect(row).toContainText("5×6-8");
-    await expect(
-      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
-    ).toBeVisible();
+    await expect(row.getByText("5×6-8", { exact: true })).toBeVisible();
+    await expect(row.getByRole("note", { name: "Double progression" })).toBeVisible();
   });
 
   test("changes the exercise of the instruction", async ({ page }) => {
@@ -531,16 +527,12 @@ test.describe("Plans - drafter", () => {
       .getByRole("button", { name: "Save", exact: true })
       .click();
 
-    await expect(
-      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
-    ).toBeVisible();
+    await expect(row.getByRole("note", { name: "Double progression" })).toBeVisible();
     await expect(row.getByText("Bodyweight", { exact: true })).toBeVisible();
 
     await page.reload();
 
-    await expect(
-      row.getByText("Double progression", { exact: true }).filter({ visible: true }),
-    ).toBeVisible();
+    await expect(row.getByRole("note", { name: "Double progression" })).toBeVisible();
     await expect(row.getByText("Bodyweight", { exact: true })).toBeVisible();
   });
 
@@ -610,7 +602,10 @@ test.describe("Plans - archivist-mutation", () => {
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Delete", exact: true }).click();
-    await page.getByRole("dialog", { name: "Delete plan" }).getByRole("button", { name: "Delete" }).click();
+    await page
+      .getByRole("dialog", { name: "Delete plan" })
+      .getByRole("button", { name: "Delete", exact: true })
+      .click();
 
     await expect(page.getByText("Could not delete the plan")).toBeVisible();
 
@@ -623,7 +618,10 @@ test.describe("Plans - archivist-mutation", () => {
     await page.goto(`/plans/${fixtures.archivistMutation.plan.id}`);
 
     await page.getByRole("button", { name: "Delete", exact: true }).click();
-    await page.getByRole("dialog", { name: "Delete plan" }).getByRole("button", { name: "Delete" }).click();
+    await page
+      .getByRole("dialog", { name: "Delete plan" })
+      .getByRole("button", { name: "Delete", exact: true })
+      .click();
 
     await expect(page).toHaveURL("/plans");
 

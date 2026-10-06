@@ -171,7 +171,7 @@ test.describe("Plan - builder", () => {
 
     await page.getByRole("button", { name: `Rename ${fixtures.builder.plan.name}` }).click();
     await page.getByLabel("Plan name").fill("PPL v2");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not rename the plan")).toBeVisible();
 
@@ -202,7 +202,7 @@ test.describe("Plan - builder", () => {
 
     await page.getByRole("button", { name: "New section" }).click();
     await page.getByLabel("New section").fill("Arms");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not create a section")).toBeVisible();
 
@@ -217,7 +217,7 @@ test.describe("Plan - builder", () => {
 
     await page.getByRole("button", { name: "Rename Push", exact: true }).click();
     await page.getByLabel("Section name").fill("Push A");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByText("Could not rename the section")).toBeVisible();
 
@@ -323,8 +323,10 @@ test.describe("Plan - builder", () => {
     await page.reload();
 
     await expect(
-      page.getByRole("listitem", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
-    ).toContainText("4×5");
+      page
+        .getByRole("listitem", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true })
+        .getByText("4×5", { exact: true }),
+    ).toBeVisible();
   });
 
   test("shows the error when moving an exercise instruction fails", async ({ page }) => {

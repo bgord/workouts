@@ -8,23 +8,25 @@ test.describe("Mobile - pocket", () => {
 
   test("sets every target", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
-    await expect(page.getByRole("button", { name: "Set target" }).first()).toBeVisible();
-    const exercises = await page.getByRole("button", { name: "Set target" }).count();
+    await expect(page.getByRole("button", { name: "Set target", exact: true }).first()).toBeVisible();
+    const exercises = await page.getByRole("button", { name: "Set target", exact: true }).count();
 
     for (let exercise = 0; exercise < exercises; exercise++) {
-      await page.getByRole("button", { name: "Set target" }).first().tap();
+      await page.getByRole("button", { name: "Set target", exact: true }).first().tap();
       await page.getByRole("spinbutton", { name: "Load (kg)" }).fill("20");
-      await page.getByRole("button", { name: "Save" }).tap();
-      await expect(page.getByRole("button", { name: "Set target" })).toHaveCount(exercises - exercise - 1);
+      await page.getByRole("button", { name: "Save", exact: true }).tap();
+      await expect(page.getByRole("button", { name: "Set target", exact: true })).toHaveCount(
+        exercises - exercise - 1,
+      );
     }
 
-    await expect(page.getByRole("button", { name: "Start" })).toBeEnabled();
+    await expect(page.getByRole("button", { name: "Start", exact: true })).toBeEnabled();
   });
 
   test("starts the workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: "Start" }).tap();
+    await page.getByRole("button", { name: "Start", exact: true }).tap();
 
     await expect(page.getByText("In progress", { exact: true })).toBeVisible();
   });

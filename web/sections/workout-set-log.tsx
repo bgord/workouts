@@ -75,6 +75,7 @@ export function WorkoutSetLog(props: {
   return (
     <form
       aria-busy={mutation.isLoading}
+      aria-label={t("workout.set.cta")}
       data-opacity={props.correcting ? "medium" : undefined}
       data-stack="x"
       data-wrap="wrap"

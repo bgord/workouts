@@ -9,7 +9,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("caps a body part name at the maximum length", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByLabel("Body part name").fill("a".repeat(65));
 
     await expect(page.getByLabel("Body part name")).toHaveValue("a".repeat(64));
@@ -18,7 +18,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("blocks defining a body part with an empty name", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
 
     await expect(page.getByRole("button", { name: "Add", exact: true })).toBeDisabled();
   });
@@ -26,7 +26,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("defines a body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByLabel("Body part name").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
@@ -38,7 +38,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("rejects a duplicate body part name", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByLabel("Body part name").fill("NECK");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
@@ -76,13 +76,13 @@ test.describe("Body parts - empty-mutation", () => {
 
     await expect(page.getByRole("dialog", { name: "Import body parts" })).toBeHidden();
     await expect(
-      page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first(),
+      page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm"),
     ).toBeVisible();
 
     await page.reload();
 
     await expect(
-      page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm").first(),
+      page.getByRole("listitem", { name: "Neck", exact: true }).getByText("39.1 cm"),
     ).toBeVisible();
   });
 
@@ -91,7 +91,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByRole("button", { name: "Rename Neck" }).click();
     await field.fill("a".repeat(65));
 
@@ -101,7 +101,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("renames the body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByRole("button", { name: "Rename Neck" }).click();
     await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("Neck girth");
     await page.getByRole("button", { name: "Save", exact: true }).click();
@@ -117,7 +117,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("renames the body part changing only the case", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByRole("button", { name: "Rename Neck girth", exact: true }).click();
     await page
       .getByRole("form", { name: "Rename Neck girth", exact: true })
@@ -135,7 +135,7 @@ test.describe("Body parts - empty-mutation", () => {
   test("deletes the body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Manage", exact: true }).click();
     await page.getByRole("button", { name: "Delete Neck girth" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
 
@@ -169,8 +169,7 @@ test.describe("Body parts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
-        .getByText("Not measured yet")
-        .first(),
+        .getByText("Not measured yet"),
     ).toBeVisible();
   });
 
@@ -190,8 +189,7 @@ test.describe("Body parts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
-        .getByText("Not measured yet")
-        .first(),
+        .getByText("Not measured yet"),
     ).toBeVisible();
   });
 
@@ -207,8 +205,7 @@ test.describe("Body parts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
-        .getByText("38.5 cm")
-        .first(),
+        .getByText("38.5 cm"),
     ).toBeVisible();
   });
 
@@ -233,8 +230,7 @@ test.describe("Body parts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
-        .getByText("38.5 cm")
-        .first(),
+        .getByText("38.5 cm"),
     ).toBeVisible();
   });
 
@@ -249,7 +245,7 @@ test.describe("Body parts - athlete-mutation", () => {
 
     await page.getByRole("button", { name: /^Correct measurement/ }).click();
     await page.getByRole("spinbutton", { name: "Circumference" }).fill("39.5");
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(
       page
@@ -263,8 +259,7 @@ test.describe("Body parts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
-        .getByText("39.5 cm")
-        .first(),
+        .getByText("39.5 cm"),
     ).toBeVisible();
   });
 
@@ -282,8 +277,7 @@ test.describe("Body parts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
-        .getByText("Not measured yet")
-        .first(),
+        .getByText("Not measured yet"),
     ).toBeVisible();
 
     await page.reload();
@@ -291,8 +285,7 @@ test.describe("Body parts - athlete-mutation", () => {
     await expect(
       page
         .getByRole("listitem", { name: fixtures.athleteMutation.bodyParts.calfRight.name, exact: true })
-        .getByText("Not measured yet")
-        .first(),
+        .getByText("Not measured yet"),
     ).toBeVisible();
   });
 });

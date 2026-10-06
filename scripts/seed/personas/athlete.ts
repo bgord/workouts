@@ -26,8 +26,6 @@ const bodyPartWobble = [0, 2, -1];
 export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.athlete) {
   const { push, pull, legs } = persona.plan.sections;
 
-  const rotation = [push.id, pull.id, legs.id];
-
   const schedule = new Map([
     [1, push],
     [3, pull],
@@ -51,7 +49,6 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
   await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 
   const history: ExerciseHistory = new Map();
-  let next = push.id;
 
   for (let daysAgo = 56; daysAgo >= 1; daysAgo--) {
     const day = tools.Day.fromTimestamp(now.subtract(tools.Duration.Days(daysAgo)));
@@ -109,8 +106,6 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
       history.set(exercise.exerciseId, [...(history.get(exercise.exerciseId) ?? []), { sets }]);
     }
 
-    next = rotation[(rotation.indexOf(section.id) + 1) % rotation.length] ?? push.id;
-
     await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
   }
 
@@ -155,7 +150,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
   await createWorkout(di, userId, {
     id: persona.scheduledWorkout.id,
     planId: persona.plan.id,
-    planSectionId: next,
+    planSectionId: pull.id,
     scheduledFor: tools.Day.fromTimestamp(now).toIsoId(),
   });
 
