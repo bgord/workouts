@@ -12,8 +12,8 @@ export const Spacing = {
   // PlanSectionExerciseInstructionRow/Add/Edit, ExerciseCategoryRow, BodyWeightMeasurementRow,
   // ExercisePicker options
   rowCompact: { ...Gap.related, "data-py": "2" },
-  // Nested content under a row header: Workout detail meta, WorkoutExerciseRow description,
-  // target and set list, PlanSectionItem instructions, ExerciseHistory sets
+  // Nested content under a row header: WorkoutExerciseRow description, target and set list,
+  // PlanSectionItem instructions, ExerciseHistory sets
   inset: { "data-md-pl": "0", "data-pl": "12" },
   // Cards and panels: profile cards, RowLink, Tile, DashboardCompleted list, drop zones
   // (ExerciseAdd, BodyWeightMeasurementImport, BodyPartMeasurementImport), ExercisePicker empty option

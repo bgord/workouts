@@ -43,10 +43,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.reload();
 
     await expect(
-      page.getByRole("heading", {
-        level: 1,
-        name: `PPL – ${fixtures.athleteMutation.plan.sections.legs.name}`,
-      }),
+      page.getByRole("heading", { level: 1, name: fixtures.athleteMutation.plan.sections.legs.name }),
     ).toBeVisible();
     await expect(page.getByText("Scheduled", { exact: true })).toBeVisible();
 

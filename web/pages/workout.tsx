@@ -9,10 +9,10 @@ import { WorkoutDiscard } from "../sections/workout-discard";
 import { WorkoutExerciseAdd } from "../sections/workout-exercise-add";
 import { WorkoutExerciseRow } from "../sections/workout-exercise-row";
 import { WorkoutExercisesEmpty } from "../sections/workout-exercises-empty";
+import { WorkoutIdentity } from "../sections/workout-identity";
 import { WorkoutLogPanel } from "../sections/workout-log-panel";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutReorder } from "../sections/workout-reorder";
-import { WorkoutScheduledFor } from "../sections/workout-scheduled-for";
 import { WorkoutStart } from "../sections/workout-start";
 import { WorkoutWarmup } from "../sections/workout-warmup";
 
@@ -48,14 +48,12 @@ export function Workout() {
           </ui.Menu>
         </div>
 
-        <div data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
-          <div data-basis="0" data-grow="1" data-minw="0" data-stack="x" {...ui.Gap.related}>
-            <h1>
-              {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
-            </h1>
+        <WorkoutIdentity />
 
-            <ui.WorkoutStatusBadge status={workout.data.status} />
-          </div>
+        <WorkoutNote />
+
+        <div data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
+          <ui.WorkoutStatusBadge status={workout.data.status} />
 
           {primary && (
             <div data-md-width="100%" data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
@@ -66,18 +64,12 @@ export function Workout() {
           )}
         </div>
 
-        <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>
-          <WorkoutScheduledFor />
-
-          <WorkoutNote />
-
-          {workout.actions.start.available && (
-            <ui.ActionHint {...workout.actions.start} id="workout-start-hint" />
-          )}
-          {workout.actions.complete.available && (
-            <ui.ActionHint {...workout.actions.complete} id="workout-complete-hint" />
-          )}
-        </div>
+        {workout.actions.start.available && (
+          <ui.ActionHint {...workout.actions.start} id="workout-start-hint" />
+        )}
+        {workout.actions.complete.available && (
+          <ui.ActionHint {...workout.actions.complete} id="workout-complete-hint" />
+        )}
       </div>
 
       <WorkoutWarmup />
