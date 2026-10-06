@@ -315,7 +315,8 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: "Neck flexion" }).click();
 
-    await page.getByRole("button", { name: "Delete Neck flexion" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Delete" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
     await expect(page).toHaveURL("/catalog");
     await expect(page.getByText("33 of 33")).toBeVisible();

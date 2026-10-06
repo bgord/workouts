@@ -41,16 +41,15 @@ export function BodyPartMeasurementImport() {
 
   return (
     <>
-      <ui.IconButton
-        aria-label={t("measurements.body_parts.import.header")}
+      <ui.MenuItem
+        aria-haspopup="dialog"
         disabled={!bodyParts.actions.import.enabled}
         onClick={bodyPartMeasurementImport.enable}
-        title={t("measurements.body_parts.import.header")}
         {...ui.describedByHint(bodyParts.actions.import, "body-part-import-hint")}
-        {...bodyPartMeasurementImport.props.controller}
       >
         <Upload data-size="sm" />
-      </ui.IconButton>
+        {t("measurements.body_parts.import.header")}
+      </ui.MenuItem>
 
       <ui.Dialog {...bodyPartMeasurementImport}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>

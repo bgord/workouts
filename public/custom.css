@@ -79,6 +79,10 @@ a {
   fill-opacity: 1;
 }
 
+[data-transform~="line-clamp"] {
+  white-space: normal;
+}
+
 [data-spin="none"] {
   appearance: textfield;
 }
@@ -142,6 +146,20 @@ body:has([data-log-panel]) {
     max-height: calc(100dvh - var(--spacing-4) - env(safe-area-inset-top));
     padding-bottom: calc(var(--spacing-4) + env(safe-area-inset-bottom));
   }
+}
+
+[data-rail] {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+[data-rail]::-webkit-scrollbar {
+  display: none;
+}
+[data-rail] > button:not([aria-current]) {
+  border-color: transparent;
+}
+[data-rail] > [aria-current] {
+  background-color: color-mix(in oklch, var(--color-brand-400) 10%, transparent);
 }
 
 .c-button[data-variant="ghost"][data-tone="danger"] {

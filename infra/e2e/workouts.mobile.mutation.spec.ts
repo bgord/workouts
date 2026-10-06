@@ -35,9 +35,7 @@ test.describe("Mobile - pocket", () => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.superHorizontalBenchPress.name}` })
-      .tap();
+    await page.getByRole("button", { name: "Log sets" }).tap();
     await panel.getByRole("spinbutton", { name: "Reps" }).tap();
     await expect(panel.getByRole("button", { name: "Log set", exact: true })).toBeInViewport();
     await panel.getByRole("button", { name: "Reps +1" }).tap();
@@ -45,7 +43,11 @@ test.describe("Mobile - pocket", () => {
     await panel.getByRole("button", { name: "Log set", exact: true }).tap();
     await panel.getByRole("button", { name: "Log set · RIR 1" }).tap();
     await panel
-      .getByRole("button", { name: `Next: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
+      .getByRole("group", { name: "Exercises" })
+      .getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      })
       .tap();
     await panel.getByRole("button", { name: "Log set", exact: true }).tap();
 
@@ -57,12 +59,11 @@ test.describe("Mobile - pocket", () => {
   });
 
   test("logs a single set on a double tap", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .tap();
+    await page.getByRole("button", { name: "Log sets" }).tap();
     await panel.getByRole("button", { name: "Log set", exact: true }).dblclick();
 
     await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeVisible();
@@ -70,15 +71,17 @@ test.describe("Mobile - pocket", () => {
     await expect(panel.getByText("Could not log the set")).toBeHidden();
 
     await page.reload();
+    await row.getByRole("button", { name: /^Details: / }).tap();
 
-    await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeVisible();
-    await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeHidden();
+    await expect(row.getByRole("button", { name: "Remove set 1" })).toBeVisible();
+    await expect(row.getByRole("button", { name: "Remove set 2" })).toBeHidden();
   });
 
   test("adds a note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: "Add a note…" }).tap();
+    await page.getByRole("button", { name: "More actions" }).tap();
+    await page.getByRole("menuitem", { name: "Add note" }).tap();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).tap();
 
@@ -99,7 +102,7 @@ test.describe("Mobile - pocket", () => {
 
     await page.getByRole("button", { name: "Complete" }).tap();
 
-    await expect(page.getByText("Completed", { exact: true })).toBeVisible();
+    await expect(page.getByRole("img", { name: "Completed" })).toBeVisible();
 
     await page.reload();
     await bench.getByRole("button", { name: /^Details: / }).tap();

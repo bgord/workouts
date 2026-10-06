@@ -4,9 +4,7 @@ import { workoutRoute } from "../router";
 
 type ExerciseId = WorkoutExercise["id"];
 
-const key = "workout-log-panel";
-
-let current: ExerciseId | null | undefined;
+let current: ExerciseId | null = null;
 
 const listeners = new Set<VoidFunction>();
 
@@ -15,28 +13,10 @@ const subscribe = (listener: VoidFunction) => {
   return () => listeners.delete(listener);
 };
 
-const read = (): ExerciseId | null => {
-  try {
-    return localStorage.getItem(key) as ExerciseId | null;
-    /* v8 ignore next 2 */
-  } catch {
-    return null;
-  }
-};
-
-const snapshot = () => {
-  if (current === undefined) current = read();
-  return current;
-};
+const snapshot = () => current;
 
 const write = (id: ExerciseId | null) => {
   current = id;
-
-  try {
-    if (id === null) localStorage.removeItem(key);
-    else localStorage.setItem(key, id);
-    /* v8 ignore next */
-  } catch {}
 
   for (const listener of listeners) listener();
 };
@@ -49,8 +29,12 @@ export function useLogPanel() {
   const index = available.findIndex((exercise) => exercise.id === id);
 
   const active = available[index];
-  const previous = active && available[index - 1];
-  const next = active && available[index + 1];
 
-  return { active, previous, next, open: write, close: () => write(null) };
+  return {
+    active,
+    available,
+    position: index + 1,
+    open: write,
+    close: () => write(null),
+  };
 }

@@ -43,14 +43,12 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.reload();
 
     await expect(
-      page.getByRole("heading", {
-        level: 1,
-        name: `PPL – ${fixtures.athleteMutation.plan.sections.legs.name}`,
-      }),
+      page.getByRole("heading", { level: 1, name: fixtures.athleteMutation.plan.sections.legs.name }),
     ).toBeVisible();
     await expect(page.getByText("Scheduled", { exact: true })).toBeVisible();
 
-    await page.getByRole("button", { name: "Discard", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard", exact: true })
@@ -78,7 +76,8 @@ test.describe("Workouts - athlete-mutation", () => {
         .getByText("4×4 17.5 kg", { exact: true }),
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Discard", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard", exact: true })
@@ -143,7 +142,8 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.goto("/workouts");
     await draft.click();
-    await page.getByRole("button", { name: "Discard", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard", exact: true })
@@ -282,9 +282,7 @@ test.describe("Workouts - athlete-mutation", () => {
   test("logs a set and completes the workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.pullUp.name}`, exact: true })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set", exact: true })
@@ -292,7 +290,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Complete" }).click();
 
-    await expect(page.getByText("Completed", { exact: true })).toBeVisible();
+    await expect(page.getByRole("img", { name: "Completed" })).toBeVisible();
   });
 
   test("rejects a set correction out of range", async ({ page }) => {
@@ -350,9 +348,10 @@ test.describe("Workouts - athlete-mutation", () => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: "Copy workout" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Copy workout" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute("title", "Copied");
+    await expect(page.getByRole("menuitem", { name: "Copied" })).toBeVisible();
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
@@ -403,9 +402,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("blocks logging a set with reps missing or out of range", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
 
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
@@ -422,9 +419,7 @@ test.describe("Workouts - active-mutation", () => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set · RIR 1" })
@@ -444,9 +439,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("unlocks scrolling after logging a set and closing the panel with Escape", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set", exact: true })
@@ -460,9 +453,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("unlocks scrolling after logging a set and closing the panel by clicking away", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set", exact: true })
@@ -541,10 +532,60 @@ test.describe("Workouts - active-mutation", () => {
     await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
   });
 
+  test("corrects a logged set from the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const overhead = rail.getByRole("button", {
+      name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+      exact: true,
+    });
+    const form = panel.getByRole("form", { name: "Correct set 1" });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await overhead.click();
+    await panel.getByRole("button", { name: "Correct set 1" }).click();
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("10");
+    await form.getByRole("button", { name: "Log set", exact: true }).click();
+
+    await expect(panel.getByText("10×22.5 kg", { exact: true })).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await overhead.click();
+
+    await expect(panel.getByText("10×22.5 kg", { exact: true })).toBeVisible();
+  });
+
+  test("removes a logged set from the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("group", { name: "Exercises" });
+    const bench = rail.getByRole("button", {
+      name: `1. ${fixtures.exercises.superHorizontalBenchPress.name}`,
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await bench.click();
+    await panel.getByRole("button", { name: "Remove set 3" }).click();
+
+    await expect(panel.getByRole("button", { name: "Remove set 3" })).toBeHidden();
+    await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await bench.click();
+
+    await expect(panel.getByRole("button", { name: "Remove set 3" })).toBeHidden();
+    await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeVisible();
+  });
+
   test("blocks saving an empty note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Add a note…" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Add note" }).click();
 
     await expect(page.getByLabel("Note")).toHaveValue("");
     await expect(page.getByRole("button", { name: "Save", exact: true })).toBeDisabled();
@@ -553,15 +594,18 @@ test.describe("Workouts - active-mutation", () => {
   test("adds a note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Add a note…" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Add note" }).click();
     await page.getByLabel("Note").fill("Shoulder felt tight on the last set.");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
 
     await page.reload();
+    await page.getByRole("button", { name: "More actions" }).click();
 
     await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Edit note" })).toBeVisible();
   });
 
   test("clears the note", async ({ page }) => {
@@ -571,11 +615,12 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByLabel("Note").fill("");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "Add a note…" })).toBeVisible();
+    await expect(page.getByText("Shoulder felt tight on the last set.")).toBeHidden();
 
     await page.reload();
+    await page.getByRole("button", { name: "More actions" }).click();
 
-    await expect(page.getByRole("button", { name: "Add a note…" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Add note" })).toBeVisible();
     await expect(page.getByText("Shoulder felt tight on the last set.")).toBeHidden();
   });
 
@@ -641,7 +686,8 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Reorder exercises" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Reorder exercises" }).click();
     await page.getByRole("button", { name: `Move ${fixtures.exercises.facePull.name} up` }).click();
 
     await expect(exercises.nth(5)).toHaveText(fixtures.exercises.facePull.name);
@@ -655,17 +701,17 @@ test.describe("Workouts - active-mutation", () => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
     await page
-      .getByRole("button", { name: `Remove ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
+      .getByRole("button", { name: `Remove ${fixtures.exercises.facePull.name}`, exact: true })
       .click();
 
     await expect(
-      page.getByRole("link", { name: fixtures.exercises.pecFlyMachine.name, exact: true }),
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeHidden();
 
     await page.reload();
 
     await expect(
-      page.getByRole("link", { name: fixtures.exercises.pecFlyMachine.name, exact: true }),
+      page.getByRole("link", { name: fixtures.exercises.facePull.name, exact: true }),
     ).toBeHidden();
   });
 
@@ -702,7 +748,7 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.getByRole("button", { name: "Complete" }).click();
 
-    await expect(page.getByText("Completed", { exact: true })).toBeVisible();
+    await expect(page.getByRole("img", { name: "Completed" })).toBeVisible();
   });
 
   test("moves the completed workout to the dashboard", async ({ page }) => {
@@ -739,17 +785,23 @@ test.describe("Workouts - hanger", () => {
   });
 
   test("hides reordering for a single exercise", async ({ page }) => {
-    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
-
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
 
-    await expect(row).toBeVisible();
-    await expect(
-      row.getByRole("button", { name: `Move ${fixtures.exercises.hangingLegRaise.name} up` }),
-    ).toBeHidden();
-    await expect(
-      row.getByRole("button", { name: `Move ${fixtures.exercises.hangingLegRaise.name} down` }),
-    ).toBeHidden();
+    await page.getByRole("button", { name: "More actions" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Discard" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeHidden();
+  });
+
+  test("lists the actions of the completed workout", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.hanger.completedWorkout.id}`);
+
+    await page.getByRole("button", { name: "More actions" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Copy workout" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Add note" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Discard" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeHidden();
   });
 
   test("sets a bodyweight target from the last session", async ({ page }) => {
@@ -784,9 +836,7 @@ test.describe("Workouts - hanger", () => {
 
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
     await page.getByRole("button", { name: "Start", exact: true }).click();
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.hangingLegRaise.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
 
     await expect(panel.getByRole("spinbutton", { name: "Load (kg)" })).toBeHidden();
 
@@ -831,9 +881,10 @@ test.describe("Workouts - hanger", () => {
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
     await page.getByRole("button", { name: "Complete" }).click();
 
-    await page.getByRole("button", { name: "Copy workout" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Copy workout" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute("title", "Copied");
+    await expect(page.getByRole("menuitem", { name: "Copied" })).toBeVisible();
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 

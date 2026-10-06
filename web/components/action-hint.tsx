@@ -3,8 +3,8 @@ import * as bg from "@bgord/ui";
 import { Info } from "lucide-react";
 import { Gap } from "./gap";
 
-export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["small"]) {
-  const { hints, available, enabled, ...rest } = props;
+export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["small"] & { icon?: boolean }) {
+  const { hints, available, enabled, icon = true, ...rest } = props;
   const t = bg.useTranslations();
   const hint = hints[0];
 
@@ -12,7 +12,7 @@ export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["sma
 
   return (
     <small data-stack="x" {...Gap.cluster} {...rest}>
-      <Info data-shrink="0" data-size="sm" />
+      {icon && <Info data-shrink="0" data-size="sm" />}
       {t(hint)}
     </small>
   );

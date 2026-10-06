@@ -117,6 +117,16 @@ test.describe("Mobile - athlete", () => {
 test.describe("Mobile - active", () => {
   test.use({ storageState: ".auth/active.json" });
 
+  test("keeps the workout header actions within the viewport", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await expect(page.getByRole("button", { name: "Complete" })).toBeInViewport({ ratio: 1 });
+
+    await page.getByRole("button", { name: "More actions" }).tap();
+
+    await expect(page.getByRole("menu")).toBeInViewport({ ratio: 1 });
+  });
+
   test("keeps the workout within the viewport width with the log panel closed and open", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
@@ -126,9 +136,7 @@ test.describe("Mobile - active", () => {
 
     expect(closed).toBeLessThanOrEqual(0);
 
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await expect(page.getByRole("dialog", { name: "Logging panel" })).toBeVisible();
 
     const open = await page.evaluate(
@@ -136,6 +144,39 @@ test.describe("Mobile - active", () => {
     );
 
     expect(open).toBeLessThanOrEqual(0);
+  });
+
+  test("keeps the log panel close button and current exercise within the viewport", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).tap();
+
+    await expect(
+      panel.getByRole("button", { name: `Close panel: ${fixtures.exercises.tricepsPushDownBar.name}` }),
+    ).toBeInViewport({ ratio: 1 });
+    await expect(
+      panel.getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true }),
+    ).toBeInViewport({ ratio: 1 });
+
+    await panel
+      .getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      })
+      .tap();
+
+    await expect(
+      panel.getByRole("button", {
+        name: `Close panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+      }),
+    ).toBeInViewport({ ratio: 1 });
+    await expect(
+      panel.getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      }),
+    ).toBeInViewport({ ratio: 1 });
   });
 
   test("fits the add exercise dialog on the screen", async ({ page }) => {
@@ -178,6 +219,16 @@ test.describe("Mobile - active", () => {
 
 test.describe("Mobile - builder", () => {
   test.use({ storageState: ".auth/builder.json" });
+
+  test("keeps the plan header actions within the viewport", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await expect(page.getByRole("button", { name: "Finalize" })).toBeInViewport({ ratio: 1 });
+
+    await page.getByRole("button", { name: "More actions" }).tap();
+
+    await expect(page.getByRole("menu")).toBeInViewport({ ratio: 1 });
+  });
 
   test("keeps the plan with an expanded section within the viewport width", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);

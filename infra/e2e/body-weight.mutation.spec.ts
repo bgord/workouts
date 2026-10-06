@@ -18,7 +18,8 @@ test.describe("Body weight - empty-mutation", () => {
   test("rejects an invalid body weight import", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Import body weight" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Import body weight" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-weight.csv",
       mimeType: "text/csv",
@@ -32,7 +33,8 @@ test.describe("Body weight - empty-mutation", () => {
   test("imports body weight measurements", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await page.getByRole("button", { name: "Import body weight" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Import body weight" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-weight.csv",
       mimeType: "text/csv",

@@ -116,7 +116,8 @@ test.describe("Errors - athlete", () => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
     await page.route("**/api/plans/*/archive", (route) => route.abort());
 
-    await page.getByRole("button", { name: "Archive" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Archive" }).click();
     await page.getByRole("dialog", { name: "Archive plan" }).getByRole("button", { name: "Archive" }).click();
 
     await expect(page.getByText("Could not archive the plan")).toBeVisible();

@@ -235,6 +235,11 @@ export const workoutExerciseWithoutTarget: Workouts.VO.WorkoutExercise = {
   loggedSets: [],
 };
 
+export const workoutExerciseWithoutTargetLogged: Workouts.VO.WorkoutExercise = {
+  ...workoutExerciseWithoutTarget,
+  loggedSets: [loggedSet],
+};
+
 export const workoutExercisesAtLimit: Array<Workouts.VO.WorkoutExercise> = Array.from(
   { length: Workouts.VO.WorkoutExerciseLimitMax },
   () => workoutExercise,

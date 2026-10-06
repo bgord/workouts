@@ -101,19 +101,12 @@ test.describe("Exercise - admin", () => {
 
   test("blocks deleting an exercise used in a plan", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+    await page.getByRole("button", { name: "More actions" }).click();
 
-    await expect(
-      page.getByRole("button", {
-        name: `Delete ${fixtures.exercises.superHorizontalBenchPress.name}`,
-        exact: true,
-      }),
-    ).toHaveAccessibleDescription("Remove it from plans first");
-    await expect(
-      page.getByRole("button", {
-        name: `Delete ${fixtures.exercises.superHorizontalBenchPress.name}`,
-        exact: true,
-      }),
-    ).toBeDisabled();
+    await expect(page.getByRole("menuitem", { name: "Delete" })).toHaveAccessibleDescription(
+      "Remove it from plans first",
+    );
+    await expect(page.getByRole("menuitem", { name: "Delete" })).toBeDisabled();
   });
 
   test("blocks assigning a fifth category", async ({ page }) => {
@@ -202,7 +195,8 @@ test.describe("Exercise - admin", () => {
     );
     await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
 
-    await page.getByRole("button", { name: `Delete ${fixtures.exercises.pecDeck.name}` }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Delete" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
 
     await expect(page.getByText("Could not delete the exercise")).toBeVisible();

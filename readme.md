@@ -203,7 +203,6 @@ modules/
 │   │   ├── body-weight-measurement-has-changed.ts
 │   │   ├── body-weight-reference-has-changed.ts
 │   ├── open-host-queries
-│   ├── ports
 │   ├── queries
 │   │   ├── get-body-part-by-name.ts
 │   │   ├── get-body-part-measurement.ts
@@ -559,7 +558,8 @@ modules/
     │   ├── workout-get-actions.ts
     │   ├── workout-get-exercise-actions.ts
     │   ├── workout-get-logged-set-actions.ts
-    │   └── workout-list-actions.ts
+    │   ├── workout-list-actions.ts
+    │   └── workout-progress.ts
     └── value-objects
         ├── exercise-prescription.ts
         ├── exercise-target-diff.ts

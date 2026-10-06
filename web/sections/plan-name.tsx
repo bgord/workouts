@@ -30,16 +30,24 @@ export function PlanName() {
     },
   });
 
-  if (!plan.actions.rename.available) return <h1 data-minw="0">{plan.data.name}</h1>;
+  const cancel = bg.exec([planName.clear, mutation.reset, planRename.disable]);
+
+  if (!plan.actions.rename.available) {
+    return (
+      <h1 data-transform="line-clamp" title={plan.data.name}>
+        {plan.data.name}
+      </h1>
+    );
+  }
 
   if (planRename.off) {
     return (
-      <h1 aria-label={plan.data.name} data-minw="0">
+      <h1 aria-label={plan.data.name}>
         <button
           aria-label={t("plan.rename.cta", { name: plan.data.name })}
           data-cursor="pointer"
           data-maxw="100%"
-          data-transform="truncate"
+          data-transform="line-clamp"
           onClick={planRename.enable}
           title={t("plan.rename.cta", { name: plan.data.name })}
           type="button"
@@ -54,9 +62,10 @@ export function PlanName() {
   return (
     <form
       aria-busy={mutation.isLoading}
-      data-grow="1"
-      data-minw="0"
       data-stack="y"
+      onKeyDown={(event) => {
+        if (event.key === "Escape") cancel();
+      }}
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}
       {...planRename.props.target}
@@ -74,10 +83,7 @@ export function PlanName() {
           {...planName.input.props}
         />
 
-        <ui.InlineEditActions
-          disabled={planName.unchanged || mutation.isLoading}
-          onCancel={bg.exec([planName.clear, mutation.reset, planRename.disable])}
-        />
+        <ui.InlineEditActions disabled={planName.unchanged || mutation.isLoading} onCancel={cancel} />
       </div>
 
       {mutation.isError && (

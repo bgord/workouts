@@ -9,7 +9,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("caps a body part name at the maximum length", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByLabel("Body part name").fill("a".repeat(65));
 
     await expect(page.getByLabel("Body part name")).toHaveValue("a".repeat(64));
@@ -18,7 +19,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("blocks defining a body part with an empty name", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
 
     await expect(page.getByRole("button", { name: "Add", exact: true })).toBeDisabled();
   });
@@ -26,7 +28,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("defines a body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByLabel("Body part name").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
@@ -38,7 +41,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("rejects a duplicate body part name", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByLabel("Body part name").fill("NECK");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
@@ -52,7 +56,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("rejects a body part import with an unknown body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Import body parts" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Import body parts" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-parts.csv",
       mimeType: "text/csv",
@@ -66,7 +71,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("imports body part measurements", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Import body parts" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Import body parts" }).click();
     await page.getByLabel("Select CSV").setInputFiles({
       name: "body-parts.csv",
       mimeType: "text/csv",
@@ -91,7 +97,8 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Rename Neck" }).click();
     await field.fill("a".repeat(65));
 
@@ -101,7 +108,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("renames the body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Rename Neck" }).click();
     await page.getByRole("form", { name: "Rename Neck" }).getByLabel("Body part name").fill("Neck girth");
     await page.getByRole("button", { name: "Save", exact: true }).click();
@@ -117,7 +125,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("renames the body part changing only the case", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Rename Neck girth", exact: true }).click();
     await page
       .getByRole("form", { name: "Rename Neck girth", exact: true })
@@ -135,7 +144,8 @@ test.describe("Body parts - empty-mutation", () => {
   test("deletes the body part", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByRole("button", { name: "Delete Neck girth" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
 

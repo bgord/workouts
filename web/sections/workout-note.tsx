@@ -1,15 +1,31 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { NotebookPen } from "lucide-react";
 import { Form } from "../../app/services/workout-note-form";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 
-export function WorkoutNote() {
+export function WorkoutNoteMenuItem(props: bg.UseToggleReturnType) {
+  const t = bg.useTranslations();
+  const { workout } = workoutRoute.useLoaderData();
+
+  /* v8 ignore next */
+  if (!workout.actions.noteSet.available || props.on) return null;
+
+  return (
+    <ui.MenuItem disabled={!workout.actions.noteSet.enabled} onClick={props.enable}>
+      <NotebookPen data-size="sm" />
+      {workout.data.note ? t("workout.note.edit.cta") : t("workout.note.add.cta")}
+    </ui.MenuItem>
+  );
+}
+
+export function WorkoutNote(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
 
-  const workoutNoteUpdate = bg.useToggle({ name: `workout-note-update-${workout.data.id}` });
+  const workoutNoteUpdate = props;
 
   const note = bg.useTextField({ ...Form.note.field, defaultValue: workout.data.note ?? "" });
 
@@ -31,21 +47,28 @@ export function WorkoutNote() {
 
   /* v8 ignore next */
   if (!workout.actions.noteSet.available) return null;
+  if (workoutNoteUpdate.off && !workout.data.note) return null;
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
       {workoutNoteUpdate.off && (
         <>
-          <ui.TextareaTrigger
-            data-color={workout.data.note ? undefined : "neutral-500"}
+          <button
+            data-color="neutral-300"
+            data-cursor="pointer"
+            data-fs="sm"
+            data-hover-color="neutral-100"
+            data-ta="start"
+            data-transform="pre-line"
             disabled={!workout.actions.noteSet.enabled}
             onClick={workoutNoteUpdate.enable}
-            title={t("workout.note.label")}
+            title={t("workout.note.edit.cta")}
+            type="button"
             {...ui.describedByHint(workout.actions.noteSet, "workout-note-hint")}
             {...workoutNoteUpdate.props.controller}
           >
-            {workout.data.note ?? t("workout.note.placeholder")}
-          </ui.TextareaTrigger>
+            {workout.data.note}
+          </button>
 
           <ui.ActionHint {...workout.actions.noteSet} id="workout-note-hint" />
         </>

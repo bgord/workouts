@@ -12,11 +12,11 @@ export function WorkoutCopy() {
   if (!completedAt) return null;
 
   return (
-    <ui.CopyButton
-      aria-label={t("workout.copy.cta")}
+    <ui.CopyMenuItem
       done={t("workout.copy.done")}
       text={() => WorkoutReport.create({ ...workout.data, completedAt })}
-      title={t("workout.copy.title")}
-    />
+    >
+      {t("workout.copy.cta")}
+    </ui.CopyMenuItem>
   );
 }

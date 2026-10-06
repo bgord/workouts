@@ -7,18 +7,20 @@ test.describe("Body parts - empty", () => {
 
   test("blocks importing body part measurements until a body part is defined", async ({ page }) => {
     await page.goto("/measurements/body-parts");
+    await page.getByRole("button", { name: "More actions" }).click();
 
-    await expect(page.getByRole("button", { name: "Import body parts" })).toHaveAccessibleDescription(
+    await expect(page.getByRole("menuitem", { name: "Import body parts" })).toHaveAccessibleDescription(
       "Add a body part first",
     );
-    await expect(page.getByRole("button", { name: "Import body parts" })).toBeDisabled();
+    await expect(page.getByRole("menuitem", { name: "Import body parts" })).toBeDisabled();
   });
 
   test("shows the error when defining a body part fails", async ({ page }) => {
     await page.route("**/api/measurements/body-part", (route) => route.fulfill({ status: 500 }));
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByLabel("Body part name").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
@@ -54,6 +56,72 @@ test.describe("Body parts - athlete", () => {
     ).toBeVisible();
   });
 
+  test("opens the menu with ArrowDown and focuses the first item", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).focus();
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+
+    await page.getByRole("button", { name: "More actions" }).focus();
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+  });
+
+  test("moves through the menu items with the keyboard", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Import body parts" })).toBeFocused();
+
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("ArrowDown");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+
+    await page.keyboard.press("ArrowUp");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("Home");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeFocused();
+
+    await page.keyboard.press("ArrowUp");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("Home");
+    await page.keyboard.press("End");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+
+    await page.keyboard.press("a");
+
+    await expect(page.getByRole("menuitem", { name: "Export" })).toBeFocused();
+  });
+
+  test("closes the menu with Escape and returns focus to the trigger", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.keyboard.press("Escape");
+
+    await expect(page.getByRole("menuitem", { name: "Manage" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "More actions" })).toBeFocused();
+
+    await page.keyboard.press("Escape");
+
+    await expect(page.getByRole("button", { name: "More actions" })).toBeFocused();
+  });
+
   test("marks the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
@@ -84,8 +152,10 @@ test.describe("Body parts - athlete", () => {
   test("downloads the body part export", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
+    await page.getByRole("button", { name: "More actions" }).click();
+
     const download = page.waitForEvent("download");
-    await page.getByRole("link", { name: "Export", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Export" }).click();
 
     expect((await download).suggestedFilename()).toMatch(/\.csv$/);
   });
@@ -93,7 +163,8 @@ test.describe("Body parts - athlete", () => {
   test("downloads the body part import template", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Import body parts" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Import body parts" }).click();
 
     const download = page.waitForEvent("download");
     await page.getByRole("link", { name: "CSV template" }).click();
@@ -165,7 +236,8 @@ test.describe("Body parts - athlete", () => {
     );
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByRole("button", { name: `Rename ${fixtures.athlete.bodyParts.waist.name}` }).click();
     await page
       .getByRole("form", { name: `Rename ${fixtures.athlete.bodyParts.waist.name}` })
@@ -188,7 +260,8 @@ test.describe("Body parts - athlete", () => {
     );
     await page.goto("/measurements/body-parts");
 
-    await page.getByRole("button", { name: "Manage", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
     await page.getByRole("button", { name: `Delete ${fixtures.athlete.bodyParts.waist.name}` }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
 
