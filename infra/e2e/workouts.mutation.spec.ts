@@ -563,8 +563,10 @@ test.describe("Workouts - active-mutation", () => {
     await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
 
     await page.reload();
+    await page.getByRole("button", { name: "More actions" }).click();
 
     await expect(page.getByRole("button", { name: "Shoulder felt tight on the last set." })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Edit note" })).toBeVisible();
   });
 
   test("clears the note", async ({ page }) => {
@@ -744,17 +746,23 @@ test.describe("Workouts - hanger", () => {
   });
 
   test("hides reordering for a single exercise", async ({ page }) => {
-    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
-
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
 
-    await expect(row).toBeVisible();
-    await expect(
-      row.getByRole("button", { name: `Move ${fixtures.exercises.hangingLegRaise.name} up` }),
-    ).toBeHidden();
-    await expect(
-      row.getByRole("button", { name: `Move ${fixtures.exercises.hangingLegRaise.name} down` }),
-    ).toBeHidden();
+    await page.getByRole("button", { name: "More actions" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Discard" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeHidden();
+  });
+
+  test("lists the actions of the completed workout", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.hanger.completedWorkout.id}`);
+
+    await page.getByRole("button", { name: "More actions" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Copy workout" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Add note" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Discard" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeHidden();
   });
 
   test("sets a bodyweight target from the last session", async ({ page }) => {

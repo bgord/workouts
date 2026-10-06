@@ -31,6 +31,17 @@ test.describe("Workout - athlete", () => {
     await expect(page.getByRole("button", { name: /^Change date/ })).toBeVisible();
   });
 
+  test("lists the actions of the scheduled workout", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await page.getByRole("button", { name: "More actions" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Add note" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Discard" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeHidden();
+    await expect(page.getByRole("menuitem", { name: "Copy workout" })).toBeHidden();
+  });
+
   test("shows the error when discarding the workout fails", async ({ page }) => {
     await page.route(`**/api/workouts/${fixtures.athlete.scheduledWorkout.id}`, (route) =>
       route.request().method() === "DELETE" ? route.fulfill({ status: 500 }) : route.continue(),
@@ -76,8 +87,32 @@ test.describe("Workout - active", () => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
     await expect(page.getByText("In progress", { exact: true })).toBeVisible();
+    await expect(page.getByText("2 of 6 exercises", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Complete" })).toBeEnabled();
     await expect(page.getByRole("button", { name: "Start", exact: true })).toBeHidden();
+    await expect(page.getByRole("button", { name: /^Change date/ })).toBeHidden();
+  });
+
+  test("lists the actions of the workout in progress", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "More actions" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Add note" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Discard" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Copy workout" })).toBeHidden();
+  });
+
+  test("hides the reorder action while reordering", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Reorder exercises" }).click();
+
+    await page.getByRole("button", { name: "More actions" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Discard" })).toBeVisible();
+    await expect(page.getByRole("menuitem", { name: "Reorder exercises" })).toBeHidden();
   });
 
   test("steps between exercises in the log panel", async ({ page }) => {
