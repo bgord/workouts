@@ -4,7 +4,18 @@ import { workoutRoute } from "../router";
 
 type ExerciseId = WorkoutExercise["id"];
 
-let current: ExerciseId | null = null;
+const key = "workout-log-panel";
+
+const read = (): ExerciseId | null => {
+  try {
+    return localStorage.getItem(key) as ExerciseId | null;
+    /* v8 ignore next 2 */
+  } catch {
+    return null;
+  }
+};
+
+let current = read();
 
 const listeners = new Set<VoidFunction>();
 
@@ -17,6 +28,12 @@ const snapshot = () => current;
 
 const write = (id: ExerciseId | null) => {
   current = id;
+
+  try {
+    if (id === null) localStorage.removeItem(key);
+    else localStorage.setItem(key, id);
+    /* v8 ignore next */
+  } catch {}
 
   for (const listener of listeners) listener();
 };

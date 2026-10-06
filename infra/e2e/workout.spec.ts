@@ -326,6 +326,20 @@ test.describe("Workout - active", () => {
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeHidden();
   });
 
+  test("reopens the log panel on the same exercise after reload", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Log sets" }).click();
+    await panel
+      .getByRole("group", { name: "Exercises" })
+      .getByRole("button", { name: `4. ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
+      .click();
+    await page.reload();
+
+    await expect(panel.getByText(fixtures.exercises.pecFlyMachine.name, { exact: true })).toBeVisible();
+  });
+
   test("stops reordering the exercises", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.getByRole("button", { name: "More actions" }).click();
