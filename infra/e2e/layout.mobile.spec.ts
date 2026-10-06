@@ -136,9 +136,7 @@ test.describe("Mobile - active", () => {
 
     expect(closed).toBeLessThanOrEqual(0);
 
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await expect(page.getByRole("dialog", { name: "Logging panel" })).toBeVisible();
 
     const open = await page.evaluate(

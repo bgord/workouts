@@ -118,29 +118,23 @@ test.describe("Workout - active", () => {
   test("steps between exercises in the log panel", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
 
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
-    await expect(
-      panel.getByText(fixtures.exercises.overheadPressSeatedDumbbells.name, { exact: true }),
-    ).toBeVisible();
-    await expect(
-      panel.getByRole("button", { name: `Previous: ${fixtures.exercises.superHorizontalBenchPress.name}` }),
-    ).toBeEnabled();
-
-    await panel.getByRole("button", { name: /^Next: / }).click();
-
+    await expect(panel.getByText(fixtures.exercises.tricepsPushDownBar.name, { exact: true })).toBeVisible();
     await expect(
       panel.getByRole("button", {
         name: `Previous: ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
       }),
     ).toBeEnabled();
+
+    await panel.getByRole("button", { name: /^Next: / }).click();
+
     await expect(
-      panel.getByText(fixtures.exercises.overheadPressSeatedDumbbells.name, { exact: true }),
-    ).toBeHidden();
+      panel.getByRole("button", { name: `Previous: ${fixtures.exercises.tricepsPushDownBar.name}` }),
+    ).toBeEnabled();
+    await expect(panel.getByText(fixtures.exercises.tricepsPushDownBar.name, { exact: true })).toBeHidden();
   });
 
   test("keeps the warm-up expanded and collapsed after reload", async ({ page }) => {
@@ -188,21 +182,6 @@ test.describe("Workout - active", () => {
     await page.reload();
 
     await expect(row.getByRole("button", { name: "Remove set 1" })).toBeHidden();
-  });
-
-  test("reopens the log panel on the same exercise after reload", async ({ page }) => {
-    await page.goto(`/workouts/${fixtures.active.workout.id}`);
-
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
-      .click();
-    await page.reload();
-
-    await expect(
-      page
-        .getByRole("dialog", { name: "Logging panel" })
-        .getByText(fixtures.exercises.overheadPressSeatedDumbbells.name, { exact: true }),
-    ).toBeVisible();
   });
 
   test("stops reordering the exercises", async ({ page }) => {
@@ -359,9 +338,7 @@ test.describe("Workout - active", () => {
     await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set · RIR 1" })
@@ -379,9 +356,7 @@ test.describe("Workout - active", () => {
     await expect(row.getByRole("button", { name: "Log set", exact: true })).toBeVisible();
     await expect(row.getByRole("button", { name: /^Remove set / })).toHaveCount(0);
 
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set · RIR 1" })

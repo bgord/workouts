@@ -282,9 +282,7 @@ test.describe("Workouts - athlete-mutation", () => {
   test("logs a set and completes the workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.pullUp.name}`, exact: true })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set", exact: true })
@@ -404,9 +402,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("blocks logging a set with reps missing or out of range", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
 
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
@@ -423,9 +419,7 @@ test.describe("Workouts - active-mutation", () => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set · RIR 1" })
@@ -445,9 +439,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("unlocks scrolling after logging a set and closing the panel with Escape", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set", exact: true })
@@ -461,9 +453,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("unlocks scrolling after logging a set and closing the panel by clicking away", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set", exact: true })
@@ -797,9 +787,7 @@ test.describe("Workouts - hanger", () => {
 
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
     await page.getByRole("button", { name: "Start", exact: true }).click();
-    await page
-      .getByRole("button", { name: `Open panel: ${fixtures.exercises.hangingLegRaise.name}` })
-      .click();
+    await page.getByRole("button", { name: "Log sets" }).click();
 
     await expect(panel.getByRole("spinbutton", { name: "Load (kg)" })).toBeHidden();
 
