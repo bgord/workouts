@@ -14,6 +14,7 @@ export * from "./chevron-toggle";
 export * from "./chip";
 export * from "./copy-button";
 export * from "./count-delta";
+export * from "./date-tile";
 export * from "./delta";
 export * from "./dialog";
 export * from "./dropzone";
