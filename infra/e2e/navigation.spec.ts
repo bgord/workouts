@@ -89,7 +89,7 @@ test.describe("Navigation - athlete", () => {
   test("goes back from the plan to the plans", async ({ page }) => {
     await page.goto(`/plans/${fixtures.athlete.plan.id}`);
 
-    await page.getByRole("link", { name: "Back", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Plans", exact: true }).click();
 
     await expect(page).toHaveURL("/plans");
   });
@@ -98,7 +98,7 @@ test.describe("Navigation - athlete", () => {
     await page.goto("/workouts?filter=all_time");
     await page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`).click();
 
-    await page.getByRole("link", { name: "Back", exact: true }).click();
+    await page.getByRole("main").getByRole("link", { name: "Workouts", exact: true }).click();
 
     await expect(page).toHaveURL("/workouts?filter=all_time");
   });
@@ -169,7 +169,6 @@ test.describe("Navigation - athlete", () => {
     const card = page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`);
 
     await page.goto("/workouts");
-    const title = (await card.getByRole("heading", { level: 2 }).textContent()) ?? "";
     await card.click();
     await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
     await page.goBack();
@@ -178,6 +177,8 @@ test.describe("Navigation - athlete", () => {
     await page.goForward();
 
     await expect(page).toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
-    await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: fixtures.athlete.plan.sections.pull.name }),
+    ).toBeVisible();
   });
 });

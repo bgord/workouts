@@ -117,6 +117,16 @@ test.describe("Mobile - athlete", () => {
 test.describe("Mobile - active", () => {
   test.use({ storageState: ".auth/active.json" });
 
+  test("keeps the workout header actions within the viewport", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await expect(page.getByRole("button", { name: "Complete" })).toBeInViewport({ ratio: 1 });
+
+    await page.getByRole("button", { name: "More actions" }).tap();
+
+    await expect(page.getByRole("menu")).toBeInViewport({ ratio: 1 });
+  });
+
   test("keeps the workout within the viewport width with the log panel closed and open", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 

@@ -170,6 +170,19 @@ test.describe("Workout - active", () => {
     ).toBeVisible();
   });
 
+  test("stops reordering the exercises", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Reorder exercises" }).click();
+
+    await page.getByRole("button", { name: "Done reordering" }).click();
+
+    await expect(page.getByText("Reordering exercises", { exact: true })).toBeHidden();
+    await expect(
+      page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} down` }),
+    ).toBeHidden();
+  });
+
   test("blocks moving the first exercise up and the last exercise down", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
