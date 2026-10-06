@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Check, Copy, X } from "lucide-react";
 import { useState } from "react";
-import { MenuItem, useMenu } from "./menu";
 
 type CopyButtonState = "idle" | "done" | "failed";
 
@@ -32,14 +31,14 @@ export function CopyMenuItem(
 ) {
   const { text, done, children, ...rest } = props;
   const t = bg.useTranslations();
-  const menu = useMenu();
+  const menu = bg.useMenu();
   const { state, copy } = useCopy(text);
 
   const labels = { idle: children, done, failed: t("app.copy.error") };
   const Icon = icons[state];
 
   return (
-    <MenuItem
+    <bg.MenuItem
       onClick={async (event) => {
         event.preventDefault();
         await copy();
@@ -50,6 +49,6 @@ export function CopyMenuItem(
     >
       <Icon data-size="sm" />
       {labels[state]}
-    </MenuItem>
+    </bg.MenuItem>
   );
 }

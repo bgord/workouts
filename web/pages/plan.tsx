@@ -23,27 +23,27 @@ export function Plan() {
         <div data-main="between" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack to="/plans">{t("app.plans")}</ui.ButtonBack>
 
-          <ui.Menu name="plan-menu">
+          <bg.Menu name="plan-menu">
             <ui.MenuTrigger />
 
-            <ui.MenuContent>
+            <bg.MenuContent>
               <PlanCopy />
 
               <PlanArchive />
 
-              {plan.actions.remove.available && <ui.MenuSeparator />}
+              {plan.actions.remove.available && <bg.MenuSeparator />}
 
               <PlanRemove />
 
-              <ui.MenuSeparator />
+              <bg.MenuSeparator />
 
-              <ui.MenuFooter>
+              <bg.MenuFooter>
                 {t("plan.updated_at", {
                   date: DateFormat.dayWithTime(language, plan.data.updatedAt, hydrated ? undefined : "UTC"),
                 })}
-              </ui.MenuFooter>
-            </ui.MenuContent>
-          </ui.Menu>
+              </bg.MenuFooter>
+            </bg.MenuContent>
+          </bg.Menu>
         </div>
 
         <div data-stack="y" {...ui.Gap.inline}>

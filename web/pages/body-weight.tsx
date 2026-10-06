@@ -15,15 +15,15 @@ export function BodyWeight() {
         <div data-main="between" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack to="/measurements">{t("app.measurements")}</ui.ButtonBack>
 
-          <ui.Menu name="body-weight-menu">
+          <bg.Menu name="body-weight-menu">
             <ui.MenuTrigger />
 
-            <ui.MenuContent>
+            <bg.MenuContent>
               <BodyWeightMeasurementImport />
 
               <BodyWeightMeasurementExport />
-            </ui.MenuContent>
-          </ui.Menu>
+            </bg.MenuContent>
+          </bg.Menu>
         </div>
 
         <h1>{t("measurements.body_weight.header")}</h1>

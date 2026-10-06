@@ -33,13 +33,13 @@ export function Exercise() {
           </ui.ButtonBack>
 
           {exercise.actions.delete.available && (
-            <ui.Menu name="exercise-menu">
+            <bg.Menu name="exercise-menu">
               <ui.MenuTrigger />
 
-              <ui.MenuContent>
+              <bg.MenuContent>
                 <ExerciseDelete />
-              </ui.MenuContent>
-            </ui.Menu>
+              </bg.MenuContent>
+            </bg.Menu>
           )}
         </div>
 

@@ -30,10 +30,10 @@ export function PlanRemove() {
 
   return (
     <>
-      <ui.MenuItem aria-haspopup="dialog" onClick={planRemove.enable} tone="danger">
+      <bg.MenuItem aria-haspopup="dialog" onClick={planRemove.enable} tone="danger">
         <Trash2 data-size="sm" />
         {t("plan.remove.cta")}
-      </ui.MenuItem>
+      </bg.MenuItem>
 
       <ui.Dialog {...planRemove}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={planRemove.disable}>

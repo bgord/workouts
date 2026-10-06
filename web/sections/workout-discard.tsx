@@ -33,7 +33,7 @@ export function WorkoutDiscard() {
 
   return (
     <>
-      <ui.MenuItem
+      <bg.MenuItem
         aria-haspopup="dialog"
         disabled={!workout.actions.discard.enabled}
         onClick={workoutDiscard.enable}
@@ -41,7 +41,7 @@ export function WorkoutDiscard() {
       >
         <Trash2 data-size="sm" />
         {t("workout.discard.cta")}
-      </ui.MenuItem>
+      </bg.MenuItem>
 
       <ui.Dialog {...workoutDiscard}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutDiscard.disable}>

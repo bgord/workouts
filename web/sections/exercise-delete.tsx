@@ -23,7 +23,7 @@ export function ExerciseDelete() {
 
   return (
     <>
-      <ui.MenuItem
+      <bg.MenuItem
         aria-haspopup="dialog"
         disabled={!exercise.actions.delete.enabled}
         onClick={exerciseDelete.enable}
@@ -32,7 +32,7 @@ export function ExerciseDelete() {
       >
         <Trash2 data-size="sm" />
         {t("exercise.delete.cta")}
-      </ui.MenuItem>
+      </bg.MenuItem>
 
       <ui.ActionHint {...exercise.actions.delete} data-px="2-5" data-py="1-5" id="exercise-delete-hint" />
 

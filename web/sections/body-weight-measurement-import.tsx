@@ -38,10 +38,10 @@ export function BodyWeightMeasurementImport() {
 
   return (
     <>
-      <ui.MenuItem aria-haspopup="dialog" onClick={bodyWeightMeasurementImport.enable}>
+      <bg.MenuItem aria-haspopup="dialog" onClick={bodyWeightMeasurementImport.enable}>
         <Upload data-size="sm" />
         {t("measurements.body_weight.import.header")}
-      </ui.MenuItem>
+      </bg.MenuItem>
 
       <ui.Dialog {...bodyWeightMeasurementImport}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>

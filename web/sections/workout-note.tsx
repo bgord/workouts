@@ -13,10 +13,10 @@ export function WorkoutNoteMenuItem(props: bg.UseToggleReturnType) {
   if (!workout.actions.noteSet.available || props.on) return null;
 
   return (
-    <ui.MenuItem disabled={!workout.actions.noteSet.enabled} onClick={props.enable}>
+    <bg.MenuItem disabled={!workout.actions.noteSet.enabled} onClick={props.enable}>
       <NotebookPen data-size="sm" />
       {workout.data.note ? t("workout.note.edit.cta") : t("workout.note.add.cta")}
-    </ui.MenuItem>
+    </bg.MenuItem>
   );
 }
 

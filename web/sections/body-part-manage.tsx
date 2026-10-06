@@ -13,10 +13,10 @@ export function BodyPartManage() {
 
   return (
     <>
-      <ui.MenuItem aria-haspopup="dialog" onClick={bodyPartManage.enable}>
+      <bg.MenuItem aria-haspopup="dialog" onClick={bodyPartManage.enable}>
         <Ruler data-size="sm" />
         {t("measurements.body_parts.manage.cta")}
-      </ui.MenuItem>
+      </bg.MenuItem>
 
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...bodyPartManage}>
         <ui.DialogHeader onClose={bodyPartManage.disable}>

@@ -31,10 +31,10 @@ export function Workout() {
             {t("app.workouts")}
           </ui.ButtonBack>
 
-          <ui.Menu name="workout-menu">
+          <bg.Menu name="workout-menu">
             <ui.MenuTrigger />
 
-            <ui.MenuContent>
+            <bg.MenuContent>
               <WorkoutNoteMenuItem {...workoutNoteUpdate} />
 
               <WorkoutCopy />
@@ -43,11 +43,11 @@ export function Workout() {
 
               {(workoutNoteUpdate.off ||
                 workout.data.completedAt ||
-                (workout.actions.reorder.available && workoutReorder.off)) && <ui.MenuSeparator />}
+                (workout.actions.reorder.available && workoutReorder.off)) && <bg.MenuSeparator />}
 
               <WorkoutDiscard />
-            </ui.MenuContent>
-          </ui.Menu>
+            </bg.MenuContent>
+          </bg.Menu>
         </div>
 
         <WorkoutIdentity />

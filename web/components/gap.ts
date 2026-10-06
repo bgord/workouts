@@ -9,7 +9,7 @@ export const Gap = {
   field: { "data-gap": "1-5" },
   // Chip lists (categories, ExerciseCard), card lists (PlanCard, WorkoutHistory), toolbars
   // (filters, search + counter), eyebrow → content (dashboard tiles), sm icon + text
-  // (ActionHint, Logo, profile card headings, DialogStatus/DialogError, MenuItem), inline form → Output,
+  // (ActionHint, Logo, profile card headings, DialogStatus/DialogError), inline form → Output,
   // StatusPanel dot → text, StatusPanelAction buttons
   cluster: { "data-gap": "2" },
   // Row items (index + image + body + controls), header bars (ButtonBack + Menu),

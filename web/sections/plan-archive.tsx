@@ -31,10 +31,10 @@ export function PlanArchive() {
 
   return (
     <>
-      <ui.MenuItem aria-haspopup="dialog" onClick={planArchive.enable}>
+      <bg.MenuItem aria-haspopup="dialog" onClick={planArchive.enable}>
         <Archive data-size="sm" />
         {t("plan.archive.cta")}
-      </ui.MenuItem>
+      </bg.MenuItem>
 
       <ui.Dialog {...planArchive}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={planArchive.disable}>

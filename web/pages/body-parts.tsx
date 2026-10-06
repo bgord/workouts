@@ -15,19 +15,19 @@ export function BodyParts() {
         <div data-main="between" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack to="/measurements">{t("app.measurements")}</ui.ButtonBack>
 
-          <ui.Menu name="body-parts-menu">
+          <bg.Menu name="body-parts-menu">
             <ui.MenuTrigger />
 
-            <ui.MenuContent>
+            <bg.MenuContent>
               <BodyPartManage />
 
-              <ui.MenuSeparator />
+              <bg.MenuSeparator />
 
               <BodyPartMeasurementImport />
 
               <BodyPartMeasurementExport />
-            </ui.MenuContent>
-          </ui.Menu>
+            </bg.MenuContent>
+          </bg.Menu>
         </div>
 
         <h1>{t("measurements.body_parts.header")}</h1>

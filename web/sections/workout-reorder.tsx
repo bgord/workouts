@@ -10,10 +10,10 @@ export function WorkoutReorder(props: bg.UseToggleReturnType) {
   if (!workout.actions.reorder.available || props.on) return null;
 
   return (
-    <ui.MenuItem onClick={props.enable}>
+    <bg.MenuItem onClick={props.enable}>
       <ArrowUpDown data-size="sm" />
       {t("workout.exercise.reorder.start.title")}
-    </ui.MenuItem>
+    </bg.MenuItem>
   );
 }
 

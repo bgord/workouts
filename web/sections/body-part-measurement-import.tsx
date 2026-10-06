@@ -41,7 +41,7 @@ export function BodyPartMeasurementImport() {
 
   return (
     <>
-      <ui.MenuItem
+      <bg.MenuItem
         aria-haspopup="dialog"
         disabled={!bodyParts.actions.import.enabled}
         onClick={bodyPartMeasurementImport.enable}
@@ -49,7 +49,7 @@ export function BodyPartMeasurementImport() {
       >
         <Upload data-size="sm" />
         {t("measurements.body_parts.import.header")}
-      </ui.MenuItem>
+      </bg.MenuItem>
 
       <ui.Dialog {...bodyPartMeasurementImport}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
