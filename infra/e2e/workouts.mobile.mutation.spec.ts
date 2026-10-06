@@ -99,7 +99,7 @@ test.describe("Mobile - pocket", () => {
 
     await page.getByRole("button", { name: "Complete" }).tap();
 
-    await expect(page.getByText("Completed", { exact: true })).toBeVisible();
+    await expect(page.getByRole("img", { name: "Completed" })).toBeVisible();
 
     await page.reload();
     await bench.getByRole("button", { name: /^Details: / }).tap();

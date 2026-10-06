@@ -2,7 +2,6 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
-import { WorkoutComplete } from "../sections/workout-complete";
 import { WorkoutCooldown } from "../sections/workout-cooldown";
 import { WorkoutCopy } from "../sections/workout-copy";
 import { WorkoutDiscard } from "../sections/workout-discard";
@@ -13,7 +12,7 @@ import { WorkoutIdentity } from "../sections/workout-identity";
 import { WorkoutLogPanel } from "../sections/workout-log-panel";
 import { WorkoutNote } from "../sections/workout-note";
 import { WorkoutReorder } from "../sections/workout-reorder";
-import { WorkoutStart } from "../sections/workout-start";
+import { WorkoutStatus } from "../sections/workout-status";
 import { WorkoutWarmup } from "../sections/workout-warmup";
 
 export function Workout() {
@@ -22,8 +21,6 @@ export function Workout() {
   const search = workoutRoute.useSearch();
 
   const workoutReorder = bg.useToggle({ name: `workout-reorder-${workout.data.id}` });
-
-  const primary = workout.actions.start.available || workout.actions.complete.available;
 
   return (
     <ui.Main>
@@ -52,24 +49,7 @@ export function Workout() {
 
         <WorkoutNote />
 
-        <div data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
-          <ui.WorkoutStatusBadge status={workout.data.status} />
-
-          {primary && (
-            <div data-md-width="100%" data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
-              <WorkoutStart />
-
-              <WorkoutComplete />
-            </div>
-          )}
-        </div>
-
-        {workout.actions.start.available && (
-          <ui.ActionHint {...workout.actions.start} id="workout-start-hint" />
-        )}
-        {workout.actions.complete.available && (
-          <ui.ActionHint {...workout.actions.complete} id="workout-complete-hint" />
-        )}
+        <WorkoutStatus />
       </div>
 
       <WorkoutWarmup />

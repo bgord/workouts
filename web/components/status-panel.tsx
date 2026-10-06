@@ -9,6 +9,12 @@ const dots = {
       boxShadow: "0 0 0 var(--spacing-1) color-mix(in oklch, var(--color-positive-400) 18%, transparent)",
     },
   },
+  brand: {
+    "data-bg": "brand-400",
+    style: {
+      boxShadow: "0 0 0 var(--spacing-1) color-mix(in oklch, var(--color-brand-400) 20%, transparent)",
+    },
+  },
   muted: { "data-bg": "neutral-600" },
 } as const;
 

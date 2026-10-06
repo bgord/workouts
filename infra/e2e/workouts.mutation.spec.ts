@@ -292,7 +292,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Complete" }).click();
 
-    await expect(page.getByText("Completed", { exact: true })).toBeVisible();
+    await expect(page.getByRole("img", { name: "Completed" })).toBeVisible();
   });
 
   test("rejects a set correction out of range", async ({ page }) => {
@@ -704,7 +704,7 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.getByRole("button", { name: "Complete" }).click();
 
-    await expect(page.getByText("Completed", { exact: true })).toBeVisible();
+    await expect(page.getByRole("img", { name: "Completed" })).toBeVisible();
   });
 
   test("moves the completed workout to the dashboard", async ({ page }) => {
