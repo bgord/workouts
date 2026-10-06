@@ -50,7 +50,8 @@ test.describe("Workouts - athlete-mutation", () => {
     ).toBeVisible();
     await expect(page.getByText("Scheduled", { exact: true })).toBeVisible();
 
-    await page.getByRole("button", { name: "Discard", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard", exact: true })
@@ -78,7 +79,8 @@ test.describe("Workouts - athlete-mutation", () => {
         .getByText("4×4 17.5 kg", { exact: true }),
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Discard", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard", exact: true })
@@ -143,7 +145,8 @@ test.describe("Workouts - athlete-mutation", () => {
 
     await page.goto("/workouts");
     await draft.click();
-    await page.getByRole("button", { name: "Discard", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard", exact: true })
@@ -350,9 +353,10 @@ test.describe("Workouts - athlete-mutation", () => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: "Copy workout" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Copy workout" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute("title", "Copied");
+    await expect(page.getByRole("menuitem", { name: "Copied" })).toBeVisible();
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
@@ -641,7 +645,8 @@ test.describe("Workouts - active-mutation", () => {
 
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 
-    await page.getByRole("button", { name: "Reorder exercises" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Reorder exercises" }).click();
     await page.getByRole("button", { name: `Move ${fixtures.exercises.facePull.name} up` }).click();
 
     await expect(exercises.nth(5)).toHaveText(fixtures.exercises.facePull.name);
@@ -831,9 +836,10 @@ test.describe("Workouts - hanger", () => {
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
     await page.getByRole("button", { name: "Complete" }).click();
 
-    await page.getByRole("button", { name: "Copy workout" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Copy workout" }).click();
 
-    await expect(page.getByRole("button", { name: "Copy workout" })).toHaveAttribute("title", "Copied");
+    await expect(page.getByRole("menuitem", { name: "Copied" })).toBeVisible();
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 

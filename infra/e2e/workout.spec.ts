@@ -37,7 +37,8 @@ test.describe("Workout - athlete", () => {
     );
     await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
 
-    await page.getByRole("button", { name: "Discard", exact: true }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
     await page
       .getByRole("dialog", { name: "Discard workout" })
       .getByRole("button", { name: "Discard", exact: true })
@@ -172,7 +173,8 @@ test.describe("Workout - active", () => {
   test("blocks moving the first exercise up and the last exercise down", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page.getByRole("button", { name: "Reorder exercises" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Reorder exercises" }).click();
 
     await expect(
       page.getByRole("button", { name: `Move ${fixtures.exercises.superHorizontalBenchPress.name} up` }),
@@ -266,7 +268,8 @@ test.describe("Workout - active", () => {
     await page.route("**/api/workouts/*/exercise/*/position", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page.getByRole("button", { name: "Reorder exercises" }).click();
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Reorder exercises" }).click();
     await page
       .getByRole("button", { name: `Move ${fixtures.exercises.overheadPressSeatedDumbbells.name} up` })
       .click();

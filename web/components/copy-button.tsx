@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Check, Copy, X } from "lucide-react";
 import { useState } from "react";
-import { IconButton } from "./icon-button";
 import { MenuItem, useMenu } from "./menu";
 
 type CopyButtonState = "idle" | "done" | "failed";
@@ -26,23 +25,6 @@ function useCopy(text: () => string) {
   };
 
   return { state, copy };
-}
-
-export function CopyButton(
-  props: React.JSX.IntrinsicElements["button"] & { text: () => string; title: string; done: string },
-) {
-  const { text, title, done, ...rest } = props;
-  const t = bg.useTranslations();
-  const { state, copy } = useCopy(text);
-
-  const titles = { idle: title, done, failed: t("app.copy.error") };
-  const Icon = icons[state];
-
-  return (
-    <IconButton onClick={copy} title={titles[state]} tone={tones[state]} {...rest}>
-      <Icon data-size="sm" />
-    </IconButton>
-  );
 }
 
 export function CopyMenuItem(

@@ -28,9 +28,27 @@ export function Workout() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.related}>
-        <div data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack search={search} to="/workouts" />
+        <div data-main="between" data-stack="x" {...ui.Gap.related}>
+          <ui.ButtonBack search={search} to="/workouts">
+            {t("app.workouts")}
+          </ui.ButtonBack>
 
+          <ui.Menu name="workout-menu">
+            <ui.MenuTrigger />
+
+            <ui.MenuContent>
+              <WorkoutCopy />
+
+              <WorkoutReorder {...workoutReorder} />
+
+              {(workout.data.completedAt || workout.actions.reorder.available) && <ui.MenuSeparator />}
+
+              <WorkoutDiscard />
+            </ui.MenuContent>
+          </ui.Menu>
+        </div>
+
+        <div data-md-wrap="wrap" data-stack="x" {...ui.Gap.related}>
           <div data-basis="0" data-grow="1" data-minw="0" data-stack="x" {...ui.Gap.related}>
             <h1>
               {t("workout.title", { plan: workout.data.planName, section: workout.data.planSectionName })}
@@ -39,24 +57,13 @@ export function Workout() {
             <ui.WorkoutStatusBadge status={workout.data.status} />
           </div>
 
-          <div
-            data-md-width={primary ? "100%" : undefined}
-            data-shrink="0"
-            data-stack="x"
-            {...ui.Gap.cluster}
-          >
-            <WorkoutStart />
+          {primary && (
+            <div data-md-width="100%" data-shrink="0" data-stack="x" {...ui.Gap.cluster}>
+              <WorkoutStart />
 
-            <WorkoutComplete />
-
-            <div data-ml="auto" data-stack="x">
-              <WorkoutReorder {...workoutReorder} />
-
-              <WorkoutCopy />
-
-              <WorkoutDiscard />
+              <WorkoutComplete />
             </div>
-          </div>
+          )}
         </div>
 
         <div data-stack="y" {...ui.Spacing.inset} {...ui.Gap.related}>

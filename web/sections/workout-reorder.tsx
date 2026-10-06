@@ -9,19 +9,10 @@ export function WorkoutReorder(props: bg.UseToggleReturnType) {
 
   if (!workout.actions.reorder.available) return null;
 
-  const title = props.on
-    ? t("workout.exercise.reorder.stop.title")
-    : t("workout.exercise.reorder.start.title");
-
   return (
-    <ui.IconButton
-      aria-label={title}
-      aria-pressed={props.on}
-      onClick={props.toggle}
-      title={title}
-      tone={props.on ? "brand" : "neutral"}
-    >
+    <ui.MenuItem onClick={props.toggle}>
       {props.on ? <Check data-size="sm" /> : <ArrowUpDown data-size="sm" />}
-    </ui.IconButton>
+      {props.on ? t("workout.exercise.reorder.stop.title") : t("workout.exercise.reorder.start.title")}
+    </ui.MenuItem>
   );
 }

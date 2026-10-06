@@ -33,16 +33,15 @@ export function WorkoutDiscard() {
 
   return (
     <>
-      <ui.IconButton
-        aria-label={t("workout.discard.cta")}
+      <ui.MenuItem
+        aria-haspopup="dialog"
         disabled={!workout.actions.discard.enabled}
         onClick={workoutDiscard.enable}
-        title={t("workout.discard.title", { name })}
         tone="danger"
-        {...workoutDiscard.props.controller}
       >
         <Trash2 data-size="sm" />
-      </ui.IconButton>
+        {t("workout.discard.cta")}
+      </ui.MenuItem>
 
       <ui.Dialog {...workoutDiscard}>
         <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutDiscard.disable}>
