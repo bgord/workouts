@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
+import { bodyPartsRoute } from "../router";
 import { BodyPartManage } from "../sections/body-part-manage";
 import { BodyPartMeasurementExport } from "../sections/body-part-measurement-export";
 import { BodyPartMeasurementImport } from "../sections/body-part-measurement-import";
@@ -8,6 +9,9 @@ import { BodyPartsOverview } from "../sections/body-parts-overview";
 
 export function BodyParts() {
   const t = bg.useTranslations();
+  const { bodyParts } = bodyPartsRoute.useLoaderData();
+
+  const exportable = bodyParts.data.some((bodyPart) => bodyPart.measurements.length > 0);
 
   return (
     <ui.Main>
@@ -21,7 +25,7 @@ export function BodyParts() {
             <bg.MenuContent>
               <BodyPartManage />
 
-              <bg.MenuSeparator />
+              {exportable && <bg.MenuSeparator />}
 
               <BodyPartMeasurementImport />
 
