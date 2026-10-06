@@ -126,12 +126,9 @@ export function PlanSectionExerciseInstructionEdit(props: {
           {planSectionExerciseInstructionPick.off && (
             <button
               aria-label={t("plan.section.exercise.edit.change", { name: exercise.name })}
-              data-bc="alpha-medium"
               data-br="md"
-              data-bw="hairline"
               data-color="neutral-100"
               data-cursor={actions.update.enabled ? "pointer" : undefined}
-              data-hover-bc={actions.update.enabled ? "brand-500" : undefined}
               data-px="3"
               data-stack="x"
               disabled={!actions.update.enabled}

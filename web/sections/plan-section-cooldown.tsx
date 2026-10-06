@@ -63,8 +63,6 @@ export function PlanSectionCooldown(props: PlanSection) {
 
       {planSectionCooldownUpdate.off && props.cooldown && (
         <button
-          data-bc="positive-400"
-          data-bwl="thin"
           data-cursor="pointer"
           data-stack="y"
           data-ta="start"

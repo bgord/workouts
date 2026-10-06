@@ -63,8 +63,6 @@ export function PlanSectionWarmup(props: PlanSection) {
 
       {planSectionWarmupUpdate.off && props.warmup && (
         <button
-          data-bc="warning-500"
-          data-bwl="thin"
           data-cursor="pointer"
           data-stack="y"
           data-ta="start"

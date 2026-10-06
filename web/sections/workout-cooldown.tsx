@@ -24,9 +24,7 @@ export function WorkoutCooldown() {
     >
       <button
         aria-label={t("workout.cooldown.toggle")}
-        data-bc="alpha-medium"
         data-br="md"
-        data-bw="hairline"
         data-cursor="pointer"
         data-p="3"
         data-stack="y"
