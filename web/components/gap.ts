@@ -20,7 +20,7 @@ export const Gap = {
   // Toolbar → list (WorkoutHistory, ExerciseCatalog, BodyWeightMeasurementList),
   // ExerciseCatalog card grid, exercise page sidebar, shortcuts overlay card, history row metrics,
   // plan header (bar → name + description → StatusPanel),
-  // measurements header (bar → h1),
+  // measurements and exercise headers (bar → h1),
   // workout header (bar → identity → StatusPanel → note → reorder strip)
   block: { "data-gap": "4" },
   // Main page sections (Exercise, Measurements), form fields (PlanCreate, ExerciseAdd, WorkoutCreate,

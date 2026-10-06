@@ -12,14 +12,15 @@ import { ExercisePerformancesEmpty } from "../sections/exercise-performances-emp
 import { ExerciseResistance } from "../sections/exercise-resistance";
 
 export function Exercise() {
+  const t = bg.useTranslations();
   const { exercise } = exerciseRoute.useLoaderData();
   const router = useRouter();
   const canGoBack = useCanGoBack();
 
   return (
     <ui.Main>
-      <div data-stack="y" {...ui.Gap.related}>
-        <div data-stack="x" {...ui.Gap.related}>
+      <div data-stack="y" {...ui.Gap.block}>
+        <div data-main="between" data-stack="x" {...ui.Gap.related}>
           <ui.ButtonBack
             onClick={(event) => {
               if (!canGoBack) return;
@@ -27,18 +28,22 @@ export function Exercise() {
               router.history.back();
             }}
             to="/catalog"
-          />
+          >
+            {t("app.catalog")}
+          </ui.ButtonBack>
 
-          <ExerciseName />
+          {exercise.actions.delete.available && (
+            <ui.Menu name="exercise-menu">
+              <ui.MenuTrigger />
 
-          <ExerciseDelete />
+              <ui.MenuContent>
+                <ExerciseDelete />
+              </ui.MenuContent>
+            </ui.Menu>
+          )}
         </div>
 
-        {exercise.actions.delete.hints.length > 0 && (
-          <div data-disp="none" data-md-disp="block">
-            <ui.ActionHint {...exercise.actions.delete} />
-          </div>
-        )}
+        <ExerciseName />
       </div>
 
       <div data-cross="start" data-stack="x" data-wrap="wrap" {...ui.Gap.section}>
