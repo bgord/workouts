@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, CircleUser, FileImage, ImageUp, X } from "lucide-react";
+import { CircleUser, FileImage, ImageUp } from "lucide-react";
 import * as ui from "../components";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
@@ -92,23 +92,10 @@ export function ProfileAvatarChange() {
                 <ui.DropzoneInput file={avatar} />
               </ui.FileButton>
 
-              <ui.IconButton
-                aria-label={t("app.save")}
+              <ui.InlineEditActions
                 disabled={!avatar.isSelected || mutation.isLoading}
-                title={t("app.save")}
-                tone="positive"
-                type="submit"
-              >
-                <Check data-size="sm" />
-              </ui.IconButton>
-
-              <ui.IconButton
-                aria-label={t("app.cancel")}
-                onClick={bg.exec([avatar.actions.clearFile, mutation.reset, profileAvatarChange.disable])}
-                title={t("app.cancel")}
-              >
-                <X data-size="sm" />
-              </ui.IconButton>
+                onCancel={bg.exec([avatar.actions.clearFile, mutation.reset, profileAvatarChange.disable])}
+              />
             </div>
 
             {mutation.isError && (

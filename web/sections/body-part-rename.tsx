@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/body-part-name-form";
 import type { BodyPart } from "../../modules/measurements/value-objects/body-part";
 import * as ui from "../components";
@@ -68,23 +67,10 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
           {...name.input.props}
         />
 
-        <ui.IconButton
-          aria-label={t("app.save")}
+        <ui.InlineEditActions
           disabled={name.unchanged || mutation.isLoading}
-          title={t("app.save")}
-          tone="positive"
-          type="submit"
-        >
-          <Check data-size="sm" />
-        </ui.IconButton>
-
-        <ui.IconButton
-          aria-label={t("app.cancel")}
-          onClick={bg.exec([name.clear, mutation.reset, toggle.disable])}
-          title={t("app.cancel")}
-        >
-          <X data-size="sm" />
-        </ui.IconButton>
+          onCancel={bg.exec([name.clear, mutation.reset, toggle.disable])}
+        />
       </div>
 
       {mutation.isError && (

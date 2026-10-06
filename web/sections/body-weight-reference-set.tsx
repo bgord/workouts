@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
@@ -59,23 +58,10 @@ export function BodyWeightReferenceSet(
         ))}
       </div>
 
-      <ui.IconButton
-        aria-label={t("app.save")}
+      <ui.InlineEditActions
         disabled={goal.empty || goal.unchanged || mutation.isLoading}
-        title={t("app.save")}
-        tone="positive"
-        type="submit"
-      >
-        <Check data-size="sm" />
-      </ui.IconButton>
-
-      <ui.IconButton
-        aria-label={t("app.cancel")}
-        onClick={bg.exec([goal.clear, mutation.reset, toggle.disable])}
-        title={t("app.cancel")}
-      >
-        <X data-size="sm" />
-      </ui.IconButton>
+        onCancel={bg.exec([goal.clear, mutation.reset, toggle.disable])}
+      />
 
       {mutation.isError && (
         <output aria-live="assertive" data-tone="danger" data-width="100%">

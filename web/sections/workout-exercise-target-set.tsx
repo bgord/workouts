@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/workout-target-form";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
@@ -72,6 +71,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         data-wrap="wrap"
         onSubmit={mutation.handleSubmit}
         {...ui.Gap.related}
+        {...ui.describedByHint(action, `workout-exercise-target-set-hint-${props.exercise.id}`)}
         {...toggle.props.target}
       >
         <div data-stack="x" {...ui.Gap.cluster}>
@@ -104,29 +104,19 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           />
         </div>
 
-        <div data-ml="auto" data-shrink="0" data-stack="x" {...ui.Gap.inline}>
-          <ui.IconButton
-            aria-label={t("app.save")}
-            disabled={
-              !action.enabled ||
-              sets.empty ||
-              reps.empty ||
-              !Resistance.ready(load) ||
-              unchanged ||
-              mutation.isLoading
-            }
-            title={t("app.save")}
-            tone="positive"
-            type="submit"
-            {...ui.describedByHint(action, `workout-exercise-target-set-hint-${props.exercise.id}`)}
-          >
-            <Check data-size="sm" />
-          </ui.IconButton>
-
-          <ui.IconButton aria-label={t("app.cancel")} onClick={cancel} title={t("app.cancel")}>
-            <X data-size="sm" />
-          </ui.IconButton>
-        </div>
+        <ui.InlineEditActions
+          data-ml="auto"
+          data-shrink="0"
+          disabled={
+            !action.enabled ||
+            sets.empty ||
+            reps.empty ||
+            !Resistance.ready(load) ||
+            unchanged ||
+            mutation.isLoading
+          }
+          onCancel={cancel}
+        />
 
         <ui.ActionHint {...action} id={`workout-exercise-target-set-hint-${props.exercise.id}`} />
 

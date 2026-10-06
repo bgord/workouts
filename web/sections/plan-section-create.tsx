@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/plan-section-create-form";
 import * as ui from "../components";
 import { planRoute } from "../router";
@@ -75,25 +74,11 @@ export function PlanSectionCreate() {
               {...planSectionName.input.props}
             />
 
-            <div data-shrink="0" data-stack="x" {...ui.Gap.inline}>
-              <ui.IconButton
-                aria-label={t("app.save")}
-                disabled={planSectionName.empty || mutation.isLoading}
-                title={t("app.save")}
-                tone="positive"
-                type="submit"
-              >
-                <Check data-size="sm" />
-              </ui.IconButton>
-
-              <ui.IconButton
-                aria-label={t("app.cancel")}
-                onClick={bg.exec([planSectionName.clear, mutation.reset, planSectionCreate.disable])}
-                title={t("app.cancel")}
-              >
-                <X data-size="sm" />
-              </ui.IconButton>
-            </div>
+            <ui.InlineEditActions
+              data-shrink="0"
+              disabled={planSectionName.empty || mutation.isLoading}
+              onCancel={bg.exec([planSectionName.clear, mutation.reset, planSectionCreate.disable])}
+            />
           </div>
 
           {mutation.isError && (

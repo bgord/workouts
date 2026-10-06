@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CalendarDays, Check, X } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
@@ -65,6 +65,7 @@ export function WorkoutScheduledFor() {
       data-wrap="wrap"
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.inline}
+      {...ui.describedByHint(workout.actions.reschedule, "workout-reschedule-hint")}
       {...workoutReschedule.props.target}
     >
       <input
@@ -80,24 +81,10 @@ export function WorkoutScheduledFor() {
         {...scheduledFor.input.props}
       />
 
-      <ui.IconButton
-        aria-label={t("app.save")}
+      <ui.InlineEditActions
         disabled={!workout.actions.reschedule.enabled || scheduledFor.unchanged || mutation.isLoading}
-        title={t("app.save")}
-        tone="positive"
-        type="submit"
-        {...ui.describedByHint(workout.actions.reschedule, "workout-reschedule-hint")}
-      >
-        <Check data-size="sm" />
-      </ui.IconButton>
-
-      <ui.IconButton
-        aria-label={t("app.cancel")}
-        onClick={bg.exec([scheduledFor.clear, mutation.reset, workoutReschedule.disable])}
-        title={t("app.cancel")}
-      >
-        <X data-size="sm" />
-      </ui.IconButton>
+        onCancel={bg.exec([scheduledFor.clear, mutation.reset, workoutReschedule.disable])}
+      />
 
       <ui.ActionHint {...workout.actions.reschedule} data-ml="2" id="workout-reschedule-hint" />
 

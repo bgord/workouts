@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, FileImage, ImageUp, X } from "lucide-react";
+import { FileImage, ImageUp } from "lucide-react";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
@@ -91,23 +91,10 @@ export function ExerciseImageChange() {
               <ui.DropzoneInput file={image} />
             </ui.FileButton>
 
-            <ui.IconButton
-              aria-label={t("app.save")}
+            <ui.InlineEditActions
               disabled={!image.isSelected || mutation.isLoading}
-              title={t("app.save")}
-              tone="positive"
-              type="submit"
-            >
-              <Check data-size="sm" />
-            </ui.IconButton>
-
-            <ui.IconButton
-              aria-label={t("app.cancel")}
-              onClick={bg.exec([image.actions.clearFile, mutation.reset, exerciseImageChange.disable])}
-              title={t("app.cancel")}
-            >
-              <X data-size="sm" />
-            </ui.IconButton>
+              onCancel={bg.exec([image.actions.clearFile, mutation.reset, exerciseImageChange.disable])}
+            />
           </div>
 
           {mutation.isError && (

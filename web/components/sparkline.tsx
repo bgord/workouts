@@ -1,7 +1,9 @@
 // cSpell:ignore sparkline
 import { SparklineMath } from "../services/sparkline";
 
-export function Sparkline(props: Omit<React.JSX.IntrinsicElements["svg"], "values"> & { values: ReadonlyArray<number> }) {
+export function Sparkline(
+  props: Omit<React.JSX.IntrinsicElements["svg"], "values"> & { values: ReadonlyArray<number> },
+) {
   const { values, ...svg } = props;
   const style = { width: SparklineMath.WIDTH, height: SparklineMath.HEIGHT };
 

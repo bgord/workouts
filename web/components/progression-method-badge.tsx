@@ -11,7 +11,14 @@ export function ProgressionMethodBadge(
   const label = t(`progression.method.${method}`);
 
   return (
-    <span aria-label={label} className="c-badge" data-tone="soft" data-variant="outline" role="note" {...span}>
+    <span
+      aria-label={label}
+      className="c-badge"
+      data-tone="soft"
+      data-variant="outline"
+      role="note"
+      {...span}
+    >
       <ProgressionMethodIcon method={method} size="xs" />
       {label}
     </span>

@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, X } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
@@ -77,23 +76,10 @@ export function ExerciseName() {
           {...name.input.props}
         />
 
-        <ui.IconButton
-          aria-label={t("app.save")}
+        <ui.InlineEditActions
           disabled={name.unchanged || mutation.isLoading}
-          title={t("app.save")}
-          tone="positive"
-          type="submit"
-        >
-          <Check data-size="sm" />
-        </ui.IconButton>
-
-        <ui.IconButton
-          aria-label={t("app.cancel")}
-          onClick={bg.exec([name.clear, mutation.reset, exerciseNameUpdate.disable])}
-          title={t("app.cancel")}
-        >
-          <X data-size="sm" />
-        </ui.IconButton>
+          onCancel={bg.exec([name.clear, mutation.reset, exerciseNameUpdate.disable])}
+        />
       </div>
 
       {mutation.isError && (
