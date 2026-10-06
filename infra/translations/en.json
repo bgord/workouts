@@ -12,6 +12,7 @@
   "app.dialog.irreversible": "Cannot be undone",
   "app.dialog.restorable": "Can be restored later",
   "app.home": "Home",
+  "app.menu": "More actions",
   "app.not_found.cta": "Go to dashboard",
   "app.not_found.header": "Nothing on the bar",
   "app.not_found.info": "The page you are looking for does not exist",

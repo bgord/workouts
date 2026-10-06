@@ -12,6 +12,7 @@
   "app.dialog.irreversible": "Nie można cofnąć",
   "app.dialog.restorable": "Można później przywrócić",
   "app.home": "Strona główna",
+  "app.menu": "Więcej akcji",
   "app.not_found.cta": "Przejdź do dashboardu",
   "app.not_found.header": "Pusty gryf",
   "app.not_found.info": "Strona, której szukasz, nie istnieje",
