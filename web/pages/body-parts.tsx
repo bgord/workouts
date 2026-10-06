@@ -34,8 +34,6 @@ export function BodyParts() {
       </div>
 
       <div data-stack="y" {...ui.Gap.related}>
-        <h2>{t("measurements.body_parts.latest")}</h2>
-
         <BodyPartsEmpty />
 
         <BodyPartsOverview />
