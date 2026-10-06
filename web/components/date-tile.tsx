@@ -46,21 +46,21 @@ export function DateTileMonth(props: React.JSX.IntrinsicElements["span"]) {
   return (
     <span
       data-color="brand-400"
-      data-fs="xs"
       data-fw="semibold"
       data-ls="widest"
       data-transform="uppercase"
+      style={{ fontSize: "10px" }}
       {...props}
     />
   );
 }
 
 export function DateTileDay(props: React.JSX.IntrinsicElements["span"]) {
-  return <span data-color="neutral-0" data-fs="2xl" data-fw="black" data-lh="tight" {...props} />;
+  return <span data-color="neutral-0" data-fs="base" data-fw="black" data-lh="tight" {...props} />;
 }
 
 export function DateTileWeekday(props: React.JSX.IntrinsicElements["span"]) {
-  return <span data-color="neutral-400" data-fs="xs" {...props} />;
+  return <span data-color="neutral-400" style={{ fontSize: "10px" }} {...props} />;
 }
 
 export function DateTileBadge(props: React.JSX.IntrinsicElements["span"] & { tone?: DateTileBadgeTone }) {

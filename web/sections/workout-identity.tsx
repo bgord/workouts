@@ -78,14 +78,14 @@ export function WorkoutIdentity() {
           </ui.DateTile>
         )}
 
-        <div data-minw="0" data-stack="y" {...ui.Gap.inline}>
-          <span data-color="neutral-400" data-fs="xs" data-transform="truncate">
-            {workout.data.planName}
-          </span>
-
+        <div data-minw="0" data-self="start" data-stack="y" {...ui.Gap.inline}>
           <h1 data-transform="line-clamp" title={workout.data.planSectionName}>
             {workout.data.planSectionName}
           </h1>
+
+          <span data-color="neutral-400" data-fs="xs" data-transform="truncate">
+            {workout.data.planName}
+          </span>
         </div>
       </div>
 
