@@ -26,31 +26,28 @@ export function Workout() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.block}>
-        <div data-main="between" data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack search={search} to="/workouts">
-            {t("app.workouts")}
-          </ui.ButtonBack>
+        <WorkoutIdentity
+          back={<ui.ButtonBack data-self="center" search={search} to="/workouts" />}
+          menu={
+            <bg.Menu name="workout-menu">
+              <ui.MenuTrigger />
 
-          <bg.Menu name="workout-menu">
-            <ui.MenuTrigger />
+              <bg.MenuContent>
+                <WorkoutNoteMenuItem {...workoutNoteUpdate} />
 
-            <bg.MenuContent>
-              <WorkoutNoteMenuItem {...workoutNoteUpdate} />
+                <WorkoutCopy />
 
-              <WorkoutCopy />
+                <WorkoutReorder {...workoutReorder} />
 
-              <WorkoutReorder {...workoutReorder} />
+                {(workoutNoteUpdate.off ||
+                  workout.data.completedAt ||
+                  (workout.actions.reorder.available && workoutReorder.off)) && <bg.MenuSeparator />}
 
-              {(workoutNoteUpdate.off ||
-                workout.data.completedAt ||
-                (workout.actions.reorder.available && workoutReorder.off)) && <bg.MenuSeparator />}
-
-              <WorkoutDiscard />
-            </bg.MenuContent>
-          </bg.Menu>
-        </div>
-
-        <WorkoutIdentity />
+                <WorkoutDiscard />
+              </bg.MenuContent>
+            </bg.Menu>
+          }
+        />
 
         <WorkoutStatus />
 

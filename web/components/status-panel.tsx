@@ -25,10 +25,9 @@ export function StatusPanel(props: React.JSX.IntrinsicElements["div"]) {
     <div
       className="c-card"
       data-cross="center"
-      data-md-cross="stretch"
-      data-md-stack="y"
       data-shadow="none"
       data-stack="x"
+      data-wrap="wrap"
       {...Spacing.surfaceCompact}
       {...Gap.related}
       {...props}
@@ -37,7 +36,19 @@ export function StatusPanel(props: React.JSX.IntrinsicElements["div"]) {
 }
 
 export function StatusPanelSummary(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-cross="start" data-grow="1" data-minw="0" data-stack="x" {...Gap.cluster} {...props} />;
+  const { style, ...rest } = props;
+
+  return (
+    <div
+      data-cross="start"
+      data-grow="1"
+      data-minw="0"
+      data-stack="x"
+      style={{ flexBasis: 160, ...style }}
+      {...Gap.cluster}
+      {...rest}
+    />
+  );
 }
 
 export function StatusPanelDot(props: React.JSX.IntrinsicElements["span"] & { tone: StatusPanelTone }) {
@@ -70,5 +81,5 @@ export function StatusPanelDescription(props: React.JSX.IntrinsicElements["small
 }
 
 export function StatusPanelAction(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-md-width="100%" data-shrink="0" data-stack="x" {...Gap.cluster} {...props} />;
+  return <div data-ml="auto" data-shrink="0" data-stack="x" {...Gap.cluster} {...props} />;
 }

@@ -4,12 +4,12 @@ import { Form } from "../../app/services/exercise-add-form";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
-export function ExerciseName() {
+export function ExerciseName(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercise } = exerciseRoute.useLoaderData();
 
-  const exerciseNameUpdate = bg.useToggle({ name: "exercise-name-update" });
+  const exerciseNameUpdate = props;
 
   const name = bg.useTextField({ ...Form.name.field, defaultValue: exercise.data.name });
 

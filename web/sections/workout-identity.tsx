@@ -6,7 +6,7 @@ import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
-export function WorkoutIdentity() {
+export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.ReactNode }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
   const router = useRouter();
@@ -50,6 +50,8 @@ export function WorkoutIdentity() {
   return (
     <div data-stack="y" {...ui.Gap.related}>
       <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+        {props.back}
+
         {workout.actions.reschedule.available ? (
           <ui.DateTileButton
             aria-label={t("workout.reschedule.cta", { date: scheduledOn })}
@@ -78,7 +80,7 @@ export function WorkoutIdentity() {
           </ui.DateTile>
         )}
 
-        <div data-minw="0" data-self="start" data-stack="y" {...ui.Gap.inline}>
+        <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
           <h1 data-transform="line-clamp" title={workout.data.planSectionName}>
             {workout.data.planSectionName}
           </h1>
@@ -87,6 +89,8 @@ export function WorkoutIdentity() {
             {workout.data.planName}
           </span>
         </div>
+
+        {props.menu}
       </div>
 
       {workoutReschedule.on && (

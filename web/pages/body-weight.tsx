@@ -11,22 +11,22 @@ export function BodyWeight() {
 
   return (
     <ui.Main>
-      <div data-stack="y" {...ui.Gap.block}>
-        <div data-main="between" data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack to="/measurements">{t("app.measurements")}</ui.ButtonBack>
+      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+        <ui.ButtonBack to="/measurements" />
 
-          <bg.Menu name="body-weight-menu">
-            <ui.MenuTrigger />
+        <h1 data-grow="1" data-md-transform="center" data-minw="0">
+          {t("measurements.body_weight.header")}
+        </h1>
 
-            <bg.MenuContent>
-              <BodyWeightMeasurementImport />
+        <bg.Menu name="body-weight-menu">
+          <ui.MenuTrigger />
 
-              <BodyWeightMeasurementExport />
-            </bg.MenuContent>
-          </bg.Menu>
-        </div>
+          <bg.MenuContent>
+            <BodyWeightMeasurementImport />
 
-        <h1>{t("measurements.body_weight.header")}</h1>
+            <BodyWeightMeasurementExport />
+          </bg.MenuContent>
+        </bg.Menu>
       </div>
 
       <BodyWeightMeasure />

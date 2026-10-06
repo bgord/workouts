@@ -17,37 +17,47 @@ export function Plan() {
   const hydrated = useHydrated();
   const { plan } = planRoute.useLoaderData();
 
+  const planRename = bg.useToggle({ name: "plan-rename" });
+
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.block}>
-        <div data-main="between" data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack to="/plans">{t("app.plans")}</ui.ButtonBack>
-
-          <bg.Menu name="plan-menu">
-            <ui.MenuTrigger />
-
-            <bg.MenuContent>
-              <PlanCopy />
-
-              <PlanArchive />
-
-              {plan.actions.remove.available && <bg.MenuSeparator />}
-
-              <PlanRemove />
-
-              <bg.MenuSeparator />
-
-              <bg.MenuFooter>
-                {t("plan.updated_at", {
-                  date: DateFormat.dayWithTime(language, plan.data.updatedAt, hydrated ? undefined : "UTC"),
-                })}
-              </bg.MenuFooter>
-            </bg.MenuContent>
-          </bg.Menu>
-        </div>
-
         <div data-stack="y" {...ui.Gap.inline}>
-          <PlanName />
+          <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+            <ui.ButtonBack to="/plans" />
+
+            <div data-grow="1" data-minw="0">
+              <PlanName {...planRename} />
+            </div>
+
+            {planRename.off && (
+              <bg.Menu name="plan-menu">
+                <ui.MenuTrigger />
+
+                <bg.MenuContent>
+                  <PlanCopy />
+
+                  <PlanArchive />
+
+                  {plan.actions.remove.available && <bg.MenuSeparator />}
+
+                  <PlanRemove />
+
+                  <bg.MenuSeparator />
+
+                  <bg.MenuFooter>
+                    {t("plan.updated_at", {
+                      date: DateFormat.dayWithTime(
+                        language,
+                        plan.data.updatedAt,
+                        hydrated ? undefined : "UTC",
+                      ),
+                    })}
+                  </bg.MenuFooter>
+                </bg.MenuContent>
+              </bg.Menu>
+            )}
+          </div>
 
           <PlanDescription />
         </div>

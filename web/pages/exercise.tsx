@@ -12,38 +12,35 @@ import { ExercisePerformancesEmpty } from "../sections/exercise-performances-emp
 import { ExerciseResistance } from "../sections/exercise-resistance";
 
 export function Exercise() {
-  const t = bg.useTranslations();
   const { exercise } = exerciseRoute.useLoaderData();
   const router = useRouter();
   const canGoBack = useCanGoBack();
 
+  const exerciseNameUpdate = bg.useToggle({ name: "exercise-name-update" });
+
   return (
     <ui.Main>
-      <div data-stack="y" {...ui.Gap.block}>
-        <div data-main="between" data-stack="x" {...ui.Gap.related}>
-          <ui.ButtonBack
-            onClick={(event) => {
-              if (!canGoBack) return;
-              event.preventDefault();
-              router.history.back();
-            }}
-            to="/catalog"
-          >
-            {t("app.catalog")}
-          </ui.ButtonBack>
+      <div data-cross="center" data-stack="x" {...ui.Gap.related}>
+        <ui.ButtonBack
+          onClick={(event) => {
+            if (!canGoBack) return;
+            event.preventDefault();
+            router.history.back();
+          }}
+          to="/catalog"
+        />
 
-          {exercise.actions.delete.available && (
-            <bg.Menu name="exercise-menu">
-              <ui.MenuTrigger />
+        <ExerciseName {...exerciseNameUpdate} />
 
-              <bg.MenuContent>
-                <ExerciseDelete />
-              </bg.MenuContent>
-            </bg.Menu>
-          )}
-        </div>
+        {exercise.actions.delete.available && exerciseNameUpdate.off && (
+          <bg.Menu name="exercise-menu">
+            <ui.MenuTrigger />
 
-        <ExerciseName />
+            <bg.MenuContent>
+              <ExerciseDelete />
+            </bg.MenuContent>
+          </bg.Menu>
+        )}
       </div>
 
       <div data-cross="start" data-stack="x" data-wrap="wrap" {...ui.Gap.section}>

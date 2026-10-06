@@ -4,12 +4,12 @@ import { Form } from "../../app/services/plan-create-form";
 import * as ui from "../components";
 import { planRoute, plansRoute } from "../router";
 
-export function PlanName() {
+export function PlanName(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { plan } = planRoute.useLoaderData();
 
-  const planRename = bg.useToggle({ name: "plan-rename" });
+  const planRename = props;
 
   const planName = bg.useTextField({ ...Form.name.field, defaultValue: plan.data.name });
 
