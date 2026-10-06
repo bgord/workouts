@@ -7,7 +7,7 @@ import { WorkoutLogPanelImage } from "./workout-log-panel-image";
 export function WorkoutLogPanelRail() {
   const t = bg.useTranslations();
   const { active, available, open } = useLogPanel();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLFieldSetElement>(null);
 
   useLayoutEffect(() => {
     const rail = ref.current;
@@ -20,16 +20,16 @@ export function WorkoutLogPanelRail() {
   }, [active?.id]);
 
   return (
-    <div
+    <fieldset
       aria-label={t("workout.log_panel.exercises")}
       data-bct="alpha-subtle"
       data-bst="solid"
       data-bwt="hairline"
+      data-minw="0"
       data-pt="3"
       data-rail
       data-stack="x"
       ref={ref}
-      role="group"
       {...ui.Gap.inline}
     >
       {available.map((exercise, index) => {
@@ -57,11 +57,6 @@ export function WorkoutLogPanelRail() {
             data-stack="y"
             key={exercise.id}
             onClick={() => open(exercise.id)}
-            style={
-              current
-                ? { backgroundColor: "color-mix(in oklch, var(--color-brand-400) 10%, transparent)" }
-                : undefined
-            }
             title={title}
             type="button"
           >
@@ -71,6 +66,6 @@ export function WorkoutLogPanelRail() {
           </button>
         );
       })}
-    </div>
+    </fieldset>
   );
 }

@@ -29,15 +29,11 @@ export function useLogPanel() {
   const index = available.findIndex((exercise) => exercise.id === id);
 
   const active = available[index];
-  const previous = active && available[index - 1];
-  const next = active && available[index + 1];
 
   return {
     active,
     available,
     position: index + 1,
-    previous,
-    next,
     open: write,
     close: () => write(null),
   };

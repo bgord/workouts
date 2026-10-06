@@ -6,11 +6,9 @@ import { workoutRoute } from "../router";
 export function WorkoutLogPanelOpen() {
   const t = bg.useTranslations();
   const { workout } = workoutRoute.useLoaderData();
-  const { open } = useLogPanel();
+  const { available, open } = useLogPanel();
 
-  const exercise = workout.data.exercises.find(
-    (exercise) => exercise.id === workout.progress.next && exercise.actions.setLog.available,
-  );
+  const exercise = available.find((exercise) => exercise.id === workout.progress.next);
 
   if (!exercise) return null;
 

@@ -158,6 +158,9 @@ body:has([data-log-panel]) {
 [data-rail] > button:not([aria-current]) {
   border-color: transparent;
 }
+[data-rail] > [aria-current] {
+  background-color: color-mix(in oklch, var(--color-brand-400) 10%, transparent);
+}
 
 .c-button[data-variant="ghost"][data-tone="danger"] {
   color: var(--color-danger-400);

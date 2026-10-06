@@ -13,16 +13,16 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
   const title = t("workout.exercise.log_panel.close.title", { name: exercise.exerciseName });
 
   return (
-    <div
+    <fieldset
       aria-label={exercise.exerciseName}
       data-bcb="alpha-subtle"
       data-bsb="solid"
       data-bwb="hairline"
       data-cross="center"
       data-mb="2"
+      data-minw="0"
       data-pb="3"
       data-stack="x"
-      role="group"
       {...ui.Gap.related}
     >
       <WorkoutLogPanelImage exercise={exercise} />
@@ -66,6 +66,6 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
       <ui.IconButton aria-label={title} onClick={close} title={title}>
         <PanelBottomClose data-size="sm" />
       </ui.IconButton>
-    </div>
+    </fieldset>
   );
 }

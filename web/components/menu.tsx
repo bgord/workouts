@@ -179,10 +179,11 @@ export function MenuItem(props: React.JSX.IntrinsicElements["button"] & { tone?:
 
 export function MenuLink(props: React.JSX.IntrinsicElements["a"] & { tone?: MenuItemTone }) {
   const menu = useMenu();
-  const { tone = "neutral", onClick, ...rest } = props;
+  const { tone = "neutral", href, onClick, ...rest } = props;
 
   return (
     <a
+      href={href}
       onClick={(event) => {
         onClick?.(event);
         if (!event.defaultPrevented) menu.close();
