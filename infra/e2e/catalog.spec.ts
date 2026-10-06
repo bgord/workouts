@@ -108,6 +108,20 @@ test.describe("Catalog - athlete", () => {
     await expect(page.getByText("Try another name or category")).toBeVisible();
   });
 
+  test("hides the search on an empty catalog", async ({ page }) => {
+    await page.route("**/api/exercises/list", (route) =>
+      route.fulfill({
+        json: { data: [], actions: { add: { available: false, enabled: false, hints: [] } } },
+      }),
+    );
+    await page.goto("/");
+
+    await page.getByRole("navigation").getByRole("link", { name: "Catalog" }).click();
+
+    await expect(page.getByRole("heading", { name: "Catalog" })).toBeVisible();
+    await expect(page.getByRole("textbox", { name: "Search by name" })).toBeHidden();
+  });
+
   test("hides the catalog management", async ({ page }) => {
     await page.goto("/catalog");
 

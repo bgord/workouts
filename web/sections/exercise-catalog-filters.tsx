@@ -32,6 +32,8 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
 
   const pristine = ExerciseCatalogFiltersForm.Form.isDefault(search);
 
+  if (exercises.data.length === 0) return null;
+
   return (
     <>
       <div data-stack="x" {...ui.Gap.cluster}>
