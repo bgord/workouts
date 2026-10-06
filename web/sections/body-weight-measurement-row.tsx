@@ -35,6 +35,7 @@ export function BodyWeightMeasurementRow(props: {
       {!open && (
         <>
           <button
+            aria-label={t("measurements.body_weight.correct.title")}
             data-color="neutral-300"
             data-cross="stretch"
             data-cursor="pointer"
@@ -47,6 +48,7 @@ export function BodyWeightMeasurementRow(props: {
             onClick={bodyWeightMeasurementCorrect.enable}
             type="button"
             {...ui.Gap.inline}
+            {...bodyWeightMeasurementCorrect.props.controller}
           >
             <span data-transform="font-variant-numeric">
               {DateFormat.dayWithWeekday(language, props.measurement.measuredOn)}
@@ -62,6 +64,7 @@ export function BodyWeightMeasurementRow(props: {
             data-transform="nowrap"
             onClick={bodyWeightMeasurementCorrect.enable}
             type="button"
+            {...bodyWeightMeasurementCorrect.props.controller}
           >
             <ui.BodyWeightValue weight={props.measurement.weight} />
           </button>

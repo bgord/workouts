@@ -47,6 +47,8 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
     },
   });
 
+  const pristine = bg.Fields.allUnchanged([measuredOn, weight]);
+
   return (
     <form
       aria-busy={mutation.isLoading}
@@ -95,9 +97,9 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
 
       <ui.IconButton
         aria-label={t("app.clear")}
-        data-disp={bg.Fields.allUnchanged([measuredOn, weight]) ? "none" : undefined}
-        data-md-disp={bg.Fields.allUnchanged([measuredOn, weight]) ? "flex" : undefined}
-        disabled={bg.Fields.allUnchanged([measuredOn, weight])}
+        data-disp={pristine ? "none" : undefined}
+        data-md-disp={pristine ? "flex" : undefined}
+        disabled={pristine}
         onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset])}
         title={t("app.clear")}
       >

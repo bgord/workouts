@@ -18,9 +18,6 @@ export function ExerciseDelete() {
     },
   });
 
-  /* v8 ignore next */
-  if (!exercise.actions.delete.available) return null;
-
   return (
     <>
       <bg.MenuItem

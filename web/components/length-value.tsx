@@ -1,11 +1,7 @@
-import * as bg from "@bgord/ui";
-import { LengthFormat } from "../services/length-format";
+import { useLengthValue } from "../hooks/use-length-value";
 
 export function LengthValue(props: { millimeters: number }) {
-  const t = bg.useTranslations();
-  const language = bg.useLanguage();
+  const lengthValue = useLengthValue();
 
-  return t("measurements.body_parts.value", {
-    value: LengthFormat.centimeters(props.millimeters).toLocaleString(language, { minimumFractionDigits: 1 }),
-  });
+  return lengthValue(props.millimeters);
 }

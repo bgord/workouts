@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import { DateFormat } from "../services/date-format";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
@@ -16,7 +17,7 @@ export function WorkoutCard(props: WorkoutSummary) {
       params={{ workoutId: props.id }}
       search={(prev) => ({ section: prev.section, filter: prev.filter })}
       to="/workouts/$workoutId"
-      variant={props.status === "completed" ? "muted" : "default"}
+      variant={props.status === WorkoutStatusEnum.completed ? "muted" : "default"}
     >
       <RowBody>
         <RowTitle>{t("workout.title", { plan: props.planName, section: props.planSectionName })}</RowTitle>

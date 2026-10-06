@@ -14,12 +14,13 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
 
   const latestOn = DateFormat.dayWithWeekday(language, props.latest.measuredOn);
   const latestDaysAgo = DateFormat.daysAgo(props.latest.measuredOn);
-  const latestRelative =
-    latestDaysAgo === 0
-      ? t("measurements.body_weight.stats.latest.today")
-      : latestDaysAgo === 1
-        ? t("measurements.body_weight.stats.latest.yesterday")
-        : t("measurements.body_weight.stats.latest.days_ago", { count: latestDaysAgo });
+  const goal = props.reference?.goal;
+
+  const latestRelative = () => {
+    if (latestDaysAgo === 0) return t("measurements.body_weight.stats.latest.today");
+    if (latestDaysAgo === 1) return t("measurements.body_weight.stats.latest.yesterday");
+    return t("measurements.body_weight.stats.latest.days_ago", { count: latestDaysAgo });
+  };
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
@@ -36,12 +37,12 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
             current={props.latest.weight}
             data-fs="xs"
             decimals={BodyWeightDecimals}
-            goal={props.reference?.goal}
+            goal={goal}
             previous={props.previous?.weight}
           />
         </ui.TileValue>
 
-        <ui.TileContext title={latestOn}>{hydrated ? latestRelative : latestOn}</ui.TileContext>
+        <ui.TileContext title={latestOn}>{hydrated ? latestRelative() : latestOn}</ui.TileContext>
       </ui.Tile>
 
       <ui.Tile>
@@ -57,7 +58,7 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
             current={props.week.average}
             data-fs="xs"
             decimals={BodyWeightDecimals}
-            goal={props.reference?.goal}
+            goal={goal}
             previous={props.previousWeek?.average}
           />
         </ui.TileValue>
@@ -77,8 +78,8 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
 
       <ui.Tile>
         <ui.TileHeader>
-          {props.reference?.goal ? (
-            <ui.BodyWeightGoalIcon goal={props.reference?.goal} size="xs" />
+          {goal ? (
+            <ui.BodyWeightGoalIcon goal={goal} size="xs" />
           ) : (
             <TrendingUp data-size="xs" />
           )}
@@ -96,16 +97,16 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
             <ui.WeightDelta
               current={props.latest.weight}
               decimals={BodyWeightDecimals}
-              goal={props.reference?.goal}
+              goal={goal}
               previous={props.baseline.weight}
             />
           )}
         </ui.TileValue>
 
         <ui.TileContext>
-          {props.reference?.goal
+          {goal
             ? t("measurements.body_weight.stats.since_reference.goal", {
-                goal: t(`measurements.body_weight.goal.${props.reference?.goal}`),
+                goal: t(`measurements.body_weight.goal.${goal}`),
                 date: DateFormat.dayWithWeekday(language, props.baseline.measuredOn),
               })
             : DateFormat.dayWithWeekday(language, props.baseline.measuredOn)}

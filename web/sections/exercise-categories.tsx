@@ -87,7 +87,6 @@ export function ExerciseCategories() {
               <div data-md-grow="1">
                 <ui.Select
                   aria-label={t("exercise.category.assign.label")}
-                  disabled={!action.enabled}
                   {...exerciseCategoryId.input.props}
                 >
                   {exercise.assignableCategories.map((category) => (
@@ -100,7 +99,7 @@ export function ExerciseCategories() {
 
               <ui.IconButton
                 aria-label={t("exercise.category.assign.cta")}
-                disabled={!action.enabled || assign.isLoading}
+                disabled={assign.isLoading}
                 title={t("exercise.category.assign.cta")}
                 tone="positive"
                 type="submit"

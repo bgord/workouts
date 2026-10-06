@@ -73,7 +73,7 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
         />
 
         <ui.InlineEditActions
-          disabled={!exerciseCategories.actions.rename.enabled || name.unchanged || mutation.isLoading}
+          disabled={name.unchanged || mutation.isLoading}
           onCancel={bg.exec([name.clear, mutation.reset, toggle.disable])}
         />
       </div>

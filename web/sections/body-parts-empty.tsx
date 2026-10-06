@@ -7,7 +7,7 @@ export function BodyPartsEmpty() {
   const t = bg.useTranslations();
   const { bodyParts } = bodyPartsRoute.useLoaderData();
 
-  if (bodyParts.actions.import.enabled) return null;
+  if (bodyParts.data.length > 0) return null;
 
   return (
     <ui.EmptyState>

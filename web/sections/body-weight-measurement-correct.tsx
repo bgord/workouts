@@ -58,9 +58,10 @@ export function BodyWeightMeasurementCorrect(
         data-minw="0"
         data-shrink="0"
         data-width="auto"
-        max={today}
+        disabled={mutation.isLoading}
         type="date"
         {...measuredOn.input.props}
+        max={today}
       />
 
       <ui.Stepper
@@ -86,6 +87,7 @@ export function BodyWeightMeasurementCorrect(
 
       <ui.IconButton
         aria-label={t("app.cancel")}
+        disabled={mutation.isLoading}
         onClick={bg.exec([measuredOn.clear, weight.clear, mutation.reset, toggle.disable])}
         title={t("app.cancel")}
       >

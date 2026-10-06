@@ -6,9 +6,11 @@ export function RirBadge(props: React.JSX.IntrinsicElements["span"] & { rir: num
   const t = bg.useTranslations();
   const { rir, ...span } = props;
 
+  const color = RirColor(rir);
+
   return (
     <span
-      data-color={RirColor(rir)}
+      data-color={color}
       data-cross="baseline"
       data-fs="xs"
       data-fw="medium"
@@ -18,7 +20,7 @@ export function RirBadge(props: React.JSX.IntrinsicElements["span"] & { rir: num
       {...Gap.inline}
       {...span}
     >
-      <span data-bg={RirColor(rir)} data-br="circle" data-self="center" style={{ width: 6, height: 6 }} />
+      <span data-bg={color} data-br="circle" data-self="center" style={{ width: 6, height: 6 }} />
       {t("workout.set.rir.label")} {rir}
     </span>
   );

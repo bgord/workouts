@@ -19,24 +19,31 @@ export function SetDots(
     return rir === undefined || rir === null ? "positive-400" : RirColor(rir);
   };
 
+  const progress = t("workout.set.progress", { done: sets.length, target });
+
   return (
     <span
-      aria-label={t("workout.set.progress", { done: sets.length, target })}
+      aria-label={progress}
       data-shrink="0"
       data-stack="x"
       role="img"
       {...Gap.inline}
-      title={t("workout.set.progress", { done: sets.length, target })}
+      title={progress}
       {...span}
     >
-      {dots.map((index) => (
-        <span
-          data-bg={index >= target ? undefined : index < sets.length ? color(index) : "neutral-700"}
-          data-br="circle"
-          key={index}
-          style={index >= target ? ring(color(index)) : dot}
-        />
-      ))}
+      {dots.map((index) => {
+        const extra = index >= target;
+        const tone = color(index);
+
+        return (
+          <span
+            data-bg={extra ? undefined : index < sets.length ? tone : "neutral-700"}
+            data-br="circle"
+            key={index}
+            style={extra ? ring(tone) : dot}
+          />
+        );
+      })}
     </span>
   );
 }

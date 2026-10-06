@@ -9,27 +9,20 @@ export function useTargetDiffLabel() {
   const language = bg.useLanguage();
   const pluralize = bg.usePluralize();
 
+  const noun = (key: "sets" | "reps", value: number) =>
+    t(`workout.previous_performance.diff.${key}`, {
+      value: sign(value, language),
+      noun: pluralize({
+        value: Math.abs(value),
+        singular: t(`workout.previous_performance.diff.${key}.noun.singular`),
+        plural: t(`workout.previous_performance.diff.${key}.noun.plural`),
+        genitive: t(`workout.previous_performance.diff.${key}.noun.genitive`),
+      }),
+    });
+
   return {
-    sets: (value: number) =>
-      t("workout.previous_performance.diff.sets", {
-        value: sign(value, language),
-        noun: pluralize({
-          value: Math.abs(value),
-          singular: t("workout.previous_performance.diff.sets.noun.singular"),
-          plural: t("workout.previous_performance.diff.sets.noun.plural"),
-          genitive: t("workout.previous_performance.diff.sets.noun.genitive"),
-        }),
-      }),
-    reps: (value: number) =>
-      t("workout.previous_performance.diff.reps", {
-        value: sign(value, language),
-        noun: pluralize({
-          value: Math.abs(value),
-          singular: t("workout.previous_performance.diff.reps.noun.singular"),
-          plural: t("workout.previous_performance.diff.reps.noun.plural"),
-          genitive: t("workout.previous_performance.diff.reps.noun.genitive"),
-        }),
-      }),
+    sets: (value: number) => noun("sets", value),
+    reps: (value: number) => noun("reps", value),
     load: (value: number) =>
       t("workout.previous_performance.diff.load", { value: sign(WeightFormat.kilograms(value), language) }),
   };

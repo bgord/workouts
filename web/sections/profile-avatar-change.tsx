@@ -29,7 +29,7 @@ export function ProfileAvatarChange() {
     onSuccess: async () => {
       profileAvatarChange.disable();
       avatar.actions.clearFile();
-      await router.invalidate({ filter: () => true, sync: true });
+      await router.invalidate({ sync: true });
     },
   });
 

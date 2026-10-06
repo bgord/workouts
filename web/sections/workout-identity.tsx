@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Pencil } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
+import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
@@ -35,7 +36,7 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
 
   const scheduledOn = DateFormat.dayWithWeekday(language, workout.data.scheduledFor);
   const today = DateFormat.todayISO();
-  const completed = workout.data.status === "completed";
+  const completed = workout.data.status === WorkoutStatusEnum.completed;
 
   const date = (
     <>

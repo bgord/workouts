@@ -39,8 +39,6 @@ export function Plan() {
 
                   <PlanArchive />
 
-                  {plan.actions.remove.available && <bg.MenuSeparator />}
-
                   <PlanRemove />
 
                   <bg.MenuSeparator />

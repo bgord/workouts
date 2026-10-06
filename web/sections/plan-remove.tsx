@@ -30,6 +30,8 @@ export function PlanRemove() {
 
   return (
     <>
+      <bg.MenuSeparator />
+
       <bg.MenuItem aria-haspopup="dialog" onClick={planRemove.enable} tone="danger">
         <Trash2 data-size="sm" />
         {t("plan.remove.cta")}

@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
+import { useLengthValue } from "../hooks/use-length-value";
 import { DateFormat } from "../services/date-format";
-import { LengthFormat } from "../services/length-format";
 import { BodyPartMeasurementCorrect } from "./body-part-measurement-correct";
 import { BodyPartMeasurementRemove } from "./body-part-measurement-remove";
 
@@ -12,15 +12,12 @@ export function BodyPartHistoryRow(props: {
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const lengthValue = useLengthValue();
   const bodyPartMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
 
   const label = t("measurements.body_parts.correct.title", {
     date: DateFormat.plainDay(language, props.measurement.measuredOn),
-    value: t("measurements.body_parts.value", {
-      value: LengthFormat.centimeters(props.measurement.value).toLocaleString(language, {
-        minimumFractionDigits: 1,
-      }),
-    }),
+    value: lengthValue(props.measurement.value),
   });
 
   return (

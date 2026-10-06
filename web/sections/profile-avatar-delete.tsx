@@ -13,7 +13,7 @@ export function ProfileAvatarDelete() {
 
   const mutation = bg.useMutation({
     perform: () => fetch("/api/preferences/profile-avatar", { method: "DELETE", credentials: "include" }),
-    onSuccess: () => router.invalidate({ filter: () => true, sync: true }),
+    onSuccess: () => router.invalidate({ sync: true }),
   });
 
   if (!enabled) return null;
