@@ -47,9 +47,9 @@ export function Workout() {
 
         <WorkoutIdentity />
 
-        <WorkoutNote />
-
         <WorkoutStatus />
+
+        <WorkoutNote />
       </div>
 
       <WorkoutWarmup />
