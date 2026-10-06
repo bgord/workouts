@@ -15,7 +15,7 @@ export function BodyPartsEmpty() {
 
       <ui.EmptyStateMessage>{t("measurements.body_parts.list.empty")}</ui.EmptyStateMessage>
 
-      <ui.ActionHint {...bodyParts.actions.import} id="body-part-import-hint" />
+      <small>{t("measurements.body_parts.empty.hint")}</small>
     </ui.EmptyState>
   );
 }

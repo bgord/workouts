@@ -131,6 +131,7 @@
   "measurements.body_parts.delete.header": "Delete body part",
   "measurements.body_parts.delete.info": "Deleting {{name}} also deletes all its measurements.",
   "measurements.body_parts.delete.title": "Delete {{name}}",
+  "measurements.body_parts.empty.hint": "Add a body part from the menu to start measuring",
   "measurements.body_parts.export.cta": "Export",
   "measurements.body_parts.header": "Body parts",
   "measurements.body_parts.header.hint": "Track circumferences over time",

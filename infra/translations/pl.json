@@ -131,6 +131,7 @@
   "measurements.body_parts.delete.header": "Usuń obwód",
   "measurements.body_parts.delete.info": "Usunięcie {{name}} usunie też wszystkie jego pomiary.",
   "measurements.body_parts.delete.title": "Usuń {{name}}",
+  "measurements.body_parts.empty.hint": "Dodaj obwód z menu, aby zacząć mierzyć",
   "measurements.body_parts.export.cta": "Eksportuj",
   "measurements.body_parts.header": "Obwody",
   "measurements.body_parts.header.hint": "Śledź obwody ciała w czasie",

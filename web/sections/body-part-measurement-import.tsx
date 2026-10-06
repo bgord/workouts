@@ -45,7 +45,6 @@ export function BodyPartMeasurementImport() {
         aria-haspopup="dialog"
         disabled={!bodyParts.actions.import.enabled}
         onClick={bodyPartMeasurementImport.enable}
-        {...ui.describedByHint(bodyParts.actions.import, "body-part-import-hint")}
       >
         <Upload data-size="sm" />
         {t("measurements.body_parts.import.header")}

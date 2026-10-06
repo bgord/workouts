@@ -9,9 +9,7 @@ test.describe("Body parts - empty", () => {
     await page.goto("/measurements/body-parts");
     await page.getByRole("button", { name: "More actions" }).click();
 
-    await expect(page.getByRole("menuitem", { name: "Import body parts" })).toHaveAccessibleDescription(
-      "Add a body part first",
-    );
+    await expect(page.getByText("Add a body part from the menu to start measuring")).toBeVisible();
     await expect(page.getByRole("menuitem", { name: "Import body parts" })).toBeDisabled();
     await expect(page.getByRole("heading", { level: 2, name: "Latest" })).toBeHidden();
   });
@@ -29,7 +27,7 @@ test.describe("Body parts - empty", () => {
 
     await page.reload();
 
-    await expect(page.getByText("Add a body part first")).toBeVisible();
+    await expect(page.getByText("Add a body part from the menu to start measuring")).toBeVisible();
   });
 });
 

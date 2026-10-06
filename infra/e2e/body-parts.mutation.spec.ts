@@ -33,7 +33,7 @@ test.describe("Body parts - empty-mutation", () => {
     await page.getByLabel("Body part name").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
-    await expect(page.getByText("Add a body part first")).toBeHidden();
+    await expect(page.getByText("Add a body part from the menu to start measuring")).toBeHidden();
     await expect(page.getByRole("button", { name: "Measure Neck" })).toBeVisible();
     await expect(page.getByLabel("Body part name")).toHaveValue("");
   });
@@ -153,7 +153,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.reload();
 
-    await expect(page.getByText("Add a body part first")).toBeVisible();
+    await expect(page.getByText("Add a body part from the menu to start measuring")).toBeVisible();
     await expect(page.getByRole("button", { name: "Measure Neck girth" })).toBeHidden();
   });
 });
