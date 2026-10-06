@@ -79,10 +79,6 @@ a {
   fill-opacity: 1;
 }
 
-[data-transform~="line-clamp"] {
-  white-space: normal;
-}
-
 [data-spin="none"] {
   appearance: textfield;
 }
