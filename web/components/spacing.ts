@@ -18,6 +18,6 @@ export const Spacing = {
   // Cards and panels: profile cards, RowLink, Tile, DashboardCompleted list, drop zones
   // (ExerciseAdd, BodyWeightMeasurementImport, BodyPartMeasurementImport), ExercisePicker empty option
   surface: { "data-p": "4" },
-  // Dense cards: ExerciseCard, WorkoutCreate section option, OnlineStatusBar
+  // Dense cards: ExerciseCard, WorkoutCreate section option, OnlineStatusBar, StatusPanel
   surfaceCompact: { "data-p": "3" },
 } as const;

@@ -58,6 +58,7 @@ export * from "./sets-reps";
 export * from "./show-more-link";
 export * from "./spacing";
 export * from "./sparkline";
+export * from "./status-panel";
 export * from "./stepper";
 export * from "./stepper-submit";
 export * from "./target-diff-pills";

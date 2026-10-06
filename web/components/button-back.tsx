@@ -13,7 +13,7 @@ function ButtonBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
         className="c-button"
         data-color="neutral-300"
         data-interaction="subtle-scale"
-        data-pl="1"
+        data-pl="0"
         data-pr="3"
         data-self="start"
         data-variant="ghost"
