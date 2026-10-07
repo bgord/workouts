@@ -99,6 +99,42 @@ describe("DateFormat", () => {
     expect(result).toEqual("Dzisiaj");
   });
 
+  test("relativeDay", () => {
+    const result = en.relativeDay("2026-10-07");
+
+    expect(result).toEqual("Today");
+  });
+
+  test("relativeDay - 3 days ago", () => {
+    const result = en.relativeDay("2026-10-04");
+
+    expect(result).toEqual("3 days ago");
+  });
+
+  test("relativeDay - in 3 days", () => {
+    const result = en.relativeDay("2026-10-10");
+
+    expect(result).toEqual("In 3 days");
+  });
+
+  test("relativeDay - 4 days ago", () => {
+    const result = en.relativeDay("2026-10-03");
+
+    expect(result).toEqual("Sat, Oct 3");
+  });
+
+  test("relativeDay - in 4 days", () => {
+    const result = en.relativeDay("2026-10-11");
+
+    expect(result).toEqual("Sun, Oct 11");
+  });
+
+  test("relativeDay - pl", () => {
+    const result = pl.relativeDay("2026-10-09");
+
+    expect(result).toEqual("Pojutrze");
+  });
+
   test("freshness - today", () => {
     const result = en.freshness("2026-10-07");
 

@@ -2,7 +2,7 @@ import { Clock } from "../services/clock";
 import { useDateFormat } from "./use-date-format";
 
 export type UseDateTimeOptions =
-  | { value: string; format: "dayLabel" | "freshness" | "list" | "short" }
+  | { value: string; format: "dayLabel" | "freshness" | "list" | "relativeDay" | "short" }
   | { value: number; format: "ago" };
 
 export function useDateTime(options: UseDateTimeOptions) {

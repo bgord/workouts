@@ -20,7 +20,7 @@ export function WorkoutCard(props: WorkoutSummary) {
         <RowTitle>{t("workout.title", { plan: props.planName, section: props.planSectionName })}</RowTitle>
 
         <small data-transform="truncate">
-          <DateTime format="dayLabel" value={props.scheduledFor} />
+          <DateTime format="relativeDay" value={props.scheduledFor} />
         </small>
       </RowBody>
 

@@ -8,6 +8,8 @@ const Shape = {
   instant: { dateStyle: "medium", timeStyle: "short" },
 } satisfies Record<string, Intl.DateTimeFormatOptions>;
 
+const RELATIVE_DAYS = 3;
+
 type DateFormatConfig = { language: string; today: CalendarDay; now: number; timeZone?: string };
 
 export class DateFormat {
@@ -52,12 +54,12 @@ export class DateFormat {
 
   // Yesterday · Today · Tomorrow · Fri, Oct 9
   dayLabel(date: string): string {
-    const days = this.config.today.daysUntil(CalendarDay.from(date));
+    return this.nearDay(date, 1);
+  }
 
-    if (Math.abs(days) > 1) return this.list(date);
-
-    const label = this.relative(days, "day");
-    return `${label.charAt(0).toLocaleUpperCase(this.config.language)}${label.slice(1)}`;
+  // 3 days ago · Yesterday · Today · In 3 days · Sun, Oct 11
+  relativeDay(date: string): string {
+    return this.nearDay(date, RELATIVE_DAYS);
   }
 
   // yesterday · 3 days ago · last week · 2 months ago · last year
@@ -96,6 +98,15 @@ export class DateFormat {
     return new Intl.DateTimeFormat(this.config.language, { ...options, timeZone: "UTC" }).format(
       CalendarDay.from(date).toUtcTimestamp(),
     );
+  }
+
+  private nearDay(date: string, window: number): string {
+    const days = this.config.today.daysUntil(CalendarDay.from(date));
+
+    if (Math.abs(days) > window) return this.list(date);
+
+    const label = this.relative(days, "day");
+    return `${label.charAt(0).toLocaleUpperCase(this.config.language)}${label.slice(1)}`;
   }
 
   private withYear(date: string, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions {
