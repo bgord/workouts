@@ -10,6 +10,7 @@ export * from "./progression-method-double-progression.strategy";
 export * from "./progression-method-factory.strategy";
 export * from "./progression-method-linear-progression.strategy";
 export * from "./progression-method-none.strategy";
+export * from "./progression-method-rep-progression.strategy";
 export * from "./workout-export-file-csv";
 export * from "./workout-get-actions";
 export * from "./workout-get-exercise-actions";

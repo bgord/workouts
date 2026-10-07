@@ -79,6 +79,26 @@ describe("Workout.addExercise", async () => {
     ).toThrow(Workouts.Invariants.WorkoutExerciseLimit.error);
   });
 
+  test("WorkoutExerciseProgressionIsApplicableForReps", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.addExercise(
+        mocks.workoutExerciseId,
+        mocks.exerciseId,
+        mocks.workoutExerciseName,
+        mocks.workoutExerciseDescription,
+        mocks.workoutExerciseResistance,
+        mocks.amrapDoubleProgressionExercisePrescription,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseProgressionIsApplicableForReps.error);
+  });
+
   test("happy path", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

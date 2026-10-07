@@ -177,6 +177,32 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutExerciseProgressionIsApplicableForReps", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.revisionHeaders(draft.length),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.amrapDoubleProgressionExercisePrescription.sets,
+          reps: mocks.amrapDoubleProgressionExercisePrescription.reps,
+          progression: mocks.amrapDoubleProgressionExercisePrescription.progression,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.progression.is.applicable.for.reps");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();

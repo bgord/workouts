@@ -66,6 +66,7 @@ export const exerciseCatalogResponseEmpty: Plans.Queries.ExerciseCatalogResponse
 
 export const repsRange = v.parse(Plans.VO.RepsRange, { min: 8, max: 12 });
 export const anotherRepsRange = v.parse(Plans.VO.RepsRange, { min: 6, max: 6 });
+export const amrapRepsRange = v.parse(Plans.VO.RepsRange, { min: 5 });
 
 export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: exerciseInstructionId,
@@ -113,6 +114,22 @@ export const linearExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   reps: repsRange,
   sets,
   progression: anotherProgression,
+};
+
+export const amrapExerciseInstruction: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId,
+  reps: amrapRepsRange,
+  sets,
+  progression: Plans.VO.ProgressionMethodOptions.rep_progression,
+};
+
+export const amrapDoubleProgressionExerciseInstruction: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId,
+  reps: amrapRepsRange,
+  sets,
+  progression,
 };
 
 export const planSummary: Plans.VO.PlanSummary = {

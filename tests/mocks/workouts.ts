@@ -16,6 +16,7 @@ import {
   exerciseResistance,
 } from "./exercises";
 import {
+  amrapRepsRange,
   exerciseInstructionId,
   planId,
   planName,
@@ -103,6 +104,18 @@ export const anotherWorkoutExercisePosition = v.parse(Workouts.VO.WorkoutExercis
 export const exercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
   sets,
   reps: repsRange,
+  progression,
+});
+
+export const amrapExercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: amrapRepsRange,
+  progression: Plans.VO.ProgressionMethodOptions.rep_progression,
+});
+
+export const amrapDoubleProgressionExercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: amrapRepsRange,
   progression,
 });
 
