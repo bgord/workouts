@@ -1,4 +1,6 @@
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
+import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
+import { RepsSchemeFormat } from "../kits/reps-scheme.format";
 
 export class PlanReport {
   static create(plan: PlanGetResponse["data"]) {
@@ -7,7 +9,7 @@ export class PlanReport {
       `## ${section.name}`,
       ...section.exerciseInstructions.map(
         (instruction) =>
-          `- ${instruction.exercise.name}: ${instruction.sets} x ${instruction.reps.min === instruction.reps.max ? instruction.reps.min : `${instruction.reps.min}-${instruction.reps.max}`}, ${instruction.progression}`,
+          `- ${instruction.exercise.name}: ${instruction.sets} x ${RepsSchemeFormat[RepsScheme.of(instruction.reps)].prescription(instruction.reps)}, ${instruction.progression}`,
       ),
     ]);
 
