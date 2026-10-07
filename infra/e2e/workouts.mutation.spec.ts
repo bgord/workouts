@@ -249,7 +249,10 @@ test.describe("Workouts - athlete-mutation", () => {
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("8");
     await page.getByRole("button", { name: "AMRAP", exact: true }).click();
-    await page.getByRole("combobox", { name: "Progression" }).selectOption("rep_progression");
+    await page
+      .getByRole("group", { name: "Progression" })
+      .getByText("Rep progression", { exact: true })
+      .click();
     await page
       .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })
@@ -789,7 +792,9 @@ test.describe("Workouts - active-mutation", () => {
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("button", { name: "AMRAP", exact: true }).click();
 
-    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("linear_progression");
+    await expect(
+      page.getByRole("group", { name: "Progression" }).getByRole("radio", { name: "Linear progression" }),
+    ).toBeChecked();
 
     await page
       .getByRole("dialog", { name: "Add exercise" })
