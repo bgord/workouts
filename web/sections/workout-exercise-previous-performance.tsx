@@ -1,16 +1,12 @@
 import * as bg from "@bgord/ui";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
-import { DateFormat } from "../services/date-format";
 
 export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const previous = props.previousPerformance;
 
   if (!previous) return null;
-
-  const scheduledFor = DateFormat.shortDay(language, previous.scheduledFor);
 
   return (
     <small
@@ -35,7 +31,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
         </>
       )}
 
-      <span data-color="neutral-600">{scheduledFor}</span>
+      <bg.DateTime format="freshness" value={previous.scheduledFor} />
     </small>
   );
 }

@@ -2,7 +2,6 @@ import * as bg from "@bgord/ui";
 import { CircleAlert, RotateCcw } from "lucide-react";
 import { createContext, useContext } from "react";
 import { createPortal } from "react-dom";
-import { useHydrated } from "../hooks/use-hydrated";
 import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
 import { Gap } from "./gap";
@@ -10,7 +9,7 @@ import { Gap } from "./gap";
 const DialogHeaderId = createContext<string | undefined>(undefined);
 
 export function Dialog(props: bg.DialogPropsType) {
-  const hydrated = useHydrated();
+  const hydrated = bg.useHydrated();
   const header = `${props.props.target.id}-header`;
 
   if (!hydrated) return null;

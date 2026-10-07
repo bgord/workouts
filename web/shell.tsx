@@ -7,7 +7,7 @@ import { Navigation } from "./sections/navigation";
 import { Shortcuts } from "./sections/shortcuts";
 
 export function Shell() {
-  const { i18n } = rootRoute.useLoaderData();
+  const { i18n, timeZone } = rootRoute.useLoaderData();
 
   return (
     <html lang={i18n.language}>
@@ -17,11 +17,13 @@ export function Shell() {
       <body data-mx="auto">
         <div id="root">
           <bg.TranslationsContext.Provider value={i18n}>
-            <NavigationProgress />
-            <Navigation />
-            <Outlet />
-            <Shortcuts />
-            <OnlineStatusBar />
+            <bg.TimeZoneContext.Provider value={timeZone}>
+              <NavigationProgress />
+              <Navigation />
+              <Outlet />
+              <Shortcuts />
+              <OnlineStatusBar />
+            </bg.TimeZoneContext.Provider>
           </bg.TranslationsContext.Provider>
         </div>
         <Scripts />

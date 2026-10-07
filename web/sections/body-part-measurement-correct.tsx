@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import { LengthFormat } from "../services/length-format";
 
 export function BodyPartMeasurementCorrect(
@@ -15,7 +14,7 @@ export function BodyPartMeasurementCorrect(
 
   const { toggle } = bg.extractUseToggle(props);
 
-  const today = DateFormat.todayISO();
+  const today = bg.useToday();
 
   const measuredOn = bg.useDateField({
     name: `corrected-body-part-measured-on-${props.measurement.id}`,
@@ -64,7 +63,7 @@ export function BodyPartMeasurementCorrect(
         disabled={mutation.isLoading}
         type="date"
         {...measuredOn.input.props}
-        max={today}
+        max={today.toString()}
       />
 
       <ui.Stepper

@@ -3,13 +3,11 @@ import * as bg from "@bgord/ui";
 import { useId } from "react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
-import { DateFormat } from "../services/date-format";
 import { BodyPartHistoryRow } from "./body-part-history-row";
 import { BodyPartMeasure } from "./body-part-measure";
 
 export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean }) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const label = useId();
   const bodyPartHistory = bg.useToggle({ name: `body-part-history-${props.id}` });
 
@@ -36,11 +34,11 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
           </span>
 
           {latest ? (
-            <small data-color="neutral-600" data-transform="nowrap">
-              {DateFormat.plainDay(language, latest.measuredOn)}
+            <small>
+              <bg.DateTime format="freshness" value={latest.measuredOn} />
             </small>
           ) : (
-            <small data-color="neutral-600">{t("measurements.body_parts.measure.never")}</small>
+            <small>{t("measurements.body_parts.measure.never")}</small>
           )}
         </span>
 

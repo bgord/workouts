@@ -31,10 +31,10 @@ test.describe("Body weight - athlete", () => {
 
     const context = page
       .getByRole("listitem", { name: "Latest weight" })
-      .getByText("Yesterday", { exact: true });
+      .getByText("yesterday", { exact: true });
 
     await expect(context).toBeVisible();
-    await expect(context).toHaveAttribute("title", /^\w{3}, \w{3} \d{1,2}, \d{4}$/);
+    await expect(context).toHaveAttribute("title", /^\w{3} \d{1,2}, \d{4}$/);
   });
 
   test("shows a positive delta since the bulk reference", async ({ page }) => {

@@ -5,11 +5,10 @@ import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 
 export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.ReactNode }) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
+  const format = bg.useDateFormat();
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
 
@@ -34,17 +33,18 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
     },
   });
 
-  const scheduledOn = DateFormat.dayWithWeekday(language, workout.data.scheduledFor);
-  const today = DateFormat.todayISO();
+  const scheduledOn = format.full(workout.data.scheduledFor);
+  const parts = format.parts(workout.data.scheduledFor);
+  const today = bg.useToday();
   const completed = workout.data.status === WorkoutStatusEnum.completed;
 
   const date = (
     <>
       <ui.DateTileMonth {...(completed ? { "data-color": "neutral-500" as const } : {})}>
-        {DateFormat.shortMonth(language, workout.data.scheduledFor)}
+        {parts.month}
       </ui.DateTileMonth>
-      <ui.DateTileDay>{DateFormat.dayOfMonth(language, workout.data.scheduledFor)}</ui.DateTileDay>
-      <ui.DateTileWeekday>{DateFormat.shortWeekday(language, workout.data.scheduledFor)}</ui.DateTileWeekday>
+      <ui.DateTileDay>{parts.day}</ui.DateTileDay>
+      <ui.DateTileWeekday>{parts.weekday}</ui.DateTileWeekday>
     </>
   );
 
@@ -81,7 +81,7 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
           </ui.DateTile>
         )}
 
-        <div data-grow="1" data-minw="0" data-stack="y" data-gap="0-5">
+        <div data-gap="0-5" data-grow="1" data-minw="0" data-stack="y">
           <h1 data-transform="line-clamp" title={workout.data.planSectionName}>
             {workout.data.planSectionName}
           </h1>
@@ -111,8 +111,8 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
             data-shrink="0"
             data-width="auto"
             disabled={!workout.actions.reschedule.enabled}
-            max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
-            min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
+            max={today.add(WorkoutScheduledForHorizonDaysMax).toString()}
+            min={today.add(-WorkoutScheduledForHorizonDaysMax).toString()}
             type="date"
             {...scheduledFor.input.props}
           />

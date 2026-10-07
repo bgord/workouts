@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { bodyWeightRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -20,9 +19,9 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
   const t = bg.useTranslations();
   const router = useRouter();
 
-  const today = DateFormat.todayISO();
+  const today = bg.useToday();
 
-  const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
+  const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today.toString() });
   const weight = bg.useNumberField({
     name: "body-weight",
     defaultValue: props.latest ? WeightFormat.kilograms(props.latest.weight, BodyWeightDecimals) : undefined,
@@ -79,7 +78,7 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
             data-width="auto"
             type="date"
             {...measuredOn.input.props}
-            max={today}
+            max={today.toString()}
           />
         }
         max={500}

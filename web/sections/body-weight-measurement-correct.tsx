@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { bodyWeightRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
 export function BodyWeightMeasurementCorrect(
@@ -15,7 +14,7 @@ export function BodyWeightMeasurementCorrect(
 
   const { toggle } = bg.extractUseToggle(props);
 
-  const today = DateFormat.todayISO();
+  const today = bg.useToday();
 
   const measuredOn = bg.useDateField({
     name: `corrected-measured-on-${props.measurement.id}`,
@@ -61,7 +60,7 @@ export function BodyWeightMeasurementCorrect(
         disabled={mutation.isLoading}
         type="date"
         {...measuredOn.input.props}
-        max={today}
+        max={today.toString()}
       />
 
       <ui.Stepper

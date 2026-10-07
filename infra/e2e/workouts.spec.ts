@@ -1,6 +1,5 @@
 // cSpell:ignore unpresses
 import * as fixtures from "../../scripts/seed/fixtures";
-import { DateFormat } from "../../web/services/date-format";
 import { expect, test } from "./test";
 
 test.describe("Workouts - empty", () => {
@@ -51,6 +50,14 @@ test.describe("Workouts - athlete", () => {
     await expect(page.getByLabel("Period")).toHaveValue("all_time");
     await expect(page.getByText("25 of 25")).toBeVisible();
     await expect(page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`)).toBeVisible();
+  });
+
+  test("shows the scheduled workout as today", async ({ page }) => {
+    const card = page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`);
+
+    await page.goto("/workouts?filter=all_time");
+
+    await expect(card.locator("time")).toHaveText("Today");
   });
 
   test("falls back to the default period for an invalid filter", async ({ page }) => {
@@ -127,7 +134,7 @@ test.describe("Workouts - athlete", () => {
     await dialog.getByRole("button", { name: "Other" }).click();
 
     await expect(dialog.getByRole("textbox", { name: "Date" })).toHaveValue(
-      DateFormat.addDays(DateFormat.todayISO(), 3),
+      await page.evaluate(() => Temporal.Now.plainDateISO().add({ days: 3 }).toString()),
     );
     await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "false");
   });

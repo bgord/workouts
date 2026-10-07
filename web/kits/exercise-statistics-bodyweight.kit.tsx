@@ -5,7 +5,6 @@ import type { ExerciseRecords } from "../../modules/statistics/value-objects/exe
 import { CountDelta } from "../components/count-delta";
 import { Gap } from "../components/gap";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
-import { DateFormat } from "../services/date-format";
 
 const repsValue = (t: bg.TranslateType, language: string, value: number) =>
   t("statistics.exercise.reps.value", { value: value.toLocaleString(language) });
@@ -26,7 +25,9 @@ function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerforman
 
         <TileValue>{repsValue(t, language, peak.bestSet.reps)}</TileValue>
 
-        <TileContext>{DateFormat.plainDay(language, peak.scheduledFor)}</TileContext>
+        <TileContext>
+          <bg.DateTime format="short" value={peak.scheduledFor} />
+        </TileContext>
       </TileLink>
 
       <Tile>
@@ -37,7 +38,9 @@ function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerforman
 
         <TileValue>{repsValue(t, language, total.totalReps)}</TileValue>
 
-        <TileContext>{DateFormat.plainDay(language, total.scheduledFor)}</TileContext>
+        <TileContext>
+          <bg.DateTime format="short" value={total.scheduledFor} />
+        </TileContext>
       </Tile>
     </>
   );

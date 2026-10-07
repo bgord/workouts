@@ -54,7 +54,10 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       ...bg.CSS(bg.AssetVersion.url("/public/main.min.css", match.context.assetVersion)),
       ...bg.CSS(bg.AssetVersion.url("/public/custom.css", match.context.assetVersion)),
     ],
-    scripts: [bg.JS(bg.AssetVersion.url("/public/entry-client.js", match.context.assetVersion))],
+    scripts: [
+      { children: bg.TimeZone.script },
+      bg.JS(bg.AssetVersion.url("/public/entry-client.js", match.context.assetVersion)),
+    ],
   }),
   component: Shell,
   staleTime: Number.POSITIVE_INFINITY,
@@ -64,11 +67,12 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       I18N.get(context.request),
       Avatar.getEtag(context.request),
     ]);
+    const timeZone = bg.TimeZone.get(context.request);
 
     /* v8 ignore next */
     if (!(session && i18n)) throw redirect({ href: "/public/login.html", reloadDocument: true });
 
-    return { session, i18n, avatarEtag };
+    return { session, i18n, avatarEtag, timeZone };
   },
   notFoundComponent: NotFound,
 });

@@ -1,9 +1,9 @@
-import { useHydrated } from "../hooks/use-hydrated";
+import * as bg from "@bgord/ui";
 import { Gap } from "./gap";
 import { Spacing } from "./spacing";
 
 export function Main(props: React.JSX.IntrinsicElements["main"]) {
-  const hydrated = useHydrated();
+  const hydrated = bg.useHydrated();
 
   return (
     <main

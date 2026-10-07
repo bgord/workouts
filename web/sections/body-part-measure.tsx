@@ -4,18 +4,16 @@ import { Plus, Ruler } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import { LengthFormat } from "../services/length-format";
 
 export function BodyPartMeasure(props: BodyPartSummary) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const router = useRouter();
 
   const bodyPartMeasure = bg.useToggle({ name: `body-part-measure-${props.id}` });
 
   const [latest, previous] = props.measurements;
-  const today = DateFormat.todayISO();
+  const today = bg.useToday();
 
   const value = bg.useNumberField({
     name: `body-part-measure-value-${props.id}`,
@@ -23,7 +21,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
   });
   const measuredOn = bg.useDateField({
     name: `body-part-measure-measured-on-${props.id}`,
-    defaultValue: today,
+    defaultValue: today.toString(),
   });
 
   const close = bg.exec([value.clear, measuredOn.clear, bodyPartMeasure.disable]);
@@ -78,9 +76,11 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                 </ui.TileValue>
 
                 <ui.TileContext>
-                  {latest
-                    ? DateFormat.dayWithWeekday(language, latest.measuredOn)
-                    : t("measurements.body_parts.measure.never")}
+                  {latest ? (
+                    <bg.DateTime format="freshness" value={latest.measuredOn} />
+                  ) : (
+                    t("measurements.body_parts.measure.never")
+                  )}
                 </ui.TileContext>
               </ui.Tile>
             </ul>
@@ -139,7 +139,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                     disabled={mutation.isLoading}
                     type="date"
                     {...measuredOn.input.props}
-                    max={today}
+                    max={today.toString()}
                   />
                 </div>
               </div>

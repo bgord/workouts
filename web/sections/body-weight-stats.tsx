@@ -2,25 +2,14 @@ import * as bg from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
-import { useHydrated } from "../hooks/use-hydrated";
-import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals } from "../services/weight-format";
 
 export function BodyWeightStats(props: VO.BodyWeightStats) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const pluralize = bg.usePluralize();
-  const hydrated = useHydrated();
 
-  const latestOn = DateFormat.dayWithWeekday(language, props.latest.measuredOn);
-  const latestDaysAgo = DateFormat.daysAgo(props.latest.measuredOn);
   const goal = props.reference?.goal;
-
-  const latestRelative = () => {
-    if (latestDaysAgo === 0) return t("measurements.body_weight.stats.latest.today");
-    if (latestDaysAgo === 1) return t("measurements.body_weight.stats.latest.yesterday");
-    return t("measurements.body_weight.stats.latest.days_ago", { count: latestDaysAgo });
-  };
+  const since = bg.useDateTime({ value: props.baseline.measuredOn, format: "short" });
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
@@ -42,7 +31,9 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
           />
         </ui.TileValue>
 
-        <ui.TileContext title={latestOn}>{hydrated ? latestRelative() : latestOn}</ui.TileContext>
+        <ui.TileContext>
+          <bg.DateTime format="freshness" value={props.latest.measuredOn} />
+        </ui.TileContext>
       </ui.Tile>
 
       <ui.Tile>
@@ -99,13 +90,13 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
           )}
         </ui.TileValue>
 
-        <ui.TileContext>
+        <ui.TileContext title={since.full}>
           {goal
             ? t("measurements.body_weight.stats.since_reference.goal", {
                 goal: t(`measurements.body_weight.goal.${goal}`),
-                date: DateFormat.dayWithWeekday(language, props.baseline.measuredOn),
+                date: since.text,
               })
-            : DateFormat.dayWithWeekday(language, props.baseline.measuredOn)}
+            : since.text}
         </ui.TileContext>
       </ui.Tile>
     </ul>

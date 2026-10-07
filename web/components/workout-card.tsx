@@ -1,15 +1,11 @@
 import * as bg from "@bgord/ui";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
-import { DateFormat } from "../services/date-format";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
 export function WorkoutCard(props: WorkoutSummary) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
-
-  const scheduledFor = DateFormat.dayWithWeekday(language, props.scheduledFor);
 
   return (
     <RowLink
@@ -22,7 +18,9 @@ export function WorkoutCard(props: WorkoutSummary) {
       <RowBody>
         <RowTitle>{t("workout.title", { plan: props.planName, section: props.planSectionName })}</RowTitle>
 
-        <small data-transform="truncate">{scheduledFor}</small>
+        <small data-transform="truncate">
+          <bg.DateTime format="relativeDay" value={props.scheduledFor} />
+        </small>
       </RowBody>
 
       <WorkoutStatusBadge status={props.status} />
