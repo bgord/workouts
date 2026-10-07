@@ -22,6 +22,7 @@ export * from "./empty-state";
 export * from "./exercise-card";
 export * from "./exercise-image";
 export * from "./exercise-link";
+export * from "./exercise-picked";
 export * from "./exercise-picker";
 export * from "./exercise-resistance-picker";
 export * from "./eyebrow";

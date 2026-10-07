@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ArrowLeftRight, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
@@ -126,7 +126,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     <>
       <ui.IconButton
         aria-label={t("plan.section.exercise.edit.cta")}
-        onClick={planSectionExerciseInstructionEdit.enable}
+        onClick={bg.exec([catalog.load, planSectionExerciseInstructionEdit.enable])}
         title={t("plan.section.exercise.edit.cta")}
         {...planSectionExerciseInstructionEdit.props.controller}
       >
@@ -139,129 +139,119 @@ export function PlanSectionExerciseInstructionEdit(props: {
           <small data-ml="2">· {props.section.name}</small>
         </ui.DialogHeader>
 
-        <form
-          aria-busy={mutation.isLoading}
-          data-minh="0"
-          data-stack="y"
-          onSubmit={mutation.handleSubmit}
-          {...ui.Gap.section}
-        >
-          {planSectionExerciseInstructionPick.off && (
-            <button
-              aria-label={t("plan.section.exercise.edit.change", { name: exercise.name })}
-              data-br="md"
-              data-color="neutral-100"
-              data-cursor={actions.update.enabled ? "pointer" : undefined}
-              data-px="3"
-              data-stack="x"
-              disabled={!actions.update.enabled}
-              onClick={bg.exec([catalog.load, planSectionExerciseInstructionPick.enable])}
-              onFocus={catalog.load}
-              onPointerEnter={catalog.load}
-              title={t("plan.section.exercise.edit.change", { name: exercise.name })}
-              type="button"
-              {...ui.Spacing.rowCompact}
-              {...planSectionExerciseInstructionPick.props.controller}
-            >
-              <span data-shrink="0" data-stack="x">
-                <ui.ExerciseImage size={ui.ExerciseImageSize.xs} {...exercise} />
-              </span>
-
-              <span data-grow="1" data-transform="truncate" title={exercise.name}>
-                {exercise.name}
-              </span>
-
-              <ArrowLeftRight data-color="neutral-500" data-shrink="0" data-size="sm" />
-            </button>
-          )}
-
-          {planSectionExerciseInstructionPick.on && catalog.exercises && (
-            <div data-minh="0" {...planSectionExerciseInstructionPick.props.target}>
-              <ui.ExercisePicker
-                exercises={catalog.exercises}
-                name={exerciseId.input.props.name}
-                onCancel={bg.exec([query.clear, planSectionExerciseInstructionPick.disable])}
-                onChange={(exercise) => {
-                  exerciseId.set(exercise.id);
-                  progression.set(
-                    ProgressionMethodChoice.keep(exercise.progressionMethods, scheme, progression.value),
-                  );
-                  planSectionExerciseInstructionPick.disable();
-                }}
-                query={query}
-                value={exerciseId.value}
-              />
-            </div>
-          )}
-
-          <ui.Prescription>
-            <ui.Stepper
-              aria-label={t("plan.section.exercise.add.sets.label")}
-              disabled={!actions.update.enabled}
-              field={sets}
-              variant="fill"
-              {...Form.sets.pattern}
+        {planSectionExerciseInstructionPick.on && catalog.exercises && (
+          <div data-minh="0" data-stack="y">
+            <ui.ExercisePicker
+              exercises={catalog.exercises}
+              name={exerciseId.input.props.name}
+              onCancel={bg.exec([query.clear, planSectionExerciseInstructionPick.disable])}
+              onChange={(exercise) => {
+                exerciseId.set(exercise.id);
+                progression.set(
+                  ProgressionMethodChoice.keep(exercise.progressionMethods, scheme, progression.value),
+                );
+                planSectionExerciseInstructionPick.disable();
+              }}
+              query={query}
+              value={exerciseId.value}
             />
-
-            <ui.Separator>×</ui.Separator>
-
-            <ui.Stepper
-              aria-label={t("plan.section.exercise.add.reps.label")}
-              disabled={!actions.update.enabled}
-              field={repsMin}
-              variant="fill"
-              {...Form.repsMin.pattern}
-            />
-
-            <Reps.Field
-              aria-label={t("plan.section.exercise.add.reps.max.label")}
-              disabled={!actions.update.enabled}
-              field={repsMax}
-              {...Form.repsMax.pattern}
-              min={repsMin.value ?? Form.repsMax.pattern.min}
-            />
-          </ui.Prescription>
-
-          <div data-stack="x">
-            <ui.ChipButton
-              disabled={!actions.update.enabled}
-              onClick={toggleRepsScheme}
-              pressed={scheme === RepsSchemeOptions.amrap}
-            >
-              {t("plan.section.exercise.add.amrap")}
-            </ui.ChipButton>
           </div>
+        )}
 
-          <ui.ProgressionMethodSelect
-            disabled={!actions.update.enabled}
-            field={progression}
-            options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
-          />
-
-          {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
-
-          <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
-            <ui.ButtonClear
-              disabled={exerciseId.unchanged && query.empty && instructionUnchanged}
-              onClick={bg.exec([clear, planSectionExerciseInstructionPick.disable])}
+        {planSectionExerciseInstructionPick.off && (
+          <form
+            aria-busy={mutation.isLoading}
+            data-stack="y"
+            onSubmit={mutation.handleSubmit}
+            {...ui.Gap.section}
+          >
+            <ui.ExercisePicked
+              disabled={!actions.update.enabled || mutation.isLoading}
+              exercise={exercise}
+              onChange={bg.exec([catalog.load, planSectionExerciseInstructionPick.enable])}
             />
 
-            <button
-              className="c-button"
-              data-variant="primary"
-              disabled={
-                (exerciseId.unchanged && instructionUnchanged) ||
-                sets.empty ||
-                repsMin.empty ||
-                !Reps.ready(repsMax) ||
-                mutation.isLoading
-              }
-              type="submit"
-            >
-              {t("app.save")}
-            </button>
-          </ui.DialogFooter>
-        </form>
+            <ui.Prescription data-cross="end">
+              <div data-grow="1" data-stack="y" {...ui.Gap.field}>
+                <span aria-hidden>{t("plan.section.exercise.add.sets.label")}</span>
+
+                <ui.Stepper
+                  aria-label={t("plan.section.exercise.add.sets.label")}
+                  disabled={!actions.update.enabled}
+                  field={sets}
+                  variant="fill"
+                  {...Form.sets.pattern}
+                />
+              </div>
+
+              <ui.Separator data-cross="center" data-stack="x" {...bg.Rhythm(34).times(1).style.height}>
+                ×
+              </ui.Separator>
+
+              <div data-stack="y" style={{ flexGrow: 2 }} {...ui.Gap.field}>
+                <div data-cross="center" data-main="between" data-stack="x" {...ui.Gap.cluster}>
+                  <span aria-hidden>{t("plan.section.exercise.add.reps.label")}</span>
+
+                  <ui.ChipButton
+                    disabled={!actions.update.enabled}
+                    onClick={toggleRepsScheme}
+                    pressed={scheme === RepsSchemeOptions.amrap}
+                  >
+                    {t("plan.section.exercise.add.amrap")}
+                  </ui.ChipButton>
+                </div>
+
+                <div data-cross="center" data-stack="x" {...ui.Gap.cluster}>
+                  <ui.Stepper
+                    aria-label={t("plan.section.exercise.add.reps.label")}
+                    disabled={!actions.update.enabled}
+                    field={repsMin}
+                    variant="fill"
+                    {...Form.repsMin.pattern}
+                  />
+
+                  <Reps.Field
+                    aria-label={t("plan.section.exercise.add.reps.max.label")}
+                    disabled={!actions.update.enabled}
+                    field={repsMax}
+                    {...Form.repsMax.pattern}
+                    min={repsMin.value ?? Form.repsMax.pattern.min}
+                  />
+                </div>
+              </div>
+            </ui.Prescription>
+
+            <ui.ProgressionMethodPicker
+              disabled={!actions.update.enabled}
+              field={progression}
+              options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
+            />
+
+            {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
+
+            <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
+              <ui.ButtonClear
+                disabled={exerciseId.unchanged && query.empty && instructionUnchanged}
+                onClick={clear}
+              />
+
+              <button
+                className="c-button"
+                data-variant="primary"
+                disabled={
+                  (exerciseId.unchanged && instructionUnchanged) ||
+                  sets.empty ||
+                  repsMin.empty ||
+                  !Reps.ready(repsMax) ||
+                  mutation.isLoading
+                }
+                type="submit"
+              >
+                {t("app.save")}
+              </button>
+            </ui.DialogFooter>
+          </form>
+        )}
       </ui.Dialog>
     </>
   );

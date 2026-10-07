@@ -3,12 +3,10 @@ import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
-import type { ExerciseCatalogItem } from "../../modules/plans/queries/list-exercise-catalog";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
-import { ResistanceKit } from "../kits/resistance.kit";
 import { planRoute } from "../router";
 import { ProgressionMethodChoice } from "../services/progression-method-choice";
 
@@ -144,12 +142,11 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
         {exercise && planSectionExerciseInstructionPick.off && (
           <form
             aria-busy={mutation.isLoading}
-            data-minh="0"
             data-stack="y"
             onSubmit={mutation.handleSubmit}
             {...ui.Gap.section}
           >
-            <PlanSectionExerciseInstructionAddExercise
+            <ui.ExercisePicked
               disabled={mutation.isLoading}
               exercise={exercise}
               onChange={bg.exec([catalog.load, planSectionExerciseInstructionPick.enable])}
@@ -222,58 +219,5 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
         )}
       </ui.Dialog>
     </>
-  );
-}
-
-function PlanSectionExerciseInstructionAddExercise(
-  props: Omit<React.JSX.IntrinsicElements["button"], "onChange"> & {
-    exercise: ExerciseCatalogItem;
-    onChange: () => void;
-  },
-) {
-  const t = bg.useTranslations();
-  const { exercise, onChange, ...button } = props;
-  const Resistance = ResistanceKit[exercise.resistance];
-
-  return (
-    <div
-      data-bc="alpha-medium"
-      data-br="md"
-      data-bs="solid"
-      data-bw="hairline"
-      data-stack="x"
-      {...ui.Spacing.surfaceCompact}
-      {...ui.Gap.related}
-    >
-      <span aria-hidden data-shrink="0" data-stack="x">
-        <ui.ExerciseImage size={ui.ExerciseImageSize.xs} {...exercise} />
-      </span>
-
-      <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-        <span data-color="neutral-100" data-fw="medium" data-transform="truncate" title={exercise.name}>
-          {exercise.name}
-        </span>
-
-        <div data-color="neutral-500" data-fs="xs" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
-          {exercise.categories.length > 0 && (
-            <span>{exercise.categories.map((category) => category.name).join(", ")}</span>
-          )}
-
-          <Resistance.Badge />
-        </div>
-      </div>
-
-      <button
-        aria-label={t("plan.section.exercise.edit.change", { name: exercise.name })}
-        className="c-button"
-        data-shrink="0"
-        data-variant="ghost"
-        onClick={onChange}
-        type="button"
-        {...button}
-      >
-        {t("plan.section.exercise.add.change")}
-      </button>
-    </div>
   );
 }

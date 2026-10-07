@@ -418,7 +418,10 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("5");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("6");
     await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("8");
-    await page.getByRole("combobox", { name: "Progression" }).selectOption("double_progression");
+    await page
+      .getByRole("group", { name: "Progression" })
+      .getByText("Double progression", { exact: true })
+      .click();
     await page
       .getByRole("dialog", { name: "Edit exercise" })
       .getByRole("button", { name: "Save", exact: true })
@@ -524,7 +527,9 @@ test.describe("Plans - drafter", () => {
       })
       .click();
 
-    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("double_progression");
+    await expect(
+      page.getByRole("group", { name: "Progression" }).getByRole("radio", { name: "Double progression" }),
+    ).toBeChecked();
 
     await page
       .getByRole("dialog", { name: "Edit exercise" })
@@ -550,7 +555,9 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("button", { name: "AMRAP", exact: true }).click();
 
     await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toBeHidden();
-    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("rep_progression");
+    await expect(
+      page.getByRole("group", { name: "Progression" }).getByRole("radio", { name: "Rep progression" }),
+    ).toBeChecked();
 
     await page
       .getByRole("dialog", { name: "Edit exercise" })

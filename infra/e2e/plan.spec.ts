@@ -183,7 +183,7 @@ test.describe("Plan - builder", () => {
     await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
 
     await expect(progression.getByRole("radio", { name: "Double progression" })).toHaveAccessibleDescription(
-      "Add a rep each session up to the top of the range, then add weight",
+      "Add reps up to the range top, then weight",
     );
     await expect(progression.getByRole("radio", { name: "Linear progression" })).toHaveAccessibleDescription(
       "Add weight after every successful session",
@@ -278,6 +278,45 @@ test.describe("Plan - builder", () => {
     await page.getByRole("button", { name: "AMRAP", exact: true }).click();
 
     await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toHaveValue("15");
+  });
+
+  test("shows the exercise of the instruction when editing", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Edit exercise" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
+
+    await page
+      .getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true })
+      .getByRole("button", { name: "Edit exercise" })
+      .click();
+
+    await expect(dialog.getByText(fixtures.exercises.hangingLegRaise.name, { exact: true })).toBeVisible();
+    await expect(dialog.getByText(fixtures.categories.abs.name, { exact: true })).toBeVisible();
+    await expect(dialog.getByText("Bodyweight", { exact: true })).toBeVisible();
+    await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toBeHidden();
+  });
+
+  test("keeps the exercise of the instruction when cancelling the change", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Edit exercise" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
+    await page
+      .getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true })
+      .getByRole("button", { name: "Edit exercise" })
+      .click();
+    await dialog
+      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.hangingLegRaise.name}` })
+      .click();
+
+    await expect(dialog.getByRole("spinbutton", { name: "Sets", exact: true })).toBeHidden();
+
+    await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+
+    await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toBeHidden();
+    await expect(dialog.getByText(fixtures.exercises.hangingLegRaise.name, { exact: true })).toBeVisible();
+    await expect(dialog.getByRole("spinbutton", { name: "Sets", exact: true })).toBeVisible();
   });
 
   test("shows the empty state when no exercise matches", async ({ page }) => {
