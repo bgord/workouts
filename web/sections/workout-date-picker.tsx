@@ -2,17 +2,17 @@ import * as bg from "@bgord/ui";
 import { CalendarDays } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import * as ui from "../components";
+import { useDateFormat } from "../hooks/use-date-format";
 import { useToday } from "../hooks/use-time-zone";
-import { DateFormat } from "../services/date-format";
 
 export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
+  const format = useDateFormat();
   const { toggle: custom } = bg.extractUseToggle(props);
   const { field } = props;
 
   const today = useToday();
-  const predefined = Array.from({ length: 3 }, (_, offset) => DateFormat.addDays(today, offset));
+  const predefined = Array.from({ length: 3 }, (_, offset) => today.add(offset).toString());
 
   return (
     <div data-stack="y" {...ui.Gap.field}>
@@ -29,7 +29,7 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
               }}
               pressed={custom.off && field.value === date}
             >
-              {DateFormat.dayLabel(language, date, today)}
+              {format.dayLabel(date)}
             </ui.ChipButton>
           ))}
 
@@ -38,7 +38,7 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
               /* v8 ignore next */
               if (custom.on) return;
               custom.enable();
-              field.set(DateFormat.addDays(today, predefined.length));
+              field.set(today.add(predefined.length).toString());
             }}
             pressed={custom.on}
             {...custom.props.controller}
@@ -52,8 +52,8 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
           <div data-md-self="stretch" data-self="start" data-stack="y" {...custom.props.target}>
             <input
               className="c-input"
-              max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
-              min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
+              max={today.add(WorkoutScheduledForHorizonDaysMax).toString()}
+              min={today.add(-WorkoutScheduledForHorizonDaysMax).toString()}
               type="date"
               {...field.input.props}
             />

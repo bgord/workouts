@@ -4,13 +4,13 @@ import { Check, Pencil } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
+import { useDateFormat } from "../hooks/use-date-format";
 import { useToday } from "../hooks/use-time-zone";
 import { workoutRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 
 export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.ReactNode }) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
+  const format = useDateFormat();
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
 
@@ -35,8 +35,8 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
     },
   });
 
-  const scheduledOn = DateFormat.full(language, workout.data.scheduledFor);
-  const parts = DateFormat.parts(language, workout.data.scheduledFor);
+  const scheduledOn = format.full(workout.data.scheduledFor);
+  const parts = format.parts(workout.data.scheduledFor);
   const today = useToday();
   const completed = workout.data.status === WorkoutStatusEnum.completed;
 
@@ -113,8 +113,8 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
             data-shrink="0"
             data-width="auto"
             disabled={!workout.actions.reschedule.enabled}
-            max={DateFormat.addDays(today, WorkoutScheduledForHorizonDaysMax)}
-            min={DateFormat.addDays(today, -WorkoutScheduledForHorizonDaysMax)}
+            max={today.add(WorkoutScheduledForHorizonDaysMax).toString()}
+            min={today.add(-WorkoutScheduledForHorizonDaysMax).toString()}
             type="date"
             {...scheduledFor.input.props}
           />

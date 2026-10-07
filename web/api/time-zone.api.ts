@@ -11,7 +11,7 @@ export class TimeZone {
   if (read() === encodeURIComponent(timeZone)) location.reload();
 })();`;
 
-  static get(request: Request | null): string {
+  static get(request: Pick<Request, "headers"> | null): string {
     const cookies = request ? request.headers.get("cookie") : document.cookie;
     const value = cookies?.match(new RegExp(`(?:^|;\\s*)${TimeZone.COOKIE}=([^;]*)`))?.[1];
 

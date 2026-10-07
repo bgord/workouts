@@ -3,8 +3,8 @@ import { X } from "lucide-react";
 import * as BodyWeightChartForm from "../../app/services/body-weight-chart-form";
 import { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import * as ui from "../components";
+import { useDateFormat } from "../hooks/use-date-format";
 import { bodyWeightRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import { LineChartMath } from "../services/line-chart";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -13,6 +13,7 @@ const POINT_HIT_RADIUS = 8;
 export function BodyWeightProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const format = useDateFormat();
   const { chart } = bodyWeightRoute.useLoaderData();
   const navigate = bodyWeightRoute.useNavigate();
   const search = bodyWeightRoute.useSearch();
@@ -77,9 +78,9 @@ export function BodyWeightProgressChart() {
 
       <ui.LineChart
         aria-label={t("measurements.body_weight.progress")}
-        end={DateFormat.full(language, chart.at(-1)!.to)}
+        end={format.full(chart.at(-1)!.to)}
         layout={layout}
-        start={DateFormat.full(language, chart[0]!.from)}
+        start={format.full(chart[0]!.from)}
       >
         {reference && (
           <g data-color="brand-300" stroke="currentColor" strokeDasharray="4 4">
@@ -109,11 +110,11 @@ export function BodyWeightProgressChart() {
                 <title>
                   {point.count === 1
                     ? t("measurements.body_weight.progress.point", {
-                        date: DateFormat.full(language, point.from),
+                        date: format.full(point.from),
                         weight,
                       })
                     : t("measurements.body_weight.progress.week", {
-                        range: DateFormat.range(language, point.from, point.to),
+                        range: format.range(point.from, point.to),
                         weight,
                         count: point.count,
                       })}

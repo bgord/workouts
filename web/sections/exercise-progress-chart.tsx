@@ -1,14 +1,15 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import * as ui from "../components";
+import { useDateFormat } from "../hooks/use-date-format";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import { LineChartMath } from "../services/line-chart";
 
 export function ExerciseProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const format = useDateFormat();
   const { exercise, performances } = exerciseRoute.useLoaderData();
   const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
 
@@ -30,9 +31,9 @@ export function ExerciseProgressChart() {
 
       <ui.LineChart
         aria-label={t("statistics.exercise.progress")}
-        end={DateFormat.full(language, performances.at(-1)!.scheduledFor)}
+        end={format.full(performances.at(-1)!.scheduledFor)}
         layout={layout}
-        start={DateFormat.full(language, performances[0]!.scheduledFor)}
+        start={format.full(performances[0]!.scheduledFor)}
       >
         <ui.LineChartArea layout={layout} />
 
@@ -48,7 +49,7 @@ export function ExerciseProgressChart() {
             >
               <title>
                 {t("statistics.exercise.progress.point", {
-                  date: DateFormat.full(language, performance.scheduledFor),
+                  date: format.full(performance.scheduledFor),
                   value: Statistics.progress.format(t, language, Statistics.progress.value(performance)),
                 })}
               </title>

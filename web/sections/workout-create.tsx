@@ -18,7 +18,7 @@ export function WorkoutCreate() {
   const workoutCreateCustomDate = bg.useToggle({ name: "workout-create-custom-date" });
 
   const today = useToday();
-  const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today });
+  const scheduledFor = bg.useDateField({ name: "scheduledFor", defaultValue: today.toString() });
   const planSectionId = bg.useTextField({
     name: "planSectionId",
     defaultValue: workouts.plan?.sections[0]?.id ?? "",

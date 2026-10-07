@@ -22,7 +22,7 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
 
   const today = useToday();
 
-  const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today });
+  const measuredOn = bg.useDateField({ name: "body-weight-measured-on", defaultValue: today.toString() });
   const weight = bg.useNumberField({
     name: "body-weight",
     defaultValue: props.latest ? WeightFormat.kilograms(props.latest.weight, BodyWeightDecimals) : undefined,
@@ -79,7 +79,7 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
             data-width="auto"
             type="date"
             {...measuredOn.input.props}
-            max={today}
+            max={today.toString()}
           />
         }
         max={500}

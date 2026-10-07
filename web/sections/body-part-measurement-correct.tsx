@@ -64,7 +64,7 @@ export function BodyPartMeasurementCorrect(
         disabled={mutation.isLoading}
         type="date"
         {...measuredOn.input.props}
-        max={today}
+        max={today.toString()}
       />
 
       <ui.Stepper

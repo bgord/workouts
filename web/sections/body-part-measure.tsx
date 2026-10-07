@@ -22,7 +22,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
   });
   const measuredOn = bg.useDateField({
     name: `body-part-measure-measured-on-${props.id}`,
-    defaultValue: today,
+    defaultValue: today.toString(),
   });
 
   const close = bg.exec([value.clear, measuredOn.clear, bodyPartMeasure.disable]);
@@ -140,7 +140,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                     disabled={mutation.isLoading}
                     type="date"
                     {...measuredOn.input.props}
-                    max={today}
+                    max={today.toString()}
                   />
                 </div>
               </div>

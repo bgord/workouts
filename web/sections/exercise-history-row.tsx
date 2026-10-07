@@ -3,8 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { Trophy } from "lucide-react";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import * as ui from "../components";
+import { useDateFormat } from "../hooks/use-date-format";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
-import { DateFormat } from "../services/date-format";
 
 export function ExerciseHistoryRow(props: {
   performance: ExercisePerformanceStatistics;
@@ -14,11 +14,11 @@ export function ExerciseHistoryRow(props: {
   last: boolean;
 }) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
+  const format = useDateFormat();
   const Statistics = ExerciseStatisticsKit[props.performance.resistance];
   const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
-  const scheduledOn = DateFormat.full(language, props.performance.scheduledFor);
+  const scheduledOn = format.full(props.performance.scheduledFor);
 
   return (
     <ui.HairlineRow data-stack="y" first={props.first} last={props.last} {...ui.Spacing.row}>
