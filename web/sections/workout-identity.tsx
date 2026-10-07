@@ -4,6 +4,7 @@ import { Check, Pencil } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
+import { useToday } from "../hooks/use-time-zone";
 import { workoutRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 
@@ -36,7 +37,7 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
 
   const scheduledOn = DateFormat.full(language, workout.data.scheduledFor);
   const parts = DateFormat.parts(language, workout.data.scheduledFor);
-  const today = DateFormat.todayISO();
+  const today = useToday();
   const completed = workout.data.status === WorkoutStatusEnum.completed;
 
   const date = (

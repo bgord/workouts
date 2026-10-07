@@ -2,32 +2,7 @@ const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 const DAY: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" };
 
-const formatters = new Map<string, Intl.DateTimeFormat>();
-
-const formatter = (language: string, options: Intl.DateTimeFormatOptions) => {
-  const key = `${language}|${JSON.stringify(options)}`;
-  const cached = formatters.get(key);
-
-  if (cached) return cached;
-
-  const created = new Intl.DateTimeFormat(language, options);
-  formatters.set(key, created);
-
-  return created;
-};
-
-const relatives = new Map<string, Intl.RelativeTimeFormat>();
-
-const relative = (language: string) => {
-  const cached = relatives.get(language);
-
-  if (cached) return cached;
-
-  const created = new Intl.RelativeTimeFormat(language, { numeric: "auto" });
-  relatives.set(language, created);
-
-  return created;
-};
+const relative = (language: string) => new Intl.RelativeTimeFormat(language, { numeric: "auto" });
 
 const capitalize = (language: string, text: string) =>
   `${text.charAt(0).toLocaleUpperCase(language)}${text.slice(1)}`;
@@ -44,7 +19,7 @@ const iso = (timestamp: number) =>
   new Date(timestamp).toISOString().slice(0, 10);
 
 const localDay = (timestamp: number, timeZone?: string) => {
-  const parts = formatter("en", {
+  const parts = new Intl.DateTimeFormat("en", {
     timeZone,
     year: "numeric",
     month: "2-digit",
@@ -57,8 +32,8 @@ const localDay = (timestamp: number, timeZone?: string) => {
 
 const format = (language: string, moment: string | number, options: Intl.DateTimeFormatOptions) =>
   typeof moment === "number"
-    ? formatter(language, options).format(moment)
-    : formatter(language, { ...options, timeZone: "UTC" }).format(plain(moment));
+    ? new Intl.DateTimeFormat(language, options).format(moment)
+    : new Intl.DateTimeFormat(language, { ...options, timeZone: "UTC" }).format(plain(moment));
 
 const year = (date: string) => date.slice(0, 4);
 
@@ -81,13 +56,7 @@ const freshness = (language: string, date: string, today: string) => {
 };
 
 export const DateFormat = {
-  todayISO: () => {
-    // biome-ignore lint: lint/style/noRestrictedGlobals
-    const now = new Date();
-
-    // biome-ignore lint: lint/style/noRestrictedGlobals
-    return iso(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
-  },
+  todayISO: (timeZone?: string) => localDay(DateFormat.now(), timeZone),
 
   now: () =>
     // biome-ignore lint: lint/style/noRestrictedGlobals
@@ -118,7 +87,7 @@ export const DateFormat = {
   freshness,
 
   range: (language: string, from: string, to: string) =>
-    formatter(language, { ...DAY, timeZone: "UTC" }).formatRange(plain(from), plain(to)),
+    new Intl.DateTimeFormat(language, { ...DAY, timeZone: "UTC" }).formatRange(plain(from), plain(to)),
 
   parts: (language: string, date: string) => ({
     month: format(language, date, { month: "short" }),

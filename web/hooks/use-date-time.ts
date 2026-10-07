@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { DateFormat } from "../services/date-format";
-import { useHydrated } from "./use-hydrated";
+import { useTimeZone, useToday } from "./use-time-zone";
 
 export type UseDateTimeOptions =
   | { value: string; format: "dayLabel" | "freshness" | "list" | "short" }
@@ -8,23 +8,20 @@ export type UseDateTimeOptions =
 
 export function useDateTime(options: UseDateTimeOptions) {
   const language = bg.useLanguage();
-  const hydrated = useHydrated();
+  const timeZone = useTimeZone();
+  const today = useToday();
 
   if (options.format === "ago") {
-    const full = DateFormat.instantFull(language, options.value, hydrated ? undefined : "UTC");
-
     return {
-      text: hydrated ? DateFormat.ago(language, options.value, DateFormat.now()) : full,
-      full,
+      text: DateFormat.ago(language, options.value, DateFormat.now(), timeZone),
+      full: DateFormat.instantFull(language, options.value, timeZone),
       dateTime: DateFormat.instantIso(options.value),
     };
   }
 
-  const full = DateFormat.full(language, options.value);
-
   return {
-    text: hydrated ? DateFormat[options.format](language, options.value, DateFormat.todayISO()) : full,
-    full,
+    text: DateFormat[options.format](language, options.value, today),
+    full: DateFormat.full(language, options.value),
     dateTime: options.value,
   };
 }
