@@ -14,8 +14,6 @@ export function ExerciseCategoryRow(props: ExerciseCategoryWithExerciseNames & {
   return (
     <ui.HairlineRow
       aria-label={props.name}
-      data-hover-bg={exerciseCategoryRename.off ? "alpha-subtle" : undefined}
-      data-px={exerciseCategoryRename.off ? "3" : undefined}
       data-stack="x"
       first={first}
       tone="subtle"

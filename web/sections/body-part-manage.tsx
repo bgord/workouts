@@ -21,6 +21,7 @@ export function BodyPartManage() {
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...bodyPartManage}>
         <ui.DialogHeader onClose={bodyPartManage.disable}>
           {t("measurements.body_parts.manage.header")}
+          <small data-ml="2">· {bodyParts.data.length}</small>
         </ui.DialogHeader>
 
         <BodyPartDefine />
@@ -34,9 +35,15 @@ export function BodyPartManage() {
         )}
 
         {bodyParts.data.length > 0 && (
-          <ul data-md-minh="unset" data-minh="0" data-overflow="auto" data-stack="y">
-            {bodyParts.data.map((bodyPart) => (
-              <BodyPartRow key={bodyPart.id} {...bodyPart} />
+          <ul
+            aria-label={t("measurements.body_parts.manage.header")}
+            data-md-minh="unset"
+            data-minh="0"
+            data-overflow="auto"
+            data-stack="y"
+          >
+            {bodyParts.data.map((bodyPart, index) => (
+              <BodyPartRow first={index === 0} key={bodyPart.id} {...bodyPart} />
             ))}
           </ul>
         )}

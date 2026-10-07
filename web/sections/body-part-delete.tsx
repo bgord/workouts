@@ -26,7 +26,6 @@ export function BodyPartDelete(props: BodyPart) {
         aria-label={t("measurements.body_parts.delete.title", { name: props.name })}
         onClick={bodyPartDelete.enable}
         title={t("measurements.body_parts.delete.title", { name: props.name })}
-        tone="danger"
         {...bodyPartDelete.props.controller}
       >
         <Trash2 data-size="sm" />

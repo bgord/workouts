@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Pencil } from "lucide-react";
 import { Form } from "../../app/services/body-part-name-form";
 import type { BodyPart } from "../../modules/measurements/value-objects/body-part";
 import * as ui from "../components";
@@ -27,19 +28,14 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
 
   if (toggle.off) {
     return (
-      <button
+      <ui.IconButton
         aria-label={t("measurements.body_parts.rename.cta", { name: props.name })}
-        data-color="neutral-100"
-        data-cursor="pointer"
-        data-hover-color="brand-300"
-        data-transform="truncate"
         onClick={toggle.enable}
         title={t("measurements.body_parts.rename.cta", { name: props.name })}
-        type="button"
         {...toggle.props.controller}
       >
-        {props.name}
-      </button>
+        <Pencil data-size="sm" />
+      </ui.IconButton>
     );
   }
 

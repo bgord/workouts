@@ -21,7 +21,7 @@ test.describe("Body parts - empty", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("Body part name").fill("Neck");
+    await page.getByLabel("New body part").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the body part")).toBeVisible();
@@ -54,6 +54,26 @@ test.describe("Body parts - athlete", () => {
     ).toBeVisible();
     await expect(
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
+    ).toBeVisible();
+  });
+
+  test("lists the body parts with their measurement counts", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Body parts" });
+
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
+
+    await expect(
+      dialog
+        .getByRole("listitem", { name: fixtures.athlete.bodyParts.waist.name, exact: true })
+        .getByText("12 measurements", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      dialog
+        .getByRole("listitem", { name: fixtures.athlete.bodyParts.calfRight.name, exact: true })
+        .getByText("Not measured yet", { exact: true }),
     ).toBeVisible();
   });
 
