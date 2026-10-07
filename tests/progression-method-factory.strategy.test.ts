@@ -25,6 +25,16 @@ describe("ProgressionMethodStrategyFactory", () => {
     expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodLinearProgressionStrategy);
   });
 
+  test("rep_progression", () => {
+    const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
+      { ...mocks.exercisePrescription, progression: Plans.VO.ProgressionMethodOptions.rep_progression },
+      mocks.workoutExerciseResistance,
+      mocks.exercisePerformance,
+    );
+
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRepProgressionStrategy);
+  });
+
   test("none", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       { ...mocks.exercisePrescription, progression: Plans.VO.ProgressionMethodOptions.none },

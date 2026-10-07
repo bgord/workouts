@@ -54,6 +54,7 @@ export const anotherProgression = Plans.VO.ProgressionMethodOptions.linear_progr
 export const exerciseProgressionMethods = [
   Plans.VO.ProgressionMethodOptions.double_progression,
   Plans.VO.ProgressionMethodOptions.linear_progression,
+  Plans.VO.ProgressionMethodOptions.rep_progression,
   Plans.VO.ProgressionMethodOptions.none,
 ];
 

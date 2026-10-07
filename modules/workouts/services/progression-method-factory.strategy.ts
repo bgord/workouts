@@ -7,6 +7,7 @@ import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 import { ProgressionMethodDoubleProgressionStrategy } from "./progression-method-double-progression.strategy";
 import { ProgressionMethodLinearProgressionStrategy } from "./progression-method-linear-progression.strategy";
 import { ProgressionMethodNoneStrategy } from "./progression-method-none.strategy";
+import { ProgressionMethodRepProgressionStrategy } from "./progression-method-rep-progression.strategy";
 
 export class ProgressionMethodStrategyFactory {
   static for(
@@ -22,6 +23,8 @@ export class ProgressionMethodStrategyFactory {
         return new ProgressionMethodDoubleProgressionStrategy({ prescription, last }, { LoadStep });
       case Plans.VO.ProgressionMethodOptions.linear_progression:
         return new ProgressionMethodLinearProgressionStrategy({ last }, { LoadStep });
+      case Plans.VO.ProgressionMethodOptions.rep_progression:
+        return new ProgressionMethodRepProgressionStrategy({ prescription, last });
       case Plans.VO.ProgressionMethodOptions.none:
         return new ProgressionMethodNoneStrategy({ last });
     }
