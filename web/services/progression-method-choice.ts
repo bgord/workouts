@@ -2,10 +2,10 @@ import { ProgressionMethodOptions } from "../../modules/plans/value-objects/prog
 import { ProgressionMethodRepsApplicability } from "../../modules/plans/value-objects/progression-method-reps-applicability";
 import type { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
 
-const options = (
-  methods: ReadonlyArray<ProgressionMethodOptions> = Object.values(ProgressionMethodOptions),
-  scheme: RepsSchemeOptions,
-) => methods.filter((method) => ProgressionMethodRepsApplicability[scheme].includes(method));
+const options = (methods: ReadonlyArray<ProgressionMethodOptions> | undefined, scheme: RepsSchemeOptions) =>
+  (methods ?? Object.values(ProgressionMethodOptions)).filter((method) =>
+    ProgressionMethodRepsApplicability[scheme].includes(method),
+  );
 
 export const ProgressionMethodChoice = {
   options,
