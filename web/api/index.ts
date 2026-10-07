@@ -7,4 +7,5 @@ export * from "./measurements.api";
 export * from "./plans.api";
 export * from "./preferences.api";
 export * from "./statistics.api";
+export * from "./time-zone.api";
 export * from "./workouts.api";
