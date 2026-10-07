@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Pencil, Target } from "lucide-react";
+import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { SetNotation } from "../services/set-notation";
@@ -9,6 +10,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
   const language = bg.useLanguage();
   const { toggle } = bg.extractUseToggle(props);
   const { target, actions } = props.exercise;
+  const scheme = RepsScheme.of(props.exercise.prescription.reps);
 
   if (!actions.targetSet.available) {
     /* v8 ignore next */
@@ -29,6 +31,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
           load={target.load}
           reps={target.reps}
           resistance={props.exercise.resistance}
+          scheme={scheme}
           sets={target.sets}
         />
       </div>
@@ -40,7 +43,11 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       aria-label={
         target
           ? t("workout.target.edit", {
-              target: SetNotation.target(t, language, { resistance: props.exercise.resistance, ...target }),
+              target: SetNotation.target(t, language, {
+                resistance: props.exercise.resistance,
+                scheme,
+                ...target,
+              }),
             })
           : undefined
       }
@@ -72,6 +79,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
           load={target.load}
           reps={target.reps}
           resistance={props.exercise.resistance}
+          scheme={scheme}
           sets={target.sets}
         />
       )}

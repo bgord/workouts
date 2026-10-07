@@ -2,8 +2,10 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
+import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
+import { RepsSchemeKit } from "../kits/reps-scheme.kit";
 import { workoutRoute } from "../router";
 import { ProgressionMethodChoice } from "../services/progression-method-choice";
 
@@ -21,7 +23,17 @@ export function WorkoutExerciseAdd() {
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
   const progression = bg.useTextField(Form.progression.field);
+  const repsScheme = bg.useTextField(Form.repsScheme.field);
   const exercise = catalog.find(exerciseId.value);
+  const scheme = repsScheme.value ?? RepsSchemeOptions.range;
+  const Reps = RepsSchemeKit[scheme];
+
+  const toggleRepsScheme = () => {
+    repsScheme.set(Reps.toggled);
+    progression.set(
+      ProgressionMethodChoice.keep(exercise?.progressionMethods, Reps.toggled, progression.value),
+    );
+  };
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -32,14 +44,14 @@ export function WorkoutExerciseAdd() {
         body: JSON.stringify({
           exerciseId: exerciseId.value,
           sets: sets.value,
-          reps: { min: repsMin.value, max: repsMax.value },
+          reps: Reps.payload(repsMin, repsMax),
           progression: progression.value,
         }),
       }),
     onSuccess: async (_, context) => {
       workoutExerciseAdd.disable();
       await router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true });
-      bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax, progression]);
+      bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax, repsScheme, progression]);
       context.form?.reset();
     },
   });
@@ -50,6 +62,7 @@ export function WorkoutExerciseAdd() {
     sets.clear,
     repsMin.clear,
     repsMax.clear,
+    repsScheme.clear,
     progression.clear,
     mutation.reset,
   ]);
@@ -95,7 +108,9 @@ export function WorkoutExerciseAdd() {
               name={exerciseId.input.props.name}
               onChange={(exercise) => {
                 exerciseId.set(exercise.id);
-                progression.set(ProgressionMethodChoice.keep(exercise.progressionMethods, progression.value));
+                progression.set(
+                  ProgressionMethodChoice.keep(exercise.progressionMethods, scheme, progression.value),
+                );
               }}
               query={query}
               value={exerciseId.value}
@@ -119,18 +134,24 @@ export function WorkoutExerciseAdd() {
               {...Form.repsMin.pattern}
             />
 
-            <ui.Separator>–</ui.Separator>
-
-            <ui.Stepper
+            <Reps.Field
               aria-label={t("workout.exercise.add.reps.max.label")}
               field={repsMax}
-              variant="fill"
               {...Form.repsMax.pattern}
               min={repsMin.value ?? Form.repsMax.pattern.min}
             />
           </ui.Prescription>
 
-          <ui.ProgressionMethodSelect field={progression} options={exercise?.progressionMethods} />
+          <div data-stack="x">
+            <ui.ChipButton onClick={toggleRepsScheme} pressed={scheme === RepsSchemeOptions.amrap}>
+              {t("workout.exercise.add.amrap")}
+            </ui.ChipButton>
+          </div>
+
+          <ui.ProgressionMethodSelect
+            field={progression}
+            options={ProgressionMethodChoice.options(exercise?.progressionMethods, scheme)}
+          />
 
           {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 
@@ -144,7 +165,8 @@ export function WorkoutExerciseAdd() {
                 query.empty &&
                 sets.unchanged &&
                 repsMin.unchanged &&
-                repsMax.unchanged &&
+                Reps.unchanged(repsMax) &&
+                repsScheme.unchanged &&
                 progression.unchanged
               }
               onClick={clear}
@@ -154,7 +176,7 @@ export function WorkoutExerciseAdd() {
               className="c-button"
               data-variant="primary"
               disabled={
-                exerciseId.empty || sets.empty || repsMin.empty || repsMax.empty || mutation.isLoading
+                exerciseId.empty || sets.empty || repsMin.empty || !Reps.ready(repsMax) || mutation.isLoading
               }
               type="submit"
             >

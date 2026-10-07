@@ -4,8 +4,11 @@ import { ArrowLeftRight, Pencil } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
+import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
+import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
+import { RepsSchemeKit } from "../kits/reps-scheme.kit";
 import { planRoute } from "../router";
 import { ProgressionMethodChoice } from "../services/progression-method-choice";
 
@@ -46,7 +49,12 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
   const repsMax = bg.useNumberField<number>({
     name: `${Form.repsMax.field.name}-${exerciseInstruction.id}`,
-    defaultValue: exerciseInstruction.reps.max,
+    defaultValue: exerciseInstruction.reps.max ?? Form.repsMax.field.defaultValue,
+  });
+
+  const repsScheme = bg.useTextField<RepsSchemeOptions>({
+    name: `${Form.repsScheme.field.name}-${exerciseInstruction.id}`,
+    defaultValue: RepsScheme.of(exerciseInstruction.reps),
   });
 
   const progression = bg.useTextField<ProgressionMethodOptions>({
@@ -55,9 +63,22 @@ export function PlanSectionExerciseInstructionEdit(props: {
   });
 
   const exercise = catalog.find(exerciseId.value) ?? exerciseInstruction.exercise;
+  const scheme = repsScheme.value ?? RepsSchemeOptions.range;
+  const Reps = RepsSchemeKit[scheme];
 
   const instructionUnchanged =
-    sets.unchanged && repsMin.unchanged && repsMax.unchanged && progression.unchanged;
+    sets.unchanged &&
+    repsMin.unchanged &&
+    Reps.unchanged(repsMax) &&
+    repsScheme.unchanged &&
+    progression.unchanged;
+
+  const toggleRepsScheme = () => {
+    repsScheme.set(Reps.toggled);
+    progression.set(
+      ProgressionMethodChoice.keep(exercise.progressionMethods, Reps.toggled, progression.value),
+    );
+  };
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -70,7 +91,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
           body: JSON.stringify({
             exerciseId: exerciseId.value,
             sets: sets.value,
-            reps: { min: repsMin.value, max: repsMax.value },
+            reps: Reps.payload(repsMin, repsMax),
             progression: progression.value,
           }),
         },
@@ -89,6 +110,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     repsMin.clear,
     repsMax.clear,
     progression.clear,
+    repsScheme.clear,
     mutation.reset,
   ]);
   const close = bg.exec([
@@ -161,7 +183,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 onChange={(exercise) => {
                   exerciseId.set(exercise.id);
                   progression.set(
-                    ProgressionMethodChoice.keep(exercise.progressionMethods, progression.value),
+                    ProgressionMethodChoice.keep(exercise.progressionMethods, scheme, progression.value),
                   );
                   planSectionExerciseInstructionPick.disable();
                 }}
@@ -190,22 +212,29 @@ export function PlanSectionExerciseInstructionEdit(props: {
               {...Form.repsMin.pattern}
             />
 
-            <ui.Separator>–</ui.Separator>
-
-            <ui.Stepper
+            <Reps.Field
               aria-label={t("plan.section.exercise.add.reps.max.label")}
               disabled={!actions.update.enabled}
               field={repsMax}
-              variant="fill"
               {...Form.repsMax.pattern}
               min={repsMin.value ?? Form.repsMax.pattern.min}
             />
           </ui.Prescription>
 
+          <div data-stack="x">
+            <ui.ChipButton
+              disabled={!actions.update.enabled}
+              onClick={toggleRepsScheme}
+              pressed={scheme === RepsSchemeOptions.amrap}
+            >
+              {t("plan.section.exercise.add.amrap")}
+            </ui.ChipButton>
+          </div>
+
           <ui.ProgressionMethodSelect
             disabled={!actions.update.enabled}
             field={progression}
-            options={exercise.progressionMethods}
+            options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
           />
 
           {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
@@ -223,7 +252,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
                 (exerciseId.unchanged && instructionUnchanged) ||
                 sets.empty ||
                 repsMin.empty ||
-                repsMax.empty ||
+                !Reps.ready(repsMax) ||
                 mutation.isLoading
               }
               type="submit"

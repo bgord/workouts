@@ -1,6 +1,21 @@
-import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
+import { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
+import { ProgressionMethodRepsApplicability } from "../../modules/plans/value-objects/progression-method-reps-applicability";
+import type { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
+
+const options = (
+  methods: ReadonlyArray<ProgressionMethodOptions> = Object.values(ProgressionMethodOptions),
+  scheme: RepsSchemeOptions,
+) => methods.filter((method) => ProgressionMethodRepsApplicability[scheme].includes(method));
 
 export const ProgressionMethodChoice = {
-  keep: (options: ReadonlyArray<ProgressionMethodOptions>, current: ProgressionMethodOptions | undefined) =>
-    options.find((option) => option === current) ?? options[0],
+  options,
+  keep: (
+    methods: ReadonlyArray<ProgressionMethodOptions> | undefined,
+    scheme: RepsSchemeOptions,
+    current: ProgressionMethodOptions | undefined,
+  ) => {
+    const available = options(methods, scheme);
+
+    return available.find((method) => method === current) ?? available[0];
+  },
 };

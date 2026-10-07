@@ -1,8 +1,10 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/workout-target-form";
+import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { RepsSchemeFormat } from "../kits/reps-scheme.format";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
@@ -16,6 +18,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
   const action = props.exercise.actions.targetSet;
   const progression = props.exercise.targetProgression;
   const Resistance = ResistanceKit[props.exercise.resistance];
+  const repsField = RepsSchemeFormat[RepsScheme.of(props.exercise.prescription.reps)].targetField;
 
   const sets = bg.useNumberField<number>({
     name: `sets-${props.exercise.id}`,
@@ -87,9 +90,10 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           <ui.Separator>×</ui.Separator>
 
           <ui.Stepper
-            aria-label={t("workout.target.reps.label")}
+            aria-label={t(repsField.label)}
             disabled={mutation.isLoading}
             field={reps}
+            unit={repsField.unit}
             variant="compact"
             width={40}
             {...Form.reps.pattern}

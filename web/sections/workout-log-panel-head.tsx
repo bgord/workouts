@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { PanelBottomClose, Target } from "lucide-react";
+import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { useLogPanel } from "../hooks/use-log-panel";
@@ -53,6 +54,7 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
                   load={exercise.target.load}
                   reps={exercise.target.reps}
                   resistance={exercise.resistance}
+                  scheme={RepsScheme.of(exercise.prescription.reps)}
                   sets={exercise.target.sets}
                 />
               </span>
