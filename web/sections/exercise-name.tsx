@@ -9,7 +9,7 @@ export function ExerciseName(props: bg.UseToggleReturnType) {
   const router = useRouter();
   const { exercise } = exerciseRoute.useLoaderData();
 
-  const exerciseNameUpdate = props;
+  const { toggle } = bg.extractUseToggle(props);
 
   const name = bg.useTextField({ ...Form.name.field, defaultValue: exercise.data.name });
 
@@ -21,7 +21,7 @@ export function ExerciseName(props: bg.UseToggleReturnType) {
         body: JSON.stringify({ name: name.value, description: exercise.data.description }),
       }),
     onSuccess: async () => {
-      exerciseNameUpdate.disable();
+      toggle.disable();
       await router.invalidate({ filter: (match) => match.routeId === exerciseRoute.id, sync: true });
     },
   });
@@ -34,7 +34,7 @@ export function ExerciseName(props: bg.UseToggleReturnType) {
     );
   }
 
-  if (exerciseNameUpdate.off) {
+  if (toggle.off) {
     return (
       <h1 aria-label={exercise.data.name} data-grow="1" data-minw="0">
         <button
@@ -42,10 +42,10 @@ export function ExerciseName(props: bg.UseToggleReturnType) {
           data-cursor="pointer"
           data-maxw="100%"
           data-transform="truncate"
-          onClick={exerciseNameUpdate.enable}
+          onClick={toggle.enable}
           title={t("exercise.update.name.cta", { name: exercise.data.name })}
           type="button"
-          {...exerciseNameUpdate.props.controller}
+          {...toggle.props.controller}
         >
           {exercise.data.name}
         </button>
@@ -61,7 +61,7 @@ export function ExerciseName(props: bg.UseToggleReturnType) {
       data-stack="y"
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}
-      {...exerciseNameUpdate.props.target}
+      {...toggle.props.target}
     >
       <div data-stack="x" {...ui.Gap.inline}>
         <input
@@ -78,7 +78,7 @@ export function ExerciseName(props: bg.UseToggleReturnType) {
 
         <ui.InlineEditActions
           disabled={name.unchanged || mutation.isLoading}
-          onCancel={bg.exec([name.clear, mutation.reset, exerciseNameUpdate.disable])}
+          onCancel={bg.exec([name.clear, mutation.reset, toggle.disable])}
         />
       </div>
 

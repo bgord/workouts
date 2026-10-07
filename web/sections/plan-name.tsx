@@ -9,7 +9,7 @@ export function PlanName(props: bg.UseToggleReturnType) {
   const router = useRouter();
   const { plan } = planRoute.useLoaderData();
 
-  const planRename = props;
+  const { toggle } = bg.extractUseToggle(props);
 
   const planName = bg.useTextField({ ...Form.name.field, defaultValue: plan.data.name });
 
@@ -22,7 +22,7 @@ export function PlanName(props: bg.UseToggleReturnType) {
         body: JSON.stringify({ planName: planName.value }),
       }),
     onSuccess: async () => {
-      planRename.disable();
+      toggle.disable();
       await router.invalidate({
         filter: (match) => match.routeId === planRoute.id || match.routeId === plansRoute.id,
         sync: true,
@@ -30,7 +30,7 @@ export function PlanName(props: bg.UseToggleReturnType) {
     },
   });
 
-  const cancel = bg.exec([planName.clear, mutation.reset, planRename.disable]);
+  const cancel = bg.exec([planName.clear, mutation.reset, toggle.disable]);
 
   if (!plan.actions.rename.available) {
     return (
@@ -40,7 +40,7 @@ export function PlanName(props: bg.UseToggleReturnType) {
     );
   }
 
-  if (planRename.off) {
+  if (toggle.off) {
     return (
       <h1 aria-label={plan.data.name}>
         <button
@@ -48,10 +48,10 @@ export function PlanName(props: bg.UseToggleReturnType) {
           data-cursor="pointer"
           data-maxw="100%"
           data-transform="line-clamp"
-          onClick={planRename.enable}
+          onClick={toggle.enable}
           title={t("plan.rename.cta", { name: plan.data.name })}
           type="button"
-          {...planRename.props.controller}
+          {...toggle.props.controller}
         >
           {plan.data.name}
         </button>
@@ -68,7 +68,7 @@ export function PlanName(props: bg.UseToggleReturnType) {
       }}
       onSubmit={mutation.handleSubmit}
       {...ui.Gap.cluster}
-      {...planRename.props.target}
+      {...toggle.props.target}
     >
       <div data-stack="x" {...ui.Gap.inline}>
         <input

@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { Flag } from "lucide-react";
-import type { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
+import { bodyWeightRoute } from "../router";
 import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
@@ -12,11 +12,11 @@ import { BodyWeightReferenceSet } from "./body-weight-reference-set";
 export function BodyWeightMeasurementRow(props: {
   measurement: BodyWeightMeasurement;
   previous: BodyWeightMeasurement | undefined;
-  goal: BodyWeightGoalOptions | undefined;
   first: boolean;
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
+  const { bodyWeightStats } = bodyWeightRoute.useLoaderData();
 
   const bodyWeightMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
   const bodyWeightReference = bg.useToggle({ name: `reference-${props.measurement.id}` });
@@ -37,17 +37,14 @@ export function BodyWeightMeasurementRow(props: {
           <button
             aria-label={t("measurements.body_weight.correct.title")}
             data-color="neutral-300"
-            data-cross="stretch"
             data-cursor="pointer"
             data-grow="1"
             data-md-fs="xs"
             data-minw="0"
             data-stack="x"
             data-transform="nowrap"
-            data-wrap="wrap"
             onClick={bodyWeightMeasurementCorrect.enable}
             type="button"
-            {...ui.Gap.inline}
             {...bodyWeightMeasurementCorrect.props.controller}
           >
             <span data-transform="font-variant-numeric">
@@ -79,7 +76,7 @@ export function BodyWeightMeasurementRow(props: {
             <ui.WeightDelta
               current={props.measurement.weight}
               decimals={BodyWeightDecimals}
-              goal={props.goal}
+              goal={bodyWeightStats?.reference?.goal}
               previous={props.previous?.weight}
             />
           </div>

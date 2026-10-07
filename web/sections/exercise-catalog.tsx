@@ -32,7 +32,7 @@ export function ExerciseCatalog() {
     <div data-stack="y" {...ui.Gap.block}>
       <ExerciseCatalogFilters matching={matching} />
 
-      <ExerciseCatalogEmpty matching={matching} />
+      {matching.length === 0 && <ExerciseCatalogEmpty />}
 
       <ul
         aria-label={t("exercise.catalog.header")}

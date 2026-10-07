@@ -5,7 +5,8 @@ export const Gap = {
   // input + button inline forms (rename, note, description, category add), plan name → description,
   // workout section → plan name
   inline: { "data-gap": "1" },
-  // Label + control inside a form field (PlanCreate, ExerciseAdd, WorkoutCreate, ProfileAccountDelete)
+  // Label + control inside a form field (PlanCreate, ExerciseAdd, WorkoutCreate, ProfileAccountDelete),
+  // log panel rail tiles
   field: { "data-gap": "1-5" },
   // Chip lists (categories, ExerciseCard), card lists (PlanCard, WorkoutHistory), toolbars
   // (filters, search + counter), eyebrow → content (dashboard tiles), sm icon + text

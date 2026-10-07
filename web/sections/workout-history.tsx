@@ -29,7 +29,7 @@ export function WorkoutHistory() {
     <div data-stack="y" {...ui.Gap.block}>
       <WorkoutHistoryFilters matching={matching} />
 
-      <WorkoutHistoryEmpty matching={matching} />
+      {matching.length === 0 && <WorkoutHistoryEmpty />}
 
       <ul aria-label={t("workout.list.header")} data-stack="y" {...ui.Gap.cluster}>
         {matching.map((workout) => (

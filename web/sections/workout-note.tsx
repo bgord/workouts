@@ -25,7 +25,7 @@ export function WorkoutNote(props: bg.UseToggleReturnType) {
   const router = useRouter();
   const { workout } = workoutRoute.useLoaderData();
 
-  const workoutNoteUpdate = props;
+  const { toggle } = bg.extractUseToggle(props);
 
   const note = bg.useTextField({ ...Form.note.field, defaultValue: workout.data.note ?? "" });
 
@@ -40,18 +40,18 @@ export function WorkoutNote(props: bg.UseToggleReturnType) {
         body: JSON.stringify({ note: note.value?.trim() || null }),
       }),
     onSuccess: async () => {
-      workoutNoteUpdate.disable();
+      toggle.disable();
       await router.invalidate({ filter: (match) => match.routeId === workoutRoute.id, sync: true });
     },
   });
 
   /* v8 ignore next */
   if (!workout.actions.noteSet.available) return null;
-  if (workoutNoteUpdate.off && !workout.data.note) return null;
+  if (toggle.off && !workout.data.note) return null;
 
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
-      {workoutNoteUpdate.off && (
+      {toggle.off && (
         <>
           <button
             data-color="neutral-300"
@@ -61,11 +61,11 @@ export function WorkoutNote(props: bg.UseToggleReturnType) {
             data-ta="start"
             data-transform="pre-line"
             disabled={!workout.actions.noteSet.enabled}
-            onClick={workoutNoteUpdate.enable}
+            onClick={toggle.enable}
             title={t("workout.note.edit.cta")}
             type="button"
             {...ui.describedByHint(workout.actions.noteSet, "workout-note-hint")}
-            {...workoutNoteUpdate.props.controller}
+            {...toggle.props.controller}
           >
             {workout.data.note}
           </button>
@@ -74,13 +74,13 @@ export function WorkoutNote(props: bg.UseToggleReturnType) {
         </>
       )}
 
-      {workoutNoteUpdate.on && (
+      {toggle.on && (
         <form
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
           {...ui.Gap.cluster}
-          {...workoutNoteUpdate.props.target}
+          {...toggle.props.target}
         >
           <div data-cross="start" data-md-cross="stretch" data-md-stack="y" data-stack="x" {...ui.Gap.inline}>
             <textarea
@@ -99,7 +99,7 @@ export function WorkoutNote(props: bg.UseToggleReturnType) {
             <ui.InlineEditActions
               data-md-self="end"
               disabled={note.unchanged || mutation.isLoading}
-              onCancel={bg.exec([note.clear, mutation.reset, workoutNoteUpdate.disable])}
+              onCancel={bg.exec([note.clear, mutation.reset, toggle.disable])}
             />
           </div>
 

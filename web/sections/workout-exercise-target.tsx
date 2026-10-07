@@ -68,14 +68,12 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       <Target data-color="neutral-500" data-size="xs" />
 
       {target && (
-        <>
-          <ui.TargetValue
-            load={target.load}
-            reps={target.reps}
-            resistance={props.exercise.resistance}
-            sets={target.sets}
-          />
-        </>
+        <ui.TargetValue
+          load={target.load}
+          reps={target.reps}
+          resistance={props.exercise.resistance}
+          sets={target.sets}
+        />
       )}
 
       {!target && t("workout.target.cta")}

@@ -1,12 +1,9 @@
 import * as bg from "@bgord/ui";
 import { SearchX } from "lucide-react";
-import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import * as ui from "../components";
 
-export function WorkoutHistoryEmpty(props: { matching: Array<WorkoutSummary> }) {
+export function WorkoutHistoryEmpty() {
   const t = bg.useTranslations();
-
-  if (props.matching.length > 0) return null;
 
   return (
     <ui.EmptyState>

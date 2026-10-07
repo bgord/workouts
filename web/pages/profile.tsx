@@ -14,7 +14,7 @@ export function Profile() {
 
   return (
     <ui.Main>
-      <div data-main="between" data-stack="x" {...ui.Gap.related}>
+      <div data-stack="x" {...ui.Gap.related}>
         <h1 data-grow="1">{t("profile.header")}</h1>
         <ui.Logout />
       </div>

@@ -49,7 +49,6 @@ export function WorkoutLogPanelRail() {
             data-bw="hairline"
             data-cross="center"
             data-cursor="pointer"
-            data-gap="1-5"
             data-hover-bc={current ? undefined : "alpha-soft"}
             data-opacity={current || exercise.loggedSets.length > 0 ? undefined : "low"}
             data-p="1"
@@ -59,6 +58,7 @@ export function WorkoutLogPanelRail() {
             onClick={() => open(exercise.id)}
             title={title}
             type="button"
+            {...ui.Gap.field}
           >
             <WorkoutLogPanelImage exercise={exercise} />
 

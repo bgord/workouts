@@ -6,7 +6,7 @@ export function WorkoutSetList(props: {
   exercise: WorkoutExercise;
   pendingSet: LoggedSet | null;
   correction: ReturnType<typeof useSetCorrection>;
-  flushTop?: boolean;
+  first?: boolean;
 }) {
   if (props.exercise.loggedSets.length === 0) return null;
 
@@ -15,7 +15,7 @@ export function WorkoutSetList(props: {
       {props.exercise.loggedSets.map((loggedSet, index) => (
         <WorkoutSetRow
           exercise={props.exercise}
-          first={props.flushTop && index === 0}
+          first={props.first && index === 0}
           key={loggedSet.id}
           loggedSet={loggedSet}
           pending={loggedSet === props.pendingSet}

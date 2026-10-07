@@ -78,11 +78,7 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
 
       <ui.Tile>
         <ui.TileHeader>
-          {goal ? (
-            <ui.BodyWeightGoalIcon goal={goal} size="xs" />
-          ) : (
-            <TrendingUp data-size="xs" />
-          )}
+          {goal ? <ui.BodyWeightGoalIcon goal={goal} size="xs" /> : <TrendingUp data-size="xs" />}
           {t(
             props.reference
               ? "measurements.body_weight.stats.since_reference"

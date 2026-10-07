@@ -8,7 +8,7 @@ import { PlanSectionRemove } from "./plan-section-remove";
 import { PlanSectionRename } from "./plan-section-rename";
 import { PlanSectionWarmup } from "./plan-section-warmup";
 
-export function PlanSectionItem(props: { section: PlanSection; index: number; last: boolean }) {
+export function PlanSectionItem(props: { section: PlanSection; first: boolean; last: boolean }) {
   const t = bg.useTranslations();
   const pluralize = bg.usePluralize();
 
@@ -19,7 +19,7 @@ export function PlanSectionItem(props: { section: PlanSection; index: number; la
     <ui.HairlineRow
       aria-label={props.section.name}
       data-stack="y"
-      first={props.index === 0}
+      first={props.first}
       last={props.last}
       {...ui.Spacing.row}
     >

@@ -29,7 +29,7 @@ export function BodyWeightProgressChart() {
   const pristine = BodyWeightChartForm.Form.isDefault(search);
 
   return (
-    <div data-stack="y" data-variant="flat" {...ui.Gap.related}>
+    <div data-stack="y" {...ui.Gap.related}>
       <h2>{t("measurements.body_weight.progress")}</h2>
 
       <div data-stack="x" {...ui.Gap.cluster}>

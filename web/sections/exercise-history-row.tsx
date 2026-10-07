@@ -10,7 +10,7 @@ export function ExerciseHistoryRow(props: {
   performance: ExercisePerformanceStatistics;
   previous: ExercisePerformanceStatistics | undefined;
   record: boolean;
-  index: number;
+  first: boolean;
   last: boolean;
 }) {
   const t = bg.useTranslations();
@@ -21,7 +21,7 @@ export function ExerciseHistoryRow(props: {
   const scheduledOn = DateFormat.dayWithWeekday(language, props.performance.scheduledFor);
 
   return (
-    <ui.HairlineRow data-stack="y" first={props.index === 0} last={props.last} {...ui.Spacing.row}>
+    <ui.HairlineRow data-stack="y" first={props.first} last={props.last} {...ui.Spacing.row}>
       <div data-stack="x" {...ui.Gap.related}>
         <ui.ChevronToggle aria-label={t("app.details", { name: scheduledOn })} {...open} />
 

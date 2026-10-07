@@ -12,7 +12,7 @@ export function ExerciseHistory() {
     <ul aria-label={t("statistics.exercise.history")} data-stack="y">
       {history.map((performance, index) => (
         <ExerciseHistoryRow
-          index={index}
+          first={index === 0}
           key={performance.workoutId}
           last={index === history.length - 1}
           performance={performance}

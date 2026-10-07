@@ -77,7 +77,7 @@ function WorkoutLogPanelContent(props: { exercise: WorkoutExercise }) {
 
       {exercise.loggedSets.length > 0 && (
         <div data-minh="0" data-overflow="auto">
-          <WorkoutSetList correction={correction} exercise={exercise} flushTop pendingSet={pendingSet} />
+          <WorkoutSetList correction={correction} exercise={exercise} first pendingSet={pendingSet} />
         </div>
       )}
 

@@ -47,7 +47,7 @@ export function ProfileAvatarChange() {
       </div>
 
       <div data-cross="start" data-stack="y" {...ui.Gap.related}>
-        <div data-position="relative" data-self="start">
+        <div data-position="relative">
           <ui.Avatar size={ui.AvatarSize.lg} />
 
           <ProfileAvatarDelete />
