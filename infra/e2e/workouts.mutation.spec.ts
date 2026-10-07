@@ -233,6 +233,44 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(row).toContainText("×1 ");
   });
 
+  test("sets an AMRAP target from the rep progression suggestion", async ({ page }) => {
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.lateralRaiseDumbbells.name,
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page
+      .getByRole("searchbox", { name: "Exercise" })
+      .fill(fixtures.exercises.lateralRaiseDumbbells.name);
+    await page.getByRole("radio", { name: fixtures.exercises.lateralRaiseDumbbells.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("8");
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+    await page.getByRole("combobox", { name: "Progression" }).selectOption("rep_progression");
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+    await row
+      .getByRole("group", { name: /^Based on the last session/ })
+      .getByRole("button", { name: "+1 rep", exact: true })
+      .click();
+
+    await expect(row.getByRole("spinbutton", { name: "Min reps", exact: true })).toHaveValue("9");
+
+    await row.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×9+ 10.5 kg", exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×9+ 10.5 kg", exact: true })).toBeVisible();
+  });
+
   test("shows the error when starting the workout fails", async ({ page }) => {
     await page.route("**/api/workouts/*/start", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
@@ -737,6 +775,32 @@ test.describe("Workouts - active-mutation", () => {
         exact: true,
       }),
     ).toBeHidden();
+  });
+
+  test("adds an AMRAP exercise", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("linear_progression");
+
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+
+    await expect(row.getByText("3×12+", { exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByText("3×12+", { exact: true })).toBeVisible();
   });
 
   test("completes the workout in progress", async ({ page }) => {

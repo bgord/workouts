@@ -93,7 +93,48 @@ test.describe("Plan - builder", () => {
       .click();
 
     await expect(progression).toHaveValue("double_progression");
-    await expect(progression.getByRole("option")).toHaveText(["Double progression", "No progression"]);
+    await expect(progression.getByRole("option")).toHaveText([
+      "Double progression",
+      "Rep progression",
+      "No progression",
+    ]);
+  });
+
+  test("offers only the applicable progressions for an AMRAP instruction", async ({ page }) => {
+    const progression = page.getByRole("combobox", { name: "Progression" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(progression).toHaveValue("linear_progression");
+    await expect(progression.getByRole("option")).toHaveText([
+      "Linear progression",
+      "Rep progression",
+      "No progression",
+    ]);
+  });
+
+  test("clears the AMRAP choice", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toBeHidden();
+    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("linear_progression");
+
+    await page.getByRole("button", { name: "Clear", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "AMRAP", exact: true })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+    await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toHaveValue("12");
+    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("double_progression");
   });
 
   test("shows the empty state when no exercise matches", async ({ page }) => {

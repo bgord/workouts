@@ -445,7 +445,11 @@ test.describe("Workout - active", () => {
       .click();
 
     await expect(progression).toHaveValue("double_progression");
-    await expect(progression.getByRole("option")).toHaveText(["Double progression", "No progression"]);
+    await expect(progression.getByRole("option")).toHaveText([
+      "Double progression",
+      "Rep progression",
+      "No progression",
+    ]);
   });
 
   test("shows the error when moving an exercise fails", async ({ page }) => {

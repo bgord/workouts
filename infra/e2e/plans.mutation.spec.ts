@@ -537,6 +537,67 @@ test.describe("Plans - drafter", () => {
     await expect(row.getByText("Bodyweight", { exact: true })).toBeVisible();
   });
 
+  test("sets the exercise instruction to AMRAP", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page.getByRole("button", { name: "Details: Pull", exact: true }).click();
+
+    await row.getByRole("button", { name: "Edit exercise" }).click();
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toBeHidden();
+    await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("rep_progression");
+
+    await page
+      .getByRole("dialog", { name: "Edit exercise" })
+      .getByRole("button", { name: "Save", exact: true })
+      .click();
+
+    await expect(row.getByText("4×4+", { exact: true })).toBeVisible();
+    await expect(row.getByRole("note", { name: "Rep progression" })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByText("4×4+", { exact: true })).toBeVisible();
+    await expect(row.getByRole("note", { name: "Rep progression" })).toBeVisible();
+  });
+
+  test("sets the AMRAP exercise instruction back to a range", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+    const save = page
+      .getByRole("dialog", { name: "Edit exercise" })
+      .getByRole("button", { name: "Save", exact: true });
+
+    await page.goto(`/plans/${fixtures.drafter.plan.id}`);
+    await page.getByRole("button", { name: "Details: Pull", exact: true }).click();
+
+    await row.getByRole("button", { name: "Edit exercise" }).click();
+
+    await expect(page.getByRole("button", { name: "AMRAP", exact: true })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await expect(save).toBeDisabled();
+
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("6");
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(save).toBeDisabled();
+
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+    await save.click();
+
+    await expect(row.getByText("4×4-6", { exact: true })).toBeVisible();
+    await expect(row.getByRole("note", { name: "Rep progression" })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByText("4×4-6", { exact: true })).toBeVisible();
+    await expect(row.getByRole("note", { name: "Rep progression" })).toBeVisible();
+  });
+
   test("finalizes the plan with the edits", async ({ page }) => {
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
 
