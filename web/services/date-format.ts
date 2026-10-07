@@ -1,7 +1,6 @@
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 const DAY: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" };
-const TIME: Intl.DateTimeFormatOptions = { hour: "2-digit", hour12: false, minute: "2-digit" };
 
 const formatters = new Map<string, Intl.DateTimeFormat>();
 
@@ -45,9 +44,12 @@ const iso = (timestamp: number) =>
   new Date(timestamp).toISOString().slice(0, 10);
 
 const localDay = (timestamp: number, timeZone?: string) => {
-  const parts = formatter("en", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(
-    timestamp,
-  );
+  const parts = formatter("en", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(timestamp);
   const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((entry) => entry.type === type)!.value;
 
   return `${part("year")}-${part("month")}-${part("day")}`;
@@ -87,37 +89,17 @@ export const DateFormat = {
     return iso(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
   },
 
-  daysAgo: (date: string) => Math.max(0, (plain(DateFormat.todayISO()) - plain(date)) / DAY_IN_MS),
+  now: () =>
+    // biome-ignore lint: lint/style/noRestrictedGlobals
+    Date.now(),
 
   addDays: (date: string, days: number) => iso(plain(date) + days * DAY_IN_MS),
 
-  instant: (timestamp: number) =>
+  instantIso: (timestamp: number) =>
     // biome-ignore lint: lint/style/noRestrictedGlobals
     new Date(timestamp).toISOString(),
 
-  day: (language: string, moment: string | number) => format(language, moment, DAY),
-
-  plainDay: (language: string, date: string) => format(language, date, DAY),
-
   month: (language: string, date: string) => format(language, date, { month: "long", year: "numeric" }),
-
-  shortDay: (language: string, date: string) => format(language, date, { day: "numeric", month: "short" }),
-
-  shortMonth: (language: string, date: string) => format(language, date, { month: "short" }),
-
-  dayOfMonth: (language: string, date: string) => format(language, date, { day: "numeric" }),
-
-  shortWeekday: (language: string, date: string) => format(language, date, { weekday: "short" }),
-
-  weekdayWithDay: (language: string, date: string) =>
-    format(language, date, { weekday: "short", day: "numeric", month: "short" }),
-
-  dayWithWeekday: (language: string, date: string) => format(language, date, { ...DAY, weekday: "short" }),
-
-  dayWithTime: (language: string, timestamp: number, timeZone?: string) =>
-    `${format(language, timestamp, { ...DAY, timeZone })}, ${format(language, timestamp, { ...TIME, timeZone })}`,
-
-  time: (language: string, timestamp: number) => format(language, timestamp, TIME),
 
   full: (language: string, date: string) => format(language, date, DAY),
 

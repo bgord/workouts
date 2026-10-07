@@ -18,7 +18,7 @@ export class WorkoutReport {
     return [
       `# Workout: ${workout.planName} - ${workout.planSectionName}`,
       "",
-      `Completed at: ${DateFormat.instant(workout.completedAt)}`,
+      `Completed at: ${DateFormat.instantIso(workout.completedAt)}`,
       `Workout id: ${workout.id}`,
       `Logged sets: ${rows.length}`,
       "",

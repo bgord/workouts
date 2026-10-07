@@ -34,17 +34,18 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
     },
   });
 
-  const scheduledOn = DateFormat.dayWithWeekday(language, workout.data.scheduledFor);
+  const scheduledOn = DateFormat.full(language, workout.data.scheduledFor);
+  const parts = DateFormat.parts(language, workout.data.scheduledFor);
   const today = DateFormat.todayISO();
   const completed = workout.data.status === WorkoutStatusEnum.completed;
 
   const date = (
     <>
       <ui.DateTileMonth {...(completed ? { "data-color": "neutral-500" as const } : {})}>
-        {DateFormat.shortMonth(language, workout.data.scheduledFor)}
+        {parts.month}
       </ui.DateTileMonth>
-      <ui.DateTileDay>{DateFormat.dayOfMonth(language, workout.data.scheduledFor)}</ui.DateTileDay>
-      <ui.DateTileWeekday>{DateFormat.shortWeekday(language, workout.data.scheduledFor)}</ui.DateTileWeekday>
+      <ui.DateTileDay>{parts.day}</ui.DateTileDay>
+      <ui.DateTileWeekday>{parts.weekday}</ui.DateTileWeekday>
     </>
   );
 

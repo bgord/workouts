@@ -16,7 +16,7 @@ export function BodyPartHistoryRow(props: {
   const bodyPartMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
 
   const label = t("measurements.body_parts.correct.title", {
-    date: DateFormat.plainDay(language, props.measurement.measuredOn),
+    date: DateFormat.full(language, props.measurement.measuredOn),
     value: lengthValue(props.measurement.value),
   });
 
@@ -42,7 +42,7 @@ export function BodyPartHistoryRow(props: {
             {...bodyPartMeasurementCorrect.props.controller}
           >
             <span data-color="neutral-300" data-grow="1" data-md-fs="xs" data-transform="nowrap">
-              {DateFormat.plainDay(language, props.measurement.measuredOn)}
+              <ui.DateTime format="list" value={props.measurement.measuredOn} />
             </span>
 
             <span

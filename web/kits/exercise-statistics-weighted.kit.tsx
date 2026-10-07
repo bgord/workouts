@@ -5,11 +5,11 @@ import type {
   WeightedExercisePerformanceStatisticsSet,
 } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
+import { DateTime } from "../components/date-time";
 import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 import { WeightDelta } from "../components/weight-delta";
-import { DateFormat } from "../services/date-format";
 import { WeightFormat } from "../services/weight-format";
 
 function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformanceStatistics> }) {
@@ -52,7 +52,9 @@ function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformance
           })}
         </TileValue>
 
-        <TileContext>{DateFormat.plainDay(language, total.scheduledFor)}</TileContext>
+        <TileContext>
+          <DateTime format="short" value={total.scheduledFor} />
+        </TileContext>
       </Tile>
     </>
   );

@@ -30,9 +30,9 @@ export function ExerciseProgressChart() {
 
       <ui.LineChart
         aria-label={t("statistics.exercise.progress")}
-        end={DateFormat.plainDay(language, performances.at(-1)!.scheduledFor)}
+        end={DateFormat.full(language, performances.at(-1)!.scheduledFor)}
         layout={layout}
-        start={DateFormat.plainDay(language, performances[0]!.scheduledFor)}
+        start={DateFormat.full(language, performances[0]!.scheduledFor)}
       >
         <ui.LineChartArea layout={layout} />
 
@@ -48,7 +48,7 @@ export function ExerciseProgressChart() {
             >
               <title>
                 {t("statistics.exercise.progress.point", {
-                  date: DateFormat.plainDay(language, performance.scheduledFor),
+                  date: DateFormat.full(language, performance.scheduledFor),
                   value: Statistics.progress.format(t, language, Statistics.progress.value(performance)),
                 })}
               </title>

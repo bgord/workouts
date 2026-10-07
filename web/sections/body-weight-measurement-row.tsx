@@ -3,7 +3,6 @@ import { Flag } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
 import { bodyWeightRoute } from "../router";
-import { DateFormat } from "../services/date-format";
 import { BodyWeightDecimals } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";
 import { BodyWeightMeasurementRemove } from "./body-weight-measurement-remove";
@@ -15,7 +14,6 @@ export function BodyWeightMeasurementRow(props: {
   first: boolean;
 }) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const { bodyWeightStats } = bodyWeightRoute.useLoaderData();
 
   const bodyWeightMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
@@ -47,9 +45,11 @@ export function BodyWeightMeasurementRow(props: {
             type="button"
             {...bodyWeightMeasurementCorrect.props.controller}
           >
-            <span data-transform="font-variant-numeric">
-              {DateFormat.dayWithWeekday(language, props.measurement.measuredOn)}
-            </span>
+            <ui.DateTime
+              data-transform="font-variant-numeric"
+              format="list"
+              value={props.measurement.measuredOn}
+            />
           </button>
 
           <button

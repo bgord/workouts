@@ -18,7 +18,7 @@ export function ExerciseHistoryRow(props: {
   const Statistics = ExerciseStatisticsKit[props.performance.resistance];
   const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
-  const scheduledOn = DateFormat.dayWithWeekday(language, props.performance.scheduledFor);
+  const scheduledOn = DateFormat.full(language, props.performance.scheduledFor);
 
   return (
     <ui.HairlineRow data-stack="y" first={props.first} last={props.last} {...ui.Spacing.row}>
@@ -35,7 +35,7 @@ export function ExerciseHistoryRow(props: {
           to="/workouts/$workoutId"
           {...ui.Gap.cluster}
         >
-          {scheduledOn}
+          <ui.DateTime format="list" value={props.performance.scheduledFor} />
 
           {props.record && (
             <Trophy aria-label={t(Statistics.recordLabel)} data-color="brand-400" data-size="xs" />

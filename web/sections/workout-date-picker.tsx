@@ -13,19 +13,13 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
   const today = DateFormat.todayISO();
   const predefined = Array.from({ length: 3 }, (_, offset) => DateFormat.addDays(today, offset));
 
-  const label = (date: string, offset: number) => {
-    if (offset === 0) return t("workout.create.when.today");
-    if (offset === 1) return t("workout.create.when.tomorrow");
-    return DateFormat.weekdayWithDay(language, date);
-  };
-
   return (
     <div data-stack="y" {...ui.Gap.field}>
       <label {...field.label.props}>{t("workout.create.when.label")}</label>
 
       <div data-stack="y" {...ui.Gap.cluster}>
         <div data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
-          {predefined.map((date, offset) => (
+          {predefined.map((date) => (
             <ui.ChipButton
               key={date}
               onClick={() => {
@@ -34,7 +28,7 @@ export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & 
               }}
               pressed={custom.off && field.value === date}
             >
-              {label(date, offset)}
+              {DateFormat.dayLabel(language, date, today)}
             </ui.ChipButton>
           ))}
 

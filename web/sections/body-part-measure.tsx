@@ -9,7 +9,6 @@ import { LengthFormat } from "../services/length-format";
 
 export function BodyPartMeasure(props: BodyPartSummary) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const router = useRouter();
 
   const bodyPartMeasure = bg.useToggle({ name: `body-part-measure-${props.id}` });
@@ -78,9 +77,11 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                 </ui.TileValue>
 
                 <ui.TileContext>
-                  {latest
-                    ? DateFormat.dayWithWeekday(language, latest.measuredOn)
-                    : t("measurements.body_parts.measure.never")}
+                  {latest ? (
+                    <ui.DateTime format="freshness" value={latest.measuredOn} />
+                  ) : (
+                    t("measurements.body_parts.measure.never")
+                  )}
                 </ui.TileContext>
               </ui.Tile>
             </ul>

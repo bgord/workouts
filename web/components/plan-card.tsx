@@ -1,14 +1,13 @@
 import * as bg from "@bgord/ui";
 import { Layers } from "lucide-react";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
-import { DateFormat } from "../services/date-format";
+import { DateTime } from "./date-time";
 import { Gap } from "./gap";
 import { PlanStatusBadge } from "./plan-status-badge";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
 
 export function PlanCard(props: PlanSummary) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
 
   return (
     <RowLink params={{ planId: props.id }} title={props.name} to="/plans/$planId">
@@ -27,7 +26,9 @@ export function PlanCard(props: PlanSummary) {
             {props.sections}
           </span>
 
-          {t("plan.updated_at", { date: DateFormat.day(language, props.updatedAt) })}
+          <span>
+            {t("plan.updated_at")} <DateTime format="ago" value={props.updatedAt} />
+          </span>
         </small>
       </RowBody>
 

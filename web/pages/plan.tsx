@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
-import { useHydrated } from "../hooks/use-hydrated";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
 import { PlanCopy } from "../sections/plan-copy";
@@ -9,12 +8,9 @@ import { PlanName } from "../sections/plan-name";
 import { PlanRemove } from "../sections/plan-remove";
 import { PlanSectionList } from "../sections/plan-section-list";
 import { PlanStatus } from "../sections/plan-status";
-import { DateFormat } from "../services/date-format";
 
 export function Plan() {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
-  const hydrated = useHydrated();
   const { plan } = planRoute.useLoaderData();
 
   const planRename = bg.useToggle({ name: "plan-rename" });
@@ -44,13 +40,7 @@ export function Plan() {
                   <bg.MenuSeparator />
 
                   <bg.MenuFooter>
-                    {t("plan.updated_at", {
-                      date: DateFormat.dayWithTime(
-                        language,
-                        plan.data.updatedAt,
-                        hydrated ? undefined : "UTC",
-                      ),
-                    })}
+                    {t("plan.updated_at")} <ui.DateTime format="ago" value={plan.data.updatedAt} />
                   </bg.MenuFooter>
                 </bg.MenuContent>
               </bg.Menu>
