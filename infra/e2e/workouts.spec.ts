@@ -53,6 +53,14 @@ test.describe("Workouts - athlete", () => {
     await expect(page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`)).toBeVisible();
   });
 
+  test("shows the scheduled workout as today", async ({ page }) => {
+    const card = page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`);
+
+    await page.goto("/workouts?filter=all_time");
+
+    await expect(card.locator("time")).toHaveText("Today");
+  });
+
   test("falls back to the default period for an invalid filter", async ({ page }) => {
     await page.goto("/workouts?filter=no-such-period");
 
