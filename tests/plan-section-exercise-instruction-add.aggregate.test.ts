@@ -62,6 +62,22 @@ describe("Plan.addSectionExerciseInstruction", async () => {
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionLimit.error);
   });
 
+  test("PlanSectionExerciseInstructionProgressionIsApplicableForReps", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      plan.addSectionExerciseInstruction(
+        mocks.planSectionId,
+        mocks.amrapDoubleProgressionExerciseInstruction,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.error);
+  });
+
   test("happy path - first", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -104,5 +120,27 @@ describe("Plan.addSectionExerciseInstruction", async () => {
     );
 
     expect(plan.pullEvents()).toEqual([mocks.GenericPlanSectionExerciseInstructionAddedEvent]);
+  });
+
+  test("happy path - amrap", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [mocks.GenericPlanCreatedEvent, mocks.GenericPlanSectionCreatedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.addSectionExerciseInstruction(mocks.planSectionId, mocks.amrapExerciseInstruction, mocks.userId),
+    );
+
+    expect(plan.pullEvents()).toEqual([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionAddedEvent.payload,
+          exerciseInstruction: mocks.amrapExerciseInstruction,
+        },
+      },
+    ]);
   });
 });

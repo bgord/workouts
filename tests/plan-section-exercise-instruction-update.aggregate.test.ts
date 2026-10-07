@@ -100,6 +100,26 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionHasChanged.error);
   });
 
+  test("PlanSectionExerciseInstructionProgressionIsApplicableForReps", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        mocks.amrapDoubleProgressionExerciseInstruction,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.error);
+  });
+
   test("happy path", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -224,9 +244,45 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     );
     const exerciseInstruction = {
       id: mocks.exerciseInstructionId,
-      reps: v.parse(Plans.VO.RepsRange, { min: mocks.repsRange.min, max: mocks.repsRange.max + 1 }),
+      reps: v.parse(Plans.VO.RepsRange, { min: mocks.repsRange.min, max: mocks.repsRange.max! + 1 }),
       sets: mocks.sets,
       progression: mocks.progression,
+    };
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.userId,
+      ),
+    );
+
+    expect(plan.pullEvents()).toEqual([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
+          exerciseInstruction,
+        },
+      },
+    ]);
+  });
+
+  test("happy path - amrap", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      deps,
+    );
+    const exerciseInstruction = {
+      id: mocks.exerciseInstructionId,
+      reps: mocks.amrapRepsRange,
+      sets: mocks.sets,
+      progression: Plans.VO.ProgressionMethodOptions.linear_progression,
     };
 
     await bg.CorrelationStorage.run(mocks.correlationId, () =>

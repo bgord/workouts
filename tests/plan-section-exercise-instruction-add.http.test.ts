@@ -376,6 +376,37 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanSectionExerciseInstructionProgressionIsApplicableForReps", async () => {
+    const events = mocks.planWithSectionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.amrapRepsRange,
+          progression: mocks.progression,
+        }),
+        headers: mocks.headers(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(
+      response,
+      403,
+      "plan.section.exercise.instruction.progression.is.applicable.for.reps",
+    );
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -466,5 +497,45 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionExerciseInstructionAddedEvent]);
+  });
+
+  test("happy path - bodyweight amrap with rep progression", async () => {
+    const events = mocks.planWithSectionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.exerciseInstructionId);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies
+      .use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute"))
+      .mockResolvedValue(mocks.bodyweightExercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.headers(events.length),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.amrapRepsRange,
+          progression: mocks.amrapExerciseInstruction.progression,
+        }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionAddedEvent.payload,
+          exerciseInstruction: mocks.amrapExerciseInstruction,
+        },
+      },
+    ]);
   });
 });
