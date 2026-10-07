@@ -1,6 +1,3 @@
-import { Column } from "@react-email/column";
-import { Row } from "@react-email/row";
-import { Text } from "@react-email/text";
 import type * as Notifications from "+notifications";
 import { Heading, Link, Shell, Title } from "../components";
 import { theme } from "../theme";
@@ -48,36 +45,50 @@ export function WeeklySummaryEmail(props: Notifications.Services.WeeklySummaryNo
     <Shell preview={props.title} signature={props.signature}>
       <Title style={styles.title}>{props.title}</Title>
 
-      <Row style={styles.totals}>
-        {props.totals.map((tile, index) => (
-          <Column
-            key={tile.label}
-            style={index === props.totals.length - 1 ? styles.cell : { ...styles.cell, ...styles.divider }}
-            width="33%"
-          >
-            <div style={styles.value}>{tile.value}</div>
-            <div style={styles.label}>{tile.label}</div>
-            <div style={styles.delta}>{tile.delta}</div>
-          </Column>
-        ))}
-      </Row>
+      <table
+        align="center"
+        border={0}
+        cellPadding="0"
+        cellSpacing="0"
+        role="presentation"
+        style={styles.totals}
+        width="100%"
+      >
+        <tbody>
+          <tr>
+            {props.totals.map((tile, index) => (
+              <td
+                key={tile.label}
+                style={
+                  index === props.totals.length - 1 ? styles.cell : { ...styles.cell, ...styles.divider }
+                }
+                width="33%"
+              >
+                <div style={styles.value}>{tile.value}</div>
+                <div style={styles.label}>{tile.label}</div>
+                <div style={styles.delta}>{tile.delta}</div>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
 
       {props.bodyWeight && (
         <>
           <Heading>{props.bodyWeight.heading}</Heading>
-          <Text style={styles.bodyWeight}>
+          <p style={styles.bodyWeight}>
             <span style={styles.bodyWeightValue}>{props.bodyWeight.value}</span>
             <span style={styles.bodyWeightCaption}>{` ${props.bodyWeight.caption}`}</span>
-          </Text>
-          {props.bodyWeight.note && <Text style={styles.bodyWeightNote}>{props.bodyWeight.note}</Text>}
+          </p>
+          {props.bodyWeight.note && <p style={styles.bodyWeightNote}>{props.bodyWeight.note}</p>}
         </>
       )}
 
-      <Text style={styles.footer}>
+      <p style={styles.footer}>
         {props.footer.before}
         <Link href={props.footer.url}>{props.footer.link}</Link>
         {props.footer.after}
-      </Text>
+      </p>
     </Shell>
   );
 }
