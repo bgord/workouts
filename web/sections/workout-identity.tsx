@@ -81,7 +81,7 @@ export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.Reac
           </ui.DateTile>
         )}
 
-        <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
+        <div data-grow="1" data-minw="0" data-stack="y" data-gap="0-5">
           <h1 data-transform="line-clamp" title={workout.data.planSectionName}>
             {workout.data.planSectionName}
           </h1>

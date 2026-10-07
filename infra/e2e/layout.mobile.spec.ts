@@ -136,7 +136,7 @@ test.describe("Mobile - active", () => {
 
     expect(closed).toBeLessThanOrEqual(0);
 
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
     await expect(page.getByRole("dialog", { name: "Logging panel" })).toBeVisible();
 
     const open = await page.evaluate(
@@ -150,7 +150,7 @@ test.describe("Mobile - active", () => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).tap();
+    await page.getByRole("button", { name: "Continue" }).tap();
 
     await expect(
       panel.getByRole("button", { name: `Close panel: ${fixtures.exercises.tricepsPushDownBar.name}` }),

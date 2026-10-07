@@ -13,16 +13,11 @@ export function WorkoutLogPanelOpen() {
   if (!exercise) return null;
 
   return (
-    <button
-      className="c-button"
-      data-md-basis="0"
-      data-md-grow="1"
-      data-variant="primary"
-      onClick={() => open(exercise.id)}
-      type="button"
-    >
-      <PanelBottomOpen data-size="sm" />
-      {t("workout.log_panel.open")}
-    </button>
+    <div data-md-basis="0" data-md-grow="1" data-stack="y">
+      <button className="c-button" data-variant="primary" onClick={() => open(exercise.id)} type="button">
+        <PanelBottomOpen data-size="sm" />
+        {t("workout.log_panel.open")}
+      </button>
+    </div>
   );
 }

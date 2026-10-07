@@ -128,7 +128,7 @@ test.describe("Workout - active", () => {
     });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
 
     await expect(panel.getByText(fixtures.exercises.tricepsPushDownBar.name, { exact: true })).toBeVisible();
     await expect(current).toHaveAttribute("aria-current", "step");
@@ -148,7 +148,7 @@ test.describe("Workout - active", () => {
     const head = panel.getByRole("group", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
 
     await expect(head.getByText("3 of 6", { exact: true })).toBeVisible();
     await expect(head.getByText("3×8 25 kg", { exact: true })).toBeVisible();
@@ -176,7 +176,7 @@ test.describe("Workout - active", () => {
     });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
 
     await expect(rail.getByRole("button")).toHaveCount(6);
     await expect(completed.getByRole("img", { name: "4 / 4" })).toBeVisible();
@@ -193,7 +193,7 @@ test.describe("Workout - active", () => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
 
     await panel
       .getByRole("button", { name: `Close panel: ${fixtures.exercises.tricepsPushDownBar.name}` })
@@ -215,7 +215,7 @@ test.describe("Workout - active", () => {
     });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
     await current.focus();
     await page.keyboard.press("Tab");
 
@@ -233,7 +233,7 @@ test.describe("Workout - active", () => {
     const reps = panel.getByRole("spinbutton", { name: "Reps" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
     await reps.fill("9");
 
     await expect(reps).toHaveValue("9");
@@ -259,7 +259,7 @@ test.describe("Workout - active", () => {
     const log = panel.getByRole("form", { name: "Log set" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
     await rail
       .getByRole("button", { name: `1. ${fixtures.exercises.superHorizontalBenchPress.name}`, exact: true })
       .click();
@@ -330,7 +330,7 @@ test.describe("Workout - active", () => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
     await panel
       .getByRole("group", { name: "Exercises" })
       .getByRole("button", { name: `4. ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
@@ -494,7 +494,7 @@ test.describe("Workout - active", () => {
     await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
     await page
       .getByRole("dialog", { name: "Logging panel" })
       .getByRole("button", { name: "Log set · RIR 1" })
@@ -517,7 +517,7 @@ test.describe("Workout - active", () => {
     await expect(row.getByRole("button", { name: "Log set", exact: true })).toBeVisible();
     await expect(row.getByRole("button", { name: /^Remove set / })).toHaveCount(0);
 
-    await page.getByRole("button", { name: "Log sets" }).click();
+    await page.getByRole("button", { name: "Continue" }).click();
     await panel.getByRole("button", { name: "Log set · RIR 1" }).click();
     await expect(page.getByText("Could not log the set")).toBeVisible();
     await expect(head.getByRole("img", { name: "0 / 3" })).toBeVisible();

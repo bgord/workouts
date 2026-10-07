@@ -81,5 +81,15 @@ export function StatusPanelDescription(props: React.JSX.IntrinsicElements["small
 }
 
 export function StatusPanelAction(props: React.JSX.IntrinsicElements["div"]) {
-  return <div data-ml="auto" data-shrink="0" data-stack="x" {...Gap.cluster} {...props} />;
+  return (
+    <div
+      data-md-ml="0"
+      data-md-width="100%"
+      data-ml="auto"
+      data-shrink="0"
+      data-stack="x"
+      {...Gap.cluster}
+      {...props}
+    />
+  );
 }

@@ -35,7 +35,7 @@ test.describe("Mobile - pocket", () => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).tap();
+    await page.getByRole("button", { name: "Continue" }).tap();
     await panel.getByRole("spinbutton", { name: "Reps" }).tap();
     await expect(panel.getByRole("button", { name: "Log set", exact: true })).toBeInViewport();
     await panel.getByRole("button", { name: "Reps +1" }).tap();
@@ -62,7 +62,7 @@ test.describe("Mobile - pocket", () => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
 
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
-    await page.getByRole("button", { name: "Log sets" }).tap();
+    await page.getByRole("button", { name: "Continue" }).tap();
     await panel.getByRole("button", { name: "Log set", exact: true }).dblclick();
 
     await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeVisible();

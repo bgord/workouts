@@ -418,7 +418,7 @@
   "workout.log_panel.exercise.title": "{{position}}. {{name}}",
   "workout.log_panel.exercises": "Exercises",
   "workout.log_panel.label": "Logging panel",
-  "workout.log_panel.open": "Log sets",
+  "workout.log_panel.open": "Continue",
   "workout.log_panel.position": "{{position}} of {{total}}",
   "workout.not_found": "Workout not found",
   "workout.not_found.cta": "Go to workouts",
