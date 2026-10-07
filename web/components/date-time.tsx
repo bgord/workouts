@@ -5,7 +5,7 @@ export function DateTime(props: UseDateTimeOptions & React.JSX.IntrinsicElements
   const date = useDateTime(props);
 
   return (
-    <time dateTime={date.dateTime} title={date.full} {...rest}>
+    <time dateTime={date.dateTime} suppressHydrationWarning title={date.full} {...rest}>
       {date.text}
     </time>
   );
