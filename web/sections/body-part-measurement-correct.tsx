@@ -3,7 +3,6 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
-import { useToday } from "../hooks/use-time-zone";
 import { bodyPartsRoute } from "../router";
 import { LengthFormat } from "../services/length-format";
 
@@ -15,7 +14,7 @@ export function BodyPartMeasurementCorrect(
 
   const { toggle } = bg.extractUseToggle(props);
 
-  const today = useToday();
+  const today = bg.useToday();
 
   const measuredOn = bg.useDateField({
     name: `corrected-body-part-measured-on-${props.measurement.id}`,

@@ -1,8 +1,9 @@
-import { CalendarDay } from "../../web/services/calendar-day";
+// cSpell:ignore Kiritimati Pago
 import { expect, test } from "./test";
 
 const timeZone =
-  CalendarDay.today("Pacific/Kiritimati").toString() === CalendarDay.today("UTC").toString()
+  new Intl.DateTimeFormat("en-CA", { timeZone: "Pacific/Kiritimati" }).format() ===
+  new Intl.DateTimeFormat("en-CA", { timeZone: "UTC" }).format()
     ? "Pacific/Pago_Pago"
     : "Pacific/Kiritimati";
 
@@ -20,6 +21,8 @@ test.describe("Time zone - athlete", () => {
   test("defaults the measurement date to the browser today", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
-    await expect(page.getByLabel("Date")).toHaveValue(CalendarDay.today(timeZone).toString());
+    await expect(page.getByLabel("Date")).toHaveValue(
+      await page.evaluate(() => Temporal.Now.plainDateISO().toString()),
+    );
   });
 });

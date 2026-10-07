@@ -4,12 +4,11 @@ import * as BodyWeightMeasurementFiltersForm from "../../app/services/body-weigh
 import type { BodyWeightHistoryMonthType } from "../../modules/measurements/value-objects/body-weight-history-month";
 import { BodyWeightHistoryMonthAll } from "../../modules/measurements/value-objects/body-weight-history-month.validation";
 import * as ui from "../components";
-import { useDateFormat } from "../hooks/use-date-format";
 import { bodyWeightRoute } from "../router";
 
 export function BodyWeightMeasurementFilters() {
   const t = bg.useTranslations();
-  const format = useDateFormat();
+  const format = bg.useDateFormat();
   const { month, months } = bodyWeightRoute.useLoaderData();
   const navigate = bodyWeightRoute.useNavigate();
   const search = bodyWeightRoute.useSearch();

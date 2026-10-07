@@ -35,7 +35,7 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
 
           {latest ? (
             <small>
-              <ui.DateTime format="freshness" value={latest.measuredOn} />
+              <bg.DateTime format="freshness" value={latest.measuredOn} />
             </small>
           ) : (
             <small>{t("measurements.body_parts.measure.never")}</small>

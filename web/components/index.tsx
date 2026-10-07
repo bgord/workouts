@@ -15,7 +15,6 @@ export * from "./chip";
 export * from "./copy-button";
 export * from "./count-delta";
 export * from "./date-tile";
-export * from "./date-time";
 export * from "./delta";
 export * from "./dialog";
 export * from "./dropzone";

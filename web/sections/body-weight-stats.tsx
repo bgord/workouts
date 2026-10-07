@@ -2,7 +2,6 @@ import * as bg from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
-import { useDateTime } from "../hooks/use-date-time";
 import { BodyWeightDecimals } from "../services/weight-format";
 
 export function BodyWeightStats(props: VO.BodyWeightStats) {
@@ -10,7 +9,7 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
   const pluralize = bg.usePluralize();
 
   const goal = props.reference?.goal;
-  const since = useDateTime({ value: props.baseline.measuredOn, format: "short" });
+  const since = bg.useDateTime({ value: props.baseline.measuredOn, format: "short" });
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
@@ -33,7 +32,7 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
         </ui.TileValue>
 
         <ui.TileContext>
-          <ui.DateTime format="freshness" value={props.latest.measuredOn} />
+          <bg.DateTime format="freshness" value={props.latest.measuredOn} />
         </ui.TileContext>
       </ui.Tile>
 

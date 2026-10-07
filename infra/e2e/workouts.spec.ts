@@ -1,6 +1,5 @@
 // cSpell:ignore unpresses
 import * as fixtures from "../../scripts/seed/fixtures";
-import { CalendarDay } from "../../web/services/calendar-day";
 import { expect, test } from "./test";
 
 test.describe("Workouts - empty", () => {
@@ -135,7 +134,7 @@ test.describe("Workouts - athlete", () => {
     await dialog.getByRole("button", { name: "Other" }).click();
 
     await expect(dialog.getByRole("textbox", { name: "Date" })).toHaveValue(
-      CalendarDay.today().add(3).toString(),
+      await page.evaluate(() => Temporal.Now.plainDateISO().add({ days: 3 }).toString()),
     );
     await expect(dialog.getByRole("button", { name: "Tomorrow" })).toHaveAttribute("aria-pressed", "false");
   });

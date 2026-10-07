@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { Trophy } from "lucide-react";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import * as ui from "../components";
-import { useDateFormat } from "../hooks/use-date-format";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 
 export function ExerciseHistoryRow(props: {
@@ -14,7 +13,7 @@ export function ExerciseHistoryRow(props: {
   last: boolean;
 }) {
   const t = bg.useTranslations();
-  const format = useDateFormat();
+  const format = bg.useDateFormat();
   const Statistics = ExerciseStatisticsKit[props.performance.resistance];
   const open = bg.usePersistedToggle({ name: `exercise-history-${props.performance.workoutId}` });
 
@@ -35,7 +34,7 @@ export function ExerciseHistoryRow(props: {
           to="/workouts/$workoutId"
           {...ui.Gap.cluster}
         >
-          <ui.DateTime format="list" value={props.performance.scheduledFor} />
+          <bg.DateTime format="list" value={props.performance.scheduledFor} />
 
           {props.record && (
             <Trophy aria-label={t(Statistics.recordLabel)} data-color="brand-400" data-size="xs" />

@@ -27,7 +27,7 @@ export function ExerciseStats() {
         <ui.TileValue>{performances.length}</ui.TileValue>
 
         <ui.TileContext>
-          <ui.DateTime format="freshness" value={latest.scheduledFor} />
+          <bg.DateTime format="freshness" value={latest.scheduledFor} />
         </ui.TileContext>
       </ui.Tile>
     </ul>

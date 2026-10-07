@@ -40,7 +40,7 @@ export function Plan() {
                   <bg.MenuSeparator />
 
                   <bg.MenuFooter>
-                    {t("plan.updated_at")} <ui.DateTime format="ago" value={plan.data.updatedAt} />
+                    {t("plan.updated_at")} <bg.DateTime format="ago" value={plan.data.updatedAt} />
                   </bg.MenuFooter>
                 </bg.MenuContent>
               </bg.Menu>

@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Layers } from "lucide-react";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
-import { DateTime } from "./date-time";
 import { Gap } from "./gap";
 import { PlanStatusBadge } from "./plan-status-badge";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
@@ -27,7 +26,7 @@ export function PlanCard(props: PlanSummary) {
           </span>
 
           <span>
-            {t("plan.updated_at")} <DateTime format="ago" value={props.updatedAt} />
+            {t("plan.updated_at")} <bg.DateTime format="ago" value={props.updatedAt} />
           </span>
         </small>
       </RowBody>

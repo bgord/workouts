@@ -3,7 +3,6 @@ import { ChevronsUp, Sigma, Trophy } from "lucide-react";
 import type { BodyweightExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
 import { CountDelta } from "../components/count-delta";
-import { DateTime } from "../components/date-time";
 import { Gap } from "../components/gap";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 
@@ -27,7 +26,7 @@ function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerforman
         <TileValue>{repsValue(t, language, peak.bestSet.reps)}</TileValue>
 
         <TileContext>
-          <DateTime format="short" value={peak.scheduledFor} />
+          <bg.DateTime format="short" value={peak.scheduledFor} />
         </TileContext>
       </TileLink>
 
@@ -40,7 +39,7 @@ function RepsTiles(props: { records: ExerciseRecords<BodyweightExercisePerforman
         <TileValue>{repsValue(t, language, total.totalReps)}</TileValue>
 
         <TileContext>
-          <DateTime format="short" value={total.scheduledFor} />
+          <bg.DateTime format="short" value={total.scheduledFor} />
         </TileContext>
       </Tile>
     </>

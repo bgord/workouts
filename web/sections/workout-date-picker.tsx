@@ -2,16 +2,14 @@ import * as bg from "@bgord/ui";
 import { CalendarDays } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import * as ui from "../components";
-import { useDateFormat } from "../hooks/use-date-format";
-import { useToday } from "../hooks/use-time-zone";
 
 export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
-  const format = useDateFormat();
+  const format = bg.useDateFormat();
   const { toggle: custom } = bg.extractUseToggle(props);
   const { field } = props;
 
-  const today = useToday();
+  const today = bg.useToday();
   const predefined = Array.from({ length: 3 }, (_, offset) => today.add(offset).toString());
 
   return (

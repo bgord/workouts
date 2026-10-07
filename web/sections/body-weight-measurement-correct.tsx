@@ -3,7 +3,6 @@ import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
-import { useToday } from "../hooks/use-time-zone";
 import { bodyWeightRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 
@@ -15,7 +14,7 @@ export function BodyWeightMeasurementCorrect(
 
   const { toggle } = bg.extractUseToggle(props);
 
-  const today = useToday();
+  const today = bg.useToday();
 
   const measuredOn = bg.useDateField({
     name: `corrected-measured-on-${props.measurement.id}`,

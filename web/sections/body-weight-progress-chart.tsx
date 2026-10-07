@@ -3,7 +3,6 @@ import { X } from "lucide-react";
 import * as BodyWeightChartForm from "../../app/services/body-weight-chart-form";
 import { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import * as ui from "../components";
-import { useDateFormat } from "../hooks/use-date-format";
 import { bodyWeightRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
@@ -13,7 +12,7 @@ const POINT_HIT_RADIUS = 8;
 export function BodyWeightProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const format = useDateFormat();
+  const format = bg.useDateFormat();
   const { chart } = bodyWeightRoute.useLoaderData();
   const navigate = bodyWeightRoute.useNavigate();
   const search = bodyWeightRoute.useSearch();

@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { BodyPartSummaryMeasurement } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
-import { useDateFormat } from "../hooks/use-date-format";
 import { useLengthValue } from "../hooks/use-length-value";
 import { BodyPartMeasurementCorrect } from "./body-part-measurement-correct";
 import { BodyPartMeasurementRemove } from "./body-part-measurement-remove";
@@ -11,7 +10,7 @@ export function BodyPartHistoryRow(props: {
   previous: BodyPartSummaryMeasurement | undefined;
 }) {
   const t = bg.useTranslations();
-  const format = useDateFormat();
+  const format = bg.useDateFormat();
   const lengthValue = useLengthValue();
   const bodyPartMeasurementCorrect = bg.useToggle({ name: `correct-${props.measurement.id}` });
 
@@ -41,7 +40,7 @@ export function BodyPartHistoryRow(props: {
             {...ui.Gap.cluster}
             {...bodyPartMeasurementCorrect.props.controller}
           >
-            <ui.DateTime
+            <bg.DateTime
               data-color="neutral-300"
               data-grow="1"
               data-md-fs="xs"

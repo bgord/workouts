@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import * as ui from "../components";
-import { useDateFormat } from "../hooks/use-date-format";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
@@ -9,7 +8,7 @@ import { LineChartMath } from "../services/line-chart";
 export function ExerciseProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const format = useDateFormat();
+  const format = bg.useDateFormat();
   const { exercise, performances } = exerciseRoute.useLoaderData();
   const Statistics = ExerciseStatisticsKit[exercise.data.resistance];
 

@@ -1,7 +1,6 @@
 import * as bg from "@bgord/ui";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
-import { DateTime } from "./date-time";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";
 import { WorkoutStatusBadge } from "./workout-status-badge";
 
@@ -20,7 +19,7 @@ export function WorkoutCard(props: WorkoutSummary) {
         <RowTitle>{t("workout.title", { plan: props.planName, section: props.planSectionName })}</RowTitle>
 
         <small data-transform="truncate">
-          <DateTime format="relativeDay" value={props.scheduledFor} />
+          <bg.DateTime format="relativeDay" value={props.scheduledFor} />
         </small>
       </RowBody>
 

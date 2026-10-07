@@ -5,7 +5,6 @@ import type {
   WeightedExercisePerformanceStatisticsSet,
 } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
-import { DateTime } from "../components/date-time";
 import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
@@ -53,7 +52,7 @@ function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformance
         </TileValue>
 
         <TileContext>
-          <DateTime format="short" value={total.scheduledFor} />
+          <bg.DateTime format="short" value={total.scheduledFor} />
         </TileContext>
       </Tile>
     </>

@@ -45,7 +45,7 @@ export function BodyWeightMeasurementRow(props: {
             type="button"
             {...bodyWeightMeasurementCorrect.props.controller}
           >
-            <ui.DateTime format="list" value={props.measurement.measuredOn} />
+            <bg.DateTime format="list" value={props.measurement.measuredOn} />
           </button>
 
           <button

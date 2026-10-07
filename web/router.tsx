@@ -16,7 +16,6 @@ import {
   Preferences,
   Session,
   Statistics,
-  TimeZone,
   Workouts,
 } from "./api";
 import { NotFound } from "./not-found";
@@ -56,7 +55,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       ...bg.CSS(bg.AssetVersion.url("/public/custom.css", match.context.assetVersion)),
     ],
     scripts: [
-      { children: TimeZone.script },
+      { children: bg.TimeZone.script },
       bg.JS(bg.AssetVersion.url("/public/entry-client.js", match.context.assetVersion)),
     ],
   }),
@@ -68,7 +67,7 @@ export const rootRoute = createRootRouteWithContext<RouterContext>()({
       I18N.get(context.request),
       Avatar.getEtag(context.request),
     ]);
-    const timeZone = TimeZone.get(context.request);
+    const timeZone = bg.TimeZone.get(context.request);
 
     /* v8 ignore next */
     if (!(session && i18n)) throw redirect({ href: "/public/login.html", reloadDocument: true });
