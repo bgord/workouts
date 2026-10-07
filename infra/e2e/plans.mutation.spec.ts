@@ -364,7 +364,10 @@ test.describe("Plans - drafter", () => {
     await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
     await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
     await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("15");
-    await page.getByRole("combobox", { name: "Progression" }).selectOption("linear_progression");
+    await page
+      .getByRole("group", { name: "Progression" })
+      .getByText("Linear progression", { exact: true })
+      .click();
     await page
       .getByRole("dialog", { name: "Add exercise" })
       .getByRole("button", { name: "Add exercise" })

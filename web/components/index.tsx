@@ -46,6 +46,7 @@ export * from "./plan-status-badge";
 export * from "./prescription";
 export * from "./progression-method-badge";
 export * from "./progression-method-icon";
+export * from "./progression-method-picker";
 export * from "./progression-method-select";
 export * from "./radio-tile";
 export * from "./rir-badge";
