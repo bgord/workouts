@@ -1,27 +1,24 @@
-import * as bg from "@bgord/ui";
-import { DateFormat } from "../services/date-format";
-import { useTimeZone, useToday } from "./use-time-zone";
+import { Clock } from "../services/clock";
+import { useDateFormat } from "./use-date-format";
 
 export type UseDateTimeOptions =
   | { value: string; format: "dayLabel" | "freshness" | "list" | "short" }
   | { value: number; format: "ago" };
 
 export function useDateTime(options: UseDateTimeOptions) {
-  const language = bg.useLanguage();
-  const timeZone = useTimeZone();
-  const today = useToday();
+  const format = useDateFormat();
 
   if (options.format === "ago") {
     return {
-      text: DateFormat.ago(language, options.value, DateFormat.now(), timeZone),
-      full: DateFormat.instantFull(language, options.value, timeZone),
-      dateTime: DateFormat.instantIso(options.value),
+      text: format.ago(options.value),
+      full: format.instantFull(options.value),
+      dateTime: Clock.iso(options.value),
     };
   }
 
   return {
-    text: DateFormat[options.format](language, options.value, today),
-    full: DateFormat.full(language, options.value),
+    text: format[options.format](options.value),
+    full: format.full(options.value),
     dateTime: options.value,
   };
 }

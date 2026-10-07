@@ -1,12 +1,13 @@
 import { createContext, useContext } from "react";
-import { DateFormat } from "../services/date-format";
+import { TimeZone } from "../api/time-zone.api";
+import { CalendarDay } from "../services/calendar-day";
 
-export const TimeZoneContext = createContext("UTC");
+export const TimeZoneContext = createContext(TimeZone.DEFAULT);
 
 export function useTimeZone() {
   return useContext(TimeZoneContext);
 }
 
 export function useToday() {
-  return DateFormat.todayISO(useTimeZone());
+  return CalendarDay.today(useTimeZone());
 }
