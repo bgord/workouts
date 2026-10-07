@@ -156,6 +156,27 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByRole("button", { name: "Categories", exact: true })).toBeEnabled();
   });
 
+  test("lists the categories with their exercises", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Categories" });
+    const biceps = dialog.getByRole("listitem", { name: fixtures.categories.biceps.name });
+    const lowerBack = dialog.getByRole("listitem", { name: fixtures.categories.lowerBack.name });
+
+    await page.goto("/catalog");
+
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+
+    await expect(
+      biceps.getByText(
+        `${fixtures.exercises.bicepsCurlBarStraight.name}, ${fixtures.exercises.concentrationCurlDumbbell.name}`,
+        { exact: true },
+      ),
+    ).toBeVisible();
+    await expect(biceps.getByText("+9", { exact: true })).toBeVisible();
+    await expect(
+      lowerBack.getByText(fixtures.exercises.romanianDeadliftDumbbellSingleLeg.name, { exact: true }),
+    ).toBeVisible();
+  });
+
   test("shows the error when adding a category fails", async ({ page }) => {
     const dialog = page.getByRole("dialog", { name: "Categories" });
 
@@ -163,7 +184,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByLabel("Category name").fill("Neck");
+    await page.getByLabel("New category").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the category")).toBeVisible();

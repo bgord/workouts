@@ -4,6 +4,7 @@ export * from "./exercise-catalog-entry";
 export * from "./exercise-category";
 export * from "./exercise-category-id";
 export * from "./exercise-category-name";
+export * from "./exercise-category-with-exercise-names";
 export * from "./exercise-description";
 export * from "./exercise-id";
 export * from "./exercise-image-key";

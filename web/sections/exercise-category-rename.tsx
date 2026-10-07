@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
+import { Pencil } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import * as ui from "../components";
@@ -27,24 +28,19 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
   });
 
   /* v8 ignore next */
-  if (!exerciseCategories.actions.rename.available) return <div>{props.name}</div>;
+  if (!exerciseCategories.actions.rename.available) return null;
 
   if (toggle.off) {
     return (
-      <button
+      <ui.IconButton
         aria-label={t("exercise.category.rename.cta", { name: props.name })}
-        data-color="neutral-100"
-        data-cursor="pointer"
-        data-hover-color="brand-300"
-        data-transform="truncate"
         disabled={!exerciseCategories.actions.rename.enabled}
         onClick={toggle.enable}
         title={t("exercise.category.rename.cta", { name: props.name })}
-        type="button"
         {...toggle.props.controller}
       >
-        {props.name}
-      </button>
+        <Pencil data-size="sm" />
+      </ui.IconButton>
     );
   }
 

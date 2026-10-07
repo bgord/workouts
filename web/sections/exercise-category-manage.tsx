@@ -34,6 +34,7 @@ export function ExerciseCategoryManage() {
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...exerciseCategoryManage}>
         <ui.DialogHeader onClose={exerciseCategoryManage.disable}>
           {t("exercise.category.manage.header")}
+          <small data-ml="2">· {exerciseCategories.data.length}</small>
         </ui.DialogHeader>
 
         <ExerciseCategoryAdd />
@@ -47,9 +48,15 @@ export function ExerciseCategoryManage() {
         )}
 
         {exerciseCategories.data.length > 0 && (
-          <ul data-md-minh="unset" data-minh="0" data-overflow="auto" data-stack="y">
-            {exerciseCategories.data.map((category) => (
-              <ExerciseCategoryRow key={category.id} {...category} />
+          <ul
+            aria-label={t("exercise.category.manage.header")}
+            data-md-minh="unset"
+            data-minh="0"
+            data-overflow="auto"
+            data-stack="y"
+          >
+            {exerciseCategories.data.map((category, index) => (
+              <ExerciseCategoryRow first={index === 0} key={category.id} {...category} />
             ))}
           </ul>
         )}

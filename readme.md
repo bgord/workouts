@@ -133,6 +133,7 @@ modules/
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
 │       ├── exercise-category-name.validation.ts
+│       ├── exercise-category-with-exercise-names.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
 │       ├── exercise-description.validation.ts
