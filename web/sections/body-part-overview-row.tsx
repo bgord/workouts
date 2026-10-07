@@ -34,11 +34,11 @@ export function BodyPartOverviewRow(props: BodyPartSummary & { first: boolean })
           </span>
 
           {latest ? (
-            <small data-color="neutral-600" data-transform="nowrap">
+            <small>
               <ui.DateTime format="freshness" value={latest.measuredOn} />
             </small>
           ) : (
-            <small data-color="neutral-600">{t("measurements.body_parts.measure.never")}</small>
+            <small>{t("measurements.body_parts.measure.never")}</small>
           )}
         </span>
 

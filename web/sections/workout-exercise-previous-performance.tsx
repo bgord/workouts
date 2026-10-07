@@ -31,7 +31,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
         </>
       )}
 
-      <ui.DateTime data-color="neutral-600" format="freshness" value={previous.scheduledFor} />
+      <ui.DateTime format="freshness" value={previous.scheduledFor} />
     </small>
   );
 }

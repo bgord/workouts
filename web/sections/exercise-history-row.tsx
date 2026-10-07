@@ -29,8 +29,8 @@ export function ExerciseHistoryRow(props: {
           data-color="neutral-100"
           data-fw="medium"
           data-hover-color="brand-300"
+          data-md-fs="xs"
           data-stack="x"
-          data-transform="font-variant-numeric"
           params={{ workoutId: props.performance.workoutId }}
           to="/workouts/$workoutId"
           {...ui.Gap.cluster}

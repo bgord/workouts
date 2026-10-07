@@ -2,16 +2,15 @@ import * as bg from "@bgord/ui";
 import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
-import { DateFormat } from "../services/date-format";
+import { useDateTime } from "../hooks/use-date-time";
 import { BodyWeightDecimals } from "../services/weight-format";
 
 export function BodyWeightStats(props: VO.BodyWeightStats) {
   const t = bg.useTranslations();
-  const language = bg.useLanguage();
   const pluralize = bg.usePluralize();
 
   const goal = props.reference?.goal;
-  const since = DateFormat.short(language, props.baseline.measuredOn, DateFormat.todayISO());
+  const since = useDateTime({ value: props.baseline.measuredOn, format: "short" });
 
   return (
     <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
@@ -92,13 +91,13 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
           )}
         </ui.TileValue>
 
-        <ui.TileContext title={DateFormat.full(language, props.baseline.measuredOn)}>
+        <ui.TileContext title={since.full}>
           {goal
             ? t("measurements.body_weight.stats.since_reference.goal", {
                 goal: t(`measurements.body_weight.goal.${goal}`),
-                date: since,
+                date: since.text,
               })
-            : since}
+            : since.text}
         </ui.TileContext>
       </ui.Tile>
     </ul>

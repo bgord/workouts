@@ -45,7 +45,6 @@ export function BodyPartHistoryRow(props: {
               data-color="neutral-300"
               data-grow="1"
               data-md-fs="xs"
-              data-transform="nowrap"
               format="list"
               value={props.measurement.measuredOn}
             />

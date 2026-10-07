@@ -28,6 +28,13 @@
   }
 }
 
+@layer defaults {
+  time {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
 body {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
