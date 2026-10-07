@@ -137,6 +137,17 @@ test.describe("Plan - builder", () => {
     await expect(page.getByRole("combobox", { name: "Progression" })).toHaveValue("double_progression");
   });
 
+  test("raises the max reps to the min reps when leaving AMRAP", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("15");
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toHaveValue("15");
+  });
+
   test("shows the empty state when no exercise matches", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     await page.getByRole("button", { name: "Details: Push", exact: true }).click();

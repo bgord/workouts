@@ -30,6 +30,7 @@ export function WorkoutExerciseAdd() {
 
   const toggleRepsScheme = () => {
     repsScheme.set(Reps.toggled);
+    RepsSchemeKit[Reps.toggled].align(repsMin, repsMax);
     progression.set(
       ProgressionMethodChoice.keep(exercise?.progressionMethods, Reps.toggled, progression.value),
     );

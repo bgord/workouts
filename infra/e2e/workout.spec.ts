@@ -452,6 +452,16 @@ test.describe("Workout - active", () => {
     ]);
   });
 
+  test("raises the max reps to the min reps when leaving AMRAP", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("15");
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toHaveValue("15");
+  });
+
   test("shows the error when moving an exercise fails", async ({ page }) => {
     await page.route("**/api/workouts/*/exercise/*/position", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.active.workout.id}`);

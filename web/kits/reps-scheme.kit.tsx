@@ -18,6 +18,7 @@ type RepsSchemeKitStrategy = {
   payload: (min: RepsField, max: RepsField) => { min: RepsField["value"]; max?: RepsField["value"] };
   ready: (max: RepsField) => boolean;
   unchanged: (max: RepsField) => boolean;
+  align: (min: RepsField, max: RepsField) => void;
   toggled: RepsSchemeOptions;
 };
 
@@ -37,6 +38,9 @@ export const RepsSchemeKit = {
     payload: (min, max) => ({ min: min.value, max: max.value }),
     ready: (max) => !max.empty,
     unchanged: (max) => max.unchanged,
+    align: (min, max) => {
+      if (min.value !== undefined && (max.value === undefined || max.value < min.value)) max.set(min.value);
+    },
     toggled: RepsSchemeOptions.amrap,
   },
   [RepsSchemeOptions.amrap]: {
@@ -44,6 +48,7 @@ export const RepsSchemeKit = {
     payload: (min) => ({ min: min.value }),
     ready: () => true,
     unchanged: () => true,
+    align: () => {},
     toggled: RepsSchemeOptions.range,
   },
 } satisfies Record<RepsSchemeOptions, RepsSchemeKitStrategy>;

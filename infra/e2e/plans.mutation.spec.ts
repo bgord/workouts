@@ -580,7 +580,12 @@ test.describe("Plans - drafter", () => {
     );
     await expect(save).toBeDisabled();
 
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("15");
     await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toHaveValue("15");
+
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("4");
     await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("6");
     await page.getByRole("button", { name: "AMRAP", exact: true }).click();
 
