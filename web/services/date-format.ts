@@ -1,111 +1,108 @@
-const DAY_IN_MS = 24 * 60 * 60 * 1000;
+import { CalendarDay } from "./calendar-day";
 
-const DAY: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" };
+const Shape = {
+  full: { day: "numeric", month: "short", year: "numeric" },
+  short: { day: "numeric", month: "short" },
+  list: { weekday: "short", day: "numeric", month: "short" },
+  month: { month: "long", year: "numeric" },
+  instant: { dateStyle: "medium", timeStyle: "short" },
+} satisfies Record<string, Intl.DateTimeFormatOptions>;
 
-const relative = (language: string) => new Intl.RelativeTimeFormat(language, { numeric: "auto" });
+type DateFormatConfig = { language: string; today: CalendarDay; now: number; timeZone?: string };
 
-const capitalize = (language: string, text: string) =>
-  `${text.charAt(0).toLocaleUpperCase(language)}${text.slice(1)}`;
+export class DateFormat {
+  constructor(private readonly config: DateFormatConfig) {}
 
-const plain = (date: string) => {
-  const [year, month, day] = date.split("-").map(Number);
+  // Oct 7, 2026
+  full(date: string): string {
+    return this.day(date, Shape.full);
+  }
 
-  // biome-ignore lint: lint/style/noRestrictedGlobals
-  return Date.UTC(year!, month! - 1, day!);
-};
+  // Oct 7 · Oct 7, 2025
+  short(date: string): string {
+    return this.day(date, this.withYear(date, Shape.short));
+  }
 
-const iso = (timestamp: number) =>
-  // biome-ignore lint: lint/style/noRestrictedGlobals
-  new Date(timestamp).toISOString().slice(0, 10);
+  // Wed, Oct 7 · Tue, Oct 7, 2025
+  list(date: string): string {
+    return this.day(date, this.withYear(date, Shape.list));
+  }
 
-const localDay = (timestamp: number, timeZone?: string) => {
-  const parts = new Intl.DateTimeFormat("en", {
-    timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(timestamp);
-  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((entry) => entry.type === type)!.value;
+  // October 2026
+  month(date: string): string {
+    return this.day(date, Shape.month);
+  }
 
-  return `${part("year")}-${part("month")}-${part("day")}`;
-};
+  // { month: "Oct", day: "7", weekday: "Wed" }
+  parts(date: string) {
+    return {
+      month: this.day(date, { month: "short" }),
+      day: this.day(date, { day: "numeric" }),
+      weekday: this.day(date, { weekday: "short" }),
+    };
+  }
 
-const format = (language: string, moment: string | number, options: Intl.DateTimeFormatOptions) =>
-  typeof moment === "number"
-    ? new Intl.DateTimeFormat(language, options).format(moment)
-    : new Intl.DateTimeFormat(language, { ...options, timeZone: "UTC" }).format(plain(moment));
+  // Sep 29 – Oct 5, 2026
+  range(from: string, to: string): string {
+    return new Intl.DateTimeFormat(this.config.language, { ...Shape.full, timeZone: "UTC" }).formatRange(
+      CalendarDay.from(from).toUtcTimestamp(),
+      CalendarDay.from(to).toUtcTimestamp(),
+    );
+  }
 
-const year = (date: string) => date.slice(0, 4);
+  // Yesterday · Today · Tomorrow · Fri, Oct 9
+  dayLabel(date: string): string {
+    const days = this.config.today.daysUntil(CalendarDay.from(date));
 
-const months = (date: string) => Number(date.slice(0, 4)) * 12 + Number(date.slice(5, 7));
+    if (Math.abs(days) > 1) return this.list(date);
 
-const SHORT: Intl.DateTimeFormatOptions = { day: "numeric", month: "short" };
+    const label = this.relative(days, "day");
+    return `${label.charAt(0).toLocaleUpperCase(this.config.language)}${label.slice(1)}`;
+  }
 
-const short = (language: string, date: string, today: string, options: Intl.DateTimeFormatOptions) =>
-  format(language, date, year(date) === year(today) ? options : { ...options, year: "numeric" });
+  // yesterday · 3 days ago · last week · 2 months ago · last year
+  freshness(date: string): string {
+    const days = this.config.today.daysUntil(CalendarDay.from(date));
+    const weeks = Math.sign(days) * Math.round(Math.abs(days) / 7);
+    const months = this.config.today.monthsUntil(CalendarDay.from(date));
 
-const freshness = (language: string, date: string, today: string) => {
-  const days = (plain(date) - plain(today)) / DAY_IN_MS;
-  const weeks = Math.sign(days) * Math.round(Math.abs(days) / 7);
-  const difference = months(date) - months(today);
+    if (Math.abs(days) < 7) return this.relative(days, "day");
+    if (Math.abs(days) < 35) return this.relative(weeks, "week");
+    if (Math.abs(months) < 12) return this.relative(months, "month");
+    return this.relative(Math.trunc(months / 12), "year");
+  }
 
-  if (Math.abs(days) < 7) return relative(language).format(days, "day");
-  if (Math.abs(days) < 35) return relative(language).format(weeks, "week");
-  if (Math.abs(difference) < 12) return relative(language).format(difference, "month");
-  return relative(language).format(Math.trunc(difference / 12), "year");
-};
-
-export const DateFormat = {
-  todayISO: (timeZone?: string) => localDay(DateFormat.now(), timeZone),
-
-  now: () =>
-    // biome-ignore lint: lint/style/noRestrictedGlobals
-    Date.now(),
-
-  addDays: (date: string, days: number) => iso(plain(date) + days * DAY_IN_MS),
-
-  instantIso: (timestamp: number) =>
-    // biome-ignore lint: lint/style/noRestrictedGlobals
-    new Date(timestamp).toISOString(),
-
-  month: (language: string, date: string) => format(language, date, { month: "long", year: "numeric" }),
-
-  full: (language: string, date: string) => format(language, date, DAY),
-
-  short: (language: string, date: string, today: string) => short(language, date, today, SHORT),
-
-  list: (language: string, date: string, today: string) =>
-    short(language, date, today, { ...SHORT, weekday: "short" }),
-
-  dayLabel: (language: string, date: string, today: string) => {
-    const days = (plain(date) - plain(today)) / DAY_IN_MS;
-
-    if (Math.abs(days) <= 1) return capitalize(language, relative(language).format(days, "day"));
-    return DateFormat.list(language, date, today);
-  },
-
-  freshness,
-
-  range: (language: string, from: string, to: string) =>
-    new Intl.DateTimeFormat(language, { ...DAY, timeZone: "UTC" }).formatRange(plain(from), plain(to)),
-
-  parts: (language: string, date: string) => ({
-    month: format(language, date, { month: "short" }),
-    day: format(language, date, { day: "numeric" }),
-    weekday: format(language, date, { weekday: "short" }),
-  }),
-
-  ago: (language: string, timestamp: number, now: number, timeZone?: string) => {
-    const seconds = Math.round((timestamp - now) / 1000);
+  // now · 5 minutes ago · 3 hours ago · yesterday
+  ago(instant: number): string {
+    const seconds = Math.round((instant - this.config.now) / 1000);
     const minutes = Math.trunc(seconds / 60);
     const hours = Math.trunc(seconds / 3600);
 
-    if (Math.abs(seconds) < 60) return relative(language).format(0, "second");
-    if (Math.abs(minutes) < 60) return relative(language).format(minutes, "minute");
-    if (Math.abs(hours) < 24) return relative(language).format(hours, "hour");
-    return freshness(language, localDay(timestamp, timeZone), localDay(now, timeZone));
-  },
+    if (Math.abs(seconds) < 60) return this.relative(0, "second");
+    if (Math.abs(minutes) < 60) return this.relative(minutes, "minute");
+    if (Math.abs(hours) < 24) return this.relative(hours, "hour");
+    return this.freshness(CalendarDay.fromInstant(instant, this.config.timeZone).toString());
+  }
 
-  instantFull: (language: string, timestamp: number, timeZone?: string) =>
-    format(language, timestamp, { dateStyle: "medium", timeStyle: "short", timeZone }),
-};
+  // Oct 7, 2026 at 2:00 PM
+  instantFull(instant: number): string {
+    return new Intl.DateTimeFormat(this.config.language, {
+      ...Shape.instant,
+      timeZone: this.config.timeZone,
+    }).format(instant);
+  }
+
+  private day(date: string, options: Intl.DateTimeFormatOptions): string {
+    return new Intl.DateTimeFormat(this.config.language, { ...options, timeZone: "UTC" }).format(
+      CalendarDay.from(date).toUtcTimestamp(),
+    );
+  }
+
+  private withYear(date: string, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions {
+    return CalendarDay.from(date).year === this.config.today.year ? options : { ...options, year: "numeric" };
+  }
+
+  private relative(value: number, unit: Intl.RelativeTimeFormatUnit): string {
+    return new Intl.RelativeTimeFormat(this.config.language, { numeric: "auto" }).format(value, unit);
+  }
+}

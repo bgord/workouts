@@ -1,6 +1,6 @@
 import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-workout";
 import { ResistanceFormat } from "../kits/resistance.format";
-import { DateFormat } from "./date-format";
+import { Clock } from "./clock";
 
 export class WorkoutReport {
   static create(
@@ -18,7 +18,7 @@ export class WorkoutReport {
     return [
       `# Workout: ${workout.planName} - ${workout.planSectionName}`,
       "",
-      `Completed at: ${DateFormat.instantIso(workout.completedAt)}`,
+      `Completed at: ${Clock.iso(workout.completedAt)}`,
       `Workout id: ${workout.id}`,
       `Logged sets: ${rows.length}`,
       "",
