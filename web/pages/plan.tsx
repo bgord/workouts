@@ -18,7 +18,7 @@ export function Plan() {
   return (
     <ui.Main>
       <div data-stack="y" {...ui.Gap.block}>
-        <div data-stack="y" {...ui.Gap.inline}>
+        <div data-stack="y" {...ui.Gap.related}>
           <div data-cross="center" data-stack="x" {...ui.Gap.related}>
             <ui.ButtonBack to="/plans" />
 

@@ -75,6 +75,45 @@ test.describe("Mobile - pocket", () => {
     await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeHidden();
   });
 
+  test("corrects a logged set from the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const form = panel.getByRole("form", { name: "Correct set 1" });
+
+    await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
+    await page.getByRole("button", { name: "Continue" }).tap();
+    await panel
+      .getByRole("group", { name: "Exercises" })
+      .getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true })
+      .tap();
+    await panel.getByRole("button", { name: "Correct set 1" }).tap();
+    await form.getByRole("spinbutton", { name: "Reps" }).fill("10");
+    await form.getByRole("button", { name: "Log set", exact: true }).tap();
+
+    await expect(panel.getByText("10×20 kg", { exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(panel.getByText("10×20 kg", { exact: true })).toBeVisible();
+  });
+
+  test("removes a logged set from the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
+    await page.getByRole("button", { name: "Continue" }).tap();
+    await panel
+      .getByRole("group", { name: "Exercises" })
+      .getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true })
+      .tap();
+    await panel.getByRole("button", { name: "Remove set 1" }).tap();
+
+    await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeHidden();
+
+    await page.reload();
+
+    await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeHidden();
+  });
+
   test("adds a note", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
 

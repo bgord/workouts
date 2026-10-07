@@ -77,8 +77,13 @@ export const exerciseListResponseEmpty: Exercises.Queries.ExerciseListResponse =
   data: [],
 };
 
+export const exerciseCategoryWithExerciseNames: Exercises.VO.ExerciseCategoryWithExerciseNames = {
+  ...exerciseCategory,
+  exerciseNames: [exerciseName],
+};
+
 export const exerciseCategoryListResponse: Exercises.Queries.ExerciseCategoryListResponse = {
-  data: [exerciseCategory],
+  data: [exerciseCategoryWithExerciseNames],
   actions: {
     manage: actionAvailable,
     add: actionAvailable,

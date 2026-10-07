@@ -8,7 +8,12 @@ export const ProgressionMethodApplicability: Record<
   weighted: [
     ProgressionMethodOptions.double_progression,
     ProgressionMethodOptions.linear_progression,
+    ProgressionMethodOptions.rep_progression,
     ProgressionMethodOptions.none,
   ],
-  bodyweight: [ProgressionMethodOptions.double_progression, ProgressionMethodOptions.none],
+  bodyweight: [
+    ProgressionMethodOptions.double_progression,
+    ProgressionMethodOptions.rep_progression,
+    ProgressionMethodOptions.none,
+  ],
 };

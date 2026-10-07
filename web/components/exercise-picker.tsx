@@ -5,6 +5,7 @@ import type {
   ExerciseCatalogItem,
   ExerciseCatalogResponse,
 } from "../../modules/plans/queries/list-exercise-catalog";
+import { ResistanceKit } from "../kits/resistance.kit";
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 import { ExercisePickerLoading } from "./exercise-picker-loading";
@@ -79,52 +80,58 @@ function ExercisePickerOptions(props: ExercisePickerOptionsProps) {
         </li>
       )}
 
-      {matching.map((exercise, index) => (
-        <HairlineRow first={index === 0} key={exercise.id} tone="subtle">
-          <label
-            data-bg={props.value === exercise.id ? "alpha-subtle" : undefined}
-            data-color={props.value === exercise.id ? "neutral-0" : "neutral-200"}
-            data-cursor="pointer"
-            data-hover-bg="alpha-subtle"
-            data-position="relative"
-            data-px="3"
-            data-stack="x"
-            {...Spacing.rowCompact}
-          >
-            <input
-              checked={props.value === exercise.id}
+      {matching.map((exercise, index) => {
+        const Resistance = ResistanceKit[exercise.resistance];
+
+        return (
+          <HairlineRow first={index === 0} key={exercise.id} tone="subtle">
+            <label
+              data-bg={props.value === exercise.id ? "alpha-subtle" : undefined}
+              data-color={props.value === exercise.id ? "neutral-0" : "neutral-200"}
               data-cursor="pointer"
-              data-inset="0"
-              data-opacity="none"
-              data-position="absolute"
-              name={props.name}
-              onChange={() => props.onChange(exercise)}
-              type="radio"
-              value={exercise.id}
-            />
-
-            <span aria-hidden data-shrink="0" data-stack="x">
-              <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
-            </span>
-
-            <span data-grow="1" data-transform="truncate" title={exercise.name}>
-              {exercise.name}
-            </span>
-
-            <span
-              data-color="neutral-500"
-              data-fs="xs"
-              data-md-disp="none"
-              data-transform="truncate"
-              style={{ flexShrink: 2, maxWidth: "40%" }}
+              data-hover-bg="alpha-subtle"
+              data-position="relative"
+              data-px="3"
+              data-stack="x"
+              {...Spacing.rowCompact}
             >
-              {exercise.categories.map((category) => category.name).join(", ")}
-            </span>
+              <input
+                checked={props.value === exercise.id}
+                data-cursor="pointer"
+                data-inset="0"
+                data-opacity="none"
+                data-position="absolute"
+                name={props.name}
+                onChange={() => props.onChange(exercise)}
+                type="radio"
+                value={exercise.id}
+              />
 
-            {props.value === exercise.id && <Check data-color="brand-400" data-shrink="0" data-size="sm" />}
-          </label>
-        </HairlineRow>
-      ))}
+              <span aria-hidden data-shrink="0" data-stack="x">
+                <ExerciseImage size={ExerciseImageSize.xs} {...exercise} />
+              </span>
+
+              <span data-grow="1" data-transform="truncate" title={exercise.name}>
+                {exercise.name}
+              </span>
+
+              <Resistance.Glyph />
+
+              <span
+                data-color="neutral-500"
+                data-fs="xs"
+                data-md-disp="none"
+                data-transform="truncate"
+                style={{ flexShrink: 2, maxWidth: "40%" }}
+              >
+                {exercise.categories.map((category) => category.name).join(", ")}
+              </span>
+
+              {props.value === exercise.id && <Check data-color="brand-400" data-shrink="0" data-size="sm" />}
+            </label>
+          </HairlineRow>
+        );
+      })}
     </>
   );
 }

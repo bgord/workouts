@@ -37,7 +37,7 @@ export class ProgressionMethodDoubleProgressionStrategy implements ProgressionMe
     const { last } = this.config;
     const { min, max } = this.config.prescription.reps;
 
-    if (last.reps >= max) {
+    if (max !== undefined && last.reps >= max) {
       const load = this.deps.LoadStep.increase(last.load);
 
       if (load === undefined) return undefined;

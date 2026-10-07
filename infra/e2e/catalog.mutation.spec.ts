@@ -10,10 +10,10 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByLabel("Category name").fill("ab");
+    await page.getByLabel("New category").fill("ab");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
-    await expect(page.getByLabel("Category name").and(page.locator(":invalid"))).toHaveCount(1);
+    await expect(page.getByLabel("New category").and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
@@ -27,11 +27,14 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByLabel("Category name").fill("Neck");
+    await page.getByLabel("New category").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(dialog.getByText("Neck", { exact: true })).toBeVisible();
-    await expect(page.getByLabel("Category name")).toHaveValue("");
+    await expect(
+      dialog.getByRole("listitem", { name: "Neck" }).getByText("No exercises", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByLabel("New category")).toHaveValue("");
 
     await page.reload();
     await page.getByRole("button", { name: "Categories", exact: true }).click();
@@ -43,7 +46,7 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByLabel("Category name").fill(fixtures.categories.abs.name.toUpperCase());
+    await page.getByLabel("New category").fill(fixtures.categories.abs.name.toUpperCase());
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the category")).toBeVisible();
@@ -347,7 +350,7 @@ test.describe("Catalog - admin", () => {
 
     await page.goto("/catalog");
     await page.getByRole("button", { name: "Categories", exact: true }).click();
-    await page.getByLabel("Category name").fill("Grip");
+    await page.getByLabel("New category").fill("Grip");
     await page.getByRole("button", { name: "Add", exact: true }).click();
     await expect(page.getByRole("button", { name: "Delete Grip" })).toBeVisible();
     await page.goto(`/catalog/exercise/${fixtures.exercises.hammerCurlDumbbells.id}`);
@@ -358,6 +361,11 @@ test.describe("Catalog - admin", () => {
 
     await page.goto("/catalog");
     await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await expect(
+      page
+        .getByRole("listitem", { name: "Grip" })
+        .getByText(fixtures.exercises.hammerCurlDumbbells.name, { exact: true }),
+    ).toBeVisible();
     await page.getByRole("button", { name: "Delete Grip" }).click();
     await page.getByRole("button", { name: "Delete", exact: true }).click();
     await expect(page.getByRole("button", { name: "Delete Grip" })).toBeHidden();

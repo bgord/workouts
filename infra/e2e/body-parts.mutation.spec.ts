@@ -11,9 +11,9 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("Body part name").fill("a".repeat(65));
+    await page.getByLabel("New body part").fill("a".repeat(65));
 
-    await expect(page.getByLabel("Body part name")).toHaveValue("a".repeat(64));
+    await expect(page.getByLabel("New body part")).toHaveValue("a".repeat(64));
   });
 
   test("blocks defining a body part with an empty name", async ({ page }) => {
@@ -30,12 +30,18 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("Body part name").fill("Neck");
+    await page.getByLabel("New body part").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Add a body part from the menu to start measuring")).toBeHidden();
     await expect(page.getByRole("button", { name: "Measure Neck" })).toBeVisible();
-    await expect(page.getByLabel("Body part name")).toHaveValue("");
+    await expect(
+      page
+        .getByRole("dialog", { name: "Body parts" })
+        .getByRole("listitem", { name: "Neck", exact: true })
+        .getByText("Not measured yet", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByLabel("New body part")).toHaveValue("");
   });
 
   test("rejects a duplicate body part name", async ({ page }) => {
@@ -43,7 +49,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("Body part name").fill("NECK");
+    await page.getByLabel("New body part").fill("NECK");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the body part")).toBeVisible();

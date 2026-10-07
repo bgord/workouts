@@ -1,4 +1,5 @@
 import { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
+import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
 
 export const Form = {
   exerciseId: { field: { name: "exerciseId" } },
@@ -6,6 +7,7 @@ export const Form = {
   sets: { pattern: { min: 1, max: 20, step: 1 }, field: { name: "workoutSets", defaultValue: 3 } },
   repsMin: { pattern: { min: 1, max: 100, step: 1 }, field: { name: "workoutRepsMin", defaultValue: 8 } },
   repsMax: { pattern: { min: 1, max: 100, step: 1 }, field: { name: "workoutRepsMax", defaultValue: 12 } },
+  repsScheme: { field: { name: "workoutRepsScheme", defaultValue: RepsSchemeOptions.range } },
   progression: {
     field: { name: "workoutProgression", defaultValue: ProgressionMethodOptions.double_progression },
   },

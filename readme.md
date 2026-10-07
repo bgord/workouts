@@ -133,6 +133,7 @@ modules/
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
 │       ├── exercise-category-name.validation.ts
+│       ├── exercise-category-with-exercise-names.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
 │       ├── exercise-description.validation.ts
@@ -357,6 +358,7 @@ modules/
 │   │   ├── plan-section-exercise-instruction-limit.ts
 │   │   ├── plan-section-exercise-instruction-position-has-changed.ts
 │   │   ├── plan-section-exercise-instruction-position-in-range.ts
+│   │   ├── plan-section-exercise-instruction-progression-is-applicable-for-reps.ts
 │   │   ├── plan-section-exercise-instruction-progression-is-applicable.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
@@ -403,8 +405,11 @@ modules/
 │       ├── plan-summary.ts
 │       ├── progression-method-applicability.ts
 │       ├── progression-method-options.ts
+│       ├── progression-method-reps-applicability.ts
 │       ├── progression-method.ts
 │       ├── reps-range.ts
+│       ├── reps-scheme-options.ts
+│       ├── reps-scheme.ts
 │       └── sets.ts
 ├── preferences
 │   ├── command-handlers
@@ -511,6 +516,7 @@ modules/
     │   ├── workout-exercise-load-is-applicable.ts
     │   ├── workout-exercise-position-has-changed.ts
     │   ├── workout-exercise-position-in-range.ts
+    │   ├── workout-exercise-progression-is-applicable-for-reps.ts
     │   ├── workout-exercise-progression-is-applicable.ts
     │   ├── workout-exercise-target-has-changed.ts
     │   ├── workout-exercises-have-targets.ts
@@ -553,6 +559,7 @@ modules/
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-none.strategy.ts
+    │   ├── progression-method-rep-progression.strategy.ts
     │   ├── progression-method.strategy.ts
     │   ├── workout-export-file-csv.ts
     │   ├── workout-get-actions.ts

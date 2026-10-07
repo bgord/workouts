@@ -1,5 +1,7 @@
 import type * as bg from "@bgord/ui";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
+import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
+import { RepsSchemeFormat } from "../kits/reps-scheme.format";
 import { ResistanceFormat } from "../kits/resistance.format";
 import { EffortFormat } from "./effort-format";
 
@@ -15,10 +17,10 @@ export const SetNotation = {
   target: (
     t: bg.TranslateType,
     language: string,
-    value: { resistance: ExerciseResistanceOptions; sets: number } & SetFigures,
+    value: { resistance: ExerciseResistanceOptions; scheme: RepsSchemeOptions; sets: number } & SetFigures,
   ) =>
     join(" ", [
-      EffortFormat.target(t, value.sets, value.reps),
+      EffortFormat.target(t, value.sets, RepsSchemeFormat[value.scheme].target(value.reps)),
       ResistanceFormat[value.resistance].target(value.load, language),
     ]),
 
@@ -34,6 +36,7 @@ export const SetNotation = {
     if (uniform) {
       return SetNotation.target(t, language, {
         resistance: value.resistance,
+        scheme: RepsSchemeOptions.range,
         sets: value.sets.length,
         reps: reps[0] ?? 0,
         load,

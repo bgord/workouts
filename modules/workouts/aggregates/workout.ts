@@ -127,6 +127,7 @@ export class Workout {
     Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
     Invariants.WorkoutExerciseLimit.enforce({ workoutExercises: this.exercises });
+    Invariants.WorkoutExerciseProgressionIsApplicableForReps.enforce(prescription);
 
     const event = bg.event(
       Events.WorkoutExerciseAddedEvent,

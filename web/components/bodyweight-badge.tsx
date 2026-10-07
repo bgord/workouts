@@ -13,6 +13,10 @@ export function BodyweightBadge(props: React.JSX.IntrinsicElements["span"]) {
   );
 }
 
+export function BodyweightGlyph(props: React.JSX.IntrinsicElements["svg"]) {
+  return <PersonStanding aria-hidden data-color="neutral-500" data-shrink="0" data-size="sm" {...props} />;
+}
+
 export function BodyweightMarker(props: React.JSX.IntrinsicElements["span"]) {
   const t = bg.useTranslations();
 

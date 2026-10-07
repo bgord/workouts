@@ -30,7 +30,6 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
         disabled={!exerciseCategories.actions.delete.enabled}
         onClick={exerciseCategoryDelete.enable}
         title={t("exercise.category.delete.title", { name: props.name })}
-        tone="danger"
         {...exerciseCategoryDelete.props.controller}
       >
         <Trash2 data-size="sm" />

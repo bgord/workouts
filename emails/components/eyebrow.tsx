@@ -1,4 +1,3 @@
-import { Text } from "@react-email/text";
 import { theme } from "../theme";
 
 const styles = {
@@ -12,6 +11,6 @@ const styles = {
   },
 } satisfies Record<string, React.CSSProperties>;
 
-export function Eyebrow(props: React.ComponentProps<typeof Text>) {
-  return <Text {...props} style={{ ...styles.eyebrow, ...props.style }} />;
+export function Eyebrow(props: React.JSX.IntrinsicElements["p"]) {
+  return <p {...props} style={{ ...styles.eyebrow, ...props.style }} />;
 }

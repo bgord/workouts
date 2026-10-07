@@ -312,7 +312,7 @@ export class Plan {
   ) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    this.section(planSectionId).guardInstructionAdd();
+    this.section(planSectionId).guardInstructionAdd(exerciseInstruction);
 
     const event = bg.event(
       Events.PlanSectionExerciseInstructionAddedEvent,

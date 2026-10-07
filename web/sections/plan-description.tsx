@@ -35,7 +35,11 @@ export function PlanDescription() {
   if (!plan.actions.descriptionSet.available) {
     if (!plan.data.description) return null;
 
-    return <p className="c-prose">{plan.data.description}</p>;
+    return (
+      <p className="c-prose" data-ml="3">
+        {plan.data.description}
+      </p>
+    );
   }
 
   return (

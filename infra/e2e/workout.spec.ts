@@ -430,12 +430,51 @@ test.describe("Workout - active", () => {
     await expect(dialog).toBeHidden();
   });
 
-  test("offers only the applicable progressions for a bodyweight exercise", async ({ page }) => {
-    const progression = page.getByRole("combobox", { name: "Progression" });
+  test("asks for the exercise before the prescription", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+
+    await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toBeVisible();
+    await expect(dialog.getByRole("spinbutton", { name: "Sets", exact: true })).toBeHidden();
+    await expect(dialog.getByRole("button", { name: "Add exercise" })).toBeHidden();
+  });
+
+  test("shows the picked exercise above the prescription", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.getByRole("button", { name: "Add exercise" }).click();
-    await progression.selectOption("linear_progression");
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
+
+    await page
+      .getByRole("radio", {
+        name: `${fixtures.exercises.hangingLegRaise.name} ${fixtures.categories.abs.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toBeHidden();
+    await expect(dialog.getByText(fixtures.exercises.hangingLegRaise.name, { exact: true })).toBeVisible();
+    await expect(dialog.getByText(fixtures.categories.abs.name, { exact: true })).toBeVisible();
+    await expect(dialog.getByText("Bodyweight", { exact: true })).toBeVisible();
+    await expect(dialog.getByRole("spinbutton", { name: "Sets", exact: true })).toBeVisible();
+  });
+
+  test("changes the picked exercise", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("5");
+
+    await dialog
+      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.facePull.name}` })
+      .click();
     await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
     await page
       .getByRole("radio", {
@@ -444,8 +483,81 @@ test.describe("Workout - active", () => {
       })
       .click();
 
-    await expect(progression).toHaveValue("double_progression");
-    await expect(progression.getByRole("option")).toHaveText(["Double progression", "No progression"]);
+    await expect(dialog.getByText(fixtures.exercises.hangingLegRaise.name, { exact: true })).toBeVisible();
+    await expect(dialog.getByText(fixtures.exercises.facePull.name, { exact: true })).toBeHidden();
+    await expect(dialog.getByRole("spinbutton", { name: "Sets", exact: true })).toHaveValue("5");
+  });
+
+  test("keeps the picked exercise when cancelling the change", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await dialog
+      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.facePull.name}` })
+      .click();
+
+    await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toBeHidden();
+    await expect(dialog.getByText(fixtures.exercises.facePull.name, { exact: true })).toBeVisible();
+  });
+
+  test("returns to the exercise list when clearing", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+
+    await dialog.getByRole("button", { name: "Clear", exact: true }).click();
+
+    await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toHaveValue("");
+    await expect(dialog.getByRole("spinbutton", { name: "Sets", exact: true })).toBeHidden();
+  });
+
+  test("offers only the applicable progressions for a bodyweight exercise", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
+    const progression = page.getByRole("group", { name: "Progression" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await progression.getByText("Linear progression", { exact: true }).click();
+    await dialog
+      .getByRole("button", { name: `Change exercise: ${fixtures.exercises.facePull.name}` })
+      .click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.hangingLegRaise.name);
+
+    await page
+      .getByRole("radio", {
+        name: `${fixtures.exercises.hangingLegRaise.name} ${fixtures.categories.abs.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(progression.getByRole("radio")).toHaveCount(3);
+    await expect(progression.getByRole("radio", { name: "Double progression" })).toBeChecked();
+    await expect(progression.getByRole("radio", { name: "Rep progression" })).not.toBeChecked();
+    await expect(progression.getByRole("radio", { name: "No progression" })).not.toBeChecked();
+  });
+
+  test("raises the max reps to the min reps when leaving AMRAP", async ({ page }) => {
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.facePull.name);
+    await page.getByRole("radio", { name: fixtures.exercises.facePull.name }).click();
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("15");
+
+    await page.getByRole("button", { name: "AMRAP", exact: true }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Max reps", exact: true })).toHaveValue("15");
   });
 
   test("shows the error when moving an exercise fails", async ({ page }) => {

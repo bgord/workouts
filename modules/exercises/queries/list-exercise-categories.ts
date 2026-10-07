@@ -3,7 +3,7 @@ import type * as Auth from "+auth";
 import type * as VO from "+exercises/value-objects";
 
 export type ExerciseCategoryListResponse = {
-  data: ReadonlyArray<VO.ExerciseCategory>;
+  data: ReadonlyArray<VO.ExerciseCategoryWithExerciseNames>;
   actions: { manage: bg.ActionState; add: bg.ActionState; rename: bg.ActionState; delete: bg.ActionState };
 };
 

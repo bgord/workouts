@@ -24,8 +24,9 @@ export class PlanSection implements VO.PlanSection {
     Invariants.PlanSectionCooldownHasChanged.enforce({ current: this.cooldown, incoming: cooldown });
   }
 
-  guardInstructionAdd() {
+  guardInstructionAdd(exerciseInstruction: VO.ExerciseInstructionType) {
     Invariants.PlanSectionExerciseInstructionLimit.enforce({ planSection: this });
+    Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.enforce(exerciseInstruction);
   }
 
   guardInstructionExists(exerciseInstructionId: VO.ExerciseInstructionIdType) {
@@ -40,6 +41,7 @@ export class PlanSection implements VO.PlanSection {
         incoming: exerciseInstruction,
       });
     }
+    Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.enforce(exerciseInstruction);
   }
 
   guardInstructionMove(

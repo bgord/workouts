@@ -1,9 +1,7 @@
-import { Column } from "@react-email/column";
-import { Row } from "@react-email/row";
 import { theme } from "../theme";
 
 const styles = {
-  row: { width: "auto", borderCollapse: "collapse" },
+  table: { width: "auto", borderCollapse: "collapse" },
   bar: {
     width: "4px",
     height: "30px",
@@ -28,13 +26,17 @@ const styles = {
 
 export function Logo() {
   return (
-    <Row align={undefined} style={styles.row} width="auto">
-      <Column style={styles.bar} />
-      <Column style={styles.gap} />
-      <Column style={styles.bar} />
-      <Column style={styles.gap} />
-      <Column style={styles.bar} />
-      <Column style={styles.word}>Workouts</Column>
-    </Row>
+    <table border={0} cellPadding="0" cellSpacing="0" role="presentation" style={styles.table} width="auto">
+      <tbody>
+        <tr>
+          <td style={styles.bar} />
+          <td style={styles.gap} />
+          <td style={styles.bar} />
+          <td style={styles.gap} />
+          <td style={styles.bar} />
+          <td style={styles.word}>Workouts</td>
+        </tr>
+      </tbody>
+    </table>
   );
 }

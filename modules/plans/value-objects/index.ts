@@ -18,5 +18,8 @@ export * from "./plan-summary";
 export * from "./progression-method";
 export * from "./progression-method-applicability";
 export * from "./progression-method-options";
+export * from "./progression-method-reps-applicability";
 export * from "./reps-range";
+export * from "./reps-scheme";
+export * from "./reps-scheme-options";
 export * from "./sets";
