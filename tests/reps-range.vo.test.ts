@@ -8,6 +8,10 @@ describe("RepsRange", () => {
     expect(v.safeParse(Plans.VO.RepsRange, { min: 5, max: 10 }).success).toEqual(true);
   });
 
+  test("happy path - no max", () => {
+    expect(v.safeParse(Plans.VO.RepsRange, { min: 5 }).success).toEqual(true);
+  });
+
   test("rejects invalid input type", () => {
     expect(() => v.parse(Plans.VO.RepsRange, null)).toThrow("reps.range.type");
     expect(() => v.parse(Plans.VO.RepsRange, "123")).toThrow("reps.range.type");
