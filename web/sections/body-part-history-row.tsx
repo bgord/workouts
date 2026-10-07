@@ -41,9 +41,14 @@ export function BodyPartHistoryRow(props: {
             {...ui.Gap.cluster}
             {...bodyPartMeasurementCorrect.props.controller}
           >
-            <span data-color="neutral-300" data-grow="1" data-md-fs="xs" data-transform="nowrap">
-              <ui.DateTime format="list" value={props.measurement.measuredOn} />
-            </span>
+            <ui.DateTime
+              data-color="neutral-300"
+              data-grow="1"
+              data-md-fs="xs"
+              data-transform="nowrap"
+              format="list"
+              value={props.measurement.measuredOn}
+            />
 
             <span
               data-fs="xs"
