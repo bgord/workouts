@@ -186,11 +186,28 @@ test.describe("Mobile - active", () => {
 
     await page.getByRole("button", { name: "Add exercise" }).tap();
 
-    await expect(dialog.getByRole("button", { name: "Add exercise" })).toBeInViewport();
+    await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toBeInViewport();
     await expect(dialog.getByRole("button", { name: "Close" })).toBeInViewport();
     await expect(dialog.getByRole("button", { name: "Cancel" })).toBeInViewport();
 
     await dialog.getByRole("button", { name: "Close" }).tap();
+
+    await expect(dialog).toBeHidden();
+  });
+
+  test("fits the discard dialog on the screen", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Discard workout" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await page.getByRole("button", { name: "More actions" }).tap();
+    await page.getByRole("menuitem", { name: "Discard" }).tap();
+
+    await expect(dialog.getByRole("button", { name: "Discard", exact: true })).toBeInViewport();
+    await expect(dialog.getByRole("button", { name: "Close" })).toBeInViewport();
+    await expect(dialog.getByRole("button", { name: "Cancel" })).toBeInViewport();
+
+    await dialog.getByRole("button", { name: "Cancel" }).tap();
 
     await expect(dialog).toBeHidden();
   });

@@ -26,6 +26,21 @@ test.describe("Exercise - athlete", () => {
     await expect(categories.getByText(fixtures.categories.triceps.name, { exact: true })).toBeVisible();
   });
 
+  test("shows the exercise read-only", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
+
+    await expect(
+      page.getByRole("button", { name: `Rename ${fixtures.exercises.superHorizontalBenchPress.name}` }),
+    ).toBeHidden();
+    await expect(page.getByRole("button", { name: "Change image" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "Edit description" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "Assign", exact: true })).toBeHidden();
+    await expect(
+      page.getByRole("button", { name: `Unassign ${fixtures.categories.chest.name}` }),
+    ).toBeHidden();
+    await expect(page.getByRole("button", { name: "More actions" })).toBeHidden();
+  });
+
   test("shows the exercise stats", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 

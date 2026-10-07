@@ -147,7 +147,11 @@ test.describe("Body parts - athlete", () => {
   test("marks the body part that was never measured", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
-    await expect(page.getByText("Not measured yet")).toBeVisible();
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.athlete.bodyParts.calfRight.name, exact: true })
+        .getByText("Not measured yet", { exact: true }),
+    ).toBeVisible();
     await expect(
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.calfRight.name}` }),
     ).toBeVisible();
