@@ -141,6 +141,12 @@ export const amrapRirExercisePrescription = v.parse(Workouts.VO.ExercisePrescrip
   rir: rirTarget,
 });
 
+export const linearExercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: v.parse(Plans.VO.RepsRange, { min: 5, max: 5 }),
+  progression: Plans.VO.ProgressionMethodOptions.linear_progression,
+});
+
 export const loadStep = tools.Weight.fromKilograms(2.5);
 
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");

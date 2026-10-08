@@ -35,7 +35,7 @@ export class ProgressionMethodStrategyFactory {
       case Plans.VO.ProgressionMethodOptions.double_progression:
         return new ProgressionMethodDoubleProgressionStrategy({ prescription, last }, { LoadStep });
       case Plans.VO.ProgressionMethodOptions.linear_progression:
-        return new ProgressionMethodLinearProgressionStrategy({ last }, { LoadStep });
+        return new ProgressionMethodLinearProgressionStrategy({ prescription, last }, { LoadStep });
       case Plans.VO.ProgressionMethodOptions.rep_progression:
         return new ProgressionMethodRepProgressionStrategy({ prescription, last });
       case Plans.VO.ProgressionMethodOptions.none:
