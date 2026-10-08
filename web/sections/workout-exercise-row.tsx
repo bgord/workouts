@@ -148,24 +148,25 @@ export function WorkoutExerciseRow(props: {
 
             <span
               data-cross="center"
+              data-md-disp={hasTarget ? "none" : undefined}
               data-shrink="0"
               data-stack="x"
               data-transform="nowrap"
               title={t("workout.exercise.plan.title")}
               {...ui.Gap.inline}
             >
-              <ListChecks
-                data-color="neutral-500"
-                data-md-disp={hasTarget ? "none" : undefined}
-                data-size="xs"
-              />
+              <ListChecks data-color="neutral-500" data-size="xs" />
 
-              <small data-md-disp={hasTarget ? "none" : undefined}>
+              <small>
                 <ui.SetsReps {...props.exercise.prescription} />
               </small>
 
               {props.exercise.prescription.rir !== undefined && (
-                <ui.RirBadge rir={props.exercise.prescription.rir} title={t("rir.target.label")} />
+                <ui.RirBadge
+                  data-ml="1"
+                  rir={props.exercise.prescription.rir}
+                  title={t("rir.target.label")}
+                />
               )}
             </span>
 

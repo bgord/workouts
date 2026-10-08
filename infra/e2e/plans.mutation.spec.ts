@@ -436,7 +436,8 @@ test.describe("Plans - drafter", () => {
     await expect(row.getByRole("note", { name: "Double progression" })).toBeVisible();
   });
 
-  test("sets a target RIR on the exercise instruction", async ({ page }) => {
+  test("sets a target RIR on the exercise instruction", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     const row = page.getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true });
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);
@@ -459,6 +460,14 @@ test.describe("Plans - drafter", () => {
 
     await expect(row.getByText("5×6-8", { exact: true })).toBeVisible();
     await expect(row.getByTitle("Target RIR", { exact: true })).toHaveText("RIR 2");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Copy plan" }).click();
+
+    await expect(page.getByRole("menuitem", { name: "Copied" })).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain(
+      `- ${fixtures.exercises.facePull.name}: 5 x 6-8 @ RIR 2, double_progression`,
+    );
   });
 
   test("changes the exercise of the instruction", async ({ page }) => {

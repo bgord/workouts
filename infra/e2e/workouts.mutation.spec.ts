@@ -878,6 +878,51 @@ test.describe("Workouts - active-mutation", () => {
     await expect(row.getByText("3×12+", { exact: true })).toBeVisible();
   });
 
+  test("shows the target RIR in the log panel head and marks a set below it", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const head = panel.getByRole("group", { name: fixtures.exercises.pecDeck.name, exact: true });
+    const row = page.getByRole("listitem", { name: fixtures.exercises.pecDeck.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecDeck.name);
+    await page.getByRole("radio", { name: fixtures.exercises.pecDeck.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("10");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("12");
+    await page
+      .getByRole("group", { name: "Target RIR" })
+      .getByRole("button", { name: "RIR 2", exact: true })
+      .click();
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+    await page.getByRole("button", { name: "Continue" }).click();
+    await panel
+      .getByRole("toolbar", { name: "Exercises" })
+      .getByRole("button", { name: `7. ${fixtures.exercises.pecDeck.name}`, exact: true })
+      .click();
+
+    await expect(head.getByTitle("Target RIR", { exact: true })).toHaveText("RIR 2");
+
+    await panel.getByRole("spinbutton", { name: "Reps" }).fill("10");
+    await panel.getByRole("spinbutton", { name: "Load (kg)" }).fill("40");
+    await panel.getByRole("button", { name: "Log set · RIR 1" }).click();
+
+    await expect(panel.getByRole("img", { name: "Below target RIR 2", exact: true })).toBeVisible();
+
+    await expect(page.locator("[aria-busy=true]")).toHaveCount(0);
+    await page.keyboard.press("Escape");
+    await page
+      .getByRole("button", { name: `Details: ${fixtures.exercises.pecDeck.name}`, exact: true })
+      .click();
+    await page.reload();
+
+    await expect(row.getByRole("img", { name: "Below target RIR 2", exact: true })).toBeVisible();
+  });
+
   test("completes the workout in progress", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 

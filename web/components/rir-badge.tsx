@@ -25,7 +25,9 @@ export function RirBadge(props: React.JSX.IntrinsicElements["span"] & { rir: num
       {...span}
     >
       <RirDot rir={rir} />
-      {t("workout.set.rir.label")} {rir}
+      <span data-transform="nowrap">
+        {t("workout.set.rir.label")} {rir}
+      </span>
     </span>
   );
 }
