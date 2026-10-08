@@ -88,6 +88,12 @@ test.describe("Exercise - athlete", () => {
     ).toHaveCount(1);
   });
 
+  test("shows the sides of a unilateral exercise", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.legExtensionSingleLeg.id}`);
+
+    await expect(page.getByText("Each side", { exact: true })).toBeVisible();
+  });
+
   test("keeps the history session expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.superHorizontalBenchPress.id}`);
 
