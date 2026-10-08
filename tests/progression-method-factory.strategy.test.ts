@@ -9,7 +9,7 @@ describe("ProgressionMethodStrategyFactory", () => {
   test("double_progression", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       mocks.exercisePrescription,
-      mocks.workoutExerciseResistance,
+      mocks.exerciseLoadStep,
       mocks.exercisePerformance,
     );
 
@@ -39,7 +39,7 @@ describe("ProgressionMethodStrategyFactory", () => {
   test("double_progression - rir below target", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       mocks.rirExercisePrescription,
-      mocks.workoutExerciseResistance,
+      mocks.exerciseLoadStep,
       mocks.exercisePerformanceWithRir,
     );
 
@@ -61,7 +61,7 @@ describe("ProgressionMethodStrategyFactory", () => {
   test("linear_progression", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       { ...mocks.exercisePrescription, progression: Plans.VO.ProgressionMethodOptions.linear_progression },
-      mocks.workoutExerciseResistance,
+      mocks.exerciseLoadStep,
       mocks.exercisePerformance,
     );
 
@@ -74,7 +74,7 @@ describe("ProgressionMethodStrategyFactory", () => {
   test("rep_progression", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       { ...mocks.exercisePrescription, progression: Plans.VO.ProgressionMethodOptions.rep_progression },
-      mocks.workoutExerciseResistance,
+      mocks.exerciseLoadStep,
       mocks.exercisePerformance,
     );
 
@@ -87,7 +87,7 @@ describe("ProgressionMethodStrategyFactory", () => {
   test("none", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       { ...mocks.exercisePrescription, progression: Plans.VO.ProgressionMethodOptions.none },
-      mocks.workoutExerciseResistance,
+      mocks.exerciseLoadStep,
       mocks.exercisePerformance,
     );
 

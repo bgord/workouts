@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import type * as Exercises from "+exercises";
 import * as Plans from "+plans";
 import type * as Queries from "+workouts/queries";
 import * as VO from "+workouts/value-objects";
@@ -15,23 +16,23 @@ import { ProgressionMethodRepProgressionStrategy } from "./progression-method-re
 export class ProgressionMethodStrategyFactory {
   static for(
     prescription: VO.ExercisePrescriptionType,
-    resistance: VO.WorkoutExerciseResistanceType,
+    loadStep: Exercises.VO.ExerciseLoadStepType,
     previous: Pick<Queries.ExercisePerformance, "sets">,
   ): ProgressionMethodEffortGateStrategy {
     const effort = new ExercisePerformanceEffort(previous).calculate();
-    const ProgressionMethod = ProgressionMethodStrategyFactory.method(prescription, resistance, previous);
+    const ProgressionMethod = ProgressionMethodStrategyFactory.method(prescription, loadStep, previous);
 
     return new ProgressionMethodEffortGateStrategy({ prescription, effort }, { ProgressionMethod });
   }
 
   private static method(
     prescription: VO.ExercisePrescriptionType,
-    resistance: VO.WorkoutExerciseResistanceType,
+    loadStep: Exercises.VO.ExerciseLoadStepType,
     previous: Pick<Queries.ExercisePerformance, "sets">,
   ): ProgressionMethodStrategy {
     const weakest = new ExercisePerformanceWeakestSet(previous).calculate();
     const last = v.parse(VO.ExerciseTarget, { ...weakest, sets: prescription.sets });
-    const LoadStep = LoadStepStrategyFactory.for(resistance);
+    const LoadStep = LoadStepStrategyFactory.for(loadStep);
 
     switch (prescription.progression) {
       case Plans.VO.ProgressionMethodOptions.double_progression:

@@ -1,6 +1,7 @@
 import * as tools from "@bgord/tools";
 import { and, asc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
+import * as Exercises from "+exercises";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -43,7 +44,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             },
             orderBy: asc(Schema.workoutExercises.position),
             with: {
-              exercise: { columns: { imageEtag: true } },
+              exercise: { columns: { imageEtag: true, loadStep: true } },
               loggedSets: {
                 columns: { id: true, setNumber: true, reps: true, load: true, rir: true },
                 orderBy: asc(Schema.workoutLoggedSets.setNumber),
@@ -94,7 +95,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               previous &&
               Workouts.Services.ProgressionMethodStrategyFactory.for(
                 exercise.prescription,
-                exercise.resistance,
+                catalogExercise?.loadStep ?? Exercises.VO.ExerciseLoadStepOptions.none,
                 previous,
               ).calculate(),
             actions: new Workouts.Services.WorkoutGetExerciseActions({

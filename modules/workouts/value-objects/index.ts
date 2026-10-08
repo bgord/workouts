@@ -1,3 +1,4 @@
+export * from "./dumbbell-rack";
 export * from "./exercise-prescription";
 export * from "./exercise-target";
 export * from "./exercise-target-diff";

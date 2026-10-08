@@ -569,6 +569,7 @@ modules/
     │   ├── load-step-factory.strategy.ts
     │   ├── load-step-increment.strategy.ts
     │   ├── load-step-locked.strategy.ts
+    │   ├── load-step-rack.strategy.ts
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
@@ -586,6 +587,7 @@ modules/
     │   ├── workout-list-actions.ts
     │   └── workout-progress.ts
     └── value-objects
+        ├── dumbbell-rack.ts
         ├── exercise-prescription.ts
         ├── exercise-target-diff.ts
         ├── exercise-target-progression.ts
