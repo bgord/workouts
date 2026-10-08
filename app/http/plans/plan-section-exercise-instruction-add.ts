@@ -24,6 +24,7 @@ export const PlanSectionExerciseInstructionAdd =
       sets: v.parse(Plans.VO.Sets, body["sets"]),
       reps: v.parse(Plans.VO.RepsRange, body["reps"]),
       progression: v.parse(Plans.VO.ProgressionMethod, body["progression"]),
+      rir: v.parse(v.optional(Plans.VO.RirTarget), body["rir"] ?? undefined),
     };
 
     const command = bg.command(
