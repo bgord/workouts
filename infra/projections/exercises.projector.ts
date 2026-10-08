@@ -41,6 +41,7 @@ export class ExercisesProjector {
       description: event.payload.description,
       resistance: event.payload.resistance,
       laterality: event.payload.laterality,
+      loadStep: event.payload.loadStep,
       image: event.payload.image,
       imageEtag: event.payload.imageEtag,
       userId: event.payload.userId,

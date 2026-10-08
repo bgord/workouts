@@ -36,6 +36,7 @@ export const exercise: Exercises.VO.Exercise = {
   description: exerciseDescription,
   resistance: exerciseResistance,
   laterality: exerciseLaterality,
+  loadStep: exerciseLoadStep,
   image: exerciseImageKey,
   imageEtag: exerciseImageEtag,
 };
@@ -43,6 +44,7 @@ export const exercise: Exercises.VO.Exercise = {
 export const bodyweightExercise: Exercises.VO.Exercise = {
   ...exercise,
   resistance: anotherExerciseResistance,
+  loadStep: Exercises.VO.ExerciseLoadStepOptions.none,
 };
 
 export const exerciseCategoryId = v.parse(
