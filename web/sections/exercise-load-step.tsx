@@ -42,19 +42,18 @@ export function ExerciseLoadStep() {
         {...ui.Gap.cluster}
         {...exerciseLoadStepSet.props.target}
       >
-        <div data-cross="end" data-stack="x" data-wrap="wrap" {...ui.Gap.inline}>
-          <ui.ExerciseLoadStepPicker
-            disabled={mutation.isLoading}
-            field={loadStep}
-            options={ExerciseLoadStepChoice.options(exercise.data.resistance)}
-            value={loadStep.value ?? exercise.data.loadStep}
-          />
-
-          <ui.InlineEditActions
-            disabled={loadStep.unchanged || mutation.isLoading}
-            onCancel={bg.exec([loadStep.clear, mutation.reset, exerciseLoadStepSet.disable])}
-          />
-        </div>
+        <ui.ExerciseLoadStepPicker
+          actions={
+            <ui.InlineEditActions
+              disabled={loadStep.unchanged || mutation.isLoading}
+              onCancel={bg.exec([loadStep.clear, mutation.reset, exerciseLoadStepSet.disable])}
+            />
+          }
+          disabled={mutation.isLoading}
+          field={loadStep}
+          options={ExerciseLoadStepChoice.options(exercise.data.resistance)}
+          value={loadStep.value ?? exercise.data.loadStep}
+        />
 
         {mutation.isError && (
           <output aria-live="assertive" data-tone="danger">

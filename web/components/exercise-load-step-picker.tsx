@@ -1,5 +1,4 @@
 import * as bg from "@bgord/ui";
-import { useId } from "react";
 import type { ExerciseLoadStepOptions } from "../../modules/exercises/value-objects/exercise-load-step-options";
 import { Gap } from "./gap";
 
@@ -8,9 +7,9 @@ export function ExerciseLoadStepPicker(props: {
   options: ReadonlyArray<ExerciseLoadStepOptions>;
   value: ExerciseLoadStepOptions;
   disabled?: boolean;
+  actions?: React.ReactNode;
 }) {
   const t = bg.useTranslations();
-  const id = useId();
 
   if (props.options.length < 2) return null;
 
@@ -18,8 +17,8 @@ export function ExerciseLoadStepPicker(props: {
     <fieldset disabled={props.disabled}>
       <legend>{t("exercise.load_step.label")}</legend>
 
-      <div data-stack="y" {...Gap.inline}>
-        <div data-stack="x" data-wrap="wrap" {...Gap.cluster}>
+      <div data-cross="start" data-stack="x" {...Gap.cluster}>
+        <div data-grow="1" data-minw="0" data-stack="x" data-wrap="wrap" {...Gap.cluster}>
           {props.options.map((option) => (
             <label
               className="c-badge"
@@ -28,7 +27,6 @@ export function ExerciseLoadStepPicker(props: {
               key={option}
             >
               <input
-                aria-describedby={`${id}-${option}-hint`}
                 checked={option === props.value}
                 className="c-visually-hidden"
                 name={props.field.input.props.name}
@@ -41,11 +39,7 @@ export function ExerciseLoadStepPicker(props: {
           ))}
         </div>
 
-        {props.options.map((option) => (
-          <small hidden={option !== props.value} id={`${id}-${option}-hint`} key={option}>
-            {t(`exercise.load_step.${option}.hint`)}
-          </small>
-        ))}
+        {props.actions && <div data-shrink="0">{props.actions}</div>}
       </div>
     </fieldset>
   );

@@ -151,6 +151,7 @@ modules/
 │       ├── exercise-laterality-options.ts
 │       ├── exercise-laterality.ts
 │       ├── exercise-load-step-applicability.ts
+│       ├── exercise-load-step-default.ts
 │       ├── exercise-load-step-options.ts
 │       ├── exercise-load-step.ts
 │       ├── exercise-name.ts
