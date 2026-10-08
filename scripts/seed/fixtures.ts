@@ -144,7 +144,13 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
+    categories: [
+      categories.biceps,
+      categories.forearms,
+      categories.lats,
+      categories.upperMidBack,
+      categories.shoulders,
+    ],
   },
   lateralRaiseDumbbells: {
     id: "867680bc-73d3-4827-930f-47795690ca8e",
