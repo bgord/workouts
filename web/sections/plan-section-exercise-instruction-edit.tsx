@@ -6,6 +6,7 @@ import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/q
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
 import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
+import { RirTargetRepsApplicability } from "../../modules/plans/value-objects/rir-target-reps-applicability";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
@@ -62,6 +63,11 @@ export function PlanSectionExerciseInstructionEdit(props: {
     defaultValue: exerciseInstruction.progression,
   });
 
+  const rir = bg.useNumberField<number>({
+    name: `${Form.rir.field.name}-${exerciseInstruction.id}`,
+    defaultValue: exerciseInstruction.rir ?? undefined,
+  });
+
   const exercise = catalog.find(exerciseId.value) ?? exerciseInstruction.exercise;
   const scheme = repsScheme.value ?? RepsSchemeOptions.range;
   const Reps = RepsSchemeKit[scheme];
@@ -71,7 +77,8 @@ export function PlanSectionExerciseInstructionEdit(props: {
     repsMin.unchanged &&
     Reps.unchanged(repsMax) &&
     repsScheme.unchanged &&
-    progression.unchanged;
+    progression.unchanged &&
+    rir.unchanged;
 
   const toggleRepsScheme = () => {
     repsScheme.set(Reps.toggled);
@@ -79,6 +86,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     progression.set(
       ProgressionMethodChoice.keep(exercise.progressionMethods, Reps.toggled, progression.value),
     );
+    if (!RirTargetRepsApplicability[Reps.toggled]) rir.set(undefined);
   };
 
   const mutation = bg.useMutation({
@@ -94,6 +102,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
             sets: sets.value,
             reps: Reps.payload(repsMin, repsMax),
             progression: progression.value,
+            rir: rir.value,
           }),
         },
       ),
@@ -112,6 +121,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     repsMax.clear,
     progression.clear,
     repsScheme.clear,
+    rir.clear,
     mutation.reset,
   ]);
   const close = bg.exec([
@@ -226,6 +236,10 @@ export function PlanSectionExerciseInstructionEdit(props: {
               field={progression}
               options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
             />
+
+            {RirTargetRepsApplicability[scheme] && (
+              <ui.RirTargetPicker disabled={!actions.update.enabled} field={rir} />
+            )}
 
             {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
 

@@ -4,14 +4,19 @@ import type { ExercisePrescriptionType } from "../../modules/workouts/value-obje
 import { RepsSchemeFormat } from "../kits/reps-scheme.format";
 
 export function SetsReps(
-  props: React.JSX.IntrinsicElements["span"] & Pick<ExercisePrescriptionType, "sets" | "reps">,
+  props: React.JSX.IntrinsicElements["span"] &
+    Pick<ExercisePrescriptionType, "sets" | "reps"> & { rir?: number | null },
 ) {
   const t = bg.useTranslations();
-  const { sets, reps, ...span } = props;
+  const { sets, reps, rir, ...span } = props;
+
+  const prescription = RepsSchemeFormat[RepsScheme.of(reps)].prescription(reps);
 
   return (
     <span {...span}>
-      {t("exercise.sets_reps", { sets, reps: RepsSchemeFormat[RepsScheme.of(reps)].prescription(reps) })}
+      {rir === undefined || rir === null
+        ? t("exercise.sets_reps", { sets, reps: prescription })
+        : t("exercise.sets_reps_rir", { sets, reps: prescription, rir })}
     </span>
   );
 }

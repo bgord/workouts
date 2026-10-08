@@ -52,6 +52,7 @@ export * from "./progression-method-picker";
 export * from "./radio-tile";
 export * from "./rir-badge";
 export * from "./rir-submit";
+export * from "./rir-target-picker";
 export * from "./row";
 export * from "./row-index";
 export * from "./select";

@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
+import { RirTargetRepsApplicability } from "../../modules/plans/value-objects/rir-target-reps-applicability";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
@@ -29,6 +30,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
   const repsMin = bg.useNumberField(Form.repsMin.field);
   const repsMax = bg.useNumberField(Form.repsMax.field);
   const progression = bg.useTextField(Form.progression.field);
+  const rir = bg.useNumberField(Form.rir.field);
   const repsScheme = bg.useTextField(Form.repsScheme.field);
   const exercise = catalog.find(exerciseId.value);
   const scheme = repsScheme.value ?? RepsSchemeOptions.range;
@@ -40,6 +42,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
     progression.set(
       ProgressionMethodChoice.keep(exercise?.progressionMethods, Reps.toggled, progression.value),
     );
+    if (!RirTargetRepsApplicability[Reps.toggled]) rir.clear();
   };
 
   const mutation = bg.useMutation({
@@ -53,13 +56,14 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
           sets: sets.value,
           reps: Reps.payload(repsMin, repsMax),
           progression: progression.value,
+          rir: rir.value,
         }),
       }),
     onSuccess: async (_, context) => {
       planSectionExerciseInstructionAdd.disable();
       planSectionExerciseInstructionPick.disable();
       await router.invalidate({ filter: (match) => match.routeId === planRoute.id, sync: true });
-      bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax, repsScheme, progression]);
+      bg.Fields.clearAll([exerciseId, query, sets, repsMin, repsMax, repsScheme, progression, rir]);
       context.form?.reset();
     },
   });
@@ -72,6 +76,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
     repsMax.clear,
     repsScheme.clear,
     progression.clear,
+    rir.clear,
     mutation.reset,
   ]);
   const close = bg.exec([
@@ -199,6 +204,8 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
               field={progression}
               options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
             />
+
+            {RirTargetRepsApplicability[scheme] && <ui.RirTargetPicker field={rir} />}
 
             {mutation.isError && <ui.DialogError>{t("plan.section.exercise.add.error")}</ui.DialogError>}
 

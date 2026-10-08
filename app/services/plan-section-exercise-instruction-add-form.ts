@@ -9,4 +9,5 @@ export const Form = {
   repsMax: { pattern: { min: 1, max: 100, step: 1 }, field: { name: "repsMax", defaultValue: 12 } },
   repsScheme: { field: { name: "repsScheme", defaultValue: RepsSchemeOptions.range } },
   progression: { field: { name: "progression", defaultValue: ProgressionMethodOptions.double_progression } },
+  rir: { field: { name: "rir" } },
 };

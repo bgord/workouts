@@ -18,11 +18,12 @@ export function WorkoutExerciseTargetProgression(
   props: {
     progression: ExerciseTargetProgression;
     method: ProgressionMethodType;
+    rir: number | undefined;
     resistance: WorkoutExerciseResistanceType;
     disabled: boolean;
   } & Fields,
 ) {
-  const { progression, method, resistance, disabled, sets, reps, load } = props;
+  const { progression, method, rir, resistance, disabled, sets, reps, load } = props;
   const t = bg.useTranslations();
   const label = useTargetDiffLabel();
 
@@ -83,6 +84,12 @@ export function WorkoutExerciseTargetProgression(
         >
           {step(progression.progress)}
         </ui.ChipButton>
+      )}
+
+      {progression.hold && (
+        <small data-color="neutral-400" data-self="center">
+          {t(`workout.target.progression.hold.${progression.hold}`, { rir: rir ?? "" })}
+        </small>
       )}
     </fieldset>
   );
