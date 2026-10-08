@@ -151,18 +151,22 @@ export function ExerciseAdd() {
 
           {mutation.isError && <ui.DialogError>{t("exercise.add.error")}</ui.DialogError>}
 
-          <ui.DialogFooter disabled={mutation.isLoading} onCancel={exerciseAdd.disable}>
-            <ui.ButtonClear
-              disabled={bg.Fields.allUnchanged([name, description, resistance]) && !image.isSelected}
-              onClick={bg.exec([
-                name.clear,
-                description.clear,
-                resistance.clear,
-                image.actions.clearFile,
-                mutation.reset,
-              ])}
-            />
-
+          <ui.DialogFooter
+            disabled={mutation.isLoading}
+            onCancel={exerciseAdd.disable}
+            start={
+              <ui.ButtonClear
+                disabled={bg.Fields.allUnchanged([name, description, resistance]) && !image.isSelected}
+                onClick={bg.exec([
+                  name.clear,
+                  description.clear,
+                  resistance.clear,
+                  image.actions.clearFile,
+                  mutation.reset,
+                ])}
+              />
+            }
+          >
             <button
               className="c-button"
               data-variant="primary"

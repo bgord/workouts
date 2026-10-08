@@ -183,9 +183,11 @@ export function WorkoutExerciseAdd() {
 
             {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 
-            <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
-              <ui.ButtonClear onClick={clear} />
-
+            <ui.DialogFooter
+              disabled={mutation.isLoading}
+              onCancel={close}
+              start={<ui.ButtonClear onClick={clear} />}
+            >
               <button
                 className="c-button"
                 data-variant="primary"

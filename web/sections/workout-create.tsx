@@ -98,12 +98,18 @@ export function WorkoutCreate() {
 
           {mutation.isError && <ui.DialogError>{t("workout.create.error")}</ui.DialogError>}
 
-          <ui.DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([clear, workoutCreate.disable])}>
-            <ui.ButtonClear
-              disabled={bg.Fields.allUnchanged([planSectionId, scheduledFor]) && workoutCreateCustomDate.off}
-              onClick={clear}
-            />
-
+          <ui.DialogFooter
+            disabled={mutation.isLoading}
+            onCancel={bg.exec([clear, workoutCreate.disable])}
+            start={
+              <ui.ButtonClear
+                disabled={
+                  bg.Fields.allUnchanged([planSectionId, scheduledFor]) && workoutCreateCustomDate.off
+                }
+                onClick={clear}
+              />
+            }
+          >
             <button
               className="c-button"
               data-variant="primary"

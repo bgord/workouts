@@ -115,14 +115,22 @@ export function DialogError(props: React.JSX.IntrinsicElements["output"]) {
 }
 
 export function DialogFooter(
-  props: React.JSX.IntrinsicElements["div"] & { disabled?: boolean; onCancel: () => void },
+  props: React.JSX.IntrinsicElements["div"] & {
+    disabled?: boolean;
+    onCancel: () => void;
+    start?: React.ReactNode;
+  },
 ) {
-  const { disabled, onCancel, children, ...rest } = props;
+  const { disabled, onCancel, start, children, ...rest } = props;
 
   return (
-    <div data-main="end" data-stack="x" data-wrap="wrap" {...Gap.cluster} {...rest}>
-      <ButtonCancel disabled={disabled} onClick={onCancel} />
-      {children}
+    <div data-stack="x" data-wrap="wrap" {...Gap.cluster} {...rest}>
+      {start}
+
+      <div data-main="end" data-ml="auto" data-stack="x" {...Gap.cluster}>
+        <ButtonCancel disabled={disabled} onClick={onCancel} />
+        {children}
+      </div>
     </div>
   );
 }

@@ -95,12 +95,16 @@ export function BodyPartMeasurementImport() {
 
           {mutation.isError && <ui.DialogError>{t("measurements.body_parts.import.error")}</ui.DialogError>}
 
-          <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
-            <ui.ButtonClear
-              disabled={!file.isSelected}
-              onClick={bg.exec([file.actions.clearFile, mutation.reset])}
-            />
-
+          <ui.DialogFooter
+            disabled={mutation.isLoading}
+            onCancel={close}
+            start={
+              <ui.ButtonClear
+                disabled={!file.isSelected}
+                onClick={bg.exec([file.actions.clearFile, mutation.reset])}
+              />
+            }
+          >
             <button
               className="c-button"
               data-variant="primary"

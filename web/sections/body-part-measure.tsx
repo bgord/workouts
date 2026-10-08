@@ -148,12 +148,16 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                 <ui.DialogError>{t("measurements.body_parts.measure.error")}</ui.DialogError>
               )}
 
-              <ui.DialogFooter disabled={mutation.isLoading} onCancel={bg.exec([mutation.reset, close])}>
-                <ui.ButtonClear
-                  disabled={bg.Fields.allUnchanged([value, measuredOn])}
-                  onClick={bg.exec([value.clear, measuredOn.clear, mutation.reset])}
-                />
-
+              <ui.DialogFooter
+                disabled={mutation.isLoading}
+                onCancel={bg.exec([mutation.reset, close])}
+                start={
+                  <ui.ButtonClear
+                    disabled={bg.Fields.allUnchanged([value, measuredOn])}
+                    onClick={bg.exec([value.clear, measuredOn.clear, mutation.reset])}
+                  />
+                }
+              >
                 <button
                   className="c-button"
                   data-variant="primary"

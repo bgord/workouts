@@ -229,12 +229,16 @@ export function PlanSectionExerciseInstructionEdit(props: {
 
             {mutation.isError && <ui.DialogError>{t("plan.section.exercise.edit.error")}</ui.DialogError>}
 
-            <ui.DialogFooter disabled={mutation.isLoading} onCancel={close}>
-              <ui.ButtonClear
-                disabled={exerciseId.unchanged && query.empty && instructionUnchanged}
-                onClick={clear}
-              />
-
+            <ui.DialogFooter
+              disabled={mutation.isLoading}
+              onCancel={close}
+              start={
+                <ui.ButtonClear
+                  disabled={exerciseId.unchanged && query.empty && instructionUnchanged}
+                  onClick={clear}
+                />
+              }
+            >
               <button
                 className="c-button"
                 data-variant="primary"
