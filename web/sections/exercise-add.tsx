@@ -39,6 +39,7 @@ export function ExerciseAdd() {
       form.append("name", name.value ?? "");
       form.append("description", description.value ?? "");
       form.append("resistance", resistance.value ?? Form.resistance.field.defaultValue);
+      form.append("laterality", Form.laterality.field.defaultValue);
       if (image.data) form.append("file", image.data);
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });

@@ -14,6 +14,7 @@ export const exerciseDescription = v.parse(
 );
 export const exerciseResistance = Exercises.VO.ExerciseResistanceOptions.weighted;
 export const anotherExerciseResistance = Exercises.VO.ExerciseResistanceOptions.bodyweight;
+export const exerciseLaterality = Exercises.VO.ExerciseLateralityOptions.bilateral;
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 export const exerciseImageEtag = bg.Hash.fromString(
   "0000000000000000000000000000000000000000000000000000000000000000",
@@ -31,6 +32,7 @@ export const exercise: Exercises.VO.Exercise = {
   name: exerciseName,
   description: exerciseDescription,
   resistance: exerciseResistance,
+  laterality: exerciseLaterality,
   image: exerciseImageKey,
   imageEtag: exerciseImageEtag,
 };
@@ -117,7 +119,7 @@ export const GenericExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: exerciseStream,
-  version: 2,
+  version: 3,
   commit,
   name: "EXERCISE_ADDED_EVENT",
   payload: {
@@ -125,6 +127,7 @@ export const GenericExerciseAddedEvent = {
     name: exerciseName,
     description: exerciseDescription,
     resistance: exerciseResistance,
+    laterality: exerciseLaterality,
     image: exerciseImageKey,
     imageEtag: exerciseImageEtag,
     userId: Auth.VO.ADMIN_USER_ID,
