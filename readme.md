@@ -109,6 +109,8 @@ modules/
 │   │   ├── exercise-is-assigned-to-category.ts
 │   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-is-not-used.ts
+│   │   ├── exercise-load-step-has-changed.ts
+│   │   ├── exercise-load-step-is-applicable.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── open-host-queries
 │   ├── policies

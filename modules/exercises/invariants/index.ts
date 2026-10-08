@@ -9,4 +9,6 @@ export * from "./exercise-image-constraints";
 export * from "./exercise-is-assigned-to-category";
 export * from "./exercise-is-not-assigned-to-category";
 export * from "./exercise-is-not-used";
+export * from "./exercise-load-step-has-changed";
+export * from "./exercise-load-step-is-applicable";
 export * from "./exercise-name-is-unique";
