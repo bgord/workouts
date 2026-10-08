@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ArrowRight, ImageUp, Pencil, Plus } from "lucide-react";
+import { useState } from "react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseLateralityOptions } from "../../modules/exercises/value-objects/exercise-laterality-options";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
@@ -12,6 +13,55 @@ import { catalogRoute } from "../router";
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
 const maxSizeBytes = 10_000_000;
 
+type ExerciseAddStep = "details" | "classification" | "image";
+
+function ExerciseAddSummary(props: {
+  name: string;
+  description: string;
+  badges?: React.ReactNode;
+  editLabel: string;
+  onEdit: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div
+      data-bc="alpha-medium"
+      data-br="md"
+      data-bs="solid"
+      data-bw="hairline"
+      data-stack="x"
+      {...ui.Spacing.surfaceCompact}
+      {...ui.Gap.related}
+    >
+      <span aria-hidden data-shrink="0" data-stack="x">
+        <ui.ExerciseImagePlaceholder size={ui.ExerciseImageSize.xs} />
+      </span>
+
+      <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
+        <span data-color="neutral-100" data-fw="medium" data-transform="truncate" title={props.name}>
+          {props.name}
+        </span>
+
+        <div data-color="neutral-500" data-fs="xs" data-stack="x" {...ui.Gap.cluster}>
+          {props.badges}
+
+          <span data-transform="truncate">{props.description}</span>
+        </div>
+      </div>
+
+      <ui.IconButton
+        aria-label={props.editLabel}
+        data-shrink="0"
+        disabled={props.disabled}
+        onClick={props.onEdit}
+        title={props.editLabel}
+      >
+        <Pencil data-size="sm" />
+      </ui.IconButton>
+    </div>
+  );
+}
+
 export function ExerciseAdd() {
   const t = bg.useTranslations();
   const router = useRouter();
@@ -19,7 +69,7 @@ export function ExerciseAdd() {
   const { exercises } = catalogRoute.useLoaderData();
 
   const exerciseAdd = bg.useToggle({ name: "exercise-add" });
-  const exerciseAddImage = bg.useToggle({ name: "exercise-add-image" });
+  const [step, setStep] = useState<ExerciseAddStep>("details");
 
   const name = bg.useTextField(Form.name.field);
   const description = bg.useTextField(Form.description.field);
@@ -31,9 +81,11 @@ export function ExerciseAdd() {
   const Resistance = ResistanceKit[resistance.value ?? Form.resistance.field.defaultValue];
   const Laterality = LateralityKit[laterality.value ?? Form.laterality.field.defaultValue];
 
-  const next = (event: React.FormEvent<HTMLFormElement>) => {
+  const goTo = (next: ExerciseAddStep) => () => setStep(next);
+
+  const advance = (next: ExerciseAddStep) => (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    exerciseAddImage.enable();
+    setStep(next);
   };
 
   const mutation = bg.useMutation({
@@ -64,7 +116,7 @@ export function ExerciseAdd() {
     resistance.clear,
     laterality.clear,
     image.actions.clearFile,
-    exerciseAddImage.disable,
+    goTo("details"),
     mutation.reset,
   ]);
   const close = bg.exec([clear, exerciseAdd.disable]);
@@ -92,8 +144,8 @@ export function ExerciseAdd() {
       <ui.Dialog {...exerciseAdd}>
         <ui.DialogHeader>{t("exercise.add.cta")}</ui.DialogHeader>
 
-        {exerciseAddImage.off && (
-          <form data-stack="y" onSubmit={next} {...ui.Gap.stack}>
+        {step === "details" && (
+          <form data-stack="y" onSubmit={advance("classification")} {...ui.Gap.stack}>
             <div data-stack="y" {...ui.Gap.field}>
               <label {...name.label.props}>{t("exercise.add.name.label")}</label>
 
@@ -107,10 +159,6 @@ export function ExerciseAdd() {
                 {...name.input.props}
               />
             </div>
-
-            <ui.ExerciseResistancePicker field={resistance} />
-
-            <ui.ExerciseLateralityPicker field={laterality} />
 
             <div data-stack="y" {...ui.Gap.field}>
               <label {...description.label.props}>{t("exercise.add.description.label")}</label>
@@ -144,7 +192,29 @@ export function ExerciseAdd() {
           </form>
         )}
 
-        {exerciseAddImage.on && (
+        {step === "classification" && (
+          <form data-stack="y" onSubmit={advance("image")} {...ui.Gap.stack}>
+            <ExerciseAddSummary
+              description={description.value ?? ""}
+              editLabel={t("exercise.add.details.edit", { name: name.value ?? "" })}
+              name={name.value ?? ""}
+              onEdit={goTo("details")}
+            />
+
+            <ui.ExerciseResistancePicker field={resistance} />
+
+            <ui.ExerciseLateralityPicker field={laterality} />
+
+            <ui.DialogFooter onCancel={close} start={<ui.ButtonClear onClick={clear} />}>
+              <button className="c-button" data-variant="primary" type="submit">
+                {t("exercise.add.next.cta")}
+                <ArrowRight data-size="sm" />
+              </button>
+            </ui.DialogFooter>
+          </form>
+        )}
+
+        {step === "image" && (
           <form
             aria-busy={mutation.isLoading}
             data-stack="y"
@@ -152,43 +222,20 @@ export function ExerciseAdd() {
             onSubmit={mutation.handleSubmit}
             {...ui.Gap.stack}
           >
-            <div
-              data-bc="alpha-medium"
-              data-br="md"
-              data-bs="solid"
-              data-bw="hairline"
-              data-stack="x"
-              {...ui.Spacing.surfaceCompact}
-              {...ui.Gap.related}
-            >
-              <span aria-hidden data-shrink="0" data-stack="x">
-                <ui.ExerciseImagePlaceholder size={ui.ExerciseImageSize.xs} />
-              </span>
-
-              <div data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-                <span data-color="neutral-100" data-fw="medium" data-transform="truncate" title={name.value}>
-                  {name.value}
-                </span>
-
-                <div data-color="neutral-500" data-fs="xs" data-stack="x" {...ui.Gap.cluster}>
+            <ExerciseAddSummary
+              badges={
+                <>
                   <Resistance.Badge />
 
                   <Laterality.Badge />
-
-                  <span data-transform="truncate">{description.value}</span>
-                </div>
-              </div>
-
-              <ui.IconButton
-                aria-label={t("exercise.add.details.edit", { name: name.value ?? "" })}
-                data-shrink="0"
-                disabled={mutation.isLoading}
-                onClick={exerciseAddImage.disable}
-                title={t("exercise.add.details.edit", { name: name.value ?? "" })}
-              >
-                <Pencil data-size="sm" />
-              </ui.IconButton>
-            </div>
+                </>
+              }
+              description={description.value ?? ""}
+              disabled={mutation.isLoading}
+              editLabel={t("exercise.add.classification.edit", { name: name.value ?? "" })}
+              name={name.value ?? ""}
+              onEdit={goTo("classification")}
+            />
 
             <div data-stack="y" {...ui.Gap.field}>
               <ui.Dropzone

@@ -267,6 +267,7 @@ test.describe("Catalog - admin", () => {
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
     await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
     await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 

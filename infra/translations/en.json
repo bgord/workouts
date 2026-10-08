@@ -48,6 +48,7 @@
   "dashboard.shortcuts.open": "Open next workout",
   "dashboard.empty.cta": "Go to workouts",
   "exercise.add.cta": "New exercise",
+  "exercise.add.classification.edit": "Edit resistance and sides: {{name}}",
   "exercise.add.description.label": "Description",
   "exercise.add.description.placeholder": "Lie on a flat bench and press the barbell up.",
   "exercise.add.details.edit": "Edit details: {{name}}",

@@ -48,6 +48,7 @@
   "dashboard.shortcuts.open": "Otwórz następny trening",
   "dashboard.empty.cta": "Przejdź do treningów",
   "exercise.add.cta": "Nowe ćwiczenie",
+  "exercise.add.classification.edit": "Edytuj obciążenie i strony: {{name}}",
   "exercise.add.description.label": "Opis",
   "exercise.add.description.placeholder": "Wyciskaj sztangę w górę, leżąc na poziomej ławce.",
   "exercise.add.details.edit": "Edytuj szczegóły: {{name}}",
