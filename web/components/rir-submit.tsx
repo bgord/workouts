@@ -1,8 +1,7 @@
 import * as bg from "@bgord/ui";
 import { Check } from "lucide-react";
 import { RirColor } from "./rir-color";
-
-const RirOptions = [2, 1, 0];
+import { RirOptions } from "./rir-options";
 
 export function RirSubmit(props: {
   onSelect: (rir: number | undefined) => void;

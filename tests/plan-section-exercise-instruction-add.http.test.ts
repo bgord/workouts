@@ -151,6 +151,27 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     await testcases.assertErrorResponse(response, 400, "progression.method.invalid");
   });
 
+  test("validation - rir - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.repsRange,
+          progression: mocks.progression,
+          rir: 6,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "rir.target.range");
+  });
+
   test("PlanExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -407,6 +428,38 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanSectionExerciseInstructionRirIsApplicableForReps", async () => {
+    const events = mocks.planWithSectionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.amrapRepsRange,
+          progression: mocks.amrapRirExerciseInstruction.progression,
+          rir: mocks.rirTarget,
+        }),
+        headers: mocks.headers(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(
+      response,
+      403,
+      "plan.section.exercise.instruction.rir.is.applicable.for.reps",
+    );
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     const events = mocks.planWithSectionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -534,6 +587,45 @@ describe("POST /api/plans/:planId/section/:planSectionId/exercise-instruction", 
         payload: {
           ...mocks.GenericPlanSectionExerciseInstructionAddedEvent.payload,
           exerciseInstruction: mocks.amrapExerciseInstruction,
+        },
+      },
+    ]);
+  });
+
+  test("happy path - rir", async () => {
+    const events = mocks.planWithSectionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.exerciseInstructionId);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.headers(events.length),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.repsRange,
+          progression: mocks.progression,
+          rir: mocks.rirTarget,
+        }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionAddedEvent.payload,
+          exerciseInstruction: mocks.rirExerciseInstruction,
         },
       },
     ]);

@@ -72,6 +72,10 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
             exerciseImageEtag: catalogExercise?.imageEtag ?? null,
             loggedSets: exercise.loggedSets.map((loggedSet) => ({
               ...loggedSet,
+              rirBelowTarget: new Workouts.Services.RirBelowTarget({
+                target: exercise.prescription.rir,
+                effort: loggedSet.rir,
+              }).calculate(),
               actions: new Workouts.Services.WorkoutGetLoggedSetActions({
                 status: workout.status,
                 loggedSetCount: tools.Int.nonNegative(

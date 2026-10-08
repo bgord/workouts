@@ -1,0 +1,1 @@
+ALTER TABLE `planSectionExerciseInstructions` ADD `rir` integer;

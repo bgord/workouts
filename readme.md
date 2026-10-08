@@ -362,6 +362,7 @@ modules/
 │   │   ├── plan-section-exercise-instruction-position-in-range.ts
 │   │   ├── plan-section-exercise-instruction-progression-is-applicable-for-reps.ts
 │   │   ├── plan-section-exercise-instruction-progression-is-applicable.ts
+│   │   ├── plan-section-exercise-instruction-rir-is-applicable-for-reps.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
 │   │   ├── plan-section-name-has-changed.ts
@@ -412,6 +413,9 @@ modules/
 │       ├── reps-range.ts
 │       ├── reps-scheme-options.ts
 │       ├── reps-scheme.ts
+│       ├── rir-target-limit.ts
+│       ├── rir-target-reps-applicability.ts
+│       ├── rir-target.ts
 │       └── sets.ts
 ├── preferences
 │   ├── command-handlers
@@ -520,6 +524,7 @@ modules/
     │   ├── workout-exercise-position-in-range.ts
     │   ├── workout-exercise-progression-is-applicable-for-reps.ts
     │   ├── workout-exercise-progression-is-applicable.ts
+    │   ├── workout-exercise-rir-is-applicable-for-reps.ts
     │   ├── workout-exercise-target-has-changed.ts
     │   ├── workout-exercises-have-targets.ts
     │   ├── workout-exists.ts
@@ -550,6 +555,7 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
+    │   ├── exercise-performance-effort.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
     │   ├── load-step-factory.strategy.ts
@@ -558,11 +564,13 @@ modules/
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
+    │   ├── progression-method-effort-gate.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method-rep-progression.strategy.ts
     │   ├── progression-method.strategy.ts
+    │   ├── rir-below-target.ts
     │   ├── workout-export-file-csv.ts
     │   ├── workout-get-actions.ts
     │   ├── workout-get-exercise-actions.ts
@@ -577,6 +585,7 @@ modules/
         ├── load.ts
         ├── logged-set-id.ts
         ├── logged-set.ts
+        ├── progression-hold-reason-options.ts
         ├── reps.ts
         ├── rir-limit.ts
         ├── rir.ts

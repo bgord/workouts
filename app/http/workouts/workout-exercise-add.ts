@@ -23,6 +23,7 @@ export const WorkoutExerciseAdd =
       sets: body["sets"],
       reps: body["reps"],
       progression: body["progression"],
+      rir: body["rir"] ?? undefined,
     });
 
     const command = bg.command(

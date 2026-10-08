@@ -181,6 +181,28 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     await testcases.assertErrorResponse(response, 400, "progression.method.invalid");
   });
 
+  test("validation - rir - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.sets,
+          reps: mocks.repsRange,
+          progression: mocks.progression,
+          rir: 6,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "rir.target.range");
+  });
+
   test("PlanExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -413,6 +435,32 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("PlanSectionExerciseInstructionRirIsApplicableForReps", async () => {
+    const events = mocks.planWithExerciseInstructionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        body: JSON.stringify(mocks.amrapRirExerciseInstruction),
+        headers: mocks.headers(events.length),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(
+      response,
+      403,
+      "plan.section.exercise.instruction.rir.is.applicable.for.reps",
+    );
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     const events = mocks.planWithExerciseInstructionHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -453,6 +501,42 @@ describe("PATCH /api/plans/:planId/section/:planSectionId/exercise-instruction/:
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericPlanSectionExerciseInstructionUpdatedEvent]);
+  });
+
+  test("happy path - only the rir changed", async () => {
+    const events = mocks.planWithExerciseInstructionHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.headers(events.length),
+        body: JSON.stringify(mocks.rirExerciseInstruction),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
+          exerciseInstruction: {
+            id: mocks.exerciseInstructionId,
+            reps: mocks.repsRange,
+            sets: mocks.sets,
+            progression: mocks.progression,
+            rir: mocks.rirTarget,
+          },
+        },
+      },
+    ]);
   });
 
   test("happy path - only the exercise changed", async () => {

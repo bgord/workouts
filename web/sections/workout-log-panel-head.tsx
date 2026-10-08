@@ -59,10 +59,14 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
                   sets={exercise.target.sets}
                 />
               </span>
-
-              <ui.SetDots sets={exercise.loggedSets} target={exercise.target.sets} />
             </>
           )}
+
+          {exercise.prescription.rir !== undefined && (
+            <ui.RirBadge rir={exercise.prescription.rir} title={t("rir.target.label")} />
+          )}
+
+          {exercise.target && <ui.SetDots sets={exercise.loggedSets} target={exercise.target.sets} />}
         </div>
       </div>
 

@@ -27,6 +27,7 @@ export class PlanSection implements VO.PlanSection {
   guardInstructionAdd(exerciseInstruction: VO.ExerciseInstructionType) {
     Invariants.PlanSectionExerciseInstructionLimit.enforce({ planSection: this });
     Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.enforce(exerciseInstruction);
+    Invariants.PlanSectionExerciseInstructionRirIsApplicableForReps.enforce(exerciseInstruction);
   }
 
   guardInstructionExists(exerciseInstructionId: VO.ExerciseInstructionIdType) {
@@ -42,6 +43,7 @@ export class PlanSection implements VO.PlanSection {
       });
     }
     Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.enforce(exerciseInstruction);
+    Invariants.PlanSectionExerciseInstructionRirIsApplicableForReps.enforce(exerciseInstruction);
   }
 
   guardInstructionMove(
@@ -82,7 +84,13 @@ export class PlanSection implements VO.PlanSection {
   updateInstruction(updated: Omit<VO.ExerciseInstructionType, "exerciseId">) {
     this.exerciseInstructions = this.exerciseInstructions.map((exerciseInstruction) =>
       exerciseInstruction.id === updated.id
-        ? { ...exerciseInstruction, reps: updated.reps, sets: updated.sets, progression: updated.progression }
+        ? {
+            ...exerciseInstruction,
+            reps: updated.reps,
+            sets: updated.sets,
+            progression: updated.progression,
+            rir: updated.rir,
+          }
         : exerciseInstruction,
     );
   }

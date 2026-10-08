@@ -5,6 +5,7 @@ export * from "./exercise-target-progression";
 export * from "./load";
 export * from "./logged-set";
 export * from "./logged-set-id";
+export * from "./progression-hold-reason-options";
 export * from "./reps";
 export * from "./rir";
 export * from "./rir-limit";

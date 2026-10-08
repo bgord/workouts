@@ -1,3 +1,4 @@
+export * from "./exercise-performance-effort";
 export * from "./exercise-performance-weakest-set";
 export * from "./exercise-target-diff-calculator";
 export * from "./load-step.strategy";
@@ -7,10 +8,12 @@ export * from "./load-step-locked.strategy";
 export * from "./logged-sets-volume";
 export * from "./progression-method.strategy";
 export * from "./progression-method-double-progression.strategy";
+export * from "./progression-method-effort-gate.strategy";
 export * from "./progression-method-factory.strategy";
 export * from "./progression-method-linear-progression.strategy";
 export * from "./progression-method-none.strategy";
 export * from "./progression-method-rep-progression.strategy";
+export * from "./rir-below-target";
 export * from "./workout-export-file-csv";
 export * from "./workout-get-actions";
 export * from "./workout-get-exercise-actions";

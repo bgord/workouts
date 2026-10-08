@@ -45,6 +45,10 @@ export function WorkoutSetRow(props: {
               />
 
               {props.loggedSet.rir !== null && <ui.RirBadge rir={props.loggedSet.rir} />}
+
+              {props.loggedSet.rirBelowTarget && (
+                <ui.RirBelowTargetMarker target={props.exercise.prescription.rir} />
+              )}
             </>
           )}
         </div>

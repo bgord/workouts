@@ -222,6 +222,40 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).toHaveBeenCalledWith(mocks.workoutWithExerciseHistory);
   });
 
+  test("happy path - rir", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.System.IdProvider, "generate"))
+      .mockReturnValueOnce(mocks.workoutId)
+      .mockReturnValue(mocks.workoutExerciseId);
+    spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.planWithRir);
+    spies
+      .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdHeaders,
+        body: JSON.stringify({
+          planId: mocks.planId,
+          planSectionId: mocks.planSectionId,
+          scheduledFor: mocks.workoutScheduledFor,
+        }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([
+      mocks.GenericWorkoutCreatedEvent,
+      mocks.GenericWorkoutExerciseAddedEventRir,
+    ]);
+  });
+
   test("happy path - past scheduledFor", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

@@ -59,6 +59,28 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
+  test("validation - rir - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.revisionHeaders(draft.length),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.exercisePrescription.sets,
+          reps: mocks.exercisePrescription.reps,
+          progression: mocks.exercisePrescription.progression,
+          rir: 6,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "rir.target.range");
+  });
+
   test("WorkoutExists", async () => {
     const events = [] as const;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
@@ -203,6 +225,33 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutExerciseRirIsApplicableForReps", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.revisionHeaders(draft.length),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.amrapRirExercisePrescription.sets,
+          reps: mocks.amrapRirExercisePrescription.reps,
+          progression: mocks.amrapRirExercisePrescription.progression,
+          rir: mocks.amrapRirExercisePrescription.rir,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.rir.is.applicable.for.reps");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("revision mismatch", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using spies = new DisposableStack();
@@ -263,5 +312,33 @@ describe(`POST ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseAddedEventAnother]);
+  });
+
+  test("happy path - rir", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValue(mocks.workoutExerciseId);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(draft);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.headers(draft.length),
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          sets: mocks.rirExercisePrescription.sets,
+          reps: mocks.rirExercisePrescription.reps,
+          progression: mocks.rirExercisePrescription.progression,
+          rir: mocks.rirExercisePrescription.rir,
+        }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericWorkoutExerciseAddedEventRir]);
   });
 });

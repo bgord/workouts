@@ -139,6 +139,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
           progression={progression}
           reps={reps}
           resistance={props.exercise.resistance}
+          rir={props.exercise.prescription.rir}
           sets={sets}
         />
       )}

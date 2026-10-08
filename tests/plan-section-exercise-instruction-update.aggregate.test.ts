@@ -120,6 +120,26 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
     ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.error);
   });
 
+  test("PlanSectionExerciseInstructionRirIsApplicableForReps", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        mocks.amrapRirExerciseInstruction,
+        mocks.userId,
+      ),
+    ).toThrow(Plans.Invariants.PlanSectionExerciseInstructionRirIsApplicableForReps.error);
+  });
+
   test("happy path", async () => {
     const plan = Plans.Aggregates.Plan.build(
       mocks.planId,
@@ -336,6 +356,50 @@ describe("Plan.updateSectionExerciseInstruction", async () => {
           ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
           exerciseInstruction,
         },
+      },
+    ]);
+  });
+
+  test("happy path - only the rir changed", async () => {
+    const plan = Plans.Aggregates.Plan.build(
+      mocks.planId,
+      [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      ],
+      deps,
+    );
+    const exerciseInstruction = {
+      id: mocks.exerciseInstructionId,
+      reps: mocks.repsRange,
+      sets: mocks.sets,
+      progression: mocks.progression,
+      rir: mocks.rirTarget,
+    };
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      plan.updateSectionExerciseInstruction(
+        mocks.planSectionId,
+        { ...exerciseInstruction, exerciseId: mocks.exerciseId },
+        mocks.userId,
+      ),
+    );
+
+    expect(plan.pullEvents()).toEqual([
+      {
+        ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+        payload: {
+          ...mocks.GenericPlanSectionExerciseInstructionUpdatedEvent.payload,
+          exerciseInstruction,
+        },
+      },
+    ]);
+    expect<Array<Plans.VO.PlanSection>>(plan["sections"]).toEqual([
+      {
+        id: mocks.planSectionId,
+        name: mocks.planSectionName,
+        exerciseInstructions: [mocks.rirExerciseInstruction],
       },
     ]);
   });

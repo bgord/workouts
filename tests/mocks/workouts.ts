@@ -28,6 +28,7 @@ import {
   planSectionWarmup,
   progression,
   repsRange,
+  rirTarget,
   sets,
 } from "./plans";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
@@ -126,6 +127,20 @@ export const amrapDoubleProgressionExercisePrescription = v.parse(Workouts.VO.Ex
   progression,
 });
 
+export const rirExercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: repsRange,
+  progression,
+  rir: rirTarget,
+});
+
+export const amrapRirExercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: amrapRepsRange,
+  progression: Plans.VO.ProgressionMethodOptions.rep_progression,
+  rir: rirTarget,
+});
+
 export const loadStep = tools.Weight.fromKilograms(2.5);
 
 export const loggedSetId = v.parse(Workouts.VO.LoggedSetId, "5f1c9b7e-3a2d-4c8b-9e6f-1a2b3c4d5e6f");
@@ -171,6 +186,24 @@ export const exercisePerformance = {
       reps: v.parse(Workouts.VO.Reps, 10),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
       rir: null,
+    },
+  ],
+};
+
+export const exercisePerformanceWithRir = {
+  ...exercisePerformance,
+  sets: [
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 1),
+      reps: v.parse(Workouts.VO.Reps, 5),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: v.parse(Workouts.VO.Rir, 2),
+    },
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 2),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: v.parse(Workouts.VO.Rir, 1),
     },
   ],
 };
@@ -328,6 +361,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     loggedSets: exercise.loggedSets.map((set) => ({
       ...set,
       rir: null,
+      rirBelowTarget: false,
       actions: {
         correct: { available: true, enabled: true, hints: [] },
         remove: { available: true, enabled: true, hints: [] },
@@ -415,6 +449,11 @@ export const GenericWorkoutExerciseAddedEventBodyweight = {
     ...GenericWorkoutExerciseAddedEvent.payload,
     resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
   },
+} satisfies Workouts.Events.WorkoutExerciseAddedEventType;
+
+export const GenericWorkoutExerciseAddedEventRir = {
+  ...GenericWorkoutExerciseAddedEvent,
+  payload: { ...GenericWorkoutExerciseAddedEvent.payload, prescription: rirExercisePrescription },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
 export const GenericWorkoutExerciseAddedEventAnother = {

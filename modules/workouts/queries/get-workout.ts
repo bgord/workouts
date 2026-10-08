@@ -16,7 +16,11 @@ export type WorkoutExerciseActions = {
 
 export type LoggedSetActions = { correct: bg.ActionState; remove: bg.ActionState };
 
-export type LoggedSet = Omit<VO.LoggedSetType, "rir"> & { rir: VO.RirType | null; actions: LoggedSetActions };
+export type LoggedSet = Omit<VO.LoggedSetType, "rir"> & {
+  rir: VO.RirType | null;
+  rirBelowTarget: boolean;
+  actions: LoggedSetActions;
+};
 
 export type ExercisePreviousPerformance = Pick<ExercisePerformance, "scheduledFor" | "sets"> & {
   diff: VO.ExerciseTargetDiff | null;

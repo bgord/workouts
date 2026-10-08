@@ -11,4 +11,5 @@ export const Form = {
   progression: {
     field: { name: "workoutProgression", defaultValue: ProgressionMethodOptions.double_progression },
   },
+  rir: { field: { name: "workoutRir" } },
 };

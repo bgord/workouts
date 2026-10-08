@@ -3,7 +3,6 @@ import { useId } from "react";
 import { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
 import { Gap } from "./gap";
 import { ProgressionMethodIcon } from "./progression-method-icon";
-import { RadioTile } from "./radio-tile";
 
 export function ProgressionMethodPicker(props: {
   field: bg.UseTextFieldReturnType<ProgressionMethodOptions>;
@@ -18,13 +17,19 @@ export function ProgressionMethodPicker(props: {
     <fieldset disabled={props.disabled}>
       <legend>{t("progression.method.label")}</legend>
 
-      <ul data-stack="y" {...Gap.inline}>
-        {options.map((option) => (
-          <li key={option}>
-            <RadioTile selected={option === props.field.value}>
+      <div data-stack="y" {...Gap.inline}>
+        <div data-stack="x" data-wrap="wrap" {...Gap.cluster}>
+          {options.map((option) => (
+            <label
+              className="c-badge"
+              data-cursor="pointer"
+              data-stack="x"
+              data-variant={option === props.field.value ? "primary" : "outline"}
+              key={option}
+              {...Gap.inline}
+            >
               <input
                 aria-describedby={`${id}-${option}-hint`}
-                aria-labelledby={`${id}-${option}`}
                 checked={option === props.field.value}
                 className="c-visually-hidden"
                 name={props.field.input.props.name}
@@ -32,25 +37,18 @@ export function ProgressionMethodPicker(props: {
                 type="radio"
                 value={option}
               />
+              <ProgressionMethodIcon method={option} size="xs" />
+              {t(`progression.method.${option}`)}
+            </label>
+          ))}
+        </div>
 
-              <div data-stack="y" {...Gap.inline}>
-                <div
-                  data-color="neutral-100"
-                  data-fw="medium"
-                  data-stack="x"
-                  id={`${id}-${option}`}
-                  {...Gap.inline}
-                >
-                  <ProgressionMethodIcon method={option} size="xs" />
-                  {t(`progression.method.${option}`)}
-                </div>
-
-                <small id={`${id}-${option}-hint`}>{t(`progression.method.${option}.hint`)}</small>
-              </div>
-            </RadioTile>
-          </li>
+        {options.map((option) => (
+          <small hidden={option !== props.field.value} id={`${id}-${option}-hint`} key={option}>
+            {t(`progression.method.${option}.hint`)}
+          </small>
         ))}
-      </ul>
+      </div>
     </fieldset>
   );
 }
