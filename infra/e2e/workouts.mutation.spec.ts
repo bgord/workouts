@@ -575,7 +575,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("corrects a logged set from the log panel", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
-    const rail = panel.getByRole("group", { name: "Exercises" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
     const overhead = rail.getByRole("button", {
       name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
       exact: true,
@@ -598,7 +598,7 @@ test.describe("Workouts - active-mutation", () => {
 
   test("removes a logged set from the log panel", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
-    const rail = panel.getByRole("group", { name: "Exercises" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
     const bench = rail.getByRole("button", {
       name: `1. ${fixtures.exercises.superHorizontalBenchPress.name}`,
       exact: true,

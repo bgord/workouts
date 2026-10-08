@@ -43,7 +43,7 @@ test.describe("Mobile - pocket", () => {
     await panel.getByRole("button", { name: "Log set", exact: true }).tap();
     await panel.getByRole("button", { name: "Log set · RIR 1" }).tap();
     await panel
-      .getByRole("group", { name: "Exercises" })
+      .getByRole("toolbar", { name: "Exercises" })
       .getByRole("button", {
         name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
         exact: true,
@@ -82,7 +82,7 @@ test.describe("Mobile - pocket", () => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
     await page.getByRole("button", { name: "Continue" }).tap();
     await panel
-      .getByRole("group", { name: "Exercises" })
+      .getByRole("toolbar", { name: "Exercises" })
       .getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true })
       .tap();
     await panel.getByRole("button", { name: "Correct set 1" }).tap();
@@ -102,7 +102,7 @@ test.describe("Mobile - pocket", () => {
     await page.goto(`/workouts/${fixtures.pocket.scheduledWorkout.id}`);
     await page.getByRole("button", { name: "Continue" }).tap();
     await panel
-      .getByRole("group", { name: "Exercises" })
+      .getByRole("toolbar", { name: "Exercises" })
       .getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true })
       .tap();
     await panel.getByRole("button", { name: "Remove set 1" }).tap();

@@ -7,7 +7,7 @@ import { WorkoutLogPanelImage } from "./workout-log-panel-image";
 export function WorkoutLogPanelRail() {
   const t = bg.useTranslations();
   const { active, available, open } = useLogPanel();
-  const ref = useRef<HTMLFieldSetElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const rail = ref.current;
@@ -19,9 +19,27 @@ export function WorkoutLogPanelRail() {
     rail.scrollLeft = current.offsetLeft - rail.offsetLeft - (rail.clientWidth - current.offsetWidth) / 2;
   }, [active?.id]);
 
+  const move = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const buttons = Array.from(ref.current?.querySelectorAll<HTMLButtonElement>("button") ?? []);
+    const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
+
+    const target = {
+      ArrowLeft: buttons[Math.max(index - 1, 0)],
+      ArrowRight: buttons[Math.min(index + 1, buttons.length - 1)],
+      Home: buttons[0],
+      End: buttons[buttons.length - 1],
+    }[event.key];
+
+    if (!target) return;
+
+    event.preventDefault();
+    target.focus();
+  };
+
   return (
-    <fieldset
+    <div
       aria-label={t("workout.log_panel.exercises")}
+      aria-orientation="horizontal"
       data-bct="alpha-subtle"
       data-bst="solid"
       data-bwt="hairline"
@@ -29,7 +47,9 @@ export function WorkoutLogPanelRail() {
       data-pt="3"
       data-rail
       data-stack="x"
+      onKeyDown={move}
       ref={ref}
+      role="toolbar"
       {...ui.Gap.inline}
     >
       {available.map((exercise, index) => {
@@ -56,6 +76,7 @@ export function WorkoutLogPanelRail() {
             data-stack="y"
             key={exercise.id}
             onClick={() => open(exercise.id)}
+            tabIndex={current ? 0 : -1}
             title={title}
             type="button"
             {...ui.Gap.field}
@@ -66,6 +87,6 @@ export function WorkoutLogPanelRail() {
           </button>
         );
       })}
-    </fieldset>
+    </div>
   );
 }

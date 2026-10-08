@@ -117,7 +117,7 @@ test.describe("Workout - active", () => {
 
   test("switches exercises from the log panel rail", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
-    const rail = panel.getByRole("group", { name: "Exercises" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
     const current = rail.getByRole("button", {
       name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`,
       exact: true,
@@ -157,7 +157,7 @@ test.describe("Workout - active", () => {
 
   test("lists every exercise with its progress in the log panel rail", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
-    const rail = panel.getByRole("group", { name: "Exercises" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
     const completed = rail.getByRole("button", {
       name: `1. ${fixtures.exercises.superHorizontalBenchPress.name}`,
       exact: true,
@@ -204,7 +204,7 @@ test.describe("Workout - active", () => {
 
   test("switches exercises in the log panel rail with the keyboard", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
-    const rail = panel.getByRole("group", { name: "Exercises" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
     const current = rail.getByRole("button", {
       name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`,
       exact: true,
@@ -217,7 +217,7 @@ test.describe("Workout - active", () => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.getByRole("button", { name: "Continue" }).click();
     await current.focus();
-    await page.keyboard.press("Tab");
+    await page.keyboard.press("ArrowRight");
 
     await expect(next).toBeFocused();
 
@@ -227,9 +227,54 @@ test.describe("Workout - active", () => {
     await expect(panel.getByText("4 of 6", { exact: true })).toBeVisible();
   });
 
+  test("moves through the log panel rail with arrow keys, Home and End", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
+    const buttons = rail.getByRole("button");
+    const current = rail.getByRole("button", {
+      name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`,
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+    await current.focus();
+    await page.keyboard.press("Home");
+
+    await expect(buttons.first()).toBeFocused();
+
+    await page.keyboard.press("ArrowLeft");
+
+    await expect(buttons.first()).toBeFocused();
+
+    await page.keyboard.press("End");
+
+    await expect(buttons.last()).toBeFocused();
+
+    await page.keyboard.press("ArrowRight");
+
+    await expect(buttons.last()).toBeFocused();
+
+    await page.keyboard.press("ArrowLeft");
+
+    await expect(buttons.nth(4)).toBeFocused();
+  });
+
+  test("keeps only the current exercise of the log panel rail in the tab order", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
+    const buttons = rail.getByRole("button");
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+
+    await expect(buttons.nth(2)).toHaveAttribute("tabindex", "0");
+    await expect(rail.locator('button[tabindex="-1"]')).toHaveCount(5);
+  });
+
   test("resets the log form when switching exercises in the log panel", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
-    const rail = panel.getByRole("group", { name: "Exercises" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
     const reps = panel.getByRole("spinbutton", { name: "Reps" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
@@ -255,7 +300,7 @@ test.describe("Workout - active", () => {
     page,
   }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
-    const rail = panel.getByRole("group", { name: "Exercises" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
     const log = panel.getByRole("form", { name: "Log set" });
 
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
@@ -332,7 +377,7 @@ test.describe("Workout - active", () => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
     await page.getByRole("button", { name: "Continue" }).click();
     await panel
-      .getByRole("group", { name: "Exercises" })
+      .getByRole("toolbar", { name: "Exercises" })
       .getByRole("button", { name: `4. ${fixtures.exercises.pecFlyMachine.name}`, exact: true })
       .click();
     await page.reload();
@@ -620,7 +665,7 @@ test.describe("Workout - active", () => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
     const head = panel.getByRole("group", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
     const current = panel
-      .getByRole("group", { name: "Exercises" })
+      .getByRole("toolbar", { name: "Exercises" })
       .getByRole("button", { name: `3. ${fixtures.exercises.tricepsPushDownBar.name}`, exact: true });
 
     await page.route("**/api/workouts/*/exercise/*/set", (route) => route.fulfill({ status: 500 }));
