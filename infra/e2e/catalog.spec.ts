@@ -251,11 +251,12 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill("Neck curl");
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the exercise")).toBeVisible();

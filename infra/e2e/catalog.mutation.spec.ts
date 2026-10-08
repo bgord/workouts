@@ -61,10 +61,9 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill("ab");
     await page.getByLabel("Description").fill("ab");
-    await page.getByRole("button", { name: "Add", exact: true }).click();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
 
     await expect(page.getByLabel("Exercise name").and(page.locator(":invalid"))).toHaveCount(1);
     await expect(page.getByLabel("Description").and(page.locator(":invalid"))).toHaveCount(1);
@@ -78,11 +77,12 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill(fixtures.exercises.facePull.name.toUpperCase());
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the exercise")).toBeVisible();
@@ -96,12 +96,13 @@ test.describe("Catalog - admin", () => {
     await page.goto("/catalog");
 
     await page.getByRole("button", { name: "New exercise" }).click();
-    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByLabel("Exercise name").fill("Neck curl");
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
     await page.getByRole("dialog", { name: "New exercise" }).getByText("Bodyweight", { exact: true }).click();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page).toHaveURL(/\/catalog\/exercise\/[0-9a-f-]{36}$/);
@@ -114,7 +115,7 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "New exercise" }).click();
 
-    await expect(page.getByText("PNG, JPG or WebP, up to 10 MB and 4000 px per side")).toBeVisible();
+    await expect(page.getByLabel("Exercise name")).toHaveValue("");
   });
 
   test("rejects a too short new exercise name", async ({ page }) => {
