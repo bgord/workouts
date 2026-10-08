@@ -1,3 +1,4 @@
+export * from "./exercise-performance-effort";
 export * from "./exercise-performance-weakest-set";
 export * from "./exercise-target-diff-calculator";
 export * from "./load-step.strategy";
