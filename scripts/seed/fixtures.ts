@@ -364,7 +364,6 @@ export const ppl = {
           sets: 3,
           reps: { min: 10, max: 12 },
           progression: "double_progression",
-          rir: 2,
         },
         {
           exercise: exercises.tricepsExtensionOverheadCable,
@@ -377,7 +376,6 @@ export const ppl = {
           sets: 3,
           reps: { min: 8, max: 12 },
           progression: "double_progression",
-          rir: 2,
         },
       ],
     },

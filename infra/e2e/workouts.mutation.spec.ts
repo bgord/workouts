@@ -303,6 +303,46 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(row.getByRole("button", { name: "Edit target: 3×9+ 10.5 kg", exact: true })).toBeVisible();
   });
 
+  test("holds the progression when the last session was below the target RIR", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.pecFlyMachine.name, exact: true });
+    const suggestion = row.getByRole("group", {
+      name: "Based on the last session · Double progression",
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.pecFlyMachine.name);
+    await page.getByRole("radio", { name: fixtures.exercises.pecFlyMachine.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("10");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("12");
+    await page
+      .getByRole("group", { name: "Target RIR" })
+      .getByRole("button", { name: "RIR 2", exact: true })
+      .click();
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+
+    await expect(row.getByText("3×10-12 · RIR 2", { exact: true })).toBeVisible();
+
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+
+    await expect(suggestion.getByText("Below RIR 2 last time, repeat it", { exact: true })).toBeVisible();
+    await expect(suggestion.getByRole("button", { name: "+1 rep", exact: true })).toBeHidden();
+
+    await row.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×9 45 kg", exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×9 45 kg", exact: true })).toBeVisible();
+  });
+
   test("shows the error when starting the workout fails", async ({ page }) => {
     await page.route("**/api/workouts/*/start", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
