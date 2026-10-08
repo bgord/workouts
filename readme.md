@@ -362,6 +362,7 @@ modules/
 │   │   ├── plan-section-exercise-instruction-position-in-range.ts
 │   │   ├── plan-section-exercise-instruction-progression-is-applicable-for-reps.ts
 │   │   ├── plan-section-exercise-instruction-progression-is-applicable.ts
+│   │   ├── plan-section-exercise-instruction-rir-is-applicable-for-reps.ts
 │   │   ├── plan-section-exists.ts
 │   │   ├── plan-section-limit-for-plan.ts
 │   │   ├── plan-section-name-has-changed.ts
@@ -412,6 +413,9 @@ modules/
 │       ├── reps-range.ts
 │       ├── reps-scheme-options.ts
 │       ├── reps-scheme.ts
+│       ├── rir-target-limit.ts
+│       ├── rir-target-reps-applicability.ts
+│       ├── rir-target.ts
 │       └── sets.ts
 ├── preferences
 │   ├── command-handlers
