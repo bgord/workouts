@@ -14,6 +14,7 @@ class ListWorkoutExportRowsQueryDrizzle implements Workouts.Queries.ListWorkoutE
         planSectionName: Schema.workouts.planSectionName,
         exerciseName: Schema.workoutExercises.exerciseName,
         resistance: Schema.workoutExercises.resistance,
+        laterality: Schema.workoutExercises.laterality,
         setNumber: Schema.workoutLoggedSets.setNumber,
         reps: Schema.workoutLoggedSets.reps,
         load: Schema.workoutLoggedSets.load,

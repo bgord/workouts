@@ -15,10 +15,10 @@ export function ExerciseResistancePicker(props: {
     <fieldset disabled={props.disabled}>
       <legend>{t("exercise.resistance.label")}</legend>
 
-      <ul data-stack="x" data-wrap="wrap" {...Gap.cluster}>
+      <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...Gap.cluster}>
         {Object.values(ExerciseResistanceOptions).map((option) => (
-          <li data-grow="1" key={option}>
-            <RadioTile selected={option === props.field.value}>
+          <li data-basis="0" data-grow="1" data-md-basis="unset" data-stack="y" key={option}>
+            <RadioTile data-grow="1" selected={option === props.field.value}>
               <input
                 aria-describedby={`${id}-${option}-hint`}
                 aria-labelledby={`${id}-${option}`}

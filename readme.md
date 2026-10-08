@@ -143,6 +143,8 @@ modules/
 │       ├── exercise-image-max-size.ts
 │       ├── exercise-image-mime-registry.ts
 │       ├── exercise-image-side.ts
+│       ├── exercise-laterality-options.ts
+│       ├── exercise-laterality.ts
 │       ├── exercise-name.ts
 │       ├── exercise-name.validation.ts
 │       ├── exercise-resistance-options.ts
@@ -582,10 +584,12 @@ modules/
         ├── workout-draft-limit-for-owner.ts
         ├── workout-exercise-description.ts
         ├── workout-exercise-id.ts
+        ├── workout-exercise-laterality.ts
         ├── workout-exercise-limit.ts
         ├── workout-exercise-name.ts
         ├── workout-exercise-position.ts
         ├── workout-exercise-resistance.ts
+        ├── workout-exercise-sides.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts

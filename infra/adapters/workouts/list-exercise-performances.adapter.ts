@@ -15,6 +15,7 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
         workoutId: Schema.workoutLoggedSets.workoutId,
         scheduledFor: Schema.workouts.scheduledFor,
         resistance: Schema.workoutExercises.resistance,
+        laterality: Schema.workoutExercises.laterality,
         setNumber: Schema.workoutLoggedSets.setNumber,
         reps: Schema.workoutLoggedSets.reps,
         load: Schema.workoutLoggedSets.load,
@@ -43,6 +44,7 @@ class ListExercisePerformancesQueryDrizzle implements Workouts.Queries.ListExerc
       workoutId,
       scheduledFor: rows[0]!.scheduledFor,
       resistance: rows[0]!.resistance,
+      laterality: rows[0]!.laterality,
       sets: rows.map((row) => ({
         setNumber: row.setNumber,
         reps: row.reps,

@@ -17,7 +17,7 @@ class ListWeekCompletedWorkoutsQueryDrizzle implements Workouts.Queries.ListWeek
     );
     const end = v.parse(Workouts.VO.WorkoutScheduledFor, tools.Day.fromTimestamp(week.getEnd()).toIsoId());
 
-    return db.query.workouts.findMany({
+    const workouts = await db.query.workouts.findMany({
       columns: { id: true, planName: true, planSectionName: true, scheduledFor: true },
       where: and(
         eq(Schema.workouts.userId, userId),
@@ -26,9 +26,21 @@ class ListWeekCompletedWorkoutsQueryDrizzle implements Workouts.Queries.ListWeek
       ),
       orderBy: [asc(Schema.workouts.scheduledFor), asc(Schema.workouts.completedAt)],
       with: {
-        loggedSets: { columns: { reps: true, load: true }, orderBy: asc(Schema.workoutLoggedSets.createdAt) },
+        loggedSets: {
+          columns: { reps: true, load: true },
+          orderBy: asc(Schema.workoutLoggedSets.createdAt),
+          with: { workoutExercise: { columns: { laterality: true } } },
+        },
       },
     });
+
+    return workouts.map(({ loggedSets, ...workout }) => ({
+      ...workout,
+      loggedSets: loggedSets.map(({ workoutExercise, ...loggedSet }) => ({
+        ...loggedSet,
+        laterality: workoutExercise.laterality,
+      })),
+    }));
   }
 }
 

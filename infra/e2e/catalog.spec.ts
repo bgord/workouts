@@ -25,6 +25,17 @@ test.describe("Catalog - athlete", () => {
     ).toBeVisible();
   });
 
+  test("marks a unilateral exercise", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await expect(
+      page.getByRole("link", {
+        name: `${fixtures.exercises.legExtensionSingleLeg.name} Each side ${fixtures.categories.quads.name}`,
+        exact: true,
+      }),
+    ).toBeVisible();
+  });
+
   test("searches by name", async ({ page }) => {
     await page.goto("/catalog");
 
@@ -255,6 +266,7 @@ test.describe("Catalog - admin", () => {
     await page
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
+    await page.getByRole("button", { name: "Next", exact: true }).click();
     await page.getByRole("button", { name: "Next", exact: true }).click();
     await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Add", exact: true }).click();

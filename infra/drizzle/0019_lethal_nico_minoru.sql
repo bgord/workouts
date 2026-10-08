@@ -1,0 +1,1 @@
+ALTER TABLE `workoutExercises` ADD `laterality` text DEFAULT 'bilateral' NOT NULL;

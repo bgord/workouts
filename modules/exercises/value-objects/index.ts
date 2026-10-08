@@ -12,6 +12,8 @@ export * from "./exercise-image-max-side";
 export * from "./exercise-image-max-size";
 export * from "./exercise-image-mime-registry";
 export * from "./exercise-image-side";
+export * from "./exercise-laterality";
+export * from "./exercise-laterality-options";
 export * from "./exercise-name";
 export * from "./exercise-resistance";
 export * from "./exercise-resistance-options";

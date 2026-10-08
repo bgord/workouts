@@ -11,6 +11,7 @@ export type WeightedExercisePerformanceStatisticsSet = ExercisePerformanceSet & 
 
 export type WeightedExercisePerformanceStatistics = {
   resistance: Exercises.VO.ExerciseResistanceOptions.weighted;
+  laterality: Workouts.VO.WorkoutExerciseLateralityType;
   workoutId: Workouts.VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
   sets: Array<WeightedExercisePerformanceStatisticsSet>;
@@ -21,6 +22,7 @@ export type WeightedExercisePerformanceStatistics = {
 
 export type BodyweightExercisePerformanceStatistics = {
   resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight;
+  laterality: Workouts.VO.WorkoutExerciseLateralityType;
   workoutId: Workouts.VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
   sets: Array<ExercisePerformanceSet>;

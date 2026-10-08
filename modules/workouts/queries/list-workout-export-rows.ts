@@ -9,6 +9,7 @@ export type WorkoutExportRow = {
   planSectionName: VO.WorkoutPlanSectionNameType;
   exerciseName: VO.WorkoutExerciseNameType;
   resistance: VO.WorkoutExerciseResistanceType;
+  laterality: VO.WorkoutExerciseLateralityType;
   setNumber: VO.SetNumberType;
   reps: VO.RepsType;
   load: VO.LoadType;

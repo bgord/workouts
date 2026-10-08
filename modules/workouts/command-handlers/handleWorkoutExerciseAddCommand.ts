@@ -6,6 +6,7 @@ import type * as Workouts from "+workouts";
 import { WorkoutCatalogExerciseExists } from "../invariants/workout-catalog-exercise-exists";
 import { WorkoutExerciseProgressionIsApplicable } from "../invariants/workout-exercise-progression-is-applicable";
 import { WorkoutExerciseDescription } from "../value-objects/workout-exercise-description";
+import { WorkoutExerciseLaterality } from "../value-objects/workout-exercise-laterality";
 import { WorkoutExerciseName } from "../value-objects/workout-exercise-name";
 import { WorkoutExerciseResistance } from "../value-objects/workout-exercise-resistance";
 
@@ -35,6 +36,7 @@ export const handleWorkoutExerciseAddCommand =
       v.parse(WorkoutExerciseName, exercise!.name),
       v.parse(WorkoutExerciseDescription, exercise!.description),
       v.parse(WorkoutExerciseResistance, exercise!.resistance),
+      v.parse(WorkoutExerciseLaterality, exercise!.laterality),
       command.payload.prescription,
       command.payload.requesterId,
     );

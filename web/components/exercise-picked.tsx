@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { ArrowLeftRight } from "lucide-react";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
+import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
 import { Gap } from "./gap";
@@ -17,6 +18,7 @@ export function ExercisePicked(
   const t = bg.useTranslations();
   const { exercise, onChange, ...button } = props;
   const Resistance = ResistanceKit[exercise.resistance];
+  const Laterality = LateralityKit[exercise.laterality];
 
   return (
     <div
@@ -43,6 +45,8 @@ export function ExercisePicked(
           )}
 
           <Resistance.Badge />
+
+          <Laterality.Badge />
         </div>
       </div>
 

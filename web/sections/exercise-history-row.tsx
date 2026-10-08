@@ -70,6 +70,7 @@ export function ExerciseHistoryRow(props: {
               <ui.SetValue
                 data-color="neutral-100"
                 data-fw="medium"
+                laterality={props.performance.laterality}
                 load={set.load}
                 reps={set.reps}
                 resistance={props.performance.resistance}

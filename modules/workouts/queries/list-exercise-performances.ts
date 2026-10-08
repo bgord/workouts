@@ -7,6 +7,7 @@ export type ExercisePerformance = {
   workoutId: VO.WorkoutIdType;
   scheduledFor: tools.DayIsoIdType;
   resistance: VO.WorkoutExerciseResistanceType;
+  laterality: VO.WorkoutExerciseLateralityType;
   sets: Array<{
     setNumber: VO.SetNumberType;
     reps: VO.RepsType;

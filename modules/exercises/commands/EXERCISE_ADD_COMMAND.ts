@@ -3,6 +3,7 @@ import * as v from "valibot";
 import * as Auth from "+auth";
 import { ExerciseDescription } from "../value-objects/exercise-description";
 import { ExerciseId } from "../value-objects/exercise-id";
+import { ExerciseLaterality } from "../value-objects/exercise-laterality";
 import { ExerciseName } from "../value-objects/exercise-name";
 import { ExerciseResistance } from "../value-objects/exercise-resistance";
 
@@ -18,6 +19,7 @@ export const ExerciseAddCommand = v.object({
     name: ExerciseName,
     description: ExerciseDescription,
     resistance: ExerciseResistance,
+    laterality: ExerciseLaterality,
     userId: Auth.VO.UserId,
   }),
 });

@@ -15,7 +15,13 @@ import {
   revision,
   T0,
 } from "./shared";
-import { workoutId, workoutPlanName, workoutPlanSectionName, workoutScheduledFor } from "./workouts";
+import {
+  workoutExerciseLaterality,
+  workoutId,
+  workoutPlanName,
+  workoutPlanSectionName,
+  workoutScheduledFor,
+} from "./workouts";
 
 export const mondaySixAM = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-06T06:00:00Z"));
 export const previousWeekIsoId = tools.Week.fromTimestamp(mondaySixAM).previous().toIsoId();
@@ -77,10 +83,12 @@ export const weekCompletedWorkout: Workouts.Queries.WeekCompletedWorkout = {
     {
       reps: v.parse(Workouts.VO.Reps, 5),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      laterality: workoutExerciseLaterality,
     },
     {
       reps: v.parse(Workouts.VO.Reps, 10),
       load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      laterality: workoutExerciseLaterality,
     },
   ],
 };

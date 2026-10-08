@@ -14,6 +14,21 @@ describe("ExercisePerformanceMetricsBodyweightStrategy", () => {
     expect(result).toEqual(mocks.calculatedRepsExercisePerformance);
   });
 
+  test("happy path - unilateral", () => {
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
+
+    const result = strategy.calculate({
+      ...mocks.bodyweightExercisePerformance,
+      laterality: mocks.anotherWorkoutExerciseLaterality,
+    });
+
+    expect(result).toEqual({
+      ...mocks.calculatedRepsExercisePerformance,
+      laterality: mocks.anotherWorkoutExerciseLaterality,
+      totalReps: tools.Int.positive(44),
+    });
+  });
+
   test("happy path - best set is the first with the most reps, not the last", () => {
     const strategy = new Statistics.Services.ExercisePerformanceMetricsBodyweightStrategy();
 

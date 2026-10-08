@@ -28,6 +28,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       >
         <Target data-color="neutral-500" data-size="xs" />
         <ui.TargetValue
+          laterality={props.exercise.laterality}
           load={target.load}
           reps={target.reps}
           resistance={props.exercise.resistance}
@@ -45,6 +46,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
           ? t("workout.target.edit", {
               target: SetNotation.target(t, language, {
                 resistance: props.exercise.resistance,
+                laterality: props.exercise.laterality,
                 scheme,
                 ...target,
               }),
@@ -76,6 +78,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
 
       {target && (
         <ui.TargetValue
+          laterality={props.exercise.laterality}
           load={target.load}
           reps={target.reps}
           resistance={props.exercise.resistance}

@@ -127,6 +127,20 @@
       "when": 1791186533985,
       "tag": "0017_silent_the_hood",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "6",
+      "when": 1791457599996,
+      "tag": "0018_talented_sharon_ventura",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "6",
+      "when": 1791458381271,
+      "tag": "0019_lethal_nico_minoru",
+      "breakpoints": true
     }
   ]
 }

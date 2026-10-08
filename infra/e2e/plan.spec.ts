@@ -77,6 +77,17 @@ test.describe("Plan - builder", () => {
     ).toBeVisible();
   });
 
+  test("marks a unilateral exercise instruction", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Legs", exact: true }).click();
+
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.exercises.legExtensionSingleLeg.name, exact: true })
+        .getByText("Each side", { exact: true }),
+    ).toBeVisible();
+  });
+
   test("asks for the exercise before the prescription", async ({ page }) => {
     const dialog = page.getByRole("dialog", { name: "Add exercise" });
 
@@ -110,6 +121,26 @@ test.describe("Plan - builder", () => {
     await expect(dialog.getByText(fixtures.categories.abs.name, { exact: true })).toBeVisible();
     await expect(dialog.getByText("Bodyweight", { exact: true })).toBeVisible();
     await expect(dialog.getByRole("spinbutton", { name: "Sets", exact: true })).toBeVisible();
+  });
+
+  test("marks a picked unilateral exercise", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Add exercise" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "Details: Push", exact: true }).click();
+    await page.getByRole("button", { name: "Add exercise" }).click();
+
+    await page
+      .getByRole("searchbox", { name: "Exercise" })
+      .fill(fixtures.exercises.legExtensionSingleLeg.name);
+    await page
+      .getByRole("radio", {
+        name: `${fixtures.exercises.legExtensionSingleLeg.name} ${fixtures.categories.quads.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(dialog.getByText("Each side", { exact: true })).toBeVisible();
   });
 
   test("changes the picked exercise", async ({ page }) => {

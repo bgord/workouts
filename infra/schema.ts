@@ -9,6 +9,8 @@ import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/
 import type { ExerciseCategoryNameType } from "../modules/exercises/value-objects/exercise-category-name";
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
+import type { ExerciseLateralityType } from "../modules/exercises/value-objects/exercise-laterality";
+import { ExerciseLateralityOptions } from "../modules/exercises/value-objects/exercise-laterality-options";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
 import type { ExerciseResistanceType } from "../modules/exercises/value-objects/exercise-resistance";
 import { ExerciseResistanceOptions } from "../modules/exercises/value-objects/exercise-resistance-options";
@@ -46,6 +48,7 @@ import type { RirType } from "../modules/workouts/value-objects/rir";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseDescriptionType } from "../modules/workouts/value-objects/workout-exercise-description";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
+import type { WorkoutExerciseLateralityType } from "../modules/workouts/value-objects/workout-exercise-laterality";
 import type { WorkoutExerciseNameType } from "../modules/workouts/value-objects/workout-exercise-name";
 import type { WorkoutExercisePositionType } from "../modules/workouts/value-objects/workout-exercise-position";
 import type { WorkoutExerciseResistanceType } from "../modules/workouts/value-objects/workout-exercise-resistance";
@@ -220,6 +223,10 @@ export const exercises = sqliteTable("exercises", {
     .notNull()
     .$type<ExerciseResistanceType>()
     .default(ExerciseResistanceOptions.weighted),
+  laterality: text("laterality")
+    .notNull()
+    .$type<ExerciseLateralityType>()
+    .default(ExerciseLateralityOptions.bilateral),
   image: text("image").notNull().$type<tools.ObjectKeyType>(),
   imageEtag: text("imageEtag").notNull().$type<bg.HashValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
@@ -372,6 +379,10 @@ export const workoutExercises = sqliteTable(
       .notNull()
       .$type<WorkoutExerciseResistanceType>()
       .default(ExerciseResistanceOptions.weighted),
+    laterality: text("laterality")
+      .notNull()
+      .$type<WorkoutExerciseLateralityType>()
+      .default(ExerciseLateralityOptions.bilateral),
     prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
     target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
     position: integer("position", { mode: "number" })

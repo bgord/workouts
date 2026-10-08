@@ -17,6 +17,23 @@ describe("ExercisePerformanceMetricsWeightedStrategy", () => {
     expect(result).toEqual(mocks.calculatedExercisePerformance);
   });
 
+  test("happy path - unilateral", () => {
+    const strategy = new Statistics.Services.ExercisePerformanceMetricsWeightedStrategy({
+      OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),
+    });
+
+    const result = strategy.calculate({
+      ...mocks.exercisePerformance,
+      laterality: mocks.anotherWorkoutExerciseLaterality,
+    });
+
+    expect(result).toEqual({
+      ...mocks.calculatedExercisePerformance,
+      laterality: mocks.anotherWorkoutExerciseLaterality,
+      volume: v.parse(tools.WeightGrams, 2_700_000),
+    });
+  });
+
   test("happy path - best set is the first with the highest estimate, not the last", () => {
     const strategy = new Statistics.Services.ExercisePerformanceMetricsWeightedStrategy({
       OneRepEstimator: new Statistics.Services.OneRepEstimatorEpley(),

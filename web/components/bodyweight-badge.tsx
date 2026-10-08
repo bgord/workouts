@@ -27,10 +27,7 @@ export function BodyweightMarker(props: React.JSX.IntrinsicElements["span"]) {
       data-br="circle"
       data-color="neutral-100"
       data-disp="flex"
-      data-left="4"
       data-p="1"
-      data-position="absolute"
-      data-top="4"
       role="img"
       title={t("exercise.resistance.bodyweight")}
       {...props}

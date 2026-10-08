@@ -5,6 +5,7 @@ import type {
   ExerciseCatalogItem,
   ExerciseCatalogResponse,
 } from "../../modules/plans/queries/list-exercise-catalog";
+import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { ButtonCancel } from "./button-cancel";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";
@@ -82,6 +83,7 @@ function ExercisePickerOptions(props: ExercisePickerOptionsProps) {
 
       {matching.map((exercise, index) => {
         const Resistance = ResistanceKit[exercise.resistance];
+        const Laterality = LateralityKit[exercise.laterality];
 
         return (
           <HairlineRow first={index === 0} key={exercise.id} tone="subtle">
@@ -116,6 +118,8 @@ function ExercisePickerOptions(props: ExercisePickerOptionsProps) {
               </span>
 
               <Resistance.Glyph />
+
+              <Laterality.Glyph />
 
               <span
                 data-color="neutral-500"

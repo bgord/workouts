@@ -25,6 +25,7 @@ export function WorkoutExercisePreviousPerformance(props: WorkoutExercise) {
           <ui.PerformanceValue
             data-color="neutral-400"
             data-fw="medium"
+            laterality={props.laterality}
             resistance={props.resistance}
             sets={previous.sets}
           />

@@ -86,6 +86,35 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(page).toHaveURL("/workouts");
   });
 
+  test("summarizes the previous unilateral session per side", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await page.getByRole("button", { name: "New workout" }).click();
+    await page
+      .getByRole("dialog", { name: "New workout" })
+      .getByText(fixtures.athleteMutation.plan.sections.legs.name, { exact: true })
+      .click();
+    await page.getByRole("button", { name: "Tomorrow" }).click();
+    await page.getByRole("button", { name: "Schedule", exact: true }).click();
+    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}/);
+
+    await expect(
+      page
+        .getByRole("listitem", { name: fixtures.exercises.legExtensionSingleLeg.name, exact: true })
+        .getByRole("note", { name: "Last session" })
+        .getByText("10·10·9×25 kg / side", { exact: true }),
+    ).toBeVisible();
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Discard" }).click();
+    await page
+      .getByRole("dialog", { name: "Discard workout" })
+      .getByRole("button", { name: "Discard", exact: true })
+      .click();
+
+    await expect(page).toHaveURL("/workouts");
+  });
+
   test("blocks starting a workout with no exercises", async ({ page }) => {
     const links = page.getByRole("list", { name: "Exercises" }).getByRole("link");
     const draft = page
@@ -398,7 +427,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     expect(copied).toContain(`Workout id: ${fixtures.athleteMutation.scheduledWorkout.id}`);
     expect(copied).toContain("Logged sets: 1");
-    expect(copied).toContain("| 1 | 7 | 30 | not recorded |");
+    expect(copied).toContain("| 1 | 7 | 30 | both | not recorded |");
   });
 
   test("removes a set of a past workout", async ({ page }) => {
@@ -953,6 +982,8 @@ test.describe("Workouts - hanger", () => {
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
-    expect(copied).toContain(`| ${fixtures.exercises.hangingLegRaise.name} | 1 | 12 | — | not recorded |`);
+    expect(copied).toContain(
+      `| ${fixtures.exercises.hangingLegRaise.name} | 1 | 12 | — | both | not recorded |`,
+    );
   });
 });
