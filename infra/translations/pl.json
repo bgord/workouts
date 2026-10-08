@@ -115,6 +115,8 @@
   "exercise.load_step.kg_10.hint": "Maszyny ze stosem płytek po 10 kg",
   "exercise.load_step.dumbbell_rack": "Stojak z hantlami",
   "exercise.load_step.dumbbell_rack.hint": "Następna hantla na stojaku: 1–10, 12, 12,5, 14 … 50 kg",
+  "exercise.load_step.update.cta": "Zmień skok obciążenia: {{loadStep}}",
+  "exercise.load_step.update.error": "Nie udało się zmienić skoku obciążenia",
   "exercise.resistance.label": "Rodzaj obciążenia",
   "exercise.resistance.weighted": "Z ciężarem",
   "exercise.resistance.weighted.hint": "Zapisuj ciężar każdej serii",

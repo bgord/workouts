@@ -115,6 +115,8 @@
   "exercise.load_step.kg_10.hint": "Pin machines with 10 kg plates",
   "exercise.load_step.dumbbell_rack": "Dumbbell rack",
   "exercise.load_step.dumbbell_rack.hint": "The next dumbbell on the rack: 1–10, 12, 12.5, 14 … 50 kg",
+  "exercise.load_step.update.cta": "Change load step: {{loadStep}}",
+  "exercise.load_step.update.error": "Could not change the load step",
   "exercise.resistance.label": "Resistance",
   "exercise.resistance.weighted": "Weighted",
   "exercise.resistance.weighted.hint": "Log the weight of every set",

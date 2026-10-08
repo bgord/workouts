@@ -7,6 +7,7 @@ import { ExerciseDelete } from "../sections/exercise-delete";
 import { ExerciseDescription } from "../sections/exercise-description";
 import { ExerciseImageChange } from "../sections/exercise-image-change";
 import { ExerciseLaterality } from "../sections/exercise-laterality";
+import { ExerciseLoadStep } from "../sections/exercise-load-step";
 import { ExerciseName } from "../sections/exercise-name";
 import { ExercisePerformanceHistory } from "../sections/exercise-performance-history";
 import { ExercisePerformancesEmpty } from "../sections/exercise-performances-empty";
@@ -53,6 +54,8 @@ export function Exercise() {
           <ExerciseCategories />
 
           <ExerciseResistance />
+
+          <ExerciseLoadStep />
 
           <ExerciseLaterality />
 
