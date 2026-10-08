@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { Pencil, X } from "lucide-react";
 import { useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
+import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { ResistanceKit } from "../kits/resistance.kit";
@@ -18,6 +19,7 @@ export function WorkoutSetCorrect(
   const { toggle } = bg.extractUseToggle(props);
   const action = props.loggedSet.actions.correct;
   const Resistance = ResistanceKit[props.exercise.resistance];
+  const bodyweight = props.exercise.resistance === ExerciseResistanceOptions.bodyweight;
 
   const reps = bg.useNumberField<number>({
     name: `corrected-reps-${props.loggedSet.id}`,
@@ -85,7 +87,12 @@ export function WorkoutSetCorrect(
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
-      <div data-md-width="100%" data-stack="x" {...ui.Gap.cluster}>
+      <div
+        data-md-grow={bodyweight ? "1" : undefined}
+        data-md-width={bodyweight ? undefined : "100%"}
+        data-stack="x"
+        {...ui.Gap.cluster}
+      >
         <ui.Stepper
           aria-label={t("workout.set.reps.label")}
           disabled={mutation.isLoading}
