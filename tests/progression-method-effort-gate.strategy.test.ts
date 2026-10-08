@@ -1,5 +1,7 @@
 import { describe, expect, test } from "bun:test";
+import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
 
@@ -75,5 +77,27 @@ describe("ProgressionMethodEffortGateStrategy", () => {
     );
 
     expect(strategy.calculate()).toEqual({ last: mocks.exercisePerformanceWeakestSet });
+  });
+
+  test("reps below the range - rir below target - reps hold", () => {
+    const strategy = new Workouts.Services.ProgressionMethodEffortGateStrategy(
+      { prescription: mocks.rirExercisePrescription, effort: v.parse(Workouts.VO.Rir, 1) },
+      {
+        ProgressionMethod: new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
+          { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
+          { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
+        ),
+      },
+    );
+
+    expect(strategy.calculate()).toEqual({
+      last: mocks.exercisePerformanceWeakestSet,
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 2),
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
+      }),
+      hold: Workouts.VO.ProgressionHoldReasonOptions.reps_below_target,
+    });
   });
 });

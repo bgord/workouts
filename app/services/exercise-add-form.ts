@@ -17,4 +17,5 @@ export const Form = {
   },
   resistance: { field: { name: "resistance", defaultValue: ExerciseResistanceOptions.weighted } },
   laterality: { field: { name: "laterality", defaultValue: ExerciseLateralityOptions.bilateral } },
+  loadStep: { field: { name: "loadStep" } },
 };

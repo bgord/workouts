@@ -8,6 +8,7 @@ describe("ExerciseGetActions", () => {
   test("admin", () => {
     const actions = new Exercises.Services.ExerciseGetActions({
       requesterId: Auth.VO.ADMIN_USER_ID,
+      resistance: mocks.exerciseResistance,
       usageCount: tools.Int.nonNegative(0),
       categories: [mocks.exerciseCategory],
       assignableCategories: [mocks.anotherExerciseCategory],
@@ -16,6 +17,7 @@ describe("ExerciseGetActions", () => {
     expect(actions.calculate()).toEqual({
       update: mocks.actionAvailable,
       imageChange: mocks.actionAvailable,
+      loadStepSet: mocks.actionAvailable,
       delete: mocks.actionAvailable,
       categoryAssign: mocks.actionAvailable,
       categoryUnassign: mocks.actionAvailable,
@@ -25,6 +27,7 @@ describe("ExerciseGetActions", () => {
   test("admin - blocked", () => {
     const actions = new Exercises.Services.ExerciseGetActions({
       requesterId: Auth.VO.ADMIN_USER_ID,
+      resistance: mocks.exerciseResistance,
       usageCount: tools.Int.nonNegative(1),
       categories: [
         mocks.exerciseCategory,
@@ -38,6 +41,7 @@ describe("ExerciseGetActions", () => {
     expect(actions.calculate()).toEqual({
       update: mocks.actionAvailable,
       imageChange: mocks.actionAvailable,
+      loadStepSet: mocks.actionAvailable,
       delete: { available: true, enabled: false, hints: ["exercise.is.not.used"] },
       categoryAssign: {
         available: true,
@@ -48,9 +52,29 @@ describe("ExerciseGetActions", () => {
     });
   });
 
+  test("admin - bodyweight", () => {
+    const actions = new Exercises.Services.ExerciseGetActions({
+      requesterId: Auth.VO.ADMIN_USER_ID,
+      resistance: mocks.anotherExerciseResistance,
+      usageCount: tools.Int.nonNegative(0),
+      categories: [mocks.exerciseCategory],
+      assignableCategories: [mocks.anotherExerciseCategory],
+    });
+
+    expect(actions.calculate()).toEqual({
+      update: mocks.actionAvailable,
+      imageChange: mocks.actionAvailable,
+      loadStepSet: mocks.actionUnavailable,
+      delete: mocks.actionAvailable,
+      categoryAssign: mocks.actionAvailable,
+      categoryUnassign: mocks.actionAvailable,
+    });
+  });
+
   test("user", () => {
     const actions = new Exercises.Services.ExerciseGetActions({
       requesterId: mocks.userId,
+      resistance: mocks.exerciseResistance,
       usageCount: tools.Int.nonNegative(1),
       categories: [mocks.exerciseCategory],
       assignableCategories: [],
@@ -59,6 +83,7 @@ describe("ExerciseGetActions", () => {
     expect(actions.calculate()).toEqual({
       update: mocks.actionUnavailable,
       imageChange: mocks.actionUnavailable,
+      loadStepSet: mocks.actionUnavailable,
       delete: mocks.actionUnavailable,
       categoryAssign: mocks.actionUnavailable,
       categoryUnassign: mocks.actionUnavailable,

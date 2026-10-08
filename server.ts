@@ -88,6 +88,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseImageChange(deps)),
   );
   exercises.get("/:exerciseId/image", bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseImageGet(deps)));
+  exercises.patch(
+    "/:exerciseId/load-step",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseLoadStepSet(deps)),
+  );
 
   exercises.get(
     "/category/list",

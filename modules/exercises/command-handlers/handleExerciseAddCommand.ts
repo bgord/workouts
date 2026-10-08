@@ -5,6 +5,7 @@ import type * as Exercises from "+exercises";
 import { ExerciseAddedEvent } from "../events/EXERCISE_ADDED_EVENT";
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
+import { ExerciseLoadStepIsApplicable } from "../invariants/exercise-load-step-is-applicable";
 import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
 import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
 import { ExerciseImageSide } from "../value-objects/exercise-image-side";
@@ -28,6 +29,16 @@ export const handleExerciseAddCommand =
     if (!CatalogIsManagedByAdmin.passes({ requesterId: command.payload.userId })) {
       await deps.TemporaryFile.cleanup(temporary.getFilename());
       throw new CatalogIsManagedByAdmin.error();
+    }
+
+    if (
+      !ExerciseLoadStepIsApplicable.passes({
+        resistance: command.payload.resistance,
+        loadStep: command.payload.loadStep,
+      })
+    ) {
+      await deps.TemporaryFile.cleanup(temporary.getFilename());
+      throw new ExerciseLoadStepIsApplicable.error();
     }
 
     const count = await deps.GetExerciseNameCountQuery.execute(command.payload.name);
@@ -64,6 +75,7 @@ export const handleExerciseAddCommand =
         description: command.payload.description,
         resistance: command.payload.resistance,
         laterality: command.payload.laterality,
+        loadStep: command.payload.loadStep,
         image: key,
         imageEtag: object.etag.get(),
         userId: command.payload.userId,

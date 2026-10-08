@@ -12,6 +12,7 @@ class ListExerciseCatalogQueryDrizzle implements Plans.Queries.ListExerciseCatal
         description: true,
         resistance: true,
         laterality: true,
+        loadStep: true,
         image: true,
         imageEtag: true,
       },

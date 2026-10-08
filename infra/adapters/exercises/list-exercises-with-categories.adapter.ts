@@ -13,6 +13,7 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
         description: true,
         resistance: true,
         laterality: true,
+        loadStep: true,
         image: true,
         imageEtag: true,
       },

@@ -24,6 +24,7 @@ test.describe("Exercise - athlete", () => {
     await expect(categories.getByText(fixtures.categories.chest.name, { exact: true })).toBeVisible();
     await expect(categories.getByText(fixtures.categories.shoulders.name, { exact: true })).toBeVisible();
     await expect(categories.getByText(fixtures.categories.triceps.name, { exact: true })).toBeVisible();
+    await expect(page.getByText("2.5 kg", { exact: true })).toBeVisible();
   });
 
   test("shows the exercise read-only", async ({ page }) => {
@@ -34,6 +35,7 @@ test.describe("Exercise - athlete", () => {
     ).toBeHidden();
     await expect(page.getByRole("button", { name: "Change image" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Edit description" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "Change load step: 2.5 kg" })).toBeHidden();
     await expect(page.getByRole("button", { name: "Assign", exact: true })).toBeHidden();
     await expect(
       page.getByRole("button", { name: `Unassign ${fixtures.categories.chest.name}` }),
@@ -73,6 +75,7 @@ test.describe("Exercise - athlete", () => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.hangingLegRaise.id}`);
 
     await expect(page.getByText("Bodyweight", { exact: true })).toBeVisible();
+    await expect(page.getByText("None", { exact: true })).toBeVisible();
     await expect(
       page.getByRole("link", { name: /^Most reps/ }).getByText("15 reps", { exact: true }),
     ).toBeVisible();

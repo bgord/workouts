@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Auth from "+auth";
+import * as Exercises from "+exercises";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import type { BootstrapType } from "+infra/bootstrap";
@@ -47,11 +48,12 @@ export async function targetWorkout(
 
   for (const exercise of workout["exercises"]) {
     const previous = history.get(exercise.exerciseId)?.at(-1);
+    const catalogExercise = await di.Adapters.Exercises.GetExerciseQuery.execute(exercise.exerciseId);
 
     const progression = previous
       ? Workouts.Services.ProgressionMethodStrategyFactory.for(
           exercise.prescription,
-          exercise.resistance,
+          catalogExercise?.loadStep ?? Exercises.VO.ExerciseLoadStepOptions.none,
           previous,
         ).calculate()
       : undefined;

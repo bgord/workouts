@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import type { ProgressionMethodType } from "../../modules/plans/value-objects/progression-method";
+import type { ExercisePrescriptionType } from "../../modules/workouts/value-objects/exercise-prescription";
 import type { ExerciseTargetType } from "../../modules/workouts/value-objects/exercise-target";
 import type { ExerciseTargetProgression } from "../../modules/workouts/value-objects/exercise-target-progression";
 import type { WorkoutExerciseResistanceType } from "../../modules/workouts/value-objects/workout-exercise-resistance";
@@ -17,13 +17,12 @@ type Fields = {
 export function WorkoutExerciseTargetProgression(
   props: {
     progression: ExerciseTargetProgression;
-    method: ProgressionMethodType;
-    rir: number | undefined;
+    prescription: ExercisePrescriptionType;
     resistance: WorkoutExerciseResistanceType;
     disabled: boolean;
   } & Fields,
 ) {
-  const { progression, method, rir, resistance, disabled, sets, reps, load } = props;
+  const { progression, prescription, resistance, disabled, sets, reps, load } = props;
   const t = bg.useTranslations();
   const label = useTargetDiffLabel();
 
@@ -44,7 +43,7 @@ export function WorkoutExerciseTargetProgression(
       ? label.reps(option.reps - progression.last.reps)
       : label.load(option.load - progression.last.load);
 
-  const title = `${t("workout.target.progression.title")} · ${t(`progression.method.${method}`)}`;
+  const title = `${t("workout.target.progression.title")} · ${t(`progression.method.${prescription.progression}`)}`;
 
   return (
     <fieldset
@@ -88,7 +87,10 @@ export function WorkoutExerciseTargetProgression(
 
       {progression.hold && (
         <small data-color="neutral-400" data-self="center">
-          {t(`workout.target.progression.hold.${progression.hold}`, { rir: rir ?? "" })}
+          {t(`workout.target.progression.hold.${progression.hold}`, {
+            reps: prescription.reps.min,
+            rir: prescription.rir ?? "",
+          })}
         </small>
       )}
     </fieldset>

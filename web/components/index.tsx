@@ -23,6 +23,7 @@ export * from "./exercise-card";
 export * from "./exercise-image";
 export * from "./exercise-laterality-picker";
 export * from "./exercise-link";
+export * from "./exercise-load-step-picker";
 export * from "./exercise-picked";
 export * from "./exercise-picker";
 export * from "./exercise-resistance-picker";

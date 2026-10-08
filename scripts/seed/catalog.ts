@@ -50,6 +50,7 @@ export async function seedCatalog(di: BootstrapType) {
           description: v.parse(Exercises.VO.ExerciseDescription, exercise.description),
           resistance: v.parse(Exercises.VO.ExerciseResistance, exercise.resistance),
           laterality: v.parse(Exercises.VO.ExerciseLaterality, exercise.laterality),
+          loadStep: v.parse(Exercises.VO.ExerciseLoadStep, exercise.loadStep),
           userId: Auth.VO.ADMIN_USER_ID,
         },
       },

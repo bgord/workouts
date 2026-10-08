@@ -4,11 +4,13 @@ import { ArrowRight, ImageUp, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseLateralityOptions } from "../../modules/exercises/value-objects/exercise-laterality-options";
+import type { ExerciseLoadStepOptions } from "../../modules/exercises/value-objects/exercise-load-step-options";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import * as ui from "../components";
 import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { catalogRoute } from "../router";
+import { ExerciseLoadStepChoice } from "../services/exercise-load-step-choice";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
 const maxSizeBytes = 10_000_000;
@@ -75,11 +77,16 @@ export function ExerciseAdd() {
   const description = bg.useTextField(Form.description.field);
   const resistance = bg.useTextField<ExerciseResistanceOptions>(Form.resistance.field);
   const laterality = bg.useTextField<ExerciseLateralityOptions>(Form.laterality.field);
+  const loadStep = bg.useTextField<ExerciseLoadStepOptions>(Form.loadStep.field);
 
   const metaEnterSubmit = bg.useMetaEnterSubmit();
   const image = bg.useFile("exercise-image", { mimeTypes, maxSizeBytes });
   const Resistance = ResistanceKit[resistance.value ?? Form.resistance.field.defaultValue];
   const Laterality = LateralityKit[laterality.value ?? Form.laterality.field.defaultValue];
+  const loadStepValue = ExerciseLoadStepChoice.keep(
+    resistance.value ?? Form.resistance.field.defaultValue,
+    loadStep.value,
+  );
 
   const goTo = (next: ExerciseAddStep) => () => setStep(next);
 
@@ -96,6 +103,7 @@ export function ExerciseAdd() {
       form.append("description", description.value ?? "");
       form.append("resistance", resistance.value ?? Form.resistance.field.defaultValue);
       form.append("laterality", laterality.value ?? Form.laterality.field.defaultValue);
+      form.append("loadStep", loadStepValue);
       if (image.data) form.append("file", image.data);
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });
@@ -115,6 +123,7 @@ export function ExerciseAdd() {
     description.clear,
     resistance.clear,
     laterality.clear,
+    loadStep.clear,
     image.actions.clearFile,
     goTo("details"),
     mutation.reset,
@@ -178,7 +187,8 @@ export function ExerciseAdd() {
               start={
                 <ui.ButtonClear
                   disabled={
-                    bg.Fields.allUnchanged([name, description, resistance, laterality]) && !image.isSelected
+                    bg.Fields.allUnchanged([name, description, resistance, laterality, loadStep]) &&
+                    !image.isSelected
                   }
                   onClick={clear}
                 />
@@ -202,6 +212,12 @@ export function ExerciseAdd() {
             />
 
             <ui.ExerciseResistancePicker field={resistance} />
+
+            <ui.ExerciseLoadStepPicker
+              field={loadStep}
+              options={ExerciseLoadStepChoice.options(resistance.value ?? Form.resistance.field.defaultValue)}
+              value={loadStepValue}
+            />
 
             <ui.ExerciseLateralityPicker field={laterality} />
 

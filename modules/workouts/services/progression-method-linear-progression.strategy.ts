@@ -3,7 +3,7 @@ import * as VO from "+workouts/value-objects";
 import type { LoadStepStrategy } from "./load-step.strategy";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 
-type Config = { last: VO.ExerciseTargetType };
+type Config = { prescription: VO.ExercisePrescriptionType; last: VO.ExerciseTargetType };
 
 type Dependencies = { LoadStep: LoadStepStrategy };
 
@@ -14,7 +14,16 @@ export class ProgressionMethodLinearProgressionStrategy implements ProgressionMe
   ) {}
 
   calculate(): VO.ExerciseTargetProgression {
-    return { last: this.config.last, regress: this.regress(), progress: this.progress() };
+    const { prescription, last } = this.config;
+    const regress = this.regress();
+    const progress = this.progress();
+
+    if (progress === undefined) return { last, regress };
+    if (last.reps < prescription.reps.min) {
+      return { last, regress, hold: VO.ProgressionHoldReasonOptions.reps_below_target };
+    }
+
+    return { last, regress, progress };
   }
 
   private regress(): VO.ExerciseTargetType | undefined {

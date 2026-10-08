@@ -102,7 +102,15 @@ test.describe("Catalog - admin", () => {
       .getByLabel("Description")
       .fill("Lie on your back, curl the head up with a plate on the forehead.");
     await page.getByRole("button", { name: "Next", exact: true }).click();
+
+    await expect(
+      page.getByRole("group", { name: "Load step" }).getByRole("radio", { name: "2.5 kg", exact: true }),
+    ).toBeChecked();
+
     await page.getByRole("dialog", { name: "New exercise" }).getByText("Bodyweight", { exact: true }).click();
+
+    await expect(page.getByRole("group", { name: "Load step" })).toBeHidden();
+
     await page.getByRole("button", { name: "Next", exact: true }).click();
     await page.getByLabel("Select image").setInputFiles("scripts/seed/assets/exercise.webp");
     await page.getByRole("button", { name: "Add", exact: true }).click();
@@ -267,6 +275,20 @@ test.describe("Catalog - admin", () => {
     await expect(
       page.getByRole("button", { name: "Lie on your back, curl the head up against a light plate." }),
     ).toBeVisible();
+  });
+
+  test("sets the load step of an exercise", async ({ page }) => {
+    await page.goto(`/catalog/exercise/${fixtures.exercises.bicepsCurlBarStraight.id}`);
+
+    await page.getByRole("button", { name: "Change load step: 2.5 kg" }).click();
+    await page.getByRole("group", { name: "Load step" }).getByText("Dumbbell rack", { exact: true }).click();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByRole("button", { name: "Change load step: Dumbbell rack" })).toBeVisible();
+
+    await page.reload();
+
+    await expect(page.getByRole("button", { name: "Change load step: Dumbbell rack" })).toBeVisible();
   });
 
   test("changes the exercise image", async ({ page }) => {

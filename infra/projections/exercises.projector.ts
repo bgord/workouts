@@ -10,6 +10,7 @@ type Dependencies = {
     | Exercises.Events.ExerciseDeletedEventType
     | Exercises.Events.ExerciseUpdatedEventType
     | Exercises.Events.ExerciseImageChangedEventType
+    | Exercises.Events.ExerciseLoadStepSetEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -29,6 +30,10 @@ export class ExercisesProjector {
       deps.EventHandler.handle(this.onExerciseImageChangedEvent.bind(this)),
     );
     deps.EventBus.on(
+      Exercises.Events.EXERCISE_LOAD_STEP_SET_EVENT,
+      deps.EventHandler.handle(this.onExerciseLoadStepSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
       Exercises.Events.EXERCISE_DELETED_EVENT,
       deps.EventHandler.handle(this.onExerciseDeletedEvent.bind(this)),
     );
@@ -41,6 +46,7 @@ export class ExercisesProjector {
       description: event.payload.description,
       resistance: event.payload.resistance,
       laterality: event.payload.laterality,
+      loadStep: event.payload.loadStep,
       image: event.payload.image,
       imageEtag: event.payload.imageEtag,
       userId: event.payload.userId,
@@ -64,6 +70,13 @@ export class ExercisesProjector {
         imageEtag: event.payload.imageEtag,
         updatedAt: event.createdAt,
       })
+      .where(eq(Schema.exercises.id, event.payload.id));
+  }
+
+  async onExerciseLoadStepSetEvent(event: Exercises.Events.ExerciseLoadStepSetEventType) {
+    await db
+      .update(Schema.exercises)
+      .set({ loadStep: event.payload.loadStep, updatedAt: event.createdAt })
       .where(eq(Schema.exercises.id, event.payload.id));
   }
 

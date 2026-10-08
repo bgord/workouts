@@ -18,6 +18,7 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
           description: true,
           resistance: true,
           laterality: true,
+          loadStep: true,
           image: true,
           imageEtag: true,
         },
@@ -56,6 +57,7 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
       assignableCategories,
       actions: new Exercises.Services.ExerciseGetActions({
         requesterId,
+        resistance: exercise.resistance,
         usageCount,
         categories,
         assignableCategories,

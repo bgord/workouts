@@ -35,6 +35,7 @@ class GetExercisePreviousPerformanceQueryDrizzle implements Workouts.Queries.Get
         ),
       )
       .orderBy(
+        desc(eq(Schema.workouts.planSectionId, workout.planSectionId)),
         desc(Schema.workouts.scheduledFor),
         desc(Schema.workouts.completedAt),
         asc(Schema.workoutExercises.position),

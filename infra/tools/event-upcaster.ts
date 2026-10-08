@@ -17,6 +17,17 @@ export const EventUpcaster = new bg.EventUpcasterChainAdapter({
       toVersion: 3,
       upcast: (payload) => ({ ...payload, laterality: Exercises.VO.ExerciseLateralityOptions.bilateral }),
     }),
+    new bg.EventUpcasterStep({
+      fromVersion: 3,
+      toVersion: 4,
+      upcast: (payload) => ({
+        ...payload,
+        loadStep: {
+          [Exercises.VO.ExerciseResistanceOptions.weighted]: Exercises.VO.ExerciseLoadStepOptions.kg_2_5,
+          [Exercises.VO.ExerciseResistanceOptions.bodyweight]: Exercises.VO.ExerciseLoadStepOptions.none,
+        }[payload.resistance as Exercises.VO.ExerciseResistanceOptions],
+      }),
+    }),
   ],
   [Plans.Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT]: [
     new bg.EventUpcasterStep({

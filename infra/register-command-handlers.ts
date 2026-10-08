@@ -39,6 +39,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_LOAD_STEP_SET_COMMAND,
+    ExercisesCommandHandlers.handleExerciseLoadStepSetCommand({
+      ...deps,
+      GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+    }),
+  );
+  Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_DELETE_COMMAND,
     ExercisesCommandHandlers.handleExerciseDeleteCommand({
       ...deps,

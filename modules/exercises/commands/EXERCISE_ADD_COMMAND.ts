@@ -4,6 +4,7 @@ import * as Auth from "+auth";
 import { ExerciseDescription } from "../value-objects/exercise-description";
 import { ExerciseId } from "../value-objects/exercise-id";
 import { ExerciseLaterality } from "../value-objects/exercise-laterality";
+import { ExerciseLoadStep } from "../value-objects/exercise-load-step";
 import { ExerciseName } from "../value-objects/exercise-name";
 import { ExerciseResistance } from "../value-objects/exercise-resistance";
 
@@ -20,6 +21,7 @@ export const ExerciseAddCommand = v.object({
     description: ExerciseDescription,
     resistance: ExerciseResistance,
     laterality: ExerciseLaterality,
+    loadStep: ExerciseLoadStep,
     userId: Auth.VO.UserId,
   }),
 });

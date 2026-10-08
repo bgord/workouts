@@ -7,6 +7,7 @@ import { ExerciseDelete } from "../sections/exercise-delete";
 import { ExerciseDescription } from "../sections/exercise-description";
 import { ExerciseImageChange } from "../sections/exercise-image-change";
 import { ExerciseLaterality } from "../sections/exercise-laterality";
+import { ExerciseLoadStep } from "../sections/exercise-load-step";
 import { ExerciseName } from "../sections/exercise-name";
 import { ExercisePerformanceHistory } from "../sections/exercise-performance-history";
 import { ExercisePerformancesEmpty } from "../sections/exercise-performances-empty";
@@ -52,9 +53,17 @@ export function Exercise() {
         <div data-grow="1" data-stack="y" {...bg.Rhythm(280).times(1).style.width} {...ui.Gap.block}>
           <ExerciseCategories />
 
-          <ExerciseResistance />
+          <div data-stack="x" {...ui.Gap.block}>
+            <div data-basis="0" data-grow="1">
+              <ExerciseResistance />
+            </div>
 
-          <ExerciseLaterality />
+            <div data-basis="0" data-grow="1">
+              <ExerciseLaterality />
+            </div>
+          </div>
+
+          <ExerciseLoadStep />
 
           <ExerciseDescription />
         </div>

@@ -75,6 +75,7 @@ modules/
 │   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
+│   │   ├── handleExerciseLoadStepSetCommand.ts
 │   │   ├── handleExerciseUnassignCategoryCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
@@ -85,6 +86,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
+│   │   ├── EXERCISE_LOAD_STEP_SET_COMMAND.ts
 │   │   ├── EXERCISE_UNASSIGN_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
 │   ├── events
@@ -96,6 +98,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_UNASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
+│   │   ├── EXERCISE_LOAD_STEP_SET_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
 │   │   ├── catalog-is-managed-by-admin.ts
@@ -109,6 +112,8 @@ modules/
 │   │   ├── exercise-is-assigned-to-category.ts
 │   │   ├── exercise-is-not-assigned-to-category.ts
 │   │   ├── exercise-is-not-used.ts
+│   │   ├── exercise-load-step-has-changed.ts
+│   │   ├── exercise-load-step-is-applicable.ts
 │   │   ├── exercise-name-is-unique.ts
 │   ├── open-host-queries
 │   ├── policies
@@ -145,6 +150,10 @@ modules/
 │       ├── exercise-image-side.ts
 │       ├── exercise-laterality-options.ts
 │       ├── exercise-laterality.ts
+│       ├── exercise-load-step-applicability.ts
+│       ├── exercise-load-step-default.ts
+│       ├── exercise-load-step-options.ts
+│       ├── exercise-load-step.ts
 │       ├── exercise-name.ts
 │       ├── exercise-name.validation.ts
 │       ├── exercise-resistance-options.ts
@@ -561,6 +570,7 @@ modules/
     │   ├── load-step-factory.strategy.ts
     │   ├── load-step-increment.strategy.ts
     │   ├── load-step-locked.strategy.ts
+    │   ├── load-step-rack.strategy.ts
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
@@ -578,6 +588,7 @@ modules/
     │   ├── workout-list-actions.ts
     │   └── workout-progress.ts
     └── value-objects
+        ├── dumbbell-rack.ts
         ├── exercise-prescription.ts
         ├── exercise-target-diff.ts
         ├── exercise-target-progression.ts
@@ -637,6 +648,7 @@ app/
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
+│   │   ├── exercise-load-step-set.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements
