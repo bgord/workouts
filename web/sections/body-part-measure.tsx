@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus, Ruler } from "lucide-react";
+import { Check, Plus, Ruler } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
@@ -164,6 +164,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                   disabled={bg.Fields.anyEmpty([value, measuredOn]) || mutation.isLoading}
                   type="submit"
                 >
+                  <Check data-size="sm" />
                   {t("measurements.body_parts.measure.cta")}
                 </button>
               </ui.DialogFooter>
