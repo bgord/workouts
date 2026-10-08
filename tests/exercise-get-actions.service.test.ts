@@ -34,6 +34,7 @@ describe("ExerciseGetActions", () => {
         mocks.anotherExerciseCategory,
         mocks.exerciseCategory,
         mocks.anotherExerciseCategory,
+        mocks.exerciseCategory,
       ],
       assignableCategories: [],
     });
