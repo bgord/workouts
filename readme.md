@@ -584,6 +584,7 @@ modules/
         ├── workout-draft-limit-for-owner.ts
         ├── workout-exercise-description.ts
         ├── workout-exercise-id.ts
+        ├── workout-exercise-laterality.ts
         ├── workout-exercise-limit.ts
         ├── workout-exercise-name.ts
         ├── workout-exercise-position.ts

@@ -48,6 +48,7 @@ import type { RirType } from "../modules/workouts/value-objects/rir";
 import type { SetNumberType } from "../modules/workouts/value-objects/set-number";
 import type { WorkoutExerciseDescriptionType } from "../modules/workouts/value-objects/workout-exercise-description";
 import type { WorkoutExerciseIdType } from "../modules/workouts/value-objects/workout-exercise-id";
+import type { WorkoutExerciseLateralityType } from "../modules/workouts/value-objects/workout-exercise-laterality";
 import type { WorkoutExerciseNameType } from "../modules/workouts/value-objects/workout-exercise-name";
 import type { WorkoutExercisePositionType } from "../modules/workouts/value-objects/workout-exercise-position";
 import type { WorkoutExerciseResistanceType } from "../modules/workouts/value-objects/workout-exercise-resistance";
@@ -378,6 +379,10 @@ export const workoutExercises = sqliteTable(
       .notNull()
       .$type<WorkoutExerciseResistanceType>()
       .default(ExerciseResistanceOptions.weighted),
+    laterality: text("laterality")
+      .notNull()
+      .$type<WorkoutExerciseLateralityType>()
+      .default(ExerciseLateralityOptions.bilateral),
     prescription: text("prescription", { mode: "json" }).notNull().$type<ExercisePrescriptionType>(),
     target: text("target", { mode: "json" }).$type<ExerciseTargetType>(),
     position: integer("position", { mode: "number" })
