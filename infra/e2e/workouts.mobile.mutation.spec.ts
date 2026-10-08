@@ -41,7 +41,9 @@ test.describe("Mobile - pocket", () => {
     await panel.getByRole("button", { name: "Reps +1" }).tap();
     await panel.getByRole("button", { name: "Load (kg) +0.5" }).tap();
     await panel.getByRole("button", { name: "Log set", exact: true }).tap();
+    await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeEnabled();
     await panel.getByRole("button", { name: "Log set · RIR 1" }).tap();
+    await expect(panel.getByRole("button", { name: "Remove set 2" })).toBeEnabled();
     await panel
       .getByRole("toolbar", { name: "Exercises" })
       .getByRole("button", {
@@ -50,6 +52,7 @@ test.describe("Mobile - pocket", () => {
       })
       .tap();
     await panel.getByRole("button", { name: "Log set", exact: true }).tap();
+    await expect(panel.getByRole("button", { name: "Remove set 1" })).toBeEnabled();
 
     await panel
       .getByRole("button", { name: `Close panel: ${fixtures.exercises.overheadPressSeatedDumbbells.name}` })
