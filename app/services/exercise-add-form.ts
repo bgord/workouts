@@ -2,6 +2,7 @@ import {
   ExerciseDescriptionMax,
   ExerciseDescriptionMin,
 } from "../../modules/exercises/value-objects/exercise-description.validation";
+import { ExerciseLateralityOptions } from "../../modules/exercises/value-objects/exercise-laterality-options";
 import {
   ExerciseNameMax,
   ExerciseNameMin,
@@ -15,4 +16,5 @@ export const Form = {
     field: { name: "description" },
   },
   resistance: { field: { name: "resistance", defaultValue: ExerciseResistanceOptions.weighted } },
+  laterality: { field: { name: "laterality", defaultValue: ExerciseLateralityOptions.bilateral } },
 };

@@ -63,6 +63,7 @@ export const handleExerciseAddCommand =
         name: command.payload.name,
         description: command.payload.description,
         resistance: command.payload.resistance,
+        laterality: command.payload.laterality,
         image: key,
         imageEtag: object.etag.get(),
         userId: command.payload.userId,
