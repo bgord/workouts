@@ -28,6 +28,7 @@ import {
   planSectionWarmup,
   progression,
   repsRange,
+  rirTarget,
   sets,
 } from "./plans";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
@@ -124,6 +125,20 @@ export const amrapDoubleProgressionExercisePrescription = v.parse(Workouts.VO.Ex
   sets,
   reps: amrapRepsRange,
   progression,
+});
+
+export const rirExercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: repsRange,
+  progression,
+  rir: rirTarget,
+});
+
+export const amrapRirExercisePrescription = v.parse(Workouts.VO.ExercisePrescription, {
+  sets,
+  reps: amrapRepsRange,
+  progression: Plans.VO.ProgressionMethodOptions.rep_progression,
+  rir: rirTarget,
 });
 
 export const loadStep = tools.Weight.fromKilograms(2.5);
@@ -415,6 +430,11 @@ export const GenericWorkoutExerciseAddedEventBodyweight = {
     ...GenericWorkoutExerciseAddedEvent.payload,
     resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
   },
+} satisfies Workouts.Events.WorkoutExerciseAddedEventType;
+
+export const GenericWorkoutExerciseAddedEventRir = {
+  ...GenericWorkoutExerciseAddedEvent,
+  payload: { ...GenericWorkoutExerciseAddedEvent.payload, prescription: rirExercisePrescription },
 } satisfies Workouts.Events.WorkoutExerciseAddedEventType;
 
 export const GenericWorkoutExerciseAddedEventAnother = {

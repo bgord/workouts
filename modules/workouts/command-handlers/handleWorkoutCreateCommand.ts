@@ -64,7 +64,12 @@ export const handleWorkoutCreateCommand =
         v.parse(WorkoutExerciseDescription, instruction.exercise.description),
         v.parse(WorkoutExerciseResistance, instruction.exercise.resistance),
         v.parse(WorkoutExerciseLaterality, instruction.exercise.laterality),
-        { sets: instruction.sets, reps: instruction.reps, progression: instruction.progression },
+        {
+          sets: instruction.sets,
+          reps: instruction.reps,
+          progression: instruction.progression,
+          rir: instruction.rir ?? undefined,
+        },
         command.payload.userId,
       );
     }

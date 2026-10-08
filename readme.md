@@ -524,6 +524,7 @@ modules/
     │   ├── workout-exercise-position-in-range.ts
     │   ├── workout-exercise-progression-is-applicable-for-reps.ts
     │   ├── workout-exercise-progression-is-applicable.ts
+    │   ├── workout-exercise-rir-is-applicable-for-reps.ts
     │   ├── workout-exercise-target-has-changed.ts
     │   ├── workout-exercises-have-targets.ts
     │   ├── workout-exists.ts

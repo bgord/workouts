@@ -240,6 +240,25 @@ export const plan: Plans.VO.PlanSnapshot = {
   sections: [planSection, anotherPlanSection],
 };
 
+export const planWithRir: Plans.VO.PlanSnapshot = {
+  ...plan,
+  sections: [
+    {
+      ...planSection,
+      exerciseInstructions: [
+        {
+          id: exerciseInstruction.id,
+          exercise,
+          sets: exerciseInstruction.sets,
+          reps: exerciseInstruction.reps,
+          progression,
+          rir: rirTarget,
+        },
+      ],
+    },
+  ],
+};
+
 export const planAtInstructionLimit: Plans.VO.PlanSnapshot = {
   ...plan,
   sections: [planSectionAtInstructionLimit],

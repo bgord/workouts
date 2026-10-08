@@ -103,6 +103,27 @@ describe("Workout.addExercise", async () => {
     ).toThrow(Workouts.Invariants.WorkoutExerciseProgressionIsApplicableForReps.error);
   });
 
+  test("WorkoutExerciseRirIsApplicableForReps", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    expect(() =>
+      workout.addExercise(
+        mocks.workoutExerciseId,
+        mocks.exerciseId,
+        mocks.workoutExerciseName,
+        mocks.workoutExerciseDescription,
+        mocks.workoutExerciseResistance,
+        mocks.workoutExerciseLaterality,
+        mocks.amrapRirExercisePrescription,
+        mocks.userId,
+      ),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseRirIsApplicableForReps.error);
+  });
+
   test("happy path", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,
@@ -152,5 +173,28 @@ describe("Workout.addExercise", async () => {
     );
 
     expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseAddedEventAnother]);
+  });
+
+  test("happy path - rir", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [mocks.GenericWorkoutCreatedEvent],
+      deps,
+    );
+
+    await bg.CorrelationStorage.run(mocks.correlationId, () =>
+      workout.addExercise(
+        mocks.workoutExerciseId,
+        mocks.exerciseId,
+        mocks.workoutExerciseName,
+        mocks.workoutExerciseDescription,
+        mocks.workoutExerciseResistance,
+        mocks.workoutExerciseLaterality,
+        mocks.rirExercisePrescription,
+        mocks.userId,
+      ),
+    );
+
+    expect(workout.pullEvents()).toEqual([mocks.GenericWorkoutExerciseAddedEventRir]);
   });
 });
