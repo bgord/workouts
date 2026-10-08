@@ -18,12 +18,15 @@ export class ExercisePerformanceMetricsWeightedStrategy
     }));
 
     const bestSet = sets.reduce((best, set) => (set.estimate > best.estimate ? set : best));
+    const volume = new Workouts.Services.LoggedSetsVolume(
+      sets.map((set) => ({ ...set, laterality: performance.laterality })),
+    );
 
     return {
       ...performance,
       resistance: Exercises.VO.ExerciseResistanceOptions.weighted,
       sets,
-      volume: new Workouts.Services.LoggedSetsVolume(sets).calculate().get(),
+      volume: volume.calculate().get(),
       bestSet,
       bestEstimate: bestSet.estimate,
     };

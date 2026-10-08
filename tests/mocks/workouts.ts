@@ -8,6 +8,7 @@ import * as Workouts from "+workouts";
 import { userId } from "./auth";
 import {
   anotherExerciseId,
+  anotherExerciseLaterality,
   anotherExerciseName,
   exerciseDescription,
   exerciseId,
@@ -59,6 +60,10 @@ export const workoutExerciseDescription = v.parse(
 );
 export const workoutExerciseResistance = v.parse(Workouts.VO.WorkoutExerciseResistance, exerciseResistance);
 export const workoutExerciseLaterality = v.parse(Workouts.VO.WorkoutExerciseLaterality, exerciseLaterality);
+export const anotherWorkoutExerciseLaterality = v.parse(
+  Workouts.VO.WorkoutExerciseLaterality,
+  anotherExerciseLaterality,
+);
 
 export const workoutSummary: Workouts.VO.WorkoutSummary = {
   id: workoutId,

@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Workouts from "+workouts";
+import * as mocks from "./mocks";
 
 describe("LoggedSetsVolume", () => {
   test("calculate - no sets", () => {
@@ -15,6 +16,7 @@ describe("LoggedSetsVolume", () => {
       {
         reps: v.parse(Workouts.VO.Reps, 5),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+        laterality: mocks.workoutExerciseLaterality,
       },
     ]);
 
@@ -28,13 +30,27 @@ describe("LoggedSetsVolume", () => {
       {
         reps: v.parse(Workouts.VO.Reps, 5),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+        laterality: mocks.workoutExerciseLaterality,
       },
       {
         reps: v.parse(Workouts.VO.Reps, 8),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(60).get()),
+        laterality: mocks.workoutExerciseLaterality,
       },
     ]);
 
     expect(volume.calculate().toKilograms()).toEqual(980);
+  });
+
+  test("calculate - a unilateral set counts both sides", () => {
+    const volume = new Workouts.Services.LoggedSetsVolume([
+      {
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(100).get()),
+        laterality: mocks.anotherWorkoutExerciseLaterality,
+      },
+    ]);
+
+    expect(volume.calculate().toKilograms()).toEqual(1000);
   });
 });

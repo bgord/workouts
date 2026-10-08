@@ -18,6 +18,7 @@ export * from "./workout-exercise-limit";
 export * from "./workout-exercise-name";
 export * from "./workout-exercise-position";
 export * from "./workout-exercise-resistance";
+export * from "./workout-exercise-sides";
 export * from "./workout-id";
 export * from "./workout-in-progress-limit-for-owner";
 export * from "./workout-list-filter";

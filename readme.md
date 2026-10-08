@@ -589,6 +589,7 @@ modules/
         ├── workout-exercise-name.ts
         ├── workout-exercise-position.ts
         ├── workout-exercise-resistance.ts
+        ├── workout-exercise-sides.ts
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts

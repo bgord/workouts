@@ -15,6 +15,7 @@ export const exerciseDescription = v.parse(
 export const exerciseResistance = Exercises.VO.ExerciseResistanceOptions.weighted;
 export const anotherExerciseResistance = Exercises.VO.ExerciseResistanceOptions.bodyweight;
 export const exerciseLaterality = Exercises.VO.ExerciseLateralityOptions.bilateral;
+export const anotherExerciseLaterality = Exercises.VO.ExerciseLateralityOptions.unilateral;
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 export const exerciseImageEtag = bg.Hash.fromString(
   "0000000000000000000000000000000000000000000000000000000000000000",

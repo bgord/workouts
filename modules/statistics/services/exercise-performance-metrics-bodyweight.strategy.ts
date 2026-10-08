@@ -1,6 +1,6 @@
 import * as tools from "@bgord/tools";
 import * as Exercises from "+exercises";
-import type * as Workouts from "+workouts";
+import * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
 import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-metrics.strategy";
 
@@ -14,7 +14,12 @@ export class ExercisePerformanceMetricsBodyweightStrategy
       ...performance,
       resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
       bestSet,
-      totalReps: tools.Int.positive(performance.sets.reduce((total, set) => total + set.reps, 0)),
+      totalReps: tools.Int.positive(
+        performance.sets.reduce(
+          (total, set) => total + set.reps * Workouts.VO.WorkoutExerciseSides[performance.laterality],
+          0,
+        ),
+      ),
     };
   }
 

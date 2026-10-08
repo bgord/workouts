@@ -90,6 +90,7 @@ describe("WeeklySummaryTotals", async () => {
             {
               reps: v.parse(Workouts.VO.Reps, 1),
               load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(0.4).get()),
+              laterality: mocks.workoutExerciseLaterality,
             },
           ],
         },
@@ -100,5 +101,36 @@ describe("WeeklySummaryTotals", async () => {
     );
 
     expect(totals.tiles()[2]).toEqual({ value: "0", label: "volume (kg)", delta: "+0 vs last week" });
+  });
+
+  test("tiles - unilateral sets count volume for both sides", () => {
+    const totals = new Notifications.Services.WeeklySummaryTotals(
+      [
+        {
+          ...mocks.weekCompletedWorkout,
+          loggedSets: [
+            {
+              reps: v.parse(Workouts.VO.Reps, 5),
+              load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+              laterality: mocks.anotherWorkoutExerciseLaterality,
+            },
+            {
+              reps: v.parse(Workouts.VO.Reps, 10),
+              load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+              laterality: mocks.anotherWorkoutExerciseLaterality,
+            },
+          ],
+        },
+      ],
+      [],
+      en,
+      "en",
+    );
+
+    expect(totals.tiles()).toEqual([
+      { value: "1", label: "workout", delta: "+1 vs last week" },
+      { value: "2", label: "sets", delta: "+2 vs last week" },
+      { value: "2,700", label: "volume (kg)", delta: "+2,700 vs last week" },
+    ]);
   });
 });
