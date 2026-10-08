@@ -11,6 +11,7 @@ import type { PlanSectionWarmupType } from "./plan-section-warmup";
 import type { PlanStatusEnum } from "./plan-status";
 import type { ProgressionMethodType } from "./progression-method";
 import type { RepsRangeType } from "./reps-range";
+import type { RirTargetType } from "./rir-target";
 import type { SetsType } from "./sets";
 
 export type ExerciseInstructionSnapshot = {
@@ -19,6 +20,7 @@ export type ExerciseInstructionSnapshot = {
   sets: SetsType;
   reps: RepsRangeType;
   progression: ProgressionMethodType;
+  rir: RirTargetType | null;
 };
 
 export type PlanSectionSnapshot = {
