@@ -68,6 +68,8 @@ export const repsRange = v.parse(Plans.VO.RepsRange, { min: 8, max: 12 });
 export const anotherRepsRange = v.parse(Plans.VO.RepsRange, { min: 6, max: 6 });
 export const amrapRepsRange = v.parse(Plans.VO.RepsRange, { min: 5 });
 
+export const rirTarget = v.parse(Plans.VO.RirTarget, 2);
+
 export const exerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: exerciseInstructionId,
   exerciseId,
@@ -132,6 +134,24 @@ export const amrapDoubleProgressionExerciseInstruction: Plans.VO.ExerciseInstruc
   progression,
 };
 
+export const rirExerciseInstruction: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId,
+  reps: repsRange,
+  sets,
+  progression,
+  rir: rirTarget,
+};
+
+export const amrapRirExerciseInstruction: Plans.VO.ExerciseInstructionType = {
+  id: exerciseInstructionId,
+  exerciseId,
+  reps: amrapRepsRange,
+  sets,
+  progression: Plans.VO.ProgressionMethodOptions.rep_progression,
+  rir: rirTarget,
+};
+
 export const planSummary: Plans.VO.PlanSummary = {
   id: planId,
   name: planName,
@@ -153,6 +173,7 @@ export const planSection: Plans.VO.PlanSectionSnapshot = {
       sets: exerciseInstruction.sets,
       reps: exerciseInstruction.reps,
       progression,
+      rir: null,
     },
   ],
 };
@@ -168,6 +189,7 @@ const anotherPlanSection: Plans.VO.PlanSectionSnapshot = {
       sets: otherExerciseInstruction.sets,
       reps: otherExerciseInstruction.reps,
       progression,
+      rir: null,
     },
   ],
 };
@@ -183,6 +205,7 @@ export const planSectionAtInstructionLimit: Plans.VO.PlanSectionSnapshot = {
     sets: exerciseInstruction.sets,
     reps: exerciseInstruction.reps,
     progression,
+    rir: null,
   })),
 };
 
