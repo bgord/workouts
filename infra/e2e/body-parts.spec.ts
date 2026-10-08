@@ -299,4 +299,19 @@ test.describe("Body parts - athlete", () => {
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` }),
     ).toBeVisible();
   });
+
+  test("keeps the body parts open after cancelling the body part delete", async ({ page }) => {
+    const bodyParts = page.getByRole("dialog", { name: "Body parts" });
+    const bodyPartDelete = page.getByRole("dialog", { name: "Delete body part" });
+
+    await page.goto("/measurements/body-parts");
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
+    await page.getByRole("button", { name: `Delete ${fixtures.athlete.bodyParts.waist.name}` }).click();
+
+    await bodyPartDelete.getByRole("button", { name: "Cancel" }).click();
+
+    await expect(bodyPartDelete).toBeHidden();
+    await expect(bodyParts).toBeVisible();
+  });
 });

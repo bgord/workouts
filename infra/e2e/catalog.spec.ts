@@ -232,6 +232,20 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByRole("button", { name: "Delete Abs" })).toBeVisible();
   });
 
+  test("keeps the categories open after cancelling the category delete", async ({ page }) => {
+    const categories = page.getByRole("dialog", { name: "Categories" });
+    const categoryDelete = page.getByRole("dialog", { name: "Delete category" });
+
+    await page.goto("/catalog");
+    await page.getByRole("button", { name: "Categories", exact: true }).click();
+    await page.getByRole("button", { name: "Delete Abs" }).click();
+
+    await categoryDelete.getByRole("button", { name: "Cancel" }).click();
+
+    await expect(categoryDelete).toBeHidden();
+    await expect(categories).toBeVisible();
+  });
+
   test("shows the error when adding an exercise fails", async ({ page }) => {
     await page.route("**/api/exercises/add", (route) => route.fulfill({ status: 500 }));
     await page.goto("/catalog");

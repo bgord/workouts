@@ -10,11 +10,12 @@ const DialogHeaderId = createContext<string | undefined>(undefined);
 
 export function Dialog(props: bg.DialogPropsType) {
   const hydrated = bg.useHydrated();
+  const parent = useContext(DialogHeaderId);
   const header = `${props.props.target.id}-header`;
 
   if (!hydrated) return null;
 
-  return createPortal(
+  const dialog = (
     <DialogHeaderId.Provider value={header}>
       <bg.Dialog
         aria-labelledby={header}
@@ -52,9 +53,10 @@ export function Dialog(props: bg.DialogPropsType) {
         />
         {props.children}
       </bg.Dialog>
-    </DialogHeaderId.Provider>,
-    document.body,
+    </DialogHeaderId.Provider>
   );
+
+  return parent ? dialog : createPortal(dialog, document.body);
 }
 
 export function DialogHeader(props: React.JSX.IntrinsicElements["strong"]) {
