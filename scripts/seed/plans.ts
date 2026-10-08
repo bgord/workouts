@@ -19,6 +19,7 @@ type PlanFixture = Pick<typeof fixtures.ppl, "name" | "description"> & {
         sets: number;
         reps: { min: number; max: number };
         progression: string;
+        rir?: number;
       }>;
     }
   >;
@@ -120,6 +121,7 @@ export async function draftPlan(di: BootstrapType, userId: Auth.VO.UserIdType, p
               sets: instruction.sets,
               reps: instruction.reps,
               progression: instruction.progression,
+              rir: instruction.rir,
             }),
             requesterId: userId,
           },

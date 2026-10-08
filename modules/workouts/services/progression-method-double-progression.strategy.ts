@@ -3,7 +3,11 @@ import * as VO from "+workouts/value-objects";
 import type { LoadStepStrategy } from "./load-step.strategy";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 
-type Config = { prescription: VO.ExercisePrescriptionType; last: VO.ExerciseTargetType };
+type Config = {
+  prescription: VO.ExercisePrescriptionType;
+  last: VO.ExerciseTargetType;
+  effort?: VO.RirType;
+};
 
 type Dependencies = { LoadStep: LoadStepStrategy };
 
@@ -14,7 +18,23 @@ export class ProgressionMethodDoubleProgressionStrategy implements ProgressionMe
   ) {}
 
   calculate(): VO.ExerciseTargetProgression {
+    if (this.belowTarget()) {
+      return {
+        last: this.config.last,
+        regress: this.regress(),
+        hold: VO.ProgressionHoldReasonOptions.rir_below_target,
+      };
+    }
+
     return { last: this.config.last, regress: this.regress(), progress: this.progress() };
+  }
+
+  private belowTarget(): boolean {
+    const { prescription, effort } = this.config;
+
+    if (prescription.rir === undefined || effort === undefined) return false;
+
+    return effort < prescription.rir;
   }
 
   private regress(): VO.ExerciseTargetType | undefined {

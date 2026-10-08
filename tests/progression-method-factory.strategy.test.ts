@@ -15,6 +15,20 @@ describe("ProgressionMethodStrategyFactory", () => {
     expect(strategy.calculate()).toEqual(mocks.exerciseTargetProgression);
   });
 
+  test("double_progression - rir below target", () => {
+    const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
+      mocks.rirExercisePrescription,
+      mocks.workoutExerciseResistance,
+      mocks.exercisePerformanceWithRir,
+    );
+
+    expect(strategy.calculate()).toEqual({
+      last: mocks.exerciseTargetProgression.last,
+      regress: mocks.exerciseTargetProgression.regress,
+      hold: Workouts.VO.ProgressionHoldReasonOptions.rir_below_target,
+    });
+  });
+
   test("linear_progression", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       { ...mocks.exercisePrescription, progression: Plans.VO.ProgressionMethodOptions.linear_progression },
