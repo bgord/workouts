@@ -21,7 +21,9 @@ describe("LoadStepStrategyFactory", () => {
   });
 
   test("kg_2_5", () => {
-    const strategy = Workouts.Services.LoadStepStrategyFactory.for(Exercises.VO.ExerciseLoadStepOptions.kg_2_5);
+    const strategy = Workouts.Services.LoadStepStrategyFactory.for(
+      Exercises.VO.ExerciseLoadStepOptions.kg_2_5,
+    );
 
     expect(strategy).toBeInstanceOf(Workouts.Services.LoadStepIncrementStrategy);
     expect(strategy.increase(v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(20).get()))).toEqual(
@@ -39,7 +41,9 @@ describe("LoadStepStrategyFactory", () => {
   });
 
   test("kg_10", () => {
-    const strategy = Workouts.Services.LoadStepStrategyFactory.for(Exercises.VO.ExerciseLoadStepOptions.kg_10);
+    const strategy = Workouts.Services.LoadStepStrategyFactory.for(
+      Exercises.VO.ExerciseLoadStepOptions.kg_10,
+    );
 
     expect(strategy).toBeInstanceOf(Workouts.Services.LoadStepIncrementStrategy);
     expect(strategy.increase(v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(20).get()))).toEqual(

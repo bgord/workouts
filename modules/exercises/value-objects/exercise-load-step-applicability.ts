@@ -3,7 +3,7 @@ import type { ExerciseResistanceOptions } from "./exercise-resistance-options";
 
 export const ExerciseLoadStepApplicability: Record<
   ExerciseResistanceOptions,
-  ReadonlyArray<ExerciseLoadStepOptions>
+  readonly [ExerciseLoadStepOptions, ...ReadonlyArray<ExerciseLoadStepOptions>]
 > = {
   weighted: [
     ExerciseLoadStepOptions.kg_2_5,
