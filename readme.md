@@ -555,6 +555,7 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
+    │   ├── exercise-performance-effort.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
     │   ├── load-step-factory.strategy.ts
@@ -582,6 +583,7 @@ modules/
         ├── load.ts
         ├── logged-set-id.ts
         ├── logged-set.ts
+        ├── progression-hold-reason-options.ts
         ├── reps.ts
         ├── rir-limit.ts
         ├── rir.ts
