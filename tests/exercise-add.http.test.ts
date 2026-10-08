@@ -2,6 +2,7 @@ import { describe, expect, spyOn, test } from "bun:test";
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
+import * as Exercises from "+exercises";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -17,6 +18,7 @@ form.append("name", mocks.exerciseName);
 form.append("description", mocks.exerciseDescription);
 form.append("resistance", mocks.exerciseResistance);
 form.append("laterality", mocks.exerciseLaterality);
+form.append("loadStep", mocks.exerciseLoadStep);
 
 const temporary = tools.Filename.fromString(`${mocks.temporaryFileId}.png`);
 const final = temporary.withExtension(v.parse(tools.Extension, "webp"));
@@ -166,6 +168,37 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, "exercise.laterality.invalid");
   });
 
+  test("validation - load step - missing", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
+
+    const form = new FormData();
+    form.append("file", mocks.png);
+    form.append("name", mocks.exerciseName);
+    form.append("description", mocks.exerciseDescription);
+    form.append("resistance", mocks.exerciseResistance);
+    form.append("laterality", mocks.exerciseLaterality);
+
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
+
+    await testcases.assertErrorResponse(response, 400, "exercise.load.step.invalid");
+  });
+
+  test("validation - load step - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
+
+    const form = new FormData();
+    form.append("file", mocks.png);
+    form.append("name", mocks.exerciseName);
+    form.append("description", mocks.exerciseDescription);
+    form.append("resistance", mocks.exerciseResistance);
+    form.append("laterality", mocks.exerciseLaterality);
+    form.append("loadStep", "invalid");
+
+    const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
+
+    await testcases.assertErrorResponse(response, 400, "exercise.load.step.invalid");
+  });
+
   test("CatalogIsManagedByAdmin", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
@@ -180,6 +213,32 @@ describe(`POST ${url}`, async () => {
     );
 
     await testcases.assertErrorResponse(response, 403, "catalog.is.managed.by.admin");
+    expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
+  test("ExerciseLoadStepIsApplicable", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
+    using temporaryFileCleanup = spyOn(di.Adapters.System.TemporaryFile, "cleanup");
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.temporaryFileId);
+
+    const form = new FormData();
+    form.append("file", mocks.png);
+    form.append("name", mocks.exerciseName);
+    form.append("description", mocks.exerciseDescription);
+    form.append("resistance", mocks.exerciseResistance);
+    form.append("laterality", mocks.exerciseLaterality);
+    form.append("loadStep", Exercises.VO.ExerciseLoadStepOptions.none);
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.correlationIdHeaders, body: form },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "exercise.load.step.is.applicable");
     expect(temporaryFileCleanup).toHaveBeenCalledWith(temporary);
     expect(eventStoreSave).not.toHaveBeenCalled();
   });

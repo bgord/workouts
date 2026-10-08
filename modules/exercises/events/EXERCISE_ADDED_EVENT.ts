@@ -9,13 +9,14 @@ export const EXERCISE_ADDED_EVENT = "EXERCISE_ADDED_EVENT";
 export const ExerciseAddedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(EXERCISE_ADDED_EVENT),
-  version: v.literal(3),
+  version: v.literal(4),
   payload: v.object({
     id: VO.ExerciseId,
     name: VO.ExerciseName,
     description: VO.ExerciseDescription,
     resistance: VO.ExerciseResistance,
     laterality: VO.ExerciseLaterality,
+    loadStep: VO.ExerciseLoadStep,
     image: tools.ObjectKey,
     imageEtag: bg.HashValue,
     userId: Auth.VO.UserId,

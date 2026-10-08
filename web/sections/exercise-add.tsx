@@ -4,6 +4,7 @@ import { ArrowRight, ImageUp, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseLateralityOptions } from "../../modules/exercises/value-objects/exercise-laterality-options";
+import { ExerciseLoadStepApplicability } from "../../modules/exercises/value-objects/exercise-load-step-applicability";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import * as ui from "../components";
 import { LateralityKit } from "../kits/laterality.kit";
@@ -96,6 +97,10 @@ export function ExerciseAdd() {
       form.append("description", description.value ?? "");
       form.append("resistance", resistance.value ?? Form.resistance.field.defaultValue);
       form.append("laterality", laterality.value ?? Form.laterality.field.defaultValue);
+      form.append(
+        "loadStep",
+        ExerciseLoadStepApplicability[resistance.value ?? Form.resistance.field.defaultValue][0]!,
+      );
       if (image.data) form.append("file", image.data);
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });

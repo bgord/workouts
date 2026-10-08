@@ -25,6 +25,7 @@ export const exercises = {
       "Stand tall, elbows pinned to your sides. Curl the bar up without swinging, lower under control.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms],
   },
   bulgarianSplitSquatDumbbell: {
@@ -34,6 +35,7 @@ export const exercises = {
       "Rear foot on a bench, dumbbells at your sides. Drop the back knee straight down, drive through the front heel.",
     resistance: "weighted",
     laterality: "unilateral",
+    loadStep: "kg_2_5",
     categories: [categories.glutes, categories.hamstrings, categories.quads],
   },
   calfRaisesLegPress: {
@@ -43,6 +45,7 @@ export const exercises = {
       "Balls of the feet on the platform edge. Push through the toes to full extension, lower into a deep stretch.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.calves],
   },
   calfRaisesMachine: {
@@ -52,6 +55,7 @@ export const exercises = {
       "Shoulders under the pads, heels off the step. Rise as high as possible, pause, lower slowly.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.calves],
   },
   calfRaisesSeatedDumbbells: {
@@ -60,6 +64,7 @@ export const exercises = {
     description: "Seated, dumbbells resting on the knees. Lift the heels high, lower into a full stretch.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.calves],
   },
   calfRaisesStandingDumbbellSingleLeg: {
@@ -69,6 +74,7 @@ export const exercises = {
       "One foot on a step, dumbbell in the same-side hand. Rise onto the toes, lower the heel below the step.",
     resistance: "weighted",
     laterality: "unilateral",
+    loadStep: "kg_2_5",
     categories: [categories.calves],
   },
   concentrationCurlDumbbell: {
@@ -78,6 +84,7 @@ export const exercises = {
       "Seated, elbow braced against the inner thigh. Curl without moving the upper arm, squeeze at the top.",
     resistance: "weighted",
     laterality: "unilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms],
   },
   facePull: {
@@ -87,6 +94,7 @@ export const exercises = {
       "Rope at face height. Pull towards the forehead with high elbows, spreading the rope apart at the end.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.shoulders, categories.upperMidBack],
   },
   hammerCurlDumbbells: {
@@ -96,6 +104,7 @@ export const exercises = {
       "Neutral grip, palms facing each other. Curl without rotating the wrists, keep the elbows still.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms],
   },
   hangingLegRaise: {
@@ -105,6 +114,7 @@ export const exercises = {
       "Hang from the bar, arms straight. Raise the legs to hip height without swinging, lower slowly.",
     resistance: "bodyweight",
     laterality: "bilateral",
+    loadStep: "none",
     categories: [categories.abs],
   },
   hammerStrengthIncline: {
@@ -114,6 +124,7 @@ export const exercises = {
       "Handles in line with the upper chest. Press up and slightly in, lower until the chest is stretched.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.chest, categories.shoulders, categories.triceps],
   },
   independentChestPress: {
@@ -122,6 +133,7 @@ export const exercises = {
     description: "Handles at mid-chest, shoulder blades back. Press both arms evenly, control the return.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.chest, categories.shoulders, categories.triceps],
   },
   latPullDownCable: {
@@ -131,6 +143,7 @@ export const exercises = {
       "Grip slightly wider than the shoulders. Pull the bar to the upper chest leading with the elbows, no leaning back.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   lateralRaiseDumbbells: {
@@ -139,6 +152,7 @@ export const exercises = {
     description: "Slight bend in the elbows. Raise to shoulder height leading with the elbows, lower slowly.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.shoulders, categories.upperMidBack],
   },
   legCurlLying: {
@@ -148,6 +162,7 @@ export const exercises = {
       "Knees just off the pad edge, hips pressed down. Curl the heels towards the glutes, lower under control.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.hamstrings],
   },
   legCurlSeated: {
@@ -156,6 +171,7 @@ export const exercises = {
     description: "Thigh pad locked down, knees in line with the pivot. Curl fully, pause, return slowly.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.hamstrings],
   },
   legExtensionBothLegs: {
@@ -165,6 +181,7 @@ export const exercises = {
       "Knees in line with the pivot, back against the pad. Extend fully, pause, lower under control.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.quads],
   },
   legExtensionSingleLeg: {
@@ -173,6 +190,7 @@ export const exercises = {
     description: "One leg at a time, knee in line with the pivot. Extend fully and hold briefly at the top.",
     resistance: "weighted",
     laterality: "unilateral",
+    loadStep: "kg_2_5",
     categories: [categories.quads],
   },
   legPressBridge: {
@@ -182,6 +200,7 @@ export const exercises = {
       "Feet high and wide on the platform to bias glutes and hamstrings. Press through the heels, control the descent.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.glutes, categories.hamstrings, categories.quads],
   },
   legPressHorizontal: {
@@ -191,6 +210,7 @@ export const exercises = {
       "Feet shoulder-width apart on the platform. Bend the knees to about 90 degrees, press back without locking out.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.glutes, categories.hamstrings, categories.quads],
   },
   lowRowCable: {
@@ -200,6 +220,7 @@ export const exercises = {
       "Chest up, slight forward lean at the start. Row the handle to the lower ribs, squeeze the shoulder blades.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   lowRowIsoLateral: {
@@ -209,6 +230,7 @@ export const exercises = {
       "Chest against the pad. Row each handle towards the hip, squeeze the shoulder blades together.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   lowRowMachine: {
@@ -218,6 +240,7 @@ export const exercises = {
       "Chest against the pad, arms fully extended. Pull the handles to the torso, pause, return slowly.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   overheadPressSeatedDumbbells: {
@@ -227,6 +250,7 @@ export const exercises = {
       "Back against an upright bench, dumbbells at shoulder height. Press overhead without arching, lower to the ears.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.shoulders, categories.triceps, categories.upperMidBack],
   },
   pecDeck: {
@@ -236,6 +260,7 @@ export const exercises = {
       "Elbows slightly bent, handles at chest height. Bring the arms together in an arc, squeeze, open slowly.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.chest, categories.shoulders],
   },
   pecFlyCable: {
@@ -245,6 +270,7 @@ export const exercises = {
       "Cables at shoulder height, one step forward. Sweep the hands together in a wide arc, control the stretch.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.chest, categories.shoulders],
   },
   pecFlyMachine: {
@@ -253,6 +279,7 @@ export const exercises = {
     description: "Handles in line with the chest. Hug the handles together, pause, return to a full stretch.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.chest, categories.shoulders],
   },
   pullUp: {
@@ -261,6 +288,7 @@ export const exercises = {
     description: "Hang with an overhand grip. Pull until the chin clears the bar, lower to a full hang.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
   },
   romanianDeadliftDumbbellSingleLeg: {
@@ -270,6 +298,7 @@ export const exercises = {
       "Dumbbell in the opposite hand. Hinge at the hip with the back leg rising, stop when the hamstring is stretched.",
     resistance: "weighted",
     laterality: "unilateral",
+    loadStep: "kg_2_5",
     categories: [categories.glutes, categories.hamstrings, categories.lowerBack],
   },
   straightArmPulldownBar: {
@@ -279,6 +308,7 @@ export const exercises = {
       "Arms straight, slight hip hinge. Sweep the bar down to the thighs using the lats, return slowly.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.lats, categories.upperMidBack],
   },
   superHorizontalBenchPress: {
@@ -288,6 +318,7 @@ export const exercises = {
       "Handles at mid-chest, feet flat. Press forward to near lockout, lower until the chest is stretched.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.chest, categories.shoulders, categories.triceps],
   },
   tricepsExtensionOverheadCable: {
@@ -297,6 +328,7 @@ export const exercises = {
       "Facing away from the stack, rope behind the head. Extend the elbows fully, keep the upper arms still.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.triceps],
   },
   tricepsPushDownBar: {
@@ -305,6 +337,7 @@ export const exercises = {
     description: "Elbows pinned to the sides. Push the bar down to full lockout, return to about 90 degrees.",
     resistance: "weighted",
     laterality: "bilateral",
+    loadStep: "kg_2_5",
     categories: [categories.triceps],
   },
 };

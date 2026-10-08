@@ -26,6 +26,7 @@ export const ExerciseAdd =
     const description = v.parse(Exercises.VO.ExerciseDescription, form.get("description"));
     const resistance = v.parse(Exercises.VO.ExerciseResistance, form.get("resistance"));
     const laterality = v.parse(Exercises.VO.ExerciseLaterality, form.get("laterality"));
+    const loadStep = v.parse(Exercises.VO.ExerciseLoadStep, form.get("loadStep"));
 
     const temporary = await deps.TemporaryFile.write(filename, file);
 
@@ -39,6 +40,7 @@ export const ExerciseAdd =
           description,
           resistance,
           laterality,
+          loadStep,
           userId,
         },
       },
