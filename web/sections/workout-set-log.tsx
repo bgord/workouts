@@ -59,6 +59,7 @@ export function WorkoutSetLog(props: {
         reps: reps.value as LoggedSet["reps"],
         load: Resistance.payload(load) as LoggedSet["load"],
         rir: (rir.current ?? null) as LoggedSet["rir"],
+        rirBelowTarget: false,
         actions: {
           correct: { available: true, enabled: false, hints: [] },
           remove: { available: true, enabled: false, hints: [] },

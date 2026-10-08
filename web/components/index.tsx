@@ -51,6 +51,7 @@ export * from "./progression-method-icon";
 export * from "./progression-method-picker";
 export * from "./radio-tile";
 export * from "./rir-badge";
+export * from "./rir-below-target-marker";
 export * from "./rir-submit";
 export * from "./rir-target-picker";
 export * from "./row";

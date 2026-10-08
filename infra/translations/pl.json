@@ -478,6 +478,7 @@
   "workout.set.remove.info": "Usunięcie serii {{setNumber}} z {{name}} zmieni zakończony trening.",
   "workout.set.remove.title": "Usuń serię {{setNumber}}",
   "workout.set.reps.label": "Powtórzenia",
+  "workout.set.rir.below_target": "Poniżej docelowego RIR {{rir}}",
   "workout.set.rir.label": "RIR",
   "workout.set.rir.title": "Powtórzenia w zapasie",
   "workout.shortcuts.open": "Otwórz najnowszy trening",

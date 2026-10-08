@@ -478,6 +478,7 @@
   "workout.set.remove.info": "Removing set {{setNumber}} of {{name}} changes this completed workout.",
   "workout.set.remove.title": "Remove set {{setNumber}}",
   "workout.set.reps.label": "Reps",
+  "workout.set.rir.below_target": "Below target RIR {{rir}}",
   "workout.set.rir.label": "RIR",
   "workout.set.rir.title": "Reps in reserve",
   "workout.shortcuts.open": "Open latest workout",

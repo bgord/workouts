@@ -1,5 +1,6 @@
 import * as VO from "+workouts/value-objects";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
+import { RirBelowTarget } from "./rir-below-target";
 
 type Config = { prescription: VO.ExercisePrescriptionType; effort: VO.RirType | undefined };
 
@@ -13,18 +14,12 @@ export class ProgressionMethodEffortGateStrategy implements ProgressionMethodStr
 
   calculate(): VO.ExerciseTargetProgression {
     const { progress, ...progression } = this.deps.ProgressionMethod.calculate();
+    const { prescription, effort } = this.config;
+    const rirBelowTarget = new RirBelowTarget({ target: prescription.rir, effort }).calculate();
 
     if (progress === undefined) return progression;
-    if (!this.belowTarget()) return { ...progression, progress };
+    if (!rirBelowTarget) return { ...progression, progress };
 
     return { ...progression, hold: VO.ProgressionHoldReasonOptions.rir_below_target };
-  }
-
-  private belowTarget(): boolean {
-    const { prescription, effort } = this.config;
-
-    if (prescription.rir === undefined || effort === undefined) return false;
-
-    return effort < prescription.rir;
   }
 }

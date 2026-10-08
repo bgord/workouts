@@ -570,6 +570,7 @@ modules/
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method-rep-progression.strategy.ts
     │   ├── progression-method.strategy.ts
+    │   ├── rir-below-target.ts
     │   ├── workout-export-file-csv.ts
     │   ├── workout-get-actions.ts
     │   ├── workout-get-exercise-actions.ts

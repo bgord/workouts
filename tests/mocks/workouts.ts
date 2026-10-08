@@ -361,6 +361,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
     loggedSets: exercise.loggedSets.map((set) => ({
       ...set,
       rir: null,
+      rirBelowTarget: false,
       actions: {
         correct: { available: true, enabled: true, hints: [] },
         remove: { available: true, enabled: true, hints: [] },
