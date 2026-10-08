@@ -2,15 +2,19 @@ import * as bg from "@bgord/ui";
 import { Gap } from "./gap";
 import { RirColor } from "./rir-color";
 
+export function RirDot(props: { rir: number }) {
+  return (
+    <span data-bg={RirColor(props.rir)} data-br="circle" data-self="center" style={{ width: 6, height: 6 }} />
+  );
+}
+
 export function RirBadge(props: React.JSX.IntrinsicElements["span"] & { rir: number }) {
   const t = bg.useTranslations();
   const { rir, ...span } = props;
 
-  const color = RirColor(rir);
-
   return (
     <span
-      data-color={color}
+      data-color={RirColor(rir)}
       data-cross="baseline"
       data-fs="xs"
       data-fw="medium"
@@ -20,7 +24,7 @@ export function RirBadge(props: React.JSX.IntrinsicElements["span"] & { rir: num
       {...Gap.inline}
       {...span}
     >
-      <span data-bg={color} data-br="circle" data-self="center" style={{ width: 6, height: 6 }} />
+      <RirDot rir={rir} />
       {t("workout.set.rir.label")} {rir}
     </span>
   );
