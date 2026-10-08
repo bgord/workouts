@@ -6,17 +6,25 @@ import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
 import { Gap } from "./gap";
 
-const DialogHeaderId = createContext<string | undefined>(undefined);
+const DialogContext = createContext<{ header: string; swipe: bg.UseSwipeDismissReturnType } | undefined>(
+  undefined,
+);
 
 export function Dialog(props: bg.DialogPropsType) {
   const hydrated = bg.useHydrated();
-  const parent = useContext(DialogHeaderId);
+  const parent = useContext(DialogContext);
+  const { width } = bg.useWindowDimensions();
   const header = `${props.props.target.id}-header`;
+
+  const swipe = bg.useSwipeDismiss({
+    enabled: width !== undefined && width <= 768 && !props.locked,
+    onDismiss: props.disable,
+  });
 
   if (!hydrated) return null;
 
   const dialog = (
-    <DialogHeaderId.Provider value={header}>
+    <DialogContext.Provider value={{ header, swipe }}>
       <bg.Dialog
         aria-labelledby={header}
         data-bc="alpha-soft"
@@ -27,7 +35,7 @@ export function Dialog(props: bg.DialogPropsType) {
         data-md-bottom="0"
         data-md-bwb="none"
         data-md-mb="0"
-        data-md-pt="2"
+        data-md-pt="0"
         data-md-px="4"
         data-md-top="auto"
         data-mt="8"
@@ -41,26 +49,19 @@ export function Dialog(props: bg.DialogPropsType) {
         {...Gap.stack}
         {...props}
       >
-        <div
-          aria-hidden
-          data-bg="neutral-700"
-          data-br="pill"
-          data-disp="none"
-          data-md-disp="block"
-          data-mx="auto"
-          data-shrink="0"
-          style={{ width: 36, height: 4 }}
-        />
+        <div aria-hidden data-disp="none" data-md-disp="block" data-pt="2" data-shrink="0" {...swipe}>
+          <div data-bg="neutral-700" data-br="pill" data-mx="auto" style={{ width: 36, height: 4 }} />
+        </div>
         {props.children}
       </bg.Dialog>
-    </DialogHeaderId.Provider>
+    </DialogContext.Provider>
   );
 
   return parent ? dialog : createPortal(dialog, document.body);
 }
 
 export function DialogHeader(props: React.JSX.IntrinsicElements["strong"]) {
-  const id = useContext(DialogHeaderId);
+  const dialog = useContext(DialogContext);
 
   return (
     <strong
@@ -69,7 +70,8 @@ export function DialogHeader(props: React.JSX.IntrinsicElements["strong"]) {
       data-fw="semibold"
       data-shrink="0"
       data-transform="truncate"
-      id={id}
+      id={dialog?.header}
+      {...dialog?.swipe}
       {...props}
     />
   );

@@ -90,6 +90,37 @@ test.describe("Mobile - athlete", () => {
     await expect(dialog).toBeHidden();
   });
 
+  test("dismisses the dialog with a swipe down", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "New workout" });
+
+    await page.goto("/workouts");
+    await page.getByRole("button", { name: "New workout" }).click();
+    const sheet = await dialog.boundingBox();
+    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 6);
+    await page.mouse.down();
+
+    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 400, { steps: 10 });
+    await page.mouse.up();
+
+    await expect(dialog).toBeHidden();
+  });
+
+  test("keeps the dialog after a short swipe down", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "New workout" });
+
+    await page.goto("/workouts");
+    await page.getByRole("button", { name: "New workout" }).click();
+    const sheet = await dialog.boundingBox();
+    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 6);
+    await page.mouse.down();
+    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 26, { steps: 10 });
+    await page.waitForTimeout(300);
+
+    await page.mouse.up();
+
+    await expect(dialog.getByRole("button", { name: "Schedule" })).toBeInViewport();
+  });
+
   test("fits the body weight form on the screen", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
