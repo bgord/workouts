@@ -1,3 +1,4 @@
+import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
 import { useId } from "react";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
@@ -13,6 +14,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   exerciseInstruction: PlanExerciseInstruction;
   position: number;
 }) {
+  const t = bg.useTranslations();
   const { exerciseInstruction } = props;
   const label = useId();
   const Resistance = ResistanceKit[exerciseInstruction.exercise.resistance];
@@ -46,7 +48,17 @@ export function PlanSectionExerciseInstructionRow(props: {
           {exerciseInstruction.exercise.name}
         </ui.ExerciseLink>
 
-        <ui.SetsReps data-color="neutral-300" {...exerciseInstruction} />
+        <div data-cross="baseline" data-stack="x" {...ui.Gap.cluster}>
+          <ui.SetsReps
+            data-color="neutral-300"
+            reps={exerciseInstruction.reps}
+            sets={exerciseInstruction.sets}
+          />
+
+          {exerciseInstruction.rir !== null && (
+            <ui.RirBadge rir={exerciseInstruction.rir} title={t("rir.target.label")} />
+          )}
+        </div>
 
         <div data-color="neutral-500" data-fs="xs" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           <ui.ProgressionMethodBadge method={exerciseInstruction.progression} />

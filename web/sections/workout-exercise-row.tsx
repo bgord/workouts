@@ -149,6 +149,14 @@ export function WorkoutExerciseRow(props: {
               <ui.SetsReps {...props.exercise.prescription} />
             </small>
 
+            {props.exercise.prescription.rir !== undefined && (
+              <ui.RirBadge
+                data-self="center"
+                rir={props.exercise.prescription.rir}
+                title={t("rir.target.label")}
+              />
+            )}
+
             {target && (
               <div data-disp="none" data-md-disp="block" data-self="center">
                 <ui.SetDots sets={exercise.loggedSets} target={target.sets} />

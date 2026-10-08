@@ -452,11 +452,13 @@ test.describe("Plans - drafter", () => {
       .getByRole("button", { name: "Save", exact: true })
       .click();
 
-    await expect(row.getByText("5×6-8 · RIR 2", { exact: true })).toBeVisible();
+    await expect(row.getByText("5×6-8", { exact: true })).toBeVisible();
+    await expect(row.getByTitle("Target RIR", { exact: true })).toHaveText("RIR 2");
 
     await page.reload();
 
-    await expect(row.getByText("5×6-8 · RIR 2", { exact: true })).toBeVisible();
+    await expect(row.getByText("5×6-8", { exact: true })).toBeVisible();
+    await expect(row.getByTitle("Target RIR", { exact: true })).toHaveText("RIR 2");
   });
 
   test("changes the exercise of the instruction", async ({ page }) => {

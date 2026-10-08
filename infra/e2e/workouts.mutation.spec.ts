@@ -327,7 +327,8 @@ test.describe("Workouts - athlete-mutation", () => {
       .getByRole("button", { name: "Add exercise" })
       .click();
 
-    await expect(row.getByText("3×10-12 · RIR 2", { exact: true })).toBeVisible();
+    await expect(row.getByText("3×10-12", { exact: true })).toBeVisible();
+    await expect(row.getByTitle("Target RIR", { exact: true })).toHaveText("RIR 2");
 
     await row.getByRole("button", { name: "Set target", exact: true }).click();
 
