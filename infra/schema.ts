@@ -9,6 +9,8 @@ import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/
 import type { ExerciseCategoryNameType } from "../modules/exercises/value-objects/exercise-category-name";
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
+import type { ExerciseLateralityType } from "../modules/exercises/value-objects/exercise-laterality";
+import { ExerciseLateralityOptions } from "../modules/exercises/value-objects/exercise-laterality-options";
 import type { ExerciseNameType } from "../modules/exercises/value-objects/exercise-name";
 import type { ExerciseResistanceType } from "../modules/exercises/value-objects/exercise-resistance";
 import { ExerciseResistanceOptions } from "../modules/exercises/value-objects/exercise-resistance-options";
@@ -220,6 +222,10 @@ export const exercises = sqliteTable("exercises", {
     .notNull()
     .$type<ExerciseResistanceType>()
     .default(ExerciseResistanceOptions.weighted),
+  laterality: text("laterality")
+    .notNull()
+    .$type<ExerciseLateralityType>()
+    .default(ExerciseLateralityOptions.bilateral),
   image: text("image").notNull().$type<tools.ObjectKeyType>(),
   imageEtag: text("imageEtag").notNull().$type<bg.HashValueType>(),
   userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
