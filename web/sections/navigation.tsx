@@ -64,14 +64,14 @@ function NavigationDesktop() {
           {t("app.workouts")}
         </NavigationLink>
 
-        <NavigationLink to="/catalog" {...desktopItem}>
-          <Dumbbell data-size="sm" />
-          {t("app.catalog")}
-        </NavigationLink>
-
         <NavigationLink to="/plans" {...desktopItem}>
           <ListChecks data-size="sm" />
           {t("app.plans")}
+        </NavigationLink>
+
+        <NavigationLink to="/catalog" {...desktopItem}>
+          <Dumbbell data-size="sm" />
+          {t("app.catalog")}
         </NavigationLink>
 
         <NavigationLink to="/measurements" {...desktopItem}>
@@ -117,12 +117,12 @@ function NavigationMobileDrawer() {
         <CalendarCheck data-size="md" />
       </NavigationLink>
 
-      <NavigationLink title={t("app.catalog")} to="/catalog" {...drawerItem}>
-        <Dumbbell data-size="md" />
-      </NavigationLink>
-
       <NavigationLink title={t("app.plans")} to="/plans" {...drawerItem}>
         <ListChecks data-size="md" />
+      </NavigationLink>
+
+      <NavigationLink title={t("app.catalog")} to="/catalog" {...drawerItem}>
+        <Dumbbell data-size="md" />
       </NavigationLink>
 
       <NavigationLink title={t("app.measurements")} to="/measurements" {...drawerItem}>
