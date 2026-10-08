@@ -53,16 +53,18 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
             })
           : undefined
       }
-      data-bc={target ? undefined : "alpha-strong"}
+      data-bc={target ? undefined : "brand-700"}
       data-br="sm"
       data-bs={target ? undefined : "dashed"}
       data-bw={target ? undefined : "hairline"}
-      data-color={target ? "neutral-300" : "neutral-400"}
+      data-color={target ? "neutral-300" : "brand-300"}
       data-cursor="pointer"
       data-fs="xs"
-      data-fw={target ? "medium" : undefined}
-      data-hover-color="neutral-0"
+      data-fw="medium"
+      data-hover-bc={target ? undefined : "brand-400"}
+      data-hover-color={target ? "neutral-0" : "brand-200"}
       data-px={target ? undefined : "2"}
+      data-py={target ? undefined : "0-5"}
       data-shrink="0"
       data-stack="x"
       data-transform="font-variant-numeric"
@@ -74,7 +76,7 @@ export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.
       {...toggle.props.controller}
     >
       {target && <Pencil data-color="neutral-500" data-size="xs" />}
-      <Target data-color="neutral-500" data-size="xs" />
+      <Target data-color={target ? "neutral-500" : "brand-400"} data-size="xs" />
 
       {target && (
         <ui.TargetValue
