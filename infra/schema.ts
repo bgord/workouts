@@ -38,6 +38,7 @@ import { PlanStatusEnum } from "../modules/plans/value-objects/plan-status";
 import type { ProgressionMethodType } from "../modules/plans/value-objects/progression-method";
 import { ProgressionMethodOptions } from "../modules/plans/value-objects/progression-method-options";
 import type { RepsRangeType } from "../modules/plans/value-objects/reps-range";
+import type { RirTargetType } from "../modules/plans/value-objects/rir-target";
 import type { SetsType } from "../modules/plans/value-objects/sets";
 import type { ExercisePrescriptionType } from "../modules/workouts/value-objects/exercise-prescription";
 import type { ExerciseTargetType } from "../modules/workouts/value-objects/exercise-target";
@@ -306,6 +307,7 @@ export const planSectionExerciseInstructions = sqliteTable(
       .notNull()
       .default(ProgressionMethodOptions.double_progression)
       .$type<ProgressionMethodType>(),
+    rir: integer("rir", { mode: "number" }).$type<RirTargetType>(),
     position: integer("position", { mode: "number" })
       .notNull()
       .default(0)

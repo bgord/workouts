@@ -20,7 +20,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
             orderBy: asc(Schema.planSections.createdAt),
             with: {
               exerciseInstructions: {
-                columns: { id: true, sets: true, reps: true, progression: true },
+                columns: { id: true, sets: true, reps: true, progression: true, rir: true },
                 orderBy: asc(Schema.planSectionExerciseInstructions.position),
                 with: {
                   exercise: {
