@@ -206,7 +206,7 @@ test.describe("Body parts - athlete", () => {
     await expect(
       page
         .getByRole("dialog", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` })
-        .getByText("0.0 cm", { exact: true }),
+        .getByText("No change since", { exact: true }),
     ).toBeVisible();
   });
 

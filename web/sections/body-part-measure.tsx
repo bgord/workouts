@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Plus, Ruler } from "lucide-react";
+import { Check, Plus } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
 import { bodyPartsRoute } from "../router";
@@ -12,7 +12,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
 
   const bodyPartMeasure = bg.useToggle({ name: `body-part-measure-${props.id}` });
 
-  const [latest, previous] = props.measurements;
+  const [latest] = props.measurements;
   const today = bg.useToday();
 
   const value = bg.useNumberField({
@@ -60,88 +60,54 @@ export function BodyPartMeasure(props: BodyPartSummary) {
               {t("measurements.body_parts.measure.header", { name: props.name })}
             </ui.DialogHeader>
 
-            <ul data-stack="x">
-              <ui.Tile>
-                <ui.TileHeader>
-                  <Ruler data-size="xs" />
-                  {t("measurements.body_parts.measure.previous")}
-                </ui.TileHeader>
-
-                <ui.TileValue>
-                  {latest ? <ui.LengthValue millimeters={latest.value} /> : "—"}
-
-                  {latest && (
-                    <ui.LengthDelta current={latest.value} data-fs="xs" previous={previous?.value} />
-                  )}
-                </ui.TileValue>
-
-                <ui.TileContext>
-                  {latest ? (
-                    <bg.DateTime format="freshness" value={latest.measuredOn} />
-                  ) : (
-                    t("measurements.body_parts.measure.never")
-                  )}
-                </ui.TileContext>
-              </ui.Tile>
-            </ul>
-
             <form
               aria-busy={mutation.isLoading}
               data-stack="y"
               onSubmit={mutation.handleSubmit}
               {...ui.Gap.stack}
             >
-              <div
-                data-cross="start"
-                data-md-cross="stretch"
-                data-md-stack="y"
-                data-stack="x"
-                {...ui.Gap.related}
-              >
-                <div data-stack="y" {...ui.Gap.field}>
-                  <label {...value.label.props}>{t("measurements.body_parts.measure.value.label")}</label>
+              <div data-stack="y" {...ui.Gap.field}>
+                <label {...value.label.props}>{t("measurements.body_parts.measure.value.label")}</label>
 
-                  <ui.Stepper
-                    aria-label={t("measurements.body_parts.measure.value.label")}
-                    disabled={mutation.isLoading}
-                    field={value}
-                    max={300}
-                    min={0.1}
-                    step={0.1}
-                    unit={t("measurements.body_parts.measure.unit")}
-                    width={72}
-                  />
+                <ui.Stepper
+                  aria-label={t("measurements.body_parts.measure.value.label")}
+                  disabled={mutation.isLoading}
+                  field={value}
+                  max={300}
+                  min={0.1}
+                  step={0.1}
+                  unit={t("measurements.body_parts.measure.unit")}
+                  width={72}
+                />
 
-                  <small data-color="neutral-600" data-cross="center" data-stack="x" {...ui.Gap.inline}>
-                    {t("measurements.body_parts.measure.change")}
-                    {latest && value.changed && !value.empty && (
-                      <ui.LengthDelta
-                        current={LengthFormat.millimeters(value.value ?? 0)}
-                        previous={latest.value}
-                      />
+                {latest && !value.empty && (
+                  <small data-color="neutral-500" data-cross="center" data-stack="x" {...ui.Gap.inline}>
+                    {value.changed && (
+                      <>
+                        <ui.LengthDelta
+                          current={LengthFormat.millimeters(value.value ?? 0)}
+                          previous={latest.value}
+                        />
+                        <span>{t("measurements.body_parts.measure.since")}</span>
+                      </>
                     )}
-                    {latest && value.unchanged && (
-                      <span>
-                        <ui.LengthValue millimeters={0} />
-                      </span>
-                    )}
-                    {(!latest || value.empty) && <span>—</span>}
+                    {value.unchanged && <span>{t("measurements.body_parts.measure.unchanged")}</span>}
+                    <bg.DateTime format="short" value={latest.measuredOn} />
                   </small>
-                </div>
+                )}
+              </div>
 
-                <div data-stack="y" {...ui.Gap.field}>
-                  <label {...measuredOn.label.props}>{t("measurements.body_parts.measure.date.label")}</label>
+              <div data-stack="y" {...ui.Gap.field}>
+                <label {...measuredOn.label.props}>{t("measurements.body_parts.measure.date.label")}</label>
 
-                  <input
-                    className="c-input"
-                    data-md-width="100%"
-                    data-width="auto"
-                    disabled={mutation.isLoading}
-                    type="date"
-                    {...measuredOn.input.props}
-                    max={today.toString()}
-                  />
-                </div>
+                <input
+                  className="c-input"
+                  data-width="100%"
+                  disabled={mutation.isLoading}
+                  type="date"
+                  {...measuredOn.input.props}
+                  max={today.toString()}
+                />
               </div>
 
               {mutation.isError && (
