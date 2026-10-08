@@ -1,4 +1,6 @@
 import { describe, expect, test } from "bun:test";
+import * as tools from "@bgord/tools";
+import * as v from "valibot";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
@@ -15,7 +17,23 @@ describe("ProgressionMethodStrategyFactory", () => {
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
       Workouts.Services.ProgressionMethodDoubleProgressionStrategy,
     );
-    expect(strategy.calculate()).toEqual(mocks.exerciseTargetProgression);
+    expect(strategy.calculate()).toEqual({
+      last: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 3),
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 3),
+        reps: v.parse(Workouts.VO.Reps, 4),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
+      progress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 3),
+        reps: v.parse(Workouts.VO.Reps, 6),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
+    });
   });
 
   test("double_progression - rir below target", () => {
@@ -26,8 +44,16 @@ describe("ProgressionMethodStrategyFactory", () => {
     );
 
     expect(strategy.calculate()).toEqual({
-      last: mocks.exerciseTargetProgression.last,
-      regress: mocks.exerciseTargetProgression.regress,
+      last: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 3),
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 3),
+        reps: v.parse(Workouts.VO.Reps, 4),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
       hold: Workouts.VO.ProgressionHoldReasonOptions.rir_below_target,
     });
   });

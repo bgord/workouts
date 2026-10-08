@@ -1,6 +1,7 @@
+import * as v from "valibot";
 import * as Plans from "+plans";
 import type * as Queries from "+workouts/queries";
-import type * as VO from "+workouts/value-objects";
+import * as VO from "+workouts/value-objects";
 import { ExercisePerformanceEffort } from "./exercise-performance-effort";
 import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-set";
 import { LoadStepStrategyFactory } from "./load-step-factory.strategy";
@@ -28,7 +29,8 @@ export class ProgressionMethodStrategyFactory {
     resistance: VO.WorkoutExerciseResistanceType,
     previous: Pick<Queries.ExercisePerformance, "sets">,
   ): ProgressionMethodStrategy {
-    const last = new ExercisePerformanceWeakestSet(previous).calculate();
+    const weakest = new ExercisePerformanceWeakestSet(previous).calculate();
+    const last = v.parse(VO.ExerciseTarget, { ...weakest, sets: prescription.sets });
     const LoadStep = LoadStepStrategyFactory.for(resistance);
 
     switch (prescription.progression) {
