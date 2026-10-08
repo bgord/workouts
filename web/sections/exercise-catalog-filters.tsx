@@ -60,7 +60,7 @@ export function ExerciseCatalogFilters(props: { matching: Array<ExerciseWithCate
           />
         </div>
 
-        <small {...bg.Rhythm(64).times(1).style.minWidth}>
+        <small>
           {t("exercise.catalog.count", { matching: props.matching.length, total: exercises.data.length })}
         </small>
 
