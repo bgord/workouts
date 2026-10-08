@@ -53,7 +53,9 @@ export function ExerciseCategoryManage() {
             data-md-minh="unset"
             data-minh="0"
             data-overflow="auto"
+            data-p="1"
             data-stack="y"
+            style={{ margin: "calc(var(--spacing-1) * -1)" }}
           >
             {exerciseCategories.data.map((category, index) => (
               <ExerciseCategoryRow first={index === 0} key={category.id} {...category} />

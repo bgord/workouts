@@ -40,7 +40,9 @@ export function BodyPartManage() {
             data-md-minh="unset"
             data-minh="0"
             data-overflow="auto"
+            data-p="1"
             data-stack="y"
+            style={{ margin: "calc(var(--spacing-1) * -1)" }}
           >
             {bodyParts.data.map((bodyPart, index) => (
               <BodyPartRow first={index === 0} key={bodyPart.id} {...bodyPart} />

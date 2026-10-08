@@ -44,9 +44,11 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
       aria-busy={mutation.isLoading}
       aria-label={t("measurements.body_parts.rename.cta", { name: props.name })}
       data-grow="1"
+      data-main="center"
       data-minw="0"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
+      {...bg.Rhythm(43).times(1).style.minHeight}
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >

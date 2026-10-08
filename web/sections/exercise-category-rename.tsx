@@ -49,9 +49,11 @@ export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleRet
       aria-busy={mutation.isLoading}
       aria-label={t("exercise.category.rename.cta", { name: props.name })}
       data-grow="1"
+      data-main="center"
       data-minw="0"
       data-stack="y"
       onSubmit={mutation.handleSubmit}
+      {...bg.Rhythm(43).times(1).style.minHeight}
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
