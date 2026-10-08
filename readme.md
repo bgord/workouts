@@ -564,6 +564,7 @@ modules/
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
+    │   ├── progression-method-effort-gate.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-none.strategy.ts

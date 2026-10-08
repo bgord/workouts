@@ -8,6 +8,7 @@ export * from "./load-step-locked.strategy";
 export * from "./logged-sets-volume";
 export * from "./progression-method.strategy";
 export * from "./progression-method-double-progression.strategy";
+export * from "./progression-method-effort-gate.strategy";
 export * from "./progression-method-factory.strategy";
 export * from "./progression-method-linear-progression.strategy";
 export * from "./progression-method-none.strategy";
