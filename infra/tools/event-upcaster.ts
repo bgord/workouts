@@ -54,5 +54,10 @@ export const EventUpcaster = new bg.EventUpcasterChainAdapter({
       toVersion: 4,
       upcast: (payload) => ({ ...payload, resistance: Exercises.VO.ExerciseResistanceOptions.weighted }),
     }),
+    new bg.EventUpcasterStep({
+      fromVersion: 4,
+      toVersion: 5,
+      upcast: (payload) => ({ ...payload, laterality: Exercises.VO.ExerciseLateralityOptions.bilateral }),
+    }),
   ],
 });

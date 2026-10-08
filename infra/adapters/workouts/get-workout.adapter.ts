@@ -37,6 +37,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               exerciseName: true,
               exerciseDescription: true,
               resistance: true,
+              laterality: true,
               prescription: true,
               target: true,
             },

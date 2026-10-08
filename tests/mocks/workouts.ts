@@ -12,6 +12,7 @@ import {
   exerciseDescription,
   exerciseId,
   exerciseImageEtag,
+  exerciseLaterality,
   exerciseName,
   exerciseResistance,
 } from "./exercises";
@@ -57,6 +58,7 @@ export const workoutExerciseDescription = v.parse(
   exerciseDescription,
 );
 export const workoutExerciseResistance = v.parse(Workouts.VO.WorkoutExerciseResistance, exerciseResistance);
+export const workoutExerciseLaterality = v.parse(Workouts.VO.WorkoutExerciseLaterality, exerciseLaterality);
 
 export const workoutSummary: Workouts.VO.WorkoutSummary = {
   id: workoutId,
@@ -151,6 +153,7 @@ export const exercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
   resistance: workoutExerciseResistance,
+  laterality: workoutExerciseLaterality,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -171,6 +174,7 @@ export const bodyweightExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
   resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
+  laterality: workoutExerciseLaterality,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -194,6 +198,7 @@ export const workoutExportRow = {
   planSectionName: workoutPlanSectionName,
   exerciseName: workoutExerciseName,
   resistance: workoutExerciseResistance,
+  laterality: workoutExerciseLaterality,
   setNumber: v.parse(Workouts.VO.SetNumber, 1),
   reps: v.parse(Workouts.VO.Reps, 9),
   load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(80).get()),
@@ -234,6 +239,7 @@ export const workoutExercise: Workouts.VO.WorkoutExercise = {
   exerciseId,
   exerciseName: workoutExerciseName,
   resistance: workoutExerciseResistance,
+  laterality: workoutExerciseLaterality,
   prescription: exercisePrescription,
   target: exerciseTarget,
   loggedSets: [loggedSet],
@@ -244,6 +250,7 @@ export const workoutExerciseWithoutTarget: Workouts.VO.WorkoutExercise = {
   exerciseId: anotherExerciseId,
   exerciseName: anotherWorkoutExerciseName,
   resistance: workoutExerciseResistance,
+  laterality: workoutExerciseLaterality,
   prescription: exercisePrescription,
   loggedSets: [],
 };
@@ -381,7 +388,7 @@ export const GenericWorkoutExerciseAddedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 4,
+  version: 5,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -391,6 +398,7 @@ export const GenericWorkoutExerciseAddedEvent = {
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
     resistance: workoutExerciseResistance,
+    laterality: workoutExerciseLaterality,
     prescription: exercisePrescription,
     requesterId: userId,
   },
@@ -409,7 +417,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
   correlationId,
   createdAt: T0.ms,
   stream: workoutStream,
-  version: 4,
+  version: 5,
   commit,
   name: "WORKOUT_EXERCISE_ADDED_EVENT",
   payload: {
@@ -419,6 +427,7 @@ export const GenericWorkoutExerciseAddedEventAnother = {
     exerciseName: workoutExerciseName,
     exerciseDescription: workoutExerciseDescription,
     resistance: workoutExerciseResistance,
+    laterality: workoutExerciseLaterality,
     prescription: exercisePrescription,
     requesterId: userId,
   },

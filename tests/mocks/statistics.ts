@@ -4,12 +4,13 @@ import * as v from "valibot";
 import * as Exercises from "+exercises";
 import * as Statistics from "+statistics";
 import * as Workouts from "+workouts";
-import { workoutId, workoutScheduledFor } from "./workouts";
+import { workoutExerciseLaterality, workoutId, workoutScheduledFor } from "./workouts";
 
 export const calculatedExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
   resistance: Exercises.VO.ExerciseResistanceOptions.weighted,
+  laterality: workoutExerciseLaterality,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -41,6 +42,7 @@ export const calculatedRepsExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,
   resistance: Exercises.VO.ExerciseResistanceOptions.bodyweight,
+  laterality: workoutExerciseLaterality,
   sets: [
     {
       setNumber: v.parse(Workouts.VO.SetNumber, 1),

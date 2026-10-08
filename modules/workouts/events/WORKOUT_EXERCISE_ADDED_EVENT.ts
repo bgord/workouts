@@ -9,7 +9,7 @@ export const WORKOUT_EXERCISE_ADDED_EVENT = "WORKOUT_EXERCISE_ADDED_EVENT";
 export const WorkoutExerciseAddedEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(WORKOUT_EXERCISE_ADDED_EVENT),
-  version: v.literal(4),
+  version: v.literal(5),
   payload: v.object({
     workoutId: VO.WorkoutId,
     workoutExerciseId: VO.WorkoutExerciseId,
@@ -17,6 +17,7 @@ export const WorkoutExerciseAddedEvent = v.object({
     exerciseName: VO.WorkoutExerciseName,
     exerciseDescription: VO.WorkoutExerciseDescription,
     resistance: VO.WorkoutExerciseResistance,
+    laterality: VO.WorkoutExerciseLaterality,
     prescription: VO.ExercisePrescription,
     requesterId: Auth.VO.UserId,
   }),
