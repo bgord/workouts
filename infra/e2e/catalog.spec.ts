@@ -25,6 +25,17 @@ test.describe("Catalog - athlete", () => {
     ).toBeVisible();
   });
 
+  test("marks a unilateral exercise", async ({ page }) => {
+    await page.goto("/catalog");
+
+    await expect(
+      page.getByRole("link", {
+        name: `${fixtures.exercises.legExtensionSingleLeg.name} Each side ${fixtures.categories.quads.name}`,
+        exact: true,
+      }),
+    ).toBeVisible();
+  });
+
   test("searches by name", async ({ page }) => {
     await page.goto("/catalog");
 

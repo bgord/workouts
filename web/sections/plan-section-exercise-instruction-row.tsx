@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useId } from "react";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
+import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { PlanSectionExerciseInstructionEdit } from "./plan-section-exercise-instruction-edit";
 import { PlanSectionExerciseInstructionMove } from "./plan-section-exercise-instruction-move";
@@ -15,6 +16,7 @@ export function PlanSectionExerciseInstructionRow(props: {
   const { exerciseInstruction } = props;
   const label = useId();
   const Resistance = ResistanceKit[exerciseInstruction.exercise.resistance];
+  const Laterality = LateralityKit[exerciseInstruction.exercise.laterality];
 
   return (
     <ui.HairlineRow aria-labelledby={label} data-stack="x" tone="subtle" {...ui.Spacing.rowCompact}>
@@ -49,6 +51,7 @@ export function PlanSectionExerciseInstructionRow(props: {
         <div data-color="neutral-500" data-fs="xs" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           <ui.ProgressionMethodBadge method={exerciseInstruction.progression} />
           <Resistance.Badge />
+          <Laterality.Badge />
         </div>
       </div>
 

@@ -2,8 +2,10 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { ArrowRight, ImageUp, Pencil, Plus } from "lucide-react";
 import { Form } from "../../app/services/exercise-add-form";
+import type { ExerciseLateralityOptions } from "../../modules/exercises/value-objects/exercise-laterality-options";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import * as ui from "../components";
+import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { catalogRoute } from "../router";
 
@@ -22,10 +24,12 @@ export function ExerciseAdd() {
   const name = bg.useTextField(Form.name.field);
   const description = bg.useTextField(Form.description.field);
   const resistance = bg.useTextField<ExerciseResistanceOptions>(Form.resistance.field);
+  const laterality = bg.useTextField<ExerciseLateralityOptions>(Form.laterality.field);
 
   const metaEnterSubmit = bg.useMetaEnterSubmit();
   const image = bg.useFile("exercise-image", { mimeTypes, maxSizeBytes });
   const Resistance = ResistanceKit[resistance.value ?? Form.resistance.field.defaultValue];
+  const Laterality = LateralityKit[laterality.value ?? Form.laterality.field.defaultValue];
 
   const next = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,7 +43,7 @@ export function ExerciseAdd() {
       form.append("name", name.value ?? "");
       form.append("description", description.value ?? "");
       form.append("resistance", resistance.value ?? Form.resistance.field.defaultValue);
-      form.append("laterality", Form.laterality.field.defaultValue);
+      form.append("laterality", laterality.value ?? Form.laterality.field.defaultValue);
       if (image.data) form.append("file", image.data);
 
       return fetch("/api/exercises/add", { method: "POST", body: form, credentials: "include" });
@@ -58,6 +62,7 @@ export function ExerciseAdd() {
     name.clear,
     description.clear,
     resistance.clear,
+    laterality.clear,
     image.actions.clearFile,
     exerciseAddImage.disable,
     mutation.reset,
@@ -105,6 +110,8 @@ export function ExerciseAdd() {
 
             <ui.ExerciseResistancePicker field={resistance} />
 
+            <ui.ExerciseLateralityPicker field={laterality} />
+
             <div data-stack="y" {...ui.Gap.field}>
               <label {...description.label.props}>{t("exercise.add.description.label")}</label>
 
@@ -122,7 +129,9 @@ export function ExerciseAdd() {
               onCancel={close}
               start={
                 <ui.ButtonClear
-                  disabled={bg.Fields.allUnchanged([name, description, resistance]) && !image.isSelected}
+                  disabled={
+                    bg.Fields.allUnchanged([name, description, resistance, laterality]) && !image.isSelected
+                  }
                   onClick={clear}
                 />
               }
@@ -163,6 +172,8 @@ export function ExerciseAdd() {
 
                 <div data-color="neutral-500" data-fs="xs" data-stack="x" {...ui.Gap.cluster}>
                   <Resistance.Badge />
+
+                  <Laterality.Badge />
 
                   <span data-transform="truncate">{description.value}</span>
                 </div>
