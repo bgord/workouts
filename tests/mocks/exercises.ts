@@ -18,6 +18,7 @@ export const exerciseLaterality = Exercises.VO.ExerciseLateralityOptions.bilater
 export const anotherExerciseLaterality = Exercises.VO.ExerciseLateralityOptions.unilateral;
 
 export const exerciseLoadStep = Exercises.VO.ExerciseLoadStepOptions.kg_2_5;
+export const anotherExerciseLoadStep = Exercises.VO.ExerciseLoadStepOptions.dumbbell_rack;
 export const exerciseImageKey = v.parse(tools.ObjectKey, `exercises/${exerciseId}/original.webp`);
 export const exerciseImageEtag = bg.Hash.fromString(
   "0000000000000000000000000000000000000000000000000000000000000000",
@@ -110,6 +111,7 @@ export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
   actions: {
     update: actionAvailable,
     imageChange: actionAvailable,
+    loadStepSet: actionAvailable,
     delete: actionAvailable,
     categoryAssign: actionAvailable,
     categoryUnassign: actionAvailable,
@@ -198,6 +200,17 @@ export const GenericExerciseUpdatedEvent = {
     requesterId: Auth.VO.ADMIN_USER_ID,
   },
 } satisfies Exercises.Events.ExerciseUpdatedEventType;
+
+export const GenericExerciseLoadStepSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: exerciseStream,
+  version: 1,
+  commit,
+  name: "EXERCISE_LOAD_STEP_SET_EVENT",
+  payload: { id: exerciseId, loadStep: anotherExerciseLoadStep, requesterId: Auth.VO.ADMIN_USER_ID },
+} satisfies Exercises.Events.ExerciseLoadStepSetEventType;
 
 export const GenericExerciseImageChangedEvent = {
   id: expectAnyId,

@@ -9,5 +9,6 @@ export * from "./exercise-get";
 export * from "./exercise-image-change";
 export * from "./exercise-image-get";
 export * from "./exercise-list";
+export * from "./exercise-load-step-set";
 export * from "./exercise-unassign-category";
 export * from "./exercise-update";

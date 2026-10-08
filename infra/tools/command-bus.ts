@@ -11,6 +11,7 @@ type AcceptedCommand =
   | ExercisesCommands.ExerciseAddCommandType
   | ExercisesCommands.ExerciseUpdateCommandType
   | ExercisesCommands.ExerciseImageChangeCommandType
+  | ExercisesCommands.ExerciseLoadStepSetCommandType
   | ExercisesCommands.ExerciseDeleteCommandType
   | ExercisesCommands.ExerciseCategoryAddCommandType
   | ExercisesCommands.ExerciseCategoryDeleteCommandType

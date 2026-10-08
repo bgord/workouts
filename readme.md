@@ -75,6 +75,7 @@ modules/
 │   │   ├── handleExerciseCategoryRenameCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
+│   │   ├── handleExerciseLoadStepSetCommand.ts
 │   │   ├── handleExerciseUnassignCategoryCommand.ts
 │   │   ├── handleExerciseUpdateCommand.ts
 │   ├── commands
@@ -85,6 +86,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
+│   │   ├── EXERCISE_LOAD_STEP_SET_COMMAND.ts
 │   │   ├── EXERCISE_UNASSIGN_CATEGORY_COMMAND.ts
 │   │   ├── EXERCISE_UPDATE_COMMAND.ts
 │   ├── events
@@ -96,6 +98,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_UNASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
+│   │   ├── EXERCISE_LOAD_STEP_SET_EVENT.ts
 │   │   ├── EXERCISE_UPDATED_EVENT.ts
 │   ├── invariants
 │   │   ├── catalog-is-managed-by-admin.ts
@@ -642,6 +645,7 @@ app/
 │   │   ├── exercise-image-change.ts
 │   │   ├── exercise-image-get.ts
 │   │   ├── exercise-list.ts
+│   │   ├── exercise-load-step-set.ts
 │   │   ├── exercise-unassign-category.ts
 │   │   ├── exercise-update.ts
 │   ├── measurements

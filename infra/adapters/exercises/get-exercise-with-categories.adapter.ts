@@ -57,6 +57,7 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
       assignableCategories,
       actions: new Exercises.Services.ExerciseGetActions({
         requesterId,
+        resistance: exercise.resistance,
         usageCount,
         categories,
         assignableCategories,

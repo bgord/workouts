@@ -11,6 +11,7 @@ import type {
   ExerciseCategoryUnassignedEventType,
   ExerciseDeletedEventType,
   ExerciseImageChangedEventType,
+  ExerciseLoadStepSetEventType,
   ExerciseUpdatedEventType,
 } from "+exercises/events";
 import { db } from "+infra/db";
@@ -52,6 +53,7 @@ export type AcceptedEventType =
   | ExerciseAddedEventType
   | ExerciseUpdatedEventType
   | ExerciseImageChangedEventType
+  | ExerciseLoadStepSetEventType
   | ExerciseDeletedEventType
   | ExerciseCategoryAddedEventType
   | ExerciseCategoryRenamedEventType
