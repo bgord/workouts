@@ -36,6 +36,7 @@ export function RirSubmit(props: {
           data-bwl={index === 0 ? undefined : "hairline"}
           data-color={option === undefined ? "positive-400" : RirColor(option)}
           data-cursor="pointer"
+          data-focus-ring-offset="inset"
           data-fs="xs"
           data-fw="medium"
           data-hover-bg="alpha-subtle"
