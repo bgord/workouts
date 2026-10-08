@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { ListChecks } from "lucide-react";
 import { useId } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
@@ -145,17 +146,28 @@ export function WorkoutExerciseRow(props: {
           <div data-stack="x" {...ui.Gap.cluster}>
             <WorkoutExerciseTarget exercise={props.exercise} {...workoutExerciseTarget} />
 
-            <small data-md-disp={hasTarget ? "none" : undefined}>
-              <ui.SetsReps {...props.exercise.prescription} />
-            </small>
-
-            {props.exercise.prescription.rir !== undefined && (
-              <ui.RirBadge
-                data-self="center"
-                rir={props.exercise.prescription.rir}
-                title={t("rir.target.label")}
+            <span
+              data-cross="center"
+              data-shrink="0"
+              data-stack="x"
+              data-transform="nowrap"
+              title={t("workout.exercise.plan.title")}
+              {...ui.Gap.inline}
+            >
+              <ListChecks
+                data-color="neutral-500"
+                data-md-disp={hasTarget ? "none" : undefined}
+                data-size="xs"
               />
-            )}
+
+              <small data-md-disp={hasTarget ? "none" : undefined}>
+                <ui.SetsReps {...props.exercise.prescription} />
+              </small>
+
+              {props.exercise.prescription.rir !== undefined && (
+                <ui.RirBadge rir={props.exercise.prescription.rir} title={t("rir.target.label")} />
+              )}
+            </span>
 
             {target && (
               <div data-disp="none" data-md-disp="block" data-self="center">

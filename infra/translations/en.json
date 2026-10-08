@@ -409,6 +409,7 @@
   "workout.exercise.move.down.title": "Move {{name}} down",
   "workout.exercise.move.error": "Could not move the exercise",
   "workout.exercise.move.up.title": "Move {{name}} up",
+  "workout.exercise.plan.title": "Plan",
   "workout.exercise.position.has.changed": "Already the first exercise",
   "workout.exercise.position.in.range": "Already the last exercise",
   "workout.exercise.remove.cta": "Remove",
