@@ -100,6 +100,7 @@
   "exercise.laterality.bilateral.hint": "Obie strony pracują razem",
   "exercise.laterality.unilateral": "Każda strona",
   "exercise.laterality.unilateral.hint": "Jedna strona naraz, liczby na stronę",
+  "exercise.laterality.per_side": "/ stronę",
   "exercise.resistance.label": "Rodzaj obciążenia",
   "exercise.resistance.weighted": "Z ciężarem",
   "exercise.resistance.weighted.hint": "Zapisuj ciężar każdej serii",

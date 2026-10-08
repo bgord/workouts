@@ -211,8 +211,8 @@ export const workoutExportRow = {
 };
 
 export const workoutCsv = [
-  "workoutId,completedAt,planName,planSectionName,exerciseName,resistance,setNumber,reps,load,rir",
-  `${workoutId},${T0.ms},${planName},${planSectionName},${exerciseName},${exerciseResistance},1,9,80000,2`,
+  "workoutId,completedAt,planName,planSectionName,exerciseName,resistance,laterality,setNumber,reps,load,rir",
+  `${workoutId},${T0.ms},${planName},${planSectionName},${exerciseName},${exerciseResistance},${exerciseLaterality},1,9,80000,2`,
 ].join("");
 
 export const exerciseTarget = v.parse(Workouts.VO.ExerciseTarget, {

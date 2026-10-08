@@ -51,6 +51,7 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
               >
                 <Target data-color="neutral-500" data-size="xs" />
                 <ui.TargetValue
+                  laterality={exercise.laterality}
                   load={exercise.target.load}
                   reps={exercise.target.reps}
                   resistance={exercise.resistance}

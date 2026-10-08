@@ -38,6 +38,7 @@ export function WorkoutSetRow(props: {
               <ui.SetValue
                 data-color="neutral-100"
                 data-fw="medium"
+                laterality={props.exercise.laterality}
                 load={props.loggedSet.load}
                 reps={props.loggedSet.reps}
                 resistance={props.exercise.resistance}

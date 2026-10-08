@@ -35,7 +35,12 @@ function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformance
         </TileValue>
 
         <TileContext>
-          <SetValue load={peak.bestSet.load} reps={peak.bestSet.reps} resistance={peak.resistance} />
+          <SetValue
+            laterality={peak.laterality}
+            load={peak.bestSet.load}
+            reps={peak.bestSet.reps}
+            resistance={peak.resistance}
+          />
         </TileContext>
       </TileLink>
 

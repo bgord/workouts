@@ -100,6 +100,7 @@
   "exercise.laterality.bilateral.hint": "Both sides work together",
   "exercise.laterality.unilateral": "Each side",
   "exercise.laterality.unilateral.hint": "One side at a time, numbers are per side",
+  "exercise.laterality.per_side": "/ side",
   "exercise.resistance.label": "Resistance",
   "exercise.resistance.weighted": "Weighted",
   "exercise.resistance.weighted.hint": "Log the weight of every set",
