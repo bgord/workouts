@@ -141,7 +141,6 @@
   "measurements.body_parts.import.header": "Importuj obwody",
   "measurements.body_parts.import.select.cta": "Wybierz CSV",
   "measurements.body_parts.import.template.cta": "Szablon CSV",
-  "measurements.body_parts.latest": "Ostatni",
   "measurements.body_parts.list.empty": "Brak obwodów",
   "measurements.body_parts.list.empty.hint": "Dodaj obwód powyżej, aby zacząć mierzyć",
   "measurements.body_parts.manage.count": "{{count}} {{noun}}",

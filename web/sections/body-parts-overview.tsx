@@ -9,14 +9,10 @@ export function BodyPartsOverview() {
   if (bodyParts.data.length === 0) return null;
 
   return (
-    <>
-      <h2>{t("measurements.body_parts.latest")}</h2>
-
-      <ul data-stack="y">
-        {bodyParts.data.map((bodyPart, index) => (
-          <BodyPartOverviewRow first={index === 0} key={bodyPart.id} {...bodyPart} />
-        ))}
-      </ul>
-    </>
+    <ul aria-label={t("measurements.body_parts.header")} data-stack="y">
+      {bodyParts.data.map((bodyPart, index) => (
+        <BodyPartOverviewRow first={index === 0} key={bodyPart.id} {...bodyPart} />
+      ))}
+    </ul>
   );
 }

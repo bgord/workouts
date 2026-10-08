@@ -95,11 +95,11 @@ test.describe("Mobile - athlete", () => {
 
     await page.goto("/workouts");
     await page.getByRole("button", { name: "New workout" }).click();
+    await dialog.hover({ position: { x: 20, y: 6 } });
     const sheet = await dialog.boundingBox();
-    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 6);
     await page.mouse.down();
 
-    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 400, { steps: 10 });
+    await page.mouse.move(sheet!.x + 20, sheet!.y + 400, { steps: 10 });
     await page.mouse.up();
 
     await expect(dialog).toBeHidden();
@@ -110,10 +110,10 @@ test.describe("Mobile - athlete", () => {
 
     await page.goto("/workouts");
     await page.getByRole("button", { name: "New workout" }).click();
+    await dialog.hover({ position: { x: 20, y: 6 } });
     const sheet = await dialog.boundingBox();
-    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 6);
     await page.mouse.down();
-    await page.mouse.move(sheet!.x + sheet!.width / 2, sheet!.y + 26, { steps: 10 });
+    await page.mouse.move(sheet!.x + 20, sheet!.y + 26, { steps: 10 });
     await page.waitForTimeout(300);
 
     await page.mouse.up();

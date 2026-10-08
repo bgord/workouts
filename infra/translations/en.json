@@ -141,7 +141,6 @@
   "measurements.body_parts.import.header": "Import body parts",
   "measurements.body_parts.import.select.cta": "Select CSV",
   "measurements.body_parts.import.template.cta": "CSV template",
-  "measurements.body_parts.latest": "Latest",
   "measurements.body_parts.list.empty": "No body parts yet",
   "measurements.body_parts.list.empty.hint": "Add one above to start measuring",
   "measurements.body_parts.manage.count": "{{count}} {{noun}}",

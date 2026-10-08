@@ -12,7 +12,7 @@ test.describe("Body parts - empty", () => {
     await expect(page.getByText("Add a body part from the menu to start measuring")).toBeVisible();
     await expect(page.getByRole("menuitem", { name: "Import body parts" })).toBeDisabled();
     await expect(page.getByRole("menu").getByRole("separator")).toBeHidden();
-    await expect(page.getByRole("heading", { level: 2, name: "Latest" })).toBeHidden();
+    await expect(page.getByRole("list", { name: "Body parts", exact: true })).toBeHidden();
   });
 
   test("shows the error when defining a body part fails", async ({ page }) => {
@@ -39,7 +39,7 @@ test.describe("Body parts - athlete", () => {
     await page.goto("/measurements/body-parts");
 
     await expect(page.getByRole("heading", { level: 1, name: "Body parts" })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 2, name: "Latest" })).toBeVisible();
+    await expect(page.getByRole("list", { name: "Body parts", exact: true })).toBeVisible();
     await expect(
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` }),
     ).toBeVisible();
