@@ -36,9 +36,7 @@ export function ExerciseCategoryDelete(props: ExerciseCategory) {
       </ui.IconButton>
 
       <ui.Dialog {...exerciseCategoryDelete}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={exerciseCategoryDelete.disable}>
-          {t("exercise.category.delete.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("exercise.category.delete.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("exercise.category.delete.info", { name: props.name })}</ui.DialogInfo>

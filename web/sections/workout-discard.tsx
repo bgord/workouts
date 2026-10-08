@@ -44,9 +44,7 @@ export function WorkoutDiscard() {
       </bg.MenuItem>
 
       <ui.Dialog {...workoutDiscard}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutDiscard.disable}>
-          {t("workout.discard.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("workout.discard.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("workout.discard.info", { name })}</ui.DialogInfo>

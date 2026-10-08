@@ -37,9 +37,7 @@ export function PlanArchive() {
       </bg.MenuItem>
 
       <ui.Dialog {...planArchive}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={planArchive.disable}>
-          {t("plan.archive.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("plan.archive.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("plan.archive.info", { name: plan.data.name })}</ui.DialogInfo>

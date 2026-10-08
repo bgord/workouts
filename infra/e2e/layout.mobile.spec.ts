@@ -83,10 +83,9 @@ test.describe("Mobile - athlete", () => {
     await page.getByRole("button", { name: "New workout" }).click();
 
     await expect(dialog.getByRole("button", { name: "Schedule" })).toBeInViewport();
-    await expect(dialog.getByRole("button", { name: "Close" })).toBeInViewport();
     await expect(dialog.getByRole("button", { name: "Cancel" })).toBeInViewport();
 
-    await dialog.getByRole("button", { name: "Close" }).tap();
+    await dialog.getByRole("button", { name: "Cancel" }).tap();
 
     await expect(dialog).toBeHidden();
   });
@@ -187,10 +186,9 @@ test.describe("Mobile - active", () => {
     await page.getByRole("button", { name: "Add exercise" }).tap();
 
     await expect(dialog.getByRole("searchbox", { name: "Exercise" })).toBeInViewport();
-    await expect(dialog.getByRole("button", { name: "Close" })).toBeInViewport();
     await expect(dialog.getByRole("button", { name: "Cancel" })).toBeInViewport();
 
-    await dialog.getByRole("button", { name: "Close" }).tap();
+    await dialog.getByRole("button", { name: "Cancel" }).tap();
 
     await expect(dialog).toBeHidden();
   });
@@ -204,7 +202,6 @@ test.describe("Mobile - active", () => {
     await page.getByRole("menuitem", { name: "Discard" }).tap();
 
     await expect(dialog.getByRole("button", { name: "Discard", exact: true })).toBeInViewport();
-    await expect(dialog.getByRole("button", { name: "Close" })).toBeInViewport();
     await expect(dialog.getByRole("button", { name: "Cancel" })).toBeInViewport();
 
     await dialog.getByRole("button", { name: "Cancel" }).tap();

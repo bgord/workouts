@@ -38,9 +38,7 @@ export function PlanRemove() {
       </bg.MenuItem>
 
       <ui.Dialog {...planRemove}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={planRemove.disable}>
-          {t("plan.remove.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("plan.remove.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("plan.remove.info", { name: plan.data.name })}</ui.DialogInfo>

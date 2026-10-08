@@ -53,15 +53,13 @@ export function PlanCreate() {
       </button>
 
       <ui.Dialog {...planCreate}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={planCreate.disable}>
-          {t("plan.create.cta")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("plan.create.cta")}</ui.DialogHeader>
 
         <form
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Gap.section}
+          {...ui.Gap.stack}
         >
           <div data-stack="y" {...ui.Gap.field}>
             <label {...name.label.props}>{t("plan.create.name.label")}</label>

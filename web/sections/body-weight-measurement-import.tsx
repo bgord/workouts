@@ -44,16 +44,14 @@ export function BodyWeightMeasurementImport() {
       </bg.MenuItem>
 
       <ui.Dialog {...bodyWeightMeasurementImport}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
-          {t("measurements.body_weight.import.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("measurements.body_weight.import.header")}</ui.DialogHeader>
 
         <form
           aria-busy={mutation.isLoading}
           data-stack="y"
           encType="multipart/form-data"
           onSubmit={mutation.handleSubmit}
-          {...ui.Gap.section}
+          {...ui.Gap.stack}
         >
           <div data-stack="y" {...ui.Gap.related}>
             <ui.Dropzone file={file}>

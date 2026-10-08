@@ -111,7 +111,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
       </ui.HairlineBlock>
 
       <ui.Dialog {...planSectionExerciseInstructionAdd}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
+        <ui.DialogHeader>
           {t("plan.section.exercise.add.cta")}
           <small data-ml="2">· {props.name}</small>
         </ui.DialogHeader>
@@ -144,7 +144,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
             aria-busy={mutation.isLoading}
             data-stack="y"
             onSubmit={mutation.handleSubmit}
-            {...ui.Gap.section}
+            {...ui.Gap.stack}
           >
             <ui.ExercisePicked
               disabled={mutation.isLoading}

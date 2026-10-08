@@ -63,9 +63,7 @@ export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: 
       </form>
 
       <ui.Dialog {...workoutSetRemove}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutSetRemove.disable}>
-          {t("workout.set.remove.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("workout.set.remove.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>

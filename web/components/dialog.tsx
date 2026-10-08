@@ -18,42 +18,58 @@ export function Dialog(props: bg.DialogPropsType) {
     <DialogHeaderId.Provider value={header}>
       <bg.Dialog
         aria-labelledby={header}
-        data-md-mt="4"
-        data-md-p="3"
+        data-bc="alpha-soft"
+        data-br="xl"
+        data-bs="solid"
+        data-bw="hairline"
+        data-dialog
+        data-md-bottom="0"
+        data-md-bwb="none"
+        data-md-mb="0"
+        data-md-pt="2"
+        data-md-px="4"
+        data-md-top="auto"
         data-mt="8"
         data-overflow="auto"
+        data-top="0"
         data-wrap="nowrap"
         onCancel={(event) => {
           event.preventDefault();
           if (!props.locked) props.disable();
         }}
-        style={{
-          ...bg.Rhythm().times(50).width,
-          maxHeight: "calc(100% - 4rem - env(safe-area-inset-top))",
-          maxWidth: "calc(100% - 2rem)",
-          top: "env(safe-area-inset-top)",
-        }}
         {...Gap.stack}
         {...props}
-      />
+      >
+        <div
+          aria-hidden
+          data-bg="neutral-700"
+          data-br="pill"
+          data-disp="none"
+          data-md-disp="block"
+          data-mx="auto"
+          data-shrink="0"
+          style={{ width: 36, height: 4 }}
+        />
+        {props.children}
+      </bg.Dialog>
     </DialogHeaderId.Provider>,
     document.body,
   );
 }
 
-export function DialogHeader(
-  props: React.JSX.IntrinsicElements["div"] & { disabled?: boolean; onClose: () => void },
-) {
+export function DialogHeader(props: React.JSX.IntrinsicElements["strong"]) {
   const id = useContext(DialogHeaderId);
-  const { disabled, onClose, children, ...rest } = props;
 
   return (
-    <div data-main="between" data-stack="x" {...Gap.related} {...rest}>
-      <strong data-color="neutral-100" data-transform="truncate" id={id}>
-        {children}
-      </strong>
-      <ButtonClose disabled={disabled} onClick={onClose} />
-    </div>
+    <strong
+      data-color="neutral-0"
+      data-fs="base"
+      data-fw="semibold"
+      data-shrink="0"
+      data-transform="truncate"
+      id={id}
+      {...props}
+    />
   );
 }
 
@@ -102,9 +118,17 @@ export function DialogFooter(
   const { disabled, onCancel, children, ...rest } = props;
 
   return (
-    <div data-main="end" data-stack="x" data-wrap="wrap" {...Gap.inline} {...rest}>
+    <div data-main="end" data-stack="x" data-wrap="wrap" {...Gap.cluster} {...rest}>
       <ButtonCancel disabled={disabled} onClick={onCancel} />
       {children}
+    </div>
+  );
+}
+
+export function DialogDismiss(props: React.JSX.IntrinsicElements["button"]) {
+  return (
+    <div data-main="end" data-stack="x">
+      <ButtonClose {...props} />
     </div>
   );
 }

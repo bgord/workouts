@@ -56,7 +56,7 @@ export function Shortcuts() {
       </button>
 
       <ui.Dialog {...shortcuts}>
-        <ui.DialogHeader onClose={shortcuts.disable}>
+        <ui.DialogHeader>
           <span data-stack="x" {...ui.Gap.cluster}>
             <Keyboard data-size="sm" />
             {t("app.shortcuts.header")}
@@ -66,6 +66,8 @@ export function Shortcuts() {
         {group && <ShortcutGroup {...group} />}
 
         <ShortcutGroup header={t("app.shortcuts.global")} shortcuts={ShortcutDefinitions.GlobalGroup} />
+
+        <ui.DialogDismiss onClick={shortcuts.disable} />
       </ui.Dialog>
     </>
   );

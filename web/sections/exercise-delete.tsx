@@ -34,9 +34,7 @@ export function ExerciseDelete() {
       <ui.ActionHint {...exercise.actions.delete} data-px="2-5" data-py="1-5" id="exercise-delete-hint" />
 
       <ui.Dialog {...exerciseDelete}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={exerciseDelete.disable}>
-          {t("exercise.delete.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("exercise.delete.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("exercise.delete.info", { name: exercise.data.name })}</ui.DialogInfo>

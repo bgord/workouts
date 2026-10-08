@@ -95,9 +95,7 @@ export function WorkoutExerciseAdd() {
       </ui.HairlineBlock>
 
       <ui.Dialog {...workoutExerciseAdd}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
-          {t("workout.exercise.add.cta")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("workout.exercise.add.cta")}</ui.DialogHeader>
 
         {(!exercise || workoutExercisePick.on) && catalog.exercises && (
           <>
@@ -127,7 +125,7 @@ export function WorkoutExerciseAdd() {
             aria-busy={mutation.isLoading}
             data-stack="y"
             onSubmit={mutation.handleSubmit}
-            {...ui.Gap.section}
+            {...ui.Gap.stack}
           >
             <ui.ExercisePicked
               disabled={mutation.isLoading}

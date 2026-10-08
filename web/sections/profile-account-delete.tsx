@@ -50,9 +50,7 @@ export function ProfileAccountDelete() {
       </button>
 
       <ui.Dialog {...deleteAccount}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={deleteAccount.disable}>
-          {t("profile.delete_account.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("profile.delete_account.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("profile.delete_account.info")}</ui.DialogInfo>

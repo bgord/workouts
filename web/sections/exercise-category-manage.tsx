@@ -32,7 +32,7 @@ export function ExerciseCategoryManage() {
       </button>
 
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...exerciseCategoryManage}>
-        <ui.DialogHeader onClose={exerciseCategoryManage.disable}>
+        <ui.DialogHeader>
           {t("exercise.category.manage.header")}
           <small data-ml="2">· {exerciseCategories.data.length}</small>
         </ui.DialogHeader>
@@ -60,6 +60,8 @@ export function ExerciseCategoryManage() {
             ))}
           </ul>
         )}
+
+        <ui.DialogDismiss onClick={exerciseCategoryManage.disable} />
       </ui.Dialog>
     </>
   );

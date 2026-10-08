@@ -32,9 +32,7 @@ export function BodyPartDelete(props: BodyPart) {
       </ui.IconButton>
 
       <ui.Dialog {...bodyPartDelete}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={bodyPartDelete.disable}>
-          {t("measurements.body_parts.delete.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("measurements.body_parts.delete.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("measurements.body_parts.delete.info", { name: props.name })}</ui.DialogInfo>

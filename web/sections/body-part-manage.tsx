@@ -19,7 +19,7 @@ export function BodyPartManage() {
       </bg.MenuItem>
 
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...bodyPartManage}>
-        <ui.DialogHeader onClose={bodyPartManage.disable}>
+        <ui.DialogHeader>
           {t("measurements.body_parts.manage.header")}
           <small data-ml="2">· {bodyParts.data.length}</small>
         </ui.DialogHeader>
@@ -47,6 +47,8 @@ export function BodyPartManage() {
             ))}
           </ul>
         )}
+
+        <ui.DialogDismiss onClick={bodyPartManage.disable} />
       </ui.Dialog>
     </>
   );

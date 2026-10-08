@@ -41,9 +41,7 @@ export function PlanSectionRemove(props: PlanSection) {
       </ui.IconButton>
 
       <ui.Dialog {...planSectionRemove}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={planSectionRemove.disable}>
-          {t("plan.section.remove.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("plan.section.remove.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("plan.section.remove.info", { name: props.name })}</ui.DialogInfo>

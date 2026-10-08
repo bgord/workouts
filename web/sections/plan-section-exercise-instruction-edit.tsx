@@ -134,7 +134,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
       </ui.IconButton>
 
       <ui.Dialog {...planSectionExerciseInstructionEdit}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={close}>
+        <ui.DialogHeader>
           {t("plan.section.exercise.edit.cta")}
           <small data-ml="2">· {props.section.name}</small>
         </ui.DialogHeader>
@@ -163,7 +163,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
             aria-busy={mutation.isLoading}
             data-stack="y"
             onSubmit={mutation.handleSubmit}
-            {...ui.Gap.section}
+            {...ui.Gap.stack}
           >
             <ui.ExercisePicked
               disabled={!actions.update.enabled || mutation.isLoading}

@@ -56,7 +56,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
       <ui.Dialog {...bodyPartMeasure}>
         {bodyPartMeasure.on && (
           <>
-            <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([mutation.reset, close])}>
+            <ui.DialogHeader>
               {t("measurements.body_parts.measure.header", { name: props.name })}
             </ui.DialogHeader>
 

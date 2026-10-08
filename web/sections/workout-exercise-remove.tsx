@@ -61,9 +61,7 @@ export function WorkoutExerciseRemove(props: WorkoutExercise) {
       </form>
 
       <ui.Dialog {...workoutExerciseRemove}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={workoutExerciseRemove.disable}>
-          {t("workout.exercise.remove.header")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("workout.exercise.remove.header")}</ui.DialogHeader>
 
         <ui.DialogBody>
           <ui.DialogInfo>{t("workout.exercise.remove.info", { name: props.exerciseName })}</ui.DialogInfo>

@@ -81,7 +81,7 @@ export function WorkoutCreate() {
       </button>
 
       <ui.Dialog {...workoutCreate}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={bg.exec([clear, workoutCreate.disable])}>
+        <ui.DialogHeader>
           {t("workout.create.toggle.cta")}
           {workouts.plan && <small data-ml="2">· {workouts.plan.name}</small>}
         </ui.DialogHeader>
@@ -90,7 +90,7 @@ export function WorkoutCreate() {
           aria-busy={mutation.isLoading}
           data-stack="y"
           onSubmit={mutation.handleSubmit}
-          {...ui.Gap.section}
+          {...ui.Gap.stack}
         >
           {workouts.plan && <WorkoutSectionPicker field={planSectionId} sections={workouts.plan.sections} />}
 

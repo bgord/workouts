@@ -68,16 +68,14 @@ export function ExerciseAdd() {
       </button>
 
       <ui.Dialog {...exerciseAdd}>
-        <ui.DialogHeader disabled={mutation.isLoading} onClose={exerciseAdd.disable}>
-          {t("exercise.add.cta")}
-        </ui.DialogHeader>
+        <ui.DialogHeader>{t("exercise.add.cta")}</ui.DialogHeader>
 
         <form
           aria-busy={mutation.isLoading}
           data-stack="y"
           encType="multipart/form-data"
           onSubmit={mutation.handleSubmit}
-          {...ui.Gap.section}
+          {...ui.Gap.stack}
         >
           <div data-stack="y" {...ui.Gap.field}>
             <ui.Dropzone
