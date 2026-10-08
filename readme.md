@@ -143,6 +143,8 @@ modules/
 │       ├── exercise-image-max-size.ts
 │       ├── exercise-image-mime-registry.ts
 │       ├── exercise-image-side.ts
+│       ├── exercise-laterality-options.ts
+│       ├── exercise-laterality.ts
 │       ├── exercise-name.ts
 │       ├── exercise-name.validation.ts
 │       ├── exercise-resistance-options.ts
