@@ -128,6 +128,7 @@ export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
     delete: actionAvailable,
     categoryAssign: actionAvailable,
     categoryUnassign: actionAvailable,
+    categoryRoleSet: actionAvailable,
   },
 };
 

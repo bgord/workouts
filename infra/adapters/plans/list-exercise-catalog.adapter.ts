@@ -19,8 +19,11 @@ class ListExerciseCatalogQueryDrizzle implements Plans.Queries.ListExerciseCatal
       orderBy: asc(Schema.exercises.name),
       with: {
         categoryAssignments: {
-          columns: {},
-          orderBy: asc(Schema.exerciseCategoryAssignments.createdAt),
+          columns: { role: true },
+          orderBy: [
+            asc(Schema.exerciseCategoryAssignments.role),
+            asc(Schema.exerciseCategoryAssignments.createdAt),
+          ],
           with: { category: { columns: { id: true, name: true } } },
         },
       },
@@ -28,7 +31,10 @@ class ListExerciseCatalogQueryDrizzle implements Plans.Queries.ListExerciseCatal
 
     const data = exercises.map(({ categoryAssignments, ...exercise }) => ({
       ...exercise,
-      categories: categoryAssignments.map((assignment) => assignment.category),
+      categories: categoryAssignments.map((assignment) => ({
+        ...assignment.category,
+        role: assignment.role,
+      })),
       progressionMethods: Plans.VO.ProgressionMethodApplicability[exercise.resistance],
     }));
 
