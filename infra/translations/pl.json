@@ -404,7 +404,7 @@
   "workout.cooldown.toggle": "Pokaż lub ukryj schłodzenie",
   "workout.copy.cta": "Kopiuj trening",
   "workout.copy.done": "Skopiowano",
-  "workout.draft.limit.for.owner": "Masz już 3 zaplanowane treningi",
+  "workout.draft.limit.for.owner": "Masz już 4 zaplanowane treningi",
   "workout.plan.ready": "Najpierw zatwierdź plan",
   "workout.create.cta": "Zaplanuj",
   "workout.create.section.exercises": "{{count}} {{noun}}",

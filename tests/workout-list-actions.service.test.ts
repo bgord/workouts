@@ -27,7 +27,7 @@ describe("WorkoutListActions", () => {
   test("draft limit for owner", () => {
     const actions = new Workouts.Services.WorkoutListActions({
       plan: mocks.planSummary,
-      draftCount: tools.Int.nonNegative(3),
+      draftCount: tools.Int.nonNegative(4),
     });
 
     expect(actions.calculate()).toEqual({
@@ -38,7 +38,7 @@ describe("WorkoutListActions", () => {
   test("no finalized plan and draft limit for owner", () => {
     const actions = new Workouts.Services.WorkoutListActions({
       plan: null,
-      draftCount: tools.Int.nonNegative(3),
+      draftCount: tools.Int.nonNegative(4),
     });
 
     expect(actions.calculate()).toEqual({

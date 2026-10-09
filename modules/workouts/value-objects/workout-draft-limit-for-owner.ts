@@ -1,1 +1,1 @@
-export const WorkoutDraftLimitForOwnerMax = 3;
+export const WorkoutDraftLimitForOwnerMax = 4;

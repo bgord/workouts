@@ -565,8 +565,8 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(row.getByRole("button", { name: "Remove set 3" })).toBeVisible();
   });
 
-  test("blocks scheduling a fourth workout", async ({ page }) => {
-    for (let draft = 0; draft < 3; draft++) {
+  test("blocks scheduling a fifth workout", async ({ page }) => {
+    for (let draft = 0; draft < 4; draft++) {
       await page.goto("/workouts");
       await page.getByRole("button", { name: "New workout" }).click();
       await page.getByRole("button", { name: "Schedule", exact: true }).click();

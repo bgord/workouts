@@ -124,7 +124,7 @@ describe(`POST ${url}`, async () => {
     spies.use(spyOn(di.Adapters.Plans.GetFinalizedPlanQuery, "execute")).mockResolvedValue(mocks.plan);
     spies
       .use(spyOn(di.Adapters.Workouts.GetWorkoutStatusForOwnerCountQuery, "execute"))
-      .mockResolvedValue(tools.Int.nonNegative(3));
+      .mockResolvedValue(tools.Int.nonNegative(4));
 
     const response = await server.request(
       url,
