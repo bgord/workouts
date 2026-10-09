@@ -6,6 +6,6 @@ export type BodyWeightStats = {
   previous?: BodyWeightMeasurement;
   reference?: BodyWeightMeasurement;
   baseline: BodyWeightMeasurement;
-  week: { average: number; count: tools.IntegerPositiveType };
-  previousWeek?: { average: number };
+  week: { average: tools.WeightGramsType; count: tools.IntegerPositiveType };
+  previousWeek?: { average: tools.WeightGramsType };
 };

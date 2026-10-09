@@ -28,7 +28,7 @@ describe("BodyWeightAverage", () => {
     );
 
     expect(average.calculate()).toEqual({
-      average: (mocks.bodyWeight + mocks.heavierBodyWeight) / 2,
+      average: v.parse(tools.WeightGrams, (mocks.bodyWeight + mocks.heavierBodyWeight) / 2),
       count: tools.Int.positive(2),
     });
   });
@@ -46,7 +46,10 @@ describe("BodyWeightAverage", () => {
       to,
     );
 
-    expect(average.calculate()).toEqual({ average: 80333, count: tools.Int.positive(3) });
+    expect(average.calculate()).toEqual({
+      average: v.parse(tools.WeightGrams, 80333),
+      count: tools.Int.positive(3),
+    });
   });
 
   test("calculate - range is inclusive", () => {

@@ -1,7 +1,10 @@
 import * as tools from "@bgord/tools";
+import * as v from "valibot";
 import type * as VO from "+measurements/value-objects";
 
 export class BodyWeightAverage {
+  private readonly rounding = new tools.RoundingToNearestStrategy();
+
   static forWeek(measurements: ReadonlyArray<VO.BodyWeightMeasurement>, week: tools.Week) {
     return new BodyWeightAverage(
       measurements,
@@ -16,7 +19,7 @@ export class BodyWeightAverage {
     private readonly to: tools.DayIsoIdType,
   ) {}
 
-  calculate(): { average: number; count: tools.IntegerPositiveType } | null {
+  calculate(): { average: tools.WeightGramsType; count: tools.IntegerPositiveType } | null {
     const within = this.measurements.filter(
       (measurement) => measurement.measuredOn >= this.from && measurement.measuredOn <= this.to,
     );
@@ -25,6 +28,9 @@ export class BodyWeightAverage {
 
     const total = within.reduce((sum, measurement) => sum + measurement.weight, 0);
 
-    return { average: Math.round(total / within.length), count: tools.Int.positive(within.length) };
+    return {
+      average: v.parse(tools.WeightGrams, this.rounding.round(total / within.length)),
+      count: tools.Int.positive(within.length),
+    };
   }
 }

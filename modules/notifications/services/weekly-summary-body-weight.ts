@@ -51,7 +51,7 @@ export class WeeklySummaryBodyWeight {
     };
   }
 
-  private note(current: number, previous?: number): string | undefined {
+  private note(current: tools.WeightGramsType, previous?: tools.WeightGramsType): string | undefined {
     if (previous === undefined) return undefined;
 
     const delta =
