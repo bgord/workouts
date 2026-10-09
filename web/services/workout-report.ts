@@ -12,7 +12,7 @@ export class WorkoutReport {
     const rows = workout.exercises.flatMap((exercise) =>
       exercise.loggedSets.map(
         (loggedSet) =>
-          `| ${exercise.exerciseName} | ${loggedSet.setNumber} | ${loggedSet.reps} | ${ResistanceFormat[exercise.resistance].report(loggedSet.load)} | ${LateralityFormat[exercise.laterality].report()} | ${loggedSet.rir ?? "not recorded"} |`,
+          `| ${exercise.exerciseName} | ${loggedSet.setNumber} | ${loggedSet.reps} | ${ResistanceFormat[exercise.resistance].report(loggedSet.load)} | ${LateralityFormat[exercise.laterality].report()} | ${loggedSet.rir ?? "3+"} |`,
       ),
     );
 
