@@ -16,7 +16,8 @@ export class ExercisePerformanceMetricsBodyweightStrategy
       bestSet,
       totalReps: tools.Int.positive(
         performance.sets.reduce(
-          (total, set) => total + set.reps * Workouts.VO.WorkoutExerciseSides[performance.laterality],
+          (total, set) =>
+            total + Workouts.VO.WorkoutExerciseSides.totalReps(performance.laterality, set.reps),
           0,
         ),
       ),

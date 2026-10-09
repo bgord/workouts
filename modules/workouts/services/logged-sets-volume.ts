@@ -9,7 +9,9 @@ export class LoggedSetsVolume {
   calculate(): tools.Weight {
     return this.sets.reduce(
       (total, set) =>
-        total.add(tools.Weight.fromGrams(set.reps * set.load * VO.WorkoutExerciseSides[set.laterality])),
+        total.add(
+          tools.Weight.fromGrams(set.load * VO.WorkoutExerciseSides.totalReps(set.laterality, set.reps)),
+        ),
       tools.Weight.zero(),
     );
   }
