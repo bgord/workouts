@@ -3,7 +3,7 @@ import * as v from "valibot";
 import type * as Queries from "+workouts/queries";
 import * as VO from "+workouts/value-objects";
 
-export class ExercisePerformanceEffort {
+export class ExercisePerformanceLowestRir {
   constructor(private readonly performance: Pick<Queries.ExercisePerformance, "sets">) {}
 
   calculate(): VO.RirType | undefined {

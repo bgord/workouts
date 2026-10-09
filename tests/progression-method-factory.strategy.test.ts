@@ -13,7 +13,7 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodEffortGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
       Workouts.Services.ProgressionMethodDoubleProgressionStrategy,
     );
@@ -65,7 +65,7 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodEffortGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
       Workouts.Services.ProgressionMethodLinearProgressionStrategy,
     );
@@ -78,7 +78,7 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodEffortGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
       Workouts.Services.ProgressionMethodRepProgressionStrategy,
     );
@@ -91,7 +91,7 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodEffortGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
       Workouts.Services.ProgressionMethodNoneStrategy,
     );

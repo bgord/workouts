@@ -7,7 +7,7 @@ describe("RirBelowTarget", () => {
   test("below target", () => {
     const rirBelowTarget = new Workouts.Services.RirBelowTarget({
       target: mocks.rirTarget,
-      effort: v.parse(Workouts.VO.Rir, 1),
+      rir: v.parse(Workouts.VO.Rir, 1),
     });
 
     expect(rirBelowTarget.calculate()).toEqual(true);
@@ -16,7 +16,7 @@ describe("RirBelowTarget", () => {
   test("at target", () => {
     const rirBelowTarget = new Workouts.Services.RirBelowTarget({
       target: mocks.rirTarget,
-      effort: v.parse(Workouts.VO.Rir, 2),
+      rir: v.parse(Workouts.VO.Rir, 2),
     });
 
     expect(rirBelowTarget.calculate()).toEqual(false);
@@ -25,22 +25,22 @@ describe("RirBelowTarget", () => {
   test("above target", () => {
     const rirBelowTarget = new Workouts.Services.RirBelowTarget({
       target: mocks.rirTarget,
-      effort: v.parse(Workouts.VO.Rir, 3),
+      rir: v.parse(Workouts.VO.Rir, 3),
     });
 
     expect(rirBelowTarget.calculate()).toEqual(false);
   });
 
   test("no rir logged", () => {
-    const rirBelowTarget = new Workouts.Services.RirBelowTarget({ target: mocks.rirTarget, effort: null });
+    const rirBelowTarget = new Workouts.Services.RirBelowTarget({ target: mocks.rirTarget, rir: null });
 
     expect(rirBelowTarget.calculate()).toEqual(false);
   });
 
-  test("effort unknown", () => {
+  test("rir unknown", () => {
     const rirBelowTarget = new Workouts.Services.RirBelowTarget({
       target: mocks.rirTarget,
-      effort: undefined,
+      rir: undefined,
     });
 
     expect(rirBelowTarget.calculate()).toEqual(false);
@@ -49,7 +49,7 @@ describe("RirBelowTarget", () => {
   test("no target", () => {
     const rirBelowTarget = new Workouts.Services.RirBelowTarget({
       target: undefined,
-      effort: v.parse(Workouts.VO.Rir, 0),
+      rir: v.parse(Workouts.VO.Rir, 0),
     });
 
     expect(rirBelowTarget.calculate()).toEqual(false);

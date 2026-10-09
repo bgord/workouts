@@ -4,21 +4,21 @@ import * as v from "valibot";
 import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
 
-describe("ExercisePerformanceEffort", () => {
+describe("ExercisePerformanceLowestRir", () => {
   test("happy path", () => {
-    const effort = new Workouts.Services.ExercisePerformanceEffort(mocks.exercisePerformanceWithRir);
+    const lowestRir = new Workouts.Services.ExercisePerformanceLowestRir(mocks.exercisePerformanceWithRir);
 
-    expect(effort.calculate()).toEqual(v.parse(Workouts.VO.Rir, 1));
+    expect(lowestRir.calculate()).toEqual(v.parse(Workouts.VO.Rir, 1));
   });
 
   test("no rir logged", () => {
-    const effort = new Workouts.Services.ExercisePerformanceEffort(mocks.exercisePerformance);
+    const lowestRir = new Workouts.Services.ExercisePerformanceLowestRir(mocks.exercisePerformance);
 
-    expect(effort.calculate()).toEqual(undefined);
+    expect(lowestRir.calculate()).toEqual(undefined);
   });
 
   test("one set without rir", () => {
-    const effort = new Workouts.Services.ExercisePerformanceEffort({
+    const lowestRir = new Workouts.Services.ExercisePerformanceLowestRir({
       sets: [
         {
           setNumber: v.parse(Workouts.VO.SetNumber, 1),
@@ -35,12 +35,12 @@ describe("ExercisePerformanceEffort", () => {
       ],
     });
 
-    expect(effort.calculate()).toEqual(undefined);
+    expect(lowestRir.calculate()).toEqual(undefined);
   });
 
   test("no sets", () => {
-    const effort = new Workouts.Services.ExercisePerformanceEffort({ sets: [] });
+    const lowestRir = new Workouts.Services.ExercisePerformanceLowestRir({ sets: [] });
 
-    expect(effort.calculate()).toEqual(undefined);
+    expect(lowestRir.calculate()).toEqual(undefined);
   });
 });

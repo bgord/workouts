@@ -3,26 +3,26 @@ import type * as Exercises from "+exercises";
 import * as Plans from "+plans";
 import type * as Queries from "+workouts/queries";
 import * as VO from "+workouts/value-objects";
-import { ExercisePerformanceEffort } from "./exercise-performance-effort";
+import { ExercisePerformanceLowestRir } from "./exercise-performance-lowest-rir";
 import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-set";
 import { LoadStepStrategyFactory } from "./load-step-factory.strategy";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
 import { ProgressionMethodDoubleProgressionStrategy } from "./progression-method-double-progression.strategy";
-import { ProgressionMethodEffortGateStrategy } from "./progression-method-effort-gate.strategy";
 import { ProgressionMethodLinearProgressionStrategy } from "./progression-method-linear-progression.strategy";
 import { ProgressionMethodNoneStrategy } from "./progression-method-none.strategy";
 import { ProgressionMethodRepProgressionStrategy } from "./progression-method-rep-progression.strategy";
+import { ProgressionMethodRirGateStrategy } from "./progression-method-rir-gate.strategy";
 
 export class ProgressionMethodStrategyFactory {
   static for(
     prescription: VO.ExercisePrescriptionType,
     loadStep: Exercises.VO.ExerciseLoadStepType,
     previous: Pick<Queries.ExercisePerformance, "sets">,
-  ): ProgressionMethodEffortGateStrategy {
-    const effort = new ExercisePerformanceEffort(previous).calculate();
+  ): ProgressionMethodRirGateStrategy {
+    const rir = new ExercisePerformanceLowestRir(previous).calculate();
     const ProgressionMethod = ProgressionMethodStrategyFactory.method(prescription, loadStep, previous);
 
-    return new ProgressionMethodEffortGateStrategy({ prescription, effort }, { ProgressionMethod });
+    return new ProgressionMethodRirGateStrategy({ prescription, rir }, { ProgressionMethod });
   }
 
   private static method(

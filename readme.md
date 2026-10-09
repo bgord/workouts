@@ -564,7 +564,7 @@ modules/
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
-    │   ├── exercise-performance-effort.ts
+    │   ├── exercise-performance-lowest-rir.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-target-diff-calculator.ts
     │   ├── load-step-factory.strategy.ts
@@ -574,11 +574,11 @@ modules/
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
     │   ├── progression-method-double-progression.strategy.ts
-    │   ├── progression-method-effort-gate.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method-rep-progression.strategy.ts
+    │   ├── progression-method-rir-gate.strategy.ts
     │   ├── progression-method.strategy.ts
     │   ├── rir-below-target.ts
     │   ├── workout-export-file-csv.ts

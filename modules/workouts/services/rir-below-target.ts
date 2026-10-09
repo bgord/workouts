@@ -1,16 +1,16 @@
 import type * as Plans from "+plans";
 import type * as VO from "+workouts/value-objects";
 
-type Config = { target: Plans.VO.RirTargetType | undefined; effort: VO.RirType | null | undefined };
+type Config = { target: Plans.VO.RirTargetType | undefined; rir: VO.RirType | null | undefined };
 
 export class RirBelowTarget {
   constructor(private readonly config: Config) {}
 
   calculate(): boolean {
-    const { target, effort } = this.config;
+    const { target, rir } = this.config;
 
-    if (target === undefined || effort === undefined || effort === null) return false;
+    if (target === undefined || rir === undefined || rir === null) return false;
 
-    return effort < target;
+    return rir < target;
   }
 }

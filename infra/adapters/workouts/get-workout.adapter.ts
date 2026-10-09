@@ -75,7 +75,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               ...loggedSet,
               rirBelowTarget: new Workouts.Services.RirBelowTarget({
                 target: exercise.prescription.rir,
-                effort: loggedSet.rir,
+                rir: loggedSet.rir,
               }).calculate(),
               actions: new Workouts.Services.WorkoutGetLoggedSetActions({
                 status: workout.status,

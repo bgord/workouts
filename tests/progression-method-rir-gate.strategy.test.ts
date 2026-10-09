@@ -5,10 +5,10 @@ import * as Plans from "+plans";
 import * as Workouts from "+workouts";
 import * as mocks from "./mocks";
 
-describe("ProgressionMethodEffortGateStrategy", () => {
+describe("ProgressionMethodRirGateStrategy", () => {
   test("rir below target - hold", () => {
-    const strategy = new Workouts.Services.ProgressionMethodEffortGateStrategy(
-      { prescription: mocks.rirExercisePrescription, effort: v.parse(Workouts.VO.Rir, 1) },
+    const strategy = new Workouts.Services.ProgressionMethodRirGateStrategy(
+      { prescription: mocks.rirExercisePrescription, rir: v.parse(Workouts.VO.Rir, 1) },
       {
         ProgressionMethod: new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
           { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
@@ -25,8 +25,8 @@ describe("ProgressionMethodEffortGateStrategy", () => {
   });
 
   test("rir at target - progress", () => {
-    const strategy = new Workouts.Services.ProgressionMethodEffortGateStrategy(
-      { prescription: mocks.rirExercisePrescription, effort: v.parse(Workouts.VO.Rir, 2) },
+    const strategy = new Workouts.Services.ProgressionMethodRirGateStrategy(
+      { prescription: mocks.rirExercisePrescription, rir: v.parse(Workouts.VO.Rir, 2) },
       {
         ProgressionMethod: new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
           { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
@@ -38,9 +38,9 @@ describe("ProgressionMethodEffortGateStrategy", () => {
     expect(strategy.calculate()).toEqual(mocks.exerciseTargetProgression);
   });
 
-  test("effort unknown - progress", () => {
-    const strategy = new Workouts.Services.ProgressionMethodEffortGateStrategy(
-      { prescription: mocks.rirExercisePrescription, effort: undefined },
+  test("rir unknown - progress", () => {
+    const strategy = new Workouts.Services.ProgressionMethodRirGateStrategy(
+      { prescription: mocks.rirExercisePrescription, rir: undefined },
       {
         ProgressionMethod: new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
           { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
@@ -53,8 +53,8 @@ describe("ProgressionMethodEffortGateStrategy", () => {
   });
 
   test("no rir target - progress", () => {
-    const strategy = new Workouts.Services.ProgressionMethodEffortGateStrategy(
-      { prescription: mocks.exercisePrescription, effort: v.parse(Workouts.VO.Rir, 0) },
+    const strategy = new Workouts.Services.ProgressionMethodRirGateStrategy(
+      { prescription: mocks.exercisePrescription, rir: v.parse(Workouts.VO.Rir, 0) },
       {
         ProgressionMethod: new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
           { prescription: mocks.exercisePrescription, last: mocks.exercisePerformanceWeakestSet },
@@ -67,8 +67,8 @@ describe("ProgressionMethodEffortGateStrategy", () => {
   });
 
   test("rir below target - no progress offered - no hold", () => {
-    const strategy = new Workouts.Services.ProgressionMethodEffortGateStrategy(
-      { prescription: mocks.rirExercisePrescription, effort: v.parse(Workouts.VO.Rir, 1) },
+    const strategy = new Workouts.Services.ProgressionMethodRirGateStrategy(
+      { prescription: mocks.rirExercisePrescription, rir: v.parse(Workouts.VO.Rir, 1) },
       {
         ProgressionMethod: new Workouts.Services.ProgressionMethodNoneStrategy({
           last: mocks.exercisePerformanceWeakestSet,
@@ -80,8 +80,8 @@ describe("ProgressionMethodEffortGateStrategy", () => {
   });
 
   test("reps below the range - rir below target - reps hold", () => {
-    const strategy = new Workouts.Services.ProgressionMethodEffortGateStrategy(
-      { prescription: mocks.rirExercisePrescription, effort: v.parse(Workouts.VO.Rir, 1) },
+    const strategy = new Workouts.Services.ProgressionMethodRirGateStrategy(
+      { prescription: mocks.rirExercisePrescription, rir: v.parse(Workouts.VO.Rir, 1) },
       {
         ProgressionMethod: new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
           { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
