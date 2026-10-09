@@ -45,6 +45,7 @@ export function PlanSectionRename(props: { section: PlanSection } & bg.UseToggle
           aria-label={t("plan.section.rename.cta", { name: props.section.name })}
           data-cursor="pointer"
           data-disp="block"
+          data-focus-ring-offset="inset"
           data-maxw="100%"
           data-transform="truncate"
           disabled={!plan.actions.sectionRename.enabled}

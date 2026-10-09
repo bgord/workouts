@@ -46,6 +46,7 @@ export function PlanName(props: bg.UseToggleReturnType) {
         <button
           aria-label={t("plan.rename.cta", { name: plan.data.name })}
           data-cursor="pointer"
+          data-focus-ring-offset="inset"
           data-maxw="100%"
           data-transform="line-clamp"
           onClick={toggle.enable}

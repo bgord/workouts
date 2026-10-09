@@ -40,6 +40,7 @@ export function ExerciseName(props: bg.UseToggleReturnType) {
         <button
           aria-label={t("exercise.update.name.cta", { name: exercise.data.name })}
           data-cursor="pointer"
+          data-focus-ring-offset="inset"
           data-maxw="100%"
           data-transform="truncate"
           onClick={toggle.enable}
