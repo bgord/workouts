@@ -180,7 +180,8 @@ test.describe("Catalog - admin", () => {
   });
 
   test("sets the category role", async ({ page }) => {
-    const role = page.getByRole("combobox", { name: "Change role of Neck" });
+    const categories = page.getByRole("list", { name: "Categories" });
+    const role = categories.getByRole("combobox", { name: "Change role of Neck" });
 
     await page.goto("/catalog");
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
@@ -188,6 +189,7 @@ test.describe("Catalog - admin", () => {
 
     await role.selectOption({ label: "Primary" });
 
+    await expect(categories.getByRole("img", { name: "Primary", exact: true })).toBeVisible();
     await expect(role).toHaveValue("primary");
 
     await page.reload();
@@ -229,7 +231,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
     await page.getByRole("link", { name: "Neck flexion" }).click();
 
-    await expect(categories.getByText("Neck and traps", { exact: true })).toBeVisible();
+    await expect(categories.getByRole("combobox", { name: "Change role of Neck and traps" })).toBeVisible();
   });
 
   test("rejects an empty exercise description", async ({ page }) => {
@@ -399,7 +401,7 @@ test.describe("Catalog - admin", () => {
     await page.getByRole("button", { name: "Assign", exact: true }).click();
     await page.getByLabel("Category to assign").selectOption({ label: "Grip" });
     await page.getByRole("button", { name: "Assign", exact: true }).click();
-    await expect(categories.getByText("Grip", { exact: true })).toBeVisible();
+    await expect(categories.getByRole("combobox", { name: "Change role of Grip" })).toBeVisible();
 
     await page.goto("/catalog");
     await page.getByRole("button", { name: "Categories", exact: true }).click();
@@ -413,8 +415,8 @@ test.describe("Catalog - admin", () => {
     await expect(page.getByRole("button", { name: "Delete Grip" })).toBeHidden();
     await page.goto(`/catalog/exercise/${fixtures.exercises.hammerCurlDumbbells.id}`);
 
-    await expect(categories.getByText("Grip", { exact: true })).toBeHidden();
-    await expect(categories.getByText("Biceps", { exact: true })).toBeVisible();
-    await expect(categories.getByText("Forearms", { exact: true })).toBeVisible();
+    await expect(categories.getByRole("combobox", { name: "Change role of Grip" })).toBeHidden();
+    await expect(categories.getByRole("combobox", { name: "Change role of Biceps" })).toBeVisible();
+    await expect(categories.getByRole("combobox", { name: "Change role of Forearms" })).toBeVisible();
   });
 });

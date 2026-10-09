@@ -166,7 +166,7 @@ test.describe("Exercise - admin", () => {
 
     await page.reload();
 
-    await expect(categories.getByText("Abs", { exact: true })).toBeHidden();
+    await expect(categories.getByRole("combobox", { name: "Change role of Abs" })).toBeHidden();
   });
 
   test("shows the error when setting a category role fails", async ({ page }) => {
@@ -197,7 +197,9 @@ test.describe("Exercise - admin", () => {
 
     await page.reload();
 
-    await expect(categories.getByText(fixtures.categories.chest.name, { exact: true })).toBeVisible();
+    await expect(
+      categories.getByRole("button", { name: `Unassign ${fixtures.categories.chest.name}` }),
+    ).toBeVisible();
   });
 
   test("focuses the exercise name when renaming", async ({ page }) => {
