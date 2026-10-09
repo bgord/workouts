@@ -95,6 +95,8 @@
   "exercise.category.rename.cta": "Zmień nazwę: {{name}}",
   "exercise.category.rename.error": "Nie udało się zmienić nazwy kategorii",
   "exercise.category.rename.label": "Nazwa kategorii",
+  "exercise.category.role.primary": "Główna",
+  "exercise.category.role.secondary": "Pomocnicza",
   "exercise.category.unassign.cta": "Odłącz {{name}}",
   "exercise.laterality.label": "Strony",
   "exercise.laterality.bilateral": "Obie strony",

@@ -45,6 +45,7 @@ export function ExerciseCategories() {
           {assigned.map((category) => (
             <li key={category.id}>
               <ui.ChipLink search={{ category: category.id }} to="/catalog">
+                <ui.CategoryRoleIcon value={category.role} />
                 {category.name}
               </ui.ChipLink>
             </li>
@@ -130,6 +131,7 @@ export function ExerciseCategories() {
         {assigned.map((category) => (
           <li key={category.id}>
             <ui.Chip>
+              <ui.CategoryRoleIcon value={category.role} />
               {category.name}
 
               <ExerciseCategoryUnassign {...category} />

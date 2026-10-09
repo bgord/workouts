@@ -95,6 +95,8 @@
   "exercise.category.rename.cta": "Rename {{name}}",
   "exercise.category.rename.error": "Could not rename the category",
   "exercise.category.rename.label": "Category name",
+  "exercise.category.role.primary": "Primary",
+  "exercise.category.role.secondary": "Secondary",
   "exercise.category.unassign.cta": "Unassign {{name}}",
   "exercise.laterality.label": "Sides",
   "exercise.laterality.bilateral": "Both sides",
