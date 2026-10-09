@@ -372,8 +372,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     new bg.FileUploaderHonoMiddleware(
       {
         field: "file",
-        maxSize: Measurements.VO.BodyPartMeasurementImportMaxSize,
-        MimeRegistry: Measurements.VO.BodyPartMeasurementImportMimeRegistry,
+        maxSize: Measurements.VO.BodyPartMeasurementImport.MaxSize,
+        MimeRegistry: Measurements.VO.BodyPartMeasurementImport.MimeRegistry,
       },
       { FileTypeDetector: new bg.FileTypeDetectorTextStrategy(tools.Mimes.csv.mime) },
     ).handle(),
@@ -432,8 +432,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     new bg.FileUploaderHonoMiddleware(
       {
         field: "file",
-        maxSize: Measurements.VO.BodyWeightMeasurementImportMaxSize,
-        MimeRegistry: Measurements.VO.BodyWeightMeasurementImportMimeRegistry,
+        maxSize: Measurements.VO.BodyWeightMeasurementImport.MaxSize,
+        MimeRegistry: Measurements.VO.BodyWeightMeasurementImport.MimeRegistry,
       },
       { FileTypeDetector: new bg.FileTypeDetectorTextStrategy(tools.Mimes.csv.mime) },
     ).handle(),
