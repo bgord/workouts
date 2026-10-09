@@ -83,14 +83,14 @@ test.describe("Catalog - athlete", () => {
   test("shows more and less categories", async ({ page }) => {
     await page.goto("/catalog");
 
-    await page.getByRole("button", { name: "+8 more" }).click();
+    await page.getByRole("button", { name: "+10 more" }).click();
 
     await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeVisible();
     await expect(page.getByRole("button", { name: "Show less" })).toBeVisible();
 
     await page.getByRole("button", { name: "Show less" }).click();
 
-    await expect(page.getByRole("button", { name: "+8 more" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "+10 more" })).toBeVisible();
     await expect(page.getByRole("button", { name: fixtures.categories.lowerBack.name })).toBeHidden();
   });
 

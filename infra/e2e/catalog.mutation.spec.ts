@@ -169,13 +169,30 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "Assign", exact: true }).click();
     await page.getByLabel("Category to assign").selectOption({ label: "Neck" });
+    await page.getByLabel("Role", { exact: true }).selectOption({ label: "Secondary" });
     await page.getByRole("button", { name: "Assign", exact: true }).click();
 
-    await expect(categories.getByText("Neck", { exact: true })).toBeVisible();
+    await expect(categories.getByRole("combobox", { name: "Change role of Neck" })).toHaveValue("secondary");
 
     await page.reload();
 
-    await expect(categories.getByText("Neck", { exact: true })).toBeVisible();
+    await expect(categories.getByRole("combobox", { name: "Change role of Neck" })).toHaveValue("secondary");
+  });
+
+  test("sets the category role", async ({ page }) => {
+    const role = page.getByRole("combobox", { name: "Change role of Neck" });
+
+    await page.goto("/catalog");
+    await page.getByRole("textbox", { name: "Search by name" }).fill("Neck flexion");
+    await page.getByRole("link", { name: "Neck flexion" }).click();
+
+    await role.selectOption({ label: "Primary" });
+
+    await expect(role).toHaveValue("primary");
+
+    await page.reload();
+
+    await expect(role).toHaveValue("primary");
   });
 
   test("rejects a too short new category name", async ({ page }) => {
