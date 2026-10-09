@@ -299,6 +299,17 @@ export const planCategoryCoverage: Plans.VO.PlanCategoryCoverage = [
   },
 ];
 
+export const planCategoryCoverageEmpty: Plans.VO.PlanCategoryCoverage = [
+  {
+    category: exerciseCategory,
+    primarySets: 0,
+    secondarySets: 0,
+    total: 0,
+    primaryShare: 0,
+    secondaryShare: 0,
+  },
+];
+
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 
 export const GenericPlanCreatedEvent = {

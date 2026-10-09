@@ -79,7 +79,7 @@ describe("PlanGetActions", () => {
       status: Plans.VO.PlanStatusEnum.draft,
       sections: [],
       activeCount: tools.Int.nonNegative(0),
-      coverage: [],
+      coverage: mocks.planCategoryCoverageEmpty,
     });
 
     expect(actions.calculate().coverageView).toEqual(mocks.actionUnavailable);
