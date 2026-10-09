@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { planRoute } from "../router";
 import { PlanArchive } from "../sections/plan-archive";
+import { PlanCategoryCoverage } from "../sections/plan-category-coverage";
 import { PlanCopy } from "../sections/plan-copy";
 import { PlanDescription } from "../sections/plan-description";
 import { PlanName } from "../sections/plan-name";
@@ -14,6 +15,7 @@ export function Plan() {
   const { plan } = planRoute.useLoaderData();
 
   const planRename = bg.useToggle({ name: "plan-rename" });
+  const planCategoryCoverage = bg.useToggle({ name: "plan-category-coverage" });
 
   return (
     <ui.Main>
@@ -50,7 +52,9 @@ export function Plan() {
           <PlanDescription />
         </div>
 
-        <PlanStatus />
+        <PlanStatus {...planCategoryCoverage} />
+
+        <PlanCategoryCoverage {...planCategoryCoverage} />
       </div>
 
       <PlanSectionList />

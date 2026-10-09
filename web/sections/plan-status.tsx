@@ -2,6 +2,7 @@ import * as bg from "@bgord/ui";
 import { PlanStatusEnum } from "../../modules/plans/value-objects/plan-status";
 import * as ui from "../components";
 import { planRoute } from "../router";
+import { PlanCategoryCoverageToggle } from "./plan-category-coverage-toggle";
 import { PlanEditingEnable } from "./plan-editing-enable";
 import { PlanFinalize } from "./plan-finalize";
 import { PlanRestore } from "./plan-restore";
@@ -14,7 +15,7 @@ const tone: Record<PlanStatusEnum, ui.StatusPanelTone> = {
   [PlanStatusEnum.removed]: "muted",
 };
 
-export function PlanStatus() {
+export function PlanStatus(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const { plan } = planRoute.useLoaderData();
 
@@ -42,6 +43,8 @@ export function PlanStatus() {
       </ui.StatusPanelSummary>
 
       <ui.StatusPanelAction>
+        <PlanCategoryCoverageToggle {...props} />
+
         <PlanFinalize />
 
         <PlanEditingEnable />
