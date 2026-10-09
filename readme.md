@@ -389,6 +389,7 @@ modules/
 │   │   ├── list-exercise-catalog.ts
 │   │   └── list-plans.ts
 │   ├── services
+│   │   ├── plan-category-coverage.ts
 │   │   ├── plan-get-actions.ts
 │   │   ├── plan-get-exercise-instruction-actions.ts
 │   │   ├── plan-get-section-actions.ts
