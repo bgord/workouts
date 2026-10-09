@@ -2,8 +2,8 @@ import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
+import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
-import { RirTargetRepsApplicability } from "../../modules/plans/value-objects/rir-target-reps-applicability";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
@@ -37,7 +37,7 @@ export function WorkoutExerciseAdd() {
     progression.set(
       ProgressionMethodChoice.keep(exercise?.progressionMethods, Reps.toggled, progression.value),
     );
-    if (!RirTargetRepsApplicability[Reps.toggled]) rir.clear();
+    if (!RepsScheme.allowsRir(Reps.toggled)) rir.clear();
   };
 
   const mutation = bg.useMutation({
@@ -186,7 +186,7 @@ export function WorkoutExerciseAdd() {
               options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
             />
 
-            {RirTargetRepsApplicability[scheme] && <ui.RirTargetPicker field={rir} />}
+            {RepsScheme.allowsRir(scheme) && <ui.RirTargetPicker field={rir} />}
 
             {mutation.isError && <ui.DialogError>{t("workout.exercise.add.error")}</ui.DialogError>}
 

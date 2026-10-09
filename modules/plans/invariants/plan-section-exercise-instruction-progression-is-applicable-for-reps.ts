@@ -10,7 +10,7 @@ type PlanSectionExerciseInstructionProgressionIsApplicableForRepsConfigType = Pi
 
 class PlanSectionExerciseInstructionProgressionIsApplicableForRepsFactory extends bg.Invariant<PlanSectionExerciseInstructionProgressionIsApplicableForRepsConfigType> {
   passes(config: PlanSectionExerciseInstructionProgressionIsApplicableForRepsConfigType) {
-    return VO.ProgressionMethodRepsApplicability[VO.RepsScheme.of(config.reps)].includes(config.progression);
+    return VO.RepsScheme.allowsProgression(VO.RepsScheme.of(config.reps), config.progression);
   }
 
   // Stryker disable next-line StringLiteral

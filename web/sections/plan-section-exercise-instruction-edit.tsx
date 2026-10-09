@@ -6,7 +6,6 @@ import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/q
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
 import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
-import { RirTargetRepsApplicability } from "../../modules/plans/value-objects/rir-target-reps-applicability";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
@@ -86,7 +85,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
     progression.set(
       ProgressionMethodChoice.keep(exercise.progressionMethods, Reps.toggled, progression.value),
     );
-    if (!RirTargetRepsApplicability[Reps.toggled]) rir.set(undefined);
+    if (!RepsScheme.allowsRir(Reps.toggled)) rir.set(undefined);
   };
 
   const mutation = bg.useMutation({
@@ -237,7 +236,7 @@ export function PlanSectionExerciseInstructionEdit(props: {
               options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
             />
 
-            {RirTargetRepsApplicability[scheme] && (
+            {RepsScheme.allowsRir(scheme) && (
               <ui.RirTargetPicker disabled={!actions.update.enabled} field={rir} />
             )}
 

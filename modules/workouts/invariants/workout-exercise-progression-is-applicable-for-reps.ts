@@ -11,9 +11,7 @@ type WorkoutExerciseProgressionIsApplicableForRepsConfigType = Pick<
 
 class WorkoutExerciseProgressionIsApplicableForRepsFactory extends bg.Invariant<WorkoutExerciseProgressionIsApplicableForRepsConfigType> {
   passes(config: WorkoutExerciseProgressionIsApplicableForRepsConfigType) {
-    return Plans.VO.ProgressionMethodRepsApplicability[Plans.VO.RepsScheme.of(config.reps)].includes(
-      config.progression,
-    );
+    return Plans.VO.RepsScheme.allowsProgression(Plans.VO.RepsScheme.of(config.reps), config.progression);
   }
 
   // Stryker disable next-line StringLiteral

@@ -11,7 +11,7 @@ type PlanSectionExerciseInstructionRirIsApplicableForRepsConfigType = Pick<
 class PlanSectionExerciseInstructionRirIsApplicableForRepsFactory extends bg.Invariant<PlanSectionExerciseInstructionRirIsApplicableForRepsConfigType> {
   passes(config: PlanSectionExerciseInstructionRirIsApplicableForRepsConfigType) {
     if (config.rir === undefined) return true;
-    return VO.RirTargetRepsApplicability[VO.RepsScheme.of(config.reps)];
+    return VO.RepsScheme.allowsRir(VO.RepsScheme.of(config.reps));
   }
 
   // Stryker disable next-line StringLiteral

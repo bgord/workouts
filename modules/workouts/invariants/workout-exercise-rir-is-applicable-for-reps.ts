@@ -9,7 +9,7 @@ type WorkoutExerciseRirIsApplicableForRepsConfigType = Pick<VO.ExercisePrescript
 class WorkoutExerciseRirIsApplicableForRepsFactory extends bg.Invariant<WorkoutExerciseRirIsApplicableForRepsConfigType> {
   passes(config: WorkoutExerciseRirIsApplicableForRepsConfigType) {
     if (config.rir === undefined) return true;
-    return Plans.VO.RirTargetRepsApplicability[Plans.VO.RepsScheme.of(config.reps)];
+    return Plans.VO.RepsScheme.allowsRir(Plans.VO.RepsScheme.of(config.reps));
   }
 
   // Stryker disable next-line StringLiteral

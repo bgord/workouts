@@ -3,8 +3,8 @@ import { useRouter } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
+import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
-import { RirTargetRepsApplicability } from "../../modules/plans/value-objects/rir-target-reps-applicability";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
@@ -42,7 +42,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
     progression.set(
       ProgressionMethodChoice.keep(exercise?.progressionMethods, Reps.toggled, progression.value),
     );
-    if (!RirTargetRepsApplicability[Reps.toggled]) rir.clear();
+    if (!RepsScheme.allowsRir(Reps.toggled)) rir.clear();
   };
 
   const mutation = bg.useMutation({
@@ -205,7 +205,7 @@ export function PlanSectionExerciseInstructionAdd(props: PlanSection) {
               options={ProgressionMethodChoice.options(exercise.progressionMethods, scheme)}
             />
 
-            {RirTargetRepsApplicability[scheme] && <ui.RirTargetPicker field={rir} />}
+            {RepsScheme.allowsRir(scheme) && <ui.RirTargetPicker field={rir} />}
 
             {mutation.isError && <ui.DialogError>{t("plan.section.exercise.add.error")}</ui.DialogError>}
 
