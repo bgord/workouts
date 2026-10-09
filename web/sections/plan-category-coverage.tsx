@@ -7,7 +7,9 @@ const hatched = {
     "repeating-linear-gradient(-45deg, var(--color-brand-400) 0 2px, color-mix(in oklch, var(--color-brand-400) 25%, transparent) 2px 4px)",
 };
 
-const row = { display: "grid", gridTemplateColumns: "7rem minmax(0, 1fr) 2.5rem" };
+const list = { display: "grid", gridTemplateColumns: "max-content minmax(0, 1fr) auto auto auto" };
+
+const row = { display: "grid", gridTemplateColumns: "subgrid", gridColumn: "1 / -1" };
 
 const total = (value: number) => value.toFixed(Number.isInteger(value) ? 0 : 1);
 
@@ -37,7 +39,7 @@ export function PlanCategoryCoverage(props: bg.UseToggleReturnType) {
         </small>
       </div>
 
-      <ul aria-label={t("plan.coverage.title")} data-stack="y">
+      <ul aria-label={t("plan.coverage.title")} style={list}>
         {plan.coverage.map((entry, index) => (
           <ui.HairlineRow
             aria-label={t("plan.coverage.row", {
@@ -51,6 +53,7 @@ export function PlanCategoryCoverage(props: bg.UseToggleReturnType) {
             key={entry.category.id}
             last={index === plan.coverage.length - 1}
             style={row}
+            {...ui.Gap.cluster}
             {...ui.Spacing.rowCompact}
           >
             <span data-transform="truncate">{entry.category.name}</span>
@@ -66,6 +69,42 @@ export function PlanCategoryCoverage(props: bg.UseToggleReturnType) {
 
               <span style={{ ...hatched, height: "100%", width: `${entry.secondaryShare * 100}%` }} />
             </span>
+
+            {entry.primarySets > 0 ? (
+              <span
+                aria-label={t("plan.coverage.primary", { count: entry.primarySets })}
+                data-color="neutral-500"
+                data-cross="center"
+                data-fs="xs"
+                data-stack="x"
+                data-transform="font-variant-numeric"
+                role="img"
+                {...ui.Gap.inline}
+              >
+                <span data-bg="brand-400" data-br="pill" style={{ height: 6, width: 10 }} />
+                {entry.primarySets}
+              </span>
+            ) : (
+              <span />
+            )}
+
+            {entry.secondarySets > 0 ? (
+              <span
+                aria-label={t("plan.coverage.secondary", { count: entry.secondarySets })}
+                data-color="neutral-500"
+                data-cross="center"
+                data-fs="xs"
+                data-stack="x"
+                data-transform="font-variant-numeric"
+                role="img"
+                {...ui.Gap.inline}
+              >
+                <span data-br="pill" style={{ ...hatched, height: 6, width: 10 }} />
+                {entry.secondarySets}
+              </span>
+            ) : (
+              <span />
+            )}
 
             <span data-main="end" data-stack="x" data-transform="font-variant-numeric">
               {total(entry.total)}

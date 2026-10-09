@@ -687,14 +687,21 @@ test.describe("Plan - builder", () => {
   test("shows the sets per category over one pass through the plan", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
 
+    const chest = page.getByRole("listitem", { name: "Chest: 7 (primary: 7, secondary: 0)", exact: true });
+    const sideDelts = page.getByRole("listitem", {
+      name: "Side delts: 4.5 (primary: 3, secondary: 3)",
+      exact: true,
+    });
+
     await page.getByRole("button", { name: "Toggle sets per category", exact: true }).click();
 
-    await expect(
-      page.getByRole("listitem", { name: "Chest: 7 (primary: 7, secondary: 0)", exact: true }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("listitem", { name: "Side delts: 4.5 (primary: 3, secondary: 3)", exact: true }),
-    ).toBeVisible();
+    await expect(chest).toBeVisible();
+    await expect(chest.getByRole("img")).toHaveCount(1);
+    await expect(chest.getByRole("img", { name: "Primary: 7", exact: true })).toBeVisible();
+    await expect(sideDelts).toBeVisible();
+    await expect(sideDelts.getByRole("img")).toHaveCount(2);
+    await expect(sideDelts.getByRole("img", { name: "Primary: 3", exact: true })).toBeVisible();
+    await expect(sideDelts.getByRole("img", { name: "Secondary: 3", exact: true })).toBeVisible();
   });
 });
 
@@ -761,11 +768,12 @@ test.describe("Plan - archivist", () => {
   test("shows the categories without sets as zero", async ({ page }) => {
     await page.goto(`/plans/${fixtures.archivist.plan.id}`);
 
+    const abs = page.getByRole("listitem", { name: "Abs: 0 (primary: 0, secondary: 0)", exact: true });
+
     await page.getByRole("button", { name: "Toggle sets per category", exact: true }).click();
 
-    await expect(
-      page.getByRole("listitem", { name: "Abs: 0 (primary: 0, secondary: 0)", exact: true }),
-    ).toBeVisible();
+    await expect(abs).toBeVisible();
+    await expect(abs.getByRole("img")).toHaveCount(0);
   });
 });
 
