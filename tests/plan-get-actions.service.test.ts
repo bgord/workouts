@@ -9,6 +9,7 @@ describe("PlanGetActions", () => {
       status: Plans.VO.PlanStatusEnum.draft,
       sections: mocks.plan.sections,
       activeCount: tools.Int.nonNegative(0),
+      coverage: mocks.planCategoryCoverage,
     });
 
     expect(actions.calculate()).toEqual({
@@ -24,6 +25,7 @@ describe("PlanGetActions", () => {
       sectionWarmupSet: mocks.actionAvailable,
       sectionCooldownSet: mocks.actionAvailable,
       sectionRemove: mocks.actionAvailable,
+      coverageView: mocks.actionAvailable,
     });
   });
 
@@ -32,6 +34,7 @@ describe("PlanGetActions", () => {
       status: Plans.VO.PlanStatusEnum.draft,
       sections: [],
       activeCount: tools.Int.nonNegative(0),
+      coverage: mocks.planCategoryCoverage,
     });
 
     expect(actions.calculate().finalize).toEqual({
@@ -46,6 +49,7 @@ describe("PlanGetActions", () => {
       status: Plans.VO.PlanStatusEnum.draft,
       sections: [mocks.planSectionEmpty],
       activeCount: tools.Int.nonNegative(0),
+      coverage: mocks.planCategoryCoverage,
     });
 
     expect(actions.calculate().finalize).toEqual({
@@ -60,6 +64,7 @@ describe("PlanGetActions", () => {
       status: Plans.VO.PlanStatusEnum.draft,
       sections: mocks.planSectionsAtLimit,
       activeCount: tools.Int.nonNegative(0),
+      coverage: mocks.planCategoryCoverage,
     });
 
     expect(actions.calculate().sectionCreate).toEqual({
@@ -69,11 +74,23 @@ describe("PlanGetActions", () => {
     });
   });
 
+  test("draft - no coverage", () => {
+    const actions = new Plans.Services.PlanGetActions({
+      status: Plans.VO.PlanStatusEnum.draft,
+      sections: [],
+      activeCount: tools.Int.nonNegative(0),
+      coverage: [],
+    });
+
+    expect(actions.calculate().coverageView).toEqual(mocks.actionUnavailable);
+  });
+
   test("finalized", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.finalized,
       sections: [],
       activeCount: tools.Int.nonNegative(0),
+      coverage: mocks.planCategoryCoverage,
     });
 
     expect(actions.calculate()).toEqual({
@@ -89,6 +106,7 @@ describe("PlanGetActions", () => {
       sectionWarmupSet: mocks.actionUnavailable,
       sectionCooldownSet: mocks.actionUnavailable,
       sectionRemove: mocks.actionUnavailable,
+      coverageView: mocks.actionAvailable,
     });
   });
 
@@ -97,6 +115,7 @@ describe("PlanGetActions", () => {
       status: Plans.VO.PlanStatusEnum.archived,
       sections: mocks.plan.sections,
       activeCount: tools.Int.nonNegative(0),
+      coverage: mocks.planCategoryCoverage,
     });
 
     expect(actions.calculate()).toEqual({
@@ -112,6 +131,7 @@ describe("PlanGetActions", () => {
       sectionWarmupSet: mocks.actionUnavailable,
       sectionCooldownSet: mocks.actionUnavailable,
       sectionRemove: mocks.actionUnavailable,
+      coverageView: mocks.actionAvailable,
     });
   });
 
@@ -120,6 +140,7 @@ describe("PlanGetActions", () => {
       status: Plans.VO.PlanStatusEnum.archived,
       sections: mocks.plan.sections,
       activeCount: tools.Int.nonNegative(1),
+      coverage: mocks.planCategoryCoverage,
     });
 
     expect(actions.calculate().restore).toEqual({

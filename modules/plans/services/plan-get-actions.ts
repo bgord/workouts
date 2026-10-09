@@ -16,6 +16,7 @@ type PlanGetActionsFacts = {
   status: VO.PlanStatusEnum;
   sections: ReadonlyArray<VO.PlanSectionSnapshot>;
   activeCount: tools.IntegerNonNegativeType;
+  coverage: VO.PlanCategoryCoverage;
 };
 
 export class PlanGetActions {
@@ -46,6 +47,7 @@ export class PlanGetActions {
       sectionWarmupSet: bg.ActionState.of(editable),
       sectionCooldownSet: bg.ActionState.of(editable),
       sectionRemove: bg.ActionState.of(editable),
+      coverageView: bg.ActionState.of(this.facts.coverage.some((entry) => entry.total > 0)),
     };
   }
 }

@@ -79,25 +79,28 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       })),
     };
 
+    const coverage = new Plans.Services.PlanCategoryCoverage({
+      categories,
+      instructions: plan.sections.flatMap((section) =>
+        section.exerciseInstructions.map((exerciseInstruction) => ({
+          sets: exerciseInstruction.sets,
+          categories: exerciseInstruction.exercise.categoryAssignments.map((assignment) => ({
+            ...assignment.category,
+            role: assignment.role,
+          })),
+        })),
+      ),
+    }).calculate();
+
     return {
       data,
       actions: new Plans.Services.PlanGetActions({
         status: plan.status,
         sections: data.sections,
         activeCount,
+        coverage,
       }).calculate(),
-      coverage: new Plans.Services.PlanCategoryCoverage({
-        categories,
-        instructions: plan.sections.flatMap((section) =>
-          section.exerciseInstructions.map((exerciseInstruction) => ({
-            sets: exerciseInstruction.sets,
-            categories: exerciseInstruction.exercise.categoryAssignments.map((assignment) => ({
-              ...assignment.category,
-              role: assignment.role,
-            })),
-          })),
-        ),
-      }).calculate(),
+      coverage,
     };
   }
 }
