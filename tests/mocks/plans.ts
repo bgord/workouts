@@ -4,7 +4,13 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Plans from "+plans";
 import { userId } from "./auth";
-import { anotherExerciseId, exercise, exerciseId, exerciseWithCategories } from "./exercises";
+import {
+  anotherExerciseId,
+  exercise,
+  exerciseCategory,
+  exerciseId,
+  exerciseWithCategories,
+} from "./exercises";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
 
 export const planId = v.parse(Plans.VO.PlanId, "8e9ec237-fe50-4a77-b917-54e1d3bf9eec");
@@ -281,6 +287,10 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
     actions: { exerciseInstructionAdd: { available: true, enabled: true, hints: [] } },
   })),
 };
+
+export const planCategoryCoverage: Plans.VO.PlanCategoryCoverage = [
+  { category: exerciseCategory, primarySets: 3, secondarySets: 0, total: 3 },
+];
 
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 

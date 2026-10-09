@@ -54,6 +54,7 @@ describe("GET /api/plans/:planId", async () => {
           sectionCooldownSet: { available: true, enabled: true, hints: [] },
           sectionRemove: { available: true, enabled: true, hints: [] },
         },
+        coverage: mocks.planCategoryCoverage,
       }),
     );
 
@@ -77,6 +78,7 @@ describe("GET /api/plans/:planId", async () => {
         sectionCooldownSet: { available: true, enabled: true, hints: [] },
         sectionRemove: { available: true, enabled: true, hints: [] },
       },
+      coverage: mocks.planCategoryCoverage,
     });
   });
 });

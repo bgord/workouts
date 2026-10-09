@@ -37,6 +37,7 @@ export type PlanGetResponse = {
     sectionCooldownSet: bg.ActionState;
     sectionRemove: bg.ActionState;
   };
+  coverage: VO.PlanCategoryCoverage;
 };
 
 export interface GetPlan {

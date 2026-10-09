@@ -10,7 +10,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
     planId: Plans.VO.PlanIdType,
     userId: Auth.VO.UserIdType,
   ): Promise<Plans.Queries.PlanGetResponse | null> {
-    const [plan, activeCount] = await Promise.all([
+    const [plan, activeCount, categories] = await Promise.all([
       db.query.plans.findFirst({
         columns: { id: true, name: true, description: true, status: true, revision: true, updatedAt: true },
         where: and(eq(Schema.plans.id, planId), eq(Schema.plans.userId, userId)),
@@ -34,6 +34,12 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
                       image: true,
                       imageEtag: true,
                     },
+                    with: {
+                      categoryAssignments: {
+                        columns: { role: true },
+                        with: { category: { columns: { id: true, name: true } } },
+                      },
+                    },
                   },
                 },
               },
@@ -42,6 +48,9 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         },
       }),
       GetPlanEditableForOwnerCountQuery.execute(userId),
+      db
+        .select({ id: Schema.exerciseCategories.id, name: Schema.exerciseCategories.name })
+        .from(Schema.exerciseCategories),
     ]);
 
     if (!plan) return null;
@@ -50,20 +59,22 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       ...plan,
       sections: plan.sections.map((section) => ({
         ...section,
-        exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => ({
-          ...exerciseInstruction,
-          exercise: {
-            ...exerciseInstruction.exercise,
-            progressionMethods: Plans.VO.ProgressionMethodApplicability.options(
-              exerciseInstruction.exercise.resistance,
-            ),
-          },
-          actions: new Plans.Services.PlanGetExerciseInstructionActions({
-            status: plan.status,
-            section,
-            exerciseInstructionId: exerciseInstruction.id,
-          }).calculate(),
-        })),
+        exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => {
+          const { categoryAssignments, ...exercise } = exerciseInstruction.exercise;
+
+          return {
+            ...exerciseInstruction,
+            exercise: {
+              ...exercise,
+              progressionMethods: Plans.VO.ProgressionMethodApplicability.options(exercise.resistance),
+            },
+            actions: new Plans.Services.PlanGetExerciseInstructionActions({
+              status: plan.status,
+              section,
+              exerciseInstructionId: exerciseInstruction.id,
+            }).calculate(),
+          };
+        }),
         actions: new Plans.Services.PlanGetSectionActions({ status: plan.status, section }).calculate(),
       })),
     };
@@ -74,6 +85,18 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
         status: plan.status,
         sections: data.sections,
         activeCount,
+      }).calculate(),
+      coverage: new Plans.Services.PlanCategoryCoverage({
+        categories,
+        instructions: plan.sections.flatMap((section) =>
+          section.exerciseInstructions.map((exerciseInstruction) => ({
+            sets: exerciseInstruction.sets,
+            categories: exerciseInstruction.exercise.categoryAssignments.map((assignment) => ({
+              ...assignment.category,
+              role: assignment.role,
+            })),
+          })),
+        ),
       }).calculate(),
     };
   }
