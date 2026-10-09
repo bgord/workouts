@@ -14,6 +14,7 @@ export * from "./progression-method-linear-progression.strategy";
 export * from "./progression-method-none.strategy";
 export * from "./progression-method-rep-progression.strategy";
 export * from "./progression-method-rir-gate.strategy";
+export * from "./progression-method-sets-gate.strategy";
 export * from "./rir-below-target";
 export * from "./workout-export-file-csv";
 export * from "./workout-get-actions";

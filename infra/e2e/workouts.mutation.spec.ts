@@ -344,6 +344,39 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(row.getByRole("button", { name: "Edit target: 3×9 45 kg", exact: true })).toBeVisible();
   });
 
+  test("holds the progression when the last session was below the target sets", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
+    const suggestion = row.getByRole("group", {
+      name: "Based on the last session · Double progression",
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page.getByRole("searchbox", { name: "Exercise" }).fill(fixtures.exercises.tricepsPushDownBar.name);
+    await page.getByRole("radio", { name: fixtures.exercises.tricepsPushDownBar.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("4");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("8");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("10");
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+
+    await expect(suggestion.getByText("Below 4 sets last time, repeat it", { exact: true })).toBeVisible();
+    await expect(suggestion.getByRole("button")).toHaveText(["−2.5 kg", "Last"]);
+
+    await row.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Edit target: 4×7 30 kg", exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Edit target: 4×7 30 kg", exact: true })).toBeVisible();
+  });
+
   test("shows the error when starting the workout fails", async ({ page }) => {
     await page.route("**/api/workouts/*/start", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);

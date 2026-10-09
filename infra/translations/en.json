@@ -509,6 +509,7 @@
   "workout.target.load.label": "Load (kg)",
   "workout.target.progression.hold.reps_below_target": "Below {{reps}} reps last time, repeat it",
   "workout.target.progression.hold.rir_below_target": "Below RIR {{rir}} last time, repeat it",
+  "workout.target.progression.hold.sets_below_target": "Below {{sets}} sets last time, repeat it",
   "workout.target.progression.last": "Last",
   "workout.target.progression.title": "Based on the last session",
   "workout.target.reps.amrap.label": "Min reps",

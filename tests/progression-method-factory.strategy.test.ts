@@ -8,15 +8,67 @@ import * as mocks from "./mocks";
 describe("ProgressionMethodStrategyFactory", () => {
   test("double_progression", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
-      mocks.exercisePrescription,
+      { ...mocks.exercisePrescription, sets: v.parse(Plans.VO.Sets, 2) },
       mocks.exerciseLoadStep,
       mocks.exercisePerformance,
     );
 
     expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodDoubleProgressionStrategy,
+      Workouts.Services.ProgressionMethodSetsGateStrategy,
     );
+    expect(
+      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
+        .ProgressionMethod,
+    ).toBeInstanceOf(Workouts.Services.ProgressionMethodDoubleProgressionStrategy);
+    expect(strategy.calculate()).toEqual({
+      last: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 2),
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 2),
+        reps: v.parse(Workouts.VO.Reps, 12),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
+      }),
+      progress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 2),
+        reps: v.parse(Workouts.VO.Reps, 6),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
+    });
+  });
+
+  test("double_progression - rir below target", () => {
+    const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
+      { ...mocks.rirExercisePrescription, sets: v.parse(Plans.VO.Sets, 2) },
+      mocks.exerciseLoadStep,
+      mocks.exercisePerformanceWithRir,
+    );
+
+    expect(strategy.calculate()).toEqual({
+      last: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 2),
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      }),
+      regress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 2),
+        reps: v.parse(Workouts.VO.Reps, 12),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
+      }),
+      hold: Workouts.VO.ProgressionHoldReasonOptions.rir_below_target,
+    });
+  });
+
+  test("double_progression - sets below target", () => {
+    const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
+      mocks.exercisePrescription,
+      mocks.exerciseLoadStep,
+      mocks.exercisePerformance,
+    );
+
     expect(strategy.calculate()).toEqual({
       last: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 3),
@@ -28,15 +80,11 @@ describe("ProgressionMethodStrategyFactory", () => {
         reps: v.parse(Workouts.VO.Reps, 12),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      progress: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 3),
-        reps: v.parse(Workouts.VO.Reps, 6),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
-      }),
+      hold: Workouts.VO.ProgressionHoldReasonOptions.sets_below_target,
     });
   });
 
-  test("double_progression - rir below target", () => {
+  test("double_progression - sets and rir below target - sets hold", () => {
     const strategy = Workouts.Services.ProgressionMethodStrategyFactory.for(
       mocks.rirExercisePrescription,
       mocks.exerciseLoadStep,
@@ -54,7 +102,7 @@ describe("ProgressionMethodStrategyFactory", () => {
         reps: v.parse(Workouts.VO.Reps, 12),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.rir_below_target,
+      hold: Workouts.VO.ProgressionHoldReasonOptions.sets_below_target,
     });
   });
 
@@ -67,8 +115,12 @@ describe("ProgressionMethodStrategyFactory", () => {
 
     expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodLinearProgressionStrategy,
+      Workouts.Services.ProgressionMethodSetsGateStrategy,
     );
+    expect(
+      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
+        .ProgressionMethod,
+    ).toBeInstanceOf(Workouts.Services.ProgressionMethodLinearProgressionStrategy);
   });
 
   test("rep_progression", () => {
@@ -80,8 +132,12 @@ describe("ProgressionMethodStrategyFactory", () => {
 
     expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodRepProgressionStrategy,
+      Workouts.Services.ProgressionMethodSetsGateStrategy,
     );
+    expect(
+      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
+        .ProgressionMethod,
+    ).toBeInstanceOf(Workouts.Services.ProgressionMethodRepProgressionStrategy);
   });
 
   test("none", () => {
@@ -93,7 +149,11 @@ describe("ProgressionMethodStrategyFactory", () => {
 
     expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodNoneStrategy,
+      Workouts.Services.ProgressionMethodSetsGateStrategy,
     );
+    expect(
+      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
+        .ProgressionMethod,
+    ).toBeInstanceOf(Workouts.Services.ProgressionMethodNoneStrategy);
   });
 });

@@ -12,6 +12,7 @@ import { ProgressionMethodLinearProgressionStrategy } from "./progression-method
 import { ProgressionMethodNoneStrategy } from "./progression-method-none.strategy";
 import { ProgressionMethodRepProgressionStrategy } from "./progression-method-rep-progression.strategy";
 import { ProgressionMethodRirGateStrategy } from "./progression-method-rir-gate.strategy";
+import { ProgressionMethodSetsGateStrategy } from "./progression-method-sets-gate.strategy";
 
 export class ProgressionMethodStrategyFactory {
   static for(
@@ -20,7 +21,11 @@ export class ProgressionMethodStrategyFactory {
     previous: Pick<Queries.ExercisePerformance, "sets">,
   ): ProgressionMethodRirGateStrategy {
     const rir = new ExercisePerformanceLowestRir(previous).calculate();
-    const ProgressionMethod = ProgressionMethodStrategyFactory.method(prescription, loadStep, previous);
+    const weakest = new ExercisePerformanceWeakestSet(previous).calculate();
+    const ProgressionMethod = new ProgressionMethodSetsGateStrategy(
+      { prescription, sets: weakest.sets },
+      { ProgressionMethod: ProgressionMethodStrategyFactory.method(prescription, loadStep, weakest) },
+    );
 
     return new ProgressionMethodRirGateStrategy({ prescription, rir }, { ProgressionMethod });
   }
@@ -28,9 +33,8 @@ export class ProgressionMethodStrategyFactory {
   private static method(
     prescription: VO.ExercisePrescriptionType,
     loadStep: Exercises.VO.ExerciseLoadStepType,
-    previous: Pick<Queries.ExercisePerformance, "sets">,
+    weakest: VO.ExerciseTargetType,
   ): ProgressionMethodStrategy {
-    const weakest = new ExercisePerformanceWeakestSet(previous).calculate();
     const last = v.parse(VO.ExerciseTarget, { ...weakest, sets: prescription.sets });
     const LoadStep = LoadStepStrategyFactory.for(loadStep);
 

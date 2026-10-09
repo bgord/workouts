@@ -88,6 +88,7 @@ export function WorkoutExerciseTargetProgression(
       {progression.hold && (
         <small data-color="neutral-400" data-self="center">
           {t(`workout.target.progression.hold.${progression.hold}`, {
+            sets: prescription.sets,
             reps: prescription.reps.min,
             rir: prescription.rir ?? "",
           })}

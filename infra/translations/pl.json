@@ -509,6 +509,7 @@
   "workout.target.load.label": "Ciężar (kg)",
   "workout.target.progression.hold.reps_below_target": "Ostatnio poniżej {{reps}} powt., powtórz",
   "workout.target.progression.hold.rir_below_target": "Ostatnio poniżej RIR {{rir}}, powtórz",
+  "workout.target.progression.hold.sets_below_target": "Ostatnio poniżej {{sets}} serii, powtórz",
   "workout.target.progression.last": "Ostatnio",
   "workout.target.progression.title": "Na podstawie ostatniej sesji",
   "workout.target.reps.amrap.label": "Min. powtórzeń",
