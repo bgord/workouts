@@ -8,14 +8,15 @@ import { exerciseRoute } from "../router";
 
 const options = Object.values(ExerciseCategoryRoleOptions);
 
-export function ExerciseCategoryRoleSet(props: ExerciseCategoryAssignment) {
+export function ExerciseCategoryRoleSet(props: ExerciseCategoryAssignment & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { exercise } = exerciseRoute.useLoaderData();
+  const { toggle: failure, rest: category } = bg.extractUseToggle(props);
 
   const field = bg.useTextField<ExerciseCategoryRoleOptions>({
-    name: `exercise-category-role-${props.id}`,
-    defaultValue: props.role,
+    name: `exercise-category-role-${category.id}`,
+    defaultValue: category.role,
   });
 
   const mutation = bg.useMutation({
@@ -25,16 +26,19 @@ export function ExerciseCategoryRoleSet(props: ExerciseCategoryAssignment) {
         credentials: "include",
         body: JSON.stringify({
           exerciseId: exercise.data.id,
-          exerciseCategoryId: props.id,
-          role: options.find((option) => option !== props.role),
+          exerciseCategoryId: category.id,
+          role: options.find((option) => option !== category.role),
         }),
       }),
-    onSuccess: () => router.invalidate({ filter: (match) => match.routeId === exerciseRoute.id, sync: true }),
-    onError: field.clear,
+    onSuccess: bg.exec([
+      failure.disable,
+      () => router.invalidate({ filter: (match) => match.routeId === exerciseRoute.id, sync: true }),
+    ]),
+    onError: bg.exec([field.clear, failure.enable]),
   });
 
   /* v8 ignore next */
-  if (!exercise.actions.categoryRoleSet.available) return <ui.CategoryRoleIcon value={props.role} />;
+  if (!exercise.actions.categoryRoleSet.available) return <ui.CategoryRoleIcon value={category.role} />;
 
   return (
     <label
@@ -45,13 +49,13 @@ export function ExerciseCategoryRoleSet(props: ExerciseCategoryAssignment) {
       data-hover-color="neutral-100"
       data-position="relative"
       data-stack="x"
-      title={t("exercise.category.role.set.cta", { name: props.name })}
+      title={t("exercise.category.role.set.cta", { name: category.name })}
     >
-      <ui.CategoryRoleIcon value={props.role} />
+      <ui.CategoryRoleIcon value={category.role} />
       <ChevronDown data-size="xs" />
 
       <select
-        aria-label={t("exercise.category.role.set.cta", { name: props.name })}
+        aria-label={t("exercise.category.role.set.cta", { name: category.name })}
         data-cursor="pointer"
         data-inset="0"
         data-opacity="none"

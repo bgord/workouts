@@ -16,7 +16,6 @@ export const ExerciseAssignCategory =
     const requesterId = context.identity.authenticatedUserId();
     const exerciseId = v.parse(Exercises.VO.ExerciseId, body["exerciseId"]);
     const exerciseCategoryId = v.parse(Exercises.VO.ExerciseCategoryId, body["exerciseCategoryId"]);
-
     const role = v.parse(Exercises.VO.ExerciseCategoryRole, body["role"]);
 
     const command = bg.command(

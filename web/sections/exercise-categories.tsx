@@ -14,6 +14,7 @@ export function ExerciseCategories() {
   const action = exercise.actions.categoryAssign;
 
   const assignment = bg.useToggle({ name: "exercise-category-assign" });
+  const failure = bg.useToggle({ name: "exercise-category-change-failure" });
 
   const assigned = exercise.data.categories;
 
@@ -41,7 +42,8 @@ export function ExerciseCategories() {
           role: role.value,
         }),
       }),
-    onSuccess: bg.exec([exerciseCategoryId.clear, role.clear, refresh, assignment.disable]),
+    onSuccess: bg.exec([exerciseCategoryId.clear, role.clear, failure.disable, refresh, assignment.disable]),
+    onError: failure.disable,
   });
 
   if (!action.available) {
@@ -161,16 +163,22 @@ export function ExerciseCategories() {
         {assigned.map((category) => (
           <li key={category.id}>
             <ui.Chip {...ui.Gap.cluster}>
-              <ExerciseCategoryRoleSet {...category} />
+              <ExerciseCategoryRoleSet {...category} {...failure} />
               {category.name}
 
-              <ExerciseCategoryUnassign {...category} />
+              <ExerciseCategoryUnassign {...category} {...failure} />
             </ui.Chip>
           </li>
         ))}
 
         {assigned.length === 0 && <li data-color="neutral-500">{t("exercise.categories.empty")}</li>}
       </ul>
+
+      {failure.on && (
+        <output aria-live="assertive" data-tone="danger">
+          {t("exercise.category.assign.error")}
+        </output>
+      )}
     </div>
   );
 }

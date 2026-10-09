@@ -1,4 +1,4 @@
-// cSpell:ignore delts
+// cSpell:ignore delts unassigning
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -169,7 +169,7 @@ test.describe("Exercise - admin", () => {
     await expect(categories.getByText("Abs", { exact: true })).toBeHidden();
   });
 
-  test("restores the category role when setting it fails", async ({ page }) => {
+  test("shows the error when setting a category role fails", async ({ page }) => {
     const role = page.getByRole("combobox", { name: `Change role of ${fixtures.categories.chest.name}` });
 
     await page.route("**/api/exercises/category/role-set", (route) => route.fulfill({ status: 500 }));
@@ -177,11 +177,27 @@ test.describe("Exercise - admin", () => {
 
     await role.selectOption({ label: "Secondary" });
 
+    await expect(page.getByText("Could not change the categories")).toBeVisible();
     await expect(role).toHaveValue("primary");
 
     await page.reload();
 
     await expect(role).toHaveValue("primary");
+  });
+
+  test("shows the error when unassigning a category fails", async ({ page }) => {
+    const categories = page.getByRole("list", { name: "Categories" });
+
+    await page.route("**/api/exercises/category/unassign", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await page.getByRole("button", { name: `Unassign ${fixtures.categories.chest.name}` }).click();
+
+    await expect(page.getByText("Could not change the categories")).toBeVisible();
+
+    await page.reload();
+
+    await expect(categories.getByText(fixtures.categories.chest.name, { exact: true })).toBeVisible();
   });
 
   test("focuses the exercise name when renaming", async ({ page }) => {
