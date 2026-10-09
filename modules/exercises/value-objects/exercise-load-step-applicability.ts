@@ -1,3 +1,4 @@
+// cSpell:ignore Choosable
 import { ExerciseLoadStepOptions } from "./exercise-load-step-options";
 import type { ExerciseResistanceOptions } from "./exercise-resistance-options";
 

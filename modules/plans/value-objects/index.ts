@@ -22,5 +22,4 @@ export * from "./reps-range";
 export * from "./reps-scheme";
 export * from "./reps-scheme-options";
 export * from "./rir-target";
-export * from "./rir-target-limit";
 export * from "./sets";

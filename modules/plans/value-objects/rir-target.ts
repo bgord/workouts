@@ -1,6 +1,7 @@
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-import { RirTargetMax } from "./rir-target-limit";
+
+export const RirTargetMax = 5;
 
 export const RirTargetError = { Range: "rir.target.range" };
 

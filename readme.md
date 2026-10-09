@@ -245,8 +245,7 @@ modules/
 │       ├── body-part-id.ts
 │       ├── body-part-measured-on.ts
 │       ├── body-part-measurement-id.ts
-│       ├── body-part-measurement-import-max-size.ts
-│       ├── body-part-measurement-import-mime-registry.ts
+│       ├── body-part-measurement-import.ts
 │       ├── body-part-measurement.ts
 │       ├── body-part-name.ts
 │       ├── body-part-name.validation.ts
@@ -261,8 +260,7 @@ modules/
 │       ├── body-weight-history-month.validation.ts
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
-│       ├── body-weight-measurement-import-max-size.ts
-│       ├── body-weight-measurement-import-mime-registry.ts
+│       ├── body-weight-measurement-import.ts
 │       ├── body-weight-measurement.ts
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
@@ -423,7 +421,6 @@ modules/
 │       ├── reps-range.ts
 │       ├── reps-scheme-options.ts
 │       ├── reps-scheme.ts
-│       ├── rir-target-limit.ts
 │       ├── rir-target.ts
 │       └── sets.ts
 ├── preferences
@@ -595,7 +592,6 @@ modules/
         ├── logged-set.ts
         ├── progression-hold-reason-options.ts
         ├── reps.ts
-        ├── rir-limit.ts
         ├── rir.ts
         ├── set-number.ts
         ├── workout-draft-limit-for-owner.ts

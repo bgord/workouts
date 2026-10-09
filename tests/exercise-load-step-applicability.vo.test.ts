@@ -1,3 +1,4 @@
+// cSpell:ignore Choosable
 import { describe, expect, test } from "bun:test";
 import * as Exercises from "+exercises";
 

@@ -9,7 +9,6 @@ export * from "./logged-set-id";
 export * from "./progression-hold-reason-options";
 export * from "./reps";
 export * from "./rir";
-export * from "./rir-limit";
 export * from "./set-number";
 export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise";
