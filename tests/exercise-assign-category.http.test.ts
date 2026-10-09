@@ -9,7 +9,11 @@ import * as testcases from "./testcases";
 
 const url = "/api/exercises/category/assign";
 
-const payload = { exerciseId: mocks.exerciseId, exerciseCategoryId: mocks.exerciseCategoryId };
+const payload = {
+  exerciseId: mocks.exerciseId,
+  exerciseCategoryId: mocks.exerciseCategoryId,
+  role: mocks.exerciseCategoryRole,
+};
 
 describe(`POST ${url}`, async () => {
   const di = await bootstrap();
@@ -68,6 +72,40 @@ describe(`POST ${url}`, async () => {
     );
 
     await testcases.assertErrorResponse(response, 400, "uuid.type");
+  });
+
+  test("validation - role - missing", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({ exerciseId: mocks.exerciseId, exerciseCategoryId: mocks.exerciseCategoryId }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "exercise.category.role.invalid");
+  });
+
+  test("validation - role - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          exerciseId: mocks.exerciseId,
+          exerciseCategoryId: mocks.exerciseCategoryId,
+          role: "invalid",
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "exercise.category.role.invalid");
   });
 
   test("ExerciseExists", async () => {

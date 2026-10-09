@@ -60,6 +60,9 @@ export const anotherExerciseCategoryId = v.parse(
 );
 export const anotherExerciseCategoryName = v.parse(Exercises.VO.ExerciseCategoryName, "Chest Upper");
 
+export const exerciseCategoryRole = Exercises.VO.ExerciseCategoryRoleOptions.primary;
+export const anotherExerciseCategoryRole = Exercises.VO.ExerciseCategoryRoleOptions.secondary;
+
 export const exerciseCategory: Exercises.VO.ExerciseCategory = {
   id: exerciseCategoryId,
   name: exerciseCategoryName,
@@ -70,9 +73,19 @@ export const anotherExerciseCategory: Exercises.VO.ExerciseCategory = {
   name: anotherExerciseCategoryName,
 };
 
+export const exerciseCategoryAssignment: Exercises.VO.ExerciseCategoryAssignment = {
+  ...exerciseCategory,
+  role: exerciseCategoryRole,
+};
+
+export const anotherExerciseCategoryAssignment: Exercises.VO.ExerciseCategoryAssignment = {
+  ...anotherExerciseCategory,
+  role: anotherExerciseCategoryRole,
+};
+
 export const exerciseWithCategories: Exercises.VO.ExerciseWithCategories = {
   ...exercise,
-  categories: [exerciseCategory],
+  categories: [exerciseCategoryAssignment],
 };
 
 export const exerciseListResponse: Exercises.Queries.ExerciseListResponse = {
@@ -266,10 +279,10 @@ export const GenericExerciseCategoryAssignedEvent = {
   correlationId,
   createdAt: T0.ms,
   stream: exerciseStream,
-  version: 1,
+  version: 2,
   commit,
   name: "EXERCISE_CATEGORY_ASSIGNED_EVENT",
-  payload: { exerciseId, exerciseCategoryId, requesterId: Auth.VO.ADMIN_USER_ID },
+  payload: { exerciseId, exerciseCategoryId, role: exerciseCategoryRole, requesterId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
 
 export const GenericExerciseCategoryUnassignedEvent = {

@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import { ExerciseCategoryId } from "../value-objects/exercise-category-id";
+import { ExerciseCategoryRole } from "../value-objects/exercise-category-role";
 import { ExerciseId } from "../value-objects/exercise-id";
 
 // Stryker disable next-line StringLiteral
@@ -13,6 +14,7 @@ export const ExerciseAssignCategoryCommand = v.object({
   payload: v.object({
     exerciseId: ExerciseId,
     exerciseCategoryId: ExerciseCategoryId,
+    role: ExerciseCategoryRole,
     requesterId: Auth.VO.UserId,
   }),
 });

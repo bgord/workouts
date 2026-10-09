@@ -45,6 +45,7 @@ export const handleExerciseAssignCategoryCommand =
       {
         exerciseId: command.payload.exerciseId,
         exerciseCategoryId: command.payload.exerciseCategoryId,
+        role: command.payload.role,
         requesterId: command.payload.requesterId,
       },
       deps,

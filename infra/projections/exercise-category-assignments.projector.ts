@@ -38,6 +38,7 @@ export class ExerciseCategoryAssignmentsProjector {
     await db.insert(Schema.exerciseCategoryAssignments).values({
       exerciseId: event.payload.exerciseId,
       exerciseCategoryId: event.payload.exerciseCategoryId,
+      role: event.payload.role,
       createdAt: event.createdAt,
     });
   }
