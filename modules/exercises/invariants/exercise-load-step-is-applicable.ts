@@ -10,7 +10,7 @@ type ExerciseLoadStepIsApplicableConfigType = {
 
 class ExerciseLoadStepIsApplicableFactory extends bg.Invariant<ExerciseLoadStepIsApplicableConfigType> {
   passes(config: ExerciseLoadStepIsApplicableConfigType) {
-    return VO.ExerciseLoadStepApplicability[config.resistance].includes(config.loadStep);
+    return VO.ExerciseLoadStepApplicability.isApplicable(config.resistance, config.loadStep);
   }
 
   // Stryker disable next-line StringLiteral

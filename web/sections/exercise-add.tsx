@@ -4,13 +4,13 @@ import { ArrowRight, ImageUp, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseLateralityOptions } from "../../modules/exercises/value-objects/exercise-laterality-options";
+import { ExerciseLoadStepApplicability } from "../../modules/exercises/value-objects/exercise-load-step-applicability";
 import type { ExerciseLoadStepOptions } from "../../modules/exercises/value-objects/exercise-load-step-options";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import * as ui from "../components";
 import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { catalogRoute } from "../router";
-import { ExerciseLoadStepChoice } from "../services/exercise-load-step-choice";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
 const maxSizeBytes = 10_000_000;
@@ -83,7 +83,7 @@ export function ExerciseAdd() {
   const image = bg.useFile("exercise-image", { mimeTypes, maxSizeBytes });
   const Resistance = ResistanceKit[resistance.value ?? Form.resistance.field.defaultValue];
   const Laterality = LateralityKit[laterality.value ?? Form.laterality.field.defaultValue];
-  const loadStepValue = ExerciseLoadStepChoice.keep(
+  const loadStepValue = ExerciseLoadStepApplicability.keep(
     resistance.value ?? Form.resistance.field.defaultValue,
     loadStep.value,
   );
@@ -215,7 +215,9 @@ export function ExerciseAdd() {
 
             <ui.ExerciseLoadStepPicker
               field={loadStep}
-              options={ExerciseLoadStepChoice.options(resistance.value ?? Form.resistance.field.defaultValue)}
+              options={ExerciseLoadStepApplicability.options(
+                resistance.value ?? Form.resistance.field.defaultValue,
+              )}
               value={loadStepValue}
             />
 

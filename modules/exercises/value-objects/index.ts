@@ -19,7 +19,6 @@ export * from "./exercise-laterality";
 export * from "./exercise-laterality-options";
 export * from "./exercise-load-step";
 export * from "./exercise-load-step-applicability";
-export * from "./exercise-load-step-default";
 export * from "./exercise-load-step-options";
 export * from "./exercise-name";
 export * from "./exercise-resistance";

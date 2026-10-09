@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Form } from "../../app/services/exercise-add-form";
+import { ExerciseLoadStepApplicability } from "../../modules/exercises/value-objects/exercise-load-step-applicability";
 import type { ExerciseLoadStepOptions } from "../../modules/exercises/value-objects/exercise-load-step-options";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
-import { ExerciseLoadStepChoice } from "../services/exercise-load-step-choice";
 
 export function ExerciseLoadStep() {
   const t = bg.useTranslations();
@@ -51,7 +51,7 @@ export function ExerciseLoadStep() {
           }
           disabled={mutation.isLoading}
           field={loadStep}
-          options={ExerciseLoadStepChoice.options(exercise.data.resistance)}
+          options={ExerciseLoadStepApplicability.options(exercise.data.resistance)}
           value={loadStep.value ?? exercise.data.loadStep}
         />
 
