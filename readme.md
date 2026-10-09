@@ -135,9 +135,12 @@ modules/
 │   └── value-objects
 │       ├── exercise-catalog-entry.ts
 │       ├── exercise-catalog.ts
+│       ├── exercise-category-assignment.ts
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
 │       ├── exercise-category-name.validation.ts
+│       ├── exercise-category-role-options.ts
+│       ├── exercise-category-role.ts
 │       ├── exercise-category-with-exercise-names.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
