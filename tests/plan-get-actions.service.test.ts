@@ -85,6 +85,17 @@ describe("PlanGetActions", () => {
     expect(actions.calculate().coverageView).toEqual(mocks.actionUnavailable);
   });
 
+  test("draft - partial coverage", () => {
+    const actions = new Plans.Services.PlanGetActions({
+      status: Plans.VO.PlanStatusEnum.draft,
+      sections: [],
+      activeCount: tools.Int.nonNegative(0),
+      coverage: [...mocks.planCategoryCoverageEmpty, ...mocks.planCategoryCoverage],
+    });
+
+    expect(actions.calculate().coverageView).toEqual(mocks.actionAvailable);
+  });
+
   test("finalized", () => {
     const actions = new Plans.Services.PlanGetActions({
       status: Plans.VO.PlanStatusEnum.finalized,

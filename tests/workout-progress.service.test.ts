@@ -28,7 +28,7 @@ describe("WorkoutProgress", () => {
 
   test("calculate - some exercises logged", () => {
     const progress = new Workouts.Services.WorkoutProgress({
-      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
+      exercises: [mocks.workoutExerciseWithoutTarget, mocks.workoutExercise],
     });
 
     expect(progress.calculate()).toEqual({
@@ -40,13 +40,17 @@ describe("WorkoutProgress", () => {
 
   test("calculate - all exercises logged", () => {
     const progress = new Workouts.Services.WorkoutProgress({
-      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTargetLogged],
+      exercises: [
+        mocks.workoutExerciseWithoutTargetLogged,
+        mocks.workoutExerciseWithoutTargetLogged,
+        mocks.workoutExercise,
+      ],
     });
 
     expect(progress.calculate()).toEqual({
-      logged: tools.Int.nonNegative(2),
-      total: tools.Int.nonNegative(2),
-      next: mocks.anotherWorkoutExerciseId,
+      logged: tools.Int.nonNegative(3),
+      total: tools.Int.nonNegative(3),
+      next: mocks.workoutExerciseId,
     });
   });
 });
