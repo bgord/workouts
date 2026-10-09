@@ -5,6 +5,8 @@ export type PlanCategoryCoverageEntry = {
   primarySets: number;
   secondarySets: number;
   total: number;
+  primaryShare: number;
+  secondaryShare: number;
 };
 
 export type PlanCategoryCoverage = ReadonlyArray<PlanCategoryCoverageEntry>;

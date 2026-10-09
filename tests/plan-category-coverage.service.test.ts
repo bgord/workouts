@@ -10,8 +10,22 @@ describe("PlanCategoryCoverage", () => {
     });
 
     expect(coverage.calculate()).toEqual([
-      { category: mocks.exerciseCategory, primarySets: 0, secondarySets: 0, total: 0 },
-      { category: mocks.anotherExerciseCategory, primarySets: 0, secondarySets: 0, total: 0 },
+      {
+        category: mocks.exerciseCategory,
+        primarySets: 0,
+        secondarySets: 0,
+        total: 0,
+        primaryShare: 0,
+        secondaryShare: 0,
+      },
+      {
+        category: mocks.anotherExerciseCategory,
+        primarySets: 0,
+        secondarySets: 0,
+        total: 0,
+        primaryShare: 0,
+        secondaryShare: 0,
+      },
     ]);
   });
 
@@ -22,8 +36,22 @@ describe("PlanCategoryCoverage", () => {
     });
 
     expect(coverage.calculate()).toEqual([
-      { category: mocks.exerciseCategory, primarySets: 3, secondarySets: 0, total: 3 },
-      { category: mocks.anotherExerciseCategory, primarySets: 0, secondarySets: 0, total: 0 },
+      {
+        category: mocks.exerciseCategory,
+        primarySets: 3,
+        secondarySets: 0,
+        total: 3,
+        primaryShare: 1,
+        secondaryShare: 0,
+      },
+      {
+        category: mocks.anotherExerciseCategory,
+        primarySets: 0,
+        secondarySets: 0,
+        total: 0,
+        primaryShare: 0,
+        secondaryShare: 0,
+      },
     ]);
   });
 
@@ -34,8 +62,22 @@ describe("PlanCategoryCoverage", () => {
     });
 
     expect(coverage.calculate()).toEqual([
-      { category: mocks.anotherExerciseCategory, primarySets: 0, secondarySets: 3, total: 1.5 },
-      { category: mocks.exerciseCategory, primarySets: 0, secondarySets: 0, total: 0 },
+      {
+        category: mocks.anotherExerciseCategory,
+        primarySets: 0,
+        secondarySets: 3,
+        total: 1.5,
+        primaryShare: 0,
+        secondaryShare: 1,
+      },
+      {
+        category: mocks.exerciseCategory,
+        primarySets: 0,
+        secondarySets: 0,
+        total: 0,
+        primaryShare: 0,
+        secondaryShare: 0,
+      },
     ]);
   });
 
@@ -52,7 +94,14 @@ describe("PlanCategoryCoverage", () => {
     });
 
     expect(coverage.calculate()).toEqual([
-      { category: mocks.exerciseCategory, primarySets: 3, secondarySets: 4, total: 5 },
+      {
+        category: mocks.exerciseCategory,
+        primarySets: 3,
+        secondarySets: 4,
+        total: 5,
+        primaryShare: 0.6,
+        secondaryShare: 0.4,
+      },
     ]);
   });
 
@@ -66,7 +115,14 @@ describe("PlanCategoryCoverage", () => {
     });
 
     expect(coverage.calculate()).toEqual([
-      { category: mocks.exerciseCategory, primarySets: 7, secondarySets: 0, total: 7 },
+      {
+        category: mocks.exerciseCategory,
+        primarySets: 7,
+        secondarySets: 0,
+        total: 7,
+        primaryShare: 1,
+        secondaryShare: 0,
+      },
     ]);
   });
 
@@ -85,8 +141,22 @@ describe("PlanCategoryCoverage", () => {
     });
 
     expect(coverage.calculate()).toEqual([
-      { category: mocks.anotherExerciseCategory, primarySets: 3, secondarySets: 0, total: 3 },
-      { category: mocks.exerciseCategory, primarySets: 0, secondarySets: 3, total: 1.5 },
+      {
+        category: mocks.anotherExerciseCategory,
+        primarySets: 3,
+        secondarySets: 0,
+        total: 3,
+        primaryShare: 1,
+        secondaryShare: 0,
+      },
+      {
+        category: mocks.exerciseCategory,
+        primarySets: 0,
+        secondarySets: 3,
+        total: 1.5,
+        primaryShare: 0,
+        secondaryShare: 0.5,
+      },
     ]);
   });
 });

@@ -289,7 +289,14 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
 };
 
 export const planCategoryCoverage: Plans.VO.PlanCategoryCoverage = [
-  { category: exerciseCategory, primarySets: 3, secondarySets: 0, total: 3 },
+  {
+    category: exerciseCategory,
+    primarySets: 3,
+    secondarySets: 0,
+    total: 3,
+    primaryShare: 1,
+    secondaryShare: 0,
+  },
 ];
 
 export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
