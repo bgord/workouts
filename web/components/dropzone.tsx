@@ -16,11 +16,11 @@ export function Dropzone(props: React.JSX.IntrinsicElements["label"] & DropzoneF
       data-color="neutral-400"
       data-cross="center"
       data-cursor={file.isSelected ? undefined : "pointer"}
+      data-focus-within="ring"
       data-fs="xs"
       data-hover-bc={file.isSelected ? undefined : "brand-500"}
       data-main="center"
       data-stack="y"
-      tabIndex={0}
       {...Spacing.surface}
       {...Gap.cluster}
       {...file.label.props}
@@ -35,11 +35,11 @@ export function FileButton(props: React.JSX.IntrinsicElements["label"] & Dropzon
   return (
     <label
       className="c-button"
+      data-focus-within="ring"
       data-main="center"
       data-minw="0"
       data-stack="x"
       data-variant="secondary"
-      tabIndex={0}
       {...Gap.cluster}
       {...file.label.props}
       {...rest}
