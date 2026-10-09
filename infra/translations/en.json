@@ -82,6 +82,7 @@
   "exercise.category.assign.cta": "Assign",
   "exercise.category.assign.error": "Could not change the categories",
   "exercise.category.assign.label": "Category to assign",
+  "exercise.category.assign.role.label": "Role",
   "exercise.category.delete.cta": "Delete",
   "exercise.category.delete.error": "Could not delete the category",
   "exercise.category.delete.header": "Delete category",

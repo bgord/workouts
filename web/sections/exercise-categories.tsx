@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { Check, Plus, X } from "lucide-react";
+import { ExerciseCategoryRoleOptions } from "../../modules/exercises/value-objects/exercise-category-role-options";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
@@ -20,6 +21,11 @@ export function ExerciseCategories() {
     defaultValue: exercise.assignableCategories[0]?.id ?? "",
   });
 
+  const role = bg.useTextField<ExerciseCategoryRoleOptions>({
+    name: "exercise-category-role",
+    defaultValue: ExerciseCategoryRoleOptions.primary,
+  });
+
   const refresh = () =>
     router.invalidate({ filter: (match) => match.routeId === exerciseRoute.id, sync: true });
 
@@ -31,9 +37,10 @@ export function ExerciseCategories() {
         body: JSON.stringify({
           exerciseId: exercise.data.id,
           exerciseCategoryId: exerciseCategoryId.value,
+          role: role.value,
         }),
       }),
-    onSuccess: bg.exec([exerciseCategoryId.clear, refresh, assignment.disable]),
+    onSuccess: bg.exec([exerciseCategoryId.clear, role.clear, refresh, assignment.disable]),
   });
 
   if (!action.available) {
@@ -58,7 +65,13 @@ export function ExerciseCategories() {
   return (
     <div data-stack="y" {...ui.Gap.cluster}>
       <div data-stack="y" {...ui.Gap.inline}>
-        <div data-main="between" data-stack="x" {...bg.Rhythm().times(3).style.minHeight} {...ui.Gap.related}>
+        <div
+          data-main="between"
+          data-md-wrap="wrap"
+          data-stack="x"
+          {...bg.Rhythm().times(3).style.minHeight}
+          {...ui.Gap.related}
+        >
           <h3>{t("exercise.categories.header")}</h3>
 
           {assignment.off && (
@@ -79,42 +92,58 @@ export function ExerciseCategories() {
           {action.enabled && assignment.on && (
             <form
               aria-busy={assign.isLoading}
-              data-stack="x"
-              data-wrap="wrap"
+              data-grow="1"
+              data-md-width="100%"
+              data-minw="0"
+              data-stack="y"
               onSubmit={assign.handleSubmit}
               {...ui.Gap.inline}
               {...assignment.props.target}
             >
-              <div data-md-grow="1">
-                <ui.Select
-                  aria-label={t("exercise.category.assign.label")}
-                  {...exerciseCategoryId.input.props}
+              <div data-stack="x" {...ui.Gap.inline}>
+                <div data-grow="1" data-minw="0" data-stack="x">
+                  <ui.Select
+                    aria-label={t("exercise.category.assign.label")}
+                    data-minw="0"
+                    data-width="100%"
+                    {...exerciseCategoryId.input.props}
+                  >
+                    {exercise.assignableCategories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </ui.Select>
+                </div>
+
+                <div data-shrink="0">
+                  <ui.Select aria-label={t("exercise.category.assign.role.label")} {...role.input.props}>
+                    {Object.values(ExerciseCategoryRoleOptions).map((option) => (
+                      <option key={option} value={option}>
+                        {t(`exercise.category.role.${option}`)}
+                      </option>
+                    ))}
+                  </ui.Select>
+                </div>
+
+                <ui.IconButton
+                  aria-label={t("exercise.category.assign.cta")}
+                  disabled={assign.isLoading}
+                  title={t("exercise.category.assign.cta")}
+                  tone="positive"
+                  type="submit"
                 >
-                  {exercise.assignableCategories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </ui.Select>
+                  <Check data-size="sm" />
+                </ui.IconButton>
+
+                <ui.IconButton
+                  aria-label={t("app.cancel")}
+                  onClick={bg.exec([exerciseCategoryId.clear, role.clear, assign.reset, assignment.disable])}
+                  title={t("app.cancel")}
+                >
+                  <X data-size="sm" />
+                </ui.IconButton>
               </div>
-
-              <ui.IconButton
-                aria-label={t("exercise.category.assign.cta")}
-                disabled={assign.isLoading}
-                title={t("exercise.category.assign.cta")}
-                tone="positive"
-                type="submit"
-              >
-                <Check data-size="sm" />
-              </ui.IconButton>
-
-              <ui.IconButton
-                aria-label={t("app.cancel")}
-                onClick={bg.exec([exerciseCategoryId.clear, assign.reset, assignment.disable])}
-                title={t("app.cancel")}
-              >
-                <X data-size="sm" />
-              </ui.IconButton>
 
               {assign.isError && (
                 <output aria-live="assertive" data-tone="danger" data-width="100%">

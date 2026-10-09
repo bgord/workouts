@@ -82,6 +82,7 @@
   "exercise.category.assign.cta": "Przypisz",
   "exercise.category.assign.error": "Nie udało się zmienić kategorii",
   "exercise.category.assign.label": "Kategoria do przypisania",
+  "exercise.category.assign.role.label": "Rola",
   "exercise.category.delete.cta": "Usuń",
   "exercise.category.delete.error": "Nie udało się usunąć kategorii",
   "exercise.category.delete.header": "Usuń kategorię",
