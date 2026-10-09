@@ -119,6 +119,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseAssignCategory(deps)),
   );
   exercises.post(
+    "/category/role-set",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseCategoryRoleSet(deps)),
+  );
+  exercises.post(
     "/category/unassign",
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Exercises.ExerciseUnassignCategory(deps)),
