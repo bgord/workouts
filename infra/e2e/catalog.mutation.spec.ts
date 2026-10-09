@@ -300,14 +300,14 @@ test.describe("Catalog - admin", () => {
     await page.goto(`/catalog/exercise/${fixtures.exercises.bicepsCurlBarStraight.id}`);
 
     await page.getByRole("button", { name: "Change load step: 2.5 kg" }).click();
-    await page.getByRole("group", { name: "Load step" }).getByText("Dumbbell rack", { exact: true }).click();
+    await page.getByRole("group", { name: "Load step" }).getByText("Dumbbells", { exact: true }).click();
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "Change load step: Dumbbell rack" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Change load step: Dumbbells" })).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "Change load step: Dumbbell rack" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Change load step: Dumbbells" })).toBeVisible();
   });
 
   test("changes the exercise image", async ({ page }) => {
