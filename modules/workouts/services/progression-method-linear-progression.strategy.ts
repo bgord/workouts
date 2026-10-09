@@ -27,11 +27,12 @@ export class ProgressionMethodLinearProgressionStrategy implements ProgressionMe
   }
 
   private regress(): VO.ExerciseTargetType | undefined {
-    const load = this.deps.LoadStep.decrease(this.config.last.load);
+    const { last, prescription } = this.config;
+    const load = this.deps.LoadStep.decrease(last.load);
 
     if (load === undefined) return undefined;
 
-    return v.parse(VO.ExerciseTarget, { ...this.config.last, load });
+    return v.parse(VO.ExerciseTarget, { ...last, reps: Math.max(last.reps, prescription.reps.min), load });
   }
 
   private progress(): VO.ExerciseTargetType | undefined {

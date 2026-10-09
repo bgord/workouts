@@ -94,7 +94,7 @@ describe("ProgressionMethodRirGateStrategy", () => {
       last: mocks.exercisePerformanceWeakestSet,
       regress: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 2),
-        reps: v.parse(Workouts.VO.Reps, 5),
+        reps: v.parse(Workouts.VO.Reps, 8),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
       hold: Workouts.VO.ProgressionHoldReasonOptions.reps_below_target,

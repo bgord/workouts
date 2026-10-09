@@ -33,10 +33,10 @@ test.describe("Plan - builder", () => {
     expect(copied).toContain(fixtures.builder.plan.description);
     expect(copied).toContain(`## ${fixtures.builder.plan.sections.push.name}`);
     expect(copied).toContain(
-      `- ${fixtures.exercises.superHorizontalBenchPress.name}: 4 x 5, double_progression`,
+      `- ${fixtures.exercises.superHorizontalBenchPress.name}: 4 x 5, double progression`,
     );
     expect(copied).toContain(
-      `- ${fixtures.exercises.overheadPressSeatedDumbbells.name}: 3 x 8-10, double_progression`,
+      `- ${fixtures.exercises.overheadPressSeatedDumbbells.name}: 3 x 8-10, double progression`,
     );
   });
 

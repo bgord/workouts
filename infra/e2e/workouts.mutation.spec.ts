@@ -377,6 +377,48 @@ test.describe("Workouts - athlete-mutation", () => {
     await expect(row.getByRole("button", { name: "Edit target: 4×7 30 kg", exact: true })).toBeVisible();
   });
 
+  test("regresses the linear progression to the target reps", async ({ page }) => {
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.tricepsExtensionOverheadCable.name,
+      exact: true,
+    });
+    const suggestion = row.getByRole("group", {
+      name: "Based on the last session · Linear progression",
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
+
+    await page.getByRole("button", { name: "Add exercise" }).click();
+    await page
+      .getByRole("searchbox", { name: "Exercise" })
+      .fill(fixtures.exercises.tricepsExtensionOverheadCable.name);
+    await page.getByRole("radio", { name: fixtures.exercises.tricepsExtensionOverheadCable.name }).click();
+    await page.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await page.getByRole("spinbutton", { name: "Reps", exact: true }).fill("12");
+    await page.getByRole("spinbutton", { name: "Max reps", exact: true }).fill("12");
+    await page
+      .getByRole("group", { name: "Progression" })
+      .getByText("Linear progression", { exact: true })
+      .click();
+    await page
+      .getByRole("dialog", { name: "Add exercise" })
+      .getByRole("button", { name: "Add exercise" })
+      .click();
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+
+    await expect(suggestion.getByText("Below 12 reps last time, repeat it", { exact: true })).toBeVisible();
+
+    await suggestion.getByRole("button", { name: "−2.5 kg", exact: true }).click();
+    await row.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×12 17.5 kg", exact: true })).toBeVisible();
+
+    await page.reload();
+
+    await expect(row.getByRole("button", { name: "Edit target: 3×12 17.5 kg", exact: true })).toBeVisible();
+  });
+
   test("shows the error when starting the workout fails", async ({ page }) => {
     await page.route("**/api/workouts/*/start", (route) => route.fulfill({ status: 500 }));
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
