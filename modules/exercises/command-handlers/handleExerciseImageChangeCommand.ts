@@ -6,8 +6,7 @@ import { ExerciseImageChangedEvent } from "../events/EXERCISE_IMAGE_CHANGED_EVEN
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
-import { ExerciseImageKeyFactory } from "../value-objects/exercise-image-key";
-import { ExerciseImageSide } from "../value-objects/exercise-image-side";
+import { ExerciseImage } from "../value-objects/exercise-image";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -48,10 +47,10 @@ export const handleExerciseImageChangeCommand =
       strategy: "in_place",
       input: temporary,
       to: v.parse(tools.Extension, "webp"),
-      maxSide: ExerciseImageSide,
+      maxSide: ExerciseImage.Side,
     });
 
-    const key = ExerciseImageKeyFactory.stable(command.payload.id);
+    const key = ExerciseImage.key(command.payload.id);
     const object = await deps.RemoteFileStorage.putFromPath({ key, path: final });
     await deps.TemporaryFile.cleanup(final.getFilename());
 

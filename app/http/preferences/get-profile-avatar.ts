@@ -10,7 +10,7 @@ export const GetProfileAvatar =
 
     const userId = context.identity.authenticatedUserId();
 
-    const key = Preferences.VO.ProfileAvatarKeyFactory.stable(userId);
+    const key = Preferences.VO.ProfileAvatar.key(userId);
 
     const head = await deps.RemoteFileStorage.head(key);
     if (!head.exists) return new Response(null, { status: 404 });

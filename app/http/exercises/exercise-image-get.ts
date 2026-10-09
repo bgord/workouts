@@ -12,7 +12,7 @@ export const ExerciseImageGet =
 
     const id = v.parse(Exercises.VO.ExerciseId, params["exerciseId"]);
 
-    const key = Exercises.VO.ExerciseImageKeyFactory.stable(id);
+    const key = Exercises.VO.ExerciseImage.key(id);
 
     const head = await deps.RemoteFileStorage.head(key);
     if (!head.exists) return new Response(null, { status: 404 });

@@ -9,8 +9,8 @@ export function createHashFile(deps: Dependencies) {
   return new bg.HashFileSha256Adapter({
     HashBytes: new bg.HashBytesSha256Strategy(),
     MimeRegistry: new tools.MimeRegistry([
-      ...Preferences.VO.ProfileAvatarMimeRegistry.entries,
-      ...Exercises.VO.ExerciseImageMimeRegistry.entries,
+      ...Preferences.VO.ProfileAvatar.MimeRegistry.entries,
+      ...Exercises.VO.ExerciseImage.MimeRegistry.entries,
     ]),
     FileReaderRaw: new bg.FileReaderRawAdapter(),
     ...deps,

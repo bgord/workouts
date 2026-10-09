@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as Preferences from "+preferences";
 import { ProfileAvatarRemovedEvent } from "../events/PROFILE_AVATAR_REMOVED_EVENT";
-import { ProfileAvatarKeyFactory } from "../value-objects/profile-avatar-key";
+import { ProfileAvatar } from "../value-objects/profile-avatar";
 
 type Dependencies = {
   EventStore: bg.EventStorePort<Preferences.Events.ProfileAvatarRemovedEventType>;
@@ -13,7 +13,7 @@ type Dependencies = {
 
 export const handleRemoveProfileAvatarCommand =
   (deps: Dependencies) => async (command: Preferences.Commands.RemoveProfileAvatarCommandType) => {
-    const key = ProfileAvatarKeyFactory.stable(command.payload.userId);
+    const key = ProfileAvatar.key(command.payload.userId);
 
     await deps.RemoteFileStorage.delete(key);
 

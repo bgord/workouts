@@ -7,10 +7,10 @@ type ExerciseImageConstraintsConfigType = bg.ImageInfoType;
 
 class ExerciseImageConstraintsFactory extends bg.Invariant<ExerciseImageConstraintsConfigType> {
   passes(config: ExerciseImageConstraintsConfigType) {
-    if (config.height > VO.ExerciseImageMaxSide) return false;
-    if (config.width > VO.ExerciseImageMaxSide) return false;
-    if (config.size.isGreaterThan(VO.ExerciseImageMaxSize)) return false;
-    return VO.ExerciseImageMimeRegistry.hasMime(config.mime);
+    if (config.height > VO.ExerciseImage.MaxSide) return false;
+    if (config.width > VO.ExerciseImage.MaxSide) return false;
+    if (config.size.isGreaterThan(VO.ExerciseImage.MaxSize)) return false;
+    return VO.ExerciseImage.MimeRegistry.hasMime(config.mime);
   }
 
   message = "exercise.image.constraints";

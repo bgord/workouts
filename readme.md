@@ -150,11 +150,7 @@ modules/
 │       ├── exercise-description.ts
 │       ├── exercise-description.validation.ts
 │       ├── exercise-id.ts
-│       ├── exercise-image-key.ts
-│       ├── exercise-image-max-side.ts
-│       ├── exercise-image-max-size.ts
-│       ├── exercise-image-mime-registry.ts
-│       ├── exercise-image-side.ts
+│       ├── exercise-image.ts
 │       ├── exercise-laterality-options.ts
 │       ├── exercise-laterality.ts
 │       ├── exercise-load-step-applicability.ts
@@ -423,13 +419,11 @@ modules/
 │       ├── plan-summary.ts
 │       ├── progression-method-applicability.ts
 │       ├── progression-method-options.ts
-│       ├── progression-method-reps-applicability.ts
 │       ├── progression-method.ts
 │       ├── reps-range.ts
 │       ├── reps-scheme-options.ts
 │       ├── reps-scheme.ts
 │       ├── rir-target-limit.ts
-│       ├── rir-target-reps-applicability.ts
 │       ├── rir-target.ts
 │       └── sets.ts
 ├── preferences
@@ -457,11 +451,7 @@ modules/
 │   ├── queries
 │   │   ├── get-weekly-summary.ts
 │   └── value-objects
-│       ├── profile-avatar-key.ts
-│       ├── profile-avatar-max-side.ts
-│       ├── profile-avatar-max-size.ts
-│       ├── profile-avatar-mime-registry.ts
-│       ├── profile-avatar-side.ts
+│       ├── profile-avatar.ts
 │       ├── weekly-summary-options.ts
 │       └── weekly-summary.ts
 ├── statistics

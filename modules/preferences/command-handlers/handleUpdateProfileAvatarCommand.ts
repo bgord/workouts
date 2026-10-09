@@ -4,8 +4,7 @@ import * as v from "valibot";
 import type * as Preferences from "+preferences";
 import { ProfileAvatarUpdatedEvent } from "../events/PROFILE_AVATAR_UPDATED_EVENT";
 import { ProfileAvatarConstraints } from "../invariants/profile-avatar-constraints";
-import { ProfileAvatarKeyFactory } from "../value-objects/profile-avatar-key";
-import { ProfileAvatarSide } from "../value-objects/profile-avatar-side";
+import { ProfileAvatar } from "../value-objects/profile-avatar";
 
 type Dependencies = {
   EventStore: bg.EventStorePort<Preferences.Events.ProfileAvatarUpdatedEventType>;
@@ -34,10 +33,10 @@ export const handleUpdateProfileAvatarCommand =
       strategy: "in_place",
       input: temporary,
       to: extension,
-      maxSide: ProfileAvatarSide,
+      maxSide: ProfileAvatar.Side,
     });
 
-    const key = ProfileAvatarKeyFactory.stable(command.payload.userId);
+    const key = ProfileAvatar.key(command.payload.userId);
     const object = await deps.RemoteFileStorage.putFromPath({ key, path: final });
     await deps.TemporaryFile.cleanup(final.getFilename());
 

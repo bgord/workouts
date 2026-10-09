@@ -13,8 +13,6 @@ describe("ProfileAvatarEraser", async () => {
 
     await policy.onAccountDeletedEvent(mocks.GenericAccountDeletedEvent);
 
-    expect(remoteFileStorageDelete).toHaveBeenCalledWith(
-      Preferences.VO.ProfileAvatarKeyFactory.stable(mocks.userId),
-    );
+    expect(remoteFileStorageDelete).toHaveBeenCalledWith(Preferences.VO.ProfileAvatar.key(mocks.userId));
   });
 });

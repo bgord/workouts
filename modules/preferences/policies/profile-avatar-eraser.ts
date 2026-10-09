@@ -1,6 +1,6 @@
 import type * as bg from "@bgord/bun";
 import * as Auth from "+auth";
-import { ProfileAvatarKeyFactory } from "../value-objects/profile-avatar-key";
+import { ProfileAvatar } from "../value-objects/profile-avatar";
 
 type AcceptedEvent = Auth.Events.AccountDeletedEventType;
 
@@ -21,6 +21,6 @@ export class ProfileAvatarEraser {
   // Stryker restore all
 
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
-    await this.deps.RemoteFileStorage.delete(ProfileAvatarKeyFactory.stable(event.payload.userId));
+    await this.deps.RemoteFileStorage.delete(ProfileAvatar.key(event.payload.userId));
   }
 }

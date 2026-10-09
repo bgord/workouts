@@ -8,8 +8,8 @@ type Dependencies = { FileInspection: bg.FileInspectionPort };
 export function createImageInfo(deps: Dependencies): bg.ImageInfoPort {
   return new bg.ImageInfoAdapter({
     MimeRegistry: new tools.MimeRegistry([
-      ...Preferences.VO.ProfileAvatarMimeRegistry.entries,
-      ...Exercises.VO.ExerciseImageMimeRegistry.entries,
+      ...Preferences.VO.ProfileAvatar.MimeRegistry.entries,
+      ...Exercises.VO.ExerciseImage.MimeRegistry.entries,
     ]),
     ...deps,
   });

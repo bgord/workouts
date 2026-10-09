@@ -55,8 +55,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     new bg.FileUploaderHonoMiddleware(
       {
         field: "file",
-        maxSize: Exercises.VO.ExerciseImageMaxSize,
-        MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
+        maxSize: Exercises.VO.ExerciseImage.MaxSize,
+        MimeRegistry: Exercises.VO.ExerciseImage.MimeRegistry,
       },
       { FileTypeDetector: new bg.FileTypeDetectorMagicBytesStrategy() },
     ).handle(),
@@ -80,8 +80,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     new bg.FileUploaderHonoMiddleware(
       {
         field: "file",
-        maxSize: Exercises.VO.ExerciseImageMaxSize,
-        MimeRegistry: Exercises.VO.ExerciseImageMimeRegistry,
+        maxSize: Exercises.VO.ExerciseImage.MaxSize,
+        MimeRegistry: Exercises.VO.ExerciseImage.MimeRegistry,
       },
       { FileTypeDetector: new bg.FileTypeDetectorMagicBytesStrategy() },
     ).handle(),
@@ -521,8 +521,8 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     new bg.FileUploaderHonoMiddleware(
       {
         field: "file",
-        maxSize: Preferences.VO.ProfileAvatarMaxSize,
-        MimeRegistry: Preferences.VO.ProfileAvatarMimeRegistry,
+        maxSize: Preferences.VO.ProfileAvatar.MaxSize,
+        MimeRegistry: Preferences.VO.ProfileAvatar.MimeRegistry,
       },
       { FileTypeDetector: new bg.FileTypeDetectorMagicBytesStrategy() },
     ).handle(),
