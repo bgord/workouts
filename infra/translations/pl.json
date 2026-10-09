@@ -98,6 +98,7 @@
   "exercise.category.rename.label": "Nazwa kategorii",
   "exercise.category.role.primary": "Główna",
   "exercise.category.role.secondary": "Pomocnicza",
+  "exercise.category.role.set.cta": "Zmień rolę: {{name}}",
   "exercise.category.unassign.cta": "Odłącz {{name}}",
   "exercise.laterality.label": "Strony",
   "exercise.laterality.bilateral": "Obie strony",

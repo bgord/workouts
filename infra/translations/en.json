@@ -98,6 +98,7 @@
   "exercise.category.rename.label": "Category name",
   "exercise.category.role.primary": "Primary",
   "exercise.category.role.secondary": "Secondary",
+  "exercise.category.role.set.cta": "Change role of {{name}}",
   "exercise.category.unassign.cta": "Unassign {{name}}",
   "exercise.laterality.label": "Sides",
   "exercise.laterality.bilateral": "Both sides",

@@ -4,6 +4,7 @@ import { Check, Plus, X } from "lucide-react";
 import { ExerciseCategoryRoleOptions } from "../../modules/exercises/value-objects/exercise-category-role-options";
 import * as ui from "../components";
 import { exerciseRoute } from "../router";
+import { ExerciseCategoryRoleSet } from "./exercise-category-role-set";
 import { ExerciseCategoryUnassign } from "./exercise-category-unassign";
 
 export function ExerciseCategories() {
@@ -51,7 +52,7 @@ export function ExerciseCategories() {
         <ul aria-label={t("exercise.categories.header")} data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
           {assigned.map((category) => (
             <li key={category.id}>
-              <ui.ChipLink search={{ category: category.id }} to="/catalog">
+              <ui.ChipLink search={{ category: category.id }} to="/catalog" {...ui.Gap.cluster}>
                 <ui.CategoryRoleIcon value={category.role} />
                 {category.name}
               </ui.ChipLink>
@@ -159,8 +160,8 @@ export function ExerciseCategories() {
       <ul aria-label={t("exercise.categories.header")} data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
         {assigned.map((category) => (
           <li key={category.id}>
-            <ui.Chip>
-              <ui.CategoryRoleIcon value={category.role} />
+            <ui.Chip {...ui.Gap.cluster}>
+              <ExerciseCategoryRoleSet {...category} />
               {category.name}
 
               <ExerciseCategoryUnassign {...category} />
