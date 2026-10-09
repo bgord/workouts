@@ -20,8 +20,11 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
       orderBy: asc(Schema.exercises.name),
       with: {
         categoryAssignments: {
-          columns: {},
-          orderBy: asc(Schema.exerciseCategoryAssignments.createdAt),
+          columns: { role: true },
+          orderBy: [
+            asc(Schema.exerciseCategoryAssignments.role),
+            asc(Schema.exerciseCategoryAssignments.createdAt),
+          ],
           with: { category: { columns: { id: true, name: true } } },
         },
       },
@@ -29,7 +32,10 @@ class ListExercisesWithCategoriesQueryDrizzle implements Exercises.Queries.ListE
 
     const data = exercises.map(({ categoryAssignments, ...exercise }) => ({
       ...exercise,
-      categories: categoryAssignments.map((assignment) => assignment.category),
+      categories: categoryAssignments.map((assignment) => ({
+        ...assignment.category,
+        role: assignment.role,
+      })),
     }));
 
     return { data, actions: new Exercises.Services.ExerciseListActions({ requesterId }).calculate() };

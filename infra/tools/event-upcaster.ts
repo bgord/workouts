@@ -29,6 +29,13 @@ export const EventUpcaster = new bg.EventUpcasterChainAdapter({
       }),
     }),
   ],
+  [Exercises.Events.EXERCISE_CATEGORY_ASSIGNED_EVENT]: [
+    new bg.EventUpcasterStep({
+      fromVersion: 1,
+      toVersion: 2,
+      upcast: (payload) => ({ ...payload, role: Exercises.VO.ExerciseCategoryRoleOptions.primary }),
+    }),
+  ],
   [Plans.Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT]: [
     new bg.EventUpcasterStep({
       fromVersion: 1,

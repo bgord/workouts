@@ -8,9 +8,13 @@ class ListCategoriesAssignedToExerciseQueryDrizzle
 {
   async execute(
     exerciseId: Exercises.VO.ExerciseIdType,
-  ): Promise<ReadonlyArray<Exercises.VO.ExerciseCategory>> {
+  ): Promise<ReadonlyArray<Exercises.VO.ExerciseCategoryAssignment>> {
     return db
-      .select({ id: Schema.exerciseCategories.id, name: Schema.exerciseCategories.name })
+      .select({
+        id: Schema.exerciseCategories.id,
+        name: Schema.exerciseCategories.name,
+        role: Schema.exerciseCategoryAssignments.role,
+      })
       .from(Schema.exerciseCategories)
       .innerJoin(
         Schema.exerciseCategoryAssignments,

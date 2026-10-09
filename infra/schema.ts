@@ -7,6 +7,8 @@ import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "driz
 import type { UserIdType } from "../modules/auth/value-objects/user-id";
 import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/exercise-category-id";
 import type { ExerciseCategoryNameType } from "../modules/exercises/value-objects/exercise-category-name";
+import type { ExerciseCategoryRoleType } from "../modules/exercises/value-objects/exercise-category-role";
+import { ExerciseCategoryRoleOptions } from "../modules/exercises/value-objects/exercise-category-role-options";
 import type { ExerciseDescriptionType } from "../modules/exercises/value-objects/exercise-description";
 import type { ExerciseIdType } from "../modules/exercises/value-objects/exercise-id";
 import type { ExerciseLateralityType } from "../modules/exercises/value-objects/exercise-laterality";
@@ -251,6 +253,10 @@ export const exerciseCategoryAssignments = sqliteTable(
   {
     exerciseId: text("exerciseId", { length: 36 }).notNull().$type<ExerciseIdType>(),
     exerciseCategoryId: text("exerciseCategoryId", { length: 36 }).notNull().$type<ExerciseCategoryIdType>(),
+    role: text("role")
+      .notNull()
+      .$type<ExerciseCategoryRoleType>()
+      .default(ExerciseCategoryRoleOptions.primary),
     createdAt: timestamp("createdAt").notNull(),
   },
   (table) => [

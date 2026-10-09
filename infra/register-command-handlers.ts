@@ -87,6 +87,14 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
+    ExercisesCommands.EXERCISE_CATEGORY_ROLE_SET_COMMAND,
+    ExercisesCommandHandlers.handleExerciseCategoryRoleSetCommand({
+      ...deps,
+      GetExerciseQuery: Adapters.Exercises.GetExerciseQuery,
+      ListCategoriesAssignedToExerciseQuery: Adapters.Exercises.ListCategoriesAssignedToExerciseQuery,
+    }),
+  );
+  Tools.CommandBus.on(
     ExercisesCommands.EXERCISE_UNASSIGN_CATEGORY_COMMAND,
     ExercisesCommandHandlers.handleExerciseUnassignCategoryCommand({
       ...deps,

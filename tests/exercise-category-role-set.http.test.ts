@@ -1,5 +1,4 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import * as tools from "@bgord/tools";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";
 import { registerEventHandlers } from "+infra/register-event-handlers";
@@ -7,12 +6,12 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = "/api/exercises/category/assign";
+const url = "/api/exercises/category/role-set";
 
 const payload = {
   exerciseId: mocks.exerciseId,
   exerciseCategoryId: mocks.exerciseCategoryId,
-  role: mocks.exerciseCategoryRole,
+  role: mocks.anotherExerciseCategoryRole,
 };
 
 describe(`POST ${url}`, async () => {
@@ -108,27 +107,6 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, "exercise.category.role.invalid");
   });
 
-  test("ExerciseExists", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
-
-    const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
-
-    await testcases.assertErrorResponse(response, 403, "exercise.exists");
-  });
-
-  test("ExerciseCategoryExists", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute")).mockResolvedValue(null);
-
-    const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
-
-    await testcases.assertErrorResponse(response, 403, "exercise.category.exists");
-  });
-
   test("CatalogIsManagedByAdmin", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -141,89 +119,58 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
-  test("ExerciseIsNotAssignedToCategory", async () => {
+  test("ExerciseExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
-    spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
-      .mockResolvedValue(mocks.exerciseCategory);
-    spies
-      .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue([mocks.exerciseCategoryAssignment]);
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
-    await testcases.assertErrorResponse(response, 403, "exercise.is.not.assigned.to.category");
+    await testcases.assertErrorResponse(response, 403, "exercise.exists");
   });
 
-  test("ExerciseCategoryLimit", async () => {
+  test("ExerciseIsAssignedToCategory", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using spies = new DisposableStack();
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
-      .mockResolvedValue(mocks.exerciseCategory);
-    spies
       .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue(tools.repeat(mocks.anotherExerciseCategoryAssignment, 5));
+      .mockResolvedValue([]);
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
 
-    await testcases.assertErrorResponse(response, 403, "exercise.category.limit");
+    await testcases.assertErrorResponse(response, 403, "exercise.is.assigned.to.category");
+  });
+
+  test("ExerciseCategoryRoleHasChanged", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
+    spies
+      .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
+      .mockResolvedValue([{ ...mocks.exerciseCategoryAssignment, role: mocks.anotherExerciseCategoryRole }]);
+
+    const response = await server.request(url, { method: "POST", body: JSON.stringify(payload) }, mocks.ip);
+
+    await testcases.assertErrorResponse(response, 403, "exercise.category.role.has.changed");
   });
 
   test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
     using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.exerciseCategoryId);
     spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
     spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
-      .mockResolvedValue(mocks.exerciseCategory);
-    spies
       .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue([]);
+      .mockResolvedValue([mocks.exerciseCategoryAssignment]);
 
     const response = await server.request(
       url,
-      {
-        method: "POST",
-        headers: mocks.correlationIdHeaders,
-        body: JSON.stringify(payload),
-      },
+      { method: "POST", headers: mocks.correlationIdHeaders, body: JSON.stringify(payload) },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseCategoryAssignedEvent]);
-  });
-
-  test("happy path - category limit", async () => {
-    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.adminAuth);
-    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
-    using spies = new DisposableStack();
-    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.exerciseCategoryId);
-    spies.use(spyOn(di.Adapters.Exercises.GetExerciseQuery, "execute")).mockResolvedValue(mocks.exercise);
-    spies
-      .use(spyOn(di.Adapters.Exercises.GetExerciseCategoryQuery, "execute"))
-      .mockResolvedValue(mocks.exerciseCategory);
-    spies
-      .use(spyOn(di.Adapters.Exercises.ListCategoriesAssignedToExerciseQuery, "execute"))
-      .mockResolvedValue(tools.repeat(mocks.anotherExerciseCategoryAssignment, 3));
-
-    const response = await server.request(
-      url,
-      {
-        method: "POST",
-        headers: mocks.correlationIdHeaders,
-        body: JSON.stringify(payload),
-      },
-      mocks.ip,
-    );
-
-    expect(response.status).toEqual(200);
-    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseCategoryAssignedEvent]);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericExerciseCategoryRoleSetEvent]);
   });
 });

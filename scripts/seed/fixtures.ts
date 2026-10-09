@@ -1,4 +1,4 @@
-// cSpell:ignore Aparts
+// cSpell:ignore Aparts delts
 export const password = "1234567890";
 
 export const categories = {
@@ -7,12 +7,14 @@ export const categories = {
   calves: { id: "068ba72c-424e-4ebb-ba3f-933ed67d227f", name: "Calves" },
   chest: { id: "7896055d-22f8-4769-bc8d-050665f7289f", name: "Chest" },
   forearms: { id: "24e18bd8-1ba9-4938-8647-e4336006c3c9", name: "Forearms" },
+  frontDelts: { id: "923cf84a-75ab-43d6-bf37-64919deafca3", name: "Front delts" },
   glutes: { id: "2f38f582-2297-47e3-b0c2-9a03e7868867", name: "Glutes" },
   hamstrings: { id: "4c50279f-ad24-4ebf-9323-2f0a17bfefc4", name: "Hamstrings" },
   lats: { id: "e14726a4-0335-479d-9e67-77558cf47b14", name: "Lats" },
   lowerBack: { id: "d0228b96-5cd2-4bcd-ba7d-331b8ebf2eaf", name: "Lower back" },
   quads: { id: "02be5629-f4c6-46e0-8b56-88d1ef364fb3", name: "Quads" },
-  shoulders: { id: "bec803ef-e1d0-4446-bca0-de146f8ac008", name: "Shoulders" },
+  rearDelts: { id: "5b7ad1db-d1f1-446e-b4cd-f122e7f05f5f", name: "Rear delts" },
+  sideDelts: { id: "4e1e3e61-19b3-4b69-bfe7-629425944ce9", name: "Side delts" },
   triceps: { id: "805860a2-72b9-4e67-b145-a6e4b90caab1", name: "Triceps" },
   upperMidBack: { id: "38d787bb-2fbe-4dfd-8c3e-d46df660cfa3", name: "Upper/mid back" },
 };
@@ -26,7 +28,10 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms],
+    categories: [
+      { ...categories.biceps, role: "primary" },
+      { ...categories.forearms, role: "secondary" },
+    ],
   },
   bulgarianSplitSquatDumbbell: {
     id: "554fe080-03fe-49cb-a69c-e14ee77e7e70",
@@ -36,7 +41,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "unilateral",
     loadStep: "kg_2_5",
-    categories: [categories.glutes, categories.hamstrings, categories.quads],
+    categories: [
+      { ...categories.quads, role: "primary" },
+      { ...categories.glutes, role: "primary" },
+      { ...categories.hamstrings, role: "secondary" },
+    ],
   },
   calfRaisesLegPress: {
     id: "db7fe303-df78-47fb-8123-bf708638aeb2",
@@ -46,7 +55,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.calves],
+    categories: [{ ...categories.calves, role: "primary" }],
   },
   calfRaisesMachine: {
     id: "e939f5e1-e4f1-4825-85a7-7135c20d3188",
@@ -56,7 +65,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.calves],
+    categories: [{ ...categories.calves, role: "primary" }],
   },
   calfRaisesSeatedDumbbells: {
     id: "57a93a3c-fcc7-4f56-a851-3bb5c90adee0",
@@ -65,7 +74,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.calves],
+    categories: [{ ...categories.calves, role: "primary" }],
   },
   calfRaisesStandingDumbbellSingleLeg: {
     id: "ef0e05d4-449e-4392-83a4-7b4e2c0ded6b",
@@ -75,7 +84,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "unilateral",
     loadStep: "kg_2_5",
-    categories: [categories.calves],
+    categories: [{ ...categories.calves, role: "primary" }],
   },
   concentrationCurlDumbbell: {
     id: "0ac34de0-732f-42c4-baea-b38ba1759f75",
@@ -85,7 +94,10 @@ export const exercises = {
     resistance: "weighted",
     laterality: "unilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms],
+    categories: [
+      { ...categories.biceps, role: "primary" },
+      { ...categories.forearms, role: "secondary" },
+    ],
   },
   facePull: {
     id: "209915f0-2099-41ae-aa55-060d670af8dc",
@@ -95,7 +107,10 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.shoulders, categories.upperMidBack],
+    categories: [
+      { ...categories.rearDelts, role: "primary" },
+      { ...categories.upperMidBack, role: "primary" },
+    ],
   },
   hammerCurlDumbbells: {
     id: "3410b3ef-df5f-4467-a5f7-d21ea8e0c71a",
@@ -105,7 +120,10 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms],
+    categories: [
+      { ...categories.biceps, role: "primary" },
+      { ...categories.forearms, role: "primary" },
+    ],
   },
   hangingLegRaise: {
     id: "9b3f6c2e-4d1a-4e8b-a7c5-2f6d8e0b1c3a",
@@ -115,7 +133,7 @@ export const exercises = {
     resistance: "bodyweight",
     laterality: "bilateral",
     loadStep: "none",
-    categories: [categories.abs],
+    categories: [{ ...categories.abs, role: "primary" }],
   },
   hammerStrengthIncline: {
     id: "b28c649e-c58e-400e-9b9c-646181919db4",
@@ -125,7 +143,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.chest, categories.shoulders, categories.triceps],
+    categories: [
+      { ...categories.chest, role: "primary" },
+      { ...categories.frontDelts, role: "secondary" },
+      { ...categories.triceps, role: "secondary" },
+    ],
   },
   independentChestPress: {
     id: "4171e0ed-844f-46b9-9946-c4c562f57a0d",
@@ -134,7 +156,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.chest, categories.shoulders, categories.triceps],
+    categories: [
+      { ...categories.chest, role: "primary" },
+      { ...categories.frontDelts, role: "secondary" },
+      { ...categories.triceps, role: "secondary" },
+    ],
   },
   latPullDownCable: {
     id: "d4fc3793-a8c1-42b7-8162-dc7c59dadda9",
@@ -145,11 +171,11 @@ export const exercises = {
     laterality: "bilateral",
     loadStep: "kg_2_5",
     categories: [
-      categories.biceps,
-      categories.forearms,
-      categories.lats,
-      categories.upperMidBack,
-      categories.shoulders,
+      { ...categories.lats, role: "primary" },
+      { ...categories.upperMidBack, role: "secondary" },
+      { ...categories.biceps, role: "secondary" },
+      { ...categories.forearms, role: "secondary" },
+      { ...categories.rearDelts, role: "secondary" },
     ],
   },
   lateralRaiseDumbbells: {
@@ -159,7 +185,10 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.shoulders, categories.upperMidBack],
+    categories: [
+      { ...categories.sideDelts, role: "primary" },
+      { ...categories.upperMidBack, role: "secondary" },
+    ],
   },
   legCurlLying: {
     id: "988255d6-e7a4-4149-b2b7-a140dd6e97ca",
@@ -169,7 +198,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.hamstrings],
+    categories: [{ ...categories.hamstrings, role: "primary" }],
   },
   legCurlSeated: {
     id: "dec297bd-5e97-4fae-904c-c614147769d2",
@@ -178,7 +207,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.hamstrings],
+    categories: [{ ...categories.hamstrings, role: "primary" }],
   },
   legExtensionBothLegs: {
     id: "dfca1f6a-c724-4b0e-826e-37bb7a36e7f6",
@@ -188,7 +217,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.quads],
+    categories: [{ ...categories.quads, role: "primary" }],
   },
   legExtensionSingleLeg: {
     id: "3aea56d2-b58c-4838-9ade-7ee3349fe03a",
@@ -197,7 +226,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "unilateral",
     loadStep: "kg_2_5",
-    categories: [categories.quads],
+    categories: [{ ...categories.quads, role: "primary" }],
   },
   legPressBridge: {
     id: "442226bb-e686-44e2-9d4f-c6d4f6e6051c",
@@ -207,7 +236,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.glutes, categories.hamstrings, categories.quads],
+    categories: [
+      { ...categories.quads, role: "primary" },
+      { ...categories.glutes, role: "primary" },
+      { ...categories.hamstrings, role: "secondary" },
+    ],
   },
   legPressHorizontal: {
     id: "83816ce3-ff71-44d2-b275-67ec4f5f52f6",
@@ -217,7 +250,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.glutes, categories.hamstrings, categories.quads],
+    categories: [
+      { ...categories.quads, role: "primary" },
+      { ...categories.glutes, role: "primary" },
+      { ...categories.hamstrings, role: "secondary" },
+    ],
   },
   lowRowCable: {
     id: "bcab0134-a75b-4dfc-af68-d849a9c05114",
@@ -227,7 +264,12 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
+    categories: [
+      { ...categories.upperMidBack, role: "primary" },
+      { ...categories.lats, role: "primary" },
+      { ...categories.biceps, role: "secondary" },
+      { ...categories.forearms, role: "secondary" },
+    ],
   },
   lowRowIsoLateral: {
     id: "bb53b601-1b2d-48c7-b6b9-1b5bf750a6bc",
@@ -237,7 +279,12 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
+    categories: [
+      { ...categories.upperMidBack, role: "primary" },
+      { ...categories.lats, role: "primary" },
+      { ...categories.biceps, role: "secondary" },
+      { ...categories.forearms, role: "secondary" },
+    ],
   },
   lowRowMachine: {
     id: "42839455-9845-4ad1-9797-4d2a5975920d",
@@ -247,7 +294,12 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
+    categories: [
+      { ...categories.upperMidBack, role: "primary" },
+      { ...categories.lats, role: "primary" },
+      { ...categories.biceps, role: "secondary" },
+      { ...categories.forearms, role: "secondary" },
+    ],
   },
   overheadPressSeatedDumbbells: {
     id: "269593cc-3ca4-49a0-81d7-50f6d6ba3982",
@@ -257,7 +309,12 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.shoulders, categories.triceps, categories.upperMidBack],
+    categories: [
+      { ...categories.frontDelts, role: "primary" },
+      { ...categories.sideDelts, role: "secondary" },
+      { ...categories.triceps, role: "secondary" },
+      { ...categories.upperMidBack, role: "secondary" },
+    ],
   },
   pecDeck: {
     id: "70373bb8-e0ab-43ec-8201-4188fc7f38a3",
@@ -267,7 +324,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.chest, categories.shoulders],
+    categories: [
+      { ...categories.chest, role: "primary" },
+      { ...categories.frontDelts, role: "secondary" },
+      { ...categories.biceps, role: "secondary" },
+    ],
   },
   pecFlyCable: {
     id: "bbff7ad1-e63d-4d83-8938-2356bddf6a6d",
@@ -277,7 +338,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.chest, categories.shoulders],
+    categories: [
+      { ...categories.chest, role: "primary" },
+      { ...categories.frontDelts, role: "secondary" },
+      { ...categories.biceps, role: "secondary" },
+    ],
   },
   pecFlyMachine: {
     id: "0cdd77e8-ab97-4b01-8f6e-6a6e26574f62",
@@ -286,7 +351,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.chest, categories.shoulders],
+    categories: [
+      { ...categories.chest, role: "primary" },
+      { ...categories.frontDelts, role: "secondary" },
+      { ...categories.biceps, role: "secondary" },
+    ],
   },
   pullUp: {
     id: "68c6c2e7-2c01-46a8-9dc0-e0e49b892657",
@@ -295,7 +364,12 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.biceps, categories.forearms, categories.lats, categories.upperMidBack],
+    categories: [
+      { ...categories.lats, role: "primary" },
+      { ...categories.upperMidBack, role: "secondary" },
+      { ...categories.biceps, role: "secondary" },
+      { ...categories.forearms, role: "secondary" },
+    ],
   },
   romanianDeadliftDumbbellSingleLeg: {
     id: "6097f8e7-3f02-4d6e-ba38-c551471ec57a",
@@ -305,7 +379,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "unilateral",
     loadStep: "kg_2_5",
-    categories: [categories.glutes, categories.hamstrings, categories.lowerBack],
+    categories: [
+      { ...categories.hamstrings, role: "primary" },
+      { ...categories.glutes, role: "primary" },
+      { ...categories.lowerBack, role: "secondary" },
+    ],
   },
   straightArmPulldownBar: {
     id: "86f8a1d1-29d3-49a1-a60a-ea2dfe4d9df3",
@@ -315,7 +393,10 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.lats, categories.upperMidBack],
+    categories: [
+      { ...categories.lats, role: "primary" },
+      { ...categories.upperMidBack, role: "secondary" },
+    ],
   },
   superHorizontalBenchPress: {
     id: "ce5054e8-3f37-427b-b303-a6f44b4bbb34",
@@ -325,7 +406,11 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.chest, categories.shoulders, categories.triceps],
+    categories: [
+      { ...categories.chest, role: "primary" },
+      { ...categories.frontDelts, role: "secondary" },
+      { ...categories.triceps, role: "secondary" },
+    ],
   },
   tricepsExtensionOverheadCable: {
     id: "b0686d56-0f67-44b0-9bfa-04def9665c91",
@@ -335,7 +420,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.triceps],
+    categories: [{ ...categories.triceps, role: "primary" }],
   },
   tricepsPushDownBar: {
     id: "6748ac08-f295-45d9-8698-a55cfa7b7cd8",
@@ -344,7 +429,7 @@ export const exercises = {
     resistance: "weighted",
     laterality: "bilateral",
     loadStep: "kg_2_5",
-    categories: [categories.triceps],
+    categories: [{ ...categories.triceps, role: "primary" }],
   },
 };
 

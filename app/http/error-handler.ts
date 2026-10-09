@@ -22,6 +22,7 @@ const http = new bg.ErrorClassifierHttpExceptionHonoStrategy([bg.HttpExceptionEr
 
 const validation = new bg.ErrorClassifierValidationStrategy([
   Exercises.VO.ExerciseCategoryNameError,
+  Exercises.VO.ExerciseCategoryRoleError,
   Exercises.VO.ExerciseDescriptionError,
   Exercises.VO.ExerciseLateralityError,
   Exercises.VO.ExerciseLoadStepError,

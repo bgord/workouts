@@ -5,10 +5,10 @@ import * as Exercises from "+exercises";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseAssignCategoryCommandType>;
+  CommandBus: bg.CommandBusPort<Exercises.Commands.ExerciseCategoryRoleSetCommandType>;
 };
 
-export const ExerciseAssignCategory =
+export const ExerciseCategoryRoleSet =
   (deps: Dependencies): bg.EndpointPort =>
   async (context) => {
     const body = await context.request.json();
@@ -19,7 +19,7 @@ export const ExerciseAssignCategory =
     const role = v.parse(Exercises.VO.ExerciseCategoryRole, body["role"]);
 
     const command = bg.command(
-      Exercises.Commands.ExerciseAssignCategoryCommand,
+      Exercises.Commands.ExerciseCategoryRoleSetCommand,
       { payload: { exerciseId, exerciseCategoryId, role, requesterId } },
       deps,
     );

@@ -72,6 +72,7 @@ export async function seedCatalog(di: BootstrapType) {
           payload: {
             exerciseId: v.parse(Exercises.VO.ExerciseId, exercise.id),
             exerciseCategoryId: v.parse(Exercises.VO.ExerciseCategoryId, category.id),
+            role: v.parse(Exercises.VO.ExerciseCategoryRole, category.role),
             requesterId: Auth.VO.ADMIN_USER_ID,
           },
         },

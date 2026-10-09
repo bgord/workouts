@@ -1,46 +1,45 @@
 import * as bg from "@bgord/bun";
 import type * as Exercises from "+exercises";
-import { ExerciseCategoryAssignedEvent } from "../events/EXERCISE_CATEGORY_ASSIGNED_EVENT";
+import { ExerciseCategoryRoleSetEvent } from "../events/EXERCISE_CATEGORY_ROLE_SET_EVENT";
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
-import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
-import { ExerciseCategoryLimit } from "../invariants/exercise-category-limit";
+import { ExerciseCategoryRoleHasChanged } from "../invariants/exercise-category-role-has-changed";
 import { ExerciseExists } from "../invariants/exercise-exists";
-import { ExerciseIsNotAssignedToCategory } from "../invariants/exercise-is-not-assigned-to-category";
+import { ExerciseIsAssignedToCategory } from "../invariants/exercise-is-assigned-to-category";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
   CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
-  EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryAssignedEventType>;
+  EventStore: bg.EventStorePort<Exercises.Events.ExerciseCategoryRoleSetEventType>;
   GetExerciseQuery: Exercises.Queries.GetExercise;
-  GetExerciseCategoryQuery: Exercises.Queries.GetExerciseCategory;
   ListCategoriesAssignedToExerciseQuery: Exercises.Queries.ListCategoriesAssignedToExercise;
 };
 
-export const handleExerciseAssignCategoryCommand =
-  (deps: Dependencies) => async (command: Exercises.Commands.ExerciseAssignCategoryCommandType) => {
+export const handleExerciseCategoryRoleSetCommand =
+  (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryRoleSetCommandType) => {
     CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
     const exercise = await deps.GetExerciseQuery.execute(command.payload.exerciseId);
 
     ExerciseExists.enforce({ exercise });
 
-    const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.exerciseCategoryId);
-
-    ExerciseCategoryExists.enforce({ exerciseCategory });
-
     const exerciseCategories = await deps.ListCategoriesAssignedToExerciseQuery.execute(
       command.payload.exerciseId,
     );
 
-    ExerciseIsNotAssignedToCategory.enforce({
+    ExerciseIsAssignedToCategory.enforce({
       exerciseCategories,
       exerciseCategoryId: command.payload.exerciseCategoryId,
     });
-    ExerciseCategoryLimit.enforce({ exerciseCategories });
+
+    const assignment = exerciseCategories.find(
+      (exerciseCategory) => exerciseCategory.id === command.payload.exerciseCategoryId,
+    );
+
+    ExerciseCategoryRoleHasChanged.enforce({ current: assignment!.role, incoming: command.payload.role });
 
     const event = bg.event(
-      ExerciseCategoryAssignedEvent,
+      ExerciseCategoryRoleSetEvent,
       `exercise_${command.payload.exerciseId}`,
       {
         exerciseId: command.payload.exerciseId,

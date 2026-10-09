@@ -6,11 +6,11 @@ import { ExerciseCategoryRole } from "../value-objects/exercise-category-role";
 import { ExerciseId } from "../value-objects/exercise-id";
 
 // Stryker disable next-line StringLiteral
-export const EXERCISE_ASSIGN_CATEGORY_COMMAND = "EXERCISE_ASSIGN_CATEGORY_COMMAND";
+export const EXERCISE_CATEGORY_ROLE_SET_COMMAND = "EXERCISE_CATEGORY_ROLE_SET_COMMAND";
 
-export const ExerciseAssignCategoryCommand = v.object({
+export const ExerciseCategoryRoleSetCommand = v.object({
   ...bg.CommandEnvelopeSchema,
-  name: v.literal(EXERCISE_ASSIGN_CATEGORY_COMMAND),
+  name: v.literal(EXERCISE_CATEGORY_ROLE_SET_COMMAND),
   payload: v.object({
     exerciseId: ExerciseId,
     exerciseCategoryId: ExerciseCategoryId,
@@ -19,4 +19,4 @@ export const ExerciseAssignCategoryCommand = v.object({
   }),
 });
 
-export type ExerciseAssignCategoryCommandType = v.InferOutput<typeof ExerciseAssignCategoryCommand>;
+export type ExerciseCategoryRoleSetCommandType = v.InferOutput<typeof ExerciseCategoryRoleSetCommand>;

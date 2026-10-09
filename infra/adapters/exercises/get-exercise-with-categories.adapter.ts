@@ -25,8 +25,11 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
         where: eq(Schema.exercises.id, exerciseId),
         with: {
           categoryAssignments: {
-            columns: {},
-            orderBy: asc(Schema.exerciseCategoryAssignments.createdAt),
+            columns: { role: true },
+            orderBy: [
+              asc(Schema.exerciseCategoryAssignments.role),
+              asc(Schema.exerciseCategoryAssignments.createdAt),
+            ],
             with: { category: { columns: { id: true, name: true } } },
           },
         },
@@ -50,7 +53,10 @@ class GetExerciseWithCategoriesQueryDrizzle implements Exercises.Queries.GetExer
     if (!exercise) return null;
 
     const { categoryAssignments, ...rest } = exercise;
-    const categories = categoryAssignments.map((assignment) => assignment.category);
+    const categories = categoryAssignments.map((assignment) => ({
+      ...assignment.category,
+      role: assignment.role,
+    }));
 
     return {
       data: { ...rest, categories },

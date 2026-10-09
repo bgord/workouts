@@ -38,6 +38,7 @@ export class ExerciseGetActions {
         },
       ]),
       categoryUnassign: bg.ActionState.of(managed),
+      categoryRoleSet: bg.ActionState.of(managed),
     };
   }
 }

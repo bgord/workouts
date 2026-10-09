@@ -12,6 +12,7 @@ export type ExerciseGetResponse = {
     delete: bg.ActionState;
     categoryAssign: bg.ActionState;
     categoryUnassign: bg.ActionState;
+    categoryRoleSet: bg.ActionState;
   };
 };
 

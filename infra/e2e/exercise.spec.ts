@@ -1,3 +1,4 @@
+// cSpell:ignore delts unassigning
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -21,9 +22,15 @@ test.describe("Exercise - athlete", () => {
       page.getByRole("heading", { level: 1, name: fixtures.exercises.superHorizontalBenchPress.name }),
     ).toBeVisible();
     await expect(page.getByText(fixtures.exercises.superHorizontalBenchPress.description)).toBeVisible();
-    await expect(categories.getByText(fixtures.categories.chest.name, { exact: true })).toBeVisible();
-    await expect(categories.getByText(fixtures.categories.shoulders.name, { exact: true })).toBeVisible();
-    await expect(categories.getByText(fixtures.categories.triceps.name, { exact: true })).toBeVisible();
+    await expect(
+      categories.getByRole("link", { name: `Primary ${fixtures.categories.chest.name}`, exact: true }),
+    ).toBeVisible();
+    await expect(
+      categories.getByRole("link", { name: `Secondary ${fixtures.categories.frontDelts.name}`, exact: true }),
+    ).toBeVisible();
+    await expect(
+      categories.getByRole("link", { name: `Secondary ${fixtures.categories.triceps.name}`, exact: true }),
+    ).toBeVisible();
     await expect(page.getByText("2.5 kg", { exact: true })).toBeVisible();
   });
 
@@ -39,6 +46,9 @@ test.describe("Exercise - athlete", () => {
     await expect(page.getByRole("button", { name: "Assign", exact: true })).toBeHidden();
     await expect(
       page.getByRole("button", { name: `Unassign ${fixtures.categories.chest.name}` }),
+    ).toBeHidden();
+    await expect(
+      page.getByRole("combobox", { name: `Change role of ${fixtures.categories.chest.name}` }),
     ).toBeHidden();
     await expect(page.getByRole("button", { name: "More actions" })).toBeHidden();
   });
@@ -156,7 +166,40 @@ test.describe("Exercise - admin", () => {
 
     await page.reload();
 
-    await expect(categories.getByText("Abs", { exact: true })).toBeHidden();
+    await expect(categories.getByRole("combobox", { name: "Change role of Abs" })).toBeHidden();
+  });
+
+  test("shows the error when setting a category role fails", async ({ page }) => {
+    const role = page.getByRole("combobox", { name: `Change role of ${fixtures.categories.chest.name}` });
+
+    await page.route("**/api/exercises/category/role-set", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await role.selectOption({ label: "Secondary" });
+
+    await expect(page.getByText("Could not change the categories")).toBeVisible();
+    await expect(role).toHaveValue("primary");
+
+    await page.reload();
+
+    await expect(role).toHaveValue("primary");
+  });
+
+  test("shows the error when unassigning a category fails", async ({ page }) => {
+    const categories = page.getByRole("list", { name: "Categories" });
+
+    await page.route("**/api/exercises/category/unassign", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/catalog/exercise/${fixtures.exercises.pecDeck.id}`);
+
+    await page.getByRole("button", { name: `Unassign ${fixtures.categories.chest.name}` }).click();
+
+    await expect(page.getByText("Could not change the categories")).toBeVisible();
+
+    await page.reload();
+
+    await expect(
+      categories.getByRole("button", { name: `Unassign ${fixtures.categories.chest.name}` }),
+    ).toBeVisible();
   });
 
   test("focuses the exercise name when renaming", async ({ page }) => {

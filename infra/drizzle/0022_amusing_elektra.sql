@@ -1,0 +1,1 @@
+ALTER TABLE `exercise_category_assignments` ADD `role` text DEFAULT 'primary' NOT NULL;

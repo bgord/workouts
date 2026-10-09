@@ -3,6 +3,7 @@ export * from "./handleExerciseAssignCategoryCommand";
 export * from "./handleExerciseCategoryAddCommand";
 export * from "./handleExerciseCategoryDeleteCommand";
 export * from "./handleExerciseCategoryRenameCommand";
+export * from "./handleExerciseCategoryRoleSetCommand";
 export * from "./handleExerciseDeleteCommand";
 export * from "./handleExerciseImageChangeCommand";
 export * from "./handleExerciseLoadStepSetCommand";

@@ -21,6 +21,7 @@ describe("ExerciseGetActions", () => {
       delete: mocks.actionAvailable,
       categoryAssign: mocks.actionAvailable,
       categoryUnassign: mocks.actionAvailable,
+      categoryRoleSet: mocks.actionAvailable,
     });
   });
 
@@ -50,6 +51,7 @@ describe("ExerciseGetActions", () => {
         hints: ["exercise.category.limit", "exercise.category.assign.blocked.none_left"],
       },
       categoryUnassign: mocks.actionAvailable,
+      categoryRoleSet: mocks.actionAvailable,
     });
   });
 
@@ -69,6 +71,7 @@ describe("ExerciseGetActions", () => {
       delete: mocks.actionAvailable,
       categoryAssign: mocks.actionAvailable,
       categoryUnassign: mocks.actionAvailable,
+      categoryRoleSet: mocks.actionAvailable,
     });
   });
 
@@ -88,6 +91,7 @@ describe("ExerciseGetActions", () => {
       delete: mocks.actionUnavailable,
       categoryAssign: mocks.actionUnavailable,
       categoryUnassign: mocks.actionUnavailable,
+      categoryRoleSet: mocks.actionUnavailable,
     });
   });
 });

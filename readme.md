@@ -73,6 +73,7 @@ modules/
 │   │   ├── handleExerciseCategoryAddCommand.ts
 │   │   ├── handleExerciseCategoryDeleteCommand.ts
 │   │   ├── handleExerciseCategoryRenameCommand.ts
+│   │   ├── handleExerciseCategoryRoleSetCommand.ts
 │   │   ├── handleExerciseDeleteCommand.ts
 │   │   ├── handleExerciseImageChangeCommand.ts
 │   │   ├── handleExerciseLoadStepSetCommand.ts
@@ -84,6 +85,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_ADD_COMMAND.ts
 │   │   ├── EXERCISE_CATEGORY_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_CATEGORY_RENAME_COMMAND.ts
+│   │   ├── EXERCISE_CATEGORY_ROLE_SET_COMMAND.ts
 │   │   ├── EXERCISE_DELETE_COMMAND.ts
 │   │   ├── EXERCISE_IMAGE_CHANGE_COMMAND.ts
 │   │   ├── EXERCISE_LOAD_STEP_SET_COMMAND.ts
@@ -95,6 +97,7 @@ modules/
 │   │   ├── EXERCISE_CATEGORY_ASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_DELETED_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_RENAMED_EVENT.ts
+│   │   ├── EXERCISE_CATEGORY_ROLE_SET_EVENT.ts
 │   │   ├── EXERCISE_CATEGORY_UNASSIGNED_EVENT.ts
 │   │   ├── EXERCISE_DELETED_EVENT.ts
 │   │   ├── EXERCISE_IMAGE_CHANGED_EVENT.ts
@@ -106,6 +109,7 @@ modules/
 │   │   ├── exercise-category-limit.ts
 │   │   ├── exercise-category-name-has-changed.ts
 │   │   ├── exercise-category-name-is-unique.ts
+│   │   ├── exercise-category-role-has-changed.ts
 │   │   ├── exercise-exists.ts
 │   │   ├── exercise-has-changed.ts
 │   │   ├── exercise-image-constraints.ts
@@ -135,9 +139,12 @@ modules/
 │   └── value-objects
 │       ├── exercise-catalog-entry.ts
 │       ├── exercise-catalog.ts
+│       ├── exercise-category-assignment.ts
 │       ├── exercise-category-id.ts
 │       ├── exercise-category-name.ts
 │       ├── exercise-category-name.validation.ts
+│       ├── exercise-category-role-options.ts
+│       ├── exercise-category-role.ts
 │       ├── exercise-category-with-exercise-names.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
@@ -644,6 +651,7 @@ app/
 │   │   ├── exercise-category-delete.ts
 │   │   ├── exercise-category-list.ts
 │   │   ├── exercise-category-rename.ts
+│   │   ├── exercise-category-role-set.ts
 │   │   ├── exercise-delete.ts
 │   │   ├── exercise-get.ts
 │   │   ├── exercise-image-change.ts

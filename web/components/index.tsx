@@ -10,6 +10,7 @@ export * from "./button-back";
 export * from "./button-cancel";
 export * from "./button-clear";
 export * from "./button-close";
+export * from "./category-role-icon";
 export * from "./chevron-toggle";
 export * from "./chip";
 export * from "./copy-button";
