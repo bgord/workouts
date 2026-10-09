@@ -466,7 +466,7 @@ test.describe("Plans - drafter", () => {
 
     await expect(page.getByRole("menuitem", { name: "Copied" })).toBeVisible();
     expect(await page.evaluate(() => navigator.clipboard.readText())).toContain(
-      `- ${fixtures.exercises.facePull.name}: 5 x 6-8 @ RIR 2, double_progression`,
+      `- ${fixtures.exercises.facePull.name}: 5 x 6-8 @ RIR 2, double progression`,
     );
   });
 
