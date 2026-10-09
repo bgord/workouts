@@ -1,4 +1,4 @@
-// cSpell:ignore spinbutton
+// cSpell:ignore spinbutton delts
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 
@@ -667,6 +667,37 @@ test.describe("Plan - builder", () => {
       page.getByRole("link", { name: fixtures.exercises.superHorizontalBenchPress.name, exact: true }),
     ).toBeVisible();
   });
+
+  test("toggles the sets per category", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    const toggle = page.getByRole("button", { name: "Toggle sets per category", exact: true });
+    const list = page.getByRole("list", { name: "Sets per category", exact: true });
+
+    await expect(list).toBeHidden();
+
+    await toggle.click();
+
+    await expect(list).toBeVisible();
+
+    await toggle.click();
+
+    await expect(list).toBeHidden();
+  });
+
+  test("shows the sets per category over one pass through the plan", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+
+    await page.getByRole("button", { name: "Toggle sets per category", exact: true }).click();
+
+    const chest = page.getByRole("listitem", { name: "Chest: 7 (primary: 7, secondary: 0)", exact: true });
+    const sideDelts = page.getByRole("listitem", {
+      name: "Side delts: 4.5 (primary: 3, secondary: 3)",
+      exact: true,
+    });
+
+    await expect(chest.getByText("7", { exact: true })).toBeVisible();
+    await expect(sideDelts.getByText("4.5", { exact: true })).toBeVisible();
+  });
 });
 
 test.describe("Plan - athlete", () => {
@@ -727,6 +758,16 @@ test.describe("Plan - archivist", () => {
       "Archive the current plan first",
     );
     await expect(page.getByRole("button", { name: "Restore" })).toBeDisabled();
+  });
+
+  test("shows the categories without sets as zero", async ({ page }) => {
+    await page.goto(`/plans/${fixtures.archivist.plan.id}`);
+
+    await page.getByRole("button", { name: "Toggle sets per category", exact: true }).click();
+
+    const abs = page.getByRole("listitem", { name: "Abs: 0 (primary: 0, secondary: 0)", exact: true });
+
+    await expect(abs.getByText("0", { exact: true })).toBeVisible();
   });
 });
 
