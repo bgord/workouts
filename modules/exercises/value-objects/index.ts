@@ -7,6 +7,7 @@ export * from "./exercise-category-id";
 export * from "./exercise-category-name";
 export * from "./exercise-category-role";
 export * from "./exercise-category-role-options";
+export * from "./exercise-category-role-weight";
 export * from "./exercise-category-with-exercise-names";
 export * from "./exercise-description";
 export * from "./exercise-id";

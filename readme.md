@@ -144,6 +144,7 @@ modules/
 │       ├── exercise-category-name.ts
 │       ├── exercise-category-name.validation.ts
 │       ├── exercise-category-role-options.ts
+│       ├── exercise-category-role-weight.ts
 │       ├── exercise-category-role.ts
 │       ├── exercise-category-with-exercise-names.ts
 │       ├── exercise-category.ts
@@ -397,6 +398,7 @@ modules/
 │       ├── exercise-instruction-position.ts
 │       ├── exercise-instruction.ts
 │       ├── exercise-with-progression-methods.ts
+│       ├── plan-category-coverage.ts
 │       ├── plan-description.ts
 │       ├── plan-description.validation.ts
 │       ├── plan-id.ts
