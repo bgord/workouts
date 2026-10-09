@@ -23,6 +23,7 @@ export function ProgressionMethodPicker(props: {
             <label
               className="c-badge"
               data-cursor="pointer"
+              data-focus-within="ring"
               data-stack="x"
               data-variant={option === props.field.value ? "primary" : "outline"}
               key={option}

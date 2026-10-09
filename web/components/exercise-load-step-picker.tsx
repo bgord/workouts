@@ -23,6 +23,7 @@ export function ExerciseLoadStepPicker(props: {
             <label
               className="c-badge"
               data-cursor="pointer"
+              data-focus-within="ring"
               data-variant={option === props.value ? "primary" : "outline"}
               key={option}
             >
