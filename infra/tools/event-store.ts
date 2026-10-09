@@ -8,6 +8,7 @@ import type {
   ExerciseCategoryAssignedEventType,
   ExerciseCategoryDeletedEventType,
   ExerciseCategoryRenamedEventType,
+  ExerciseCategoryRoleSetEventType,
   ExerciseCategoryUnassignedEventType,
   ExerciseDeletedEventType,
   ExerciseImageChangedEventType,
@@ -59,6 +60,7 @@ export type AcceptedEventType =
   | ExerciseCategoryRenamedEventType
   | ExerciseCategoryDeletedEventType
   | ExerciseCategoryAssignedEventType
+  | ExerciseCategoryRoleSetEventType
   | ExerciseCategoryUnassignedEventType
   | PlanEventType
   | WorkoutEventType

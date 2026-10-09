@@ -7,6 +7,7 @@ import * as Schema from "+infra/schema";
 type Dependencies = {
   EventBus: bg.EventBusPort<
     | Exercises.Events.ExerciseCategoryAssignedEventType
+    | Exercises.Events.ExerciseCategoryRoleSetEventType
     | Exercises.Events.ExerciseCategoryUnassignedEventType
     | Exercises.Events.ExerciseDeletedEventType
     | Exercises.Events.ExerciseCategoryDeletedEventType
@@ -19,6 +20,10 @@ export class ExerciseCategoryAssignmentsProjector {
     deps.EventBus.on(
       Exercises.Events.EXERCISE_CATEGORY_ASSIGNED_EVENT,
       deps.EventHandler.handle(this.onExerciseCategoryAssignedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Exercises.Events.EXERCISE_CATEGORY_ROLE_SET_EVENT,
+      deps.EventHandler.handle(this.onExerciseCategoryRoleSetEvent.bind(this)),
     );
     deps.EventBus.on(
       Exercises.Events.EXERCISE_CATEGORY_UNASSIGNED_EVENT,
@@ -41,6 +46,18 @@ export class ExerciseCategoryAssignmentsProjector {
       role: event.payload.role,
       createdAt: event.createdAt,
     });
+  }
+
+  async onExerciseCategoryRoleSetEvent(event: Exercises.Events.ExerciseCategoryRoleSetEventType) {
+    await db
+      .update(Schema.exerciseCategoryAssignments)
+      .set({ role: event.payload.role })
+      .where(
+        and(
+          eq(Schema.exerciseCategoryAssignments.exerciseId, event.payload.exerciseId),
+          eq(Schema.exerciseCategoryAssignments.exerciseCategoryId, event.payload.exerciseCategoryId),
+        ),
+      );
   }
 
   async onExerciseCategoryUnassignedEvent(event: Exercises.Events.ExerciseCategoryUnassignedEventType) {

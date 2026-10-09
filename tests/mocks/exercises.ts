@@ -285,6 +285,22 @@ export const GenericExerciseCategoryAssignedEvent = {
   payload: { exerciseId, exerciseCategoryId, role: exerciseCategoryRole, requesterId: Auth.VO.ADMIN_USER_ID },
 } satisfies Exercises.Events.ExerciseCategoryAssignedEventType;
 
+export const GenericExerciseCategoryRoleSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: exerciseStream,
+  version: 1,
+  commit,
+  name: "EXERCISE_CATEGORY_ROLE_SET_EVENT",
+  payload: {
+    exerciseId,
+    exerciseCategoryId,
+    role: anotherExerciseCategoryRole,
+    requesterId: Auth.VO.ADMIN_USER_ID,
+  },
+} satisfies Exercises.Events.ExerciseCategoryRoleSetEventType;
+
 export const GenericExerciseCategoryUnassignedEvent = {
   id: expectAnyId,
   correlationId,
