@@ -14,7 +14,7 @@ export class BodyWeightChart {
         from: measurement.measuredOn,
         to: measurement.measuredOn,
         weight: measurement.weight,
-        count: 1,
+        count: tools.Int.positive(1),
         reference: measurement.reference,
       }));
     }

@@ -1,4 +1,4 @@
-import type * as tools from "@bgord/tools";
+import * as tools from "@bgord/tools";
 import { count, desc, eq, sql } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Measurements from "+measurements";
@@ -10,7 +10,7 @@ class ListBodyWeightMonthsQueryDrizzle implements Measurements.Queries.ListBodyW
     const month = sql<tools.MonthIsoIdType>`substr(${Schema.bodyWeightMeasurements.measuredOn}, 1, 7)`;
 
     return db
-      .select({ month, count: count() })
+      .select({ month, count: count().mapWith(tools.Int.nonNegative) })
       .from(Schema.bodyWeightMeasurements)
       .where(eq(Schema.bodyWeightMeasurements.userId, userId))
       .groupBy(month)

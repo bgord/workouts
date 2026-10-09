@@ -28,7 +28,7 @@ describe("BodyWeightStatsCalculator", () => {
       previous: earlier,
       reference: earlier,
       baseline: earlier,
-      week: { average: mocks.bodyWeight, count: 1 },
+      week: { average: mocks.bodyWeight, count: tools.Int.positive(1) },
       previousWeek: { average: earlier.weight },
     });
   });

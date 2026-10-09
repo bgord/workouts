@@ -1,3 +1,4 @@
+import * as tools from "@bgord/tools";
 import * as Exercises from "+exercises";
 import type * as VO from "+plans/value-objects";
 
@@ -27,8 +28,8 @@ export class PlanCategoryCoverage {
 
       return {
         category,
-        primarySets: sets[Exercises.VO.ExerciseCategoryRoleOptions.primary],
-        secondarySets: sets[Exercises.VO.ExerciseCategoryRoleOptions.secondary],
+        primarySets: tools.Int.nonNegative(sets[Exercises.VO.ExerciseCategoryRoleOptions.primary]),
+        secondarySets: tools.Int.nonNegative(sets[Exercises.VO.ExerciseCategoryRoleOptions.secondary]),
         total: Exercises.VO.ExerciseCategoryRoleWeight.total(sets),
       };
     });
@@ -48,7 +49,11 @@ export class PlanCategoryCoverage {
       .toSorted((a, b) => b.total - a.total);
   }
 
-  private share(sets: number, role: Exercises.VO.ExerciseCategoryRoleOptions, max: number): number {
+  private share(
+    sets: tools.IntegerNonNegativeType,
+    role: Exercises.VO.ExerciseCategoryRoleOptions,
+    max: number,
+  ): number {
     return max === 0 ? 0 : (sets * Exercises.VO.ExerciseCategoryRoleWeight.of(role)) / max;
   }
 }

@@ -17,7 +17,7 @@ describe("BodyWeightAverage", () => {
   test("calculate - one", () => {
     const average = new Measurements.Services.BodyWeightAverage([mocks.bodyWeightMeasurement], from, to);
 
-    expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: 1 });
+    expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: tools.Int.positive(1) });
   });
 
   test("calculate - two", () => {
@@ -29,7 +29,7 @@ describe("BodyWeightAverage", () => {
 
     expect(average.calculate()).toEqual({
       average: (mocks.bodyWeight + mocks.heavierBodyWeight) / 2,
-      count: 2,
+      count: tools.Int.positive(2),
     });
   });
 
@@ -46,7 +46,7 @@ describe("BodyWeightAverage", () => {
       to,
     );
 
-    expect(average.calculate()).toEqual({ average: 80333, count: 3 });
+    expect(average.calculate()).toEqual({ average: 80333, count: tools.Int.positive(3) });
   });
 
   test("calculate - range is inclusive", () => {
@@ -59,7 +59,7 @@ describe("BodyWeightAverage", () => {
       to,
     );
 
-    expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: 2 });
+    expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: tools.Int.positive(2) });
   });
 
   test("calculate - outside the range", () => {
@@ -79,6 +79,6 @@ describe("BodyWeightAverage", () => {
       to,
     );
 
-    expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: 1 });
+    expect(average.calculate()).toEqual({ average: mocks.bodyWeight, count: tools.Int.positive(1) });
   });
 });

@@ -16,7 +16,7 @@ export class BodyWeightAverage {
     private readonly to: tools.DayIsoIdType,
   ) {}
 
-  calculate(): { average: number; count: number } | null {
+  calculate(): { average: number; count: tools.IntegerPositiveType } | null {
     const within = this.measurements.filter(
       (measurement) => measurement.measuredOn >= this.from && measurement.measuredOn <= this.to,
     );
@@ -25,6 +25,6 @@ export class BodyWeightAverage {
 
     const total = within.reduce((sum, measurement) => sum + measurement.weight, 0);
 
-    return { average: Math.round(total / within.length), count: within.length };
+    return { average: Math.round(total / within.length), count: tools.Int.positive(within.length) };
   }
 }

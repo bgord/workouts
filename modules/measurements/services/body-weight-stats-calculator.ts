@@ -34,7 +34,7 @@ export class BodyWeightStatsCalculator {
       previous: this.measurements[1],
       reference,
       baseline,
-      week: week ?? { average: latest.weight, count: 1 },
+      week: week ?? { average: latest.weight, count: tools.Int.positive(1) },
       previousWeek: previousWeek ? { average: previousWeek.average } : undefined,
     };
   }

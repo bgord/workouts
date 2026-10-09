@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 import * as mocks from "./mocks";
@@ -21,14 +22,14 @@ describe("BodyWeightChart", () => {
         from: mocks.anotherBodyWeightMeasuredOn,
         to: mocks.anotherBodyWeightMeasuredOn,
         weight: mocks.heavierBodyWeight,
-        count: 1,
+        count: tools.Int.positive(1),
         reference: false,
       },
       {
         from: mocks.bodyWeightMeasuredOn,
         to: mocks.bodyWeightMeasuredOn,
         weight: mocks.bodyWeight,
-        count: 1,
+        count: tools.Int.positive(1),
         reference: true,
       },
     ]);
@@ -45,7 +46,7 @@ describe("BodyWeightChart", () => {
         from: mocks.anotherBodyWeightMeasuredOn,
         to: mocks.bodyWeightMeasuredOn,
         weight: mocks.anotherBodyWeight,
-        count: 2,
+        count: tools.Int.positive(2),
         reference: false,
       },
     ]);
@@ -62,7 +63,7 @@ describe("BodyWeightChart", () => {
         from: mocks.anotherBodyWeightMeasuredOn,
         to: mocks.bodyWeightMeasuredOn,
         weight: mocks.anotherBodyWeight,
-        count: 2,
+        count: tools.Int.positive(2),
         reference: true,
       },
     ]);
@@ -82,14 +83,14 @@ describe("BodyWeightChart", () => {
         from: mocks.bodyWeightMeasuredOn,
         to: mocks.bodyWeightMeasuredOn,
         weight: mocks.bodyWeight,
-        count: 1,
+        count: tools.Int.positive(1),
         reference: false,
       },
       {
         from: v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-13"),
         to: v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-13"),
         weight: mocks.heavierBodyWeight,
-        count: 1,
+        count: tools.Int.positive(1),
         reference: false,
       },
     ]);

@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Exercises from "+exercises";
 import * as Workouts from "+workouts";
@@ -10,7 +11,7 @@ describe("WorkoutExerciseSides", () => {
         Exercises.VO.ExerciseLateralityOptions.bilateral,
         v.parse(Workouts.VO.Reps, 5),
       ),
-    ).toEqual(5);
+    ).toEqual(tools.Int.positive(5));
   });
 
   test("totalReps - unilateral", () => {
@@ -19,6 +20,6 @@ describe("WorkoutExerciseSides", () => {
         Exercises.VO.ExerciseLateralityOptions.unilateral,
         v.parse(Workouts.VO.Reps, 5),
       ),
-    ).toEqual(10);
+    ).toEqual(tools.Int.positive(10));
   });
 });

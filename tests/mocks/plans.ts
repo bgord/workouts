@@ -291,8 +291,8 @@ export const planWithSectionActions: Plans.Queries.PlanGetResponse["data"] = {
 export const planCategoryCoverage: Plans.VO.PlanCategoryCoverage = [
   {
     category: exerciseCategory,
-    primarySets: 3,
-    secondarySets: 0,
+    primarySets: tools.Int.nonNegative(3),
+    secondarySets: tools.Int.nonNegative(0),
     total: 3,
     primaryShare: 1,
     secondaryShare: 0,
@@ -302,8 +302,8 @@ export const planCategoryCoverage: Plans.VO.PlanCategoryCoverage = [
 export const planCategoryCoverageEmpty: Plans.VO.PlanCategoryCoverage = [
   {
     category: exerciseCategory,
-    primarySets: 0,
-    secondarySets: 0,
+    primarySets: tools.Int.nonNegative(0),
+    secondarySets: tools.Int.nonNegative(0),
     total: 0,
     primaryShare: 0,
     secondaryShare: 0,

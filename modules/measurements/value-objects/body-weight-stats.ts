@@ -1,3 +1,4 @@
+import type * as tools from "@bgord/tools";
 import type { BodyWeightMeasurement } from "./body-weight-measurement";
 
 export type BodyWeightStats = {
@@ -5,6 +6,6 @@ export type BodyWeightStats = {
   previous?: BodyWeightMeasurement;
   reference?: BodyWeightMeasurement;
   baseline: BodyWeightMeasurement;
-  week: { average: number; count: number };
+  week: { average: number; count: tools.IntegerPositiveType };
   previousWeek?: { average: number };
 };

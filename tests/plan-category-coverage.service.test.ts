@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import * as tools from "@bgord/tools";
 import * as Plans from "+plans";
 import * as mocks from "./mocks";
 
@@ -12,16 +13,16 @@ describe("PlanCategoryCoverage", () => {
     expect(coverage.calculate()).toEqual([
       {
         category: mocks.exerciseCategory,
-        primarySets: 0,
-        secondarySets: 0,
+        primarySets: tools.Int.nonNegative(0),
+        secondarySets: tools.Int.nonNegative(0),
         total: 0,
         primaryShare: 0,
         secondaryShare: 0,
       },
       {
         category: mocks.anotherExerciseCategory,
-        primarySets: 0,
-        secondarySets: 0,
+        primarySets: tools.Int.nonNegative(0),
+        secondarySets: tools.Int.nonNegative(0),
         total: 0,
         primaryShare: 0,
         secondaryShare: 0,
@@ -38,16 +39,16 @@ describe("PlanCategoryCoverage", () => {
     expect(coverage.calculate()).toEqual([
       {
         category: mocks.exerciseCategory,
-        primarySets: 3,
-        secondarySets: 0,
+        primarySets: tools.Int.nonNegative(3),
+        secondarySets: tools.Int.nonNegative(0),
         total: 3,
         primaryShare: 1,
         secondaryShare: 0,
       },
       {
         category: mocks.anotherExerciseCategory,
-        primarySets: 0,
-        secondarySets: 0,
+        primarySets: tools.Int.nonNegative(0),
+        secondarySets: tools.Int.nonNegative(0),
         total: 0,
         primaryShare: 0,
         secondaryShare: 0,
@@ -64,16 +65,16 @@ describe("PlanCategoryCoverage", () => {
     expect(coverage.calculate()).toEqual([
       {
         category: mocks.anotherExerciseCategory,
-        primarySets: 0,
-        secondarySets: 3,
+        primarySets: tools.Int.nonNegative(0),
+        secondarySets: tools.Int.nonNegative(3),
         total: 1.5,
         primaryShare: 0,
         secondaryShare: 1,
       },
       {
         category: mocks.exerciseCategory,
-        primarySets: 0,
-        secondarySets: 0,
+        primarySets: tools.Int.nonNegative(0),
+        secondarySets: tools.Int.nonNegative(0),
         total: 0,
         primaryShare: 0,
         secondaryShare: 0,
@@ -96,8 +97,8 @@ describe("PlanCategoryCoverage", () => {
     expect(coverage.calculate()).toEqual([
       {
         category: mocks.exerciseCategory,
-        primarySets: 3,
-        secondarySets: 4,
+        primarySets: tools.Int.nonNegative(3),
+        secondarySets: tools.Int.nonNegative(4),
         total: 5,
         primaryShare: 0.6,
         secondaryShare: 0.4,
@@ -117,8 +118,8 @@ describe("PlanCategoryCoverage", () => {
     expect(coverage.calculate()).toEqual([
       {
         category: mocks.exerciseCategory,
-        primarySets: 7,
-        secondarySets: 0,
+        primarySets: tools.Int.nonNegative(7),
+        secondarySets: tools.Int.nonNegative(0),
         total: 7,
         primaryShare: 1,
         secondaryShare: 0,
@@ -143,16 +144,16 @@ describe("PlanCategoryCoverage", () => {
     expect(coverage.calculate()).toEqual([
       {
         category: mocks.anotherExerciseCategory,
-        primarySets: 3,
-        secondarySets: 0,
+        primarySets: tools.Int.nonNegative(3),
+        secondarySets: tools.Int.nonNegative(0),
         total: 3,
         primaryShare: 1,
         secondaryShare: 0,
       },
       {
         category: mocks.exerciseCategory,
-        primarySets: 0,
-        secondarySets: 3,
+        primarySets: tools.Int.nonNegative(0),
+        secondarySets: tools.Int.nonNegative(3),
         total: 1.5,
         primaryShare: 0,
         secondaryShare: 0.5,
