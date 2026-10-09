@@ -10,7 +10,7 @@ export const Spacing = {
   row: { ...Gap.cluster, "data-py": "4" },
   // Nested hairline rows: WorkoutSetRow, WorkoutSetLog, ExerciseHistory sets,
   // PlanSectionExerciseInstructionRow/Add/Edit, ExerciseCategoryRow, BodyWeightMeasurementRow,
-  // ExercisePicker options
+  // ExercisePicker options, PlanCategoryCoverage rows
   rowCompact: { ...Gap.related, "data-py": "2" },
   // Nested content under a row header: WorkoutExerciseRow description, target and set list,
   // PlanSectionItem instructions, ExerciseHistory sets
