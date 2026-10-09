@@ -335,8 +335,8 @@ export const exerciseTargetProgression: Workouts.VO.ExerciseTargetProgression = 
   last: exercisePerformanceWeakestSet,
   regress: v.parse(Workouts.VO.ExerciseTarget, {
     sets: v.parse(Plans.VO.Sets, 2),
-    reps: v.parse(Workouts.VO.Reps, 4),
-    load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+    reps: v.parse(Workouts.VO.Reps, 12),
+    load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
   }),
   progress: v.parse(Workouts.VO.ExerciseTarget, {
     sets: v.parse(Plans.VO.Sets, 2),

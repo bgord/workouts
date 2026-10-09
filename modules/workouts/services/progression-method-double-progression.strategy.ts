@@ -21,14 +21,12 @@ export class ProgressionMethodDoubleProgressionStrategy implements ProgressionMe
     const { last } = this.config;
     const { min, max } = this.config.prescription.reps;
 
-    if (last.reps === min) {
+    if (last.reps <= min) {
       const load = this.deps.LoadStep.decrease(last.load);
 
       if (load === undefined) return undefined;
       return v.parse(VO.ExerciseTarget, { ...last, reps: max, load });
     }
-
-    if (last.reps === 1) return undefined;
 
     return v.parse(VO.ExerciseTarget, { ...last, reps: last.reps - 1 });
   }

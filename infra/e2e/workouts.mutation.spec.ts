@@ -333,7 +333,7 @@ test.describe("Workouts - athlete-mutation", () => {
     await row.getByRole("button", { name: "Set target", exact: true }).click();
 
     await expect(suggestion.getByText("Below RIR 2 last time, repeat it", { exact: true })).toBeVisible();
-    await expect(suggestion.getByRole("button", { name: "+1 rep", exact: true })).toBeHidden();
+    await expect(suggestion.getByRole("button")).toHaveText(["−2.5 kg", "Last"]);
 
     await row.getByRole("button", { name: "Save", exact: true }).click();
 
