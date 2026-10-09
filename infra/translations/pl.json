@@ -254,6 +254,7 @@
   "plan.archive.info": "Archiwizacja {{name}} zablokuje edycję i zwolni miejsce na nowy plan.",
   "plan.copy.cta": "Kopiuj plan",
   "plan.copy.done": "Skopiowano",
+  "plan.coverage.legend.primary": "Główna (1 seria)",
   "plan.coverage.legend.secondary": "Pomocnicza (½ serii)",
   "plan.coverage.row": "{{name}}: {{total}} (główna: {{primary}}, pomocnicza: {{secondary}})",
   "plan.coverage.subtitle": "Jedno przejście przez wszystkie sekcje",

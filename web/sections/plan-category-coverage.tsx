@@ -47,11 +47,11 @@ export function PlanCategoryCoverage(props: bg.UseToggleReturnType) {
               secondary: entry.secondarySets,
             })}
             data-cross="center"
-            data-py="2"
             first={index === 0}
             key={entry.category.id}
+            last={index === plan.coverage.length - 1}
             style={row}
-            {...ui.Gap.related}
+            {...ui.Spacing.rowCompact}
           >
             <span data-transform="truncate">{entry.category.name}</span>
 
@@ -78,7 +78,7 @@ export function PlanCategoryCoverage(props: bg.UseToggleReturnType) {
         <small data-cross="center" data-stack="x" {...ui.Gap.cluster}>
           <span aria-hidden data-bg="brand-400" data-br="pill" style={{ height: 6, width: 14 }} />
 
-          {t("exercise.category.role.primary")}
+          {t("plan.coverage.legend.primary")}
         </small>
 
         <small data-cross="center" data-stack="x" {...ui.Gap.cluster}>
