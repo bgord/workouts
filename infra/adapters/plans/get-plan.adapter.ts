@@ -50,7 +50,8 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
       GetPlanEditableForOwnerCountQuery.execute(userId),
       db
         .select({ id: Schema.exerciseCategories.id, name: Schema.exerciseCategories.name })
-        .from(Schema.exerciseCategories),
+        .from(Schema.exerciseCategories)
+        .orderBy(asc(Schema.exerciseCategories.name)),
     ]);
 
     if (!plan) return null;

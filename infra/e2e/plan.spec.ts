@@ -689,14 +689,12 @@ test.describe("Plan - builder", () => {
 
     await page.getByRole("button", { name: "Toggle sets per category", exact: true }).click();
 
-    const chest = page.getByRole("listitem", { name: "Chest: 7 (primary: 7, secondary: 0)", exact: true });
-    const sideDelts = page.getByRole("listitem", {
-      name: "Side delts: 4.5 (primary: 3, secondary: 3)",
-      exact: true,
-    });
-
-    await expect(chest.getByText("7", { exact: true })).toBeVisible();
-    await expect(sideDelts.getByText("4.5", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Chest: 7 (primary: 7, secondary: 0)", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Side delts: 4.5 (primary: 3, secondary: 3)", exact: true }),
+    ).toBeVisible();
   });
 });
 
@@ -765,9 +763,9 @@ test.describe("Plan - archivist", () => {
 
     await page.getByRole("button", { name: "Toggle sets per category", exact: true }).click();
 
-    const abs = page.getByRole("listitem", { name: "Abs: 0 (primary: 0, secondary: 0)", exact: true });
-
-    await expect(abs.getByText("0", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("listitem", { name: "Abs: 0 (primary: 0, secondary: 0)", exact: true }),
+    ).toBeVisible();
   });
 });
 
