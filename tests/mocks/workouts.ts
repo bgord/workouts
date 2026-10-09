@@ -214,6 +214,24 @@ export const exercisePerformanceWithRir = {
   ],
 };
 
+export const exercisePerformanceWithPartialRir = {
+  ...exercisePerformance,
+  sets: [
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 1),
+      reps: v.parse(Workouts.VO.Reps, 5),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: null,
+    },
+    {
+      setNumber: v.parse(Workouts.VO.SetNumber, 2),
+      reps: v.parse(Workouts.VO.Reps, 10),
+      load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(90).get()),
+      rir: v.parse(Workouts.VO.Rir, 1),
+    },
+  ],
+};
+
 export const bodyweightExercisePerformance = {
   workoutId,
   scheduledFor: workoutScheduledFor,

@@ -35,7 +35,7 @@ describe("ExercisePerformanceLowestRir", () => {
       ],
     });
 
-    expect(lowestRir.calculate()).toEqual(undefined);
+    expect(lowestRir.calculate()).toEqual(v.parse(Workouts.VO.Rir, 2));
   });
 
   test("no sets", () => {
