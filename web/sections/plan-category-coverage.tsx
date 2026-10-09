@@ -26,7 +26,7 @@ export function PlanCategoryCoverage(props: bg.UseToggleReturnType) {
       className="c-card"
       data-stack="y"
       {...ui.Spacing.surface}
-      {...ui.Gap.related}
+      {...ui.Gap.block}
       {...toggle.props.target}
     >
       <div data-stack="y" {...ui.Gap.inline}>
