@@ -11,7 +11,7 @@ type WorkoutExerciseProgressionIsApplicableConfigType = {
 
 class WorkoutExerciseProgressionIsApplicableFactory extends bg.Invariant<WorkoutExerciseProgressionIsApplicableConfigType> {
   passes(config: WorkoutExerciseProgressionIsApplicableConfigType) {
-    return Plans.VO.ProgressionMethodApplicability[config.resistance].includes(config.progression);
+    return Plans.VO.ProgressionMethodApplicability.isApplicable(config.resistance, config.progression);
   }
 
   // Stryker disable next-line StringLiteral

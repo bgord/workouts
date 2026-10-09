@@ -55,7 +55,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
           exercise: {
             ...exerciseInstruction.exercise,
             progressionMethods:
-              Plans.VO.ProgressionMethodApplicability[exerciseInstruction.exercise.resistance],
+              Plans.VO.ProgressionMethodApplicability.options(exerciseInstruction.exercise.resistance),
           },
           actions: new Plans.Services.PlanGetExerciseInstructionActions({
             status: plan.status,

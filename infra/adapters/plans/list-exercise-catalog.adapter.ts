@@ -35,7 +35,7 @@ class ListExerciseCatalogQueryDrizzle implements Plans.Queries.ListExerciseCatal
         ...assignment.category,
         role: assignment.role,
       })),
-      progressionMethods: Plans.VO.ProgressionMethodApplicability[exercise.resistance],
+      progressionMethods: Plans.VO.ProgressionMethodApplicability.options(exercise.resistance),
     }));
 
     return { data };
