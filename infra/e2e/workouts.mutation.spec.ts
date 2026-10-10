@@ -543,7 +543,7 @@ test.describe("Workouts - athlete-mutation", () => {
 
     expect(copied).toContain(`Workout id: ${fixtures.athleteMutation.scheduledWorkout.id}`);
     expect(copied).toContain("Logged sets: 1");
-    expect(copied).toContain("| 1 | 7 | 30 | both | not recorded |");
+    expect(copied).toContain("| 1 | 7 | 30 | both | 3+ |");
   });
 
   test("removes a set of a past workout", async ({ page }) => {
@@ -1143,8 +1143,6 @@ test.describe("Workouts - hanger", () => {
 
     const copied = await page.evaluate(() => navigator.clipboard.readText());
 
-    expect(copied).toContain(
-      `| ${fixtures.exercises.hangingLegRaise.name} | 1 | 12 | — | both | not recorded |`,
-    );
+    expect(copied).toContain(`| ${fixtures.exercises.hangingLegRaise.name} | 1 | 12 | — | both | 3+ |`);
   });
 });
