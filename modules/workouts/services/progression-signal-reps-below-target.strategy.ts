@@ -5,6 +5,8 @@ import type { ProgressionSignalStrategy } from "./progression-signal.strategy";
 type Config = { prescription: VO.ExercisePrescriptionType; reps: VO.RepsType };
 
 export class ProgressionSignalRepsBelowTargetStrategy implements ProgressionSignalStrategy {
+  readonly blocksProgress = true;
+
   private static readonly applicable: ReadonlyArray<Plans.VO.ProgressionMethodOptions> = [
     Plans.VO.ProgressionMethodOptions.linear_progression,
   ];

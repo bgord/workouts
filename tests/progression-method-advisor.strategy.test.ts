@@ -91,4 +91,63 @@ describe("ProgressionMethodAdvisorStrategy", () => {
 
     expect(strategy.calculate()).toEqual({ last: mocks.exercisePerformanceWeakestSet });
   });
+
+  test("non-blocking signal - progress", () => {
+    const strategy = new Workouts.Services.ProgressionMethodAdvisorStrategy({
+      ProgressionMethod: new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
+        { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
+        { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
+      ),
+      ProgressionSignals: [
+        new Workouts.Services.ProgressionSignalStallStrategy(mocks.stalledExerciseRecentPerformances),
+        new Workouts.Services.ProgressionSignalRirBelowTargetStrategy({
+          prescription: mocks.rirExercisePrescription,
+          rir: v.parse(Workouts.VO.Rir, 2),
+        }),
+      ],
+    });
+
+    expect(strategy.calculate()).toEqual({
+      ...mocks.exerciseTargetProgression,
+      signal: Workouts.VO.ProgressionSignalOptions.stall,
+    });
+  });
+
+  test("non-blocking and blocking signals - first signal, no progress", () => {
+    const strategy = new Workouts.Services.ProgressionMethodAdvisorStrategy({
+      ProgressionMethod: new Workouts.Services.ProgressionMethodDoubleProgressionStrategy(
+        { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
+        { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
+      ),
+      ProgressionSignals: [
+        new Workouts.Services.ProgressionSignalStallStrategy(mocks.stalledExerciseRecentPerformances),
+        new Workouts.Services.ProgressionSignalRirBelowTargetStrategy({
+          prescription: mocks.rirExercisePrescription,
+          rir: v.parse(Workouts.VO.Rir, 1),
+        }),
+      ],
+    });
+
+    expect(strategy.calculate()).toEqual({
+      last: mocks.exerciseTargetProgression.last,
+      regress: mocks.exerciseTargetProgression.regress,
+      signal: Workouts.VO.ProgressionSignalOptions.stall,
+    });
+  });
+
+  test("non-blocking signal - no progress offered", () => {
+    const strategy = new Workouts.Services.ProgressionMethodAdvisorStrategy({
+      ProgressionMethod: new Workouts.Services.ProgressionMethodNoneStrategy({
+        last: mocks.exercisePerformanceWeakestSet,
+      }),
+      ProgressionSignals: [
+        new Workouts.Services.ProgressionSignalStallStrategy(mocks.stalledExerciseRecentPerformances),
+      ],
+    });
+
+    expect(strategy.calculate()).toEqual({
+      last: mocks.exercisePerformanceWeakestSet,
+      signal: Workouts.VO.ProgressionSignalOptions.stall,
+    });
+  });
 });

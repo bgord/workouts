@@ -11,6 +11,8 @@ type Config = {
 };
 
 export class ProgressionSignalStallStrategy implements ProgressionSignalStrategy {
+  readonly blocksProgress = false;
+
   constructor(private readonly config: Config) {}
 
   calculate(): VO.ProgressionSignalOptions | undefined {

@@ -1,3 +1,4 @@
+import type * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Exercises from "+exercises";
 import * as Plans from "+plans";
@@ -15,12 +16,17 @@ import { ProgressionMethodRepProgressionStrategy } from "./progression-method-re
 import { ProgressionSignalRepsBelowTargetStrategy } from "./progression-signal-reps-below-target.strategy";
 import { ProgressionSignalRirBelowTargetStrategy } from "./progression-signal-rir-below-target.strategy";
 import { ProgressionSignalSetsBelowTargetStrategy } from "./progression-signal-sets-below-target.strategy";
+import { ProgressionSignalStallStrategy } from "./progression-signal-stall.strategy";
 
 export class ProgressionMethodStrategyFactory {
   static for(
     prescription: VO.ExercisePrescriptionType,
     loadStep: Exercises.VO.ExerciseLoadStepType,
     previous: Pick<Queries.ExercisePerformance, "sets">,
+    recent: {
+      scheduledFor: tools.DayIsoIdType;
+      performances: ReadonlyArray<Queries.ExerciseRecentPerformance>;
+    },
   ): ProgressionMethodAdvisorStrategy {
     const rir = new ExercisePerformanceLowestRir(previous).calculate();
     const weakest = new ExercisePerformanceWeakestSet(previous).calculate();
@@ -28,6 +34,7 @@ export class ProgressionMethodStrategyFactory {
     return new ProgressionMethodAdvisorStrategy({
       ProgressionMethod: ProgressionMethodStrategyFactory.method(prescription, loadStep, weakest),
       ProgressionSignals: [
+        new ProgressionSignalStallStrategy(recent),
         new ProgressionSignalRepsBelowTargetStrategy({ prescription, reps: weakest.reps }),
         new ProgressionSignalSetsBelowTargetStrategy({ prescription, sets: weakest.sets }),
         new ProgressionSignalRirBelowTargetStrategy({ prescription, rir }),

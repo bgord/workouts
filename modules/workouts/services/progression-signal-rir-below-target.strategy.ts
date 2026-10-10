@@ -5,6 +5,8 @@ import { RirBelowTarget } from "./rir-below-target";
 type Config = { prescription: VO.ExercisePrescriptionType; rir: VO.RirType | undefined };
 
 export class ProgressionSignalRirBelowTargetStrategy implements ProgressionSignalStrategy {
+  readonly blocksProgress = true;
+
   constructor(private readonly config: Config) {}
 
   calculate(): VO.ProgressionSignalOptions | undefined {

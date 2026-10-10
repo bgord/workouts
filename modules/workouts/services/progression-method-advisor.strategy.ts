@@ -12,15 +12,14 @@ export class ProgressionMethodAdvisorStrategy implements ProgressionMethodStrate
 
   calculate(): VO.ExerciseTargetProgression {
     const { progress, ...progression } = this.deps.ProgressionMethod.calculate();
-
-    if (progress === undefined) return progression;
-
-    const signal = this.deps.ProgressionSignals.map((signal) => signal.calculate()).find(
-      (reason) => reason !== undefined,
+    const applicable = this.deps.ProgressionSignals.filter(
+      (signal) => progress !== undefined || !signal.blocksProgress,
     );
+    const hits = applicable.filter((signal) => signal.calculate() !== undefined);
+    const signal = hits[0]?.calculate();
 
-    if (signal === undefined) return { ...progression, progress };
+    if (hits.some((hit) => hit.blocksProgress)) return { ...progression, signal };
 
-    return { ...progression, signal };
+    return { ...progression, progress, signal };
   }
 }

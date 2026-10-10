@@ -55,6 +55,7 @@ export async function targetWorkout(
           exercise.prescription,
           catalogExercise?.loadStep ?? Exercises.VO.ExerciseLoadStepOptions.none,
           previous,
+          { scheduledFor: workout["scheduledFor"]!, performances: [] },
         ).calculate()
       : undefined;
     const target = progression?.progress ?? progression?.last;

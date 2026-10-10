@@ -5,6 +5,8 @@ import type { ProgressionSignalStrategy } from "./progression-signal.strategy";
 type Config = { prescription: VO.ExercisePrescriptionType; sets: Plans.VO.SetsType };
 
 export class ProgressionSignalSetsBelowTargetStrategy implements ProgressionSignalStrategy {
+  readonly blocksProgress = true;
+
   constructor(private readonly config: Config) {}
 
   calculate(): VO.ProgressionSignalOptions | undefined {

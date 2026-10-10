@@ -211,6 +211,17 @@ export const hitExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerfor
   }),
 };
 
+export const exerciseRecentPerformances = { scheduledFor: workoutScheduledFor, performances: [] };
+
+export const stalledExerciseRecentPerformances = {
+  scheduledFor: workoutScheduledFor,
+  performances: [
+    { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-25") },
+    { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-18") },
+    { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-11") },
+  ],
+};
+
 export const exercisePerformanceWithRir = {
   ...exercisePerformance,
   sets: [
