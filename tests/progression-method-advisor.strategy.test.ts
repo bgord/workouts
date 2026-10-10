@@ -1,5 +1,4 @@
 import { describe, expect, test } from "bun:test";
-import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Plans from "+plans";
 import * as Workouts from "+workouts";
@@ -91,30 +90,5 @@ describe("ProgressionMethodAdvisorStrategy", () => {
     });
 
     expect(strategy.calculate()).toEqual({ last: mocks.exercisePerformanceWeakestSet });
-  });
-
-  test("reps below the range - signal - reps hold", () => {
-    const strategy = new Workouts.Services.ProgressionMethodAdvisorStrategy({
-      ProgressionMethod: new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
-        { prescription: mocks.rirExercisePrescription, last: mocks.exercisePerformanceWeakestSet },
-        { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
-      ),
-      ProgressionSignals: [
-        new Workouts.Services.ProgressionSignalSetsBelowTargetStrategy({
-          prescription: mocks.rirExercisePrescription,
-          sets: v.parse(Plans.VO.Sets, 2),
-        }),
-      ],
-    });
-
-    expect(strategy.calculate()).toEqual({
-      last: mocks.exercisePerformanceWeakestSet,
-      regress: v.parse(Workouts.VO.ExerciseTarget, {
-        sets: v.parse(Plans.VO.Sets, 2),
-        reps: v.parse(Workouts.VO.Reps, 8),
-        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
-      }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.reps_below_target,
-    });
   });
 });

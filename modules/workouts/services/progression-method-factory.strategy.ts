@@ -12,6 +12,7 @@ import { ProgressionMethodDoubleProgressionStrategy } from "./progression-method
 import { ProgressionMethodLinearProgressionStrategy } from "./progression-method-linear-progression.strategy";
 import { ProgressionMethodNoneStrategy } from "./progression-method-none.strategy";
 import { ProgressionMethodRepProgressionStrategy } from "./progression-method-rep-progression.strategy";
+import { ProgressionSignalRepsBelowTargetStrategy } from "./progression-signal-reps-below-target.strategy";
 import { ProgressionSignalRirBelowTargetStrategy } from "./progression-signal-rir-below-target.strategy";
 import { ProgressionSignalSetsBelowTargetStrategy } from "./progression-signal-sets-below-target.strategy";
 
@@ -27,6 +28,7 @@ export class ProgressionMethodStrategyFactory {
     return new ProgressionMethodAdvisorStrategy({
       ProgressionMethod: ProgressionMethodStrategyFactory.method(prescription, loadStep, weakest),
       ProgressionSignals: [
+        new ProgressionSignalRepsBelowTargetStrategy({ prescription, reps: weakest.reps }),
         new ProgressionSignalSetsBelowTargetStrategy({ prescription, sets: weakest.sets }),
         new ProgressionSignalRirBelowTargetStrategy({ prescription, rir }),
       ],

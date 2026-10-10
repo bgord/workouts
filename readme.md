@@ -576,6 +576,7 @@ modules/
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method-rep-progression.strategy.ts
     │   ├── progression-method.strategy.ts
+    │   ├── progression-signal-reps-below-target.strategy.ts
     │   ├── progression-signal-rir-below-target.strategy.ts
     │   ├── progression-signal-sets-below-target.strategy.ts
     │   ├── progression-signal.strategy.ts
