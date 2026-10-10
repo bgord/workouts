@@ -14,6 +14,25 @@ test.describe("Workout - athlete", () => {
     );
   });
 
+  test("shows the stall when the last sessions missed the prescription", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.athlete.stalledExercise.name, exact: true });
+    const suggestion = row.getByRole("group", {
+      name: "Based on the last session · Double progression",
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+
+    await expect(
+      suggestion.getByText("Missed the prescription in the last 3 sessions. Step back or change the plan", {
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(suggestion.getByRole("button")).toHaveText(["−2.5 kg", "Last", "+1 rep"]);
+  });
+
   test("shows the error when changing the date fails", async ({ page }) => {
     const scheduledFor = page.getByLabel("Scheduled for");
 
