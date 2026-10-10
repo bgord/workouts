@@ -41,6 +41,30 @@ describe(`POST ${url}`, async () => {
     await testcases.assertErrorResponse(response, 400, "body.part.name.invalid");
   });
 
+  test("validation - description - wrong type", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ name: mocks.bodyPartName, description: 2024 }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "body.part.description.type");
+  });
+
+  test("validation - description - empty", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "POST", body: JSON.stringify({ name: mocks.bodyPartName, description: "" }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "body.part.description.invalid");
+  });
+
   test("BodyPartNameIsUnique", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
@@ -80,5 +104,28 @@ describe(`POST ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyPartDefinedEvent]);
+  });
+
+  test("happy path - with description", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Adapters.System.IdProvider, "generate")).mockReturnValueOnce(mocks.bodyPartId);
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetBodyPartNameCountQuery, "execute"))
+      .mockResolvedValue(tools.Int.nonNegative(0));
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.correlationIdHeaders,
+        body: JSON.stringify({ name: mocks.bodyPartName, description: mocks.bodyPartDescription }),
+      },
+      mocks.ip,
+    );
+
+    expect(response.status).toEqual(200);
+    expect(eventStoreSave).toHaveBeenCalledWith([mocks.GenericBodyPartDefinedWithDescriptionEvent]);
   });
 });

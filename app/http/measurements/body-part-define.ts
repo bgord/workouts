@@ -16,10 +16,14 @@ export const BodyPartDefine =
     const userId = context.identity.authenticatedUserId();
     const id = v.parse(Measurements.VO.BodyPartId, deps.IdProvider.generate());
     const name = v.parse(Measurements.VO.BodyPartName, body["name"]);
+    const description = v.parse(
+      v.optional(Measurements.VO.BodyPartDescription),
+      body["description"] ?? undefined,
+    );
 
     const command = bg.command(
       Measurements.Commands.BodyPartDefineCommand,
-      { payload: { id, name, userId } },
+      { payload: { id, name, description, userId } },
       deps,
     );
 
