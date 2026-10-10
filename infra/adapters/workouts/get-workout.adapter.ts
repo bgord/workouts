@@ -7,6 +7,7 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 import { GetExercisePreviousPerformanceQuery } from "./get-exercise-previous-performance.adapter";
 import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
+import { ListExerciseRecentPerformancesQuery } from "./list-exercise-recent-performances.adapter";
 
 class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
   async execute(
@@ -62,11 +63,15 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
       ...workout,
       exercises: await Promise.all(
         workout.exercises.map(async ({ exercise: catalogExercise, ...exercise }) => {
-          const previous = await GetExercisePreviousPerformanceQuery.execute(
-            userId,
-            exercise.exerciseId,
-            workout,
-          );
+          const [previous, recent] = await Promise.all([
+            GetExercisePreviousPerformanceQuery.execute(userId, exercise.exerciseId, workout),
+            ListExerciseRecentPerformancesQuery.execute(
+              userId,
+              exercise.exerciseId,
+              workout,
+              tools.Int.positive(Workouts.VO.ExerciseStallWindowSessions),
+            ),
+          ]);
 
           return {
             ...exercise,
@@ -97,6 +102,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
                 exercise.prescription,
                 catalogExercise?.loadStep ?? Exercises.VO.ExerciseLoadStepOptions.none,
                 previous,
+                { scheduledFor: workout.scheduledFor, performances: recent },
               ).calculate(),
             actions: new Workouts.Services.WorkoutGetExerciseActions({
               status: workout.status,

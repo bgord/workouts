@@ -75,7 +75,7 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
     });
   });
 
-  test("reps below the range - regress goes to range minimum, hold", () => {
+  test("reps below the range - regress goes to range minimum", () => {
     const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
       { prescription: mocks.exercisePrescription, last: mocks.exercisePerformanceWeakestSet },
       { LoadStep: new Workouts.Services.LoadStepIncrementStrategy({ step: mocks.loadStep }) },
@@ -88,7 +88,11 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
         reps: v.parse(Workouts.VO.Reps, 8),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.reps_below_target,
+      progress: v.parse(Workouts.VO.ExerciseTarget, {
+        sets: v.parse(Plans.VO.Sets, 2),
+        reps: v.parse(Workouts.VO.Reps, 5),
+        load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(92.5).get()),
+      }),
     });
   });
 
@@ -104,14 +108,5 @@ describe("ProgressionMethodLinearProgressionStrategy", () => {
     );
 
     expect(strategy.calculate()).toEqual({ last, regress: undefined, progress: undefined });
-  });
-
-  test("locked load - reps below the range - no hold", () => {
-    const strategy = new Workouts.Services.ProgressionMethodLinearProgressionStrategy(
-      { prescription: mocks.exercisePrescription, last: mocks.exercisePerformanceWeakestSet },
-      { LoadStep: new Workouts.Services.LoadStepLockedStrategy() },
-    );
-
-    expect(strategy.calculate()).toEqual({ last: mocks.exercisePerformanceWeakestSet });
   });
 });

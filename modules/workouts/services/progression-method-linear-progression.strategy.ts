@@ -14,16 +14,7 @@ export class ProgressionMethodLinearProgressionStrategy implements ProgressionMe
   ) {}
 
   calculate(): VO.ExerciseTargetProgression {
-    const { prescription, last } = this.config;
-    const regress = this.regress();
-    const progress = this.progress();
-
-    if (progress === undefined) return { last, regress };
-    if (last.reps < prescription.reps.min) {
-      return { last, regress, hold: VO.ProgressionHoldReasonOptions.reps_below_target };
-    }
-
-    return { last, regress, progress };
+    return { last: this.config.last, regress: this.regress(), progress: this.progress() };
   }
 
   private regress(): VO.ExerciseTargetType | undefined {

@@ -81,6 +81,8 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
         const stall =
           exercise.prescription.progression === Plans.VO.ProgressionMethodOptions.double_progression &&
           sessions.length % 4 === 3;
+        const missed = exercise.exerciseId === persona.stalledExercise.id && daysAgo <= 21;
+        const lastReps = missed ? exercise.prescription.reps.min - 1 : stall ? target.reps - 1 : target.reps;
 
         await logSets(
           di,
@@ -88,7 +90,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
           workoutId,
           exercise.id,
           Array.from({ length: target.sets }, (_, index) => ({
-            reps: stall && index === target.sets - 1 ? target.reps - 1 : target.reps,
+            reps: index === target.sets - 1 ? lastReps : target.reps,
             load: target.load,
             rir: index < target.sets / 2 ? 2 : 1,
           })),

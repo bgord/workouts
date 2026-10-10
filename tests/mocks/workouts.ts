@@ -196,6 +196,32 @@ export const exercisePerformance = {
   ],
 };
 
+export const missedExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerformance = {
+  scheduledFor: workoutScheduledFor,
+  prescription: exercisePrescription,
+  sets: exercisePerformance.sets,
+};
+
+export const hitExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerformance = {
+  ...missedExerciseRecentPerformance,
+  prescription: v.parse(Workouts.VO.ExercisePrescription, {
+    sets: v.parse(Plans.VO.Sets, 2),
+    reps: amrapRepsRange,
+    progression,
+  }),
+};
+
+export const exerciseRecentPerformances = { scheduledFor: workoutScheduledFor, performances: [] };
+
+export const stalledExerciseRecentPerformances = {
+  scheduledFor: workoutScheduledFor,
+  performances: [
+    { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-25") },
+    { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-18") },
+    { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-11") },
+  ],
+};
+
 export const exercisePerformanceWithRir = {
   ...exercisePerformance,
   sets: [

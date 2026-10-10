@@ -707,6 +707,7 @@ export const drafter = {
 export const athlete = {
   email: "athlete@example.com",
   scheduledWorkout: { id: "84d48b25-7c52-4466-8f98-4b435b337bb0" },
+  stalledExercise: exercises.straightArmPulldownBar,
   bodyParts: {
     waist: { id: "0f45cbd8-7c28-4ea3-8881-df023ebe309d", name: "Waist" },
     chest: { id: "e8d40984-53c7-4270-bc60-7755252afbd9", name: "Chest" },
@@ -729,6 +730,7 @@ export const athlete = {
 export const athleteMutation = {
   email: "athlete-mutation@example.com",
   scheduledWorkout: { id: "cd6aba9a-80fb-48c9-9fa0-37adb5915031" },
+  stalledExercise: exercises.straightArmPulldownBar,
   bodyParts: {
     waist: { id: "cab2b985-aa02-415d-8bae-3a175ae7f21c", name: "Waist" },
     chest: { id: "79e2e5d0-3bde-48bc-a580-eedf7d8191a7", name: "Chest" },

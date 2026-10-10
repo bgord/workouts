@@ -556,12 +556,14 @@ modules/
     │   ├── get-workout-status-for-owner-count.ts
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
+    │   ├── list-exercise-recent-performances.ts
     │   ├── list-week-completed-workouts.ts
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
     ├── services
     │   ├── exercise-performance-lowest-rir.ts
     │   ├── exercise-performance-weakest-set.ts
+    │   ├── exercise-prescription-missed.ts
     │   ├── exercise-target-diff-calculator.ts
     │   ├── load-step-factory.strategy.ts
     │   ├── load-step-increment.strategy.ts
@@ -569,14 +571,18 @@ modules/
     │   ├── load-step-rack.strategy.ts
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
+    │   ├── progression-method-advisor.strategy.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method-rep-progression.strategy.ts
-    │   ├── progression-method-rir-gate.strategy.ts
-    │   ├── progression-method-sets-gate.strategy.ts
     │   ├── progression-method.strategy.ts
+    │   ├── progression-signal-reps-below-target.strategy.ts
+    │   ├── progression-signal-rir-below-target.strategy.ts
+    │   ├── progression-signal-sets-below-target.strategy.ts
+    │   ├── progression-signal-stall.strategy.ts
+    │   ├── progression-signal.strategy.ts
     │   ├── rir-below-target.ts
     │   ├── workout-export-file-csv.ts
     │   ├── workout-get-actions.ts
@@ -587,13 +593,15 @@ modules/
     └── value-objects
         ├── dumbbell-rack.ts
         ├── exercise-prescription.ts
+        ├── exercise-stall-break.ts
+        ├── exercise-stall-window.ts
         ├── exercise-target-diff.ts
         ├── exercise-target-progression.ts
         ├── exercise-target.ts
         ├── load.ts
         ├── logged-set-id.ts
         ├── logged-set.ts
-        ├── progression-hold-reason-options.ts
+        ├── progression-signal-options.ts
         ├── reps.ts
         ├── rir.ts
         ├── set-number.ts
@@ -811,6 +819,7 @@ infra/
 │       ├── get-workout-status-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts
+│       ├── list-exercise-recent-performances.adapter.ts
 │       ├── list-week-completed-workouts.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts
 │       └── list-workouts.adapter.ts

@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { ExercisePrescriptionType } from "../../modules/workouts/value-objects/exercise-prescription";
+import { ExerciseStallWindowSessions } from "../../modules/workouts/value-objects/exercise-stall-window";
 import type { ExerciseTargetType } from "../../modules/workouts/value-objects/exercise-target";
 import type { ExerciseTargetProgression } from "../../modules/workouts/value-objects/exercise-target-progression";
 import type { WorkoutExerciseResistanceType } from "../../modules/workouts/value-objects/workout-exercise-resistance";
@@ -85,12 +86,13 @@ export function WorkoutExerciseTargetProgression(
         </ui.ChipButton>
       )}
 
-      {progression.hold && (
+      {progression.signal && (
         <small data-color="neutral-400" data-self="center">
-          {t(`workout.target.progression.hold.${progression.hold}`, {
+          {t(`workout.target.progression.signal.${progression.signal}`, {
             sets: prescription.sets,
             reps: prescription.reps.min,
             rir: prescription.rir ?? "",
+            sessions: ExerciseStallWindowSessions,
           })}
         </small>
       )}
