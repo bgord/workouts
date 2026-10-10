@@ -345,6 +345,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     }),
   );
   Tools.CommandBus.on(
+    MeasurementsCommands.BODY_PART_DESCRIPTION_SET_COMMAND,
+    MeasurementsCommandHandlers.handleBodyPartDescriptionSetCommand({
+      ...deps,
+      GetBodyPartQuery: Adapters.Measurements.GetBodyPartQuery,
+    }),
+  );
+  Tools.CommandBus.on(
     MeasurementsCommands.BODY_PART_DELETE_COMMAND,
     MeasurementsCommandHandlers.handleBodyPartDeleteCommand({
       ...deps,
