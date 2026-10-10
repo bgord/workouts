@@ -77,6 +77,43 @@ test.describe("Body parts - athlete", () => {
     ).toBeVisible();
   });
 
+  test("lists the body part description", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
+
+    await expect(
+      page
+        .getByRole("dialog", { name: "Body parts" })
+        .getByRole("listitem", { name: fixtures.athlete.bodyParts.waist.name, exact: true })
+        .getByText(fixtures.athlete.bodyParts.waist.description, { exact: true }),
+    ).toBeVisible();
+  });
+
+  test("shows the body part description read-only when measuring", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` });
+
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` }).click();
+
+    await expect(
+      dialog.getByText(fixtures.athlete.bodyParts.waist.description, { exact: true }),
+    ).toBeVisible();
+    await expect(dialog.getByRole("textbox", { name: "How to measure" })).toBeHidden();
+  });
+
+  test("hides the description when measuring a body part without one", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: `Measure ${fixtures.athlete.bodyParts.chest.name}` });
+
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.chest.name}` }).click();
+
+    await expect(dialog.getByText("How to measure", { exact: true })).toBeHidden();
+  });
+
   test("opens the menu with ArrowDown and focuses the first item", async ({ page }) => {
     await page.goto("/measurements/body-parts");
 
@@ -271,13 +308,36 @@ test.describe("Body parts - athlete", () => {
       .fill("Waist girth");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByText("Could not rename the body part")).toBeVisible();
+    await expect(page.getByText("Could not save the body part")).toBeVisible();
 
     await page.reload();
 
     await expect(
       page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.waist.name}` }),
     ).toBeVisible();
+  });
+
+  test("shows the error when setting a body part description fails", async ({ page }) => {
+    await page.route("**/api/measurements/body-part/*/description", (route) =>
+      route.fulfill({ status: 500 }),
+    );
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
+    await page.getByRole("button", { name: `Rename ${fixtures.athlete.bodyParts.chest.name}` }).click();
+    await page
+      .getByRole("form", { name: `Rename ${fixtures.athlete.bodyParts.chest.name}` })
+      .getByLabel("How to measure")
+      .fill("Relaxed, tape across the nipples");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Could not save the body part")).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: `Measure ${fixtures.athlete.bodyParts.chest.name}` }).click();
+
+    await expect(page.getByText("Relaxed, tape across the nipples")).toBeHidden();
   });
 
   test("shows the error when deleting a body part fails", async ({ page }) => {

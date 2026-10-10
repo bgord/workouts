@@ -145,7 +145,7 @@
   "measurements.body_parts.correct.error": "Nie udało się poprawić pomiaru",
   "measurements.body_parts.correct.title": "Popraw pomiar: {{date}}, {{value}}",
   "measurements.body_parts.correct.value.label": "Obwód",
-  "measurements.body_parts.define.description.label": "Jak to mierzysz? (opcjonalnie)",
+  "measurements.body_parts.define.description.label": "Jak to mierzysz?",
   "measurements.body_parts.define.description.placeholder": "Rozluźniony, miarka na najszerszym miejscu",
   "measurements.body_parts.define.error": "Nie udało się dodać obwodu",
   "measurements.body_parts.define.name.label": "Nowy obwód",

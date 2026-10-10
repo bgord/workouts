@@ -53,7 +53,7 @@ export async function setBodyWeightReference(
 export async function defineBodyPart(
   di: BootstrapType,
   userId: Auth.VO.UserIdType,
-  bodyPart: { id: string; name: string },
+  bodyPart: { id: string; name: string; description?: string },
 ) {
   const deps = { ...di.Adapters.System, ...di.Tools };
 
@@ -63,6 +63,9 @@ export async function defineBodyPart(
       payload: {
         id: v.parse(Measurements.VO.BodyPartId, bodyPart.id),
         name: v.parse(Measurements.VO.BodyPartName, bodyPart.name),
+        description: bodyPart.description
+          ? v.parse(Measurements.VO.BodyPartDescription, bodyPart.description)
+          : undefined,
         userId,
       },
     },
