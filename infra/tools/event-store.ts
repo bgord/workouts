@@ -21,6 +21,7 @@ import * as schema from "+infra/schema";
 import type {
   BodyPartDefinedEventType,
   BodyPartDeletedEventType,
+  BodyPartDescriptionSetEventType,
   BodyPartMeasuredEventType,
   BodyPartMeasurementCorrectedEventType,
   BodyPartMeasurementRemovedEventType,
@@ -74,6 +75,7 @@ export type AcceptedEventType =
   | BodyPartMeasurementCorrectedEventType
   | BodyPartMeasurementRemovedEventType
   | BodyPartRenamedEventType
+  | BodyPartDescriptionSetEventType
   | BodyWeightMeasuredEventType
   | BodyWeightMeasurementCorrectedEventType
   | BodyWeightMeasurementRemovedEventType

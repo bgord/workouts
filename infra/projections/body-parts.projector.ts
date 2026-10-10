@@ -9,6 +9,7 @@ type Dependencies = {
   EventBus: bg.EventBusPort<
     | Measurements.Events.BodyPartDefinedEventType
     | Measurements.Events.BodyPartRenamedEventType
+    | Measurements.Events.BodyPartDescriptionSetEventType
     | Measurements.Events.BodyPartDeletedEventType
     | Auth.Events.AccountDeletedEventType
   >;
@@ -24,6 +25,10 @@ export class BodyPartsProjector {
     deps.EventBus.on(
       Measurements.Events.BODY_PART_RENAMED_EVENT,
       deps.EventHandler.handle(this.onBodyPartRenamedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      Measurements.Events.BODY_PART_DESCRIPTION_SET_EVENT,
+      deps.EventHandler.handle(this.onBodyPartDescriptionSetEvent.bind(this)),
     );
     deps.EventBus.on(
       Measurements.Events.BODY_PART_DELETED_EVENT,

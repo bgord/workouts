@@ -152,21 +152,40 @@ export const bodyPartStream = v.parse(bg.EventStream, `body_part_${bodyPartId}`)
 export const bodyPartName = v.parse(Measurements.VO.BodyPartName, "Left Bicep");
 export const anotherBodyPartName = v.parse(Measurements.VO.BodyPartName, "Right Bicep");
 
+export const bodyPartDescription = v.parse(
+  Measurements.VO.BodyPartDescription,
+  "Relaxed, tape level at the widest point",
+);
+export const anotherBodyPartDescription = v.parse(
+  Measurements.VO.BodyPartDescription,
+  "Flexed, tape level at the peak",
+);
+
 export const bodyPart: Measurements.VO.BodyPart = {
   id: bodyPartId,
   name: bodyPartName,
+  description: null,
+  userId,
+};
+
+export const describedBodyPart: Measurements.VO.BodyPart = {
+  id: bodyPartId,
+  name: bodyPartName,
+  description: bodyPartDescription,
   userId,
 };
 
 export const anotherBodyPart: Measurements.VO.BodyPart = {
   id: anotherBodyPartId,
   name: anotherBodyPartName,
+  description: null,
   userId,
 };
 
 export const anotherUserBodyPart: Measurements.VO.BodyPart = {
   id: bodyPartId,
   name: bodyPartName,
+  description: null,
   userId: anotherUserId,
 };
 
@@ -180,6 +199,22 @@ export const GenericBodyPartDefinedEvent = {
   name: "BODY_PART_DEFINED_EVENT",
   payload: { id: bodyPartId, name: bodyPartName, userId },
 } satisfies Measurements.Events.BodyPartDefinedEventType;
+
+export const GenericBodyPartDefinedWithDescriptionEvent = {
+  ...GenericBodyPartDefinedEvent,
+  payload: { id: bodyPartId, name: bodyPartName, description: bodyPartDescription, userId },
+} satisfies Measurements.Events.BodyPartDefinedEventType;
+
+export const GenericBodyPartDescriptionSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: bodyPartStream,
+  version: 1,
+  commit,
+  name: "BODY_PART_DESCRIPTION_SET_EVENT",
+  payload: { id: bodyPartId, description: bodyPartDescription, requesterId: userId },
+} satisfies Measurements.Events.BodyPartDescriptionSetEventType;
 
 export const GenericBodyPartRenamedEvent = {
   id: expectAnyId,
