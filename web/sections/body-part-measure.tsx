@@ -66,6 +66,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
                 className="c-prose"
                 data-color="neutral-400"
                 data-fs="sm"
+                role="note"
               >
                 {props.description}
               </p>
