@@ -556,6 +556,7 @@ modules/
     │   ├── get-workout-status-for-owner-count.ts
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
+    │   ├── list-exercise-recent-performances.ts
     │   ├── list-week-completed-workouts.ts
     │   ├── list-workout-export-rows.ts
     │   └── list-workouts.ts
@@ -815,6 +816,7 @@ infra/
 │       ├── get-workout-status-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts
+│       ├── list-exercise-recent-performances.adapter.ts
 │       ├── list-week-completed-workouts.adapter.ts
 │       ├── list-workout-export-rows.adapter.ts
 │       └── list-workouts.adapter.ts
