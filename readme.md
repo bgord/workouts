@@ -569,14 +569,16 @@ modules/
     │   ├── load-step-rack.strategy.ts
     │   ├── load-step.strategy.ts
     │   ├── logged-sets-volume.ts
+    │   ├── progression-method-advisor.strategy.ts
     │   ├── progression-method-double-progression.strategy.ts
     │   ├── progression-method-factory.strategy.ts
     │   ├── progression-method-linear-progression.strategy.ts
     │   ├── progression-method-none.strategy.ts
     │   ├── progression-method-rep-progression.strategy.ts
-    │   ├── progression-method-rir-gate.strategy.ts
-    │   ├── progression-method-sets-gate.strategy.ts
     │   ├── progression-method.strategy.ts
+    │   ├── progression-signal-rir-below-target.strategy.ts
+    │   ├── progression-signal-sets-below-target.strategy.ts
+    │   ├── progression-signal.strategy.ts
     │   ├── rir-below-target.ts
     │   ├── workout-export-file-csv.ts
     │   ├── workout-get-actions.ts

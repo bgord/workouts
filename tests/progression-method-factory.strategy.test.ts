@@ -13,14 +13,16 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodAdvisorStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodSetsGateStrategy,
+      Workouts.Services.ProgressionMethodDoubleProgressionStrategy,
     );
-    expect(
-      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
-        .ProgressionMethod,
-    ).toBeInstanceOf(Workouts.Services.ProgressionMethodDoubleProgressionStrategy);
+    expect(strategy["deps"].ProgressionSignals[0]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalSetsBelowTargetStrategy,
+    );
+    expect(strategy["deps"].ProgressionSignals[1]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalRirBelowTargetStrategy,
+    );
     expect(strategy.calculate()).toEqual({
       last: v.parse(Workouts.VO.ExerciseTarget, {
         sets: v.parse(Plans.VO.Sets, 2),
@@ -135,14 +137,16 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodAdvisorStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodSetsGateStrategy,
+      Workouts.Services.ProgressionMethodLinearProgressionStrategy,
     );
-    expect(
-      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
-        .ProgressionMethod,
-    ).toBeInstanceOf(Workouts.Services.ProgressionMethodLinearProgressionStrategy);
+    expect(strategy["deps"].ProgressionSignals[0]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalSetsBelowTargetStrategy,
+    );
+    expect(strategy["deps"].ProgressionSignals[1]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalRirBelowTargetStrategy,
+    );
   });
 
   test("rep_progression", () => {
@@ -152,14 +156,16 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodAdvisorStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodSetsGateStrategy,
+      Workouts.Services.ProgressionMethodRepProgressionStrategy,
     );
-    expect(
-      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
-        .ProgressionMethod,
-    ).toBeInstanceOf(Workouts.Services.ProgressionMethodRepProgressionStrategy);
+    expect(strategy["deps"].ProgressionSignals[0]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalSetsBelowTargetStrategy,
+    );
+    expect(strategy["deps"].ProgressionSignals[1]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalRirBelowTargetStrategy,
+    );
   });
 
   test("none", () => {
@@ -169,13 +175,15 @@ describe("ProgressionMethodStrategyFactory", () => {
       mocks.exercisePerformance,
     );
 
-    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodRirGateStrategy);
+    expect(strategy).toBeInstanceOf(Workouts.Services.ProgressionMethodAdvisorStrategy);
     expect(strategy["deps"].ProgressionMethod).toBeInstanceOf(
-      Workouts.Services.ProgressionMethodSetsGateStrategy,
+      Workouts.Services.ProgressionMethodNoneStrategy,
     );
-    expect(
-      (strategy["deps"].ProgressionMethod as Workouts.Services.ProgressionMethodSetsGateStrategy)["deps"]
-        .ProgressionMethod,
-    ).toBeInstanceOf(Workouts.Services.ProgressionMethodNoneStrategy);
+    expect(strategy["deps"].ProgressionSignals[0]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalSetsBelowTargetStrategy,
+    );
+    expect(strategy["deps"].ProgressionSignals[1]).toBeInstanceOf(
+      Workouts.Services.ProgressionSignalRirBelowTargetStrategy,
+    );
   });
 });

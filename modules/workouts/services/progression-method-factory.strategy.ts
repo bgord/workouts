@@ -7,27 +7,30 @@ import { ExercisePerformanceLowestRir } from "./exercise-performance-lowest-rir"
 import { ExercisePerformanceWeakestSet } from "./exercise-performance-weakest-set";
 import { LoadStepStrategyFactory } from "./load-step-factory.strategy";
 import type { ProgressionMethodStrategy } from "./progression-method.strategy";
+import { ProgressionMethodAdvisorStrategy } from "./progression-method-advisor.strategy";
 import { ProgressionMethodDoubleProgressionStrategy } from "./progression-method-double-progression.strategy";
 import { ProgressionMethodLinearProgressionStrategy } from "./progression-method-linear-progression.strategy";
 import { ProgressionMethodNoneStrategy } from "./progression-method-none.strategy";
 import { ProgressionMethodRepProgressionStrategy } from "./progression-method-rep-progression.strategy";
-import { ProgressionMethodRirGateStrategy } from "./progression-method-rir-gate.strategy";
-import { ProgressionMethodSetsGateStrategy } from "./progression-method-sets-gate.strategy";
+import { ProgressionSignalRirBelowTargetStrategy } from "./progression-signal-rir-below-target.strategy";
+import { ProgressionSignalSetsBelowTargetStrategy } from "./progression-signal-sets-below-target.strategy";
 
 export class ProgressionMethodStrategyFactory {
   static for(
     prescription: VO.ExercisePrescriptionType,
     loadStep: Exercises.VO.ExerciseLoadStepType,
     previous: Pick<Queries.ExercisePerformance, "sets">,
-  ): ProgressionMethodRirGateStrategy {
+  ): ProgressionMethodAdvisorStrategy {
     const rir = new ExercisePerformanceLowestRir(previous).calculate();
     const weakest = new ExercisePerformanceWeakestSet(previous).calculate();
-    const ProgressionMethod = new ProgressionMethodSetsGateStrategy(
-      { prescription, sets: weakest.sets },
-      { ProgressionMethod: ProgressionMethodStrategyFactory.method(prescription, loadStep, weakest) },
-    );
 
-    return new ProgressionMethodRirGateStrategy({ prescription, rir }, { ProgressionMethod });
+    return new ProgressionMethodAdvisorStrategy({
+      ProgressionMethod: ProgressionMethodStrategyFactory.method(prescription, loadStep, weakest),
+      ProgressionSignals: [
+        new ProgressionSignalSetsBelowTargetStrategy({ prescription, sets: weakest.sets }),
+        new ProgressionSignalRirBelowTargetStrategy({ prescription, rir }),
+      ],
+    });
   }
 
   private static method(
