@@ -1,5 +1,7 @@
 export * from "./dumbbell-rack";
 export * from "./exercise-prescription";
+export * from "./exercise-stall-break";
+export * from "./exercise-stall-window";
 export * from "./exercise-target";
 export * from "./exercise-target-diff";
 export * from "./exercise-target-progression";

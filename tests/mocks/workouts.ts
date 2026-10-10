@@ -196,6 +196,21 @@ export const exercisePerformance = {
   ],
 };
 
+export const missedExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerformance = {
+  scheduledFor: workoutScheduledFor,
+  prescription: exercisePrescription,
+  sets: exercisePerformance.sets,
+};
+
+export const hitExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerformance = {
+  ...missedExerciseRecentPerformance,
+  prescription: v.parse(Workouts.VO.ExercisePrescription, {
+    sets: v.parse(Plans.VO.Sets, 2),
+    reps: amrapRepsRange,
+    progression,
+  }),
+};
+
 export const exercisePerformanceWithRir = {
   ...exercisePerformance,
   sets: [

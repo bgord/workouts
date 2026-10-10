@@ -19,6 +19,7 @@ export * from "./progression-signal.strategy";
 export * from "./progression-signal-reps-below-target.strategy";
 export * from "./progression-signal-rir-below-target.strategy";
 export * from "./progression-signal-sets-below-target.strategy";
+export * from "./progression-signal-stall.strategy";
 export * from "./rir-below-target";
 export * from "./workout-export-file-csv";
 export * from "./workout-get-actions";
