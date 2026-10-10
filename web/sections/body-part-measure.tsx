@@ -60,6 +60,17 @@ export function BodyPartMeasure(props: BodyPartSummary) {
               {t("measurements.body_parts.measure.header", { name: props.name })}
             </ui.DialogHeader>
 
+            {props.description && (
+              <p
+                aria-label={t("measurements.body_parts.description.label")}
+                className="c-prose"
+                data-color="neutral-400"
+                data-fs="sm"
+              >
+                {props.description}
+              </p>
+            )}
+
             <form
               aria-busy={mutation.isLoading}
               data-stack="y"

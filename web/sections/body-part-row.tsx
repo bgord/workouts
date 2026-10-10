@@ -24,6 +24,12 @@ export function BodyPartRow(props: BodyPartSummary & { first: boolean }) {
             {props.name}
           </span>
 
+          {props.description && (
+            <span data-color="neutral-400" data-fs="xs" data-transform="truncate">
+              {props.description}
+            </span>
+          )}
+
           <span data-color="neutral-500" data-fs="xs">
             {measurements.length === 0 && t("measurements.body_parts.measure.never")}
             {measurements.length > 0 &&
