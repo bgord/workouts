@@ -1,4 +1,5 @@
 export * from "./body-part-belongs-to-user";
+export * from "./body-part-description-has-changed";
 export * from "./body-part-exists";
 export * from "./body-part-is-defined";
 export * from "./body-part-measured-on-is-not-in-future";
