@@ -389,6 +389,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartRename(deps)),
   );
+  measurements.patch(
+    "/body-part/:bodyPartId/description",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyPartDescriptionSet(deps)),
+  );
   measurements.delete(
     "/body-part/:bodyPartId",
     Tools.ShieldCaptcha.handle(),
