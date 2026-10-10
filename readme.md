@@ -596,7 +596,7 @@ modules/
         ├── load.ts
         ├── logged-set-id.ts
         ├── logged-set.ts
-        ├── progression-hold-reason-options.ts
+        ├── progression-signal-options.ts
         ├── reps.ts
         ├── rir.ts
         ├── set-number.ts

@@ -85,9 +85,9 @@ export function WorkoutExerciseTargetProgression(
         </ui.ChipButton>
       )}
 
-      {progression.hold && (
+      {progression.signal && (
         <small data-color="neutral-400" data-self="center">
-          {t(`workout.target.progression.hold.${progression.hold}`, {
+          {t(`workout.target.progression.signal.${progression.signal}`, {
             sets: prescription.sets,
             reps: prescription.reps.min,
             rir: prescription.rir ?? "",

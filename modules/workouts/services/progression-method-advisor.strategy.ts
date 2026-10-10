@@ -15,12 +15,12 @@ export class ProgressionMethodAdvisorStrategy implements ProgressionMethodStrate
 
     if (progress === undefined) return progression;
 
-    const hold = this.deps.ProgressionSignals.map((signal) => signal.calculate()).find(
+    const signal = this.deps.ProgressionSignals.map((signal) => signal.calculate()).find(
       (reason) => reason !== undefined,
     );
 
-    if (hold === undefined) return { ...progression, progress };
+    if (signal === undefined) return { ...progression, progress };
 
-    return { ...progression, hold };
+    return { ...progression, signal };
   }
 }

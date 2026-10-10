@@ -7,12 +7,12 @@ type Config = { prescription: VO.ExercisePrescriptionType; rir: VO.RirType | und
 export class ProgressionSignalRirBelowTargetStrategy implements ProgressionSignalStrategy {
   constructor(private readonly config: Config) {}
 
-  calculate(): VO.ProgressionHoldReasonOptions | undefined {
+  calculate(): VO.ProgressionSignalOptions | undefined {
     const { prescription, rir } = this.config;
     const rirBelowTarget = new RirBelowTarget({ target: prescription.rir, rir }).calculate();
 
     if (!rirBelowTarget) return undefined;
 
-    return VO.ProgressionHoldReasonOptions.rir_below_target;
+    return VO.ProgressionSignalOptions.rir_below_target;
   }
 }

@@ -11,7 +11,7 @@ describe("ProgressionSignalSetsBelowTargetStrategy", () => {
       sets: v.parse(Plans.VO.Sets, 2),
     });
 
-    expect(strategy.calculate()).toEqual(Workouts.VO.ProgressionHoldReasonOptions.sets_below_target);
+    expect(strategy.calculate()).toEqual(Workouts.VO.ProgressionSignalOptions.sets_below_target);
   });
 
   test("sets at target", () => {

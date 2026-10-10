@@ -7,11 +7,11 @@ type Config = { prescription: VO.ExercisePrescriptionType; sets: Plans.VO.SetsTy
 export class ProgressionSignalSetsBelowTargetStrategy implements ProgressionSignalStrategy {
   constructor(private readonly config: Config) {}
 
-  calculate(): VO.ProgressionHoldReasonOptions | undefined {
+  calculate(): VO.ProgressionSignalOptions | undefined {
     const { prescription, sets } = this.config;
 
     if (sets >= prescription.sets) return undefined;
 
-    return VO.ProgressionHoldReasonOptions.sets_below_target;
+    return VO.ProgressionSignalOptions.sets_below_target;
   }
 }

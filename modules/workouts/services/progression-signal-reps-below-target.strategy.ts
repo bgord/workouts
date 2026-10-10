@@ -11,13 +11,13 @@ export class ProgressionSignalRepsBelowTargetStrategy implements ProgressionSign
 
   constructor(private readonly config: Config) {}
 
-  calculate(): VO.ProgressionHoldReasonOptions | undefined {
+  calculate(): VO.ProgressionSignalOptions | undefined {
     const { prescription, reps } = this.config;
 
     if (!ProgressionSignalRepsBelowTargetStrategy.applicable.includes(prescription.progression))
       return undefined;
     if (reps >= prescription.reps.min) return undefined;
 
-    return VO.ProgressionHoldReasonOptions.reps_below_target;
+    return VO.ProgressionSignalOptions.reps_below_target;
   }
 }

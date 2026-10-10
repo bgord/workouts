@@ -10,7 +10,7 @@ describe("ProgressionSignalRepsBelowTargetStrategy", () => {
       reps: v.parse(Workouts.VO.Reps, 4),
     });
 
-    expect(strategy.calculate()).toEqual(Workouts.VO.ProgressionHoldReasonOptions.reps_below_target);
+    expect(strategy.calculate()).toEqual(Workouts.VO.ProgressionSignalOptions.reps_below_target);
   });
 
   test("reps at target", () => {

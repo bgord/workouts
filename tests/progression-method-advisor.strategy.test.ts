@@ -47,7 +47,7 @@ describe("ProgressionMethodAdvisorStrategy", () => {
     expect(strategy.calculate()).toEqual({
       last: mocks.exerciseTargetProgression.last,
       regress: mocks.exerciseTargetProgression.regress,
-      hold: Workouts.VO.ProgressionHoldReasonOptions.rir_below_target,
+      signal: Workouts.VO.ProgressionSignalOptions.rir_below_target,
     });
   });
 
@@ -72,7 +72,7 @@ describe("ProgressionMethodAdvisorStrategy", () => {
     expect(strategy.calculate()).toEqual({
       last: mocks.exerciseTargetProgression.last,
       regress: mocks.exerciseTargetProgression.regress,
-      hold: Workouts.VO.ProgressionHoldReasonOptions.sets_below_target,
+      signal: Workouts.VO.ProgressionSignalOptions.sets_below_target,
     });
   });
 

@@ -10,7 +10,7 @@ describe("ProgressionSignalRirBelowTargetStrategy", () => {
       rir: v.parse(Workouts.VO.Rir, 1),
     });
 
-    expect(strategy.calculate()).toEqual(Workouts.VO.ProgressionHoldReasonOptions.rir_below_target);
+    expect(strategy.calculate()).toEqual(Workouts.VO.ProgressionSignalOptions.rir_below_target);
   });
 
   test("rir at target", () => {

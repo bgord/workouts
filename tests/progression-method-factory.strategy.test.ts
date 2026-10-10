@@ -63,7 +63,7 @@ describe("ProgressionMethodStrategyFactory", () => {
         reps: v.parse(Workouts.VO.Reps, 12),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.rir_below_target,
+      signal: Workouts.VO.ProgressionSignalOptions.rir_below_target,
     });
   });
 
@@ -85,7 +85,7 @@ describe("ProgressionMethodStrategyFactory", () => {
         reps: v.parse(Workouts.VO.Reps, 12),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.rir_below_target,
+      signal: Workouts.VO.ProgressionSignalOptions.rir_below_target,
     });
   });
 
@@ -107,7 +107,7 @@ describe("ProgressionMethodStrategyFactory", () => {
         reps: v.parse(Workouts.VO.Reps, 12),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.sets_below_target,
+      signal: Workouts.VO.ProgressionSignalOptions.sets_below_target,
     });
   });
 
@@ -129,7 +129,7 @@ describe("ProgressionMethodStrategyFactory", () => {
         reps: v.parse(Workouts.VO.Reps, 12),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.sets_below_target,
+      signal: Workouts.VO.ProgressionSignalOptions.sets_below_target,
     });
   });
 
@@ -177,7 +177,7 @@ describe("ProgressionMethodStrategyFactory", () => {
         reps: v.parse(Workouts.VO.Reps, 8),
         load: v.parse(Workouts.VO.Load, tools.Weight.fromKilograms(87.5).get()),
       }),
-      hold: Workouts.VO.ProgressionHoldReasonOptions.reps_below_target,
+      signal: Workouts.VO.ProgressionSignalOptions.reps_below_target,
     });
   });
 
