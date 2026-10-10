@@ -72,24 +72,17 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
       {...ui.Gap.cluster}
       {...toggle.props.target}
     >
-      <div data-stack="x" {...ui.Gap.inline}>
-        <input
-          aria-label={t("measurements.body_parts.rename.label")}
-          autoFocus
-          className="c-input"
-          data-grow="1"
-          data-minw="0"
-          maxLength={Form.name.pattern.max}
-          minLength={Form.name.pattern.min}
-          required
-          {...name.input.props}
-        />
-
-        <ui.InlineEditActions
-          disabled={bg.Fields.allUnchanged([name, description]) || mutation.isLoading}
-          onCancel={bg.exec([name.clear, description.clear, mutation.reset, toggle.disable])}
-        />
-      </div>
+      <input
+        aria-label={t("measurements.body_parts.rename.label")}
+        autoFocus
+        className="c-input"
+        data-grow="1"
+        data-minw="0"
+        maxLength={Form.name.pattern.max}
+        minLength={Form.name.pattern.min}
+        required
+        {...name.input.props}
+      />
 
       <textarea
         aria-label={t("measurements.body_parts.rename.description.label")}
@@ -99,6 +92,12 @@ export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {
         {...bg.Form.textarea(DescriptionForm.description.pattern)}
         {...description.input.props}
         {...metaEnterSubmit}
+      />
+
+      <ui.InlineEditActions
+        data-self="end"
+        disabled={bg.Fields.allUnchanged([name, description]) || mutation.isLoading}
+        onCancel={bg.exec([name.clear, description.clear, mutation.reset, toggle.disable])}
       />
 
       {mutation.isError && (

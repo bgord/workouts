@@ -21,7 +21,7 @@ test.describe("Body parts - empty", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("New body part").fill("Neck");
+    await page.getByPlaceholder("Left thigh").fill("Neck");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the body part")).toBeVisible();

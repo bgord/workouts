@@ -11,9 +11,9 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("New body part").fill("a".repeat(65));
+    await page.getByPlaceholder("Left thigh").fill("a".repeat(65));
 
-    await expect(page.getByLabel("New body part")).toHaveValue("a".repeat(64));
+    await expect(page.getByPlaceholder("Left thigh")).toHaveValue("a".repeat(64));
   });
 
   test("blocks defining a body part with an empty name", async ({ page }) => {
@@ -30,7 +30,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("New body part").fill("Neck");
+    await page.getByPlaceholder("Left thigh").fill("Neck");
     await page.getByLabel("How do you measure it?").fill("Relaxed, tape under the chin");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
@@ -48,7 +48,7 @@ test.describe("Body parts - empty-mutation", () => {
         .getByRole("listitem", { name: "Neck", exact: true })
         .getByText("Relaxed, tape under the chin", { exact: true }),
     ).toBeVisible();
-    await expect(page.getByLabel("New body part")).toHaveValue("");
+    await expect(page.getByPlaceholder("Left thigh")).toHaveValue("");
     await expect(page.getByLabel("How do you measure it?")).toHaveValue("");
   });
 
@@ -57,7 +57,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("New body part").fill("NECK");
+    await page.getByPlaceholder("Left thigh").fill("NECK");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the body part")).toBeVisible();

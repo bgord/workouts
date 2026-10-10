@@ -148,7 +148,7 @@
   "measurements.body_parts.define.description.label": "How do you measure it?",
   "measurements.body_parts.define.description.placeholder": "Relaxed, tape level at the widest point",
   "measurements.body_parts.define.error": "Could not add the body part",
-  "measurements.body_parts.define.name.label": "New body part",
+  "measurements.body_parts.define.name.label": "Body part",
   "measurements.body_parts.define.name.placeholder": "Left thigh",
   "measurements.body_parts.define.submit.cta": "Add",
   "measurements.body_parts.delete.cta": "Delete",

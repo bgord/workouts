@@ -34,28 +34,16 @@ export function BodyPartDefine() {
       <div data-stack="y" {...ui.Gap.field}>
         <label {...name.label.props}>{t("measurements.body_parts.define.name.label")}</label>
 
-        <div data-stack="x" {...ui.Gap.inline}>
-          <input
-            className="c-input"
-            data-grow="1"
-            data-minw="0"
-            maxLength={Form.name.pattern.max}
-            minLength={Form.name.pattern.min}
-            placeholder={t("measurements.body_parts.define.name.placeholder")}
-            required
-            {...name.input.props}
-          />
-
-          <button
-            className="c-button"
-            data-variant="primary"
-            disabled={name.empty || mutation.isLoading}
-            type="submit"
-          >
-            <Plus data-size="sm" />
-            {t("measurements.body_parts.define.submit.cta")}
-          </button>
-        </div>
+        <input
+          className="c-input"
+          data-grow="1"
+          data-minw="0"
+          maxLength={Form.name.pattern.max}
+          minLength={Form.name.pattern.min}
+          placeholder={t("measurements.body_parts.define.name.placeholder")}
+          required
+          {...name.input.props}
+        />
       </div>
 
       <div data-stack="y" {...ui.Gap.field}>
@@ -69,6 +57,22 @@ export function BodyPartDefine() {
           {...description.input.props}
           {...metaEnterSubmit}
         />
+      </div>
+
+      <div data-self="end" data-stack="x" {...ui.Gap.field}>
+        <ui.ButtonClear
+          disabled={bg.Fields.allUnchanged([name, description])}
+          onClick={bg.exec([name.clear, description.clear])}
+        />
+        <button
+          className="c-button"
+          data-variant="primary"
+          disabled={name.empty || mutation.isLoading}
+          type="submit"
+        >
+          <Plus data-size="sm" />
+          {t("measurements.body_parts.define.submit.cta")}
+        </button>
       </div>
 
       {mutation.isError && (
