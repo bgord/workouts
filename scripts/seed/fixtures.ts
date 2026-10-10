@@ -709,7 +709,11 @@ export const athlete = {
   scheduledWorkout: { id: "84d48b25-7c52-4466-8f98-4b435b337bb0" },
   stalledExercise: exercises.straightArmPulldownBar,
   bodyParts: {
-    waist: { id: "0f45cbd8-7c28-4ea3-8881-df023ebe309d", name: "Waist" },
+    waist: {
+      id: "0f45cbd8-7c28-4ea3-8881-df023ebe309d",
+      name: "Waist",
+      description: "Relaxed, tape level with the navel",
+    },
     chest: { id: "e8d40984-53c7-4270-bc60-7755252afbd9", name: "Chest" },
     armRight: { id: "10da7966-a035-430e-ac73-a7f47a307af6", name: "Arm (right)" },
     thighRight: { id: "10c1a7d9-dd6c-4ad7-9915-236c4a6642cb", name: "Thigh (right)" },
@@ -732,7 +736,11 @@ export const athleteMutation = {
   scheduledWorkout: { id: "cd6aba9a-80fb-48c9-9fa0-37adb5915031" },
   stalledExercise: exercises.straightArmPulldownBar,
   bodyParts: {
-    waist: { id: "cab2b985-aa02-415d-8bae-3a175ae7f21c", name: "Waist" },
+    waist: {
+      id: "cab2b985-aa02-415d-8bae-3a175ae7f21c",
+      name: "Waist",
+      description: "Relaxed, tape level with the navel",
+    },
     chest: { id: "79e2e5d0-3bde-48bc-a580-eedf7d8191a7", name: "Chest" },
     armRight: { id: "e7f38be8-c8bb-424e-a05a-d5d2352a192b", name: "Arm (right)" },
     thighRight: { id: "9a74505b-6068-43da-9bc4-4fa884d79090", name: "Thigh (right)" },

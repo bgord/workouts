@@ -11,9 +11,9 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("New body part").fill("a".repeat(65));
+    await page.getByPlaceholder("Left thigh").fill("a".repeat(65));
 
-    await expect(page.getByLabel("New body part")).toHaveValue("a".repeat(64));
+    await expect(page.getByPlaceholder("Left thigh")).toHaveValue("a".repeat(64));
   });
 
   test("blocks defining a body part with an empty name", async ({ page }) => {
@@ -30,7 +30,8 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("New body part").fill("Neck");
+    await page.getByPlaceholder("Left thigh").fill("Neck");
+    await page.getByLabel("How do you measure it?").fill("Relaxed, tape under the chin");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Add a body part from the menu to start measuring")).toBeHidden();
@@ -41,7 +42,14 @@ test.describe("Body parts - empty-mutation", () => {
         .getByRole("listitem", { name: "Neck", exact: true })
         .getByText("Not measured yet", { exact: true }),
     ).toBeVisible();
-    await expect(page.getByLabel("New body part")).toHaveValue("");
+    await expect(
+      page
+        .getByRole("dialog", { name: "Body parts" })
+        .getByRole("listitem", { name: "Neck", exact: true })
+        .getByText("Relaxed, tape under the chin", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByPlaceholder("Left thigh")).toHaveValue("");
+    await expect(page.getByLabel("How do you measure it?")).toHaveValue("");
   });
 
   test("rejects a duplicate body part name", async ({ page }) => {
@@ -49,7 +57,7 @@ test.describe("Body parts - empty-mutation", () => {
 
     await page.getByRole("button", { name: "More actions" }).click();
     await page.getByRole("menuitem", { name: "Manage" }).click();
-    await page.getByLabel("New body part").fill("NECK");
+    await page.getByPlaceholder("Left thigh").fill("NECK");
     await page.getByRole("button", { name: "Add", exact: true }).click();
 
     await expect(page.getByText("Could not add the body part")).toBeVisible();
@@ -145,6 +153,52 @@ test.describe("Body parts - empty-mutation", () => {
     await page.reload();
 
     await expect(page.getByRole("button", { name: "Measure Neck Girth", exact: true })).toBeVisible();
+  });
+
+  test("changes the body part description", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Rename Neck Girth", exact: true }).click();
+    await page
+      .getByRole("form", { name: "Rename Neck Girth", exact: true })
+      .getByLabel("How to measure")
+      .fill("Flexed, tape at the thickest point");
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Flexed, tape at the thickest point", { exact: true })).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Measure Neck Girth", exact: true }).click();
+
+    await expect(
+      page
+        .getByRole("dialog", { name: "Measure Neck Girth" })
+        .getByText("Flexed, tape at the thickest point", { exact: true }),
+    ).toBeVisible();
+  });
+
+  test("clears the body part description", async ({ page }) => {
+    await page.goto("/measurements/body-parts");
+
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "Manage" }).click();
+    await page.getByRole("button", { name: "Rename Neck Girth", exact: true }).click();
+    await page
+      .getByRole("form", { name: "Rename Neck Girth", exact: true })
+      .getByLabel("How to measure")
+      .clear();
+    await page.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(page.getByText("Flexed, tape at the thickest point", { exact: true })).toBeHidden();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Measure Neck Girth", exact: true }).click();
+
+    await expect(
+      page.getByRole("dialog", { name: "Measure Neck Girth" }).getByText("How to measure", { exact: true }),
+    ).toBeHidden();
   });
 
   test("deletes the body part", async ({ page }) => {

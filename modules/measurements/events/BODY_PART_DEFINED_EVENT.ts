@@ -11,6 +11,7 @@ export const BodyPartDefinedEvent = v.object({
   payload: v.object({
     id: VO.BodyPartId,
     name: VO.BodyPartName,
+    description: v.optional(VO.BodyPartDescription),
     userId: Auth.VO.UserId,
   }),
 });

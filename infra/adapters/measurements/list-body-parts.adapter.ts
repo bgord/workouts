@@ -8,7 +8,12 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
   async execute(userId: Auth.VO.UserIdType): Promise<Measurements.Queries.BodyPartListResponse> {
     const [bodyParts, measurements] = await Promise.all([
       db
-        .select({ id: Schema.bodyParts.id, name: Schema.bodyParts.name, userId: Schema.bodyParts.userId })
+        .select({
+          id: Schema.bodyParts.id,
+          name: Schema.bodyParts.name,
+          description: Schema.bodyParts.description,
+          userId: Schema.bodyParts.userId,
+        })
         .from(Schema.bodyParts)
         .where(eq(Schema.bodyParts.userId, userId))
         .orderBy(asc(Schema.bodyParts.name)),

@@ -168,6 +168,7 @@ modules/
 │   ├── command-handlers
 │   │   ├── handleBodyPartDefineCommand.ts
 │   │   ├── handleBodyPartDeleteCommand.ts
+│   │   ├── handleBodyPartDescriptionSetCommand.ts
 │   │   ├── handleBodyPartMeasureCommand.ts
 │   │   ├── handleBodyPartMeasurementCorrectCommand.ts
 │   │   ├── handleBodyPartMeasurementRemoveCommand.ts
@@ -181,6 +182,7 @@ modules/
 │   ├── commands
 │   │   ├── BODY_PART_DEFINE_COMMAND.ts
 │   │   ├── BODY_PART_DELETE_COMMAND.ts
+│   │   ├── BODY_PART_DESCRIPTION_SET_COMMAND.ts
 │   │   ├── BODY_PART_MEASURE_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_CORRECT_COMMAND.ts
 │   │   ├── BODY_PART_MEASUREMENT_REMOVE_COMMAND.ts
@@ -194,6 +196,7 @@ modules/
 │   ├── events
 │   │   ├── BODY_PART_DEFINED_EVENT.ts
 │   │   ├── BODY_PART_DELETED_EVENT.ts
+│   │   ├── BODY_PART_DESCRIPTION_SET_EVENT.ts
 │   │   ├── BODY_PART_MEASURED_EVENT.ts
 │   │   ├── BODY_PART_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_PART_MEASUREMENT_REMOVED_EVENT.ts
@@ -204,6 +207,7 @@ modules/
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
 │   ├── invariants
 │   │   ├── body-part-belongs-to-user.ts
+│   │   ├── body-part-description-has-changed.ts
 │   │   ├── body-part-exists.ts
 │   │   ├── body-part-is-defined.ts
 │   │   ├── body-part-measured-on-is-not-in-future.ts
@@ -243,6 +247,8 @@ modules/
 │   │   ├── body-weight-stats-calculator.ts
 │   └── value-objects
 │       ├── body-part-circumference.ts
+│       ├── body-part-description.ts
+│       ├── body-part-description.validation.ts
 │       ├── body-part-id.ts
 │       ├── body-part-measured-on.ts
 │       ├── body-part-measurement-id.ts
@@ -659,6 +665,7 @@ app/
 │   ├── measurements
 │   │   ├── body-part-define.ts
 │   │   ├── body-part-delete.ts
+│   │   ├── body-part-description-set.ts
 │   │   ├── body-part-list.ts
 │   │   ├── body-part-measure.ts
 │   │   ├── body-part-measurement-correct.ts
@@ -723,6 +730,7 @@ app/
 │       ├── workout-set-remove.ts
 │       └── workout-start.ts
 └── services
+    ├── body-part-description-form.ts
     ├── body-part-name-form.ts
     ├── body-weight-chart-form.ts
     ├── body-weight-measurement-filters-form.ts

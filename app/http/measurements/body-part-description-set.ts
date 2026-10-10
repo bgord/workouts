@@ -5,25 +5,25 @@ import * as Measurements from "+measurements";
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
   Clock: bg.ClockPort;
-  CommandBus: bg.CommandBusPort<Measurements.Commands.BodyPartDefineCommandType>;
+  CommandBus: bg.CommandBusPort<Measurements.Commands.BodyPartDescriptionSetCommandType>;
 };
 
-export const BodyPartDefine =
+export const BodyPartDescriptionSet =
   (deps: Dependencies): bg.EndpointPort =>
   async (context) => {
+    const params = context.request.params();
     const body = await context.request.json();
 
-    const userId = context.identity.authenticatedUserId();
-    const id = v.parse(Measurements.VO.BodyPartId, deps.IdProvider.generate());
-    const name = v.parse(Measurements.VO.BodyPartName, body["name"]);
+    const requesterId = context.identity.authenticatedUserId();
+    const id = v.parse(Measurements.VO.BodyPartId, params["bodyPartId"]);
     const description = v.parse(
       v.optional(Measurements.VO.BodyPartDescription),
       body["description"] ?? undefined,
     );
 
     const command = bg.command(
-      Measurements.Commands.BodyPartDefineCommand,
-      { payload: { id, name, description, userId } },
+      Measurements.Commands.BodyPartDescriptionSetCommand,
+      { payload: { id, description, requesterId } },
       deps,
     );
 

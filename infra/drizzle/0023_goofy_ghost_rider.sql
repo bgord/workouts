@@ -1,0 +1,1 @@
+ALTER TABLE `bodyParts` ADD `description` text;

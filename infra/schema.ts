@@ -19,6 +19,7 @@ import type { ExerciseNameType } from "../modules/exercises/value-objects/exerci
 import type { ExerciseResistanceType } from "../modules/exercises/value-objects/exercise-resistance";
 import { ExerciseResistanceOptions } from "../modules/exercises/value-objects/exercise-resistance-options";
 import type { BodyPartCircumferenceType } from "../modules/measurements/value-objects/body-part-circumference";
+import type { BodyPartDescriptionType } from "../modules/measurements/value-objects/body-part-description";
 import type { BodyPartIdType } from "../modules/measurements/value-objects/body-part-id";
 import type { BodyPartMeasuredOnType } from "../modules/measurements/value-objects/body-part-measured-on";
 import type { BodyPartMeasurementIdType } from "../modules/measurements/value-objects/body-part-measurement-id";
@@ -469,6 +470,7 @@ export const bodyParts = sqliteTable(
   {
     id: identifier<BodyPartIdType>(),
     name: text("name").notNull().$type<BodyPartNameType>(),
+    description: text("description").$type<BodyPartDescriptionType>(),
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
     createdAt: timestamp("createdAt").notNull(),
     updatedAt: timestamp("updatedAt").notNull(),

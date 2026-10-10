@@ -9,6 +9,7 @@ type Dependencies = {
   EventBus: bg.EventBusPort<
     | Measurements.Events.BodyPartDefinedEventType
     | Measurements.Events.BodyPartRenamedEventType
+    | Measurements.Events.BodyPartDescriptionSetEventType
     | Measurements.Events.BodyPartDeletedEventType
     | Auth.Events.AccountDeletedEventType
   >;
@@ -26,6 +27,10 @@ export class BodyPartsProjector {
       deps.EventHandler.handle(this.onBodyPartRenamedEvent.bind(this)),
     );
     deps.EventBus.on(
+      Measurements.Events.BODY_PART_DESCRIPTION_SET_EVENT,
+      deps.EventHandler.handle(this.onBodyPartDescriptionSetEvent.bind(this)),
+    );
+    deps.EventBus.on(
       Measurements.Events.BODY_PART_DELETED_EVENT,
       deps.EventHandler.handle(this.onBodyPartDeletedEvent.bind(this)),
     );
@@ -39,6 +44,7 @@ export class BodyPartsProjector {
     await db.insert(Schema.bodyParts).values({
       id: event.payload.id,
       name: event.payload.name,
+      description: event.payload.description ?? null,
       userId: event.payload.userId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
@@ -49,6 +55,13 @@ export class BodyPartsProjector {
     await db
       .update(Schema.bodyParts)
       .set({ name: event.payload.name, updatedAt: event.createdAt })
+      .where(eq(Schema.bodyParts.id, event.payload.id));
+  }
+
+  async onBodyPartDescriptionSetEvent(event: Measurements.Events.BodyPartDescriptionSetEventType) {
+    await db
+      .update(Schema.bodyParts)
+      .set({ description: event.payload.description ?? null, updatedAt: event.createdAt })
       .where(eq(Schema.bodyParts.id, event.payload.id));
   }
 

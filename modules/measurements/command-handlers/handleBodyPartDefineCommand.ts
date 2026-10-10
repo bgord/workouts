@@ -20,7 +20,12 @@ export const handleBodyPartDefineCommand =
     const event = bg.event(
       BodyPartDefinedEvent,
       `body_part_${command.payload.id}`,
-      { id: command.payload.id, name: command.payload.name, userId: command.payload.userId },
+      {
+        id: command.payload.id,
+        name: command.payload.name,
+        description: command.payload.description,
+        userId: command.payload.userId,
+      },
       deps,
     );
 
