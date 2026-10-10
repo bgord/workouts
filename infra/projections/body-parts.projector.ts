@@ -44,6 +44,7 @@ export class BodyPartsProjector {
     await db.insert(Schema.bodyParts).values({
       id: event.payload.id,
       name: event.payload.name,
+      description: event.payload.description ?? null,
       userId: event.payload.userId,
       createdAt: event.createdAt,
       updatedAt: event.createdAt,
@@ -54,6 +55,13 @@ export class BodyPartsProjector {
     await db
       .update(Schema.bodyParts)
       .set({ name: event.payload.name, updatedAt: event.createdAt })
+      .where(eq(Schema.bodyParts.id, event.payload.id));
+  }
+
+  async onBodyPartDescriptionSetEvent(event: Measurements.Events.BodyPartDescriptionSetEventType) {
+    await db
+      .update(Schema.bodyParts)
+      .set({ description: event.payload.description ?? null, updatedAt: event.createdAt })
       .where(eq(Schema.bodyParts.id, event.payload.id));
   }
 
