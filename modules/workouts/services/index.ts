@@ -1,5 +1,6 @@
 export * from "./exercise-performance-lowest-rir";
 export * from "./exercise-performance-weakest-set";
+export * from "./exercise-prescription-missed";
 export * from "./exercise-target-diff-calculator";
 export * from "./load-step.strategy";
 export * from "./load-step-factory.strategy";
