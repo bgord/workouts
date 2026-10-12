@@ -96,6 +96,14 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
                 exercise.target &&
                 new Workouts.Services.ExerciseTargetDiffCalculator(exercise.target, previous).calculate(),
             },
+            recentPerformances: recent.map((performance) => ({
+              scheduledFor: performance.scheduledFor,
+              sets: performance.sets,
+              missed: new Workouts.Services.ExercisePrescriptionMissed({
+                prescription: performance.prescription,
+                performance,
+              }).calculate(),
+            })),
             targetProgression:
               previous &&
               Workouts.Services.ProgressionMethodStrategyFactory.for(

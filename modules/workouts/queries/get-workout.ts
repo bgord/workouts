@@ -4,6 +4,7 @@ import type * as Auth from "+auth";
 import type * as Exercises from "+exercises";
 import type * as VO from "+workouts/value-objects";
 import type { ExercisePerformance } from "./list-exercise-performances";
+import type { ExerciseRecentPerformance } from "./list-exercise-recent-performances";
 
 export type WorkoutExerciseActions = {
   targetSet: bg.ActionState;
@@ -26,12 +27,17 @@ export type ExercisePreviousPerformance = Pick<ExercisePerformance, "scheduledFo
   diff: VO.ExerciseTargetDiff | null;
 };
 
+export type ExerciseRecentPerformanceView = Pick<ExerciseRecentPerformance, "scheduledFor" | "sets"> & {
+  missed: boolean;
+};
+
 export type WorkoutExercise = Omit<VO.WorkoutExercise, "target" | "loggedSets"> & {
   target: VO.ExerciseTargetType | null;
   exerciseImageEtag: Exercises.VO.Exercise["imageEtag"] | null;
   exerciseDescription: VO.WorkoutExerciseDescriptionType;
   loggedSets: Array<LoggedSet>;
   previousPerformance: ExercisePreviousPerformance | null;
+  recentPerformances: Array<ExerciseRecentPerformanceView>;
   targetProgression: VO.ExerciseTargetProgression | null;
   actions: WorkoutExerciseActions;
 };

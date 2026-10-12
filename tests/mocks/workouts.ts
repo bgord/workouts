@@ -415,6 +415,10 @@ export const exercisePreviousPerformance: Workouts.Queries.ExercisePreviousPerfo
   diff: exerciseTargetDiff,
 };
 
+export const exerciseRecentPerformanceViews: Array<Workouts.Queries.ExerciseRecentPerformanceView> = [
+  { scheduledFor: pastWorkoutScheduledFor, sets: exercisePerformance.sets, missed: false },
+];
+
 export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["data"] = {
   ...workout,
   exercises: workout.exercises.map((exercise) => ({
@@ -432,6 +436,7 @@ export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["da
       },
     })),
     previousPerformance: exercisePreviousPerformance,
+    recentPerformances: exerciseRecentPerformanceViews,
     targetProgression: exerciseTargetProgression,
     actions: {
       targetSet: { available: true, enabled: true, hints: [] },
