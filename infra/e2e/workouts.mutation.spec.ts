@@ -1039,6 +1039,17 @@ test.describe("Workouts - hanger", () => {
     ).toBeVisible();
   });
 
+  test("hides the history with a single recent session", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.hangingLegRaise.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
+
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Last", exact: true })).toBeVisible();
+    await expect(row.getByRole("button", { name: "History", exact: true })).toBeHidden();
+  });
+
   test("hides reordering for a single exercise", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
 
