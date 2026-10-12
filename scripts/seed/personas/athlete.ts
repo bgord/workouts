@@ -76,6 +76,7 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
         const target = exercise.target;
 
         if (target === undefined) continue;
+        if (exercise.exerciseId === persona.skippedExercise.id && daysAgo <= 21) continue;
 
         const sessions = history.get(exercise.exerciseId) ?? [];
         const stall =
@@ -104,6 +105,8 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
 
     for (const exercise of (await di.Adapters.Workouts.WorkoutRepository.load(workoutId))["exercises"]) {
       const sets = exercise.loggedSets.map((set) => ({ ...set, rir: set.rir ?? null }));
+
+      if (sets.length === 0) continue;
 
       history.set(exercise.exerciseId, [...(history.get(exercise.exerciseId) ?? []), { sets }]);
     }

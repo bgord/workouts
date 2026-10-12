@@ -33,6 +33,24 @@ test.describe("Workout - athlete", () => {
     await expect(suggestion.getByRole("button")).toHaveText(["−2.5 kg", "Last", "+1 rep"]);
   });
 
+  test("shows the skip when the last sessions skipped the exercise", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.athlete.skippedExercise.name, exact: true });
+    const suggestion = row.getByRole("group", {
+      name: "Based on the last session · Double progression",
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+
+    await expect(
+      suggestion.getByText("Skipped in the last 3 sessions. Change the plan or replace the exercise", {
+        exact: true,
+      }),
+    ).toBeVisible();
+  });
+
   test("shows the error when changing the date fails", async ({ page }) => {
     const scheduledFor = page.getByLabel("Scheduled for");
 

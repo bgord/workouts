@@ -600,8 +600,8 @@ modules/
     └── value-objects
         ├── dumbbell-rack.ts
         ├── exercise-prescription.ts
-        ├── exercise-stall-break.ts
-        ├── exercise-stall-window.ts
+        ├── exercise-signal-break.ts
+        ├── exercise-signal-window.ts
         ├── exercise-target-diff.ts
         ├── exercise-target-progression.ts
         ├── exercise-target.ts

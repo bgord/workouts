@@ -708,6 +708,7 @@ export const athlete = {
   email: "athlete@example.com",
   scheduledWorkout: { id: "84d48b25-7c52-4466-8f98-4b435b337bb0" },
   stalledExercise: exercises.straightArmPulldownBar,
+  skippedExercise: exercises.concentrationCurlDumbbell,
   bodyParts: {
     waist: {
       id: "0f45cbd8-7c28-4ea3-8881-df023ebe309d",
@@ -735,6 +736,7 @@ export const athleteMutation = {
   email: "athlete-mutation@example.com",
   scheduledWorkout: { id: "cd6aba9a-80fb-48c9-9fa0-37adb5915031" },
   stalledExercise: exercises.straightArmPulldownBar,
+  skippedExercise: exercises.concentrationCurlDumbbell,
   bodyParts: {
     waist: {
       id: "cab2b985-aa02-415d-8bae-3a175ae7f21c",
