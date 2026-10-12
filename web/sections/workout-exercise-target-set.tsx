@@ -41,10 +41,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         : bg.NumberField.EMPTY,
   });
 
-  const history = bg.useToggle({
-    name: `workout-exercise-history-${props.exercise.id}`,
-    defaultValue: Boolean(progression?.signal),
-  });
+  const history = bg.useToggle({ name: `workout-exercise-history-${props.exercise.id}` });
 
   const mutation = bg.useMutation({
     perform: () =>

@@ -30,29 +30,12 @@ test.describe("Workout - athlete", () => {
         exact: true,
       }),
     ).toBeVisible();
-    await expect(suggestion.getByRole("button")).toHaveText(["−2.5 kg", "Last", "+1 rep", "History"]);
+    await expect(suggestion.getByRole("button")).toHaveText(["−2.5 kg", "Last", "+1 rep", ""]);
+    await expect(suggestion.getByRole("button", { name: "History", exact: true })).toBeVisible();
   });
 
-  test("shows the recent sessions of the stalled exercise without opening the history", async ({ page }) => {
+  test("shows the recent sessions of the stalled exercise after opening the history", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.athlete.stalledExercise.name, exact: true });
-    const note = row.getByRole("note", { name: "Last 3 sessions in this section", exact: true });
-
-    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
-
-    await row.getByRole("button", { name: "Set target", exact: true }).click();
-
-    await expect(row.getByRole("button", { name: "History", exact: true })).toHaveAttribute(
-      "aria-expanded",
-      "true",
-    );
-    await expect(note.getByRole("img", { name: "Prescription missed", exact: true })).toHaveCount(3);
-    await expect(note).toHaveText(
-      /^[A-Z][a-z]{2} \d{1,2}9·9·7×27\.5 kg›[A-Z][a-z]{2} \d{1,2}8·8·7×27\.5 kg›[A-Z][a-z]{2} \d{1,2}8·8·7×27\.5 kg$/,
-    );
-  });
-
-  test("shows the recent sessions after opening the history", async ({ page }) => {
-    const row = page.getByRole("listitem", { name: fixtures.exercises.pullUp.name, exact: true });
     const history = row.getByRole("button", { name: "History", exact: true });
     const note = row.getByRole("note", { name: "Last 3 sessions in this section", exact: true });
 
@@ -66,10 +49,28 @@ test.describe("Workout - athlete", () => {
     await history.click();
 
     await expect(history).toHaveAttribute("aria-expanded", "true");
-    await expect(note.getByRole("img", { name: "Prescription met", exact: true })).toHaveCount(3);
+    await expect(note.getByRole("img", { name: "Prescription missed", exact: true })).toHaveCount(3);
+    await expect(note.getByRole("link")).toHaveCount(3);
     await expect(note).toHaveText(
-      /^[A-Z][a-z]{2} \d{1,2}4×4 12\.5 kg›[A-Z][a-z]{2} \d{1,2}4×4 15 kg›[A-Z][a-z]{2} \d{1,2}4×4 17\.5 kg$/,
+      /^[A-Z][a-z]{2} \d{1,2}9·9·7×27\.5 kg›[A-Z][a-z]{2} \d{1,2}8·8·7×27\.5 kg›[A-Z][a-z]{2} \d{1,2}8·8·7×27\.5 kg$/,
     );
+  });
+
+  test("links the recent sessions to their workouts", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.pullUp.name, exact: true });
+    const note = row.getByRole("note", { name: "Last 3 sessions in this section", exact: true });
+
+    await page.goto(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
+
+    await row.getByRole("button", { name: "Set target", exact: true }).click();
+    await row.getByRole("button", { name: "History", exact: true }).click();
+
+    await expect(note.getByRole("link").first()).toHaveAttribute("href", /^\/workouts\/[0-9a-f-]{36}$/);
+
+    await note.getByRole("link").first().click();
+
+    await expect(page).toHaveURL(/\/workouts\/[0-9a-f-]{36}$/);
+    await expect(page).not.toHaveURL(`/workouts/${fixtures.athlete.scheduledWorkout.id}`);
   });
 
   test("shows the skip when the last sessions skipped the exercise", async ({ page }) => {

@@ -76,6 +76,7 @@ class ListExerciseRecentPerformancesQueryDrizzle implements Workouts.Queries.Lis
       const first = exercises.find((row) => row.set !== null) ?? exercises[0]!;
 
       return {
+        workoutId: workout.id,
         scheduledFor: workout.scheduledFor,
         prescription: first.prescription,
         sets: exercises

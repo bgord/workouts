@@ -5,7 +5,7 @@ import type * as VO from "+workouts/value-objects";
 import type { ExercisePreviousPerformanceReference } from "./get-exercise-previous-performance";
 import type { ExercisePerformance } from "./list-exercise-performances";
 
-export type ExerciseRecentPerformance = Pick<ExercisePerformance, "scheduledFor" | "sets"> & {
+export type ExerciseRecentPerformance = Pick<ExercisePerformance, "workoutId" | "scheduledFor" | "sets"> & {
   prescription: VO.ExercisePrescriptionType;
 };
 

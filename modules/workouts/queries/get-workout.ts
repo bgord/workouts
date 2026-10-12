@@ -27,7 +27,10 @@ export type ExercisePreviousPerformance = Pick<ExercisePerformance, "scheduledFo
   diff: VO.ExerciseTargetDiff | null;
 };
 
-export type ExerciseRecentPerformanceView = Pick<ExerciseRecentPerformance, "scheduledFor" | "sets"> & {
+export type ExerciseRecentPerformanceView = Pick<
+  ExerciseRecentPerformance,
+  "workoutId" | "scheduledFor" | "sets"
+> & {
   missed: boolean;
 };
 

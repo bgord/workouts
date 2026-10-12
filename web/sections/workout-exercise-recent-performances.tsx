@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { Link } from "@tanstack/react-router";
 import { CircleCheck, CircleDashed } from "lucide-react";
 import { Fragment } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
@@ -18,8 +19,10 @@ export function WorkoutExerciseRecentPerformances(
   return (
     <small
       aria-label={title}
+      data-md-cross="stretch"
       data-md-ml="1"
       data-md-pl="8"
+      data-md-stack="y"
       data-pl="12"
       data-stack="x"
       data-wrap="wrap"
@@ -29,14 +32,20 @@ export function WorkoutExerciseRecentPerformances(
       {...toggle.props.target}
     >
       {performances.map((performance, index) => (
-        <Fragment key={performance.scheduledFor}>
+        <Fragment key={performance.workoutId}>
           {index > 0 && (
-            <span aria-hidden="true" data-color="neutral-600">
+            <span aria-hidden="true" data-color="neutral-600" data-md-disp="none">
               ›
             </span>
           )}
 
-          <span data-stack="x" {...ui.Gap.related}>
+          <Link
+            data-hover-color="brand-300"
+            data-stack="x"
+            params={{ workoutId: performance.workoutId }}
+            to="/workouts/$workoutId"
+            {...ui.Gap.related}
+          >
             {performance.missed ? (
               <CircleDashed
                 aria-label={t("workout.recent_performances.missed")}
@@ -65,7 +74,7 @@ export function WorkoutExerciseRecentPerformances(
                 sets={performance.sets}
               />
             )}
-          </span>
+          </Link>
         </Fragment>
       ))}
     </small>

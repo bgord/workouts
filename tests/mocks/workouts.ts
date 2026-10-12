@@ -197,6 +197,7 @@ export const exercisePerformance = {
 };
 
 export const missedExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerformance = {
+  workoutId,
   scheduledFor: workoutScheduledFor,
   prescription: exercisePrescription,
   sets: exercisePerformance.sets,
@@ -416,7 +417,7 @@ export const exercisePreviousPerformance: Workouts.Queries.ExercisePreviousPerfo
 };
 
 export const exerciseRecentPerformanceViews: Array<Workouts.Queries.ExerciseRecentPerformanceView> = [
-  { scheduledFor: pastWorkoutScheduledFor, sets: exercisePerformance.sets, missed: false },
+  { workoutId, scheduledFor: pastWorkoutScheduledFor, sets: exercisePerformance.sets, missed: false },
 ];
 
 export const workoutWithExerciseActions: Workouts.Queries.WorkoutGetResponse["data"] = {

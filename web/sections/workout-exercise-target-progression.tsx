@@ -91,6 +91,7 @@ export function WorkoutExerciseTargetProgression(
 
       {sessions >= 2 && (
         <button
+          aria-label={t("workout.recent_performances.toggle")}
           className="c-badge"
           data-color="neutral-500"
           data-cursor="pointer"
@@ -100,7 +101,6 @@ export function WorkoutExerciseTargetProgression(
           {...history.props.controller}
         >
           <History data-shrink="0" data-size="xs" />
-          {t("workout.recent_performances.toggle")}
         </button>
       )}
 
