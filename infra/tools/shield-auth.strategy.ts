@@ -5,8 +5,8 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { haveIBeenPwned } from "better-auth/plugins/haveibeenpwned";
 import * as v from "valibot";
 import * as Auth from "+auth";
-import * as Emails from "+emails";
 import { db } from "+infra/db";
+import * as Emails from "+infra/emails";
 import type { EnvironmentResultType } from "+infra/env";
 
 export type AuthVariables = {

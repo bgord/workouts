@@ -1,12 +1,12 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type * as Auth from "+auth";
-import * as Emails from "+emails";
 import type * as Measurements from "+measurements";
 import * as Notifications from "+notifications";
 import type * as Preferences from "+preferences";
 import type { SupportedLanguages } from "+supported-languages";
 import type * as Workouts from "+workouts";
+import * as Emails from "+infra/emails";
 import type { EnvironmentResultType } from "+infra/env";
 
 type LanguagesType = (typeof SupportedLanguages)[number];

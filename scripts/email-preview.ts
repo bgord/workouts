@@ -1,7 +1,7 @@
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Auth from "+auth";
-import * as Emails from "+emails";
+import * as Emails from "+infra/emails";
 import * as mocks from "../tests/mocks";
 
 const BETTER_AUTH_URL = v.parse(tools.UrlWithoutSlash, "http://localhost:3000");

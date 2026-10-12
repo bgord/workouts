@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import * as Emails from "+emails";
+import * as Emails from "+infra/emails";
 
 describe("Emails.Shell", () => {
   test("renders the shell around the content", async () => {

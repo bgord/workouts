@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-import * as Emails from "+emails";
+import * as Emails from "+infra/emails";
 
 const url = v.parse(tools.UrlWithoutSlash, "http://example.com/reset?token=abc&x=1");
 

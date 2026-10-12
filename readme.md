@@ -862,6 +862,23 @@ infra/
 │   ├── workouts.mobile.mutation.spec.ts
 │   ├── workouts.mutation.spec.ts
 │   └── workouts.spec.ts
+├── emails
+│   ├── components
+│   │   ├── button.tsx
+│   │   ├── eyebrow.tsx
+│   │   ├── heading.tsx
+│   │   ├── link.tsx
+│   │   ├── logo.tsx
+│   │   ├── note.tsx
+│   │   ├── paragraph.tsx
+│   │   ├── rule.tsx
+│   │   ├── shell.tsx
+│   │   └── title.tsx
+│   ├── render.ts
+│   ├── templates
+│   │   ├── call-to-action.tsx
+│   │   └── weekly-summary.tsx
+│   └── theme.ts
 ├── env.ts
 ├── projections
 │   ├── body-part-measurements.projector.ts

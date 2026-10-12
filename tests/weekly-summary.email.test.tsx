@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import * as Emails from "+emails";
+import * as Emails from "+infra/emails";
 import * as mocks from "./mocks";
 
 describe("WeeklySummaryEmail", () => {
