@@ -853,6 +853,7 @@ infra/
 │   ├── plan.spec.ts
 │   ├── plans.mutation.spec.ts
 │   ├── plans.spec.ts
+│   ├── playwright.config.ts
 │   ├── profile.mutation.spec.ts
 │   ├── profile.spec.ts
 │   ├── shortcuts.spec.ts
