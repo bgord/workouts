@@ -1,4 +1,5 @@
 import * as bg from "@bgord/ui";
+import { History } from "lucide-react";
 import type { ExercisePrescriptionType } from "../../modules/workouts/value-objects/exercise-prescription";
 import { ExerciseSignalWindowSessions } from "../../modules/workouts/value-objects/exercise-signal-window";
 import type { ExerciseTargetType } from "../../modules/workouts/value-objects/exercise-target";
@@ -21,9 +22,11 @@ export function WorkoutExerciseTargetProgression(
     prescription: ExercisePrescriptionType;
     resistance: WorkoutExerciseResistanceType;
     disabled: boolean;
+    history: bg.UseToggleReturnType;
+    sessions: number;
   } & Fields,
 ) {
-  const { progression, prescription, resistance, disabled, sets, reps, load } = props;
+  const { progression, prescription, resistance, disabled, history, sessions, sets, reps, load } = props;
   const t = bg.useTranslations();
   const label = useTargetDiffLabel();
 
@@ -84,6 +87,21 @@ export function WorkoutExerciseTargetProgression(
         >
           {step(progression.progress)}
         </ui.ChipButton>
+      )}
+
+      {sessions >= 2 && (
+        <button
+          className="c-badge"
+          data-color="neutral-500"
+          data-cursor="pointer"
+          data-variant="outline"
+          onClick={history.toggle}
+          type="button"
+          {...history.props.controller}
+        >
+          <History data-shrink="0" data-size="xs" />
+          {t("workout.recent_performances.toggle")}
+        </button>
       )}
 
       {progression.signal && (

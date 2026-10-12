@@ -8,6 +8,7 @@ import { RepsSchemeFormat } from "../kits/reps-scheme.format";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";
+import { WorkoutExerciseRecentPerformances } from "./workout-exercise-recent-performances";
 import { WorkoutExerciseTargetProgression } from "./workout-exercise-target-progression";
 
 export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {
@@ -38,6 +39,11 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
       : progression
         ? WeightFormat.kilograms(progression.last.load)
         : bg.NumberField.EMPTY,
+  });
+
+  const history = bg.useToggle({
+    name: `workout-exercise-history-${props.exercise.id}`,
+    defaultValue: Boolean(progression?.signal),
   });
 
   const mutation = bg.useMutation({
@@ -134,14 +140,18 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
       {progression && (
         <WorkoutExerciseTargetProgression
           disabled={mutation.isLoading}
+          history={history}
           load={load}
           prescription={props.exercise.prescription}
           progression={progression}
           reps={reps}
           resistance={props.exercise.resistance}
+          sessions={props.exercise.recentPerformances.length}
           sets={sets}
         />
       )}
+
+      <WorkoutExerciseRecentPerformances exercise={props.exercise} {...history} />
     </>
   );
 }
