@@ -587,6 +587,7 @@ modules/
     │   ├── progression-signal-reps-below-target.strategy.ts
     │   ├── progression-signal-rir-below-target.strategy.ts
     │   ├── progression-signal-sets-below-target.strategy.ts
+    │   ├── progression-signal-skip.strategy.ts
     │   ├── progression-signal-stall.strategy.ts
     │   ├── progression-signal.strategy.ts
     │   ├── rir-below-target.ts

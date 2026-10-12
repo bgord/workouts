@@ -211,6 +211,11 @@ export const hitExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerfor
   }),
 };
 
+export const skippedExerciseRecentPerformance: Workouts.Queries.ExerciseRecentPerformance = {
+  ...missedExerciseRecentPerformance,
+  sets: [],
+};
+
 export const exerciseRecentPerformances = { scheduledFor: workoutScheduledFor, performances: [] };
 
 export const stalledExerciseRecentPerformances = {
@@ -219,6 +224,15 @@ export const stalledExerciseRecentPerformances = {
     { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-25") },
     { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-18") },
     { ...missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-11") },
+  ],
+};
+
+export const skippedExerciseRecentPerformances = {
+  scheduledFor: workoutScheduledFor,
+  performances: [
+    { ...skippedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-25") },
+    { ...skippedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-18") },
+    { ...skippedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2024-12-11") },
   ],
 };
 

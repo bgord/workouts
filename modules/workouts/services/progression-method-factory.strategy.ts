@@ -16,6 +16,7 @@ import { ProgressionMethodRepProgressionStrategy } from "./progression-method-re
 import { ProgressionSignalRepsBelowTargetStrategy } from "./progression-signal-reps-below-target.strategy";
 import { ProgressionSignalRirBelowTargetStrategy } from "./progression-signal-rir-below-target.strategy";
 import { ProgressionSignalSetsBelowTargetStrategy } from "./progression-signal-sets-below-target.strategy";
+import { ProgressionSignalSkipStrategy } from "./progression-signal-skip.strategy";
 import { ProgressionSignalStallStrategy } from "./progression-signal-stall.strategy";
 
 export class ProgressionMethodStrategyFactory {
@@ -34,6 +35,7 @@ export class ProgressionMethodStrategyFactory {
     return new ProgressionMethodAdvisorStrategy({
       ProgressionMethod: ProgressionMethodStrategyFactory.method(prescription, loadStep, weakest),
       ProgressionSignals: [
+        new ProgressionSignalSkipStrategy(recent),
         new ProgressionSignalStallStrategy(recent),
         new ProgressionSignalRepsBelowTargetStrategy({ prescription, reps: weakest.reps }),
         new ProgressionSignalSetsBelowTargetStrategy({ prescription, sets: weakest.sets }),

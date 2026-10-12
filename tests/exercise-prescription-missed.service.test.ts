@@ -18,6 +18,15 @@ describe("ExercisePrescriptionMissed", () => {
     expect(missed.calculate()).toEqual(false);
   });
 
+  test("missed - skipped", () => {
+    const missed = new Workouts.Services.ExercisePrescriptionMissed({
+      prescription: mocks.exercisePrescription,
+      performance: mocks.skippedExerciseRecentPerformance,
+    });
+
+    expect(missed.calculate()).toEqual(true);
+  });
+
   test("missed - sets", () => {
     const missed = new Workouts.Services.ExercisePrescriptionMissed({
       prescription: { ...mocks.exercisePrescription, reps: mocks.amrapRepsRange },

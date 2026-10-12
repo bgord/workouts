@@ -14,6 +14,9 @@ export class ExercisePrescriptionMissed {
 
   calculate(): boolean {
     const { prescription, performance } = this.config;
+
+    if (performance.sets.length === 0) return true;
+
     const weakest = new ExercisePerformanceWeakestSet(performance).calculate();
     const rir = new ExercisePerformanceLowestRir(performance).calculate();
 

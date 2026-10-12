@@ -16,10 +16,10 @@ export class ProgressionSignalStallStrategy implements ProgressionSignalStrategy
   constructor(private readonly config: Config) {}
 
   calculate(): VO.ProgressionSignalOptions | undefined {
-    const window = this.config.performances.slice(0, VO.ExerciseStallWindowSessions);
+    const window = this.config.performances.slice(0, VO.ExerciseSignalWindowSessions);
     const days = [this.config.scheduledFor, ...window.map((performance) => performance.scheduledFor)];
 
-    if (window.length < VO.ExerciseStallWindowSessions) return undefined;
+    if (window.length < VO.ExerciseSignalWindowSessions) return undefined;
     if (window.some((_, index) => this.isBreak(days[index]!, days[index + 1]!))) return undefined;
     if (!window.every((performance) => this.isMissed(performance))) return undefined;
 
@@ -27,7 +27,7 @@ export class ProgressionSignalStallStrategy implements ProgressionSignalStrategy
   }
 
   private isBreak(newer: tools.DayIsoIdType, older: tools.DayIsoIdType): boolean {
-    const earliest = tools.Day.fromIsoId(newer).shift(v.parse(tools.Integer, -VO.ExerciseStallBreakDays));
+    const earliest = tools.Day.fromIsoId(newer).shift(v.parse(tools.Integer, -VO.ExerciseSignalBreakDays));
 
     return older <= earliest.toIsoId();
   }

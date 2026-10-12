@@ -21,10 +21,6 @@ class ListExerciseRecentPerformancesQueryDrizzle implements Workouts.Queries.Lis
       })
       .from(Schema.workouts)
       .innerJoin(Schema.workoutExercises, eq(Schema.workoutExercises.workoutId, Schema.workouts.id))
-      .innerJoin(
-        Schema.workoutLoggedSets,
-        eq(Schema.workoutLoggedSets.workoutExerciseId, Schema.workoutExercises.id),
-      )
       .where(
         and(
           eq(Schema.workouts.userId, userId),
@@ -51,13 +47,15 @@ class ListExerciseRecentPerformancesQueryDrizzle implements Workouts.Queries.Lis
         workoutId: Schema.workoutExercises.workoutId,
         workoutExerciseId: Schema.workoutExercises.id,
         prescription: Schema.workoutExercises.prescription,
-        setNumber: Schema.workoutLoggedSets.setNumber,
-        reps: Schema.workoutLoggedSets.reps,
-        load: Schema.workoutLoggedSets.load,
-        rir: Schema.workoutLoggedSets.rir,
+        set: {
+          setNumber: Schema.workoutLoggedSets.setNumber,
+          reps: Schema.workoutLoggedSets.reps,
+          load: Schema.workoutLoggedSets.load,
+          rir: Schema.workoutLoggedSets.rir,
+        },
       })
       .from(Schema.workoutExercises)
-      .innerJoin(
+      .leftJoin(
         Schema.workoutLoggedSets,
         eq(Schema.workoutLoggedSets.workoutExerciseId, Schema.workoutExercises.id),
       )
@@ -74,14 +72,15 @@ class ListExerciseRecentPerformancesQueryDrizzle implements Workouts.Queries.Lis
       .orderBy(asc(Schema.workoutExercises.position), asc(Schema.workoutLoggedSets.setNumber));
 
     return recent.map((workout) => {
-      const first = rows.find((row) => row.workoutId === workout.id)!;
+      const exercises = rows.filter((row) => row.workoutId === workout.id);
+      const first = exercises.find((row) => row.set !== null) ?? exercises[0]!;
 
       return {
         scheduledFor: workout.scheduledFor,
         prescription: first.prescription,
-        sets: rows
+        sets: exercises
           .filter((row) => row.workoutExerciseId === first.workoutExerciseId)
-          .map((row) => ({ setNumber: row.setNumber, reps: row.reps, load: row.load, rir: row.rir })),
+          .flatMap((row) => (row.set === null ? [] : [row.set])),
       };
     });
   }

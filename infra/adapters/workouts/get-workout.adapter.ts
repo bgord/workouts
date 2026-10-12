@@ -69,7 +69,7 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
               userId,
               exercise.exerciseId,
               workout,
-              tools.Int.positive(Workouts.VO.ExerciseStallWindowSessions),
+              tools.Int.positive(Workouts.VO.ExerciseSignalWindowSessions),
             ),
           ]);
 
