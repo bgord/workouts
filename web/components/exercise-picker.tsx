@@ -91,6 +91,8 @@ function ExercisePickerOptions(props: ExercisePickerOptionsProps) {
               data-bg={props.value === exercise.id ? "alpha-subtle" : undefined}
               data-color={props.value === exercise.id ? "neutral-0" : "neutral-200"}
               data-cursor="pointer"
+              data-focus-ring-offset="inset"
+              data-focus-within="ring"
               data-hover-bg="alpha-subtle"
               data-position="relative"
               data-px="3"

@@ -64,6 +64,10 @@ a {
   outline-offset: var(--border-width-thin);
 }
 
+[data-focus-within="ring"][data-focus-ring-offset="inset"]:has(:focus-visible) {
+  outline-offset: calc(-1 * var(--border-width-thin));
+}
+
 [data-spin="none"] {
   appearance: textfield;
 }
