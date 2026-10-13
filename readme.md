@@ -261,6 +261,7 @@ modules/
 │   │   ├── body-weight-stats-calculator.ts
 │   │   ├── daily-steps-average.ts
 │   │   ├── daily-steps-chart.ts
+│   │   ├── daily-steps-export-file-csv.ts
 │   │   ├── daily-steps-stats-calculator.ts
 │   │   └── steps-provider-manual.strategy.ts
 │   └── value-objects
@@ -719,6 +720,7 @@ app/
 │   │   ├── body-weight-measurement-remove.ts
 │   │   ├── body-weight-reference-set.ts
 │   │   ├── daily-steps-chart-get.ts
+│   │   ├── daily-steps-export.ts
 │   │   ├── daily-steps-list.ts
 │   │   ├── daily-steps-record.ts
 │   │   ├── daily-steps-remove.ts
