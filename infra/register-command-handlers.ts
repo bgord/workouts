@@ -425,6 +425,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     MeasurementsCommandHandlers.handleDailyStepsRecordCommand(deps),
   );
   Tools.CommandBus.on(
+    MeasurementsCommands.DAILY_STEPS_IMPORT_COMMAND,
+    MeasurementsCommandHandlers.handleDailyStepsImportCommand(deps),
+  );
+  Tools.CommandBus.on(
     MeasurementsCommands.DAILY_STEPS_REMOVE_COMMAND,
     MeasurementsCommandHandlers.handleDailyStepsRemoveCommand({
       ...deps,

@@ -66,6 +66,7 @@ type AcceptedCommand =
   | MeasurementsCommands.BodyWeightMeasurementCorrectCommandType
   | MeasurementsCommands.BodyWeightMeasurementRemoveCommandType
   | MeasurementsCommands.BodyWeightReferenceSetCommandType
+  | MeasurementsCommands.DailyStepsImportCommandType
   | MeasurementsCommands.DailyStepsRecordCommandType
   | MeasurementsCommands.DailyStepsRemoveCommandType;
 
