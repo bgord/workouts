@@ -34,6 +34,8 @@ export const futureBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeas
 
 export const stepsCount = v.parse(Measurements.VO.StepsCount, 8_000);
 export const stepsDay = v.parse(Measurements.VO.StepsDay, "2025-01-01");
+export const anotherStepsCount = v.parse(Measurements.VO.StepsCount, 6_000);
+export const anotherStepsDay = v.parse(Measurements.VO.StepsDay, "2024-12-31");
 export const futureStepsDay = v.parse(Measurements.VO.StepsDay, "2025-01-02");
 
 export const dailySteps: Measurements.VO.DailySteps = {
@@ -41,6 +43,12 @@ export const dailySteps: Measurements.VO.DailySteps = {
   day: stepsDay,
   count: stepsCount,
   source: Measurements.VO.StepsSourceOptions.manual,
+};
+
+export const anotherDailySteps: Measurements.VO.DailySteps = {
+  ...dailySteps,
+  day: anotherStepsDay,
+  count: anotherStepsCount,
 };
 
 export const dailyStepsStats: Measurements.VO.DailyStepsStats = {

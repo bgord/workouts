@@ -468,6 +468,10 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
   );
 
   measurements.query(
+    "/daily-steps/chart",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsChartGet(Adapters.Measurements)),
+  );
+  measurements.query(
     "/daily-steps/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsList(Adapters.Measurements)),
   );
