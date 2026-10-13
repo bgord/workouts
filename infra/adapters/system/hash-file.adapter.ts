@@ -6,13 +6,12 @@ import * as Preferences from "+preferences";
 type Dependencies = { FileInspection: bg.FileInspectionPort };
 
 export function createHashFile(deps: Dependencies) {
-  return new bg.HashFileSha256Adapter({
-    HashBytes: new bg.HashBytesSha256Strategy(),
+  return new bg.HashFileMetadataAdapter({
+    HashContent: new bg.HashContentSha256Strategy(),
     MimeRegistry: new tools.MimeRegistry([
       ...Preferences.VO.ProfileAvatar.MimeRegistry.entries,
       ...Exercises.VO.ExerciseImage.MimeRegistry.entries,
     ]),
-    FileReaderRaw: new bg.FileReaderRawAdapter(),
     ...deps,
   });
 }
