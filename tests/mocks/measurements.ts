@@ -49,7 +49,10 @@ export const dailyStepsStats: Measurements.VO.DailyStepsStats = {
   month: { average: stepsCount, count: tools.Int.positive(1) },
 };
 
-export const dailyStepsListResponse = { entries: [dailySteps], stats: dailyStepsStats };
+export const stepsMonthSummary: Measurements.VO.StepsMonthSummary = {
+  month: v.parse(tools.MonthIsoId, "2025-01"),
+  count: tools.Int.nonNegative(1),
+};
 
 export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   id: bodyWeightMeasurementId,

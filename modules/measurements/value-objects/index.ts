@@ -27,5 +27,8 @@ export * from "./daily-steps-stats";
 export * from "./steps-count";
 export * from "./steps-count.validation";
 export * from "./steps-day";
+export * from "./steps-history-month";
+export * from "./steps-history-month.validation";
+export * from "./steps-month-summary";
 export * from "./steps-source";
 export * from "./steps-source-options";

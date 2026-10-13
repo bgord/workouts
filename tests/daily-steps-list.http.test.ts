@@ -16,29 +16,110 @@ describe(`QUERY ${url}`, async () => {
     await testcases.assertAuthResponse(response);
   });
 
+  test("validation - month - invalid", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ month: "2025-13" }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "steps.history.month.invalid");
+  });
+
   test("happy path", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
+      .use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute"))
+      .mockResolvedValue([mocks.stepsMonthSummary]);
+    spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
+    const listForMonth = spies
+      .use(spyOn(di.Adapters.Measurements.ListDailyStepsForMonthQuery, "execute"))
+      .mockResolvedValue([mocks.dailySteps]);
 
-    const response = await server.request(url, { method: "QUERY" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY", body: JSON.stringify({}) }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual(mocks.dailyStepsListResponse);
+    expect(listForMonth).toHaveBeenCalledWith(mocks.userId, "2025-01");
+    expect(json).toEqual({
+      month: "2025-01",
+      entries: [mocks.dailySteps],
+      months: [mocks.stepsMonthSummary],
+      stats: mocks.dailyStepsStats,
+    });
+  });
+
+  test("happy path - month", async () => {
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies
+      .use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute"))
+      .mockResolvedValue([mocks.stepsMonthSummary]);
+    spies
+      .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
+      .mockResolvedValue([mocks.dailySteps]);
+    const listForMonth = spies
+      .use(spyOn(di.Adapters.Measurements.ListDailyStepsForMonthQuery, "execute"))
+      .mockResolvedValue([]);
+
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ month: "2024-12" }) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(200);
+    expect(listForMonth).toHaveBeenCalledWith(mocks.userId, "2024-12");
+    expect(json).toEqual({
+      month: "2024-12",
+      entries: [],
+      months: [mocks.stepsMonthSummary],
+      stats: mocks.dailyStepsStats,
+    });
+  });
+
+  test("happy path - all", async () => {
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies
+      .use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute"))
+      .mockResolvedValue([mocks.stepsMonthSummary]);
+    spies
+      .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
+      .mockResolvedValue([mocks.dailySteps]);
+
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ month: "all" }) },
+      mocks.ip,
+    );
+    const json = await response.json();
+
+    expect(response.status).toEqual(200);
+    expect(json).toEqual({
+      month: "all",
+      entries: [mocks.dailySteps],
+      months: [mocks.stepsMonthSummary],
+      stats: mocks.dailyStepsStats,
+    });
   });
 
   test("happy path - empty", async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
+    spies.use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute")).mockResolvedValue([]);
     spies.use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute")).mockResolvedValue([]);
 
-    const response = await server.request(url, { method: "QUERY" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY", body: JSON.stringify({}) }, mocks.ip);
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ entries: [], stats: null });
+    expect(json).toEqual({ month: null, entries: [], months: [], stats: null });
   });
 });
