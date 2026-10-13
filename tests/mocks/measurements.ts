@@ -32,6 +32,8 @@ export const bodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn
 export const anotherBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2024-12-31");
 export const futureBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-02");
 
+export const stepsCount = v.parse(Measurements.VO.StepsCount, 8_000);
+
 export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   id: bodyWeightMeasurementId,
   weight: bodyWeight,
