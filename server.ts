@@ -467,6 +467,12 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightReferenceSet(deps)),
   );
 
+  measurements.post(
+    "/daily-steps/record",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsRecord(deps)),
+  );
+
   server.route("/measurements", measurements);
 
   // Probes =================

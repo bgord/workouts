@@ -698,6 +698,7 @@ app/
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
 │   │   ├── body-weight-reference-set.ts
+│   │   ├── daily-steps-record.ts
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create.ts
