@@ -3,6 +3,7 @@ import * as Plans from "+plans";
 import { GetFinalizedPlanQuery } from "./get-finalized-plan.adapter";
 import { GetPlanQuery } from "./get-plan.adapter";
 import { GetPlanEditableForOwnerCountQuery } from "./get-plan-editable-for-owner-count.adapter";
+import { createGetPlanHistoryQuery } from "./get-plan-history.adapter";
 import { GetPlanNameForOwnerCountQuery } from "./get-plan-name-for-owner-count.adapter";
 import { ListExerciseCatalogQuery } from "./list-exercise-catalog.adapter";
 import { ListPlansQuery } from "./list-plans.adapter";
@@ -20,6 +21,7 @@ export function createPlansAdapters(deps: Dependencies) {
     GetPlanEditableForOwnerCountQuery,
     GetPlanQuery,
     GetFinalizedPlanQuery,
+    GetPlanHistoryQuery: createGetPlanHistoryQuery(deps),
     ListExerciseCatalogQuery,
     ListPlansQuery,
     PlanRepository: new bg.EventSourcedRepositoryAdapter({ aggregate: Plans.Aggregates.Plan }, deps),

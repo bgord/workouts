@@ -21,3 +21,8 @@ export type PlanHistoryPage = {
   entries: ReadonlyArray<PlanHistoryEntry>;
   next: tools.IntegerNonNegativeType | null;
 };
+
+export type PlanHistoryPageConfig = {
+  before?: tools.IntegerNonNegativeType;
+  limit: tools.IntegerPositiveType;
+};

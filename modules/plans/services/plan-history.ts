@@ -9,8 +9,6 @@ type PlanHistoryFacts = {
   exercises: ReadonlyArray<{ id: Exercises.VO.ExerciseIdType; name: Exercises.VO.ExerciseNameType }>;
 };
 
-type PlanHistoryPageConfig = { before?: tools.IntegerNonNegativeType; limit: tools.IntegerPositiveType };
-
 type PlanHistoryState = {
   sections: Map<VO.PlanSectionIdType, VO.PlanSectionNameType>;
   exerciseInstructions: Map<VO.ExerciseInstructionIdType, Exercises.VO.ExerciseIdType>;
@@ -19,7 +17,7 @@ type PlanHistoryState = {
 export class PlanHistory {
   constructor(private readonly facts: PlanHistoryFacts) {}
 
-  calculate(config: PlanHistoryPageConfig): VO.PlanHistoryPage {
+  calculate(config: VO.PlanHistoryPageConfig): VO.PlanHistoryPage {
     const state: PlanHistoryState = { sections: new Map(), exerciseInstructions: new Map() };
 
     const entries = this.facts.events

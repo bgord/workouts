@@ -390,6 +390,7 @@ modules/
 │   ├── queries
 │   │   ├── get-finalized-plan.ts
 │   │   ├── get-plan-editable-for-owner-count.ts
+│   │   ├── get-plan-history.ts
 │   │   ├── get-plan-name-for-owner-count.ts
 │   │   ├── get-plan.ts
 │   │   ├── list-exercise-catalog.ts
@@ -788,6 +789,7 @@ infra/
 │   ├── plans
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
+│   │   ├── get-plan-history.adapter.ts
 │   │   ├── get-plan-name-for-owner-count.adapter.ts
 │   │   ├── get-plan.adapter.ts
 │   │   ├── list-exercise-catalog.adapter.ts

@@ -1,6 +1,7 @@
 export * from "./get-finalized-plan";
 export * from "./get-plan";
 export * from "./get-plan-editable-for-owner-count";
+export * from "./get-plan-history";
 export * from "./get-plan-name-for-owner-count";
 export * from "./list-exercise-catalog";
 export * from "./list-plans";
