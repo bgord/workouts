@@ -193,6 +193,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
+│   │   ├── DAILY_STEPS_RECORD_COMMAND.ts
 │   ├── events
 │   │   ├── BODY_PART_DEFINED_EVENT.ts
 │   │   ├── BODY_PART_DELETED_EVENT.ts
@@ -205,6 +206,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
+│   │   ├── DAILY_STEPS_RECORDED_EVENT.ts
 │   ├── invariants
 │   │   ├── body-part-belongs-to-user.ts
 │   │   ├── body-part-description-has-changed.ts
@@ -221,6 +223,7 @@ modules/
 │   │   ├── body-weight-measurement-exists.ts
 │   │   ├── body-weight-measurement-has-changed.ts
 │   │   ├── body-weight-reference-has-changed.ts
+│   │   ├── daily-steps-day-is-not-in-future.ts
 │   ├── open-host-queries
 │   ├── ports
 │   │   └── steps-provider.port.ts
@@ -276,7 +279,9 @@ modules/
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
 │       ├── steps-count.ts
-│       └── steps-day.ts
+│       ├── steps-day.ts
+│       ├── steps-source-options.ts
+│       └── steps-source.ts
 ├── notifications
 │   ├── events
 │   │   ├── WEEKLY_SUMMARY_SENT_EVENT.ts

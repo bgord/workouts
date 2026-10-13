@@ -3,6 +3,12 @@ import * as Measurements from "+measurements";
 import * as mocks from "./mocks";
 
 describe("StepsProviderManualStrategy", () => {
+  test("source", () => {
+    const strategy = new Measurements.Services.StepsProviderManualStrategy({ count: mocks.stepsCount });
+
+    expect(strategy.source).toEqual(Measurements.VO.StepsSourceOptions.manual);
+  });
+
   test("provide", async () => {
     const strategy = new Measurements.Services.StepsProviderManualStrategy({ count: mocks.stepsCount });
 
