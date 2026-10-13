@@ -15,7 +15,7 @@
     "better-sqlite3": "13.0.3",
     "cspell": "10.3.6",
     "drizzle-kit": "0.31.11",
-    "fallow": "3.30.0",
+    "fallow": "3.33.1",
     "gzip-cli": "1.2.0",
     "lefthook": "2.2.1",
     "lockfile-lint": "5.1.0",
@@ -32,7 +32,7 @@
     "csv": "6.6.4",
     "drizzle-orm": "0.45.4",
     "lucide-react": "1.52.0",
-    "nodemailer": "10.0.10",
+    "nodemailer": "10.1.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
