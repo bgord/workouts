@@ -15,6 +15,7 @@ export const DailyStepsRecord =
 
     const userId = context.identity.authenticatedUserId();
     const day = v.parse(Measurements.VO.StepsDay, body["day"]);
+
     const provider = new Measurements.Services.StepsProviderManualStrategy({
       count: v.parse(Measurements.VO.StepsCount, body["count"]),
     });

@@ -244,6 +244,7 @@
   "measurements.daily_steps.shortcuts.log": "Przejdź do pola kroków",
   "measurements.daily_steps.correct.title": "Popraw kroki",
   "measurements.daily_steps.correct.error": "Nie udało się poprawić kroków",
+  "measurements.daily_steps.export.cta": "Eksportuj",
   "measurements.daily_steps.remove.title": "Usuń kroki",
   "measurements.daily_steps.empty": "Brak kroków",
   "measurements.daily_steps.empty.hint": "Zapisz dzienne kroki, aby zobaczyć je tutaj",

@@ -471,6 +471,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     "/daily-steps/chart",
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsChartGet(Adapters.Measurements)),
   );
+  measurements.get(
+    "/daily-steps/export",
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsExport({ ...deps, ...Adapters.Measurements })),
+  );
   measurements.query(
     "/daily-steps/list",
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsList(Adapters.Measurements)),

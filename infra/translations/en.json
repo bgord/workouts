@@ -244,6 +244,7 @@
   "measurements.daily_steps.shortcuts.log": "Focus steps input",
   "measurements.daily_steps.correct.title": "Correct steps",
   "measurements.daily_steps.correct.error": "Could not correct the steps",
+  "measurements.daily_steps.export.cta": "Export",
   "measurements.daily_steps.remove.title": "Remove steps",
   "measurements.daily_steps.empty": "No steps yet",
   "measurements.daily_steps.empty.hint": "Log your daily steps to see them here",
