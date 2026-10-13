@@ -98,6 +98,8 @@ export const bodyWeightMonthSummary: Measurements.VO.BodyWeightMonthSummary = {
 
 const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
 
+export const dailyStepsCsv = ["day,count", `${stepsDay},${stepsCount}`].join("");
+
 export const bodyWeightMeasurementCsv = [
   "id,weight,measuredOn",
   `${bodyWeightMeasurementId},${bodyWeight},${bodyWeightMeasuredOn}`,
