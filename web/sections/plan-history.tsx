@@ -125,9 +125,12 @@ function PlanHistoryRow(props: PlanHistoryEntry & { first: boolean }) {
         dateTime={bg.Clock.iso(props.createdAt)}
         title={format.instantFull(props.createdAt)}
       >
-        {new Intl.DateTimeFormat(language, { hour: "2-digit", minute: "2-digit", timeZone }).format(
-          props.createdAt,
-        )}
+        {new Intl.DateTimeFormat(language, {
+          hour: "2-digit",
+          minute: "2-digit",
+          hourCycle: "h23",
+          timeZone,
+        }).format(props.createdAt)}
       </time>
     </ui.HairlineRow>
   );
