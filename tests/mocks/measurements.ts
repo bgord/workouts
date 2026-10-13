@@ -43,7 +43,13 @@ export const dailySteps: Measurements.VO.DailySteps = {
   source: Measurements.VO.StepsSourceOptions.manual,
 };
 
-export const dailyStepsListResponse = [dailySteps];
+export const dailyStepsStats: Measurements.VO.DailyStepsStats = {
+  latest: dailySteps,
+  week: { average: stepsCount, count: tools.Int.positive(1) },
+  month: { average: stepsCount, count: tools.Int.positive(1) },
+};
+
+export const dailyStepsListResponse = { entries: [dailySteps], stats: dailyStepsStats };
 
 export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   id: bodyWeightMeasurementId,

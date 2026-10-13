@@ -206,7 +206,11 @@ export const dailyStepsRoute = createRoute({
   path: "/measurements/daily-steps",
   getParentRoute: () => rootRoute,
   component: DailyStepsPage,
-  loader: async ({ context }) => ({ dailySteps: await Measurements.listDailySteps(context.request) }),
+  loader: async ({ context }) => {
+    const { entries, stats } = await Measurements.listDailySteps(context.request);
+
+    return { dailySteps: entries, dailyStepsStats: stats };
+  },
 });
 
 export const profileRoute = createRoute({

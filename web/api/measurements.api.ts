@@ -7,6 +7,7 @@ import type { BodyWeightMeasurement } from "../../modules/measurements/value-obj
 import type { BodyWeightMonthSummary } from "../../modules/measurements/value-objects/body-weight-month-summary";
 import type { BodyWeightStats } from "../../modules/measurements/value-objects/body-weight-stats";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
+import type { DailyStepsStats } from "../../modules/measurements/value-objects/daily-steps-stats";
 
 type BodyWeightListResponse = {
   month: BodyWeightHistoryMonthType | null;
@@ -15,6 +16,8 @@ type BodyWeightListResponse = {
   months: ReadonlyArray<BodyWeightMonthSummary>;
   stats: BodyWeightStats | null;
 };
+
+type DailyStepsListResponse = { entries: ReadonlyArray<DailySteps>; stats: DailyStepsStats | null };
 
 type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
 
@@ -54,9 +57,12 @@ export class Measurements {
     );
   }
 
-  static async listDailySteps(request: Request | null): Promise<ReadonlyArray<DailySteps>> {
-    return bg.ApiClient.json<ReadonlyArray<DailySteps>>("/api/measurements/daily-steps/list", request, [], {
-      method: "QUERY",
-    });
+  static async listDailySteps(request: Request | null): Promise<DailyStepsListResponse> {
+    return bg.ApiClient.json<DailyStepsListResponse>(
+      "/api/measurements/daily-steps/list",
+      request,
+      { entries: [], stats: null },
+      { method: "QUERY" },
+    );
   }
 }

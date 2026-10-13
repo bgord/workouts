@@ -1,5 +1,5 @@
 import type * as bg from "@bgord/bun";
-import type * as Measurements from "+measurements";
+import * as Measurements from "+measurements";
 
 type Dependencies = { ListDailyStepsQuery: Measurements.Queries.ListDailySteps };
 
@@ -8,7 +8,8 @@ export const DailyStepsList =
   async (context) => {
     const userId = context.identity.authenticatedUserId();
 
-    const dailySteps = await deps.ListDailyStepsQuery.execute(userId);
+    const entries = await deps.ListDailyStepsQuery.execute(userId);
+    const stats = new Measurements.Services.DailyStepsStatsCalculator(entries).calculate();
 
-    return Response.json(dailySteps);
+    return Response.json({ entries, stats });
   };

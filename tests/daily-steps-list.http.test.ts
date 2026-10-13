@@ -21,7 +21,7 @@ describe(`QUERY ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
-      .mockResolvedValue(mocks.dailyStepsListResponse);
+      .mockResolvedValue([mocks.dailySteps]);
 
     const response = await server.request(url, { method: "QUERY" }, mocks.ip);
     const json = await response.json();
@@ -39,6 +39,6 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual([]);
+    expect(json).toEqual({ entries: [], stats: null });
   });
 });
