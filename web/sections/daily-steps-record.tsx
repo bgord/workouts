@@ -1,18 +1,30 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
 import { X } from "lucide-react";
+import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import { StepsCountMax } from "../../modules/measurements/value-objects/steps-count.validation";
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 
 export function DailyStepsRecord() {
+  const { dailySteps } = dailyStepsRoute.useLoaderData();
+
+  const latest = dailySteps[0];
+
+  return <DailyStepsRecordForm key={latest?.count} latest={latest} />;
+}
+
+function DailyStepsRecordForm(props: { latest: DailySteps | undefined }) {
   const t = bg.useTranslations();
   const router = useRouter();
 
   const today = bg.useToday();
 
   const day = bg.useDateField({ name: "daily-steps-day", defaultValue: today.toString() });
-  const count = bg.useNumberField({ name: "daily-steps-count" });
+  const count = bg.useNumberField<number>({
+    name: "daily-steps-count",
+    defaultValue: props.latest?.count,
+  });
 
   const mutation = bg.useMutation({
     perform: () =>
@@ -23,7 +35,6 @@ export function DailyStepsRecord() {
       }),
     onSuccess: async () => {
       await router.invalidate({ filter: (match) => match.routeId === dailyStepsRoute.id, sync: true });
-      count.clear();
     },
   });
 
