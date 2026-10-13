@@ -50,7 +50,9 @@ describe("DailyStepsStatsCalculator", () => {
       latest,
       previous: weekEdge,
       week: { average: v.parse(Measurements.VO.StepsCount, 8_000), count: tools.Int.positive(2) },
+      previousWeek: { average: v.parse(Measurements.VO.StepsCount, 4_000) },
       month: { average: v.parse(Measurements.VO.StepsCount, 5_501), count: tools.Int.positive(4) },
+      previousMonth: { average: v.parse(Measurements.VO.StepsCount, 1_000) },
     });
   });
 

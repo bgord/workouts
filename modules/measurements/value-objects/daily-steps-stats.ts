@@ -8,5 +8,7 @@ export type DailyStepsStats = {
   latest: DailySteps;
   previous?: DailySteps;
   week: DailyStepsAverage;
+  previousWeek?: { average: StepsCountType };
   month: DailyStepsAverage;
+  previousMonth?: { average: StepsCountType };
 };

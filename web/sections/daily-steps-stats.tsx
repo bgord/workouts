@@ -28,6 +28,8 @@ export function DailyStepsStats(props: VO.DailyStepsStats) {
 
         <ui.TileValue>
           <ui.DailyStepsValue count={props.latest.count} />
+
+          <ui.CountDelta current={props.latest.count} data-fs="xs" previous={props.previous?.count} />
         </ui.TileValue>
 
         <ui.TileContext>
@@ -43,6 +45,8 @@ export function DailyStepsStats(props: VO.DailyStepsStats) {
 
         <ui.TileValue>
           <ui.DailyStepsValue count={props.week.average} />
+
+          <ui.CountDelta current={props.week.average} data-fs="xs" previous={props.previousWeek?.average} />
         </ui.TileValue>
 
         <ui.TileContext>{days(props.week.count)}</ui.TileContext>
@@ -56,6 +60,8 @@ export function DailyStepsStats(props: VO.DailyStepsStats) {
 
         <ui.TileValue>
           <ui.DailyStepsValue count={props.month.average} />
+
+          <ui.CountDelta current={props.month.average} data-fs="xs" previous={props.previousMonth?.average} />
         </ui.TileValue>
 
         <ui.TileContext>{days(props.month.count)}</ui.TileContext>
