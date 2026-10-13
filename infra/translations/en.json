@@ -241,6 +241,8 @@
   "measurements.daily_steps.record.count.unit": "steps",
   "measurements.daily_steps.record.cta": "Log",
   "measurements.daily_steps.record.error": "Could not log the steps",
+  "measurements.daily_steps.correct.title": "Correct steps",
+  "measurements.daily_steps.correct.error": "Could not correct the steps",
   "measurements.daily_steps.remove.title": "Remove steps",
   "measurements.daily_steps.empty": "No steps yet",
   "measurements.daily_steps.empty.hint": "Log your daily steps to see them here",

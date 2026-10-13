@@ -1,29 +1,55 @@
 import * as bg from "@bgord/ui";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import * as ui from "../components";
+import { DailyStepsCorrect } from "./daily-steps-correct";
 import { DailyStepsRemove } from "./daily-steps-remove";
 
 export function DailyStepsRow(props: { entry: DailySteps; first: boolean }) {
+  const t = bg.useTranslations();
+
+  const dailyStepsCorrect = bg.useToggle({ name: `correct-${props.entry.day}` });
+
   return (
     <ui.HairlineRow data-md-gap="2" data-stack="x" first={props.first} {...ui.Spacing.rowCompact}>
-      <div
-        data-color="neutral-300"
-        data-grow="1"
-        data-md-fs="xs"
-        data-minw="0"
-        data-stack="x"
-        data-transform="nowrap"
-      >
-        <bg.DateTime format="list" value={props.entry.day} />
-      </div>
+      {dailyStepsCorrect.on && <DailyStepsCorrect entry={props.entry} {...dailyStepsCorrect} />}
 
-      <div data-color="neutral-100" data-fw="medium" data-md-fs="xs" data-shrink="0" data-transform="nowrap">
-        <ui.DailyStepsValue count={props.entry.count} />
-      </div>
+      {!dailyStepsCorrect.on && (
+        <>
+          <button
+            aria-label={t("measurements.daily_steps.correct.title")}
+            data-color="neutral-300"
+            data-cursor="pointer"
+            data-grow="1"
+            data-md-fs="xs"
+            data-minw="0"
+            data-stack="x"
+            data-transform="nowrap"
+            onClick={dailyStepsCorrect.enable}
+            type="button"
+            {...dailyStepsCorrect.props.controller}
+          >
+            <bg.DateTime format="list" value={props.entry.day} />
+          </button>
 
-      <div data-shrink="0" data-stack="x" {...ui.Gap.inline}>
-        <DailyStepsRemove entry={props.entry} />
-      </div>
+          <button
+            data-color="neutral-100"
+            data-cursor="pointer"
+            data-fw="medium"
+            data-md-fs="xs"
+            data-shrink="0"
+            data-transform="nowrap"
+            onClick={dailyStepsCorrect.enable}
+            type="button"
+            {...dailyStepsCorrect.props.controller}
+          >
+            <ui.DailyStepsValue count={props.entry.count} />
+          </button>
+
+          <div data-shrink="0" data-stack="x" {...ui.Gap.inline}>
+            <DailyStepsRemove entry={props.entry} />
+          </div>
+        </>
+      )}
     </ui.HairlineRow>
   );
 }
