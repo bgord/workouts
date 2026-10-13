@@ -66,7 +66,8 @@ type AcceptedCommand =
   | MeasurementsCommands.BodyWeightMeasurementCorrectCommandType
   | MeasurementsCommands.BodyWeightMeasurementRemoveCommandType
   | MeasurementsCommands.BodyWeightReferenceSetCommandType
-  | MeasurementsCommands.DailyStepsRecordCommandType;
+  | MeasurementsCommands.DailyStepsRecordCommandType
+  | MeasurementsCommands.DailyStepsRemoveCommandType;
 
 export function createCommandBus(deps: Dependencies): bg.CommandBusPort<AcceptedCommand> {
   const emittery = new bg.CommandBusEmitteryAdapter<AcceptedCommand>();

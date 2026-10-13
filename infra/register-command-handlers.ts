@@ -424,4 +424,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
     MeasurementsCommands.DAILY_STEPS_RECORD_COMMAND,
     MeasurementsCommandHandlers.handleDailyStepsRecordCommand(deps),
   );
+  Tools.CommandBus.on(
+    MeasurementsCommands.DAILY_STEPS_REMOVE_COMMAND,
+    MeasurementsCommandHandlers.handleDailyStepsRemoveCommand({
+      ...deps,
+      GetDailyStepsQuery: Adapters.Measurements.GetDailyStepsQuery,
+    }),
+  );
 }
