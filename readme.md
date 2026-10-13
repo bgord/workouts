@@ -179,6 +179,7 @@ modules/
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
+│   │   ├── handleDailyStepsImportCommand.ts
 │   │   ├── handleDailyStepsRecordCommand.ts
 │   │   ├── handleDailyStepsRemoveCommand.ts
 │   ├── commands
@@ -195,6 +196,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
+│   │   ├── DAILY_STEPS_IMPORT_COMMAND.ts
 │   │   ├── DAILY_STEPS_RECORD_COMMAND.ts
 │   │   ├── DAILY_STEPS_REMOVE_COMMAND.ts
 │   ├── events
@@ -262,6 +264,7 @@ modules/
 │   │   ├── daily-steps-average.ts
 │   │   ├── daily-steps-chart.ts
 │   │   ├── daily-steps-export-file-csv.ts
+│   │   ├── daily-steps-import-file-csv.ts
 │   │   ├── daily-steps-stats-calculator.ts
 │   │   └── steps-provider-manual.strategy.ts
 │   └── value-objects
@@ -291,6 +294,7 @@ modules/
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+│       ├── daily-steps-import.ts
 │       ├── daily-steps-stats.ts
 │       ├── daily-steps.ts
 │       ├── steps-chart-granularity-options.ts
@@ -721,6 +725,7 @@ app/
 │   │   ├── body-weight-reference-set.ts
 │   │   ├── daily-steps-chart-get.ts
 │   │   ├── daily-steps-export.ts
+│   │   ├── daily-steps-import.ts
 │   │   ├── daily-steps-list.ts
 │   │   ├── daily-steps-record.ts
 │   │   ├── daily-steps-remove.ts
