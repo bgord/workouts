@@ -83,9 +83,9 @@ export const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   component: DashboardPage,
   loader: async ({ context }) => {
-    const { workouts, bodyWeightStats } = await Dashboard.get(context.request);
+    const { workouts, bodyWeightStats, dailyStepsStats } = await Dashboard.get(context.request);
 
-    return { dashboard: workouts, bodyWeightStats };
+    return { dashboard: workouts, bodyWeightStats, dailyStepsStats };
   },
 });
 
