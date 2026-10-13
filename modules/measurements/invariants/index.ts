@@ -13,3 +13,4 @@ export * from "./body-weight-measurement-belongs-to-user";
 export * from "./body-weight-measurement-exists";
 export * from "./body-weight-measurement-has-changed";
 export * from "./body-weight-reference-has-changed";
+export * from "./daily-steps-day-is-not-in-future";
