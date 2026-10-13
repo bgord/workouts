@@ -241,6 +241,7 @@
   "measurements.daily_steps.record.count.unit": "kroków",
   "measurements.daily_steps.record.cta": "Zapisz",
   "measurements.daily_steps.record.error": "Nie udało się zapisać kroków",
+  "measurements.daily_steps.shortcuts.log": "Przejdź do pola kroków",
   "measurements.daily_steps.correct.title": "Popraw kroki",
   "measurements.daily_steps.correct.error": "Nie udało się poprawić kroków",
   "measurements.daily_steps.remove.title": "Usuń kroki",

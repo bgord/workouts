@@ -5,6 +5,7 @@ import type { DailySteps } from "../../modules/measurements/value-objects/daily-
 import { StepsCountMax } from "../../modules/measurements/value-objects/steps-count.validation";
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
+import * as ShortcutDefinitions from "../services/shortcuts";
 
 export function DailyStepsRecord() {
   const { dailySteps } = dailyStepsRoute.useLoaderData();
@@ -24,6 +25,13 @@ function DailyStepsRecordForm(props: { latest: DailySteps | undefined }) {
   const count = bg.useNumberField<number>({
     name: "daily-steps-count",
     defaultValue: props.latest?.count,
+  });
+
+  bg.useShortcuts({
+    [ShortcutDefinitions.LogDailySteps.trigger]: (event) => {
+      event.preventDefault();
+      document.getElementById(count.input.props.id)?.focus();
+    },
   });
 
   const mutation = bg.useMutation({
