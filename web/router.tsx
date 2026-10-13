@@ -3,6 +3,7 @@ import * as bg from "@bgord/ui";
 import { createRootRouteWithContext, createRoute, notFound, Router, redirect } from "@tanstack/react-router";
 import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
+import * as DailyStepsFiltersForm from "../app/services/daily-steps-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
@@ -206,10 +207,14 @@ export const dailyStepsRoute = createRoute({
   path: "/measurements/daily-steps",
   getParentRoute: () => rootRoute,
   component: DailyStepsPage,
-  loader: async ({ context }) => {
-    const { entries, stats } = await Measurements.listDailySteps(context.request);
+  validateSearch: DailyStepsFiltersForm.Form.validate,
+  loaderDeps: ({ search }) => ({ month: search.month }),
+  loader: async ({ context, deps }) => {
+    const { month, entries, months, stats } = await Measurements.listDailySteps(context.request, {
+      month: deps.month,
+    });
 
-    return { dailySteps: entries, dailyStepsStats: stats };
+    return { month, dailySteps: entries, months, dailyStepsStats: stats };
   },
 });
 

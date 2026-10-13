@@ -1,6 +1,7 @@
 import * as bg from "@bgord/ui";
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
+import { DailyStepsFilters } from "./daily-steps-filters";
 import { DailyStepsList } from "./daily-steps-list";
 import { DailyStepsStats } from "./daily-steps-stats";
 
@@ -16,6 +17,8 @@ export function DailyStepsHistory() {
 
       <div data-stack="y" {...ui.Gap.related}>
         <h2>{t("measurements.daily_steps.history")}</h2>
+
+        <DailyStepsFilters />
 
         <DailyStepsList />
       </div>

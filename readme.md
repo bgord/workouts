@@ -769,6 +769,7 @@ app/
     ├── body-part-name-form.ts
     ├── body-weight-chart-form.ts
     ├── body-weight-measurement-filters-form.ts
+    ├── daily-steps-filters-form.ts
     ├── exercise-add-form.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts

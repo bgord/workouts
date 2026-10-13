@@ -247,6 +247,8 @@
   "measurements.daily_steps.empty": "No steps yet",
   "measurements.daily_steps.empty.hint": "Log your daily steps to see them here",
   "measurements.daily_steps.history": "History",
+  "measurements.daily_steps.history.month.label": "Month",
+  "measurements.daily_steps.history.month.all": "All months",
   "measurements.daily_steps.stats.latest": "Latest steps",
   "measurements.daily_steps.stats.week_average": "7-day average",
   "measurements.daily_steps.stats.month_average": "30-day average",
