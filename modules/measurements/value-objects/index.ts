@@ -22,3 +22,5 @@ export * from "./body-weight-measurement-id";
 export * from "./body-weight-measurement-import";
 export * from "./body-weight-month-summary";
 export * from "./body-weight-stats";
+export * from "./steps-count";
+export * from "./steps-day";

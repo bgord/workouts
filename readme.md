@@ -222,6 +222,8 @@ modules/
 │   │   ├── body-weight-measurement-has-changed.ts
 │   │   ├── body-weight-reference-has-changed.ts
 │   ├── open-host-queries
+│   ├── ports
+│   │   └── steps-provider.port.ts
 │   ├── queries
 │   │   ├── get-body-part-by-name.ts
 │   │   ├── get-body-part-measurement.ts
@@ -245,6 +247,7 @@ modules/
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
+│   │   └── steps-provider-manual.strategy.ts
 │   └── value-objects
 │       ├── body-part-circumference.ts
 │       ├── body-part-description.ts
@@ -272,6 +275,8 @@ modules/
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+│       ├── steps-count.ts
+│       └── steps-day.ts
 ├── notifications
 │   ├── events
 │   │   ├── WEEKLY_SUMMARY_SENT_EVENT.ts
