@@ -1,13 +1,12 @@
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-import * as VO from "+measurements/value-objects";
+import type * as VO from "+measurements/value-objects";
+import { DailyStepsAverage } from "./daily-steps-average";
 
 const WEEK_WINDOW_DAYS = 7;
 const MONTH_WINDOW_DAYS = 30;
 
 export class DailyStepsStatsCalculator {
-  private readonly rounding = new tools.RoundingToNearestStrategy();
-
   constructor(private readonly entries: ReadonlyArray<VO.DailySteps>) {}
 
   calculate(): VO.DailyStepsStats | null {
@@ -32,18 +31,9 @@ export class DailyStepsStatsCalculator {
 
   private average(anchor: VO.StepsDayType, offset: number, days: number): VO.DailyStepsAverage | null {
     const date = Temporal.PlainDate.from(anchor);
-    const from = date.subtract({ days: offset + days - 1 }).toString();
-    const to = date.subtract({ days: offset }).toString();
+    const from = v.parse(tools.DayIsoId, date.subtract({ days: offset + days - 1 }).toString());
+    const to = v.parse(tools.DayIsoId, date.subtract({ days: offset }).toString());
 
-    const within = this.entries.filter((entry) => entry.day >= from && entry.day <= to);
-
-    if (within.length === 0) return null;
-
-    const total = within.reduce((sum, entry) => sum + entry.count, 0);
-
-    return {
-      average: v.parse(VO.StepsCount, this.rounding.round(total / within.length)),
-      count: tools.Int.positive(within.length),
-    };
+    return new DailyStepsAverage(this.entries, from, to).calculate();
   }
 }
