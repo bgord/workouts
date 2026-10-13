@@ -3,6 +3,7 @@ import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 import { DailyStepsFilters } from "./daily-steps-filters";
 import { DailyStepsList } from "./daily-steps-list";
+import { DailyStepsProgressChart } from "./daily-steps-progress-chart";
 import { DailyStepsStats } from "./daily-steps-stats";
 
 export function DailyStepsHistory() {
@@ -14,6 +15,8 @@ export function DailyStepsHistory() {
   return (
     <div data-stack="y" {...ui.Gap.section}>
       <DailyStepsStats {...dailyStepsStats} />
+
+      <DailyStepsProgressChart />
 
       <div data-stack="y" {...ui.Gap.related}>
         <h2>{t("measurements.daily_steps.history")}</h2>

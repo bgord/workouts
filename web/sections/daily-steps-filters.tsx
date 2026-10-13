@@ -24,7 +24,7 @@ export function DailyStepsFilters() {
         onChange={(event) =>
           navigate({
             resetScroll: false,
-            search: { month: event.currentTarget.value as StepsHistoryMonthType },
+            search: { month: event.currentTarget.value as StepsHistoryMonthType, chart: search.chart },
             to: "/measurements/daily-steps",
           })
         }
@@ -44,7 +44,9 @@ export function DailyStepsFilters() {
         data-disp={pristine ? "none" : "flex"}
         data-md-disp="flex"
         disabled={pristine}
-        onClick={() => navigate({ resetScroll: false, search: {}, to: "/measurements/daily-steps" })}
+        onClick={() =>
+          navigate({ resetScroll: false, search: { chart: search.chart }, to: "/measurements/daily-steps" })
+        }
         title={t("app.clear")}
       >
         <X data-size="sm" />

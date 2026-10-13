@@ -8,6 +8,8 @@ import type { BodyWeightMonthSummary } from "../../modules/measurements/value-ob
 import type { BodyWeightStats } from "../../modules/measurements/value-objects/body-weight-stats";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import type { DailyStepsStats } from "../../modules/measurements/value-objects/daily-steps-stats";
+import type { StepsChartGranularityOptions } from "../../modules/measurements/value-objects/steps-chart-granularity-options";
+import type { StepsChartPoint } from "../../modules/measurements/value-objects/steps-chart-point";
 import type { StepsHistoryMonthType } from "../../modules/measurements/value-objects/steps-history-month";
 import type { StepsMonthSummary } from "../../modules/measurements/value-objects/steps-month-summary";
 
@@ -27,6 +29,8 @@ type DailyStepsListResponse = {
 };
 
 type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
+
+type DailyStepsChartResponse = { points: ReadonlyArray<StepsChartPoint> };
 
 const unavailable = { available: false, enabled: false, hints: [] };
 
@@ -72,6 +76,18 @@ export class Measurements {
       "/api/measurements/daily-steps/list",
       request,
       { month: null, entries: [], months: [], stats: null },
+      { method: "QUERY", body: JSON.stringify(params) },
+    );
+  }
+
+  static async dailyStepsChart(
+    request: Request | null,
+    params: { granularity: StepsChartGranularityOptions },
+  ): Promise<DailyStepsChartResponse> {
+    return bg.ApiClient.json<DailyStepsChartResponse>(
+      "/api/measurements/daily-steps/chart",
+      request,
+      { points: [] },
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }

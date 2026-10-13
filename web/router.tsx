@@ -3,10 +3,12 @@ import * as bg from "@bgord/ui";
 import { createRootRouteWithContext, createRoute, notFound, Router, redirect } from "@tanstack/react-router";
 import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
+import * as DailyStepsChartForm from "../app/services/daily-steps-chart-form";
 import * as DailyStepsFiltersForm from "../app/services/daily-steps-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
+import { StepsChartGranularityOptions } from "../modules/measurements/value-objects/steps-chart-granularity-options";
 import {
   Avatar,
   Dashboard,
@@ -207,14 +209,20 @@ export const dailyStepsRoute = createRoute({
   path: "/measurements/daily-steps",
   getParentRoute: () => rootRoute,
   component: DailyStepsPage,
-  validateSearch: DailyStepsFiltersForm.Form.validate,
-  loaderDeps: ({ search }) => ({ month: search.month }),
+  validateSearch: (value: Record<string, unknown>) => ({
+    ...DailyStepsFiltersForm.Form.validate(value),
+    ...DailyStepsChartForm.Form.validate(value),
+  }),
+  loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const { month, entries, months, stats } = await Measurements.listDailySteps(context.request, {
-      month: deps.month,
-    });
+    const [{ month, entries, months, stats }, { points }] = await Promise.all([
+      Measurements.listDailySteps(context.request, { month: deps.month }),
+      Measurements.dailyStepsChart(context.request, {
+        granularity: deps.chart ?? StepsChartGranularityOptions.weekly,
+      }),
+    ]);
 
-    return { month, dailySteps: entries, months, dailyStepsStats: stats };
+    return { month, dailySteps: entries, months, dailyStepsStats: stats, chart: points };
   },
 });
 
