@@ -180,6 +180,7 @@ modules/
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
 │   │   ├── handleDailyStepsRecordCommand.ts
+│   │   ├── handleDailyStepsRemoveCommand.ts
 │   ├── commands
 │   │   ├── BODY_PART_DEFINE_COMMAND.ts
 │   │   ├── BODY_PART_DELETE_COMMAND.ts
@@ -195,6 +196,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
 │   │   ├── DAILY_STEPS_RECORD_COMMAND.ts
+│   │   ├── DAILY_STEPS_REMOVE_COMMAND.ts
 │   ├── events
 │   │   ├── BODY_PART_DEFINED_EVENT.ts
 │   │   ├── BODY_PART_DELETED_EVENT.ts
@@ -208,6 +210,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
 │   │   ├── DAILY_STEPS_RECORDED_EVENT.ts
+│   │   ├── DAILY_STEPS_REMOVED_EVENT.ts
 │   ├── invariants
 │   │   ├── body-part-belongs-to-user.ts
 │   │   ├── body-part-description-has-changed.ts
@@ -225,6 +228,7 @@ modules/
 │   │   ├── body-weight-measurement-has-changed.ts
 │   │   ├── body-weight-reference-has-changed.ts
 │   │   ├── daily-steps-day-is-not-in-future.ts
+│   │   ├── daily-steps-exists.ts
 │   ├── open-host-queries
 │   ├── ports
 │   │   └── steps-provider.port.ts
@@ -234,6 +238,7 @@ modules/
 │   │   ├── get-body-part-name-count.ts
 │   │   ├── get-body-part.ts
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── get-daily-steps.ts
 │   │   ├── list-body-part-measurement-export-rows.ts
 │   │   ├── list-body-part-names.ts
 │   │   ├── list-body-parts.ts
@@ -279,6 +284,7 @@ modules/
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+│       ├── daily-steps.ts
 │       ├── steps-count.ts
 │       ├── steps-day.ts
 │       ├── steps-source-options.ts
@@ -791,6 +797,7 @@ infra/
 │   │   ├── get-body-part-name-count.adapter.ts
 │   │   ├── get-body-part.adapter.ts
 │   │   ├── get-body-weight-measurement.adapter.ts
+│   │   ├── get-daily-steps.adapter.ts
 │   │   ├── list-body-part-measurement-export-rows.adapter.ts
 │   │   ├── list-body-part-names.adapter.ts
 │   │   ├── list-body-parts.adapter.ts

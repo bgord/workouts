@@ -7,7 +7,9 @@ import * as Schema from "+infra/schema";
 
 type Dependencies = {
   EventBus: bg.EventBusPort<
-    measurements.Events.DailyStepsRecordedEventType | Auth.Events.AccountDeletedEventType
+    | measurements.Events.DailyStepsRecordedEventType
+    | measurements.Events.DailyStepsRemovedEventType
+    | Auth.Events.AccountDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
 };
@@ -17,6 +19,10 @@ export class DailyStepsProjector {
     deps.EventBus.on(
       measurements.Events.DAILY_STEPS_RECORDED_EVENT,
       deps.EventHandler.handle(this.onDailyStepsRecordedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      measurements.Events.DAILY_STEPS_REMOVED_EVENT,
+      deps.EventHandler.handle(this.onDailyStepsRemovedEvent.bind(this)),
     );
     deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
@@ -39,6 +45,14 @@ export class DailyStepsProjector {
         target: [Schema.dailySteps.userId, Schema.dailySteps.day],
         set: { count: event.payload.count, source: event.payload.source, updatedAt: event.createdAt },
       });
+  }
+
+  async onDailyStepsRemovedEvent(event: measurements.Events.DailyStepsRemovedEventType) {
+    await db
+      .delete(Schema.dailySteps)
+      .where(
+        and(eq(Schema.dailySteps.userId, event.payload.userId), eq(Schema.dailySteps.day, event.payload.day)),
+      );
   }
 
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
