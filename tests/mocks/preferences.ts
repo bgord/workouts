@@ -9,7 +9,7 @@ import { commit, correlationId, etag, expectAnyId, T0 } from "./shared";
 
 export const profileAvatarObjectKey = v.parse(tools.ObjectKey, `users/${userId}/avatar.webp`);
 
-export const preferencesStream = v.parse(bg.EventStream, `preferences_${userId}`);
+const preferencesStream = v.parse(bg.EventStream, `preferences_${userId}`);
 
 export const GenericUserLanguageSetEvent = {
   id: expectAnyId,

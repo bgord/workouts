@@ -10,7 +10,7 @@ export const bodyWeightMeasurementId = v.parse(
   Measurements.VO.BodyWeightMeasurementId,
   "3c7a9e21-5b4d-4f8e-a1c6-9d2b7e0f4a58",
 );
-export const bodyWeightMeasurementStream = v.parse(
+const bodyWeightMeasurementStream = v.parse(
   bg.EventStream,
   `body_weight_measurement_${bodyWeightMeasurementId}`,
 );
@@ -19,7 +19,7 @@ export const anotherBodyWeightMeasurementId = v.parse(
   Measurements.VO.BodyWeightMeasurementId,
   "9f2d6b1c-7e3a-4c5d-b8a1-0e4f7c2d9a63",
 );
-export const anotherBodyWeightMeasurementStream = v.parse(
+const anotherBodyWeightMeasurementStream = v.parse(
   bg.EventStream,
   `body_weight_measurement_${anotherBodyWeightMeasurementId}`,
 );
@@ -66,7 +66,7 @@ export const bodyWeightMonthSummary: Measurements.VO.BodyWeightMonthSummary = {
   count: tools.Int.nonNegative(1),
 };
 
-export const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
+const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
 
 export const bodyWeightMeasurementCsv = [
   "id,weight,measuredOn",
@@ -147,7 +147,7 @@ export const GenericBodyWeightMeasurementRemovedEvent = {
 
 export const bodyPartId = v.parse(Measurements.VO.BodyPartId, "1f0a3d7c-2b6e-4a9d-8c5f-3e7b1a0d9c42");
 export const anotherBodyPartId = v.parse(Measurements.VO.BodyPartId, "5b8e2f14-7c3a-4d9e-b1f6-0a4c8e2d7b39");
-export const bodyPartStream = v.parse(bg.EventStream, `body_part_${bodyPartId}`);
+const bodyPartStream = v.parse(bg.EventStream, `body_part_${bodyPartId}`);
 
 export const bodyPartName = v.parse(Measurements.VO.BodyPartName, "Left Bicep");
 export const anotherBodyPartName = v.parse(Measurements.VO.BodyPartName, "Right Bicep");
@@ -155,10 +155,6 @@ export const anotherBodyPartName = v.parse(Measurements.VO.BodyPartName, "Right 
 export const bodyPartDescription = v.parse(
   Measurements.VO.BodyPartDescription,
   "Relaxed, tape level at the widest point",
-);
-export const anotherBodyPartDescription = v.parse(
-  Measurements.VO.BodyPartDescription,
-  "Flexed, tape level at the peak",
 );
 
 export const bodyPart: Measurements.VO.BodyPart = {
@@ -255,7 +251,7 @@ export const bodyPartMeasurementId = v.parse(
   Measurements.VO.BodyPartMeasurementId,
   "7c4e1a9b-3d5f-4e8a-9b2c-6f0d3a7e1b54",
 );
-export const bodyPartMeasurementStream = v.parse(
+const bodyPartMeasurementStream = v.parse(
   bg.EventStream,
   `body_part_measurement_${bodyPartMeasurementId}`,
 );
@@ -263,7 +259,7 @@ export const anotherBodyPartMeasurementId = v.parse(
   Measurements.VO.BodyPartMeasurementId,
   "2d9f6b3e-8a1c-4f7d-a5e2-9c0b4d6f1a83",
 );
-export const anotherBodyPartMeasurementStream = v.parse(
+const anotherBodyPartMeasurementStream = v.parse(
   bg.EventStream,
   `body_part_measurement_${anotherBodyPartMeasurementId}`,
 );
@@ -288,7 +284,7 @@ export const bodyPartMeasurementCsv = [
   `${bodyPartMeasurementId},${bodyPartName},${bodyPartCircumference},${bodyPartMeasuredOn}`,
 ].join("");
 
-export const formulaBodyPartName = v.parse(Measurements.VO.BodyPartName, "=1+1");
+const formulaBodyPartName = v.parse(Measurements.VO.BodyPartName, "=1+1");
 
 export const formulaBodyPartMeasurementExportRow: Measurements.Queries.BodyPartMeasurementExportRow = {
   ...bodyPartMeasurementExportRow,
@@ -371,14 +367,14 @@ export const GenericBodyPartMeasurementRemovedEvent = {
   payload: { id: bodyPartMeasurementId, requesterId: userId },
 } satisfies Measurements.Events.BodyPartMeasurementRemovedEventType;
 
-export const bodyPartMeasurementLatest: Measurements.VO.BodyPartSummaryMeasurement = {
+const bodyPartMeasurementLatest: Measurements.VO.BodyPartSummaryMeasurement = {
   id: bodyPartMeasurementId,
   bodyPartId,
   value: anotherBodyPartCircumference,
   measuredOn: bodyPartMeasuredOn,
 };
 
-export const bodyPartMeasurementPrevious: Measurements.VO.BodyPartSummaryMeasurement = {
+const bodyPartMeasurementPrevious: Measurements.VO.BodyPartSummaryMeasurement = {
   id: anotherBodyPartMeasurementId,
   bodyPartId,
   value: bodyPartCircumference,

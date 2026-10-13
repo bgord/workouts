@@ -54,7 +54,7 @@ export const exerciseCategoryId = v.parse(
 );
 export const exerciseCategoryName = v.parse(Exercises.VO.ExerciseCategoryName, "Upper Chest");
 
-export const anotherExerciseCategoryId = v.parse(
+const anotherExerciseCategoryId = v.parse(
   Exercises.VO.ExerciseCategoryId,
   "bb59c1dd-ffd6-416d-9123-a4cd1c508065",
 );
@@ -98,7 +98,7 @@ export const exerciseListResponseEmpty: Exercises.Queries.ExerciseListResponse =
   data: [],
 };
 
-export const exerciseCategoryWithExerciseNames: Exercises.VO.ExerciseCategoryWithExerciseNames = {
+const exerciseCategoryWithExerciseNames: Exercises.VO.ExerciseCategoryWithExerciseNames = {
   ...exerciseCategory,
   exerciseNames: [exerciseName],
 };
@@ -132,8 +132,8 @@ export const exerciseGetResponse: Exercises.Queries.ExerciseGetResponse = {
   },
 };
 
-export const exerciseStream = v.parse(bg.EventStream, `exercise_${exerciseId}`);
-export const exerciseCategoryStream = v.parse(bg.EventStream, `exercise_category_${exerciseCategoryId}`);
+const exerciseStream = v.parse(bg.EventStream, `exercise_${exerciseId}`);
+const exerciseCategoryStream = v.parse(bg.EventStream, `exercise_category_${exerciseCategoryId}`);
 
 export const GenericExerciseAddedEvent = {
   id: expectAnyId,

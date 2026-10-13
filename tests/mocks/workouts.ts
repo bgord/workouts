@@ -35,7 +35,7 @@ import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
 
 export const workoutId = v.parse(Workouts.VO.WorkoutId, "f1c4b0a2-6d3e-4f81-9a7c-2b5e8d0f3a64");
 export const anotherWorkoutId = v.parse(Workouts.VO.WorkoutId, "3b9d7e21-5c4a-4f6b-8e2d-1a7c9f0b4d58");
-export const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
+const workoutStream = v.parse(bg.EventStream, `workout_${workoutId}`);
 
 export const workoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-01");
 export const anotherWorkoutScheduledFor = v.parse(Workouts.VO.WorkoutScheduledFor, "2025-01-08");
@@ -54,7 +54,7 @@ export const workoutPlanSectionCooldown = v.parse(
   planSectionCooldown,
 );
 export const workoutExerciseName = v.parse(Workouts.VO.WorkoutExerciseName, exerciseName);
-export const anotherWorkoutExerciseName = v.parse(Workouts.VO.WorkoutExerciseName, anotherExerciseName);
+const anotherWorkoutExerciseName = v.parse(Workouts.VO.WorkoutExerciseName, anotherExerciseName);
 export const workoutExerciseDescription = v.parse(
   Workouts.VO.WorkoutExerciseDescription,
   exerciseDescription,
@@ -368,7 +368,7 @@ export const workoutExercisesAtLimit: Array<Workouts.VO.WorkoutExercise> = Array
   () => workoutExercise,
 );
 
-export const workout: Workouts.VO.WorkoutSnapshot = {
+const workout: Workouts.VO.WorkoutSnapshot = {
   id: workoutId,
   planId,
   planName: workoutPlanName,
@@ -410,13 +410,13 @@ export const exerciseTargetDiff: Workouts.VO.ExerciseTargetDiff = {
   load: v.parse(tools.Integer, -tools.Weight.fromKilograms(10).get()),
 };
 
-export const exercisePreviousPerformance: Workouts.Queries.ExercisePreviousPerformance = {
+const exercisePreviousPerformance: Workouts.Queries.ExercisePreviousPerformance = {
   scheduledFor: pastWorkoutScheduledFor,
   sets: exercisePerformance.sets,
   diff: exerciseTargetDiff,
 };
 
-export const exerciseRecentPerformanceViews: Array<Workouts.Queries.ExerciseRecentPerformanceView> = [
+const exerciseRecentPerformanceViews: Array<Workouts.Queries.ExerciseRecentPerformanceView> = [
   { workoutId, scheduledFor: pastWorkoutScheduledFor, sets: exercisePerformance.sets, missed: false },
 ];
 

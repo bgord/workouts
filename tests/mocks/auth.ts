@@ -10,10 +10,10 @@ export const userId = v.parse(bg.UUID, "592ddbc7-9d8f-4677-9f7c-14d88800eea7");
 export const anotherUserId = v.parse(bg.UUID, "c9371ccb-b4dd-4f4c-a03e-3bd9fcba816a");
 
 export const email = v.parse(tools.Email, "user@example.com");
-export const anotherEmail = "another@example.com";
+const anotherEmail = "another@example.com";
 
 export const userStream = v.parse(bg.EventStream, `user_${userId}`);
-export const accountStream = v.parse(bg.EventStream, `account_${userId}`);
+const accountStream = v.parse(bg.EventStream, `account_${userId}`);
 
 export const GenericAccountCreatedEvent = {
   id: expectAnyId,
@@ -49,7 +49,7 @@ export const user = {
   id: userId,
 } satisfies User;
 
-export const anotherUser = {
+const anotherUser = {
   name: anotherEmail,
   email: anotherEmail,
   emailVerified: false,
@@ -61,7 +61,7 @@ export const anotherUser = {
   id: anotherUserId,
 } satisfies User;
 
-export const session: Session = {
+const session: Session = {
   // biome-ignore lint: lint/style/noRestrictedGlobals
   expiresAt: new Date(),
   token: "wyNm82TTSvBtxXSh1mb7lZJ4WF557tv4",
@@ -75,7 +75,7 @@ export const session: Session = {
   id: "JUFCrqCBwFT3MCJV0mAVYSXtLJOkNBVN",
 };
 
-export const anotherSession: Session = {
+const anotherSession: Session = {
   // biome-ignore lint: lint/style/noRestrictedGlobals
   expiresAt: new Date(),
   token: "XFgejTtN28QI8cDEmE9Yb09yxRwQuGj0",
@@ -89,7 +89,7 @@ export const anotherSession: Session = {
   id: "xXHd0LUChE6NiYnQXc8mwij7jjp5kUhs",
 };
 
-export const systemUser = {
+const systemUser = {
   name: "system",
   email: "system@example.com",
   emailVerified: true,
@@ -101,7 +101,7 @@ export const systemUser = {
   id: Auth.VO.ADMIN_USER_ID,
 } satisfies User;
 
-export const systemSession: Session = {
+const systemSession: Session = {
   // biome-ignore lint: lint/style/noRestrictedGlobals
   expiresAt: new Date(),
   token: "TzXpNRK9dQmVbW4sJhLyCe2Ff7uAgQ3o",

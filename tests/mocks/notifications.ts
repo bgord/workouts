@@ -23,7 +23,7 @@ import {
   workoutScheduledFor,
 } from "./workouts";
 
-export const mondaySixAM = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-06T06:00:00Z"));
+const mondaySixAM = tools.Timestamp.fromInstant(Temporal.Instant.from("2025-01-06T06:00:00Z"));
 export const previousWeekIsoId = tools.Week.fromTimestamp(mondaySixAM).previous().toIsoId();
 
 export const GenericHourHasPassedEventMondaySixAM = {
@@ -48,7 +48,7 @@ export const GenericWeeklySummaryComposeJob = {
 
 export const week = tools.Week.fromIsoId(previousWeekIsoId);
 
-export const weeklySummaryStream = Notifications.VO.WeeklySummaryStream.of(userId, previousWeekIsoId);
+const weeklySummaryStream = Notifications.VO.WeeklySummaryStream.of(userId, previousWeekIsoId);
 
 export const GenericWeeklySummarySentEvent = {
   id: expectAnyId,

@@ -59,7 +59,7 @@ export const anotherSets = v.parse(Plans.VO.Sets, 4);
 export const progression = Plans.VO.ProgressionMethodOptions.double_progression;
 export const anotherProgression = Plans.VO.ProgressionMethodOptions.linear_progression;
 
-export const exerciseProgressionMethods = [
+const exerciseProgressionMethods = [
   Plans.VO.ProgressionMethodOptions.double_progression,
   Plans.VO.ProgressionMethodOptions.linear_progression,
   Plans.VO.ProgressionMethodOptions.rep_progression,
@@ -118,7 +118,7 @@ export const otherExerciseInstructionWithAnotherExercise: Plans.VO.ExerciseInstr
   progression,
 };
 
-export const linearExerciseInstruction: Plans.VO.ExerciseInstructionType = {
+const linearExerciseInstruction: Plans.VO.ExerciseInstructionType = {
   id: exerciseInstructionId,
   exerciseId,
   reps: repsRange,
@@ -312,7 +312,7 @@ export const planCategoryCoverageEmpty: Plans.VO.PlanCategoryCoverage = [
   },
 ];
 
-export const planStream = v.parse(bg.EventStream, `plan_${planId}`);
+const planStream = v.parse(bg.EventStream, `plan_${planId}`);
 
 export const GenericPlanCreatedEvent = {
   id: expectAnyId,
@@ -591,7 +591,7 @@ export const GenericPlanSectionExerciseInstructionAddedEventAnother = {
   },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
-export const GenericPlanSectionExerciseInstructionAddedEventLinear = {
+const GenericPlanSectionExerciseInstructionAddedEventLinear = {
   id: expectAnyId,
   correlationId,
   createdAt: T0.ms,
