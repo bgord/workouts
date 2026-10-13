@@ -36,6 +36,13 @@ export const stepsCount = v.parse(Measurements.VO.StepsCount, 8_000);
 export const stepsDay = v.parse(Measurements.VO.StepsDay, "2025-01-01");
 export const futureStepsDay = v.parse(Measurements.VO.StepsDay, "2025-01-02");
 
+export const dailySteps: Measurements.VO.DailySteps = {
+  userId,
+  day: stepsDay,
+  count: stepsCount,
+  source: Measurements.VO.StepsSourceOptions.manual,
+};
+
 export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   id: bodyWeightMeasurementId,
   weight: bodyWeight,
@@ -409,3 +416,14 @@ export const GenericDailyStepsRecordedEvent = {
   name: "DAILY_STEPS_RECORDED_EVENT",
   payload: { userId, day: stepsDay, count: stepsCount, source: Measurements.VO.StepsSourceOptions.manual },
 } satisfies Measurements.Events.DailyStepsRecordedEventType;
+
+export const GenericDailyStepsRemovedEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: dailyStepsStream,
+  version: 1,
+  commit,
+  name: "DAILY_STEPS_REMOVED_EVENT",
+  payload: { userId, day: stepsDay },
+} satisfies Measurements.Events.DailyStepsRemovedEventType;
