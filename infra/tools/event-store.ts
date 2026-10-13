@@ -30,6 +30,7 @@ import type {
   BodyWeightMeasurementCorrectedEventType,
   BodyWeightMeasurementRemovedEventType,
   BodyWeightReferenceSetEventType,
+  DailyStepsRecordedEventType,
 } from "+measurements/events";
 import type { WeeklySummarySentEventType, WeeklySummarySkippedEventType } from "+notifications/events";
 import type { PlanEventType } from "+plans/aggregates";
@@ -80,6 +81,7 @@ export type AcceptedEventType =
   | BodyWeightMeasurementCorrectedEventType
   | BodyWeightMeasurementRemovedEventType
   | BodyWeightReferenceSetEventType
+  | DailyStepsRecordedEventType
   | WeeklySummarySentEventType
   | WeeklySummarySkippedEventType;
 

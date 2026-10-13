@@ -18,5 +18,6 @@ export function registerProjectors({ Adapters, Tools }: Pick<BootstrapType, "Ada
   new Projections.BodyPartMeasurementsProjector(deps);
   new Projections.BodyPartsProjector(deps);
   new Projections.BodyWeightMeasurementsProjector(deps);
+  new Projections.DailyStepsProjector(deps);
   new Projections.WeeklySummariesProjector(deps);
 }
