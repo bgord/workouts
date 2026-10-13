@@ -418,4 +418,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetBodyWeightMeasurementQuery: Adapters.Measurements.GetBodyWeightMeasurementQuery,
     }),
   );
+
+  // Daily steps ============================================================
+  Tools.CommandBus.on(
+    MeasurementsCommands.DAILY_STEPS_RECORD_COMMAND,
+    MeasurementsCommandHandlers.handleDailyStepsRecordCommand(deps),
+  );
 }

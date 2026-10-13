@@ -179,6 +179,7 @@ modules/
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
+│   │   ├── handleDailyStepsRecordCommand.ts
 │   ├── commands
 │   │   ├── BODY_PART_DEFINE_COMMAND.ts
 │   │   ├── BODY_PART_DELETE_COMMAND.ts
