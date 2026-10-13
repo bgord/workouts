@@ -42,6 +42,44 @@ describe("PlanHistory", () => {
     });
   });
 
+  test("calculate - plan description set", () => {
+    const history = new Plans.Services.PlanHistory({
+      events: [mocks.GenericPlanCreatedEvent, mocks.GenericPlanDescriptionSetEvent],
+      exercises: mocks.planHistoryExercises,
+    });
+
+    expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({
+      entries: [
+        {
+          name: "PLAN_DESCRIPTION_SET_EVENT",
+          details: { text: mocks.planDescription },
+          sequence: tools.Int.nonNegative(1),
+          createdAt: mocks.T0.ms,
+        },
+      ],
+      next: tools.Int.nonNegative(1),
+    });
+  });
+
+  test("calculate - plan description cleared", () => {
+    const history = new Plans.Services.PlanHistory({
+      events: [mocks.GenericPlanCreatedEvent, mocks.GenericPlanDescriptionUnsetEvent],
+      exercises: mocks.planHistoryExercises,
+    });
+
+    expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({
+      entries: [
+        {
+          name: "PLAN_DESCRIPTION_SET_EVENT",
+          details: { text: null },
+          sequence: tools.Int.nonNegative(1),
+          createdAt: mocks.T0.ms,
+        },
+      ],
+      next: tools.Int.nonNegative(1),
+    });
+  });
+
   test("calculate - plan finalized", () => {
     const history = new Plans.Services.PlanHistory({
       events: [mocks.GenericPlanCreatedEvent, mocks.GenericPlanFinalizedEvent],
@@ -109,7 +147,7 @@ describe("PlanHistory", () => {
         mocks.GenericPlanCreatedEvent,
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionRenamedEvent,
-        mocks.GenericPlanSectionWarmupSetEvent,
+        mocks.GenericPlanSectionRemovedEvent,
       ],
       exercises: mocks.planHistoryExercises,
     });
@@ -117,7 +155,7 @@ describe("PlanHistory", () => {
     expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({
       entries: [
         {
-          name: "PLAN_SECTION_WARMUP_SET_EVENT",
+          name: "PLAN_SECTION_REMOVED_EVENT",
           details: { sectionName: mocks.anotherPlanSectionName },
           sequence: tools.Int.nonNegative(3),
           createdAt: mocks.T0.ms,
@@ -164,7 +202,30 @@ describe("PlanHistory", () => {
       entries: [
         {
           name: "PLAN_SECTION_WARMUP_SET_EVENT",
-          details: { sectionName: mocks.planSectionName },
+          details: { sectionName: mocks.planSectionName, text: mocks.planSectionWarmup },
+          sequence: tools.Int.nonNegative(2),
+          createdAt: mocks.T0.ms,
+        },
+      ],
+      next: tools.Int.nonNegative(2),
+    });
+  });
+
+  test("calculate - section warmup cleared", () => {
+    const history = new Plans.Services.PlanHistory({
+      events: [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionWarmupUnsetEvent,
+      ],
+      exercises: mocks.planHistoryExercises,
+    });
+
+    expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({
+      entries: [
+        {
+          name: "PLAN_SECTION_WARMUP_SET_EVENT",
+          details: { sectionName: mocks.planSectionName, text: null },
           sequence: tools.Int.nonNegative(2),
           createdAt: mocks.T0.ms,
         },
@@ -187,7 +248,30 @@ describe("PlanHistory", () => {
       entries: [
         {
           name: "PLAN_SECTION_COOLDOWN_SET_EVENT",
-          details: { sectionName: mocks.planSectionName },
+          details: { sectionName: mocks.planSectionName, text: mocks.planSectionCooldown },
+          sequence: tools.Int.nonNegative(2),
+          createdAt: mocks.T0.ms,
+        },
+      ],
+      next: tools.Int.nonNegative(2),
+    });
+  });
+
+  test("calculate - section cooldown cleared", () => {
+    const history = new Plans.Services.PlanHistory({
+      events: [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionCooldownUnsetEvent,
+      ],
+      exercises: mocks.planHistoryExercises,
+    });
+
+    expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({
+      entries: [
+        {
+          name: "PLAN_SECTION_COOLDOWN_SET_EVENT",
+          details: { sectionName: mocks.planSectionName, text: null },
           sequence: tools.Int.nonNegative(2),
           createdAt: mocks.T0.ms,
         },
@@ -210,7 +294,43 @@ describe("PlanHistory", () => {
       entries: [
         {
           name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
-          details: { sectionName: mocks.planSectionName, exerciseName: mocks.exerciseName },
+          details: {
+            sectionName: mocks.planSectionName,
+            exerciseName: mocks.exerciseName,
+            prescription: { sets: mocks.sets, reps: mocks.repsRange, progression: mocks.progression },
+          },
+          sequence: tools.Int.nonNegative(2),
+          createdAt: mocks.T0.ms,
+        },
+      ],
+      next: tools.Int.nonNegative(2),
+    });
+  });
+
+  test("calculate - exercise instruction added - rir", () => {
+    const history = new Plans.Services.PlanHistory({
+      events: [
+        mocks.GenericPlanCreatedEvent,
+        mocks.GenericPlanSectionCreatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionAddedEventRir,
+      ],
+      exercises: mocks.planHistoryExercises,
+    });
+
+    expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({
+      entries: [
+        {
+          name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
+          details: {
+            sectionName: mocks.planSectionName,
+            exerciseName: mocks.exerciseName,
+            prescription: {
+              sets: mocks.sets,
+              reps: mocks.repsRange,
+              progression: mocks.progression,
+              rir: mocks.rirTarget,
+            },
+          },
           sequence: tools.Int.nonNegative(2),
           createdAt: mocks.T0.ms,
         },
@@ -233,7 +353,11 @@ describe("PlanHistory", () => {
       entries: [
         {
           name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
-          details: { sectionName: mocks.planSectionName, exerciseName: null },
+          details: {
+            sectionName: mocks.planSectionName,
+            exerciseName: null,
+            prescription: { sets: mocks.sets, reps: mocks.repsRange, progression: mocks.progression },
+          },
           sequence: tools.Int.nonNegative(2),
           createdAt: mocks.T0.ms,
         },
@@ -257,7 +381,15 @@ describe("PlanHistory", () => {
       entries: [
         {
           name: "PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT",
-          details: { sectionName: mocks.planSectionName, exerciseName: mocks.exerciseName },
+          details: {
+            sectionName: mocks.planSectionName,
+            exerciseName: mocks.exerciseName,
+            prescription: {
+              sets: mocks.anotherSets,
+              reps: mocks.anotherRepsRange,
+              progression: mocks.progression,
+            },
+          },
           sequence: tools.Int.nonNegative(3),
           createdAt: mocks.T0.ms,
         },
@@ -297,7 +429,7 @@ describe("PlanHistory", () => {
         mocks.GenericPlanSectionCreatedEvent,
         mocks.GenericPlanSectionExerciseInstructionAddedEvent,
         mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent,
-        mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+        mocks.GenericPlanSectionExerciseInstructionRemovedEvent,
       ],
       exercises: mocks.planHistoryExercises,
     });
@@ -305,7 +437,7 @@ describe("PlanHistory", () => {
     expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({
       entries: [
         {
-          name: "PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT",
+          name: "PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT",
           details: { sectionName: mocks.planSectionName, exerciseName: mocks.anotherExerciseName },
           sequence: tools.Int.nonNegative(4),
           createdAt: mocks.T0.ms,
@@ -330,7 +462,11 @@ describe("PlanHistory", () => {
       entries: [
         {
           name: "PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT",
-          details: { sectionName: mocks.planSectionName, exerciseName: mocks.exerciseName },
+          details: {
+            sectionName: mocks.planSectionName,
+            exerciseName: mocks.exerciseName,
+            position: mocks.anotherExerciseInstructionPosition,
+          },
           sequence: tools.Int.nonNegative(3),
           createdAt: mocks.T0.ms,
         },

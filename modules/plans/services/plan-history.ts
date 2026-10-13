@@ -60,20 +60,43 @@ export class PlanHistory {
       case Events.PLAN_CREATED_EVENT:
       case Events.PLAN_RENAMED_EVENT:
         return { planName: event.payload.planName };
+      case Events.PLAN_DESCRIPTION_SET_EVENT:
+        return { text: event.payload.description ?? null };
       case Events.PLAN_SECTION_CREATED_EVENT:
       case Events.PLAN_SECTION_RENAMED_EVENT:
       case Events.PLAN_SECTION_REMOVED_EVENT:
-      case Events.PLAN_SECTION_WARMUP_SET_EVENT:
-      case Events.PLAN_SECTION_COOLDOWN_SET_EVENT:
         return { sectionName: state.sections.get(event.payload.planSectionId) as VO.PlanSectionNameType };
+      case Events.PLAN_SECTION_WARMUP_SET_EVENT:
+        return {
+          sectionName: state.sections.get(event.payload.planSectionId) as VO.PlanSectionNameType,
+          text: event.payload.warmup ?? null,
+        };
+      case Events.PLAN_SECTION_COOLDOWN_SET_EVENT:
+        return {
+          sectionName: state.sections.get(event.payload.planSectionId) as VO.PlanSectionNameType,
+          text: event.payload.cooldown ?? null,
+        };
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT:
-      case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT:
+      case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_UPDATED_EVENT: {
+        const { id, sets, reps, progression, rir } = event.payload.exerciseInstruction;
+
+        return {
+          sectionName: state.sections.get(event.payload.planSectionId) as VO.PlanSectionNameType,
+          exerciseName: this.exerciseName(id, state),
+          prescription: { sets, reps, progression, rir },
+        };
+      }
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT:
         return {
           sectionName: state.sections.get(event.payload.planSectionId) as VO.PlanSectionNameType,
           exerciseName: this.exerciseName(event.payload.exerciseInstruction.id, state),
         };
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_MOVED_EVENT:
+        return {
+          sectionName: state.sections.get(event.payload.planSectionId) as VO.PlanSectionNameType,
+          exerciseName: this.exerciseName(event.payload.exerciseInstructionId, state),
+          position: event.payload.position,
+        };
       case Events.PLAN_SECTION_EXERCISE_INSTRUCTION_REMOVED_EVENT:
         return {
           sectionName: state.sections.get(event.payload.planSectionId) as VO.PlanSectionNameType,

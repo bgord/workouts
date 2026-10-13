@@ -602,6 +602,17 @@ export const GenericPlanSectionExerciseInstructionAddedEventLinear = {
   payload: { planId, planSectionId, exerciseInstruction: linearExerciseInstruction, requesterId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
+export const GenericPlanSectionExerciseInstructionAddedEventRir = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 2,
+  commit,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  payload: { planId, planSectionId, exerciseInstruction: rirExerciseInstruction, requesterId: userId },
+} satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
+
 export const GenericPlanSectionExerciseInstructionRemovedEvent = {
   id: expectAnyId,
   correlationId,
