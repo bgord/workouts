@@ -11,6 +11,7 @@ import { ListBodyWeightMeasurementsQuery } from "./list-body-weight-measurements
 import { ListBodyWeightMeasurementsForMonthQuery } from "./list-body-weight-measurements-for-month.adapter";
 import { ListBodyWeightMeasurementsForStatsQuery } from "./list-body-weight-measurements-for-stats.adapter";
 import { ListBodyWeightMonthsQuery } from "./list-body-weight-months.adapter";
+import { ListDailyStepsQuery } from "./list-daily-steps.adapter";
 
 export function createMeasurementsAdapters() {
   return {
@@ -27,5 +28,6 @@ export function createMeasurementsAdapters() {
     ListBodyWeightMeasurementsForMonthQuery,
     ListBodyWeightMeasurementsForStatsQuery,
     ListBodyWeightMonthsQuery,
+    ListDailyStepsQuery,
   };
 }
