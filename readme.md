@@ -411,6 +411,7 @@ modules/
 │       ├── plan-description.ts
 │       ├── plan-description.validation.ts
 │       ├── plan-history-entry.ts
+│       ├── plan-history-page-limit.ts
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
@@ -694,6 +695,7 @@ app/
 │   │   ├── plan-exercise-catalog.ts
 │   │   ├── plan-finalize.ts
 │   │   ├── plan-get.ts
+│   │   ├── plan-history-get.ts
 │   │   ├── plan-list.ts
 │   │   ├── plan-remove.ts
 │   │   ├── plan-rename.ts

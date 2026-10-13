@@ -5,6 +5,7 @@ export * from "./plan-editing-enable";
 export * from "./plan-exercise-catalog";
 export * from "./plan-finalize";
 export * from "./plan-get";
+export * from "./plan-history-get";
 export * from "./plan-list";
 export * from "./plan-remove";
 export * from "./plan-rename";

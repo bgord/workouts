@@ -687,3 +687,17 @@ export const planHistoryExercises = [
   { id: exerciseId, name: exerciseName },
   { id: anotherExerciseId, name: anotherExerciseName },
 ];
+
+export const planHistoryResponse: Plans.Queries.PlanHistoryGetResponse = {
+  data: {
+    entries: [
+      {
+        name: "PLAN_CREATED_EVENT",
+        details: { planName },
+        sequence: tools.Int.nonNegative(0),
+        createdAt: T0.ms,
+      },
+    ],
+    next: null,
+  },
+};

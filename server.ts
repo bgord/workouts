@@ -141,6 +141,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanExerciseCatalog(Adapters.Plans)),
   );
   plans.get("/:planId", bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanGet(Adapters.Plans)));
+  plans.get("/:planId/history", bg.EndpointHonoAdapter.adapt(HTTP.Plans.PlanHistoryGet(Adapters.Plans)));
   plans.post(
     "/create",
     Tools.ShieldCaptcha.handle(),
