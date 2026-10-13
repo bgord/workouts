@@ -12,6 +12,7 @@ describe("ProgressionSignalSkipStrategy", () => {
         { ...mocks.skippedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-22") },
         { ...mocks.skippedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-15") },
         { ...mocks.skippedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-08") },
+        { ...mocks.missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-01") },
       ],
     });
 

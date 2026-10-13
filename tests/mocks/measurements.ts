@@ -251,10 +251,7 @@ export const bodyPartMeasurementId = v.parse(
   Measurements.VO.BodyPartMeasurementId,
   "7c4e1a9b-3d5f-4e8a-9b2c-6f0d3a7e1b54",
 );
-const bodyPartMeasurementStream = v.parse(
-  bg.EventStream,
-  `body_part_measurement_${bodyPartMeasurementId}`,
-);
+const bodyPartMeasurementStream = v.parse(bg.EventStream, `body_part_measurement_${bodyPartMeasurementId}`);
 export const anotherBodyPartMeasurementId = v.parse(
   Measurements.VO.BodyPartMeasurementId,
   "2d9f6b3e-8a1c-4f7d-a5e2-9c0b4d6f1a83",

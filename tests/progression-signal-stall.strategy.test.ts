@@ -12,6 +12,7 @@ describe("ProgressionSignalStallStrategy", () => {
         { ...mocks.missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-22") },
         { ...mocks.missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-15") },
         { ...mocks.missedExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-08") },
+        { ...mocks.hitExerciseRecentPerformance, scheduledFor: v.parse(tools.DayIsoId, "2025-01-01") },
       ],
     });
 
