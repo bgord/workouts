@@ -246,6 +246,8 @@ modules/
 │   │   ├── list-body-weight-measurements-for-stats.ts
 │   │   ├── list-body-weight-measurements.ts
 │   │   ├── list-body-weight-months.ts
+│   │   ├── list-daily-steps-for-month.ts
+│   │   ├── list-daily-steps-months.ts
 │   │   └── list-daily-steps.ts
 │   ├── services
 │   │   ├── body-part-list-actions.ts
@@ -291,6 +293,9 @@ modules/
 │       ├── steps-count.ts
 │       ├── steps-count.validation.ts
 │       ├── steps-day.ts
+│       ├── steps-history-month.ts
+│       ├── steps-history-month.validation.ts
+│       ├── steps-month-summary.ts
 │       ├── steps-source-options.ts
 │       └── steps-source.ts
 ├── notifications
@@ -811,6 +816,8 @@ infra/
 │   │   ├── list-body-weight-measurements-for-stats.adapter.ts
 │   │   ├── list-body-weight-measurements.adapter.ts
 │   │   ├── list-body-weight-months.adapter.ts
+│   │   ├── list-daily-steps-for-month.adapter.ts
+│   │   ├── list-daily-steps-months.adapter.ts
 │   │   └── list-daily-steps.adapter.ts
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
