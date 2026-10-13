@@ -18,14 +18,13 @@ export class Plans {
 
   static async history(
     request: Request | null,
-    params: { planId: string; before: number | null },
+    params: { planId: string; before?: number },
   ): Promise<PlanHistoryGetResponse | null> {
-    const query = params.before === null ? "" : `?before=${params.before}`;
-
     return bg.ApiClient.json<PlanHistoryGetResponse | null>(
-      `/api/plans/${params.planId}/history${query}`,
+      `/api/plans/${params.planId}/history`,
       request,
       null,
+      { method: "QUERY", body: JSON.stringify({ before: params.before }) },
     );
   }
 

@@ -9,7 +9,7 @@ export function usePlanHistory(planId: string) {
   const [next, setNext] = useState<number | null>(null);
   const [state, setState] = useState<PlanHistoryState>("idle");
 
-  const fetchPage = async (before: number | null, previous: ReadonlyArray<PlanHistoryEntry>) => {
+  const fetchPage = async (before: number | undefined, previous: ReadonlyArray<PlanHistoryEntry>) => {
     setState("loading");
 
     const response = await Plans.history(null, { planId, before });
@@ -21,9 +21,9 @@ export function usePlanHistory(planId: string) {
     setState("done");
   };
 
-  const load = () => fetchPage(null, []);
+  const load = () => fetchPage(undefined, []);
 
-  const more = () => fetchPage(next, entries);
+  const more = () => fetchPage(next ?? undefined, entries);
 
   return { entries, next, state, load, more };
 }

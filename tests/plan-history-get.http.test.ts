@@ -7,12 +7,12 @@ import * as testcases from "./testcases";
 
 const url = `/api/plans/${mocks.planId}/history`;
 
-describe("GET /api/plans/:planId/history", async () => {
+describe("QUERY /api/plans/:planId/history", async () => {
   const di = await bootstrap();
   const server = createServer(di);
 
   test("validation - AccessDeniedAuthShieldError", async () => {
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY" }, mocks.ip);
 
     await testcases.assertAuthResponse(response);
   });
@@ -20,7 +20,7 @@ describe("GET /api/plans/:planId/history", async () => {
   test("validation - incorrect plan id", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
-    const response = await server.request("/api/plans/id/history", { method: "GET" }, mocks.ip);
+    const response = await server.request("/api/plans/id/history", { method: "QUERY" }, mocks.ip);
 
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
@@ -28,7 +28,23 @@ describe("GET /api/plans/:planId/history", async () => {
   test("validation - incorrect before", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
-    const response = await server.request(`${url}?before=abc`, { method: "GET" }, mocks.ip);
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ before: "abc" }) },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 400, "integer.non.negative.type");
+  });
+
+  test("validation - empty before", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ before: "" }) },
+      mocks.ip,
+    );
 
     await testcases.assertErrorResponse(response, 400, "integer.non.negative.type");
   });
@@ -36,7 +52,11 @@ describe("GET /api/plans/:planId/history", async () => {
   test("validation - negative before", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
-    const response = await server.request(`${url}?before=-1`, { method: "GET" }, mocks.ip);
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ before: -1 }) },
+      mocks.ip,
+    );
 
     await testcases.assertErrorResponse(response, 400, "integer.non.negative.invalid");
   });
@@ -46,7 +66,7 @@ describe("GET /api/plans/:planId/history", async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(spyOn(di.Adapters.Plans.GetPlanHistoryQuery, "execute").mockResolvedValue(null));
 
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY" }, mocks.ip);
 
     expect(response.status).toEqual(404);
   });
@@ -57,7 +77,7 @@ describe("GET /api/plans/:planId/history", async () => {
       mocks.planHistoryResponse,
     );
 
-    const response = await server.request(url, { method: "GET" }, mocks.ip);
+    const response = await server.request(url, { method: "QUERY" }, mocks.ip);
 
     expect(response.status).toEqual(200);
     expect(await response.json()).toEqual(mocks.planHistoryResponse);
@@ -73,7 +93,11 @@ describe("GET /api/plans/:planId/history", async () => {
       mocks.planHistoryResponse,
     );
 
-    const response = await server.request(`${url}?before=40`, { method: "GET" }, mocks.ip);
+    const response = await server.request(
+      url,
+      { method: "QUERY", body: JSON.stringify({ before: 40 }) },
+      mocks.ip,
+    );
 
     expect(response.status).toEqual(200);
     expect(getPlanHistory).toHaveBeenCalledWith(mocks.planId, mocks.userId, {

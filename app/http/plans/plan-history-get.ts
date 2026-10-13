@@ -9,12 +9,11 @@ export const PlanHistoryGet =
   (deps: Dependencies): bg.EndpointPort =>
   async (context) => {
     const params = context.request.params();
-    const query = context.request.query();
+    const body = await context.request.json();
 
     const userId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
-    const before =
-      query["before"] === undefined ? undefined : v.parse(tools.IntegerNonNegative, Number(query["before"]));
+    const before = v.parse(v.optional(tools.IntegerNonNegative), body["before"]);
 
     const history = await deps.GetPlanHistoryQuery.execute(planId, userId, {
       before,
