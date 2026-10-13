@@ -481,6 +481,20 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsList(Adapters.Measurements)),
   );
   measurements.post(
+    "/daily-steps/import",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Measurements.VO.DailyStepsImport.MaxSize,
+        MimeRegistry: Measurements.VO.DailyStepsImport.MimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorTextStrategy(tools.Mimes.csv.mime) },
+    ).handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsImport(deps)),
+  );
+  measurements.post(
     "/daily-steps/record",
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsRecord(deps)),

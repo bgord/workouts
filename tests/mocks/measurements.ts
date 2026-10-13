@@ -100,6 +100,9 @@ const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference
 
 export const dailyStepsCsv = ["day,count", `${stepsDay},${stepsCount}`].join("");
 
+export const dailyStepsCsvFile = (content: string) =>
+  new File([content], "daily-steps.csv", { type: tools.Mimes.csv.mime.toString() });
+
 export const bodyWeightMeasurementCsv = [
   "id,weight,measuredOn",
   `${bodyWeightMeasurementId},${bodyWeight},${bodyWeightMeasuredOn}`,
@@ -436,6 +439,17 @@ export const GenericDailyStepsRecordedEvent = {
   commit,
   name: "DAILY_STEPS_RECORDED_EVENT",
   payload: { userId, day: stepsDay, count: stepsCount, source: Measurements.VO.StepsSourceOptions.manual },
+} satisfies Measurements.Events.DailyStepsRecordedEventType;
+
+export const GenericDailyStepsRecordedEventAnother = {
+  ...GenericDailyStepsRecordedEvent,
+  stream: v.parse(bg.EventStream, `daily_steps_${userId}_${anotherStepsDay}`),
+  payload: {
+    userId,
+    day: anotherStepsDay,
+    count: anotherStepsCount,
+    source: Measurements.VO.StepsSourceOptions.manual,
+  },
 } satisfies Measurements.Events.DailyStepsRecordedEventType;
 
 export const GenericDailyStepsRemovedEvent = {

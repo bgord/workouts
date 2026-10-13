@@ -19,6 +19,7 @@ export * from "./body-weight-measurement-remove";
 export * from "./body-weight-reference-set";
 export * from "./daily-steps-chart-get";
 export * from "./daily-steps-export";
+export * from "./daily-steps-import";
 export * from "./daily-steps-list";
 export * from "./daily-steps-record";
 export * from "./daily-steps-remove";
