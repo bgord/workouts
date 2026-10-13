@@ -22,6 +22,7 @@ import { NotFound } from "./not-found";
 import { BodyParts as BodyPartsPage } from "./pages/body-parts";
 import { BodyWeight as BodyWeightPage } from "./pages/body-weight";
 import { Catalog as CatalogPage } from "./pages/catalog";
+import { DailySteps as DailyStepsPage } from "./pages/daily-steps";
 import { Dashboard as DashboardPage } from "./pages/dashboard";
 import { Exercise as ExercisePage } from "./pages/exercise";
 import { Measurements as MeasurementsPage } from "./pages/measurements";
@@ -201,6 +202,13 @@ export const bodyPartsRoute = createRoute({
   loader: async ({ context }) => ({ bodyParts: await Measurements.listBodyParts(context.request) }),
 });
 
+export const dailyStepsRoute = createRoute({
+  path: "/measurements/daily-steps",
+  getParentRoute: () => rootRoute,
+  component: DailyStepsPage,
+  loader: async ({ context }) => ({ dailySteps: await Measurements.listDailySteps(context.request) }),
+});
+
 export const profileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
@@ -223,6 +231,7 @@ const routeTree = rootRoute.addChildren([
   measurementsRoute,
   bodyWeightRoute,
   bodyPartsRoute,
+  dailyStepsRoute,
   profileRoute,
 ]);
 

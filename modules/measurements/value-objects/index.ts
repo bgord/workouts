@@ -24,6 +24,7 @@ export * from "./body-weight-month-summary";
 export * from "./body-weight-stats";
 export * from "./daily-steps";
 export * from "./steps-count";
+export * from "./steps-count.validation";
 export * from "./steps-day";
 export * from "./steps-source";
 export * from "./steps-source-options";

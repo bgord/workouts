@@ -6,6 +6,7 @@ import type { BodyWeightHistoryMonthType } from "../../modules/measurements/valu
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import type { BodyWeightMonthSummary } from "../../modules/measurements/value-objects/body-weight-month-summary";
 import type { BodyWeightStats } from "../../modules/measurements/value-objects/body-weight-stats";
+import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 
 type BodyWeightListResponse = {
   month: BodyWeightHistoryMonthType | null;
@@ -51,5 +52,11 @@ export class Measurements {
       { points: [] },
       { method: "QUERY", body: JSON.stringify(params) },
     );
+  }
+
+  static async listDailySteps(request: Request | null): Promise<ReadonlyArray<DailySteps>> {
+    return bg.ApiClient.json<ReadonlyArray<DailySteps>>("/api/measurements/daily-steps/list", request, [], {
+      method: "QUERY",
+    });
   }
 }

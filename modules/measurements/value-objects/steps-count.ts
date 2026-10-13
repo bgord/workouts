@@ -1,7 +1,6 @@
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-
-export const StepsCountMax = 100_000;
+import { StepsCountMax } from "./steps-count.validation";
 
 export const StepsCountError = { Range: "steps.count.range" };
 
