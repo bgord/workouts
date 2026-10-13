@@ -24,13 +24,13 @@ export const DailyStepsList =
 
     const month = requested ?? months[0]?.month;
 
-    if (!month) return Response.json({ month: null, entries: [], months, stats });
+    if (!month) return Response.json({ month: null, entries: [], previous: null, months, stats });
 
     if (month === Measurements.VO.StepsHistoryMonthAll) {
-      return Response.json({ month, entries: all, months, stats });
+      return Response.json({ month, entries: all, previous: null, months, stats });
     }
 
-    const entries = await deps.ListDailyStepsForMonthQuery.execute(userId, month);
+    const { entries, previous } = await deps.ListDailyStepsForMonthQuery.execute(userId, month);
 
-    return Response.json({ month, entries, months, stats });
+    return Response.json({ month, entries, previous, months, stats });
   };

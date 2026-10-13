@@ -4,7 +4,11 @@ import * as ui from "../components";
 import { DailyStepsCorrect } from "./daily-steps-correct";
 import { DailyStepsRemove } from "./daily-steps-remove";
 
-export function DailyStepsRow(props: { entry: DailySteps; first: boolean }) {
+export function DailyStepsRow(props: {
+  entry: DailySteps;
+  previous: DailySteps | undefined;
+  first: boolean;
+}) {
   const t = bg.useTranslations();
 
   const dailyStepsCorrect = bg.useToggle({ name: `correct-${props.entry.day}` });
@@ -44,6 +48,16 @@ export function DailyStepsRow(props: { entry: DailySteps; first: boolean }) {
           >
             <ui.DailyStepsValue count={props.entry.count} />
           </button>
+
+          <div
+            data-fs="xs"
+            data-main="end"
+            data-shrink="0"
+            data-stack="x"
+            {...bg.Rhythm(56).times(1).style.minWidth}
+          >
+            <ui.CountDelta current={props.entry.count} previous={props.previous?.count} />
+          </div>
 
           <div data-shrink="0" data-stack="x" {...ui.Gap.inline}>
             <DailyStepsRemove entry={props.entry} />

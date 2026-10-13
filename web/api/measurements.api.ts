@@ -24,6 +24,7 @@ type BodyWeightListResponse = {
 type DailyStepsListResponse = {
   month: StepsHistoryMonthType | null;
   entries: ReadonlyArray<DailySteps>;
+  previous: DailySteps | null;
   months: ReadonlyArray<StepsMonthSummary>;
   stats: DailyStepsStats | null;
 };
@@ -75,7 +76,7 @@ export class Measurements {
     return bg.ApiClient.json<DailyStepsListResponse>(
       "/api/measurements/daily-steps/list",
       request,
-      { month: null, entries: [], months: [], stats: null },
+      { month: null, entries: [], previous: null, months: [], stats: null },
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }

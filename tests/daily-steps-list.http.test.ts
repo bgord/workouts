@@ -39,7 +39,7 @@ describe(`QUERY ${url}`, async () => {
       .mockResolvedValue([mocks.dailySteps]);
     const listForMonth = spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsForMonthQuery, "execute"))
-      .mockResolvedValue([mocks.dailySteps]);
+      .mockResolvedValue({ entries: [mocks.dailySteps], previous: mocks.anotherDailySteps });
 
     const response = await server.request(url, { method: "QUERY", body: JSON.stringify({}) }, mocks.ip);
     const json = await response.json();
@@ -49,6 +49,7 @@ describe(`QUERY ${url}`, async () => {
     expect(json).toEqual({
       month: "2025-01",
       entries: [mocks.dailySteps],
+      previous: mocks.anotherDailySteps,
       months: [mocks.stepsMonthSummary],
       stats: mocks.dailyStepsStats,
     });
@@ -65,7 +66,7 @@ describe(`QUERY ${url}`, async () => {
       .mockResolvedValue([mocks.dailySteps]);
     const listForMonth = spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsForMonthQuery, "execute"))
-      .mockResolvedValue([]);
+      .mockResolvedValue({ entries: [], previous: null });
 
     const response = await server.request(
       url,
@@ -79,6 +80,7 @@ describe(`QUERY ${url}`, async () => {
     expect(json).toEqual({
       month: "2024-12",
       entries: [],
+      previous: null,
       months: [mocks.stepsMonthSummary],
       stats: mocks.dailyStepsStats,
     });
@@ -105,6 +107,7 @@ describe(`QUERY ${url}`, async () => {
     expect(json).toEqual({
       month: "all",
       entries: [mocks.dailySteps],
+      previous: null,
       months: [mocks.stepsMonthSummary],
       stats: mocks.dailyStepsStats,
     });
@@ -120,6 +123,6 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ month: null, entries: [], months: [], stats: null });
+    expect(json).toEqual({ month: null, entries: [], previous: null, months: [], stats: null });
   });
 });
