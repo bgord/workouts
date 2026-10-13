@@ -43,6 +43,8 @@ export const dailySteps: Measurements.VO.DailySteps = {
   source: Measurements.VO.StepsSourceOptions.manual,
 };
 
+export const dailyStepsListResponse = [dailySteps];
+
 export const bodyWeightMeasurement: Measurements.VO.BodyWeightMeasurement = {
   id: bodyWeightMeasurementId,
   weight: bodyWeight,
