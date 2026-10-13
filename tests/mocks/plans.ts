@@ -6,9 +6,11 @@ import * as Plans from "+plans";
 import { userId } from "./auth";
 import {
   anotherExerciseId,
+  anotherExerciseName,
   exercise,
   exerciseCategory,
   exerciseId,
+  exerciseName,
   exerciseWithCategories,
 } from "./exercises";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
@@ -680,3 +682,8 @@ export const planWithLinearExerciseInstructionHistory = [
 export const planArchivedHistory = [GenericPlanCreatedEvent, GenericPlanArchivedEvent];
 
 export const planFinalizedHistory = [GenericPlanCreatedEvent, GenericPlanFinalizedEvent];
+
+export const planHistoryExercises = [
+  { id: exerciseId, name: exerciseName },
+  { id: anotherExerciseId, name: anotherExerciseName },
+];

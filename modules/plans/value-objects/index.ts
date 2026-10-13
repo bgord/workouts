@@ -4,6 +4,7 @@ export * from "./exercise-instruction-position";
 export * from "./exercise-with-progression-methods";
 export * from "./plan-category-coverage";
 export * from "./plan-description";
+export * from "./plan-history-entry";
 export * from "./plan-id";
 export * from "./plan-name";
 export * from "./plan-section";

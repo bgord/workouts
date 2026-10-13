@@ -399,6 +399,7 @@ modules/
 │   │   ├── plan-get-actions.ts
 │   │   ├── plan-get-exercise-instruction-actions.ts
 │   │   ├── plan-get-section-actions.ts
+│   │   ├── plan-history.ts
 │   │   └── plan-list-actions.ts
 │   └── value-objects
 │       ├── exercise-instruction-id.ts
@@ -408,6 +409,7 @@ modules/
 │       ├── plan-category-coverage.ts
 │       ├── plan-description.ts
 │       ├── plan-description.validation.ts
+│       ├── plan-history-entry.ts
 │       ├── plan-id.ts
 │       ├── plan-name.ts
 │       ├── plan-name.validation.ts
