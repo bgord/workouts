@@ -233,6 +233,8 @@
   "measurements.body_weight.history": "History",
   "measurements.body_weight.history.month.label": "Month",
   "measurements.body_weight.history.month.all": "All months",
+  "measurements.daily_steps.header": "Daily steps",
+  "measurements.daily_steps.header.hint": "Log and review your daily step count",
   "notifications.weekly_summary.body_weight.caption": "average, {{count}} {{noun}}",
   "notifications.weekly_summary.body_weight.header": "Body weight",
   "notifications.weekly_summary.body_weight.unchanged": "unchanged vs last week",
