@@ -10,5 +10,6 @@ export * from "./body-weight-stats-calculator";
 export * from "./daily-steps-average";
 export * from "./daily-steps-chart";
 export * from "./daily-steps-export-file-csv";
+export * from "./daily-steps-import-file-csv";
 export * from "./daily-steps-stats-calculator";
 export * from "./steps-provider-manual.strategy";
