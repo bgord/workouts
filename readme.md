@@ -245,7 +245,8 @@ modules/
 │   │   ├── list-body-weight-measurements-for-month.ts
 │   │   ├── list-body-weight-measurements-for-stats.ts
 │   │   ├── list-body-weight-measurements.ts
-│   │   └── list-body-weight-months.ts
+│   │   ├── list-body-weight-months.ts
+│   │   └── list-daily-steps.ts
 │   ├── services
 │   │   ├── body-part-list-actions.ts
 │   │   ├── body-part-measurement-export-file-csv.ts
@@ -704,6 +705,7 @@ app/
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
 │   │   ├── body-weight-reference-set.ts
+│   │   ├── daily-steps-list.ts
 │   │   ├── daily-steps-record.ts
 │   │   ├── daily-steps-remove.ts
 │   ├── plans
@@ -805,7 +807,8 @@ infra/
 │   │   ├── list-body-weight-measurements-for-month.adapter.ts
 │   │   ├── list-body-weight-measurements-for-stats.adapter.ts
 │   │   ├── list-body-weight-measurements.adapter.ts
-│   │   └── list-body-weight-months.adapter.ts
+│   │   ├── list-body-weight-months.adapter.ts
+│   │   └── list-daily-steps.adapter.ts
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
