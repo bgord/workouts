@@ -1,5 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { PlanGetResponse } from "../../modules/plans/queries/get-plan";
+import type { PlanHistoryGetResponse } from "../../modules/plans/queries/get-plan-history";
 import type { ExerciseCatalogResponse } from "../../modules/plans/queries/list-exercise-catalog";
 import type { PlanListResponse } from "../../modules/plans/queries/list-plans";
 
@@ -13,6 +14,18 @@ export class Plans {
 
   static async get(request: Request | null, params: { planId: string }): Promise<PlanGetResponse | null> {
     return bg.ApiClient.json<PlanGetResponse | null>(`/api/plans/${params.planId}`, request, null);
+  }
+
+  static async history(
+    request: Request | null,
+    params: { planId: string; before?: number },
+  ): Promise<PlanHistoryGetResponse | null> {
+    return bg.ApiClient.json<PlanHistoryGetResponse | null>(
+      `/api/plans/${params.planId}/history`,
+      request,
+      null,
+      { method: "QUERY", body: JSON.stringify({ before: params.before }) },
+    );
   }
 
   static async exerciseCatalog(request: Request | null): Promise<ExerciseCatalogResponse> {

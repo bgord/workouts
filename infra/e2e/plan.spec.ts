@@ -49,6 +49,49 @@ test.describe("Plan - builder", () => {
     await expect(page.getByRole("menuitem", { name: "Could not copy" })).toBeVisible();
   });
 
+  test("shows the latest plan history", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Plan history" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "History" }).click();
+
+    await expect(dialog.getByRole("listitem")).toHaveCount(20);
+    await expect(
+      dialog.getByText(
+        `Added ${fixtures.exercises.hangingLegRaise.name} to ${fixtures.builder.plan.sections.legs.name}`,
+        { exact: true },
+      ),
+    ).toBeVisible();
+    await expect(dialog.getByText("3×10-15 · Double progression", { exact: true })).toBeVisible();
+    await expect(dialog.getByText(`Created ${fixtures.builder.plan.name}`, { exact: true })).toBeHidden();
+  });
+
+  test("shows the older plan history", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Plan history" });
+
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "History" }).click();
+    await dialog.getByRole("button", { name: "Show older" }).click();
+
+    await expect(dialog.getByRole("listitem")).toHaveCount(27);
+    await expect(dialog.getByText(`Created ${fixtures.builder.plan.name}`, { exact: true })).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "Show older" })).toBeHidden();
+  });
+
+  test("shows the error when loading the plan history fails", async ({ page }) => {
+    const dialog = page.getByRole("dialog", { name: "Plan history" });
+
+    await page.route("**/api/plans/*/history", (route) => route.fulfill({ status: 500 }));
+    await page.goto(`/plans/${fixtures.builder.plan.id}`);
+    await page.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("menuitem", { name: "History" }).click();
+
+    await expect(dialog.getByText("Could not load the history", { exact: true })).toBeVisible();
+    await expect(dialog.getByRole("listitem")).toHaveCount(0);
+  });
+
   test("keeps the section expanded and collapsed after reload", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
     const toggle = page.getByRole("button", { name: "Details: Push", exact: true });

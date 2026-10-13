@@ -5,6 +5,7 @@ import { PlanArchive } from "../sections/plan-archive";
 import { PlanCategoryCoverage } from "../sections/plan-category-coverage";
 import { PlanCopy } from "../sections/plan-copy";
 import { PlanDescription } from "../sections/plan-description";
+import { PlanHistory } from "../sections/plan-history";
 import { PlanName } from "../sections/plan-name";
 import { PlanRemove } from "../sections/plan-remove";
 import { PlanSectionList } from "../sections/plan-section-list";
@@ -34,6 +35,8 @@ export function Plan() {
 
                 <bg.MenuContent>
                   <PlanCopy />
+
+                  <PlanHistory />
 
                   <PlanArchive />
 

@@ -6,9 +6,11 @@ import * as Plans from "+plans";
 import { userId } from "./auth";
 import {
   anotherExerciseId,
+  anotherExerciseName,
   exercise,
   exerciseCategory,
   exerciseId,
+  exerciseName,
   exerciseWithCategories,
 } from "./exercises";
 import { commit, correlationId, expectAnyId, revision, T0 } from "./shared";
@@ -600,6 +602,17 @@ export const GenericPlanSectionExerciseInstructionAddedEventLinear = {
   payload: { planId, planSectionId, exerciseInstruction: linearExerciseInstruction, requesterId: userId },
 } satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
 
+export const GenericPlanSectionExerciseInstructionAddedEventRir = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: planStream,
+  version: 2,
+  commit,
+  name: "PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT",
+  payload: { planId, planSectionId, exerciseInstruction: rirExerciseInstruction, requesterId: userId },
+} satisfies Plans.Events.PlanSectionExerciseInstructionAddedEventType;
+
 export const GenericPlanSectionExerciseInstructionRemovedEvent = {
   id: expectAnyId,
   correlationId,
@@ -680,3 +693,22 @@ export const planWithLinearExerciseInstructionHistory = [
 export const planArchivedHistory = [GenericPlanCreatedEvent, GenericPlanArchivedEvent];
 
 export const planFinalizedHistory = [GenericPlanCreatedEvent, GenericPlanFinalizedEvent];
+
+export const planHistoryExercises = [
+  { id: exerciseId, name: exerciseName },
+  { id: anotherExerciseId, name: anotherExerciseName },
+];
+
+export const planHistoryResponse: Plans.Queries.PlanHistoryGetResponse = {
+  data: {
+    entries: [
+      {
+        name: "PLAN_CREATED_EVENT",
+        details: { planName },
+        sequence: tools.Int.nonNegative(0),
+        createdAt: T0.ms,
+      },
+    ],
+    next: null,
+  },
+};
