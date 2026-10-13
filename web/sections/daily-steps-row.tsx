@@ -4,9 +4,6 @@ import * as ui from "../components";
 import { DailyStepsRemove } from "./daily-steps-remove";
 
 export function DailyStepsRow(props: { entry: DailySteps; first: boolean }) {
-  const t = bg.useTranslations();
-  const language = bg.useLanguage();
-
   return (
     <ui.HairlineRow data-md-gap="2" data-stack="x" first={props.first} {...ui.Spacing.rowCompact}>
       <div
@@ -21,7 +18,7 @@ export function DailyStepsRow(props: { entry: DailySteps; first: boolean }) {
       </div>
 
       <div data-color="neutral-100" data-fw="medium" data-md-fs="xs" data-shrink="0" data-transform="nowrap">
-        {t("measurements.daily_steps.value", { count: props.entry.count.toLocaleString(language) })}
+        <ui.DailyStepsValue count={props.entry.count} />
       </div>
 
       <div data-shrink="0" data-stack="x" {...ui.Gap.inline}>

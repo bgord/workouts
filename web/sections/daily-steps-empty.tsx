@@ -5,9 +5,9 @@ import { dailyStepsRoute } from "../router";
 
 export function DailyStepsEmpty() {
   const t = bg.useTranslations();
-  const { dailySteps } = dailyStepsRoute.useLoaderData();
+  const { dailyStepsStats } = dailyStepsRoute.useLoaderData();
 
-  if (dailySteps.length > 0) return null;
+  if (dailyStepsStats) return null;
 
   return (
     <ui.EmptyState>
