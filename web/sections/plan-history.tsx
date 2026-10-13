@@ -122,7 +122,7 @@ function PlanHistoryRow(props: PlanHistoryEntry & { first: boolean }) {
         data-fs="xs"
         data-shrink="0"
         data-transform="font-variant-numeric"
-        dateTime={new Date(props.createdAt).toISOString()}
+        dateTime={bg.Clock.iso(props.createdAt)}
         title={format.instantFull(props.createdAt)}
       >
         {new Intl.DateTimeFormat(language, { hour: "2-digit", minute: "2-digit", timeZone }).format(
