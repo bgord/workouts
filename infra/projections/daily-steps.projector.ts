@@ -1,5 +1,5 @@
 import type * as bg from "@bgord/bun";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import * as Auth from "+auth";
 import * as measurements from "+measurements";
 import { db } from "+infra/db";
