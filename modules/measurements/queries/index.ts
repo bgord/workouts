@@ -12,3 +12,5 @@ export * from "./list-body-weight-measurements-for-month";
 export * from "./list-body-weight-measurements-for-stats";
 export * from "./list-body-weight-months";
 export * from "./list-daily-steps";
+export * from "./list-daily-steps-for-month";
+export * from "./list-daily-steps-months";
