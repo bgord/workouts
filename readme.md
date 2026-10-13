@@ -257,6 +257,7 @@ modules/
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
+│   │   ├── daily-steps-stats-calculator.ts
 │   │   └── steps-provider-manual.strategy.ts
 │   └── value-objects
 │       ├── body-part-circumference.ts
@@ -285,6 +286,7 @@ modules/
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+│       ├── daily-steps-stats.ts
 │       ├── daily-steps.ts
 │       ├── steps-count.ts
 │       ├── steps-count.validation.ts
