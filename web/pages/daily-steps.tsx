@@ -3,6 +3,7 @@ import * as ui from "../components";
 import { DailyStepsEmpty } from "../sections/daily-steps-empty";
 import { DailyStepsExport } from "../sections/daily-steps-export";
 import { DailyStepsHistory } from "../sections/daily-steps-history";
+import { DailyStepsImport } from "../sections/daily-steps-import";
 import { DailyStepsRecord } from "../sections/daily-steps-record";
 
 export function DailySteps() {
@@ -21,6 +22,8 @@ export function DailySteps() {
           <ui.MenuTrigger />
 
           <bg.MenuContent>
+            <DailyStepsImport />
+
             <DailyStepsExport />
           </bg.MenuContent>
         </bg.Menu>
