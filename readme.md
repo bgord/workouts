@@ -259,6 +259,8 @@ modules/
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
+│   │   ├── daily-steps-average.ts
+│   │   ├── daily-steps-chart.ts
 │   │   ├── daily-steps-stats-calculator.ts
 │   │   └── steps-provider-manual.strategy.ts
 │   └── value-objects
@@ -290,6 +292,9 @@ modules/
 │       ├── body-weight.ts
 │       ├── daily-steps-stats.ts
 │       ├── daily-steps.ts
+│       ├── steps-chart-granularity-options.ts
+│       ├── steps-chart-granularity.ts
+│       ├── steps-chart-point.ts
 │       ├── steps-count.ts
 │       ├── steps-count.validation.ts
 │       ├── steps-day.ts
@@ -713,6 +718,7 @@ app/
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
 │   │   ├── body-weight-reference-set.ts
+│   │   ├── daily-steps-chart-get.ts
 │   │   ├── daily-steps-list.ts
 │   │   ├── daily-steps-record.ts
 │   │   ├── daily-steps-remove.ts
