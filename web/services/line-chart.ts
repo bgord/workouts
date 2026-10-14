@@ -16,9 +16,9 @@ export const LineChartMath = {
   AREA_OPACITY: 0.08,
   MINIMAL_POINTS: 2,
 
-  layout: (values: Array<number>, format: (value: number) => string) => {
-    const floor = Math.max(Math.floor(Math.min(...values)) - SCALE_MARGIN, 0);
-    const roughCeiling = Math.ceil(Math.max(...values)) + SCALE_MARGIN;
+  layout: (values: Array<number>, format: (value: number) => string, bounds: Array<number> = []) => {
+    const floor = Math.max(Math.floor(Math.min(...values, ...bounds)) - SCALE_MARGIN, 0);
+    const roughCeiling = Math.ceil(Math.max(...values, ...bounds)) + SCALE_MARGIN;
     const step = Math.ceil((roughCeiling - floor) / GRIDLINES_LIMIT);
     const ceiling = floor + Math.ceil((roughCeiling - floor) / step) * step;
 
@@ -52,6 +52,7 @@ export const LineChartMath = {
 
     return {
       plot,
+      toY,
       gridLines,
       points,
       line,

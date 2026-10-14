@@ -5,6 +5,7 @@ import { DailyStepsChartGranularityOptions } from "../../modules/measurements/va
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
+import { DailyStepsGoalSet } from "./daily-steps-goal-set";
 
 const POINT_HIT_RADIUS = 8;
 const STEPS_IN_THOUSAND = 1000;
@@ -14,15 +15,27 @@ export function DailyStepsProgressChart() {
   const language = bg.useLanguage();
   const pluralize = bg.usePluralize();
   const format = bg.useDateFormat();
-  const { chart } = dailyStepsRoute.useLoaderData();
+  const { chart, goal } = dailyStepsRoute.useLoaderData();
   const navigate = dailyStepsRoute.useNavigate();
   const search = dailyStepsRoute.useSearch();
 
   if (chart.length < LineChartMath.MINIMAL_POINTS) return null;
 
+  const steps = (value: number) =>
+    t("measurements.daily_steps.value", {
+      count: value.toLocaleString(language),
+      noun: pluralize({
+        value,
+        singular: t("measurements.daily_steps.value.noun.singular"),
+        plural: t("measurements.daily_steps.value.noun.plural"),
+        genitive: t("measurements.daily_steps.value.noun.genitive"),
+      }),
+    });
+
   const layout = LineChartMath.layout(
     chart.map((point) => point.steps / STEPS_IN_THOUSAND),
     (thousands) => (thousands * STEPS_IN_THOUSAND).toLocaleString(language),
+    goal === null ? [] : [goal / STEPS_IN_THOUSAND],
   );
 
   const pristine = DailyStepsChartForm.Form.isDefault(search);
@@ -31,7 +44,7 @@ export function DailyStepsProgressChart() {
     <div data-stack="y" {...ui.Gap.related}>
       <h2>{t("measurements.daily_steps.progress")}</h2>
 
-      <div data-stack="x" {...ui.Gap.cluster}>
+      <div data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
         <ui.Select
           aria-label={t("measurements.daily_steps.progress.granularity.label")}
           id={DailyStepsChartForm.Form.chart.field.name}
@@ -72,6 +85,8 @@ export function DailyStepsProgressChart() {
         >
           <X data-size="sm" />
         </ui.IconButton>
+
+        <DailyStepsGoalSet goal={goal} key={goal} />
       </div>
 
       <ui.LineChart
@@ -80,20 +95,24 @@ export function DailyStepsProgressChart() {
         layout={layout}
         start={format.full(chart[0]!.from)}
       >
+        {goal !== null && (
+          <g data-color="brand-300" stroke="currentColor" strokeDasharray="4 4">
+            <title>{t("measurements.daily_steps.progress.goal", { steps: steps(goal) })}</title>
+
+            <line
+              x1={layout.plot.left}
+              x2={layout.plot.right}
+              y1={layout.toY(goal / STEPS_IN_THOUSAND)}
+              y2={layout.toY(goal / STEPS_IN_THOUSAND)}
+            />
+          </g>
+        )}
+
         <ui.LineChartArea layout={layout} />
 
         <g data-color="brand-300" fill="currentColor" stroke="transparent" strokeWidth={POINT_HIT_RADIUS}>
           {layout.points.map((coordinates, index) => {
             const point = chart[index]!;
-            const steps = t("measurements.daily_steps.value", {
-              count: point.steps.toLocaleString(language),
-              noun: pluralize({
-                value: point.steps,
-                singular: t("measurements.daily_steps.value.noun.singular"),
-                plural: t("measurements.daily_steps.value.noun.plural"),
-                genitive: t("measurements.daily_steps.value.noun.genitive"),
-              }),
-            });
 
             return (
               <circle
@@ -106,10 +125,13 @@ export function DailyStepsProgressChart() {
               >
                 <title>
                   {point.count === 1
-                    ? t("measurements.daily_steps.progress.point", { date: format.full(point.from), steps })
+                    ? t("measurements.daily_steps.progress.point", {
+                        date: format.full(point.from),
+                        steps: steps(point.steps),
+                      })
                     : t("measurements.daily_steps.progress.week", {
                         range: format.range(point.from, point.to),
-                        steps,
+                        steps: steps(point.steps),
                         count: point.count,
                       })}
                 </title>
