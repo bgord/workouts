@@ -9,7 +9,7 @@ export function WorkoutCopy() {
 
   const completedAt = workout.data.completedAt;
 
-  if (!completedAt) return null;
+  if (!(workout.actions.copy.available && completedAt)) return null;
 
   return (
     <ui.CopyMenuItem

@@ -6,7 +6,7 @@ export function BodyPartMeasurementExport() {
   const t = bg.useTranslations();
   const { bodyParts } = bodyPartsRoute.useLoaderData();
 
-  if (!bodyParts.data.some((bodyPart) => bodyPart.measurements.length > 0)) return null;
+  if (!bodyParts.actions.export.available) return null;
 
   return (
     <bg.MenuLink download href="/api/measurements/body-part/export" rel="noopener" target="_blank">

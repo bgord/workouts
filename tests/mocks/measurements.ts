@@ -4,7 +4,7 @@ import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 import { anotherUserId, userId } from "./auth";
-import { actionAvailable, commit, correlationId, expectAnyId, T0 } from "./shared";
+import { actionAvailable, actionUnavailable, commit, correlationId, expectAnyId, T0 } from "./shared";
 
 export const bodyWeightMeasurementId = v.parse(
   Measurements.VO.BodyWeightMeasurementId,
@@ -420,12 +420,15 @@ export const bodyPartListResponse: Measurements.Queries.BodyPartListResponse = {
       measurements: [bodyPartMeasurementLatest, bodyPartMeasurementPrevious],
     },
   ],
-  actions: { import: actionAvailable },
+  actions: { export: actionAvailable, import: actionAvailable },
 };
 
 export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListResponse = {
   data: [],
-  actions: { import: { available: true, enabled: false, hints: ["body.part.is.defined"] } },
+  actions: {
+    export: actionUnavailable,
+    import: { available: true, enabled: false, hints: ["body.part.is.defined"] },
+  },
 };
 
 const dailyStepsStream = v.parse(bg.EventStream, `daily_steps_${userId}_${dailyStepsDay}`);

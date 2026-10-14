@@ -4,9 +4,9 @@ import { dailyStepsRoute } from "../router";
 
 export function DailyStepsExport() {
   const t = bg.useTranslations();
-  const { dailyStepsStats } = dailyStepsRoute.useLoaderData();
+  const { actions } = dailyStepsRoute.useLoaderData();
 
-  if (!dailyStepsStats) return null;
+  if (!actions.export.available) return null;
 
   return (
     <bg.MenuLink download href="/api/measurements/daily-steps/export" rel="noopener" target="_blank">

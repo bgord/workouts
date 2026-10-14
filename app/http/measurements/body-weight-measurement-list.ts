@@ -22,15 +22,20 @@ export const BodyWeightMeasurementList =
       deps.ListBodyWeightMeasurementsForStatsQuery.execute(userId),
     ]);
     const stats = new Measurements.Services.BodyWeightStatsCalculator(measurementsForStats).calculate();
+    const actions = new Measurements.Services.BodyWeightListActions({
+      measurements: measurementsForStats,
+    }).calculate();
 
     const month = requested ?? months[0]?.month;
 
-    if (!month) return Response.json({ month: null, measurements: [], previous: null, months, stats });
+    if (!month) {
+      return Response.json({ month: null, measurements: [], previous: null, months, stats, actions });
+    }
 
     if (month === Measurements.VO.BodyWeightHistoryMonthAll) {
       const measurements = await deps.ListBodyWeightMeasurementsQuery.execute(userId);
 
-      return Response.json({ month, measurements, previous: null, months, stats });
+      return Response.json({ month, measurements, previous: null, months, stats, actions });
     }
 
     const { measurements, previous } = await deps.ListBodyWeightMeasurementsForMonthQuery.execute(
@@ -38,5 +43,5 @@ export const BodyWeightMeasurementList =
       month,
     );
 
-    return Response.json({ month, measurements, previous, months, stats });
+    return Response.json({ month, measurements, previous, months, stats, actions });
   };

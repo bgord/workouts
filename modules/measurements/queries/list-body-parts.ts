@@ -4,7 +4,7 @@ import type * as VO from "+measurements/value-objects";
 
 export type BodyPartListResponse = {
   data: ReadonlyArray<VO.BodyPartSummary>;
-  actions: { import: bg.ActionState };
+  actions: { export: bg.ActionState; import: bg.ActionState };
 };
 
 export interface ListBodyParts {

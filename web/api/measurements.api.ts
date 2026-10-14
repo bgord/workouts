@@ -1,3 +1,4 @@
+import type { ActionState } from "@bgord/bun";
 import * as bg from "@bgord/ui";
 import type { BodyPartListResponse } from "../../modules/measurements/queries/list-body-parts";
 import type { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
@@ -19,6 +20,7 @@ type BodyWeightListResponse = {
   previous: BodyWeightMeasurement | null;
   months: ReadonlyArray<BodyWeightMonthSummary>;
   stats: BodyWeightStats | null;
+  actions: { export: ActionState };
 };
 
 type DailyStepsListResponse = {
@@ -27,6 +29,7 @@ type DailyStepsListResponse = {
   previous: DailySteps | null;
   months: ReadonlyArray<DailyStepsMonthSummary>;
   stats: DailyStepsStats | null;
+  actions: { export: ActionState };
 };
 
 type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
@@ -40,7 +43,7 @@ export class Measurements {
     return bg.ApiClient.json<BodyPartListResponse>(
       "/api/measurements/body-part/list",
       request,
-      { data: [], actions: { import: unavailable } },
+      { data: [], actions: { export: unavailable, import: unavailable } },
       { method: "QUERY" },
     );
   }
@@ -52,7 +55,14 @@ export class Measurements {
     return bg.ApiClient.json<BodyWeightListResponse>(
       "/api/measurements/body-weight/list",
       request,
-      { month: null, measurements: [], previous: null, months: [], stats: null },
+      {
+        month: null,
+        measurements: [],
+        previous: null,
+        months: [],
+        stats: null,
+        actions: { export: unavailable },
+      },
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }
@@ -76,7 +86,14 @@ export class Measurements {
     return bg.ApiClient.json<DailyStepsListResponse>(
       "/api/measurements/daily-steps/list",
       request,
-      { month: null, entries: [], previous: null, months: [], stats: null },
+      {
+        month: null,
+        entries: [],
+        previous: null,
+        months: [],
+        stats: null,
+        actions: { export: unavailable },
+      },
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }

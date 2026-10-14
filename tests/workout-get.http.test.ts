@@ -49,6 +49,7 @@ describe("GET /api/workouts/:workoutId", async () => {
         actions: {
           start: { available: true, enabled: false, hints: ["workout.exercises.have.targets"] },
           complete: { available: true, enabled: true, hints: [] },
+          copy: { available: false, enabled: false, hints: [] },
           discard: { available: true, enabled: true, hints: [] },
           exerciseAdd: { available: true, enabled: true, hints: [] },
           noteSet: { available: true, enabled: true, hints: [] },
@@ -68,6 +69,7 @@ describe("GET /api/workouts/:workoutId", async () => {
       actions: {
         start: { available: true, enabled: false, hints: ["workout.exercises.have.targets"] },
         complete: { available: true, enabled: true, hints: [] },
+        copy: { available: false, enabled: false, hints: [] },
         discard: { available: true, enabled: true, hints: [] },
         exerciseAdd: { available: true, enabled: true, hints: [] },
         noteSet: { available: true, enabled: true, hints: [] },

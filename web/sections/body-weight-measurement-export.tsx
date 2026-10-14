@@ -4,9 +4,9 @@ import { bodyWeightRoute } from "../router";
 
 export function BodyWeightMeasurementExport() {
   const t = bg.useTranslations();
-  const { bodyWeightStats } = bodyWeightRoute.useLoaderData();
+  const { actions } = bodyWeightRoute.useLoaderData();
 
-  if (!bodyWeightStats) return null;
+  if (!actions.export.available) return null;
 
   return (
     <bg.MenuLink download href="/api/measurements/body-weight/export" rel="noopener" target="_blank">

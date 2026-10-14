@@ -52,6 +52,7 @@ describe(`QUERY ${url}`, async () => {
       previous: mocks.anotherDailySteps,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
+      actions: { export: mocks.actionAvailable },
     });
   });
 
@@ -83,6 +84,7 @@ describe(`QUERY ${url}`, async () => {
       previous: null,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
+      actions: { export: mocks.actionAvailable },
     });
   });
 
@@ -110,6 +112,7 @@ describe(`QUERY ${url}`, async () => {
       previous: null,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
+      actions: { export: mocks.actionAvailable },
     });
   });
 
@@ -123,6 +126,13 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ month: null, entries: [], previous: null, months: [], stats: null });
+    expect(json).toEqual({
+      month: null,
+      entries: [],
+      previous: null,
+      months: [],
+      stats: null,
+      actions: { export: mocks.actionUnavailable },
+    });
   });
 });

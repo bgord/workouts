@@ -4,7 +4,10 @@ import type * as Queries from "+measurements/queries";
 import type * as VO from "+measurements/value-objects";
 import { BodyPartIsDefined } from "../invariants/body-part-is-defined";
 
-type BodyPartListActionsFacts = { bodyParts: ReadonlyArray<VO.BodyPart> };
+type BodyPartListActionsFacts = {
+  bodyParts: ReadonlyArray<VO.BodyPart>;
+  measurements: ReadonlyArray<VO.BodyPartSummaryMeasurement>;
+};
 
 export class BodyPartListActions {
   constructor(private readonly facts: BodyPartListActionsFacts) {}
@@ -13,6 +16,7 @@ export class BodyPartListActions {
     const activeCount = tools.Int.nonNegative(this.facts.bodyParts.length);
 
     return {
+      export: bg.ActionState.of(this.facts.measurements.length > 0),
       import: bg.ActionState.of(true, [bg.ActionBlocker.from(BodyPartIsDefined, { activeCount })]),
     };
   }

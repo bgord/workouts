@@ -59,6 +59,7 @@ describe(`QUERY ${url}`, async () => {
       previous: mocks.heavierBodyWeightMeasurement,
       months: [mocks.bodyWeightMonthSummary],
       stats: mocks.bodyWeightStats,
+      actions: { export: mocks.actionAvailable },
     });
   });
 
@@ -97,6 +98,7 @@ describe(`QUERY ${url}`, async () => {
       previous: null,
       months: [mocks.bodyWeightMonthSummary],
       stats: mocks.bodyWeightStats,
+      actions: { export: mocks.actionAvailable },
     });
   });
 
@@ -134,6 +136,7 @@ describe(`QUERY ${url}`, async () => {
       previous: null,
       months: [mocks.bodyWeightMonthSummary],
       stats: mocks.bodyWeightStats,
+      actions: { export: mocks.actionAvailable },
     });
   });
 
@@ -151,6 +154,13 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ month: null, measurements: [], previous: null, months: [], stats: null });
+    expect(json).toEqual({
+      month: null,
+      measurements: [],
+      previous: null,
+      months: [],
+      stats: null,
+      actions: { export: mocks.actionUnavailable },
+    });
   });
 });

@@ -187,14 +187,14 @@ export const bodyWeightRoute = createRoute({
   }),
   loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const [{ month, measurements, previous, months, stats }, { points }] = await Promise.all([
+    const [{ month, measurements, previous, months, stats, actions }, { points }] = await Promise.all([
       Measurements.listBodyWeight(context.request, { month: deps.month }),
       Measurements.bodyWeightChart(context.request, {
         granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
       }),
     ]);
 
-    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points };
+    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points, actions };
   },
 });
 
@@ -215,14 +215,14 @@ export const dailyStepsRoute = createRoute({
   }),
   loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const [{ month, entries, previous, months, stats }, { points }] = await Promise.all([
+    const [{ month, entries, previous, months, stats, actions }, { points }] = await Promise.all([
       Measurements.listDailySteps(context.request, { month: deps.month }),
       Measurements.dailyStepsChart(context.request, {
         granularity: deps.chart ?? DailyStepsChartGranularityOptions.weekly,
       }),
     ]);
 
-    return { month, dailySteps: entries, previous, months, dailyStepsStats: stats, chart: points };
+    return { month, dailySteps: entries, previous, months, dailyStepsStats: stats, chart: points, actions };
   },
 });
 
