@@ -8,9 +8,9 @@ import { dailyStepsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 
 export function DailyStepsRecord() {
-  const { dailySteps } = dailyStepsRoute.useLoaderData();
+  const { dailyStepsStats } = dailyStepsRoute.useLoaderData();
 
-  const latest = dailySteps[0];
+  const latest = dailyStepsStats?.latest;
 
   return <DailyStepsRecordForm key={latest?.count} latest={latest} />;
 }
