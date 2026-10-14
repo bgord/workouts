@@ -52,6 +52,19 @@ test.describe("Daily steps - athlete", () => {
     await expect(page.getByRole("spinbutton", { name: "Steps" })).toHaveValue("10200");
   });
 
+  test("steps the count by 500 with the buttons", async ({ page }) => {
+    await page.goto("/measurements/daily-steps");
+
+    await page.getByRole("button", { name: "Steps +500" }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Steps" })).toHaveValue("10700");
+
+    await page.getByRole("button", { name: "Steps −500" }).click();
+    await page.getByRole("button", { name: "Steps −500" }).click();
+
+    await expect(page.getByRole("spinbutton", { name: "Steps" })).toHaveValue("9700");
+  });
+
   test("shows the progress chart in weekly granularity by default and changes it", async ({ page }) => {
     await page.goto("/measurements/daily-steps");
 

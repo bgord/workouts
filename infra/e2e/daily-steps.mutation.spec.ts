@@ -143,14 +143,14 @@ test.describe("Daily steps - athlete-mutation", () => {
   test("logs daily steps", async ({ page }) => {
     await page.goto("/measurements/daily-steps");
 
-    await page.getByRole("spinbutton", { name: "Steps" }).fill("12500");
+    await page.getByRole("spinbutton", { name: "Steps" }).fill("12345");
     await page.getByRole("button", { name: "Log", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "12,500 steps", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "12,345 steps", exact: true })).toBeVisible();
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "12,500 steps", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "12,345 steps", exact: true })).toBeVisible();
   });
 
   test("rejects a daily steps correction out of range", async ({ page }) => {
@@ -160,34 +160,34 @@ test.describe("Daily steps - athlete-mutation", () => {
 
     await page.goto("/measurements/daily-steps");
 
-    await page.getByRole("button", { name: "12,500 steps", exact: true }).click();
+    await page.getByRole("button", { name: "12,345 steps", exact: true }).click();
     await field.fill("100500");
 
     await expect(field.and(page.locator(":invalid"))).toHaveCount(1);
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "12,500 steps", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "12,345 steps", exact: true })).toBeVisible();
   });
 
   test("corrects the daily steps", async ({ page }) => {
     await page.goto("/measurements/daily-steps");
 
-    await page.getByRole("button", { name: "12,500 steps", exact: true }).click();
+    await page.getByRole("button", { name: "12,345 steps", exact: true }).click();
     await page
       .getByRole("form", { name: "Correct steps" })
       .getByRole("spinbutton", { name: "Steps" })
-      .fill("13000");
+      .fill("13210");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(page.getByRole("button", { name: "13,000 steps", exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "12,500 steps", exact: true })).toBeHidden();
-    await expect(page.getByRole("spinbutton", { name: "Steps" })).toHaveValue("13000");
+    await expect(page.getByRole("button", { name: "13,210 steps", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "12,345 steps", exact: true })).toBeHidden();
+    await expect(page.getByRole("spinbutton", { name: "Steps" })).toHaveValue("13210");
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "13,000 steps", exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "12,500 steps", exact: true })).toBeHidden();
+    await expect(page.getByRole("button", { name: "13,210 steps", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "12,345 steps", exact: true })).toBeHidden();
   });
 
   test("removes the daily steps", async ({ page }) => {
@@ -195,11 +195,11 @@ test.describe("Daily steps - athlete-mutation", () => {
 
     await page
       .getByRole("listitem")
-      .filter({ has: page.getByRole("button", { name: "13,000 steps", exact: true }) })
+      .filter({ has: page.getByRole("button", { name: "13,210 steps", exact: true }) })
       .getByRole("button", { name: "Remove steps" })
       .click();
 
-    await expect(page.getByRole("button", { name: "13,000 steps", exact: true })).toBeHidden();
+    await expect(page.getByRole("button", { name: "13,210 steps", exact: true })).toBeHidden();
   });
 
   test("rejects a daily goal out of range", async ({ page }) => {
@@ -227,15 +227,15 @@ test.describe("Daily steps - athlete-mutation", () => {
     await page.goto("/measurements/daily-steps");
 
     await goal.getByRole("button", { name: "Edit goal" }).click();
-    await goal.getByRole("spinbutton", { name: "Daily goal" }).fill("11000");
+    await goal.getByRole("spinbutton", { name: "Daily goal" }).fill("10750");
     await goal.getByRole("button", { name: "Save", exact: true }).click();
 
-    await expect(goal.getByText("11,000 steps", { exact: true })).toBeVisible();
-    await expect(row.getByRole("img", { name: "Below goal of 11,000", exact: true })).toBeVisible();
+    await expect(goal.getByText("10,750 steps", { exact: true })).toBeVisible();
+    await expect(row.getByRole("img", { name: "Below goal of 10,750", exact: true })).toBeVisible();
 
     await page.reload();
 
-    await expect(goal.getByText("11,000 steps", { exact: true })).toBeVisible();
-    await expect(row.getByRole("img", { name: "Below goal of 11,000", exact: true })).toBeVisible();
+    await expect(goal.getByText("10,750 steps", { exact: true })).toBeVisible();
+    await expect(row.getByRole("img", { name: "Below goal of 10,750", exact: true })).toBeVisible();
   });
 });

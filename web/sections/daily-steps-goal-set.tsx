@@ -47,9 +47,10 @@ export function DailyStepsGoalSet(props: { goal: DailyStepsGoalType | null } & b
         aria-label={t("measurements.daily_steps.goal.label")}
         disabled={mutation.isLoading}
         field={goal}
+        increment={500}
         max={StepsCountMax}
         min={0}
-        step={500}
+        step={1}
         unit={t("measurements.daily_steps.record.count.unit")}
         width={72}
       />
