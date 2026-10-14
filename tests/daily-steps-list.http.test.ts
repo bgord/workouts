@@ -55,6 +55,7 @@ describe(`QUERY ${url}`, async () => {
       previous: mocks.anotherDailySteps,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
+      goal: mocks.dailyStepsGoal,
       actions: { export: mocks.actionAvailable },
     });
   });
@@ -90,6 +91,7 @@ describe(`QUERY ${url}`, async () => {
       previous: null,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
+      goal: mocks.dailyStepsGoal,
       actions: { export: mocks.actionAvailable },
     });
   });
@@ -119,6 +121,7 @@ describe(`QUERY ${url}`, async () => {
       previous: null,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
+      goal: null,
       actions: { export: mocks.actionAvailable },
     });
   });
@@ -140,6 +143,7 @@ describe(`QUERY ${url}`, async () => {
       previous: null,
       months: [],
       stats: null,
+      goal: null,
       actions: { export: mocks.actionUnavailable },
     });
   });

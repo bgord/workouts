@@ -215,7 +215,7 @@ export const dailyStepsRoute = createRoute({
   }),
   loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const [{ month, entries, previous, months, stats, actions }, { points, goal }] = await Promise.all([
+    const [{ month, entries, previous, months, stats, goal, actions }, { points }] = await Promise.all([
       Measurements.listDailySteps(context.request, { month: deps.month }),
       Measurements.dailyStepsChart(context.request, {
         granularity: deps.chart ?? DailyStepsChartGranularityOptions.weekly,

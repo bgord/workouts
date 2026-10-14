@@ -33,14 +33,22 @@ export const DailyStepsList =
     });
 
     if (!month) {
-      return Response.json({ month: null, entries: [], previous: null, months, stats, actions });
+      return Response.json({ month: null, entries: [], previous: null, months, stats, goal, actions });
     }
 
     if (month === Measurements.VO.DailyStepsHistoryMonthAll) {
-      return Response.json({ month, entries: all.map(entry), previous: null, months, stats, actions });
+      return Response.json({
+        month,
+        entries: all.map(entry),
+        previous: null,
+        months,
+        stats,
+        goal,
+        actions,
+      });
     }
 
     const { entries, previous } = await deps.ListDailyStepsForMonthQuery.execute(userId, month);
 
-    return Response.json({ month, entries: entries.map(entry), previous, months, stats, actions });
+    return Response.json({ month, entries: entries.map(entry), previous, months, stats, goal, actions });
   };

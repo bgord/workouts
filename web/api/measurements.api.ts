@@ -31,12 +31,13 @@ type DailyStepsListResponse = {
   previous: DailySteps | null;
   months: ReadonlyArray<DailyStepsMonthSummary>;
   stats: DailyStepsStats | null;
+  goal: StepsCountType | null;
   actions: { export: ActionState };
 };
 
 type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
 
-type DailyStepsChartResponse = { points: ReadonlyArray<DailyStepsChartPoint>; goal: StepsCountType | null };
+type DailyStepsChartResponse = { points: ReadonlyArray<DailyStepsChartPoint> };
 
 const unavailable = { available: false, enabled: false, hints: [] };
 
@@ -94,6 +95,7 @@ export class Measurements {
         previous: null,
         months: [],
         stats: null,
+        goal: null,
         actions: { export: unavailable },
       },
       { method: "QUERY", body: JSON.stringify(params) },
@@ -107,7 +109,7 @@ export class Measurements {
     return bg.ApiClient.json<DailyStepsChartResponse>(
       "/api/measurements/daily-steps/chart",
       request,
-      { points: [], goal: null },
+      { points: [] },
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }
