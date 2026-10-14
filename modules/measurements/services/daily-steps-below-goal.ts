@@ -1,6 +1,6 @@
 import type * as VO from "+measurements/value-objects";
 
-type Config = { goal: VO.StepsCountType | null; count: VO.StepsCountType };
+type Config = { goal: VO.DailyStepsGoalType | null; count: VO.StepsCountType };
 
 export class DailyStepsBelowGoal {
   constructor(private readonly config: Config) {}

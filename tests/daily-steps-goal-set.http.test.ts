@@ -25,19 +25,19 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(url, { method: "POST", body: JSON.stringify({}) }, mocks.ip);
 
-    await testcases.assertErrorResponse(response, 400, "integer.non.negative.type");
+    await testcases.assertErrorResponse(response, 400, "integer.positive.type");
   });
 
-  test("validation - goal - negative", async () => {
+  test("validation - goal - zero", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ goal: -1 }) },
+      { method: "POST", body: JSON.stringify({ goal: 0 }) },
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "integer.non.negative.invalid");
+    await testcases.assertErrorResponse(response, 400, "integer.positive.invalid");
   });
 
   test("validation - goal - above the limit", async () => {
@@ -49,7 +49,7 @@ describe(`POST ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "steps.count.range");
+    await testcases.assertErrorResponse(response, 400, "daily.steps.goal.range");
   });
 
   test("DailyStepsGoalHasChanged", async () => {
@@ -96,7 +96,7 @@ describe(`POST ${url}`, async () => {
     using spies = new DisposableStack();
     spies
       .use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute"))
-      .mockResolvedValue(mocks.stepsCount);
+      .mockResolvedValue(mocks.anotherDailyStepsGoal);
 
     const response = await server.request(
       url,

@@ -1,11 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import type { StepsCountType } from "../../modules/measurements/value-objects/steps-count";
+import type { DailyStepsGoalType } from "../../modules/measurements/value-objects/daily-steps-goal";
 import { StepsCountMax } from "../../modules/measurements/value-objects/steps-count.validation";
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 
-export function DailyStepsGoalSet(props: { goal: StepsCountType | null } & bg.UseToggleReturnType) {
+export function DailyStepsGoalSet(props: { goal: DailyStepsGoalType | null } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
   const { toggle } = bg.extractUseToggle(props);

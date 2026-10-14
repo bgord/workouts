@@ -10,7 +10,7 @@ describe("DailyStepsGoalHasChanged", () => {
   });
 
   test("passes - goal changed", () => {
-    const config = { current: mocks.stepsCount, goal: mocks.dailyStepsGoal };
+    const config = { current: mocks.anotherDailyStepsGoal, goal: mocks.dailyStepsGoal };
 
     expect(Measurements.Invariants.DailyStepsGoalHasChanged.passes(config)).toEqual(true);
   });

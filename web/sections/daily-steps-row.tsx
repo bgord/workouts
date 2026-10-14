@@ -2,7 +2,7 @@ import * as bg from "@bgord/ui";
 import { ArrowDown } from "lucide-react";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import type { DailyStepsEntry } from "../../modules/measurements/value-objects/daily-steps-entry";
-import type { StepsCountType } from "../../modules/measurements/value-objects/steps-count";
+import type { DailyStepsGoalType } from "../../modules/measurements/value-objects/daily-steps-goal";
 import * as ui from "../components";
 import { DailyStepsCorrect } from "./daily-steps-correct";
 import { DailyStepsRemove } from "./daily-steps-remove";
@@ -11,7 +11,7 @@ export function DailyStepsRow(props: {
   entry: DailyStepsEntry;
   previous: DailySteps | undefined;
   first: boolean;
-  goal: StepsCountType | null;
+  goal: DailyStepsGoalType | null;
 }) {
   const t = bg.useTranslations();
   const language = bg.useLanguage();

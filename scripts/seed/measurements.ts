@@ -78,7 +78,7 @@ export async function setDailyStepsGoal(di: BootstrapType, userId: Auth.VO.UserI
 
   const command = bg.command(
     Measurements.Commands.DailyStepsGoalSetCommand,
-    { payload: { userId, goal: v.parse(Measurements.VO.StepsCount, goal) } },
+    { payload: { userId, goal: v.parse(Measurements.VO.DailyStepsGoal, goal) } },
     deps,
   );
 

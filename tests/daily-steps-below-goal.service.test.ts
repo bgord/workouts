@@ -14,7 +14,7 @@ describe("DailyStepsBelowGoal", () => {
 
   test("at goal", () => {
     const dailyStepsBelowGoal = new Measurements.Services.DailyStepsBelowGoal({
-      goal: mocks.stepsCount,
+      goal: mocks.anotherDailyStepsGoal,
       count: mocks.stepsCount,
     });
 
@@ -23,7 +23,7 @@ describe("DailyStepsBelowGoal", () => {
 
   test("above goal", () => {
     const dailyStepsBelowGoal = new Measurements.Services.DailyStepsBelowGoal({
-      goal: mocks.anotherStepsCount,
+      goal: mocks.lowDailyStepsGoal,
       count: mocks.stepsCount,
     });
 

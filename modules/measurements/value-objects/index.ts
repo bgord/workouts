@@ -28,6 +28,7 @@ export * from "./daily-steps-chart-granularity-options";
 export * from "./daily-steps-chart-point";
 export * from "./daily-steps-day";
 export * from "./daily-steps-entry";
+export * from "./daily-steps-goal";
 export * from "./daily-steps-history-month";
 export * from "./daily-steps-history-month.validation";
 export * from "./daily-steps-import";

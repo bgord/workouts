@@ -8,7 +8,7 @@ export const DAILY_STEPS_GOAL_SET_EVENT = "DAILY_STEPS_GOAL_SET_EVENT";
 export const DailyStepsGoalSetEvent = v.object({
   ...bg.EventEnvelopeSchema,
   name: v.literal(DAILY_STEPS_GOAL_SET_EVENT),
-  payload: v.object({ userId: Auth.VO.UserId, goal: VO.StepsCount }),
+  payload: v.object({ userId: Auth.VO.UserId, goal: VO.DailyStepsGoal }),
 });
 
 export type DailyStepsGoalSetEventType = v.InferOutput<typeof DailyStepsGoalSetEvent>;

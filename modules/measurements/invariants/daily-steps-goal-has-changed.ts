@@ -3,7 +3,10 @@ import type * as VO from "+measurements/value-objects";
 
 class DailyStepsGoalHasChangedError extends Error {}
 
-type DailyStepsGoalHasChangedConfigType = { current: VO.StepsCountType | null; goal: VO.StepsCountType };
+type DailyStepsGoalHasChangedConfigType = {
+  current: VO.DailyStepsGoalType | null;
+  goal: VO.DailyStepsGoalType;
+};
 
 class DailyStepsGoalHasChangedFactory extends bg.Invariant<DailyStepsGoalHasChangedConfigType> {
   passes(config: DailyStepsGoalHasChangedConfigType) {

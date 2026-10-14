@@ -307,6 +307,7 @@ modules/
 │       ├── daily-steps-chart-point.ts
 │       ├── daily-steps-day.ts
 │       ├── daily-steps-entry.ts
+│       ├── daily-steps-goal.ts
 │       ├── daily-steps-history-month.ts
 │       ├── daily-steps-history-month.validation.ts
 │       ├── daily-steps-import.ts

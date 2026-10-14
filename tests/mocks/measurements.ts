@@ -37,7 +37,9 @@ export const dailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2025-01-01"
 export const anotherStepsCount = v.parse(Measurements.VO.StepsCount, 6_000);
 export const anotherDailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2024-12-31");
 export const futureDailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2025-01-02");
-export const dailyStepsGoal = v.parse(Measurements.VO.StepsCount, 10_000);
+export const dailyStepsGoal = v.parse(Measurements.VO.DailyStepsGoal, 10_000);
+export const anotherDailyStepsGoal = v.parse(Measurements.VO.DailyStepsGoal, 8_000);
+export const lowDailyStepsGoal = v.parse(Measurements.VO.DailyStepsGoal, 6_000);
 
 export const dailySteps: Measurements.VO.DailySteps = {
   userId,

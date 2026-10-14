@@ -14,7 +14,7 @@ export const DailyStepsGoalSet =
     const body = await context.request.json();
 
     const userId = context.identity.authenticatedUserId();
-    const goal = v.parse(Measurements.VO.StepsCount, body["goal"]);
+    const goal = v.parse(Measurements.VO.DailyStepsGoal, body["goal"]);
 
     const command = bg.command(
       Measurements.Commands.DailyStepsGoalSetCommand,

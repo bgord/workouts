@@ -5,7 +5,7 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 class GetDailyStepsGoalQueryDrizzle implements Measurements.Queries.GetDailyStepsGoal {
-  async execute(userId: Auth.VO.UserIdType): Promise<Measurements.VO.StepsCountType | null> {
+  async execute(userId: Auth.VO.UserIdType): Promise<Measurements.VO.DailyStepsGoalType | null> {
     const row = await db
       .select({ goal: Schema.dailyStepsGoals.goal })
       .from(Schema.dailyStepsGoals)

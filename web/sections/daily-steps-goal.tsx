@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
 import { Pencil, Plus, Target } from "lucide-react";
-import type { StepsCountType } from "../../modules/measurements/value-objects/steps-count";
+import type { DailyStepsGoalType } from "../../modules/measurements/value-objects/daily-steps-goal";
 import * as ui from "../components";
 import { DailyStepsGoalSet } from "./daily-steps-goal-set";
 
-export function DailyStepsGoal(props: { goal: StepsCountType | null }) {
+export function DailyStepsGoal(props: { goal: DailyStepsGoalType | null }) {
   const t = bg.useTranslations();
   const dailyStepsGoalSet = bg.useToggle({ name: "daily-steps-goal-set" });
 
