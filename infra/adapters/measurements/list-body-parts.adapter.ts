@@ -38,7 +38,7 @@ class ListBodyPartsQueryDrizzle implements Measurements.Queries.ListBodyParts {
 
     return {
       data,
-      actions: new Measurements.Services.BodyPartListActions({ bodyParts }).calculate(),
+      actions: new Measurements.Services.BodyPartListActions({ bodyParts, measurements }).calculate(),
     };
   }
 }

@@ -1,8 +1,13 @@
 import * as bg from "@bgord/ui";
 import type { BodyWeightStats } from "../../modules/measurements/value-objects/body-weight-stats";
+import type { DailyStepsStats } from "../../modules/measurements/value-objects/daily-steps-stats";
 import type { WorkoutDashboardResponse } from "../../modules/workouts/queries/get-workout-dashboard";
 
-type DashboardResponse = { workouts: WorkoutDashboardResponse; bodyWeightStats: BodyWeightStats | null };
+type DashboardResponse = {
+  workouts: WorkoutDashboardResponse;
+  bodyWeightStats: BodyWeightStats | null;
+  dailyStepsStats: DailyStepsStats | null;
+};
 
 export class Dashboard {
   static async get(request: Request | null): Promise<DashboardResponse> {
@@ -12,6 +17,7 @@ export class Dashboard {
     return bg.ApiClient.json<DashboardResponse>("/api/dashboard", request, {
       workouts: { inProgress: null, nextUp: null, lastCompleted: null, completed },
       bodyWeightStats: null,
+      dailyStepsStats: null,
     });
   }
 }

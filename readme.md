@@ -179,6 +179,9 @@ modules/
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
+│   │   ├── handleDailyStepsImportCommand.ts
+│   │   ├── handleDailyStepsRecordCommand.ts
+│   │   ├── handleDailyStepsRemoveCommand.ts
 │   ├── commands
 │   │   ├── BODY_PART_DEFINE_COMMAND.ts
 │   │   ├── BODY_PART_DELETE_COMMAND.ts
@@ -193,6 +196,9 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
+│   │   ├── DAILY_STEPS_IMPORT_COMMAND.ts
+│   │   ├── DAILY_STEPS_RECORD_COMMAND.ts
+│   │   ├── DAILY_STEPS_REMOVE_COMMAND.ts
 │   ├── events
 │   │   ├── BODY_PART_DEFINED_EVENT.ts
 │   │   ├── BODY_PART_DELETED_EVENT.ts
@@ -205,6 +211,8 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
+│   │   ├── DAILY_STEPS_RECORDED_EVENT.ts
+│   │   ├── DAILY_STEPS_REMOVED_EVENT.ts
 │   ├── invariants
 │   │   ├── body-part-belongs-to-user.ts
 │   │   ├── body-part-description-has-changed.ts
@@ -221,20 +229,28 @@ modules/
 │   │   ├── body-weight-measurement-exists.ts
 │   │   ├── body-weight-measurement-has-changed.ts
 │   │   ├── body-weight-reference-has-changed.ts
+│   │   ├── daily-steps-day-is-not-in-future.ts
+│   │   ├── daily-steps-exists.ts
 │   ├── open-host-queries
+│   ├── ports
+│   │   └── steps-provider.port.ts
 │   ├── queries
 │   │   ├── get-body-part-by-name.ts
 │   │   ├── get-body-part-measurement.ts
 │   │   ├── get-body-part-name-count.ts
 │   │   ├── get-body-part.ts
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── get-daily-steps.ts
 │   │   ├── list-body-part-measurement-export-rows.ts
 │   │   ├── list-body-part-names.ts
 │   │   ├── list-body-parts.ts
 │   │   ├── list-body-weight-measurements-for-month.ts
 │   │   ├── list-body-weight-measurements-for-stats.ts
 │   │   ├── list-body-weight-measurements.ts
-│   │   └── list-body-weight-months.ts
+│   │   ├── list-body-weight-months.ts
+│   │   ├── list-daily-steps-for-month.ts
+│   │   ├── list-daily-steps-months.ts
+│   │   └── list-daily-steps.ts
 │   ├── services
 │   │   ├── body-part-list-actions.ts
 │   │   ├── body-part-measurement-export-file-csv.ts
@@ -245,6 +261,12 @@ modules/
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
+│   │   ├── daily-steps-average.ts
+│   │   ├── daily-steps-chart.ts
+│   │   ├── daily-steps-export-file-csv.ts
+│   │   ├── daily-steps-import-file-csv.ts
+│   │   ├── daily-steps-stats-calculator.ts
+│   │   └── steps-provider-manual.strategy.ts
 │   └── value-objects
 │       ├── body-part-circumference.ts
 │       ├── body-part-description.ts
@@ -272,6 +294,20 @@ modules/
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+│       ├── daily-steps-chart-granularity-options.ts
+│       ├── daily-steps-chart-granularity.ts
+│       ├── daily-steps-chart-point.ts
+│       ├── daily-steps-day.ts
+│       ├── daily-steps-history-month.ts
+│       ├── daily-steps-history-month.validation.ts
+│       ├── daily-steps-import.ts
+│       ├── daily-steps-month-summary.ts
+│       ├── daily-steps-stats.ts
+│       ├── daily-steps.ts
+│       ├── steps-count.ts
+│       ├── steps-count.validation.ts
+│       ├── steps-source-options.ts
+│       └── steps-source.ts
 ├── notifications
 │   ├── events
 │   │   ├── WEEKLY_SUMMARY_SENT_EVENT.ts
@@ -687,6 +723,12 @@ app/
 │   │   ├── body-weight-measurement-list.ts
 │   │   ├── body-weight-measurement-remove.ts
 │   │   ├── body-weight-reference-set.ts
+│   │   ├── daily-steps-chart-get.ts
+│   │   ├── daily-steps-export.ts
+│   │   ├── daily-steps-import.ts
+│   │   ├── daily-steps-list.ts
+│   │   ├── daily-steps-record.ts
+│   │   ├── daily-steps-remove.ts
 │   ├── plans
 │   │   ├── plan-archive.ts
 │   │   ├── plan-create.ts
@@ -740,6 +782,8 @@ app/
     ├── body-part-name-form.ts
     ├── body-weight-chart-form.ts
     ├── body-weight-measurement-filters-form.ts
+    ├── daily-steps-chart-form.ts
+    ├── daily-steps-filters-form.ts
     ├── exercise-add-form.ts
     ├── exercise-catalog-filters-form.ts
     ├── exercise-category-add-form.ts
@@ -779,13 +823,17 @@ infra/
 │   │   ├── get-body-part-name-count.adapter.ts
 │   │   ├── get-body-part.adapter.ts
 │   │   ├── get-body-weight-measurement.adapter.ts
+│   │   ├── get-daily-steps.adapter.ts
 │   │   ├── list-body-part-measurement-export-rows.adapter.ts
 │   │   ├── list-body-part-names.adapter.ts
 │   │   ├── list-body-parts.adapter.ts
 │   │   ├── list-body-weight-measurements-for-month.adapter.ts
 │   │   ├── list-body-weight-measurements-for-stats.adapter.ts
 │   │   ├── list-body-weight-measurements.adapter.ts
-│   │   └── list-body-weight-months.adapter.ts
+│   │   ├── list-body-weight-months.adapter.ts
+│   │   ├── list-daily-steps-for-month.adapter.ts
+│   │   ├── list-daily-steps-months.adapter.ts
+│   │   └── list-daily-steps.adapter.ts
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
@@ -849,6 +897,8 @@ infra/
 │   ├── body-weight.spec.ts
 │   ├── catalog.mutation.spec.ts
 │   ├── catalog.spec.ts
+│   ├── daily-steps.mutation.spec.ts
+│   ├── daily-steps.spec.ts
 │   ├── dashboard.spec.ts
 │   ├── errors.spec.ts
 │   ├── exercise.spec.ts
@@ -891,6 +941,7 @@ infra/
 │   ├── body-part-measurements.projector.ts
 │   ├── body-parts.projector.ts
 │   ├── body-weight-measurements.projector.ts
+│   ├── daily-steps.projector.ts
 │   ├── exercise-categories.projector.ts
 │   ├── exercise-category-assignments.projector.ts
 │   ├── exercises.projector.ts

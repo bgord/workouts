@@ -14,6 +14,7 @@ describe("WorkoutGetActions", () => {
     expect(actions.calculate()).toEqual({
       start: mocks.actionAvailable,
       complete: mocks.actionUnavailable,
+      copy: mocks.actionUnavailable,
       discard: mocks.actionAvailable,
       exerciseAdd: mocks.actionAvailable,
       noteSet: mocks.actionAvailable,
@@ -116,6 +117,7 @@ describe("WorkoutGetActions", () => {
     expect(actions.calculate()).toEqual({
       start: mocks.actionUnavailable,
       complete: mocks.actionAvailable,
+      copy: mocks.actionUnavailable,
       discard: mocks.actionAvailable,
       exerciseAdd: mocks.actionAvailable,
       noteSet: mocks.actionAvailable,
@@ -158,6 +160,7 @@ describe("WorkoutGetActions", () => {
     expect(actions.calculate()).toEqual({
       start: mocks.actionUnavailable,
       complete: mocks.actionUnavailable,
+      copy: mocks.actionAvailable,
       discard: mocks.actionAvailable,
       exerciseAdd: mocks.actionUnavailable,
       noteSet: mocks.actionAvailable,

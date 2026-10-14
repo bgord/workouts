@@ -3,9 +3,12 @@ import * as bg from "@bgord/ui";
 import { createRootRouteWithContext, createRoute, notFound, Router, redirect } from "@tanstack/react-router";
 import * as BodyWeightChartForm from "../app/services/body-weight-chart-form";
 import * as BodyWeightMeasurementFiltersForm from "../app/services/body-weight-measurement-filters-form";
+import * as DailyStepsChartForm from "../app/services/daily-steps-chart-form";
+import * as DailyStepsFiltersForm from "../app/services/daily-steps-filters-form";
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
+import { DailyStepsChartGranularityOptions } from "../modules/measurements/value-objects/daily-steps-chart-granularity-options";
 import {
   Avatar,
   Dashboard,
@@ -22,6 +25,7 @@ import { NotFound } from "./not-found";
 import { BodyParts as BodyPartsPage } from "./pages/body-parts";
 import { BodyWeight as BodyWeightPage } from "./pages/body-weight";
 import { Catalog as CatalogPage } from "./pages/catalog";
+import { DailySteps as DailyStepsPage } from "./pages/daily-steps";
 import { Dashboard as DashboardPage } from "./pages/dashboard";
 import { Exercise as ExercisePage } from "./pages/exercise";
 import { Measurements as MeasurementsPage } from "./pages/measurements";
@@ -82,9 +86,9 @@ export const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
   component: DashboardPage,
   loader: async ({ context }) => {
-    const { workouts, bodyWeightStats } = await Dashboard.get(context.request);
+    const { workouts, bodyWeightStats, dailyStepsStats } = await Dashboard.get(context.request);
 
-    return { dashboard: workouts, bodyWeightStats };
+    return { dashboard: workouts, bodyWeightStats, dailyStepsStats };
   },
 });
 
@@ -183,14 +187,14 @@ export const bodyWeightRoute = createRoute({
   }),
   loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
   loader: async ({ context, deps }) => {
-    const [{ month, measurements, previous, months, stats }, { points }] = await Promise.all([
+    const [{ month, measurements, previous, months, stats, actions }, { points }] = await Promise.all([
       Measurements.listBodyWeight(context.request, { month: deps.month }),
       Measurements.bodyWeightChart(context.request, {
         granularity: deps.chart ?? BodyWeightChartGranularityOptions.weekly,
       }),
     ]);
 
-    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points };
+    return { month, measurements, previous, months, bodyWeightStats: stats, chart: points, actions };
   },
 });
 
@@ -199,6 +203,27 @@ export const bodyPartsRoute = createRoute({
   getParentRoute: () => rootRoute,
   component: BodyPartsPage,
   loader: async ({ context }) => ({ bodyParts: await Measurements.listBodyParts(context.request) }),
+});
+
+export const dailyStepsRoute = createRoute({
+  path: "/measurements/daily-steps",
+  getParentRoute: () => rootRoute,
+  component: DailyStepsPage,
+  validateSearch: (value: Record<string, unknown>) => ({
+    ...DailyStepsFiltersForm.Form.validate(value),
+    ...DailyStepsChartForm.Form.validate(value),
+  }),
+  loaderDeps: ({ search }) => ({ month: search.month, chart: search.chart }),
+  loader: async ({ context, deps }) => {
+    const [{ month, entries, previous, months, stats, actions }, { points }] = await Promise.all([
+      Measurements.listDailySteps(context.request, { month: deps.month }),
+      Measurements.dailyStepsChart(context.request, {
+        granularity: deps.chart ?? DailyStepsChartGranularityOptions.weekly,
+      }),
+    ]);
+
+    return { month, dailySteps: entries, previous, months, dailyStepsStats: stats, chart: points, actions };
+  },
 });
 
 export const profileRoute = createRoute({
@@ -223,6 +248,7 @@ const routeTree = rootRoute.addChildren([
   measurementsRoute,
   bodyWeightRoute,
   bodyPartsRoute,
+  dailyStepsRoute,
   profileRoute,
 ]);
 

@@ -40,6 +40,12 @@ export const LogBodyWeight: ShortcutType = {
   label: "measurements.body_weight.shortcuts.log",
 };
 
+export const LogDailySteps: ShortcutType = {
+  keys: "n",
+  trigger: "n",
+  label: "measurements.daily_steps.shortcuts.log",
+};
+
 export const GlobalGroup: Array<ShortcutType> = [
   GoToDashboard,
   GoToWorkouts,
@@ -56,3 +62,5 @@ export const WorkoutsGroup: Array<ShortcutType> = [ScheduleWorkout, OpenWorkout]
 export const CatalogGroup: Array<ShortcutType> = [SearchExercises, OpenExercise];
 
 export const MeasurementsGroup: Array<ShortcutType> = [LogBodyWeight];
+
+export const DailyStepsGroup: Array<ShortcutType> = [LogDailySteps];

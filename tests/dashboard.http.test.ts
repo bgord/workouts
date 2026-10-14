@@ -37,6 +37,9 @@ describe(`GET ${url}`, async () => {
         mocks.bodyWeightMeasurement,
       ]),
     );
+    spies.use(
+      spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute").mockResolvedValue([mocks.dailySteps]),
+    );
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
@@ -50,6 +53,7 @@ describe(`GET ${url}`, async () => {
         completed: { month: 1, year: 2, total: 3 },
       },
       bodyWeightStats: mocks.bodyWeightStats,
+      dailyStepsStats: mocks.dailyStepsStats,
     });
   });
 
@@ -73,6 +77,7 @@ describe(`GET ${url}`, async () => {
         [],
       ),
     );
+    spies.use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute").mockResolvedValue([]));
 
     const response = await server.request(url, { method: "GET" }, mocks.ip);
     const json = await response.json();
@@ -86,6 +91,7 @@ describe(`GET ${url}`, async () => {
         completed: { month: 0, year: 0, total: 0 },
       },
       bodyWeightStats: null,
+      dailyStepsStats: null,
     });
   });
 });

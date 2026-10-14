@@ -33,6 +33,10 @@ export function Shortcuts() {
       header: t("app.measurements"),
       shortcuts: ShortcutDefinitions.MeasurementsGroup,
     },
+    "/measurements/daily-steps": {
+      header: t("app.measurements"),
+      shortcuts: ShortcutDefinitions.DailyStepsGroup,
+    },
   };
 
   const group = groups[pathname];

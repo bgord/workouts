@@ -92,6 +92,15 @@ test.describe("Errors - athlete", () => {
     await expect(page.getByText("No measurements yet")).toBeVisible();
   });
 
+  test("shows the empty state when the daily steps fail to load", async ({ page }) => {
+    await page.goto("/measurements");
+    await page.route("**/api/measurements/daily-steps/**", (route) => route.fulfill({ status: 500 }));
+
+    await page.getByRole("link", { name: "Daily steps" }).click();
+
+    await expect(page.getByText("No steps yet")).toBeVisible();
+  });
+
   test("shows no body parts when the body parts fail to load", async ({ page }) => {
     await page.goto("/measurements");
     await page.route("**/api/measurements/body-part/list", (route) => route.fulfill({ status: 500 }));

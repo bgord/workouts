@@ -6,6 +6,7 @@ type Dependencies = {
   Clock: bg.ClockPort;
   GetWorkoutDashboardQuery: Workouts.Queries.GetWorkoutDashboard;
   ListBodyWeightMeasurementsForStatsQuery: Measurements.Queries.ListBodyWeightMeasurementsForStats;
+  ListDailyStepsQuery: Measurements.Queries.ListDailySteps;
 };
 
 export const DashboardGet =
@@ -13,11 +14,13 @@ export const DashboardGet =
   async (context) => {
     const userId = context.identity.authenticatedUserId();
 
-    const [workouts, measurements] = await Promise.all([
+    const [workouts, measurements, dailySteps] = await Promise.all([
       deps.GetWorkoutDashboardQuery.execute(userId, deps.Clock.now()),
       deps.ListBodyWeightMeasurementsForStatsQuery.execute(userId),
+      deps.ListDailyStepsQuery.execute(userId),
     ]);
     const bodyWeightStats = new Measurements.Services.BodyWeightStatsCalculator(measurements).calculate();
+    const dailyStepsStats = new Measurements.Services.DailyStepsStatsCalculator(dailySteps).calculate();
 
-    return Response.json({ workouts, bodyWeightStats });
+    return Response.json({ workouts, bodyWeightStats, dailyStepsStats });
   };

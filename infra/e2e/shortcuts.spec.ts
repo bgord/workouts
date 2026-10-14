@@ -120,6 +120,14 @@ test.describe("Shortcuts - athlete", () => {
     await expect(page.getByRole("spinbutton", { name: "Weight (kg)" })).toBeFocused();
   });
 
+  test("focuses the daily steps input", async ({ page }) => {
+    await page.goto("/measurements/daily-steps");
+
+    await page.keyboard.press("n");
+
+    await expect(page.getByRole("spinbutton", { name: "Steps" })).toBeFocused();
+  });
+
   test("opens the schedule dialog from the workouts list", async ({ page }) => {
     await page.goto("/workouts");
 

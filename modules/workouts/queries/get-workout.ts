@@ -55,6 +55,7 @@ export type WorkoutGetResponse = {
   actions: {
     start: bg.ActionState;
     complete: bg.ActionState;
+    copy: bg.ActionState;
     discard: bg.ActionState;
     exerciseAdd: bg.ActionState;
     noteSet: bg.ActionState;

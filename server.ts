@@ -467,6 +467,44 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.BodyWeightReferenceSet(deps)),
   );
 
+  measurements.query(
+    "/daily-steps/chart",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsChartGet(Adapters.Measurements)),
+  );
+  measurements.get(
+    "/daily-steps/export",
+    Tools.ShieldRateLimit.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsExport({ ...deps, ...Adapters.Measurements })),
+  );
+  measurements.query(
+    "/daily-steps/list",
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsList(Adapters.Measurements)),
+  );
+  measurements.post(
+    "/daily-steps/import",
+    Tools.ShieldCaptcha.handle(),
+    Tools.ShieldRateLimit.handle(),
+    new bg.FileUploaderHonoMiddleware(
+      {
+        field: "file",
+        maxSize: Measurements.VO.DailyStepsImport.MaxSize,
+        MimeRegistry: Measurements.VO.DailyStepsImport.MimeRegistry,
+      },
+      { FileTypeDetector: new bg.FileTypeDetectorTextStrategy(tools.Mimes.csv.mime) },
+    ).handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsImport(deps)),
+  );
+  measurements.post(
+    "/daily-steps/record",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsRecord(deps)),
+  );
+  measurements.delete(
+    "/daily-steps/:day",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsRemove(deps)),
+  );
+
   server.route("/measurements", measurements);
 
   // Probes =================

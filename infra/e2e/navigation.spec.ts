@@ -130,15 +130,16 @@ test.describe("Navigation - athlete", () => {
     await expect(page).toHaveURL(`/plans/${fixtures.athlete.plan.id}`);
   });
 
-  test("links to body weight and body parts", async ({ page }) => {
+  test("links to body weight, body parts and daily steps", async ({ page }) => {
     await page.goto("/measurements");
 
     await expect(page.getByRole("heading", { level: 1, name: "Measurements" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Body weight" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Body parts" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Daily steps" })).toBeVisible();
   });
 
-  test("goes back from body weight and body parts to the measurements", async ({ page }) => {
+  test("goes back from body weight, body parts and daily steps to the measurements", async ({ page }) => {
     await page.goto("/measurements/body-weight");
 
     await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
@@ -146,6 +147,12 @@ test.describe("Navigation - athlete", () => {
     await expect(page).toHaveURL("/measurements");
 
     await page.goto("/measurements/body-parts");
+
+    await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
+
+    await expect(page).toHaveURL("/measurements");
+
+    await page.goto("/measurements/daily-steps");
 
     await page.getByRole("main").getByRole("link", { name: "Back", exact: true }).click();
 

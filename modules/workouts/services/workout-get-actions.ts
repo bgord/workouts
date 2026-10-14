@@ -1,7 +1,7 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import type * as Queries from "+workouts/queries";
-import type * as VO from "+workouts/value-objects";
+import * as VO from "+workouts/value-objects";
 import { WorkoutExerciseLimit } from "../invariants/workout-exercise-limit";
 import { WorkoutExercisesHaveTargets } from "../invariants/workout-exercises-have-targets";
 import { WorkoutExists } from "../invariants/workout-exists";
@@ -40,6 +40,7 @@ export class WorkoutGetActions {
       complete: bg.ActionState.of(inProgress, [
         bg.ActionBlocker.from(WorkoutHasLoggedSets, { workoutExercises: this.facts.exercises }),
       ]),
+      copy: bg.ActionState.of(this.facts.status === VO.WorkoutStatusEnum.completed),
       discard: bg.ActionState.of(exists),
       exerciseAdd: bg.ActionState.of(WorkoutIsEditable.passes({ status: this.facts.status }), [
         bg.ActionBlocker.from(WorkoutExerciseLimit, { workoutExercises: this.facts.exercises }),
