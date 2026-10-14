@@ -37,6 +37,9 @@ describe(`QUERY ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute"))
+      .mockResolvedValue(mocks.dailyStepsGoal);
     const listForMonth = spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsForMonthQuery, "execute"))
       .mockResolvedValue({ entries: [mocks.dailySteps], previous: mocks.anotherDailySteps });
@@ -48,7 +51,7 @@ describe(`QUERY ${url}`, async () => {
     expect(listForMonth).toHaveBeenCalledWith(mocks.userId, "2025-01");
     expect(json).toEqual({
       month: "2025-01",
-      entries: [mocks.dailySteps],
+      entries: [mocks.dailyStepsEntryBelowGoal],
       previous: mocks.anotherDailySteps,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
@@ -65,6 +68,9 @@ describe(`QUERY ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute"))
+      .mockResolvedValue(mocks.dailyStepsGoal);
     const listForMonth = spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsForMonthQuery, "execute"))
       .mockResolvedValue({ entries: [], previous: null });
@@ -97,6 +103,7 @@ describe(`QUERY ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
+    spies.use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(
       url,
@@ -108,7 +115,7 @@ describe(`QUERY ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       month: "all",
-      entries: [mocks.dailySteps],
+      entries: [mocks.dailyStepsEntry],
       previous: null,
       months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
@@ -121,6 +128,7 @@ describe(`QUERY ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute")).mockResolvedValue([]);
     spies.use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute")).mockResolvedValue([]);
+    spies.use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(url, { method: "QUERY", body: JSON.stringify({}) }, mocks.ip);
     const json = await response.json();

@@ -46,6 +46,10 @@ export const dailySteps: Measurements.VO.DailySteps = {
   source: Measurements.VO.StepsSourceOptions.manual,
 };
 
+export const dailyStepsEntry: Measurements.VO.DailyStepsEntry = { ...dailySteps, belowGoal: false };
+
+export const dailyStepsEntryBelowGoal: Measurements.VO.DailyStepsEntry = { ...dailySteps, belowGoal: true };
+
 export const anotherDailySteps: Measurements.VO.DailySteps = {
   ...dailySteps,
   day: anotherDailyStepsDay,
