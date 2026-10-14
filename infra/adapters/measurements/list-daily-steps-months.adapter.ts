@@ -6,7 +6,7 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 class ListDailyStepsMonthsQueryDrizzle implements Measurements.Queries.ListDailyStepsMonths {
-  async execute(userId: Auth.VO.UserIdType): Promise<ReadonlyArray<Measurements.VO.StepsMonthSummary>> {
+  async execute(userId: Auth.VO.UserIdType): Promise<ReadonlyArray<Measurements.VO.DailyStepsMonthSummary>> {
     const month = sql<tools.MonthIsoIdType>`substr(${Schema.dailySteps.day}, 1, 7)`;
 
     return db

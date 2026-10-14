@@ -29,8 +29,8 @@ import type { BodyWeightGoalType } from "../modules/measurements/value-objects/b
 import { BodyWeightGoalOptions } from "../modules/measurements/value-objects/body-weight-goal-options";
 import type { BodyWeightMeasuredOnType } from "../modules/measurements/value-objects/body-weight-measured-on";
 import type { BodyWeightMeasurementIdType } from "../modules/measurements/value-objects/body-weight-measurement-id";
+import type { DailyStepsDayType } from "../modules/measurements/value-objects/daily-steps-day";
 import type { StepsCountType } from "../modules/measurements/value-objects/steps-count";
-import type { StepsDayType } from "../modules/measurements/value-objects/steps-day";
 import type { StepsSourceType } from "../modules/measurements/value-objects/steps-source";
 import { StepsSourceOptions } from "../modules/measurements/value-objects/steps-source-options";
 import { WeeklySummaryStatusEnum } from "../modules/notifications/value-objects/weekly-summary-status";
@@ -474,7 +474,7 @@ export const dailySteps = sqliteTable(
   {
     id,
     userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
-    day: text("day").notNull().$type<StepsDayType>(),
+    day: text("day").notNull().$type<DailyStepsDayType>(),
     count: integer("count", { mode: "number" }).notNull().$type<StepsCountType>(),
     source: text("source", toEnumList(StepsSourceOptions)).notNull().$type<StepsSourceType>(),
     createdAt: timestamp("createdAt").notNull(),

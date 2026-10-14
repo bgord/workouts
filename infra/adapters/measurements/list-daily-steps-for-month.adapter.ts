@@ -33,7 +33,7 @@ class ListDailyStepsForMonthQueryDrizzle implements Measurements.Queries.ListDai
         .where(
           and(
             eq(Schema.dailySteps.userId, userId),
-            lt(Schema.dailySteps.day, v.parse(Measurements.VO.StepsDay, `${month}-01`)),
+            lt(Schema.dailySteps.day, v.parse(Measurements.VO.DailyStepsDay, `${month}-01`)),
           ),
         )
         .orderBy(desc(Schema.dailySteps.day))

@@ -71,7 +71,7 @@ describe(`POST ${url}`, async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
     const form = new FormData();
-    form.append("file", mocks.dailyStepsCsvFile(`day,count\n${mocks.stepsDay},`));
+    form.append("file", mocks.dailyStepsCsvFile(`day,count\n${mocks.dailyStepsDay},`));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
@@ -84,7 +84,7 @@ describe(`POST ${url}`, async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
     const form = new FormData();
-    form.append("file", mocks.dailyStepsCsvFile(`day,count\n${mocks.stepsDay},-1`));
+    form.append("file", mocks.dailyStepsCsvFile(`day,count\n${mocks.dailyStepsDay},-1`));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
@@ -97,7 +97,7 @@ describe(`POST ${url}`, async () => {
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
     const form = new FormData();
-    form.append("file", mocks.dailyStepsCsvFile(`day,count\n${mocks.stepsDay},100001`));
+    form.append("file", mocks.dailyStepsCsvFile(`day,count\n${mocks.dailyStepsDay},100001`));
 
     const response = await server.request(url, { method: "POST", body: form }, mocks.ip);
 
@@ -111,8 +111,8 @@ describe(`POST ${url}`, async () => {
 
     const content = [
       ["day", "count"],
-      [mocks.stepsDay, mocks.stepsCount],
-      [mocks.futureStepsDay, mocks.stepsCount],
+      [mocks.dailyStepsDay, mocks.stepsCount],
+      [mocks.futureDailyStepsDay, mocks.stepsCount],
     ]
       .map((row) => row.join(","))
       .join("\n");
@@ -131,8 +131,8 @@ describe(`POST ${url}`, async () => {
 
     const content = [
       ["day", "count"],
-      [mocks.stepsDay, mocks.stepsCount],
-      [mocks.anotherStepsDay, mocks.anotherStepsCount],
+      [mocks.dailyStepsDay, mocks.stepsCount],
+      [mocks.anotherDailyStepsDay, mocks.anotherStepsCount],
     ]
       .map((row) => row.join(","))
       .join("\n");

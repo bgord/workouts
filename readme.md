@@ -294,18 +294,18 @@ modules/
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
+│       ├── daily-steps-chart-granularity-options.ts
+│       ├── daily-steps-chart-granularity.ts
+│       ├── daily-steps-chart-point.ts
+│       ├── daily-steps-day.ts
+│       ├── daily-steps-history-month.ts
+│       ├── daily-steps-history-month.validation.ts
 │       ├── daily-steps-import.ts
+│       ├── daily-steps-month-summary.ts
 │       ├── daily-steps-stats.ts
 │       ├── daily-steps.ts
-│       ├── steps-chart-granularity-options.ts
-│       ├── steps-chart-granularity.ts
-│       ├── steps-chart-point.ts
 │       ├── steps-count.ts
 │       ├── steps-count.validation.ts
-│       ├── steps-day.ts
-│       ├── steps-history-month.ts
-│       ├── steps-history-month.validation.ts
-│       ├── steps-month-summary.ts
 │       ├── steps-source-options.ts
 │       └── steps-source.ts
 ├── notifications

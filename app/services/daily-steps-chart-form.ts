@@ -1,15 +1,15 @@
-import { StepsChartGranularityOptions } from "../../modules/measurements/value-objects/steps-chart-granularity-options";
+import { DailyStepsChartGranularityOptions } from "../../modules/measurements/value-objects/daily-steps-chart-granularity-options";
 
 export const Form = {
   chart: { field: { name: "chart" } },
   default: { chart: undefined },
-  isDefault: (search: { chart?: StepsChartGranularityOptions }): boolean =>
+  isDefault: (search: { chart?: DailyStepsChartGranularityOptions }): boolean =>
     search.chart === Form.default.chart,
-  validate: (value: Record<string, unknown>): { chart?: StepsChartGranularityOptions } => ({
-    chart: Object.values(StepsChartGranularityOptions).includes(
-      value["chart"] as StepsChartGranularityOptions,
+  validate: (value: Record<string, unknown>): { chart?: DailyStepsChartGranularityOptions } => ({
+    chart: Object.values(DailyStepsChartGranularityOptions).includes(
+      value["chart"] as DailyStepsChartGranularityOptions,
     )
-      ? (value["chart"] as StepsChartGranularityOptions)
+      ? (value["chart"] as DailyStepsChartGranularityOptions)
       : Form.default.chart,
   }),
 };

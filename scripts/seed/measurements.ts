@@ -62,7 +62,7 @@ export async function recordDailySteps(
     {
       payload: {
         userId,
-        day: v.parse(Measurements.VO.StepsDay, dailySteps.day),
+        day: v.parse(Measurements.VO.DailyStepsDay, dailySteps.day),
         count: v.parse(Measurements.VO.StepsCount, dailySteps.count),
         source: Measurements.VO.StepsSourceOptions.manual,
       },

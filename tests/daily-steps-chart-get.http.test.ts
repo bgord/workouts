@@ -26,7 +26,7 @@ describe(`QUERY ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "steps.chart.granularity.invalid");
+    await testcases.assertErrorResponse(response, 400, "daily.steps.chart.granularity.invalid");
   });
 
   test("happy path", async () => {
@@ -40,7 +40,7 @@ describe(`QUERY ${url}`, async () => {
       url,
       {
         method: "QUERY",
-        body: JSON.stringify({ granularity: Measurements.VO.StepsChartGranularityOptions.weekly }),
+        body: JSON.stringify({ granularity: Measurements.VO.DailyStepsChartGranularityOptions.weekly }),
       },
       mocks.ip,
     );
@@ -48,7 +48,7 @@ describe(`QUERY ${url}`, async () => {
 
     expect(response.status).toEqual(200);
     expect(json).toEqual({
-      points: [{ from: mocks.anotherStepsDay, to: mocks.stepsDay, steps: 7_000, count: 2 }],
+      points: [{ from: mocks.anotherDailyStepsDay, to: mocks.dailyStepsDay, steps: 7_000, count: 2 }],
     });
   });
 
@@ -63,14 +63,16 @@ describe(`QUERY ${url}`, async () => {
       url,
       {
         method: "QUERY",
-        body: JSON.stringify({ granularity: Measurements.VO.StepsChartGranularityOptions.daily }),
+        body: JSON.stringify({ granularity: Measurements.VO.DailyStepsChartGranularityOptions.daily }),
       },
       mocks.ip,
     );
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ points: [{ from: mocks.stepsDay, to: mocks.stepsDay, steps: 8_000, count: 1 }] });
+    expect(json).toEqual({
+      points: [{ from: mocks.dailyStepsDay, to: mocks.dailyStepsDay, steps: 8_000, count: 1 }],
+    });
   });
 
   test("happy path - empty", async () => {
@@ -82,7 +84,7 @@ describe(`QUERY ${url}`, async () => {
       url,
       {
         method: "QUERY",
-        body: JSON.stringify({ granularity: Measurements.VO.StepsChartGranularityOptions.weekly }),
+        body: JSON.stringify({ granularity: Measurements.VO.DailyStepsChartGranularityOptions.weekly }),
       },
       mocks.ip,
     );

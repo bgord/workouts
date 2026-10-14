@@ -5,7 +5,7 @@ import type * as VO from "+measurements/value-objects";
 class DailyStepsDayIsNotInFutureError extends Error {}
 
 type DailyStepsDayIsNotInFutureConfigType = {
-  day: VO.StepsDayType;
+  day: VO.DailyStepsDayType;
   today: tools.DayIsoIdType;
 };
 

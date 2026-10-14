@@ -1,8 +1,8 @@
 import * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Auth from "+auth";
+import { DailyStepsDay } from "../value-objects/daily-steps-day";
 import { StepsCount } from "../value-objects/steps-count";
-import { StepsDay } from "../value-objects/steps-day";
 import { StepsSource } from "../value-objects/steps-source";
 
 // Stryker disable next-line StringLiteral
@@ -13,7 +13,7 @@ export const DailyStepsRecordCommand = v.object({
   name: v.literal(DAILY_STEPS_RECORD_COMMAND),
   payload: v.object({
     userId: Auth.VO.UserId,
-    day: StepsDay,
+    day: DailyStepsDay,
     count: StepsCount,
     source: StepsSource,
   }),

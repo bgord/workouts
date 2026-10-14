@@ -10,7 +10,7 @@ export const DailyStepsRecordedEvent = v.object({
   name: v.literal(DAILY_STEPS_RECORDED_EVENT),
   payload: v.object({
     userId: Auth.VO.UserId,
-    day: VO.StepsDay,
+    day: VO.DailyStepsDay,
     count: VO.StepsCount,
     source: VO.StepsSource,
   }),

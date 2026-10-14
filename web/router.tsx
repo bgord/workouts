@@ -8,7 +8,7 @@ import * as DailyStepsFiltersForm from "../app/services/daily-steps-filters-form
 import * as ExerciseCatalogFiltersForm from "../app/services/exercise-catalog-filters-form";
 import * as WorkoutHistoryFiltersForm from "../app/services/workout-history-filters-form";
 import { BodyWeightChartGranularityOptions } from "../modules/measurements/value-objects/body-weight-chart-granularity-options";
-import { StepsChartGranularityOptions } from "../modules/measurements/value-objects/steps-chart-granularity-options";
+import { DailyStepsChartGranularityOptions } from "../modules/measurements/value-objects/daily-steps-chart-granularity-options";
 import {
   Avatar,
   Dashboard,
@@ -218,7 +218,7 @@ export const dailyStepsRoute = createRoute({
     const [{ month, entries, previous, months, stats }, { points }] = await Promise.all([
       Measurements.listDailySteps(context.request, { month: deps.month }),
       Measurements.dailyStepsChart(context.request, {
-        granularity: deps.chart ?? StepsChartGranularityOptions.weekly,
+        granularity: deps.chart ?? DailyStepsChartGranularityOptions.weekly,
       }),
     ]);
 

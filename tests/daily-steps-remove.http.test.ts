@@ -6,7 +6,7 @@ import { createServer } from "../server";
 import * as mocks from "./mocks";
 import * as testcases from "./testcases";
 
-const url = `/api/measurements/daily-steps/${mocks.stepsDay}`;
+const url = `/api/measurements/daily-steps/${mocks.dailyStepsDay}`;
 
 describe("DELETE /api/measurements/daily-steps/:day", async () => {
   const di = await bootstrap();

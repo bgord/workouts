@@ -4,7 +4,7 @@ import * as VO from "+measurements/value-objects";
 
 type Dependencies = { CsvParser: bg.CsvParserPort };
 
-const Row = v.object({ day: VO.StepsDay, count: VO.StepsCount });
+const Row = v.object({ day: VO.DailyStepsDay, count: VO.StepsCount });
 
 export type DailyStepsImportRow = v.InferOutput<typeof Row>;
 

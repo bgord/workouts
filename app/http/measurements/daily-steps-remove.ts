@@ -14,7 +14,7 @@ export const DailyStepsRemove =
     const params = context.request.params();
 
     const userId = context.identity.authenticatedUserId();
-    const day = v.parse(Measurements.VO.StepsDay, params["day"]);
+    const day = v.parse(Measurements.VO.DailyStepsDay, params["day"]);
 
     const command = bg.command(
       Measurements.Commands.DailyStepsRemoveCommand,

@@ -14,27 +14,27 @@ describe("DailyStepsStatsCalculator", () => {
   test("happy path - rolling windows", () => {
     const latest: Measurements.VO.DailySteps = {
       ...mocks.dailySteps,
-      day: v.parse(Measurements.VO.StepsDay, "2025-01-31"),
+      day: v.parse(Measurements.VO.DailyStepsDay, "2025-01-31"),
       count: v.parse(Measurements.VO.StepsCount, 10_000),
     };
     const weekEdge: Measurements.VO.DailySteps = {
       ...mocks.dailySteps,
-      day: v.parse(Measurements.VO.StepsDay, "2025-01-25"),
+      day: v.parse(Measurements.VO.DailyStepsDay, "2025-01-25"),
       count: v.parse(Measurements.VO.StepsCount, 6_000),
     };
     const outsideWeek: Measurements.VO.DailySteps = {
       ...mocks.dailySteps,
-      day: v.parse(Measurements.VO.StepsDay, "2025-01-24"),
+      day: v.parse(Measurements.VO.DailyStepsDay, "2025-01-24"),
       count: v.parse(Measurements.VO.StepsCount, 4_000),
     };
     const monthEdge: Measurements.VO.DailySteps = {
       ...mocks.dailySteps,
-      day: v.parse(Measurements.VO.StepsDay, "2025-01-02"),
+      day: v.parse(Measurements.VO.DailyStepsDay, "2025-01-02"),
       count: v.parse(Measurements.VO.StepsCount, 2_003),
     };
     const outsideMonth: Measurements.VO.DailySteps = {
       ...mocks.dailySteps,
-      day: v.parse(Measurements.VO.StepsDay, "2025-01-01"),
+      day: v.parse(Measurements.VO.DailyStepsDay, "2025-01-01"),
       count: v.parse(Measurements.VO.StepsCount, 1_000),
     };
 

@@ -45,7 +45,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ day: mocks.stepsDay }) },
+      { method: "POST", body: JSON.stringify({ day: mocks.dailyStepsDay }) },
       mocks.ip,
     );
 
@@ -57,7 +57,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ day: mocks.stepsDay, count: -1 }) },
+      { method: "POST", body: JSON.stringify({ day: mocks.dailyStepsDay, count: -1 }) },
       mocks.ip,
     );
 
@@ -69,7 +69,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ day: mocks.stepsDay, count: 100_001 }) },
+      { method: "POST", body: JSON.stringify({ day: mocks.dailyStepsDay, count: 100_001 }) },
       mocks.ip,
     );
 
@@ -82,7 +82,7 @@ describe(`POST ${url}`, async () => {
 
     const response = await server.request(
       url,
-      { method: "POST", body: JSON.stringify({ day: mocks.futureStepsDay, count: mocks.stepsCount }) },
+      { method: "POST", body: JSON.stringify({ day: mocks.futureDailyStepsDay, count: mocks.stepsCount }) },
       mocks.ip,
     );
 
@@ -99,7 +99,7 @@ describe(`POST ${url}`, async () => {
       {
         method: "POST",
         headers: mocks.correlationIdHeaders,
-        body: JSON.stringify({ day: mocks.stepsDay, count: mocks.stepsCount }),
+        body: JSON.stringify({ day: mocks.dailyStepsDay, count: mocks.stepsCount }),
       },
       mocks.ip,
     );

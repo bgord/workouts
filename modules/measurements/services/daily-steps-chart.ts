@@ -5,10 +5,10 @@ import { DailyStepsAverage } from "./daily-steps-average";
 export class DailyStepsChart {
   constructor(private readonly entries: ReadonlyArray<VO.DailySteps>) {}
 
-  points(granularity: VO.StepsChartGranularityType): ReadonlyArray<VO.StepsChartPoint> {
+  points(granularity: VO.DailyStepsChartGranularityType): ReadonlyArray<VO.DailyStepsChartPoint> {
     const chronological = this.entries.toReversed();
 
-    if (granularity === VO.StepsChartGranularityOptions.daily) {
+    if (granularity === VO.DailyStepsChartGranularityOptions.daily) {
       return chronological.map((entry) => ({
         from: entry.day,
         to: entry.day,

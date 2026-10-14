@@ -14,7 +14,7 @@ export const DailyStepsList =
     const body = await context.request.json();
 
     const userId = context.identity.authenticatedUserId();
-    const requested = v.parse(v.optional(Measurements.VO.StepsHistoryMonth), body["month"]);
+    const requested = v.parse(v.optional(Measurements.VO.DailyStepsHistoryMonth), body["month"]);
 
     const [months, all] = await Promise.all([
       deps.ListDailyStepsMonthsQuery.execute(userId),
@@ -26,7 +26,7 @@ export const DailyStepsList =
 
     if (!month) return Response.json({ month: null, entries: [], previous: null, months, stats });
 
-    if (month === Measurements.VO.StepsHistoryMonthAll) {
+    if (month === Measurements.VO.DailyStepsHistoryMonthAll) {
       return Response.json({ month, entries: all, previous: null, months, stats });
     }
 

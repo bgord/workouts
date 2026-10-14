@@ -29,7 +29,7 @@ export class DailyStepsStatsCalculator {
     };
   }
 
-  private average(anchor: VO.StepsDayType, offset: number, days: number): VO.DailyStepsAverage | null {
+  private average(anchor: VO.DailyStepsDayType, offset: number, days: number) {
     const date = Temporal.PlainDate.from(anchor);
     const from = v.parse(tools.DayIsoId, date.subtract({ days: offset + days - 1 }).toString());
     const to = v.parse(tools.DayIsoId, date.subtract({ days: offset }).toString());

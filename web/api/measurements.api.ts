@@ -7,11 +7,11 @@ import type { BodyWeightMeasurement } from "../../modules/measurements/value-obj
 import type { BodyWeightMonthSummary } from "../../modules/measurements/value-objects/body-weight-month-summary";
 import type { BodyWeightStats } from "../../modules/measurements/value-objects/body-weight-stats";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
+import type { DailyStepsChartGranularityOptions } from "../../modules/measurements/value-objects/daily-steps-chart-granularity-options";
+import type { DailyStepsChartPoint } from "../../modules/measurements/value-objects/daily-steps-chart-point";
+import type { DailyStepsHistoryMonthType } from "../../modules/measurements/value-objects/daily-steps-history-month";
+import type { DailyStepsMonthSummary } from "../../modules/measurements/value-objects/daily-steps-month-summary";
 import type { DailyStepsStats } from "../../modules/measurements/value-objects/daily-steps-stats";
-import type { StepsChartGranularityOptions } from "../../modules/measurements/value-objects/steps-chart-granularity-options";
-import type { StepsChartPoint } from "../../modules/measurements/value-objects/steps-chart-point";
-import type { StepsHistoryMonthType } from "../../modules/measurements/value-objects/steps-history-month";
-import type { StepsMonthSummary } from "../../modules/measurements/value-objects/steps-month-summary";
 
 type BodyWeightListResponse = {
   month: BodyWeightHistoryMonthType | null;
@@ -22,16 +22,16 @@ type BodyWeightListResponse = {
 };
 
 type DailyStepsListResponse = {
-  month: StepsHistoryMonthType | null;
+  month: DailyStepsHistoryMonthType | null;
   entries: ReadonlyArray<DailySteps>;
   previous: DailySteps | null;
-  months: ReadonlyArray<StepsMonthSummary>;
+  months: ReadonlyArray<DailyStepsMonthSummary>;
   stats: DailyStepsStats | null;
 };
 
 type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
 
-type DailyStepsChartResponse = { points: ReadonlyArray<StepsChartPoint> };
+type DailyStepsChartResponse = { points: ReadonlyArray<DailyStepsChartPoint> };
 
 const unavailable = { available: false, enabled: false, hints: [] };
 
@@ -71,7 +71,7 @@ export class Measurements {
 
   static async listDailySteps(
     request: Request | null,
-    params: { month?: StepsHistoryMonthType },
+    params: { month?: DailyStepsHistoryMonthType },
   ): Promise<DailyStepsListResponse> {
     return bg.ApiClient.json<DailyStepsListResponse>(
       "/api/measurements/daily-steps/list",
@@ -83,7 +83,7 @@ export class Measurements {
 
   static async dailyStepsChart(
     request: Request | null,
-    params: { granularity: StepsChartGranularityOptions },
+    params: { granularity: DailyStepsChartGranularityOptions },
   ): Promise<DailyStepsChartResponse> {
     return bg.ApiClient.json<DailyStepsChartResponse>(
       "/api/measurements/daily-steps/chart",

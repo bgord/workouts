@@ -7,12 +7,12 @@ describe("DailyStepsImportFileCsv", async () => {
   const di = await bootstrap();
 
   test("parses a CSV", async () => {
-    const content = ["day,count", `${mocks.stepsDay},${mocks.stepsCount}`].join("\n");
+    const content = ["day,count", `${mocks.dailyStepsDay},${mocks.stepsCount}`].join("\n");
     const file = new Measurements.Services.DailyStepsImportFileCsv(content, di.Adapters.System);
 
     const result = await file.rows();
 
-    expect(result).toEqual([{ day: mocks.stepsDay, count: mocks.stepsCount }]);
+    expect(result).toEqual([{ day: mocks.dailyStepsDay, count: mocks.stepsCount }]);
   });
 
   test("parses an empty CSV", async () => {

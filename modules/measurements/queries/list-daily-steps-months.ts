@@ -2,5 +2,5 @@ import type * as Auth from "+auth";
 import type * as VO from "+measurements/value-objects";
 
 export interface ListDailyStepsMonths {
-  execute(userId: Auth.VO.UserIdType): Promise<ReadonlyArray<VO.StepsMonthSummary>>;
+  execute(userId: Auth.VO.UserIdType): Promise<ReadonlyArray<VO.DailyStepsMonthSummary>>;
 }

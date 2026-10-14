@@ -25,7 +25,7 @@ describe(`QUERY ${url}`, async () => {
       mocks.ip,
     );
 
-    await testcases.assertErrorResponse(response, 400, "steps.history.month.invalid");
+    await testcases.assertErrorResponse(response, 400, "daily.steps.history.month.invalid");
   });
 
   test("happy path", async () => {
@@ -33,7 +33,7 @@ describe(`QUERY ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute"))
-      .mockResolvedValue([mocks.stepsMonthSummary]);
+      .mockResolvedValue([mocks.dailyStepsMonthSummary]);
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
@@ -50,7 +50,7 @@ describe(`QUERY ${url}`, async () => {
       month: "2025-01",
       entries: [mocks.dailySteps],
       previous: mocks.anotherDailySteps,
-      months: [mocks.stepsMonthSummary],
+      months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
     });
   });
@@ -60,7 +60,7 @@ describe(`QUERY ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute"))
-      .mockResolvedValue([mocks.stepsMonthSummary]);
+      .mockResolvedValue([mocks.dailyStepsMonthSummary]);
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
@@ -81,7 +81,7 @@ describe(`QUERY ${url}`, async () => {
       month: "2024-12",
       entries: [],
       previous: null,
-      months: [mocks.stepsMonthSummary],
+      months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
     });
   });
@@ -91,7 +91,7 @@ describe(`QUERY ${url}`, async () => {
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsMonthsQuery, "execute"))
-      .mockResolvedValue([mocks.stepsMonthSummary]);
+      .mockResolvedValue([mocks.dailyStepsMonthSummary]);
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
@@ -108,7 +108,7 @@ describe(`QUERY ${url}`, async () => {
       month: "all",
       entries: [mocks.dailySteps],
       previous: null,
-      months: [mocks.stepsMonthSummary],
+      months: [mocks.dailyStepsMonthSummary],
       stats: mocks.dailyStepsStats,
     });
   });

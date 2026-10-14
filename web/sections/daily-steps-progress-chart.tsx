@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { X } from "lucide-react";
 import * as DailyStepsChartForm from "../../app/services/daily-steps-chart-form";
-import { StepsChartGranularityOptions } from "../../modules/measurements/value-objects/steps-chart-granularity-options";
+import { DailyStepsChartGranularityOptions } from "../../modules/measurements/value-objects/daily-steps-chart-granularity-options";
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
@@ -37,25 +37,25 @@ export function DailyStepsProgressChart() {
           id={DailyStepsChartForm.Form.chart.field.name}
           name={DailyStepsChartForm.Form.chart.field.name}
           onChange={(event) => {
-            const granularity = event.currentTarget.value as StepsChartGranularityOptions;
+            const granularity = event.currentTarget.value as DailyStepsChartGranularityOptions;
 
             navigate({
               resetScroll: false,
               search: {
                 month: search.month,
-                chart: granularity === StepsChartGranularityOptions.weekly ? undefined : granularity,
+                chart: granularity === DailyStepsChartGranularityOptions.weekly ? undefined : granularity,
               },
               to: "/measurements/daily-steps",
             });
           }}
-          value={search.chart ?? StepsChartGranularityOptions.weekly}
+          value={search.chart ?? DailyStepsChartGranularityOptions.weekly}
           {...bg.Autocomplete.off}
         >
-          <option value={StepsChartGranularityOptions.weekly}>
+          <option value={DailyStepsChartGranularityOptions.weekly}>
             {t("measurements.daily_steps.progress.granularity.weekly")}
           </option>
 
-          <option value={StepsChartGranularityOptions.daily}>
+          <option value={DailyStepsChartGranularityOptions.daily}>
             {t("measurements.daily_steps.progress.granularity.daily")}
           </option>
         </ui.Select>

@@ -11,7 +11,7 @@ export class DailyStepsAverage {
     private readonly to: tools.DayIsoIdType,
   ) {}
 
-  calculate(): VO.DailyStepsAverage | null {
+  calculate(): { average: VO.StepsCountType; count: tools.IntegerPositiveType } | null {
     const within = this.entries.filter((entry) => entry.day >= this.from && entry.day <= this.to);
 
     if (within.length === 0) return null;

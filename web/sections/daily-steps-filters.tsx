@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { X } from "lucide-react";
 import * as DailyStepsFiltersForm from "../../app/services/daily-steps-filters-form";
-import type { StepsHistoryMonthType } from "../../modules/measurements/value-objects/steps-history-month";
-import { StepsHistoryMonthAll } from "../../modules/measurements/value-objects/steps-history-month.validation";
+import type { DailyStepsHistoryMonthType } from "../../modules/measurements/value-objects/daily-steps-history-month";
+import { DailyStepsHistoryMonthAll } from "../../modules/measurements/value-objects/daily-steps-history-month.validation";
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 
@@ -24,14 +24,14 @@ export function DailyStepsFilters() {
         onChange={(event) =>
           navigate({
             resetScroll: false,
-            search: { month: event.currentTarget.value as StepsHistoryMonthType, chart: search.chart },
+            search: { month: event.currentTarget.value as DailyStepsHistoryMonthType, chart: search.chart },
             to: "/measurements/daily-steps",
           })
         }
         value={month ?? ""}
         {...bg.Autocomplete.off}
       >
-        <option value={StepsHistoryMonthAll}>{t("measurements.daily_steps.history.month.all")}</option>
+        <option value={DailyStepsHistoryMonthAll}>{t("measurements.daily_steps.history.month.all")}</option>
         {months.map((summary) => (
           <option key={summary.month} value={summary.month}>
             {format.month(`${summary.month}-01`)} ({summary.count})

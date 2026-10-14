@@ -7,7 +7,7 @@ import * as Schema from "+infra/schema";
 class GetDailyStepsQueryDrizzle implements Measurements.Queries.GetDailySteps {
   async execute(
     userId: Auth.VO.UserIdType,
-    day: Measurements.VO.StepsDayType,
+    day: Measurements.VO.DailyStepsDayType,
   ): Promise<Measurements.VO.DailySteps | null> {
     const dailySteps = await db
       .select()

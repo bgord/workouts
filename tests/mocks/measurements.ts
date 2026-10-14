@@ -33,21 +33,21 @@ export const anotherBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMea
 export const futureBodyWeightMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2025-01-02");
 
 export const stepsCount = v.parse(Measurements.VO.StepsCount, 8_000);
-export const stepsDay = v.parse(Measurements.VO.StepsDay, "2025-01-01");
+export const dailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2025-01-01");
 export const anotherStepsCount = v.parse(Measurements.VO.StepsCount, 6_000);
-export const anotherStepsDay = v.parse(Measurements.VO.StepsDay, "2024-12-31");
-export const futureStepsDay = v.parse(Measurements.VO.StepsDay, "2025-01-02");
+export const anotherDailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2024-12-31");
+export const futureDailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2025-01-02");
 
 export const dailySteps: Measurements.VO.DailySteps = {
   userId,
-  day: stepsDay,
+  day: dailyStepsDay,
   count: stepsCount,
   source: Measurements.VO.StepsSourceOptions.manual,
 };
 
 export const anotherDailySteps: Measurements.VO.DailySteps = {
   ...dailySteps,
-  day: anotherStepsDay,
+  day: anotherDailyStepsDay,
   count: anotherStepsCount,
 };
 
@@ -57,7 +57,7 @@ export const dailyStepsStats: Measurements.VO.DailyStepsStats = {
   month: { average: stepsCount, count: tools.Int.positive(1) },
 };
 
-export const stepsMonthSummary: Measurements.VO.StepsMonthSummary = {
+export const dailyStepsMonthSummary: Measurements.VO.DailyStepsMonthSummary = {
   month: v.parse(tools.MonthIsoId, "2025-01"),
   count: tools.Int.nonNegative(1),
 };
@@ -98,7 +98,7 @@ export const bodyWeightMonthSummary: Measurements.VO.BodyWeightMonthSummary = {
 
 const bodyWeightReferenceStream = v.parse(bg.EventStream, `body_weight_reference_${userId}`);
 
-export const dailyStepsCsv = ["day,count", `${stepsDay},${stepsCount}`].join("");
+export const dailyStepsCsv = ["day,count", `${dailyStepsDay},${stepsCount}`].join("");
 
 export const dailyStepsCsvFile = (content: string) =>
   new File([content], "daily-steps.csv", { type: tools.Mimes.csv.mime.toString() });
@@ -428,7 +428,7 @@ export const bodyPartListResponseEmpty: Measurements.Queries.BodyPartListRespons
   actions: { import: { available: true, enabled: false, hints: ["body.part.is.defined"] } },
 };
 
-const dailyStepsStream = v.parse(bg.EventStream, `daily_steps_${userId}_${stepsDay}`);
+const dailyStepsStream = v.parse(bg.EventStream, `daily_steps_${userId}_${dailyStepsDay}`);
 
 export const GenericDailyStepsRecordedEvent = {
   id: expectAnyId,
@@ -438,15 +438,20 @@ export const GenericDailyStepsRecordedEvent = {
   version: 1,
   commit,
   name: "DAILY_STEPS_RECORDED_EVENT",
-  payload: { userId, day: stepsDay, count: stepsCount, source: Measurements.VO.StepsSourceOptions.manual },
+  payload: {
+    userId,
+    day: dailyStepsDay,
+    count: stepsCount,
+    source: Measurements.VO.StepsSourceOptions.manual,
+  },
 } satisfies Measurements.Events.DailyStepsRecordedEventType;
 
 export const GenericDailyStepsRecordedEventAnother = {
   ...GenericDailyStepsRecordedEvent,
-  stream: v.parse(bg.EventStream, `daily_steps_${userId}_${anotherStepsDay}`),
+  stream: v.parse(bg.EventStream, `daily_steps_${userId}_${anotherDailyStepsDay}`),
   payload: {
     userId,
-    day: anotherStepsDay,
+    day: anotherDailyStepsDay,
     count: anotherStepsCount,
     source: Measurements.VO.StepsSourceOptions.manual,
   },
@@ -460,5 +465,5 @@ export const GenericDailyStepsRemovedEvent = {
   version: 1,
   commit,
   name: "DAILY_STEPS_REMOVED_EVENT",
-  payload: { userId, day: stepsDay },
+  payload: { userId, day: dailyStepsDay },
 } satisfies Measurements.Events.DailyStepsRemovedEventType;

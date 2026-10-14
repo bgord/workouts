@@ -1,10 +1,10 @@
 import type * as tools from "@bgord/tools";
+import type { DailyStepsDayType } from "./daily-steps-day";
 import type { StepsCountType } from "./steps-count";
-import type { StepsDayType } from "./steps-day";
 
-export type StepsChartPoint = {
-  from: StepsDayType;
-  to: StepsDayType;
+export type DailyStepsChartPoint = {
+  from: DailyStepsDayType;
+  to: DailyStepsDayType;
   steps: StepsCountType;
   count: tools.IntegerPositiveType;
 };
