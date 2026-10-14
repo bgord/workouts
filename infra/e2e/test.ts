@@ -23,15 +23,15 @@ export const test = base.extend<{ pageErrors: void; coverage: void }>({
   },
   pageErrors: [
     async ({ page }, use) => {
-      const errors: Array<string> = [];
-      page.on("pageerror", (error) => {
-        if (error.message.startsWith("Transition was skipped")) return;
-        errors.push(error.message);
-      });
-
       await use();
 
-      expect(errors).toEqual([]);
+      const errors = await page.pageErrors({ filter: "all" });
+
+      expect(
+        errors
+          .map((error) => error.message)
+          .filter((message) => !message.startsWith("Transition was skipped")),
+      ).toEqual([]);
     },
     { auto: true },
   ],
