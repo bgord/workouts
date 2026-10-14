@@ -483,6 +483,18 @@ export const dailySteps = sqliteTable(
   (table) => [uniqueIndex("dailySteps_userId_day_uidx").on(table.userId, table.day)],
 );
 
+export const dailyStepsGoals = sqliteTable(
+  "dailyStepsGoals",
+  {
+    id,
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    goal: integer("goal", { mode: "number" }).notNull().$type<StepsCountType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [uniqueIndex("dailyStepsGoals_userId_uidx").on(table.userId)],
+);
+
 export const bodyParts = sqliteTable(
   "bodyParts",
   {
