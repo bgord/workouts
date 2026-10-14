@@ -9,6 +9,7 @@ export * from "./body-weight-measurement-export-file-csv";
 export * from "./body-weight-measurement-import-file-csv";
 export * from "./body-weight-stats-calculator";
 export * from "./daily-steps-average";
+export * from "./daily-steps-below-goal";
 export * from "./daily-steps-chart";
 export * from "./daily-steps-export-file-csv";
 export * from "./daily-steps-import-file-csv";
