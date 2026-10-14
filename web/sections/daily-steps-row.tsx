@@ -1,15 +1,24 @@
 import * as bg from "@bgord/ui";
+import { ArrowDown } from "lucide-react";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
+import type { DailyStepsEntry } from "../../modules/measurements/value-objects/daily-steps-entry";
+import type { StepsCountType } from "../../modules/measurements/value-objects/steps-count";
 import * as ui from "../components";
 import { DailyStepsCorrect } from "./daily-steps-correct";
 import { DailyStepsRemove } from "./daily-steps-remove";
 
 export function DailyStepsRow(props: {
-  entry: DailySteps;
+  entry: DailyStepsEntry;
   previous: DailySteps | undefined;
   first: boolean;
+  goal: StepsCountType | null;
 }) {
   const t = bg.useTranslations();
+  const language = bg.useLanguage();
+
+  const belowGoal = t("measurements.daily_steps.below_goal", {
+    goal: props.goal?.toLocaleString(language) ?? "",
+  });
 
   const dailyStepsCorrect = bg.useToggle({ name: `correct-${props.entry.day}` });
 
@@ -34,6 +43,18 @@ export function DailyStepsRow(props: {
           >
             <bg.DateTime format="list" value={props.entry.day} />
           </button>
+
+          {props.entry.belowGoal && (
+            <span
+              aria-label={belowGoal}
+              data-color="danger-400"
+              data-self="center"
+              role="img"
+              title={belowGoal}
+            >
+              <ArrowDown data-size="xs" />
+            </span>
+          )}
 
           <button
             data-color="neutral-100"

@@ -271,6 +271,7 @@
   "measurements.daily_steps.goal.edit": "Edytuj cel",
   "measurements.daily_steps.goal.set": "Ustaw cel",
   "measurements.daily_steps.goal.error": "Nie udało się ustawić celu",
+  "measurements.daily_steps.below_goal": "Poniżej celu {{goal}}",
   "measurements.daily_steps.stats.latest": "Ostatnie",
   "measurements.daily_steps.stats.week_average": "Średnia z 7 dni",
   "measurements.daily_steps.stats.month_average": "Średnia z 30 dni",

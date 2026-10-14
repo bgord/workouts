@@ -10,6 +10,7 @@ import type { BodyWeightStats } from "../../modules/measurements/value-objects/b
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import type { DailyStepsChartGranularityOptions } from "../../modules/measurements/value-objects/daily-steps-chart-granularity-options";
 import type { DailyStepsChartPoint } from "../../modules/measurements/value-objects/daily-steps-chart-point";
+import type { DailyStepsEntry } from "../../modules/measurements/value-objects/daily-steps-entry";
 import type { DailyStepsHistoryMonthType } from "../../modules/measurements/value-objects/daily-steps-history-month";
 import type { DailyStepsMonthSummary } from "../../modules/measurements/value-objects/daily-steps-month-summary";
 import type { DailyStepsStats } from "../../modules/measurements/value-objects/daily-steps-stats";
@@ -26,7 +27,7 @@ type BodyWeightListResponse = {
 
 type DailyStepsListResponse = {
   month: DailyStepsHistoryMonthType | null;
-  entries: ReadonlyArray<DailySteps>;
+  entries: ReadonlyArray<DailyStepsEntry>;
   previous: DailySteps | null;
   months: ReadonlyArray<DailyStepsMonthSummary>;
   stats: DailyStepsStats | null;
