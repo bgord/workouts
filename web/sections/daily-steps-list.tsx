@@ -2,7 +2,7 @@ import { dailyStepsRoute } from "../router";
 import { DailyStepsRow } from "./daily-steps-row";
 
 export function DailyStepsList() {
-  const { dailySteps, previous, goal } = dailyStepsRoute.useLoaderData();
+  const { dailySteps, previous } = dailyStepsRoute.useLoaderData();
 
   return (
     <ul data-stack="y">
@@ -10,7 +10,6 @@ export function DailyStepsList() {
         <DailyStepsRow
           entry={entry}
           first={index === 0}
-          goal={goal}
           key={entry.day}
           previous={dailySteps[index + 1] ?? previous ?? undefined}
         />

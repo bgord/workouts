@@ -1,11 +1,12 @@
 import * as bg from "@bgord/ui";
 import { Pencil, Plus, Target } from "lucide-react";
-import type { DailyStepsGoalType } from "../../modules/measurements/value-objects/daily-steps-goal";
 import * as ui from "../components";
+import { dailyStepsRoute } from "../router";
 import { DailyStepsGoalSet } from "./daily-steps-goal-set";
 
-export function DailyStepsGoal(props: { goal: DailyStepsGoalType | null }) {
+export function DailyStepsGoal() {
   const t = bg.useTranslations();
+  const { goal } = dailyStepsRoute.useLoaderData();
   const dailyStepsGoalSet = bg.useToggle({ name: "daily-steps-goal-set" });
 
   return (
@@ -27,18 +28,18 @@ export function DailyStepsGoal(props: { goal: DailyStepsGoalType | null }) {
           {t("measurements.daily_steps.goal.label")}
         </small>
 
-        {props.goal !== null && (
+        {goal !== null && (
           <strong data-color="neutral-0" data-fw="semibold" data-transform="font-variant-numeric">
-            <ui.DailyStepsValue count={props.goal} />
+            <ui.DailyStepsValue count={goal} />
           </strong>
         )}
 
-        {props.goal === null && (
+        {goal === null && (
           <ui.StatusPanelDescription>{t("measurements.daily_steps.goal.empty")}</ui.StatusPanelDescription>
         )}
       </ui.StatusPanelText>
 
-      {dailyStepsGoalSet.off && props.goal !== null && (
+      {dailyStepsGoalSet.off && goal !== null && (
         <ui.IconButton
           aria-label={t("measurements.daily_steps.goal.edit")}
           onClick={dailyStepsGoalSet.enable}
@@ -49,7 +50,7 @@ export function DailyStepsGoal(props: { goal: DailyStepsGoalType | null }) {
         </ui.IconButton>
       )}
 
-      {dailyStepsGoalSet.off && props.goal === null && (
+      {dailyStepsGoalSet.off && goal === null && (
         <button
           className="c-button"
           data-variant="ghost"
@@ -62,7 +63,7 @@ export function DailyStepsGoal(props: { goal: DailyStepsGoalType | null }) {
         </button>
       )}
 
-      <DailyStepsGoalSet goal={props.goal} key={props.goal} {...dailyStepsGoalSet} />
+      <DailyStepsGoalSet key={goal} {...dailyStepsGoalSet} />
     </ui.StatusPanel>
   );
 }

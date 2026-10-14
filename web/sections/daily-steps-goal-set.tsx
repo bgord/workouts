@@ -1,16 +1,19 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import type { DailyStepsGoalType } from "../../modules/measurements/value-objects/daily-steps-goal";
 import { StepsCountMax } from "../../modules/measurements/value-objects/steps-count.validation";
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 
-export function DailyStepsGoalSet(props: { goal: DailyStepsGoalType | null } & bg.UseToggleReturnType) {
+export function DailyStepsGoalSet(props: bg.UseToggleReturnType) {
   const t = bg.useTranslations();
   const router = useRouter();
+  const { goal: currentGoal } = dailyStepsRoute.useLoaderData();
   const { toggle } = bg.extractUseToggle(props);
 
-  const goal = bg.useNumberField<number>({ name: "daily-steps-goal", defaultValue: props.goal ?? undefined });
+  const goal = bg.useNumberField<number>({
+    name: "daily-steps-goal",
+    defaultValue: currentGoal ?? undefined,
+  });
 
   const mutation = bg.useMutation({
     perform: () =>

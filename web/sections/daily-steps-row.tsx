@@ -2,8 +2,8 @@ import * as bg from "@bgord/ui";
 import { ArrowDown } from "lucide-react";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import type { DailyStepsEntry } from "../../modules/measurements/value-objects/daily-steps-entry";
-import type { DailyStepsGoalType } from "../../modules/measurements/value-objects/daily-steps-goal";
 import * as ui from "../components";
+import { dailyStepsRoute } from "../router";
 import { DailyStepsCorrect } from "./daily-steps-correct";
 import { DailyStepsRemove } from "./daily-steps-remove";
 
@@ -11,13 +11,13 @@ export function DailyStepsRow(props: {
   entry: DailyStepsEntry;
   previous: DailySteps | undefined;
   first: boolean;
-  goal: DailyStepsGoalType | null;
 }) {
   const t = bg.useTranslations();
+  const { goal } = dailyStepsRoute.useLoaderData();
   const language = bg.useLanguage();
 
   const belowGoal = t("measurements.daily_steps.below_goal", {
-    goal: props.goal?.toLocaleString(language) ?? "",
+    goal: goal?.toLocaleString(language) ?? "",
   });
 
   const dailyStepsCorrect = bg.useToggle({ name: `correct-${props.entry.day}` });

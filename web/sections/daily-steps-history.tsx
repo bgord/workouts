@@ -9,7 +9,7 @@ import { DailyStepsStats } from "./daily-steps-stats";
 
 export function DailyStepsHistory() {
   const t = bg.useTranslations();
-  const { dailyStepsStats, goal } = dailyStepsRoute.useLoaderData();
+  const { dailyStepsStats } = dailyStepsRoute.useLoaderData();
 
   if (!dailyStepsStats) return null;
 
@@ -18,7 +18,7 @@ export function DailyStepsHistory() {
       <div data-stack="y" {...ui.Gap.related}>
         <DailyStepsStats {...dailyStepsStats} />
 
-        <DailyStepsGoal goal={goal} />
+        <DailyStepsGoal />
       </div>
 
       <DailyStepsProgressChart />
