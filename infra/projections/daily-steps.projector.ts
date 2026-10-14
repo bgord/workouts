@@ -9,6 +9,7 @@ type Dependencies = {
   EventBus: bg.EventBusPort<
     | measurements.Events.DailyStepsRecordedEventType
     | measurements.Events.DailyStepsRemovedEventType
+    | measurements.Events.DailyStepsGoalSetEventType
     | Auth.Events.AccountDeletedEventType
   >;
   EventHandler: bg.EventHandlerStrategy;
@@ -23,6 +24,10 @@ export class DailyStepsProjector {
     deps.EventBus.on(
       measurements.Events.DAILY_STEPS_REMOVED_EVENT,
       deps.EventHandler.handle(this.onDailyStepsRemovedEvent.bind(this)),
+    );
+    deps.EventBus.on(
+      measurements.Events.DAILY_STEPS_GOAL_SET_EVENT,
+      deps.EventHandler.handle(this.onDailyStepsGoalSetEvent.bind(this)),
     );
     deps.EventBus.on(
       Auth.Events.ACCOUNT_DELETED_EVENT,
@@ -55,7 +60,23 @@ export class DailyStepsProjector {
       );
   }
 
+  async onDailyStepsGoalSetEvent(event: measurements.Events.DailyStepsGoalSetEventType) {
+    await db
+      .insert(Schema.dailyStepsGoals)
+      .values({
+        userId: event.payload.userId,
+        goal: event.payload.goal,
+        createdAt: event.createdAt,
+        updatedAt: event.createdAt,
+      })
+      .onConflictDoUpdate({
+        target: Schema.dailyStepsGoals.userId,
+        set: { goal: event.payload.goal, updatedAt: event.createdAt },
+      });
+  }
+
   async onAccountDeletedEvent(event: Auth.Events.AccountDeletedEventType) {
     await db.delete(Schema.dailySteps).where(eq(Schema.dailySteps.userId, event.payload.userId));
+    await db.delete(Schema.dailyStepsGoals).where(eq(Schema.dailyStepsGoals.userId, event.payload.userId));
   }
 }
