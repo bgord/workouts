@@ -13,6 +13,7 @@ import type { DailyStepsChartPoint } from "../../modules/measurements/value-obje
 import type { DailyStepsHistoryMonthType } from "../../modules/measurements/value-objects/daily-steps-history-month";
 import type { DailyStepsMonthSummary } from "../../modules/measurements/value-objects/daily-steps-month-summary";
 import type { DailyStepsStats } from "../../modules/measurements/value-objects/daily-steps-stats";
+import type { StepsCountType } from "../../modules/measurements/value-objects/steps-count";
 
 type BodyWeightListResponse = {
   month: BodyWeightHistoryMonthType | null;
@@ -34,7 +35,7 @@ type DailyStepsListResponse = {
 
 type BodyWeightChartResponse = { points: ReadonlyArray<BodyWeightChartPoint> };
 
-type DailyStepsChartResponse = { points: ReadonlyArray<DailyStepsChartPoint> };
+type DailyStepsChartResponse = { points: ReadonlyArray<DailyStepsChartPoint>; goal: StepsCountType | null };
 
 const unavailable = { available: false, enabled: false, hints: [] };
 
@@ -105,7 +106,7 @@ export class Measurements {
     return bg.ApiClient.json<DailyStepsChartResponse>(
       "/api/measurements/daily-steps/chart",
       request,
-      { points: [] },
+      { points: [], goal: null },
       { method: "QUERY", body: JSON.stringify(params) },
     );
   }

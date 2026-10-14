@@ -35,6 +35,9 @@ describe(`QUERY ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps, mocks.anotherDailySteps]);
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute"))
+      .mockResolvedValue(mocks.dailyStepsGoal);
 
     const response = await server.request(
       url,
@@ -49,6 +52,7 @@ describe(`QUERY ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       points: [{ from: mocks.anotherDailyStepsDay, to: mocks.dailyStepsDay, steps: 7_000, count: 2 }],
+      goal: mocks.dailyStepsGoal,
     });
   });
 
@@ -58,6 +62,7 @@ describe(`QUERY ${url}`, async () => {
     spies
       .use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute"))
       .mockResolvedValue([mocks.dailySteps]);
+    spies.use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(
       url,
@@ -72,6 +77,7 @@ describe(`QUERY ${url}`, async () => {
     expect(response.status).toEqual(200);
     expect(json).toEqual({
       points: [{ from: mocks.dailyStepsDay, to: mocks.dailyStepsDay, steps: 8_000, count: 1 }],
+      goal: null,
     });
   });
 
@@ -79,6 +85,7 @@ describe(`QUERY ${url}`, async () => {
     using spies = new DisposableStack();
     spies.use(spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth));
     spies.use(spyOn(di.Adapters.Measurements.ListDailyStepsQuery, "execute")).mockResolvedValue([]);
+    spies.use(spyOn(di.Adapters.Measurements.GetDailyStepsGoalQuery, "execute")).mockResolvedValue(null);
 
     const response = await server.request(
       url,
@@ -91,6 +98,6 @@ describe(`QUERY ${url}`, async () => {
     const json = await response.json();
 
     expect(response.status).toEqual(200);
-    expect(json).toEqual({ points: [] });
+    expect(json).toEqual({ points: [], goal: null });
   });
 });
