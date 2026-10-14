@@ -176,6 +176,13 @@
       "when": 1791924337215,
       "tag": "0024_fair_ma_gnuci",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "6",
+      "when": 1791970885770,
+      "tag": "0025_bumpy_firebird",
+      "breakpoints": true
     }
   ]
 }

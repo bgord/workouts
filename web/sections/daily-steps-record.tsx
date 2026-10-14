@@ -64,6 +64,7 @@ function DailyStepsRecordForm(props: { latest: DailySteps | undefined }) {
         aria-label={t("measurements.daily_steps.record.count.label")}
         disabled={mutation.isLoading}
         field={count}
+        increment={500}
         leading={
           <input
             className="c-input"
@@ -83,7 +84,7 @@ function DailyStepsRecordForm(props: { latest: DailySteps | undefined }) {
         }
         max={StepsCountMax}
         min={0}
-        step={500}
+        step={1}
         unit={t("measurements.daily_steps.record.count.unit")}
         width={72}
       >

@@ -15,3 +15,4 @@ export * from "./body-weight-measurement-has-changed";
 export * from "./body-weight-reference-has-changed";
 export * from "./daily-steps-day-is-not-in-future";
 export * from "./daily-steps-exists";
+export * from "./daily-steps-goal-has-changed";

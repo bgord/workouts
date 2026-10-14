@@ -52,9 +52,10 @@ export function DailyStepsCorrect(props: { entry: DailySteps } & bg.UseToggleRet
         aria-label={t("measurements.daily_steps.record.count.label")}
         disabled={mutation.isLoading}
         field={count}
+        increment={500}
         max={StepsCountMax}
         min={0}
-        step={500}
+        step={1}
         unit={t("measurements.daily_steps.record.count.unit")}
         width={72}
       >

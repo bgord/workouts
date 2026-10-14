@@ -12,6 +12,7 @@ type StepperProps = Omit<React.JSX.IntrinsicElements["input"], "min" | "max" | "
   min: number;
   max: number;
   step: number;
+  increment?: number;
   unit?: string;
   width?: number;
   variant?: "default" | "compact" | "fill";
@@ -19,13 +20,23 @@ type StepperProps = Omit<React.JSX.IntrinsicElements["input"], "min" | "max" | "
 };
 
 export function Stepper(props: StepperProps) {
-  const { field, unit, width: inputWidth, variant = "default", leading, children, ...input } = props;
+  const {
+    field,
+    unit,
+    width: inputWidth,
+    variant = "default",
+    leading,
+    increment: by,
+    children,
+    ...input
+  } = props;
   const label = props["aria-label"];
+  const delta = by ?? props.step;
   const value = field.value ?? props.min;
   const round = (next: number) => Number(next.toFixed(2));
 
-  const decrement = () => field.set(round(Math.max(props.min, value - props.step)));
-  const increment = () => field.set(round(Math.min(props.max, value + props.step)));
+  const decrement = () => field.set(round(Math.max(props.min, value - delta)));
+  const increment = () => field.set(round(Math.min(props.max, value + delta)));
 
   return (
     <div
@@ -44,7 +55,7 @@ export function Stepper(props: StepperProps) {
       {leading}
 
       <button
-        aria-label={`${label} −${props.step}`}
+        aria-label={`${label} −${delta}`}
         data-color="neutral-400"
         data-cursor="pointer"
         data-focus-ring-offset="inset"
@@ -91,7 +102,7 @@ export function Stepper(props: StepperProps) {
       )}
 
       <button
-        aria-label={`${label} +${props.step}`}
+        aria-label={`${label} +${delta}`}
         data-color="neutral-400"
         data-cursor="pointer"
         data-focus-ring-offset="inset"

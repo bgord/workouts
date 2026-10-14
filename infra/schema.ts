@@ -30,6 +30,7 @@ import { BodyWeightGoalOptions } from "../modules/measurements/value-objects/bod
 import type { BodyWeightMeasuredOnType } from "../modules/measurements/value-objects/body-weight-measured-on";
 import type { BodyWeightMeasurementIdType } from "../modules/measurements/value-objects/body-weight-measurement-id";
 import type { DailyStepsDayType } from "../modules/measurements/value-objects/daily-steps-day";
+import type { DailyStepsGoalType } from "../modules/measurements/value-objects/daily-steps-goal";
 import type { StepsCountType } from "../modules/measurements/value-objects/steps-count";
 import type { StepsSourceType } from "../modules/measurements/value-objects/steps-source";
 import { StepsSourceOptions } from "../modules/measurements/value-objects/steps-source-options";
@@ -481,6 +482,18 @@ export const dailySteps = sqliteTable(
     updatedAt: timestamp("updatedAt").notNull(),
   },
   (table) => [uniqueIndex("dailySteps_userId_day_uidx").on(table.userId, table.day)],
+);
+
+export const dailyStepsGoals = sqliteTable(
+  "dailyStepsGoals",
+  {
+    id,
+    userId: text("userId", { length: 36 }).notNull().$type<UserIdType>(),
+    goal: integer("goal", { mode: "number" }).notNull().$type<DailyStepsGoalType>(),
+    createdAt: timestamp("createdAt").notNull(),
+    updatedAt: timestamp("updatedAt").notNull(),
+  },
+  (table) => [uniqueIndex("dailyStepsGoals_userId_uidx").on(table.userId)],
 );
 
 export const bodyParts = sqliteTable(

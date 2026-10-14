@@ -30,6 +30,7 @@ import type {
   BodyWeightMeasurementCorrectedEventType,
   BodyWeightMeasurementRemovedEventType,
   BodyWeightReferenceSetEventType,
+  DailyStepsGoalSetEventType,
   DailyStepsRecordedEventType,
   DailyStepsRemovedEventType,
 } from "+measurements/events";
@@ -82,6 +83,7 @@ export type AcceptedEventType =
   | BodyWeightMeasurementCorrectedEventType
   | BodyWeightMeasurementRemovedEventType
   | BodyWeightReferenceSetEventType
+  | DailyStepsGoalSetEventType
   | DailyStepsRecordedEventType
   | DailyStepsRemovedEventType
   | WeeklySummarySentEventType

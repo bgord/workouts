@@ -14,6 +14,7 @@ import {
   measureBodyWeight,
   recordDailySteps,
   setBodyWeightReference,
+  setDailyStepsGoal,
 } from "../measurements";
 import { draftPlan, finalizePlan } from "../plans";
 import {
@@ -147,6 +148,8 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
       day: tools.Day.fromTimestamp(now.subtract(tools.Duration.Days(daysAgo))).toIsoId(),
     });
   }
+
+  await setDailyStepsGoal(di, userId, 10_000);
 
   for (const bodyPart of Object.values(persona.bodyParts)) {
     await defineBodyPart(di, userId, bodyPart);

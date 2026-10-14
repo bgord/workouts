@@ -6,6 +6,7 @@ type Dependencies = {
   ListDailyStepsQuery: Measurements.Queries.ListDailySteps;
   ListDailyStepsForMonthQuery: Measurements.Queries.ListDailyStepsForMonth;
   ListDailyStepsMonthsQuery: Measurements.Queries.ListDailyStepsMonths;
+  GetDailyStepsGoalQuery: Measurements.Queries.GetDailyStepsGoal;
 };
 
 export const DailyStepsList =
@@ -16,24 +17,38 @@ export const DailyStepsList =
     const userId = context.identity.authenticatedUserId();
     const requested = v.parse(v.optional(Measurements.VO.DailyStepsHistoryMonth), body["month"]);
 
-    const [months, all] = await Promise.all([
+    const [months, all, goal] = await Promise.all([
       deps.ListDailyStepsMonthsQuery.execute(userId),
       deps.ListDailyStepsQuery.execute(userId),
+      deps.GetDailyStepsGoalQuery.execute(userId),
     ]);
     const stats = new Measurements.Services.DailyStepsStatsCalculator(all).calculate();
     const actions = new Measurements.Services.DailyStepsListActions({ entries: all }).calculate();
 
     const month = requested ?? months[0]?.month;
 
+    const entry = (dailySteps: Measurements.VO.DailySteps): Measurements.VO.DailyStepsEntry => ({
+      ...dailySteps,
+      belowGoal: new Measurements.Services.DailyStepsBelowGoal({ goal, count: dailySteps.count }).calculate(),
+    });
+
     if (!month) {
-      return Response.json({ month: null, entries: [], previous: null, months, stats, actions });
+      return Response.json({ month: null, entries: [], previous: null, months, stats, goal, actions });
     }
 
     if (month === Measurements.VO.DailyStepsHistoryMonthAll) {
-      return Response.json({ month, entries: all, previous: null, months, stats, actions });
+      return Response.json({
+        month,
+        entries: all.map(entry),
+        previous: null,
+        months,
+        stats,
+        goal,
+        actions,
+      });
     }
 
     const { entries, previous } = await deps.ListDailyStepsForMonthQuery.execute(userId, month);
 
-    return Response.json({ month, entries, previous, months, stats, actions });
+    return Response.json({ month, entries: entries.map(entry), previous, months, stats, goal, actions });
   };

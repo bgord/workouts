@@ -36,6 +36,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
   Measurements.VO.BodyWeightGoalError,
   Measurements.VO.BodyWeightHistoryMonthError,
   Measurements.VO.DailyStepsChartGranularityError,
+  Measurements.VO.DailyStepsGoalError,
   Measurements.VO.StepsCountError,
   Measurements.VO.DailyStepsHistoryMonthError,
   Plans.VO.PlanDescriptionError,

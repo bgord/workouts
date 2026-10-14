@@ -11,6 +11,7 @@ export * from "./handleBodyWeightMeasurementCorrectCommand";
 export * from "./handleBodyWeightMeasurementRemoveCommand";
 export * from "./handleBodyWeightMeasurementsImportCommand";
 export * from "./handleBodyWeightReferenceSetCommand";
+export * from "./handleDailyStepsGoalSetCommand";
 export * from "./handleDailyStepsImportCommand";
 export * from "./handleDailyStepsRecordCommand";
 export * from "./handleDailyStepsRemoveCommand";

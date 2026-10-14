@@ -37,6 +37,9 @@ export const dailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2025-01-01"
 export const anotherStepsCount = v.parse(Measurements.VO.StepsCount, 6_000);
 export const anotherDailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2024-12-31");
 export const futureDailyStepsDay = v.parse(Measurements.VO.DailyStepsDay, "2025-01-02");
+export const dailyStepsGoal = v.parse(Measurements.VO.DailyStepsGoal, 10_000);
+export const anotherDailyStepsGoal = v.parse(Measurements.VO.DailyStepsGoal, 8_000);
+export const lowDailyStepsGoal = v.parse(Measurements.VO.DailyStepsGoal, 6_000);
 
 export const dailySteps: Measurements.VO.DailySteps = {
   userId,
@@ -44,6 +47,10 @@ export const dailySteps: Measurements.VO.DailySteps = {
   count: stepsCount,
   source: Measurements.VO.StepsSourceOptions.manual,
 };
+
+export const dailyStepsEntry: Measurements.VO.DailyStepsEntry = { ...dailySteps, belowGoal: false };
+
+export const dailyStepsEntryBelowGoal: Measurements.VO.DailyStepsEntry = { ...dailySteps, belowGoal: true };
 
 export const anotherDailySteps: Measurements.VO.DailySteps = {
   ...dailySteps,
@@ -470,3 +477,14 @@ export const GenericDailyStepsRemovedEvent = {
   name: "DAILY_STEPS_REMOVED_EVENT",
   payload: { userId, day: dailyStepsDay },
 } satisfies Measurements.Events.DailyStepsRemovedEventType;
+
+export const GenericDailyStepsGoalSetEvent = {
+  id: expectAnyId,
+  correlationId,
+  createdAt: T0.ms,
+  stream: v.parse(bg.EventStream, `daily_steps_goal_${userId}`),
+  version: 1,
+  commit,
+  name: "DAILY_STEPS_GOAL_SET_EVENT",
+  payload: { userId, goal: dailyStepsGoal },
+} satisfies Measurements.Events.DailyStepsGoalSetEventType;

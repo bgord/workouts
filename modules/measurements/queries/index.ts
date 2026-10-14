@@ -4,6 +4,7 @@ export * from "./get-body-part-measurement";
 export * from "./get-body-part-name-count";
 export * from "./get-body-weight-measurement";
 export * from "./get-daily-steps";
+export * from "./get-daily-steps-goal";
 export * from "./list-body-part-measurement-export-rows";
 export * from "./list-body-part-names";
 export * from "./list-body-parts";

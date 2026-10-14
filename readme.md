@@ -179,6 +179,7 @@ modules/
 │   │   ├── handleBodyWeightMeasurementRemoveCommand.ts
 │   │   ├── handleBodyWeightMeasurementsImportCommand.ts
 │   │   ├── handleBodyWeightReferenceSetCommand.ts
+│   │   ├── handleDailyStepsGoalSetCommand.ts
 │   │   ├── handleDailyStepsImportCommand.ts
 │   │   ├── handleDailyStepsRecordCommand.ts
 │   │   ├── handleDailyStepsRemoveCommand.ts
@@ -196,6 +197,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVE_COMMAND.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENTS_IMPORT_COMMAND.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_COMMAND.ts
+│   │   ├── DAILY_STEPS_GOAL_SET_COMMAND.ts
 │   │   ├── DAILY_STEPS_IMPORT_COMMAND.ts
 │   │   ├── DAILY_STEPS_RECORD_COMMAND.ts
 │   │   ├── DAILY_STEPS_REMOVE_COMMAND.ts
@@ -211,6 +213,7 @@ modules/
 │   │   ├── BODY_WEIGHT_MEASUREMENT_CORRECTED_EVENT.ts
 │   │   ├── BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT.ts
 │   │   ├── BODY_WEIGHT_REFERENCE_SET_EVENT.ts
+│   │   ├── DAILY_STEPS_GOAL_SET_EVENT.ts
 │   │   ├── DAILY_STEPS_RECORDED_EVENT.ts
 │   │   ├── DAILY_STEPS_REMOVED_EVENT.ts
 │   ├── invariants
@@ -231,6 +234,7 @@ modules/
 │   │   ├── body-weight-reference-has-changed.ts
 │   │   ├── daily-steps-day-is-not-in-future.ts
 │   │   ├── daily-steps-exists.ts
+│   │   ├── daily-steps-goal-has-changed.ts
 │   ├── open-host-queries
 │   ├── ports
 │   │   └── steps-provider.port.ts
@@ -240,6 +244,7 @@ modules/
 │   │   ├── get-body-part-name-count.ts
 │   │   ├── get-body-part.ts
 │   │   ├── get-body-weight-measurement.ts
+│   │   ├── get-daily-steps-goal.ts
 │   │   ├── get-daily-steps.ts
 │   │   ├── list-body-part-measurement-export-rows.ts
 │   │   ├── list-body-part-names.ts
@@ -258,13 +263,16 @@ modules/
 │   │   ├── body-part-measurement-import-template-file-csv.ts
 │   │   ├── body-weight-average.ts
 │   │   ├── body-weight-chart.ts
+│   │   ├── body-weight-list-actions.ts
 │   │   ├── body-weight-measurement-export-file-csv.ts
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
 │   │   ├── daily-steps-average.ts
+│   │   ├── daily-steps-below-goal.ts
 │   │   ├── daily-steps-chart.ts
 │   │   ├── daily-steps-export-file-csv.ts
 │   │   ├── daily-steps-import-file-csv.ts
+│   │   ├── daily-steps-list-actions.ts
 │   │   ├── daily-steps-stats-calculator.ts
 │   │   └── steps-provider-manual.strategy.ts
 │   └── value-objects
@@ -298,6 +306,8 @@ modules/
 │       ├── daily-steps-chart-granularity.ts
 │       ├── daily-steps-chart-point.ts
 │       ├── daily-steps-day.ts
+│       ├── daily-steps-entry.ts
+│       ├── daily-steps-goal.ts
 │       ├── daily-steps-history-month.ts
 │       ├── daily-steps-history-month.validation.ts
 │       ├── daily-steps-import.ts
@@ -725,6 +735,7 @@ app/
 │   │   ├── body-weight-reference-set.ts
 │   │   ├── daily-steps-chart-get.ts
 │   │   ├── daily-steps-export.ts
+│   │   ├── daily-steps-goal-set.ts
 │   │   ├── daily-steps-import.ts
 │   │   ├── daily-steps-list.ts
 │   │   ├── daily-steps-record.ts
@@ -823,6 +834,7 @@ infra/
 │   │   ├── get-body-part-name-count.adapter.ts
 │   │   ├── get-body-part.adapter.ts
 │   │   ├── get-body-weight-measurement.adapter.ts
+│   │   ├── get-daily-steps-goal.adapter.ts
 │   │   ├── get-daily-steps.adapter.ts
 │   │   ├── list-body-part-measurement-export-rows.adapter.ts
 │   │   ├── list-body-part-names.adapter.ts
