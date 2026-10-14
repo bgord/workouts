@@ -11,6 +11,7 @@ test.describe("Daily steps - empty", () => {
     await expect(page.getByText("Log your daily steps to see them here")).toBeVisible();
     await expect(page.getByRole("button", { name: "Log", exact: true })).toBeDisabled();
     await expect(page.getByRole("listitem", { name: "Latest steps" })).toBeHidden();
+    await expect(page.getByRole("group", { name: "Daily goal" })).toBeHidden();
   });
 });
 
@@ -113,6 +114,46 @@ test.describe("Daily steps - athlete", () => {
     await page.getByRole("link", { name: "CSV template" }).click();
 
     expect((await download).suggestedFilename()).toMatch(/\.csv$/);
+  });
+
+  test("shows the daily goal", async ({ page }) => {
+    const goal = page.getByRole("group", { name: "Daily goal" });
+
+    await page.goto("/measurements/daily-steps");
+
+    await expect(goal.getByText("10,000 steps", { exact: true })).toBeVisible();
+    await expect(goal.getByRole("button", { name: "Edit goal" })).toBeVisible();
+  });
+
+  test("marks the days below the daily goal", async ({ page }) => {
+    const below = page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("button", { name: "8,200 steps", exact: true }) });
+    const above = page
+      .getByRole("listitem")
+      .filter({ has: page.getByRole("button", { name: "10,200 steps", exact: true }) });
+
+    await page.goto("/measurements/daily-steps");
+
+    await expect(below.getByRole("img", { name: "Below goal of 10,000", exact: true })).toBeVisible();
+    await expect(above.getByRole("img", { name: "Below goal of 10,000", exact: true })).toBeHidden();
+  });
+
+  test("shows the error when setting the goal fails", async ({ page }) => {
+    const goal = page.getByRole("group", { name: "Daily goal" });
+
+    await page.route("**/api/measurements/daily-steps/goal", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/measurements/daily-steps");
+
+    await goal.getByRole("button", { name: "Edit goal" }).click();
+    await goal.getByRole("spinbutton", { name: "Daily goal" }).fill("11000");
+    await goal.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(goal.getByText("Could not set the goal")).toBeVisible();
+
+    await page.reload();
+
+    await expect(goal.getByText("10,000 steps", { exact: true })).toBeVisible();
   });
 
   test("shows the error when logging the steps fails", async ({ page }) => {

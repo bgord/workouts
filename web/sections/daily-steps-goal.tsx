@@ -9,7 +9,7 @@ export function DailyStepsGoal(props: { goal: StepsCountType | null }) {
   const dailyStepsGoalSet = bg.useToggle({ name: "daily-steps-goal-set" });
 
   return (
-    <ui.StatusPanel>
+    <ui.StatusPanel aria-label={t("measurements.daily_steps.goal.label")} role="group">
       <span
         aria-hidden
         data-br="sm"

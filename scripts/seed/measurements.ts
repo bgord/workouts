@@ -73,6 +73,18 @@ export async function recordDailySteps(
   await di.Tools.CommandBus.emit(command);
 }
 
+export async function setDailyStepsGoal(di: BootstrapType, userId: Auth.VO.UserIdType, goal: number) {
+  const deps = { ...di.Adapters.System, ...di.Tools };
+
+  const command = bg.command(
+    Measurements.Commands.DailyStepsGoalSetCommand,
+    { payload: { userId, goal: v.parse(Measurements.VO.StepsCount, goal) } },
+    deps,
+  );
+
+  await di.Tools.CommandBus.emit(command);
+}
+
 export async function defineBodyPart(
   di: BootstrapType,
   userId: Auth.VO.UserIdType,
