@@ -435,4 +435,11 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
       GetDailyStepsQuery: Adapters.Measurements.GetDailyStepsQuery,
     }),
   );
+  Tools.CommandBus.on(
+    MeasurementsCommands.DAILY_STEPS_GOAL_SET_COMMAND,
+    MeasurementsCommandHandlers.handleDailyStepsGoalSetCommand({
+      ...deps,
+      GetDailyStepsGoalQuery: Adapters.Measurements.GetDailyStepsGoalQuery,
+    }),
+  );
 }
