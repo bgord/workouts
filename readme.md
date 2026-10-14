@@ -268,6 +268,7 @@ modules/
 │   │   ├── body-weight-measurement-import-file-csv.ts
 │   │   ├── body-weight-stats-calculator.ts
 │   │   ├── daily-steps-average.ts
+│   │   ├── daily-steps-below-goal.ts
 │   │   ├── daily-steps-chart.ts
 │   │   ├── daily-steps-export-file-csv.ts
 │   │   ├── daily-steps-import-file-csv.ts
@@ -305,6 +306,7 @@ modules/
 │       ├── daily-steps-chart-granularity.ts
 │       ├── daily-steps-chart-point.ts
 │       ├── daily-steps-day.ts
+│       ├── daily-steps-entry.ts
 │       ├── daily-steps-history-month.ts
 │       ├── daily-steps-history-month.validation.ts
 │       ├── daily-steps-import.ts
