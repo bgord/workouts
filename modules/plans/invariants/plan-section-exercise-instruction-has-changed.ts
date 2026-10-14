@@ -4,14 +4,12 @@ import type * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionHasChangedError extends Error {}
 
 type PlanSectionExerciseInstructionHasChangedConfigType = {
-  current: Pick<VO.ExerciseInstructionType, "sets" | "reps" | "progression" | "rir"> | undefined;
+  current: Pick<VO.ExerciseInstructionType, "sets" | "reps" | "progression" | "rir">;
   incoming: Pick<VO.ExerciseInstructionType, "sets" | "reps" | "progression" | "rir">;
 };
 
 class PlanSectionExerciseInstructionHasChangedFactory extends bg.Invariant<PlanSectionExerciseInstructionHasChangedConfigType> {
   passes(config: PlanSectionExerciseInstructionHasChangedConfigType) {
-    // Stryker disable next-line BooleanLiteral
-    if (!config.current) return false;
     return (
       config.current.sets !== config.incoming.sets ||
       config.current.reps.min !== config.incoming.reps.min ||

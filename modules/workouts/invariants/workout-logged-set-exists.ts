@@ -3,16 +3,15 @@ import type * as VO from "+workouts/value-objects";
 
 class WorkoutLoggedSetExistsError extends Error {}
 
-type WorkoutLoggedSetExistsConfigType = {
-  workoutExercise?: { loggedSets: ReadonlyArray<Pick<VO.LoggedSetType, "id">> };
-  loggedSetId: VO.LoggedSetIdType;
-};
+type WorkoutLoggedSetExistsConfigType = { loggedSet: Pick<VO.LoggedSetType, "id"> | undefined };
+type WorkoutLoggedSetExistsPassedConfigType = { loggedSet: Pick<VO.LoggedSetType, "id"> };
 
-class WorkoutLoggedSetExistsFactory extends bg.Invariant<WorkoutLoggedSetExistsConfigType> {
+class WorkoutLoggedSetExistsFactory extends bg.Invariant<
+  WorkoutLoggedSetExistsConfigType,
+  WorkoutLoggedSetExistsPassedConfigType
+> {
   passes(config: WorkoutLoggedSetExistsConfigType) {
-    return Boolean(
-      config.workoutExercise?.loggedSets.some((loggedSet) => loggedSet.id === config.loggedSetId),
-    );
+    return config.loggedSet !== undefined;
   }
 
   // Stryker disable next-line StringLiteral

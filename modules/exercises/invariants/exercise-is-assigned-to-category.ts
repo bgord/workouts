@@ -4,15 +4,16 @@ import type * as VO from "+exercises/value-objects";
 class ExerciseIsAssignedToCategoryError extends Error {}
 
 type ExerciseIsAssignedToCategoryConfigType = {
-  exerciseCategoryId: VO.ExerciseCategoryIdType;
-  exerciseCategories: ReadonlyArray<VO.ExerciseCategory>;
+  assignment: Pick<VO.ExerciseCategoryAssignment, "id"> | undefined;
 };
+type ExerciseIsAssignedToCategoryPassedConfigType = { assignment: Pick<VO.ExerciseCategoryAssignment, "id"> };
 
-class ExerciseIsAssignedToCategoryFactory extends bg.Invariant<ExerciseIsAssignedToCategoryConfigType> {
+class ExerciseIsAssignedToCategoryFactory extends bg.Invariant<
+  ExerciseIsAssignedToCategoryConfigType,
+  ExerciseIsAssignedToCategoryPassedConfigType
+> {
   passes(config: ExerciseIsAssignedToCategoryConfigType) {
-    return config.exerciseCategories
-      .map((exerciseCategory) => exerciseCategory.id)
-      .includes(config.exerciseCategoryId);
+    return config.assignment !== undefined;
   }
 
   // Stryker disable next-line StringLiteral

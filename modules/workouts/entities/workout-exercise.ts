@@ -33,7 +33,9 @@ export class WorkoutExercise implements VO.WorkoutExercise {
   }
 
   guardLoggedSetExists(loggedSetId: VO.LoggedSetIdType) {
-    Invariants.WorkoutLoggedSetExists.enforce({ workoutExercise: this, loggedSetId });
+    return Invariants.WorkoutLoggedSetExists.enforce({
+      loggedSet: this.loggedSets.find((loggedSet) => loggedSet.id === loggedSetId),
+    }).loggedSet;
   }
 
   correction(
@@ -42,10 +44,8 @@ export class WorkoutExercise implements VO.WorkoutExercise {
     load: VO.LoadType,
     rir: VO.RirType | undefined,
   ): VO.LoggedSetType {
-    this.guardLoggedSetExists(id);
+    const current = this.guardLoggedSetExists(id);
     Invariants.WorkoutExerciseLoadIsApplicable.enforce({ resistance: this.resistance, load });
-
-    const current = this.loggedSets.find((loggedSet) => loggedSet.id === id)!;
 
     return { id, setNumber: current.setNumber, reps, load, rir };
   }

@@ -3,14 +3,15 @@ import type * as VO from "+plans/value-objects";
 
 class PlanSectionExistsError extends Error {}
 
-type PlanSectionExistsConfigType = {
-  planSectionId: VO.PlanSectionIdType;
-  planSections: ReadonlyArray<Pick<VO.PlanSection, "id">>;
-};
+type PlanSectionExistsConfigType = { section: Pick<VO.PlanSection, "id"> | undefined };
+type PlanSectionExistsPassedConfigType = { section: Pick<VO.PlanSection, "id"> };
 
-class PlanSectionExistsFactory extends bg.Invariant<PlanSectionExistsConfigType> {
+class PlanSectionExistsFactory extends bg.Invariant<
+  PlanSectionExistsConfigType,
+  PlanSectionExistsPassedConfigType
+> {
   passes(config: PlanSectionExistsConfigType) {
-    return config.planSections.some((section) => section.id === config.planSectionId);
+    return config.section !== undefined;
   }
 
   // Stryker disable next-line StringLiteral

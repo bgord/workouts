@@ -28,13 +28,13 @@ type Dependencies = {
 
 export const handleWorkoutCreateCommand =
   (deps: Dependencies) => async (command: Workouts.Commands.WorkoutCreateCommandType) => {
-    const plan = await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId);
+    const { plan } = WorkoutPlanReady.enforce({
+      plan: await deps.GetFinalizedPlanOHQ.execute(command.payload.planId, command.payload.userId),
+    });
 
-    WorkoutPlanReady.enforce({ plan });
-
-    const section = plan!.sections.find((section) => section.id === command.payload.planSectionId);
-
-    WorkoutPlanSectionReady.enforce({ section });
+    const { section } = WorkoutPlanSectionReady.enforce({
+      section: plan.sections.find((section) => section.id === command.payload.planSectionId),
+    });
 
     const count = await deps.GetWorkoutStatusForOwnerCountQuery.execute(
       command.payload.userId,
@@ -46,17 +46,17 @@ export const handleWorkoutCreateCommand =
     const workout = Workout.create(
       command.payload.workoutId,
       command.payload.planId,
-      v.parse(WorkoutPlanName, plan!.name),
-      section!.id,
-      v.parse(WorkoutPlanSectionName, section!.name),
-      v.parse(v.optional(WorkoutPlanSectionWarmup), section!.warmup ?? undefined),
-      v.parse(v.optional(WorkoutPlanSectionCooldown), section!.cooldown ?? undefined),
+      v.parse(WorkoutPlanName, plan.name),
+      section.id,
+      v.parse(WorkoutPlanSectionName, section.name),
+      v.parse(v.optional(WorkoutPlanSectionWarmup), section.warmup ?? undefined),
+      v.parse(v.optional(WorkoutPlanSectionCooldown), section.cooldown ?? undefined),
       command.payload.scheduledFor,
       command.payload.userId,
       deps,
     );
 
-    for (const instruction of section!.exerciseInstructions) {
+    for (const instruction of section.exerciseInstructions) {
       workout.addExercise(
         v.parse(WorkoutExerciseId, deps.IdProvider.generate()),
         instruction.exercise.id,

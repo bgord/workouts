@@ -130,7 +130,9 @@ export class Plan {
   removeSection(planSectionId: VO.PlanSectionIdType, requesterId: Auth.VO.UserIdType) {
     Invariants.PlanIsEditable.enforce({ status: this.status });
     Invariants.PlanBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
+    Invariants.PlanSectionExists.enforce({
+      section: this.sections.find((section) => section.id === planSectionId),
+    });
 
     const event = bg.event(
       Events.PlanSectionRemovedEvent,
@@ -414,9 +416,9 @@ export class Plan {
   }
 
   private section(planSectionId: VO.PlanSectionIdType): Entities.PlanSection {
-    Invariants.PlanSectionExists.enforce({ planSectionId, planSections: this.sections });
-
-    return this.sections.find((section) => section.id === planSectionId)!;
+    return Invariants.PlanSectionExists.enforce({
+      section: this.sections.find((section) => section.id === planSectionId),
+    }).section;
   }
 
   private record(event: PlanEventType): void {

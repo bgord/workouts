@@ -154,7 +154,9 @@ export class Workout {
   removeExercise(workoutExerciseId: VO.WorkoutExerciseIdType, requesterId: Auth.VO.UserIdType) {
     Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+    Invariants.WorkoutExerciseExists.enforce({
+      workoutExercise: this.exercises.find((exercise) => exercise.id === workoutExerciseId),
+    });
 
     const event = bg.event(
       Events.WorkoutExerciseRemovedEvent,
@@ -173,7 +175,9 @@ export class Workout {
   ) {
     Invariants.WorkoutIsEditable.enforce({ status: this.status });
     Invariants.WorkoutBelongsToUser.enforce({ userId: this.userId, requesterId });
-    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
+    Invariants.WorkoutExerciseExists.enforce({
+      workoutExercise: this.exercises.find((exercise) => exercise.id === workoutExerciseId),
+    });
     Invariants.WorkoutExercisePositionInRange.enforce({ workoutExercises: this.exercises, position });
     Invariants.WorkoutExercisePositionHasChanged.enforce({
       workoutExerciseId,
@@ -364,9 +368,9 @@ export class Workout {
   }
 
   private exercise(workoutExerciseId: VO.WorkoutExerciseIdType): Entities.WorkoutExercise {
-    Invariants.WorkoutExerciseExists.enforce({ workoutExerciseId, workoutExercises: this.exercises });
-
-    return this.exercises.find((exercise) => exercise.id === workoutExerciseId)!;
+    return Invariants.WorkoutExerciseExists.enforce({
+      workoutExercise: this.exercises.find((exercise) => exercise.id === workoutExerciseId),
+    }).workoutExercise;
   }
 
   private record(event: WorkoutEventType): void {

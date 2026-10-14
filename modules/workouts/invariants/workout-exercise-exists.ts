@@ -3,14 +3,15 @@ import type * as VO from "+workouts/value-objects";
 
 class WorkoutExerciseExistsError extends Error {}
 
-type WorkoutExerciseExistsConfigType = {
-  workoutExerciseId: VO.WorkoutExerciseIdType;
-  workoutExercises: ReadonlyArray<Pick<VO.WorkoutExercise, "id">>;
-};
+type WorkoutExerciseExistsConfigType = { workoutExercise: Pick<VO.WorkoutExercise, "id"> | undefined };
+type WorkoutExerciseExistsPassedConfigType = { workoutExercise: Pick<VO.WorkoutExercise, "id"> };
 
-class WorkoutExerciseExistsFactory extends bg.Invariant<WorkoutExerciseExistsConfigType> {
+class WorkoutExerciseExistsFactory extends bg.Invariant<
+  WorkoutExerciseExistsConfigType,
+  WorkoutExerciseExistsPassedConfigType
+> {
   passes(config: WorkoutExerciseExistsConfigType) {
-    return config.workoutExercises.some((exercise) => exercise.id === config.workoutExerciseId);
+    return config.workoutExercise !== undefined;
   }
 
   // Stryker disable next-line StringLiteral

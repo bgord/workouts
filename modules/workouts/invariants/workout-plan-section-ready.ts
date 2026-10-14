@@ -4,8 +4,12 @@ import type * as Plans from "+plans";
 class WorkoutPlanSectionReadyError extends Error {}
 
 type WorkoutPlanSectionReadyConfigType = { section: Pick<Plans.VO.PlanSectionSnapshot, "id"> | undefined };
+type WorkoutPlanSectionReadyPassedConfigType = { section: Pick<Plans.VO.PlanSectionSnapshot, "id"> };
 
-class WorkoutPlanSectionReadyFactory extends bg.Invariant<WorkoutPlanSectionReadyConfigType> {
+class WorkoutPlanSectionReadyFactory extends bg.Invariant<
+  WorkoutPlanSectionReadyConfigType,
+  WorkoutPlanSectionReadyPassedConfigType
+> {
   passes(config: WorkoutPlanSectionReadyConfigType) {
     return config.section !== undefined;
   }

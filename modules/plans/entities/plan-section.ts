@@ -31,16 +31,15 @@ export class PlanSection implements VO.PlanSection {
   }
 
   guardInstructionExists(exerciseInstructionId: VO.ExerciseInstructionIdType) {
-    Invariants.PlanSectionExerciseInstructionExists.enforce({ planSection: this, exerciseInstructionId });
+    return Invariants.PlanSectionExerciseInstructionExists.enforce({
+      exerciseInstruction: this.instruction(exerciseInstructionId),
+    }).exerciseInstruction;
   }
 
   guardInstructionUpdate(exerciseInstruction: VO.ExerciseInstructionType) {
-    this.guardInstructionExists(exerciseInstruction.id);
+    const current = this.guardInstructionExists(exerciseInstruction.id);
     if (!this.instructionExerciseChanged(exerciseInstruction)) {
-      Invariants.PlanSectionExerciseInstructionHasChanged.enforce({
-        current: this.instruction(exerciseInstruction.id),
-        incoming: exerciseInstruction,
-      });
+      Invariants.PlanSectionExerciseInstructionHasChanged.enforce({ current, incoming: exerciseInstruction });
     }
     Invariants.PlanSectionExerciseInstructionProgressionIsApplicableForReps.enforce(exerciseInstruction);
     Invariants.PlanSectionExerciseInstructionRirIsApplicableForReps.enforce(exerciseInstruction);
@@ -121,12 +120,12 @@ export class PlanSection implements VO.PlanSection {
   }
 
   instructionExerciseChanged(exerciseInstruction: Pick<VO.ExerciseInstructionType, "id" | "exerciseId">) {
-    return this.instruction(exerciseInstruction.id)?.exerciseId !== exerciseInstruction.exerciseId;
+    return this.guardInstructionExists(exerciseInstruction.id).exerciseId !== exerciseInstruction.exerciseId;
   }
 
   instructionPrescriptionChanged(exerciseInstruction: VO.ExerciseInstructionType) {
     return Invariants.PlanSectionExerciseInstructionHasChanged.passes({
-      current: this.instruction(exerciseInstruction.id),
+      current: this.guardInstructionExists(exerciseInstruction.id),
       incoming: exerciseInstruction,
     });
   }

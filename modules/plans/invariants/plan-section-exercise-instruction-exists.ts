@@ -4,19 +4,18 @@ import type * as VO from "+plans/value-objects";
 class PlanSectionExerciseInstructionExistsError extends Error {}
 
 type PlanSectionExerciseInstructionExistsConfigType = {
-  planSection: { exerciseInstructions: ReadonlyArray<Pick<VO.ExerciseInstructionType, "id">> } | undefined;
-  exerciseInstructionId: VO.ExerciseInstructionIdType;
+  exerciseInstruction: Pick<VO.ExerciseInstructionType, "id"> | undefined;
+};
+type PlanSectionExerciseInstructionExistsPassedConfigType = {
+  exerciseInstruction: Pick<VO.ExerciseInstructionType, "id">;
 };
 
-class PlanSectionExerciseInstructionExistsFactory extends bg.Invariant<PlanSectionExerciseInstructionExistsConfigType> {
+class PlanSectionExerciseInstructionExistsFactory extends bg.Invariant<
+  PlanSectionExerciseInstructionExistsConfigType,
+  PlanSectionExerciseInstructionExistsPassedConfigType
+> {
   passes(config: PlanSectionExerciseInstructionExistsConfigType) {
-    return (
-      config.planSection?.exerciseInstructions.some(
-        (exerciseInstruction) => exerciseInstruction.id === config.exerciseInstructionId,
-      ) ??
-      // Stryker disable next-line BooleanLiteral
-      false
-    );
+    return config.exerciseInstruction !== undefined;
   }
 
   // Stryker disable next-line StringLiteral

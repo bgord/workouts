@@ -33,8 +33,9 @@ export const handleExerciseUnassignCategoryCommand =
     );
 
     ExerciseIsAssignedToCategory.enforce({
-      exerciseCategories,
-      exerciseCategoryId: command.payload.exerciseCategoryId,
+      assignment: exerciseCategories.find(
+        (exerciseCategory) => exerciseCategory.id === command.payload.exerciseCategoryId,
+      ),
     });
 
     const event = bg.event(

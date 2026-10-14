@@ -27,16 +27,13 @@ export const handleExerciseCategoryRoleSetCommand =
       command.payload.exerciseId,
     );
 
-    ExerciseIsAssignedToCategory.enforce({
-      exerciseCategories,
-      exerciseCategoryId: command.payload.exerciseCategoryId,
+    const { assignment } = ExerciseIsAssignedToCategory.enforce({
+      assignment: exerciseCategories.find(
+        (exerciseCategory) => exerciseCategory.id === command.payload.exerciseCategoryId,
+      ),
     });
 
-    const assignment = exerciseCategories.find(
-      (exerciseCategory) => exerciseCategory.id === command.payload.exerciseCategoryId,
-    );
-
-    ExerciseCategoryRoleHasChanged.enforce({ current: assignment!.role, incoming: command.payload.role });
+    ExerciseCategoryRoleHasChanged.enforce({ current: assignment.role, incoming: command.payload.role });
 
     const event = bg.event(
       ExerciseCategoryRoleSetEvent,

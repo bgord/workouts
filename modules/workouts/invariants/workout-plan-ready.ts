@@ -4,8 +4,12 @@ import type * as Plans from "+plans";
 class WorkoutPlanReadyError extends Error {}
 
 type WorkoutPlanReadyConfigType = { plan: Pick<Plans.VO.PlanSummary, "id"> | null };
+type WorkoutPlanReadyPassedConfigType = { plan: Pick<Plans.VO.PlanSummary, "id"> };
 
-class WorkoutPlanReadyFactory extends bg.Invariant<WorkoutPlanReadyConfigType> {
+class WorkoutPlanReadyFactory extends bg.Invariant<
+  WorkoutPlanReadyConfigType,
+  WorkoutPlanReadyPassedConfigType
+> {
   passes(config: WorkoutPlanReadyConfigType) {
     return config.plan !== null;
   }
