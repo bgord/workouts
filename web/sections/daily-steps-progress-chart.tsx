@@ -5,7 +5,6 @@ import { DailyStepsChartGranularityOptions } from "../../modules/measurements/va
 import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
-import { DailyStepsGoalSet } from "./daily-steps-goal-set";
 
 const POINT_HIT_RADIUS = 8;
 const STEPS_IN_THOUSAND = 1000;
@@ -44,7 +43,7 @@ export function DailyStepsProgressChart() {
     <div data-stack="y" {...ui.Gap.related}>
       <h2>{t("measurements.daily_steps.progress")}</h2>
 
-      <div data-cross="center" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
+      <div data-stack="x" {...ui.Gap.cluster}>
         <ui.Select
           aria-label={t("measurements.daily_steps.progress.granularity.label")}
           id={DailyStepsChartForm.Form.chart.field.name}
@@ -85,8 +84,6 @@ export function DailyStepsProgressChart() {
         >
           <X data-size="sm" />
         </ui.IconButton>
-
-        <DailyStepsGoalSet goal={goal} key={goal} />
       </div>
 
       <ui.LineChart
