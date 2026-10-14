@@ -31,6 +31,7 @@ export function BodyPartMeasure(props: BodyPartSummary) {
       fetch(`/api/measurements/body-part/${props.id}/measure`, {
         method: "POST",
         credentials: "include",
+        headers: bg.TimeZoneOffset.get(),
         body: JSON.stringify({
           value: LengthFormat.millimeters(value.value ?? 0),
           measuredOn: measuredOn.value,

@@ -15,6 +15,7 @@ export const BodyPartMeasurementCorrect =
     const body = await context.request.json();
 
     const requesterId = context.identity.authenticatedUserId();
+    const timeZoneOffset = context.middleware.timeZoneOffset();
     const id = v.parse(Measurements.VO.BodyPartMeasurementId, params["bodyPartMeasurementId"]);
     const bodyPartId = v.parse(Measurements.VO.BodyPartId, body["bodyPartId"]);
     const value = v.parse(Measurements.VO.BodyPartCircumference, body["value"]);
@@ -22,7 +23,7 @@ export const BodyPartMeasurementCorrect =
 
     const command = bg.command(
       Measurements.Commands.BodyPartMeasurementCorrectCommand,
-      { payload: { id, bodyPartId, value, measuredOn, requesterId } },
+      { payload: { id, bodyPartId, value, measuredOn, requesterId, timeZoneOffset } },
       deps,
     );
 

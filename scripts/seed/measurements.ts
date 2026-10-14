@@ -1,5 +1,5 @@
 import * as bg from "@bgord/bun";
-import type * as tools from "@bgord/tools";
+import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Measurements from "+measurements";
@@ -20,6 +20,7 @@ export async function measureBodyWeight(
         weight: v.parse(Measurements.VO.BodyWeight, measurement.grams),
         measuredOn: v.parse(Measurements.VO.BodyWeightMeasuredOn, measurement.measuredOn),
         userId,
+        timeZoneOffset: tools.Duration.ZERO,
       },
     },
     deps,
@@ -65,6 +66,7 @@ export async function recordDailySteps(
         day: v.parse(Measurements.VO.DailyStepsDay, dailySteps.day),
         count: v.parse(Measurements.VO.StepsCount, dailySteps.count),
         source: Measurements.VO.StepsSourceOptions.manual,
+        timeZoneOffset: tools.Duration.ZERO,
       },
     },
     deps,
@@ -126,6 +128,7 @@ export async function measureBodyPart(
         value: v.parse(Measurements.VO.BodyPartCircumference, measurement.millimeters),
         measuredOn: v.parse(Measurements.VO.BodyPartMeasuredOn, measurement.measuredOn),
         userId,
+        timeZoneOffset: tools.Duration.ZERO,
       },
     },
     deps,

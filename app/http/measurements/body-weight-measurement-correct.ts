@@ -15,13 +15,14 @@ export const BodyWeightMeasurementCorrect =
     const body = await context.request.json();
 
     const requesterId = context.identity.authenticatedUserId();
+    const timeZoneOffset = context.middleware.timeZoneOffset();
     const id = v.parse(Measurements.VO.BodyWeightMeasurementId, params["bodyWeightMeasurementId"]);
     const weight = v.parse(Measurements.VO.BodyWeight, body["weight"]);
     const measuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, body["measuredOn"]);
 
     const command = bg.command(
       Measurements.Commands.BodyWeightMeasurementCorrectCommand,
-      { payload: { id, weight, measuredOn, requesterId } },
+      { payload: { id, weight, measuredOn, requesterId, timeZoneOffset } },
       deps,
     );
 

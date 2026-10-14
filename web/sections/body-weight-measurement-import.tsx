@@ -25,6 +25,7 @@ export function BodyWeightMeasurementImport() {
         method: "POST",
         body: form,
         credentials: "include",
+        headers: bg.TimeZoneOffset.get(),
       });
     },
     onSuccess: async () => {

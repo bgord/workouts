@@ -90,6 +90,24 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("DailyStepsDayIsNotInFuture - time zone offset", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+
+    const response = await server.request(
+      url,
+      {
+        method: "POST",
+        headers: mocks.timeZoneOffsetHeaders,
+        body: JSON.stringify({ day: mocks.dailyStepsDay, count: mocks.stepsCount }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "daily.steps.day.is.not.in.future");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

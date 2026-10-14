@@ -30,7 +30,9 @@ export const handleBodyWeightMeasurementCorrectCommand =
       incoming: { weight: command.payload.weight, measuredOn: command.payload.measuredOn },
     });
 
-    const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
+    const today = tools.Day.fromTimestamp(
+      deps.Clock.now().subtract(command.payload.timeZoneOffset),
+    ).toIsoId();
 
     BodyWeightMeasuredOnIsNotInFuture.enforce({ measuredOn: command.payload.measuredOn, today });
 

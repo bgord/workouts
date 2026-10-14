@@ -125,6 +125,29 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("DailyStepsDayIsNotInFuture - time zone offset", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+
+    const content = [
+      ["day", "count"],
+      [mocks.dailyStepsDay, mocks.stepsCount],
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+    const form = new FormData();
+    form.append("file", mocks.dailyStepsCsvFile(content));
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.timeZoneOffsetHeaders, body: form },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "daily.steps.day.is.not.in.future");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

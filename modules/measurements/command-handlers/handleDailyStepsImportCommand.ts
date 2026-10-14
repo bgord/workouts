@@ -13,7 +13,9 @@ type Dependencies = {
 
 export const handleDailyStepsImportCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.DailyStepsImportCommandType) => {
-    const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
+    const today = tools.Day.fromTimestamp(
+      deps.Clock.now().subtract(command.payload.timeZoneOffset),
+    ).toIsoId();
 
     for (const entry of command.payload.entries) {
       DailyStepsDayIsNotInFuture.enforce({ day: entry.day, today });

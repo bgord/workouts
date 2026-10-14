@@ -1,4 +1,5 @@
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import { DailyStepsDay } from "../value-objects/daily-steps-day";
@@ -16,6 +17,7 @@ export const DailyStepsRecordCommand = v.object({
     day: DailyStepsDay,
     count: StepsCount,
     source: StepsSource,
+    timeZoneOffset: v.instance(tools.Duration),
   }),
 });
 

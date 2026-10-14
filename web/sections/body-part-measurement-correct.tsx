@@ -30,6 +30,7 @@ export function BodyPartMeasurementCorrect(
       fetch(`/api/measurements/body-part/measurement/${props.measurement.id}`, {
         method: "PATCH",
         credentials: "include",
+        headers: bg.TimeZoneOffset.get(),
         body: JSON.stringify({
           bodyPartId: props.measurement.bodyPartId,
           measuredOn: measuredOn.value,

@@ -1,4 +1,5 @@
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import { BodyPartCircumference } from "../value-objects/body-part-circumference";
@@ -22,6 +23,7 @@ export const BodyPartMeasurementsImportCommand = v.object({
       }),
     ),
     userId: Auth.VO.UserId,
+    timeZoneOffset: v.instance(tools.Duration),
   }),
 });
 

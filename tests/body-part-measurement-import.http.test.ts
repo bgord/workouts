@@ -151,6 +151,31 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("BodyPartMeasuredOnIsNotInFuture - time zone offset", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+
+    const form = new FormData();
+    form.append(
+      "file",
+      mocks.bodyPartMeasurementCsvFile(
+        [
+          "id,bodyPartName,value,measuredOn",
+          `,${mocks.bodyPartName},${mocks.bodyPartCircumference},${mocks.bodyPartMeasuredOn}`,
+        ].join("\n"),
+      ),
+    );
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.timeZoneOffsetHeaders, body: form },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "body.part.measured.on.is.not.in.future");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("BodyPartExists", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

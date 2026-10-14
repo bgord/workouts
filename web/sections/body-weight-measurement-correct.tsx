@@ -30,6 +30,7 @@ export function BodyWeightMeasurementCorrect(
       fetch(`/api/measurements/body-weight/measurement/${props.measurement.id}`, {
         method: "PATCH",
         credentials: "include",
+        headers: bg.TimeZoneOffset.get(),
         body: JSON.stringify({ measuredOn: measuredOn.value, weight: WeightFormat.grams(weight.value ?? 0) }),
       }),
     onSuccess: async () => {

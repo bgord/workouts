@@ -14,6 +14,7 @@ export const DailyStepsRecord =
     const body = await context.request.json();
 
     const userId = context.identity.authenticatedUserId();
+    const timeZoneOffset = context.middleware.timeZoneOffset();
     const day = v.parse(Measurements.VO.DailyStepsDay, body["day"]);
 
     const provider = new Measurements.Services.StepsProviderManualStrategy({
@@ -22,7 +23,7 @@ export const DailyStepsRecord =
 
     const command = bg.command(
       Measurements.Commands.DailyStepsRecordCommand,
-      { payload: { userId, day, count: await provider.provide(), source: provider.source } },
+      { payload: { userId, day, count: await provider.provide(), source: provider.source, timeZoneOffset } },
       deps,
     );
 

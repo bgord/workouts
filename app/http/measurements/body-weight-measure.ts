@@ -14,13 +14,14 @@ export const BodyWeightMeasure =
     const body = await context.request.json();
 
     const userId = context.identity.authenticatedUserId();
+    const timeZoneOffset = context.middleware.timeZoneOffset();
     const id = v.parse(Measurements.VO.BodyWeightMeasurementId, deps.IdProvider.generate());
     const weight = v.parse(Measurements.VO.BodyWeight, body["weight"]);
     const measuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, body["measuredOn"]);
 
     const command = bg.command(
       Measurements.Commands.BodyWeightMeasureCommand,
-      { payload: { id, weight, measuredOn, userId } },
+      { payload: { id, weight, measuredOn, userId, timeZoneOffset } },
       deps,
     );
 

@@ -1,4 +1,5 @@
 import * as bg from "@bgord/bun";
+import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import { BodyWeight } from "../value-objects/body-weight";
@@ -16,6 +17,7 @@ export const BodyWeightMeasureCommand = v.object({
     weight: BodyWeight,
     measuredOn: BodyWeightMeasuredOn,
     userId: Auth.VO.UserId,
+    timeZoneOffset: v.instance(tools.Duration),
   }),
 });
 

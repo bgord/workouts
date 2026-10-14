@@ -22,6 +22,7 @@ export function DailyStepsCorrect(props: { entry: DailySteps } & bg.UseToggleRet
       fetch("/api/measurements/daily-steps/record", {
         method: "POST",
         credentials: "include",
+        headers: bg.TimeZoneOffset.get(),
         body: JSON.stringify({ day: props.entry.day, count: count.value ?? 0 }),
       }),
     onSuccess: async () => {

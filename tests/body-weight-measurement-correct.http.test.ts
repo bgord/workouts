@@ -179,6 +179,28 @@ describe("PATCH /api/measurements/body-weight/measurement/:bodyWeightMeasurement
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("BodyWeightMeasuredOnIsNotInFuture - time zone offset", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetBodyWeightMeasurementQuery, "execute"))
+      .mockResolvedValue(mocks.bodyWeightMeasurement);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.timeZoneOffsetHeaders,
+        body: JSON.stringify({ weight: mocks.anotherBodyWeight, measuredOn: mocks.bodyWeightMeasuredOn }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "body.weight.measured.on.is.not.in.future");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("happy path - weight", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

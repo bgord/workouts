@@ -15,6 +15,7 @@ export const BodyPartMeasurementImport =
     const form = await context.request.form();
 
     const userId = context.identity.authenticatedUserId();
+    const timeZoneOffset = context.middleware.timeZoneOffset();
     const file = v.parse(v.instance(File), form.get("file"));
 
     const rows = await new Measurements.Services.BodyPartMeasurementImportFileCsv(
@@ -29,7 +30,7 @@ export const BodyPartMeasurementImport =
 
     const command = bg.command(
       Measurements.Commands.BodyPartMeasurementsImportCommand,
-      { payload: { measurements, userId } },
+      { payload: { measurements, userId, timeZoneOffset } },
       deps,
     );
 

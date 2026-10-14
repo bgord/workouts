@@ -275,6 +275,33 @@ describe("PATCH /api/measurements/body-part/measurement/:bodyPartMeasurementId",
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("BodyPartMeasuredOnIsNotInFuture - time zone offset", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies
+      .use(spyOn(di.Adapters.Measurements.GetBodyPartMeasurementQuery, "execute"))
+      .mockResolvedValue(mocks.bodyPartMeasurement);
+    spies.use(spyOn(di.Adapters.Measurements.GetBodyPartQuery, "execute")).mockResolvedValue(mocks.bodyPart);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.timeZoneOffsetHeaders,
+        body: JSON.stringify({
+          bodyPartId: mocks.bodyPartId,
+          value: mocks.anotherBodyPartCircumference,
+          measuredOn: mocks.bodyPartMeasuredOn,
+        }),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "body.part.measured.on.is.not.in.future");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

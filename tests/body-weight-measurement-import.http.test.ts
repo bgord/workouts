@@ -124,6 +124,28 @@ describe(`POST ${url}`, async () => {
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("BodyWeightMeasuredOnIsNotInFuture - time zone offset", async () => {
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+
+    const form = new FormData();
+    form.append(
+      "file",
+      mocks.bodyWeightMeasurementCsvFile(
+        ["id,weight,measuredOn", `,${mocks.bodyWeight},${mocks.bodyWeightMeasuredOn}`].join("\n"),
+      ),
+    );
+
+    const response = await server.request(
+      url,
+      { method: "POST", headers: mocks.timeZoneOffsetHeaders, body: form },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "body.weight.measured.on.is.not.in.future");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("happy path", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");

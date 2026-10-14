@@ -39,6 +39,7 @@ function DailyStepsRecordForm(props: { latest: DailySteps | undefined }) {
       fetch("/api/measurements/daily-steps/record", {
         method: "POST",
         credentials: "include",
+        headers: bg.TimeZoneOffset.get(),
         body: JSON.stringify({ day: day.value, count: count.value ?? 0 }),
       }),
     onSuccess: async () => {

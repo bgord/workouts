@@ -39,6 +39,7 @@ function BodyWeightMeasureForm(props: { latest: BodyWeightMeasurement | undefine
       fetch("/api/measurements/body-weight/measure", {
         method: "POST",
         credentials: "include",
+        headers: bg.TimeZoneOffset.get(),
         body: JSON.stringify({ measuredOn: measuredOn.value, weight: WeightFormat.grams(weight.value ?? 0) }),
       }),
     onSuccess: async () => {

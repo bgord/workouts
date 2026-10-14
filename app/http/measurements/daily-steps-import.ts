@@ -15,6 +15,7 @@ export const DailyStepsImport =
     const form = await context.request.form();
 
     const userId = context.identity.authenticatedUserId();
+    const timeZoneOffset = context.middleware.timeZoneOffset();
     const file = v.parse(v.instance(File), form.get("file"));
 
     const rows = await new Measurements.Services.DailyStepsImportFileCsv(await file.text(), deps).rows();
@@ -29,7 +30,7 @@ export const DailyStepsImport =
 
     const command = bg.command(
       Measurements.Commands.DailyStepsImportCommand,
-      { payload: { entries, userId } },
+      { payload: { entries, userId, timeZoneOffset } },
       deps,
     );
 

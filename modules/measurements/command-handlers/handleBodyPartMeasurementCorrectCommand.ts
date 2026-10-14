@@ -43,7 +43,9 @@ export const handleBodyPartMeasurementCorrectCommand =
 
     BodyPartBelongsToUser.enforce({ userId: bodyPart.userId, requesterId: command.payload.requesterId });
 
-    const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
+    const today = tools.Day.fromTimestamp(
+      deps.Clock.now().subtract(command.payload.timeZoneOffset),
+    ).toIsoId();
 
     BodyPartMeasuredOnIsNotInFuture.enforce({ measuredOn: command.payload.measuredOn, today });
 

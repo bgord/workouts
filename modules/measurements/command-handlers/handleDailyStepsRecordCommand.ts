@@ -13,7 +13,9 @@ type Dependencies = {
 
 export const handleDailyStepsRecordCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.DailyStepsRecordCommandType) => {
-    const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
+    const today = tools.Day.fromTimestamp(
+      deps.Clock.now().subtract(command.payload.timeZoneOffset),
+    ).toIsoId();
 
     DailyStepsDayIsNotInFuture.enforce({ day: command.payload.day, today });
 

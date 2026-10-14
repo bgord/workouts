@@ -26,6 +26,7 @@ export const revisionHeaders = (revision = 0) => ({
   "if-match": `W/${v.parse(tools.RevisionValue, revision)}`,
 });
 export const correlationIdHeaders = { "correlation-id": correlationId };
+export const timeZoneOffsetHeaders = { "time-zone-offset": "60" };
 
 export const headers = (revision = 0) => ({ ...revisionHeaders(revision), ...correlationIdHeaders });
 

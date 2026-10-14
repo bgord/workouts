@@ -15,7 +15,9 @@ type Dependencies = {
 
 export const handleBodyPartMeasurementsImportCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyPartMeasurementsImportCommandType) => {
-    const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
+    const today = tools.Day.fromTimestamp(
+      deps.Clock.now().subtract(command.payload.timeZoneOffset),
+    ).toIsoId();
 
     for (const measurement of command.payload.measurements) {
       BodyPartMeasuredOnIsNotInFuture.enforce({ measuredOn: measurement.measuredOn, today });
