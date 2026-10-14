@@ -20,10 +20,11 @@ export const handleBodyPartMeasureCommand =
 
     BodyPartMeasuredOnIsNotInFuture.enforce({ measuredOn: command.payload.measuredOn, today });
 
-    const bodyPart = await deps.GetBodyPartQuery.execute(command.payload.bodyPartId);
+    const { bodyPart } = BodyPartExists.enforce({
+      bodyPart: await deps.GetBodyPartQuery.execute(command.payload.bodyPartId),
+    });
 
-    BodyPartExists.enforce({ bodyPart });
-    BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.userId });
+    BodyPartBelongsToUser.enforce({ userId: bodyPart.userId, requesterId: command.payload.userId });
 
     const event = bg.event(
       BodyPartMeasuredEvent,

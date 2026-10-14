@@ -17,11 +17,12 @@ type Dependencies = {
 
 export const handleBodyPartRenameCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyPartRenameCommandType) => {
-    const bodyPart = await deps.GetBodyPartQuery.execute(command.payload.id);
+    const { bodyPart } = BodyPartExists.enforce({
+      bodyPart: await deps.GetBodyPartQuery.execute(command.payload.id),
+    });
 
-    BodyPartExists.enforce({ bodyPart });
-    BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.requesterId });
-    BodyPartNameHasChanged.enforce({ current: bodyPart!.name, incoming: command.payload.name });
+    BodyPartBelongsToUser.enforce({ userId: bodyPart.userId, requesterId: command.payload.requesterId });
+    BodyPartNameHasChanged.enforce({ current: bodyPart.name, incoming: command.payload.name });
 
     const count = await deps.GetBodyPartNameCountQuery.execute(
       command.payload.requesterId,

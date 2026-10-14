@@ -20,15 +20,16 @@ type Dependencies = {
 
 export const handleBodyPartMeasurementCorrectCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyPartMeasurementCorrectCommandType) => {
-    const measurement = await deps.GetBodyPartMeasurementQuery.execute(command.payload.id);
+    const { measurement } = BodyPartMeasurementExists.enforce({
+      measurement: await deps.GetBodyPartMeasurementQuery.execute(command.payload.id),
+    });
 
-    BodyPartMeasurementExists.enforce({ measurement });
     BodyPartMeasurementBelongsToUser.enforce({
-      userId: measurement!.userId,
+      userId: measurement.userId,
       requesterId: command.payload.requesterId,
     });
     BodyPartMeasurementHasChanged.enforce({
-      current: measurement!,
+      current: measurement,
       incoming: {
         bodyPartId: command.payload.bodyPartId,
         value: command.payload.value,
@@ -36,10 +37,11 @@ export const handleBodyPartMeasurementCorrectCommand =
       },
     });
 
-    const bodyPart = await deps.GetBodyPartQuery.execute(command.payload.bodyPartId);
+    const { bodyPart } = BodyPartExists.enforce({
+      bodyPart: await deps.GetBodyPartQuery.execute(command.payload.bodyPartId),
+    });
 
-    BodyPartExists.enforce({ bodyPart });
-    BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.requesterId });
+    BodyPartBelongsToUser.enforce({ userId: bodyPart.userId, requesterId: command.payload.requesterId });
 
     const today = tools.Day.fromTimestamp(deps.Clock.now()).toIsoId();
 

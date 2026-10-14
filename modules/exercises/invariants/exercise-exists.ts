@@ -4,8 +4,9 @@ import type * as VO from "+exercises/value-objects";
 class ExerciseExistsError extends Error {}
 
 type ExerciseExistsConfigType = { exercise: VO.Exercise | null };
+type ExerciseExistsPassedConfigType = { exercise: VO.Exercise };
 
-class ExerciseExistsFactory extends bg.Invariant<ExerciseExistsConfigType> {
+class ExerciseExistsFactory extends bg.Invariant<ExerciseExistsConfigType, ExerciseExistsPassedConfigType> {
   passes(config: ExerciseExistsConfigType) {
     return config.exercise !== null;
   }

@@ -16,11 +16,12 @@ export const handlePlanSectionExerciseInstructionAddCommand =
     const plan = await deps.repo.load(command.payload.planId);
     command.revision.validate(plan.revision.value);
 
-    const exercise = await deps.GetExerciseOHQ.execute(command.payload.exerciseInstruction.exerciseId);
+    const { exercise } = PlanSectionExerciseExists.enforce({
+      exercise: await deps.GetExerciseOHQ.execute(command.payload.exerciseInstruction.exerciseId),
+    });
 
-    PlanSectionExerciseExists.enforce({ exercise });
     PlanSectionExerciseInstructionProgressionIsApplicable.enforce({
-      resistance: exercise!.resistance,
+      resistance: exercise.resistance,
       progression: command.payload.exerciseInstruction.progression,
     });
 

@@ -19,11 +19,12 @@ export const handleExerciseUpdateCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseUpdateCommandType) => {
     CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
-    const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
+    const { exercise } = ExerciseExists.enforce({
+      exercise: await deps.GetExerciseQuery.execute(command.payload.id),
+    });
 
-    ExerciseExists.enforce({ exercise });
     ExerciseHasChanged.enforce({
-      current: exercise!,
+      current: exercise,
       incoming: { name: command.payload.name, description: command.payload.description },
     });
 

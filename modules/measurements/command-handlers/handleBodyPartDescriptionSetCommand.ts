@@ -15,12 +15,13 @@ type Dependencies = {
 
 export const handleBodyPartDescriptionSetCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyPartDescriptionSetCommandType) => {
-    const bodyPart = await deps.GetBodyPartQuery.execute(command.payload.id);
+    const { bodyPart } = BodyPartExists.enforce({
+      bodyPart: await deps.GetBodyPartQuery.execute(command.payload.id),
+    });
 
-    BodyPartExists.enforce({ bodyPart });
-    BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.requesterId });
+    BodyPartBelongsToUser.enforce({ userId: bodyPart.userId, requesterId: command.payload.requesterId });
     BodyPartDescriptionHasChanged.enforce({
-      current: bodyPart!.description,
+      current: bodyPart.description,
       incoming: command.payload.description,
     });
 

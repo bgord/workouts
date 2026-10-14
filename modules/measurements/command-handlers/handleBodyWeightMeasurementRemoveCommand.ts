@@ -14,11 +14,12 @@ type Dependencies = {
 
 export const handleBodyWeightMeasurementRemoveCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyWeightMeasurementRemoveCommandType) => {
-    const measurement = await deps.GetBodyWeightMeasurementQuery.execute(command.payload.id);
+    const { measurement } = BodyWeightMeasurementExists.enforce({
+      measurement: await deps.GetBodyWeightMeasurementQuery.execute(command.payload.id),
+    });
 
-    BodyWeightMeasurementExists.enforce({ measurement });
     BodyWeightMeasurementBelongsToUser.enforce({
-      userId: measurement!.userId,
+      userId: measurement.userId,
       requesterId: command.payload.requesterId,
     });
 

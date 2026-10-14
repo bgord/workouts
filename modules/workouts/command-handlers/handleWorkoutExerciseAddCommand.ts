@@ -22,21 +22,22 @@ export const handleWorkoutExerciseAddCommand =
     const workout = await deps.repo.load(command.payload.workoutId);
     command.revision.validate(workout.revision.value);
 
-    const exercise = await deps.GetExerciseOHQ.execute(command.payload.exerciseId);
+    const { exercise } = WorkoutCatalogExerciseExists.enforce({
+      exercise: await deps.GetExerciseOHQ.execute(command.payload.exerciseId),
+    });
 
-    WorkoutCatalogExerciseExists.enforce({ exercise });
     WorkoutExerciseProgressionIsApplicable.enforce({
-      resistance: exercise!.resistance,
+      resistance: exercise.resistance,
       progression: command.payload.prescription.progression,
     });
 
     workout.addExercise(
       command.payload.workoutExerciseId,
-      exercise!.id,
-      v.parse(WorkoutExerciseName, exercise!.name),
-      v.parse(WorkoutExerciseDescription, exercise!.description),
-      v.parse(WorkoutExerciseResistance, exercise!.resistance),
-      v.parse(WorkoutExerciseLaterality, exercise!.laterality),
+      exercise.id,
+      v.parse(WorkoutExerciseName, exercise.name),
+      v.parse(WorkoutExerciseDescription, exercise.description),
+      v.parse(WorkoutExerciseResistance, exercise.resistance),
+      v.parse(WorkoutExerciseLaterality, exercise.laterality),
       command.payload.prescription,
       command.payload.requesterId,
     );

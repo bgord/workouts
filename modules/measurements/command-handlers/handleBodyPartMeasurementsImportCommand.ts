@@ -21,23 +21,26 @@ export const handleBodyPartMeasurementsImportCommand =
       BodyPartMeasuredOnIsNotInFuture.enforce({ measuredOn: measurement.measuredOn, today });
     }
 
-    const bodyParts = await Promise.all(
-      command.payload.measurements.map((measurement) =>
-        deps.GetBodyPartByNameQuery.execute(command.payload.userId, measurement.bodyPartName),
-      ),
+    const measurements = await Promise.all(
+      command.payload.measurements.map(async (measurement) => {
+        const { bodyPart } = BodyPartExists.enforce({
+          bodyPart: await deps.GetBodyPartByNameQuery.execute(
+            command.payload.userId,
+            measurement.bodyPartName,
+          ),
+        });
+
+        return { measurement, bodyPart };
+      }),
     );
 
-    for (const bodyPart of bodyParts) {
-      BodyPartExists.enforce({ bodyPart });
-    }
-
-    for (const [index, measurement] of command.payload.measurements.entries()) {
+    for (const { measurement, bodyPart } of measurements) {
       const event = bg.event(
         BodyPartMeasuredEvent,
         `body_part_measurement_${measurement.id}`,
         {
           id: measurement.id,
-          bodyPartId: bodyParts[index]!.id,
+          bodyPartId: bodyPart.id,
           value: measurement.value,
           measuredOn: measurement.measuredOn,
           userId: command.payload.userId,

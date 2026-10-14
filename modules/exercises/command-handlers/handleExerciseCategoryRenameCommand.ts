@@ -19,11 +19,12 @@ export const handleExerciseCategoryRenameCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseCategoryRenameCommandType) => {
     CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
-    const exerciseCategory = await deps.GetExerciseCategoryQuery.execute(command.payload.id);
+    const { exerciseCategory } = ExerciseCategoryExists.enforce({
+      exerciseCategory: await deps.GetExerciseCategoryQuery.execute(command.payload.id),
+    });
 
-    ExerciseCategoryExists.enforce({ exerciseCategory });
     ExerciseCategoryNameHasChanged.enforce({
-      current: exerciseCategory!.name,
+      current: exerciseCategory.name,
       incoming: command.payload.name,
     });
 

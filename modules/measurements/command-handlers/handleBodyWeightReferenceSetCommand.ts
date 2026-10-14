@@ -15,14 +15,15 @@ type Dependencies = {
 
 export const handleBodyWeightReferenceSetCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyWeightReferenceSetCommandType) => {
-    const measurement = await deps.GetBodyWeightMeasurementQuery.execute(command.payload.measurementId);
+    const { measurement } = BodyWeightMeasurementExists.enforce({
+      measurement: await deps.GetBodyWeightMeasurementQuery.execute(command.payload.measurementId),
+    });
 
-    BodyWeightMeasurementExists.enforce({ measurement });
     BodyWeightMeasurementBelongsToUser.enforce({
-      userId: measurement!.userId,
+      userId: measurement.userId,
       requesterId: command.payload.requesterId,
     });
-    BodyWeightReferenceHasChanged.enforce({ measurement: measurement!, goal: command.payload.goal });
+    BodyWeightReferenceHasChanged.enforce({ measurement, goal: command.payload.goal });
 
     const event = bg.event(
       BodyWeightReferenceSetEvent,

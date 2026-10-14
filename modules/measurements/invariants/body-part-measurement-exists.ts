@@ -4,8 +4,12 @@ import type * as VO from "+measurements/value-objects";
 class BodyPartMeasurementExistsError extends Error {}
 
 type BodyPartMeasurementExistsConfigType = { measurement: VO.BodyPartMeasurement | null };
+type BodyPartMeasurementExistsPassedConfigType = { measurement: VO.BodyPartMeasurement };
 
-class BodyPartMeasurementExistsFactory extends bg.Invariant<BodyPartMeasurementExistsConfigType> {
+class BodyPartMeasurementExistsFactory extends bg.Invariant<
+  BodyPartMeasurementExistsConfigType,
+  BodyPartMeasurementExistsPassedConfigType
+> {
   passes(config: BodyPartMeasurementExistsConfigType) {
     return config.measurement !== null;
   }

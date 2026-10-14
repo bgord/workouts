@@ -17,15 +17,16 @@ type Dependencies = {
 
 export const handleBodyWeightMeasurementCorrectCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyWeightMeasurementCorrectCommandType) => {
-    const measurement = await deps.GetBodyWeightMeasurementQuery.execute(command.payload.id);
+    const { measurement } = BodyWeightMeasurementExists.enforce({
+      measurement: await deps.GetBodyWeightMeasurementQuery.execute(command.payload.id),
+    });
 
-    BodyWeightMeasurementExists.enforce({ measurement });
     BodyWeightMeasurementBelongsToUser.enforce({
-      userId: measurement!.userId,
+      userId: measurement.userId,
       requesterId: command.payload.requesterId,
     });
     BodyWeightMeasurementHasChanged.enforce({
-      current: measurement!,
+      current: measurement,
       incoming: { weight: command.payload.weight, measuredOn: command.payload.measuredOn },
     });
 

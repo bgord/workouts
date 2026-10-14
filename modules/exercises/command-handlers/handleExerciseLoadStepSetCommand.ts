@@ -18,12 +18,13 @@ export const handleExerciseLoadStepSetCommand =
   (deps: Dependencies) => async (command: Exercises.Commands.ExerciseLoadStepSetCommandType) => {
     CatalogIsManagedByAdmin.enforce({ requesterId: command.payload.requesterId });
 
-    const exercise = await deps.GetExerciseQuery.execute(command.payload.id);
+    const { exercise } = ExerciseExists.enforce({
+      exercise: await deps.GetExerciseQuery.execute(command.payload.id),
+    });
 
-    ExerciseExists.enforce({ exercise });
-    ExerciseLoadStepHasChanged.enforce({ current: exercise!.loadStep, incoming: command.payload.loadStep });
+    ExerciseLoadStepHasChanged.enforce({ current: exercise.loadStep, incoming: command.payload.loadStep });
     ExerciseLoadStepIsApplicable.enforce({
-      resistance: exercise!.resistance,
+      resistance: exercise.resistance,
       loadStep: command.payload.loadStep,
     });
 

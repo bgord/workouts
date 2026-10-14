@@ -14,10 +14,11 @@ type Dependencies = {
 
 export const handleBodyPartDeleteCommand =
   (deps: Dependencies) => async (command: Measurements.Commands.BodyPartDeleteCommandType) => {
-    const bodyPart = await deps.GetBodyPartQuery.execute(command.payload.id);
+    const { bodyPart } = BodyPartExists.enforce({
+      bodyPart: await deps.GetBodyPartQuery.execute(command.payload.id),
+    });
 
-    BodyPartExists.enforce({ bodyPart });
-    BodyPartBelongsToUser.enforce({ userId: bodyPart!.userId, requesterId: command.payload.requesterId });
+    BodyPartBelongsToUser.enforce({ userId: bodyPart.userId, requesterId: command.payload.requesterId });
 
     const event = bg.event(
       BodyPartDeletedEvent,
