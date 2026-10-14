@@ -499,6 +499,11 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsRecord(deps)),
   );
+  measurements.post(
+    "/daily-steps/goal",
+    Tools.ShieldCaptcha.handle(),
+    bg.EndpointHonoAdapter.adapt(HTTP.Measurements.DailyStepsGoalSet(deps)),
+  );
   measurements.delete(
     "/daily-steps/:day",
     Tools.ShieldCaptcha.handle(),
