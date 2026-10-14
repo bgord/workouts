@@ -50,6 +50,29 @@ export async function setBodyWeightReference(
   await di.Tools.CommandBus.emit(command);
 }
 
+export async function recordDailySteps(
+  di: BootstrapType,
+  userId: Auth.VO.UserIdType,
+  dailySteps: { count: number; day: tools.DayIsoIdType },
+) {
+  const deps = { ...di.Adapters.System, ...di.Tools };
+
+  const command = bg.command(
+    Measurements.Commands.DailyStepsRecordCommand,
+    {
+      payload: {
+        userId,
+        day: v.parse(Measurements.VO.StepsDay, dailySteps.day),
+        count: v.parse(Measurements.VO.StepsCount, dailySteps.count),
+        source: Measurements.VO.StepsSourceOptions.manual,
+      },
+    },
+    deps,
+  );
+
+  await di.Tools.CommandBus.emit(command);
+}
+
 export async function defineBodyPart(
   di: BootstrapType,
   userId: Auth.VO.UserIdType,

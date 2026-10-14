@@ -8,7 +8,13 @@ import type { BootstrapType } from "+infra/bootstrap";
 import { createAccount } from "../account";
 import { now, withClock } from "../clock";
 import type * as fixtures from "../fixtures";
-import { defineBodyPart, measureBodyPart, measureBodyWeight, setBodyWeightReference } from "../measurements";
+import {
+  defineBodyPart,
+  measureBodyPart,
+  measureBodyWeight,
+  recordDailySteps,
+  setBodyWeightReference,
+} from "../measurements";
 import { draftPlan, finalizePlan } from "../plans";
 import {
   completeWorkout,
@@ -22,6 +28,8 @@ import {
 const bodyWeightWobble = [0, 0.3, -0.2, 0.4, -0.1, 0.2, -0.3];
 
 const bodyPartWobble = [0, 2, -1];
+
+const dailyStepsWobble = [0, 1200, -800, 1500, -400, 900, -1100];
 
 export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.athlete) {
   const { push, pull, legs } = persona.plan.sections;
@@ -126,6 +134,17 @@ export async function seedAthlete(di: BootstrapType, persona: typeof fixtures.at
       id: daysAgo === 84 ? referenceId : di.Adapters.System.IdProvider.generate(),
       grams: Math.round(kilograms * 10) * 100,
       measuredOn: tools.Day.fromTimestamp(now.subtract(tools.Duration.Days(daysAgo))).toIsoId(),
+    });
+  }
+
+  for (let daysAgo = 84; daysAgo >= 1; daysAgo--) {
+    if (daysAgo % 7 === 4) continue;
+
+    const trend = 7000 + ((84 - daysAgo) / 84) * 2000;
+
+    await recordDailySteps(di, userId, {
+      count: Math.round(trend / 100) * 100 + (dailyStepsWobble[daysAgo % dailyStepsWobble.length] ?? 0),
+      day: tools.Day.fromTimestamp(now.subtract(tools.Duration.Days(daysAgo))).toIsoId(),
     });
   }
 
