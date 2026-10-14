@@ -2,6 +2,13 @@ import { test as base, expect } from "@playwright/test";
 import { e2eCoverageFixture } from "../../bgord-scripts/e2e-coverage-fixture";
 
 export const test = base.extend<{ pageErrors: void; coverage: void }>({
+  permissions: async ({ browserName }, use) => {
+    await use(
+      { chromium: ["clipboard-read", "clipboard-write"], firefox: [], webkit: ["clipboard-read"] }[
+        browserName
+      ],
+    );
+  },
   page: async ({ page }, use) => {
     const goto = page.goto.bind(page);
 

@@ -62,7 +62,7 @@ test.describe("Catalog - admin", () => {
 
     await page.getByRole("button", { name: "New exercise" }).click();
     await page.getByLabel("Exercise name").fill("ab");
-    await page.getByLabel("Description").fill("ab");
+    await page.getByLabel("Description").pressSequentially("ab");
     await page.getByRole("button", { name: "Next", exact: true }).click();
 
     await expect(page.getByLabel("Exercise name").and(page.locator(":invalid"))).toHaveCount(1);
@@ -262,7 +262,8 @@ test.describe("Catalog - admin", () => {
     await page
       .getByRole("button", { name: "Lie on your back, curl the head up with a plate on the forehead." })
       .click();
-    await page.getByLabel("Description").fill("ab");
+    await page.getByLabel("Description").clear();
+    await page.getByLabel("Description").pressSequentially("ab");
     await page.getByRole("button", { name: "Save", exact: true }).click();
 
     await expect(page.getByLabel("Description").and(page.locator(":invalid"))).toHaveCount(1);

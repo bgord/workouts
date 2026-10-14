@@ -18,8 +18,7 @@ test.describe("Plan - builder", () => {
     await expect(page.getByRole("button", { name: "Restore" })).toBeHidden();
   });
 
-  test("copies the plan outline to the clipboard", async ({ page, context }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  test("copies the plan outline to the clipboard", async ({ page }) => {
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
 
     await page.getByRole("button", { name: "More actions" }).click();
@@ -41,6 +40,9 @@ test.describe("Plan - builder", () => {
   });
 
   test("shows the error when copying the plan outline fails", async ({ page }) => {
+    await page.addInitScript(() => {
+      navigator.clipboard.writeText = () => Promise.reject(new Error());
+    });
     await page.goto(`/plans/${fixtures.builder.plan.id}`);
 
     await page.getByRole("button", { name: "More actions" }).click();

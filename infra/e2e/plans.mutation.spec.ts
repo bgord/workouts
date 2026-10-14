@@ -436,8 +436,7 @@ test.describe("Plans - drafter", () => {
     await expect(row.getByRole("note", { name: "Double progression" })).toBeVisible();
   });
 
-  test("sets a target RIR on the exercise instruction", async ({ page, context }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  test("sets a target RIR on the exercise instruction", async ({ page }) => {
     const row = page.getByRole("listitem", { name: fixtures.exercises.facePull.name, exact: true });
 
     await page.goto(`/plans/${fixtures.drafter.plan.id}`);

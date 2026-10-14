@@ -530,8 +530,7 @@ test.describe("Workouts - athlete-mutation", () => {
     );
   });
 
-  test("copies the completed workout to the clipboard", async ({ page, context }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  test("copies the completed workout to the clipboard", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.athleteMutation.scheduledWorkout.id}`);
 
     await page.getByRole("button", { name: "More actions" }).click();
@@ -1142,8 +1141,7 @@ test.describe("Workouts - hanger", () => {
     await expect(row.getByText("12", { exact: true })).toBeVisible();
   });
 
-  test("copies the completed bodyweight workout", async ({ page, context }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  test("copies the completed bodyweight workout", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.hanger.scheduledWorkout.id}`);
     await page.getByRole("button", { name: "Complete" }).click();
 
