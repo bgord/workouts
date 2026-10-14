@@ -42,7 +42,7 @@ test.describe("Daily steps - athlete", () => {
     await page.goto("/measurements/daily-steps");
 
     await expect(tile.getByRole("img", { name: "Increase" })).toBeVisible();
-    await expect(tile.getByText("10,200 steps", { exact: true })).toBeVisible();
+    await expect(tile.getByText("2,000", { exact: true })).toBeVisible();
   });
 
   test("prefills the steps input with the latest count", async ({ page }) => {

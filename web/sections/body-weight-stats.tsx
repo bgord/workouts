@@ -12,7 +12,13 @@ export function BodyWeightStats(props: VO.BodyWeightStats) {
   const since = bg.useDateTime({ value: props.baseline.measuredOn, format: "short" });
 
   return (
-    <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+    <ul
+      aria-label={t("measurements.body_weight.header")}
+      data-cross="stretch"
+      data-stack="x"
+      data-wrap="wrap"
+      {...ui.Gap.related}
+    >
       <ui.Tile>
         <ui.TileHeader>
           <Scale data-size="xs" />

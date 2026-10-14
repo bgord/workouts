@@ -21,13 +21,14 @@ test.describe("Dashboard - empty", () => {
     ).toBeVisible();
   });
 
-  test("hides the workout cards and body weight stats", async ({ page }) => {
+  test("hides the workout cards, body weight and daily steps stats", async ({ page }) => {
     await page.goto("/");
 
     await expect(page.getByRole("heading", { name: "Next up" })).toBeHidden();
     await expect(page.getByRole("heading", { name: "In progress" })).toBeHidden();
     await expect(page.getByRole("heading", { name: "Last completed" })).toBeHidden();
     await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeHidden();
+    await expect(page.getByRole("listitem", { name: "Latest steps" })).toBeHidden();
   });
 });
 
@@ -63,12 +64,24 @@ test.describe("Dashboard - athlete", () => {
   });
 
   test("shows the body weight stats with the bulk reference", async ({ page }) => {
+    const stats = page.getByRole("list", { name: "Body weight" });
+
     await page.goto("/");
 
-    await expect(page.getByRole("listitem", { name: "Latest weight" })).toBeVisible();
-    await expect(page.getByRole("listitem", { name: "7-day average" })).toBeVisible();
-    await expect(page.getByRole("listitem", { name: "Since reference" })).toBeVisible();
+    await expect(stats.getByRole("listitem", { name: "Latest weight" })).toBeVisible();
+    await expect(stats.getByRole("listitem", { name: "7-day average" })).toBeVisible();
+    await expect(stats.getByRole("listitem", { name: "Since reference" })).toBeVisible();
     await expect(page.getByText(/^Bulk since /)).toBeVisible();
+  });
+
+  test("shows the daily steps stats", async ({ page }) => {
+    const stats = page.getByRole("list", { name: "Daily steps" });
+
+    await page.goto("/");
+
+    await expect(stats.getByRole("listitem", { name: "Latest steps" })).toBeVisible();
+    await expect(stats.getByRole("listitem", { name: "7-day average" })).toBeVisible();
+    await expect(stats.getByRole("listitem", { name: "30-day average" })).toBeVisible();
   });
 
   test("shows the offline bar while the connection is lost", async ({ page, context }) => {

@@ -897,6 +897,7 @@ infra/
 │   ├── body-weight.spec.ts
 │   ├── catalog.mutation.spec.ts
 │   ├── catalog.spec.ts
+│   ├── daily-steps.mutation.spec.ts
 │   ├── daily-steps.spec.ts
 │   ├── dashboard.spec.ts
 │   ├── errors.spec.ts

@@ -19,7 +19,13 @@ export function DailyStepsStats(props: VO.DailyStepsStats) {
     });
 
   return (
-    <ul data-cross="stretch" data-stack="x" data-wrap="wrap" {...ui.Gap.related}>
+    <ul
+      aria-label={t("measurements.daily_steps.header")}
+      data-cross="stretch"
+      data-stack="x"
+      data-wrap="wrap"
+      {...ui.Gap.related}
+    >
       <ui.Tile>
         <ui.TileHeader>
           <Footprints data-size="xs" />

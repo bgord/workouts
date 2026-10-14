@@ -43,6 +43,7 @@ test.describe("Mobile - athlete", () => {
       "/measurements",
       "/measurements/body-weight",
       "/measurements/body-parts",
+      "/measurements/daily-steps",
       "/profile",
     ];
 
@@ -125,6 +126,14 @@ test.describe("Mobile - athlete", () => {
     await page.goto("/measurements/body-weight");
 
     await expect(page.getByRole("spinbutton", { name: "Weight (kg)" })).toBeInViewport();
+    await expect(page.getByRole("button", { name: "Log", exact: true })).toBeInViewport();
+  });
+
+  test("fits the daily steps form on the screen", async ({ page }) => {
+    await page.goto("/measurements/daily-steps");
+
+    await expect(page.getByRole("textbox", { name: "Date" })).toBeInViewport();
+    await expect(page.getByRole("spinbutton", { name: "Steps" })).toBeInViewport();
     await expect(page.getByRole("button", { name: "Log", exact: true })).toBeInViewport();
   });
 

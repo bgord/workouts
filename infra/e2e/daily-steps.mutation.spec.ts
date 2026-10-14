@@ -81,9 +81,9 @@ test.describe("Daily steps - athlete-mutation", () => {
 
     await page.getByRole("spinbutton", { name: "Steps" }).fill("100500");
 
-    await expect(
-      page.getByRole("spinbutton", { name: "Steps" }).and(page.locator(":invalid")),
-    ).toHaveCount(1);
+    await expect(page.getByRole("spinbutton", { name: "Steps" }).and(page.locator(":invalid"))).toHaveCount(
+      1,
+    );
 
     await page.reload();
 
@@ -95,9 +95,9 @@ test.describe("Daily steps - athlete-mutation", () => {
 
     await page.getByRole("spinbutton", { name: "Steps" }).fill("-500");
 
-    await expect(
-      page.getByRole("spinbutton", { name: "Steps" }).and(page.locator(":invalid")),
-    ).toHaveCount(1);
+    await expect(page.getByRole("spinbutton", { name: "Steps" }).and(page.locator(":invalid"))).toHaveCount(
+      1,
+    );
 
     await page.reload();
 
