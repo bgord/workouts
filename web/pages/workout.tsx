@@ -1,5 +1,6 @@
 /* cSpell:disable */
 import * as bg from "@bgord/ui";
+import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
 import { workoutRoute } from "../router";
 import { WorkoutCooldown } from "../sections/workout-cooldown";
@@ -22,6 +23,8 @@ export function Workout() {
 
   const workoutReorder = bg.useToggle({ name: `workout-reorder-${workout.data.id}` });
   const workoutNoteUpdate = bg.useToggle({ name: `workout-note-update-${workout.data.id}` });
+
+  bg.useWakeLock(workout.data.status === WorkoutStatusEnum.in_progress);
 
   return (
     <ui.Main>

@@ -170,6 +170,22 @@ test.describe("Workout - active", () => {
     await expect(page.getByRole("button", { name: /^Change date/ })).toBeHidden();
   });
 
+  test("keeps the screen awake during the workout in progress", async ({ page }) => {
+    await page.addInitScript(() => {
+      const request = navigator.wakeLock.request.bind(navigator.wakeLock);
+
+      navigator.wakeLock.request = (type) => {
+        document.documentElement.dataset["wakeLock"] = type;
+
+        return request(type);
+      };
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await expect(page.locator("html")).toHaveAttribute("data-wake-lock", "screen");
+  });
+
   test("lists the actions of the workout in progress", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.active.workout.id}`);
 
