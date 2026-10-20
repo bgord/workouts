@@ -86,7 +86,7 @@ test.describe("Body weight - athlete-mutation", () => {
 
     await page.reload();
 
-    await expect(page.getByRole("button", { name: "0 kg" })).toBeHidden();
+    await expect(page.getByRole("button", { name: "0 kg", exact: true })).toBeHidden();
   });
 
   test("rejects a body weight date in the future", async ({ page }) => {
