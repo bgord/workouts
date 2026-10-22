@@ -31,5 +31,4 @@ export type BodyweightExercisePerformanceStatistics = {
 };
 
 export type ExercisePerformanceStatistics =
-  | WeightedExercisePerformanceStatistics
-  | BodyweightExercisePerformanceStatistics;
+  WeightedExercisePerformanceStatistics | BodyweightExercisePerformanceStatistics;

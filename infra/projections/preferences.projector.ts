@@ -4,8 +4,7 @@ import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 type AcceptedEvent =
-  | bg.Preferences.Events.UserLanguageSetEventType
-  | Preferences.Events.WeeklySummarySetEventType;
+  bg.Preferences.Events.UserLanguageSetEventType | Preferences.Events.WeeklySummarySetEventType;
 
 type Dependencies = {
   EventBus: bg.EventBusPort<AcceptedEvent>;

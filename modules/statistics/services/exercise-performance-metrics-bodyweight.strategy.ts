@@ -4,9 +4,7 @@ import * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
 import type { ExercisePerformanceMetricsStrategy } from "./exercise-performance-metrics.strategy";
 
-export class ExercisePerformanceMetricsBodyweightStrategy
-  implements ExercisePerformanceMetricsStrategy<VO.BodyweightExercisePerformanceStatistics>
-{
+export class ExercisePerformanceMetricsBodyweightStrategy implements ExercisePerformanceMetricsStrategy<VO.BodyweightExercisePerformanceStatistics> {
   calculate(performance: Workouts.Queries.ExercisePerformance): VO.BodyweightExercisePerformanceStatistics {
     const bestSet = performance.sets.reduce((best, set) => (set.reps > best.reps ? set : best));
 
