@@ -9,6 +9,7 @@ import { createWorkoutsAdapters } from "+infra/adapters/workouts";
 import { createEnvironmentLoader } from "+infra/env";
 import { createTools } from "+infra/tools";
 import { createJobQueue } from "+infra/tools/job-queue.adapter";
+import { createShieldAuth } from "+infra/tools/shield-auth.strategy";
 
 export async function bootstrap() {
   const EnvironmentLoader = await createEnvironmentLoader();
@@ -39,7 +40,14 @@ export async function bootstrap() {
   return {
     Env,
     Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts, Measurements, Notifications },
-    Tools: { ...Tools, JobQueue, JobDispatcher, JobQueueStatsProvider, JobPruner },
+    Tools: {
+      ...Tools,
+      Auth: createShieldAuth(Env, { ...System, ...Tools, JobDispatcher }),
+      JobQueue,
+      JobDispatcher,
+      JobQueueStatsProvider,
+      JobPruner,
+    },
   };
 }
 

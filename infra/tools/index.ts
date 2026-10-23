@@ -8,7 +8,6 @@ import { createEventHandler } from "./event-handler";
 import { createEventStore } from "./event-store";
 import { HashContent } from "./hash-content.strategy";
 import { createPrerequisites } from "./prerequisites";
-import { createShieldAuth } from "./shield-auth.strategy";
 import { createShieldBasicAuth } from "./shield-basic-auth.strategy";
 import { createShieldCaptcha } from "./shield-captcha.strategy";
 import { createShieldRateLimit } from "./shield-rate-limit.strategy";
@@ -41,7 +40,6 @@ export async function createTools(Env: EnvironmentResultType, deps: Dependencies
   const CommitConfig = new bg.StaticConfigAdapter<bg.CommitShaValueType>((await BuildInfoConfig.get()).sha);
 
   return {
-    Auth: createShieldAuth(Env, { ...deps, EventStore, CommitConfig }),
     CronScheduler,
     Prerequisites: createPrerequisites(Env, { ...deps, TranslationsProvider, CronScheduler }),
     ShieldBasicAuth: createShieldBasicAuth(Env),

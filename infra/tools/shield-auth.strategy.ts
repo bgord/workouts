@@ -20,7 +20,7 @@ type Dependencies = {
   CommitConfig: bg.StaticConfigPort<bg.CommitShaValueType>;
   Logger: bg.LoggerPort;
   EventStore: bg.EventStorePort<Auth.Events.AccountCreatedEventType | Auth.Events.AccountDeletedEventType>;
-  Mailer: bg.MailerPort;
+  JobDispatcher: bg.JobDispatcherPort<bg.System.Jobs.SendEmailJobType>;
 };
 
 export function createShieldAuth(Env: EnvironmentResultType, deps: Dependencies) {
@@ -56,24 +56,32 @@ export function createShieldAuth(Env: EnvironmentResultType, deps: Dependencies)
       maxPasswordLength: Auth.VO.Password.MaximumLength,
       requireEmailVerification: true,
       async sendResetPassword({ user, url }) {
-        const config = { to: v.parse(tools.Email, user.email), from: Env.EMAIL_FROM };
         const notification = new Auth.Services.PasswordResetNotificationComposer().compose(
           v.parse(tools.UrlWithoutSlash, url),
         );
         const html = await Emails.renderEmail(Emails.CallToActionEmail, notification.content);
+        const email = bg.job(
+          bg.System.Jobs.SendEmailJobSchema,
+          { from: Env.EMAIL_FROM, to: v.parse(tools.Email, user.email), subject: notification.subject, html },
+          deps,
+        );
 
-        await deps.Mailer.send(new bg.MailerTemplate(config, { subject: notification.subject, html }));
+        await deps.JobDispatcher.enqueue(email);
       },
     },
     emailVerification: {
       async sendVerificationEmail({ user, url }) {
-        const config = { to: v.parse(tools.Email, user.email), from: Env.EMAIL_FROM };
         const notification = new Auth.Services.EmailVerificationNotificationComposer(
           Env.BETTER_AUTH_URL,
         ).compose(v.parse(tools.UrlWithoutSlash, url));
         const html = await Emails.renderEmail(Emails.CallToActionEmail, notification.content);
+        const email = bg.job(
+          bg.System.Jobs.SendEmailJobSchema,
+          { from: Env.EMAIL_FROM, to: v.parse(tools.Email, user.email), subject: notification.subject, html },
+          deps,
+        );
 
-        await deps.Mailer.send(new bg.MailerTemplate(config, { subject: notification.subject, html }));
+        await deps.JobDispatcher.enqueue(email);
       },
       sendOnSignUp: true,
       sendOnSignIn: true,
