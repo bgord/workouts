@@ -125,11 +125,6 @@ export function createPrerequisites(
         { enabled: production },
       ),
       new bg.Prerequisite(
-        "ffmpeg",
-        new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "ffmpeg") }),
-        { enabled: production },
-      ),
-      new bg.Prerequisite(
         "sqlite3",
         new bg.PrerequisiteVerifierBinaryAdapter({ binary: v.parse(bg.Binary, "sqlite3") }),
         { enabled: production },
