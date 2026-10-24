@@ -1,3 +1,4 @@
+import * as bg from "@bgord/bun";
 import * as Exercises from "+exercises";
 import { languages } from "+languages";
 import * as Notifications from "+notifications";
@@ -13,9 +14,9 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
   registerProjectors({ Adapters, Tools });
 
   // Policies
-  new Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
+  new bg.Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
   new Preferences.Policies.SetDefaultWeeklySummary(deps);
-  new Preferences.Policies.ProfileAvatarEraser(deps);
+  new bg.Preferences.Policies.ProfileAvatarEraser(Preferences.VO.ProfileAvatar, deps);
   new Exercises.Policies.ExerciseDeleter(deps);
   new Notifications.Policies.WeeklySummaryScheduler({
     ...deps,

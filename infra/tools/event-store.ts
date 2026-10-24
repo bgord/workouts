@@ -36,11 +36,7 @@ import type {
 } from "+measurements/events";
 import type { WeeklySummarySentEventType, WeeklySummarySkippedEventType } from "+notifications/events";
 import type { PlanEventType } from "+plans/aggregates";
-import type {
-  ProfileAvatarRemovedEventType,
-  ProfileAvatarUpdatedEventType,
-  WeeklySummarySetEventType,
-} from "+preferences/events";
+import type { WeeklySummarySetEventType } from "+preferences/events";
 import type { WorkoutEventType } from "+workouts/aggregates";
 import { EventUpcaster } from "./event-upcaster";
 
@@ -69,8 +65,8 @@ export type AcceptedEventType =
   | PlanEventType
   | WorkoutEventType
   | bg.Preferences.Events.UserLanguageSetEventType
-  | ProfileAvatarUpdatedEventType
-  | ProfileAvatarRemovedEventType
+  | bg.Preferences.Events.ProfileAvatarUpdatedEventType
+  | bg.Preferences.Events.ProfileAvatarRemovedEventType
   | WeeklySummarySetEventType
   | BodyPartDeletedEventType
   | BodyPartDefinedEventType

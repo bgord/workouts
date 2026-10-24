@@ -37,8 +37,8 @@ type AcceptedCommand =
   | PlansCommands.PlanSectionExerciseInstructionUpdateCommandType
   | PlansCommands.PlanSectionExerciseInstructionMoveCommandType
   | bg.Preferences.Commands.SetUserLanguageCommandType
-  | PreferencesCommands.UpdateProfileAvatarCommandType
-  | PreferencesCommands.RemoveProfileAvatarCommandType
+  | bg.Preferences.Commands.UpdateProfileAvatarCommandType
+  | bg.Preferences.Commands.RemoveProfileAvatarCommandType
   | PreferencesCommands.WeeklySummarySetCommandType
   | WorkoutsCommands.WorkoutCreateCommandType
   | WorkoutsCommands.WorkoutExerciseAddCommandType

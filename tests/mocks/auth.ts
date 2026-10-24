@@ -26,17 +26,6 @@ export const GenericAccountCreatedEvent = {
   payload: { userId, timestamp: T0.ms },
 } satisfies Auth.Events.AccountCreatedEventType;
 
-export const GenericAccountDeletedEvent = {
-  id: expectAnyId,
-  correlationId,
-  createdAt: T0.ms,
-  stream: accountStream,
-  version: 1,
-  commit,
-  name: "ACCOUNT_DELETED_EVENT",
-  payload: { userId, timestamp: T0.ms },
-} satisfies Auth.Events.AccountDeletedEventType;
-
 export const user = {
   name: email,
   email,

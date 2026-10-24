@@ -547,7 +547,7 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     Tools.ShieldCaptcha.handle(),
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.UpdateUserLanguage(deps)),
+    bg.EndpointHonoAdapter.adapt(bg.Preferences.HTTP.UpdateUserLanguage(deps)),
   );
   server.get(
     "/preferences/weekly-summary/get",
@@ -575,20 +575,22 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
       },
       { FileTypeDetector: new bg.FileTypeDetectorMagicBytesStrategy() },
     ).handle(),
-    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.UpdateProfileAvatar(deps)),
+    bg.EndpointHonoAdapter.adapt(bg.Preferences.HTTP.UpdateProfileAvatar(deps)),
   );
   server.get(
     "/profile-avatar/get",
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.GetProfileAvatar(Adapters.System)),
+    bg.EndpointHonoAdapter.adapt(
+      bg.Preferences.HTTP.GetProfileAvatar(Preferences.VO.ProfileAvatar, Adapters.System),
+    ),
   );
   server.delete(
     "/preferences/profile-avatar",
     Tools.ShieldCaptcha.handle(),
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.RemoveProfileAvatar(deps)),
+    bg.EndpointHonoAdapter.adapt(bg.Preferences.HTTP.RemoveProfileAvatar(deps)),
   );
   // =============================
 

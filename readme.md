@@ -480,25 +480,16 @@ modules/
 │       └── sets.ts
 ├── preferences
 │   ├── command-handlers
-│   │   ├── handleRemoveProfileAvatarCommand.ts
-│   │   ├── handleUpdateProfileAvatarCommand.ts
 │   │   ├── handleWeeklySummarySetCommand.ts
 │   ├── commands
-│   │   ├── REMOVE_PROFILE_AVATAR_COMMAND.ts
-│   │   ├── UPDATE_PROFILE_AVATAR_COMMAND.ts
 │   │   └── WEEKLY_SUMMARY_SET_COMMAND.ts
 │   ├── events
-│   │   ├── PROFILE_AVATAR_REMOVED_EVENT.ts
-│   │   ├── PROFILE_AVATAR_UPDATED_EVENT.ts
 │   │   └── WEEKLY_SUMMARY_SET_EVENT.ts
 │   ├── invariants
-│   │   ├── profile-avatar-constraints.ts
 │   │   └── weekly-summary-has-changed.ts
 │   ├── open-host-queries
 │   │   └── weekly-summary.ts
 │   ├── policies
-│   │   ├── profile-avatar-eraser.ts
-│   │   ├── set-default-user-language.ts
 │   │   └── set-default-weekly-summary.ts
 │   ├── queries
 │   │   ├── get-weekly-summary.ts
@@ -759,11 +750,7 @@ app/
 │   │   ├── plan-section-rename.ts
 │   │   └── plan-section-warmup-set.ts
 │   ├── preferences
-│   │   ├── get-profile-avatar.ts
 │   │   ├── get-weekly-summary.ts
-│   │   ├── remove-profile-avatar.ts
-│   │   ├── update-profile-avatar.ts
-│   │   ├── update-user-language.ts
 │   │   └── update-weekly-summary.ts
 │   ├── statistics
 │   │   ├── exercise-performances-get.ts

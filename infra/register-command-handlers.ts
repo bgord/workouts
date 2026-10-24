@@ -9,6 +9,7 @@ import * as PlansCommandHandlers from "+plans/command-handlers";
 import * as PlansCommands from "+plans/commands";
 import * as PreferencesCommandHandlers from "+preferences/command-handlers";
 import * as PreferencesCommands from "+preferences/commands";
+import * as PreferencesVO from "+preferences/value-objects";
 import * as WorkoutsCommandHandlers from "+workouts/command-handlers";
 import * as WorkoutsCommands from "+workouts/commands";
 
@@ -214,13 +215,13 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   );
 
   Tools.CommandBus.on(
-    PreferencesCommands.UPDATE_PROFILE_AVATAR_COMMAND,
-    PreferencesCommandHandlers.handleUpdateProfileAvatarCommand(deps),
+    bg.Preferences.Commands.UPDATE_PROFILE_AVATAR_COMMAND,
+    bg.Preferences.CommandHandlers.handleUpdateProfileAvatarCommand(PreferencesVO.ProfileAvatar, deps),
   );
 
   Tools.CommandBus.on(
-    PreferencesCommands.REMOVE_PROFILE_AVATAR_COMMAND,
-    PreferencesCommandHandlers.handleRemoveProfileAvatarCommand(deps),
+    bg.Preferences.Commands.REMOVE_PROFILE_AVATAR_COMMAND,
+    bg.Preferences.CommandHandlers.handleRemoveProfileAvatarCommand(PreferencesVO.ProfileAvatar, deps),
   );
 
   Tools.CommandBus.on(
