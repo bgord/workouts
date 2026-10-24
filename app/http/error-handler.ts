@@ -68,7 +68,6 @@ const invariants = new bg.ErrorClassifierInvariantStrategy([
   Measurements.Invariants,
   Exercises.Invariants,
   Plans.Invariants,
-  Preferences.Invariants,
   Workouts.Invariants,
   bg.Preferences.Invariants,
 ]);

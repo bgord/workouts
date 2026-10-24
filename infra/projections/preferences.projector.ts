@@ -1,14 +1,16 @@
 import * as bg from "@bgord/bun";
 import * as Preferences from "+preferences";
+import type { PreferenceKeyType } from "+infra/adapters/preferences/preference-reader.adapter";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
 type AcceptedEvent =
-  bg.Preferences.Events.UserLanguageSetEventType | Preferences.Events.WeeklySummarySetEventType;
+  bg.Preferences.Events.UserLanguageSetEventType | bg.Preferences.Events.PreferenceSetEventType;
 
 type Dependencies = {
   EventBus: bg.EventBusPort<AcceptedEvent>;
   EventHandler: bg.EventHandlerStrategy;
+  PreferenceWriter: bg.Preferences.Ports.PreferenceWriterPort<PreferenceKeyType>;
 };
 
 export class PreferencesProjector {
@@ -18,8 +20,13 @@ export class PreferencesProjector {
       deps.EventHandler.handle(this.onUserLanguageSetEvent.bind(this)),
     );
     deps.EventBus.on(
-      Preferences.Events.WEEKLY_SUMMARY_SET_EVENT,
-      deps.EventHandler.handle(this.onWeeklySummarySetEvent.bind(this)),
+      bg.Preferences.Events.PREFERENCE_SET_EVENT,
+      deps.EventHandler.handle(
+        bg.Preferences.EventHandlers.onPreferenceSetEvent(
+          Preferences.VO.PreferenceDefinitions,
+          deps.PreferenceWriter,
+        ),
+      ),
     );
   }
 
@@ -35,21 +42,6 @@ export class PreferencesProjector {
       .onConflictDoUpdate({
         target: [Schema.userPreferences.userId, Schema.userPreferences.preference],
         set: { value: event.payload.language, updatedAt: event.createdAt },
-      });
-  }
-
-  async onWeeklySummarySetEvent(event: Preferences.Events.WeeklySummarySetEventType) {
-    await db
-      .insert(Schema.userPreferences)
-      .values({
-        userId: event.payload.userId,
-        preference: "weekly_summary",
-        value: event.payload.weeklySummary,
-        updatedAt: event.createdAt,
-      })
-      .onConflictDoUpdate({
-        target: [Schema.userPreferences.userId, Schema.userPreferences.preference],
-        set: { value: event.payload.weeklySummary, updatedAt: event.createdAt },
       });
   }
 }

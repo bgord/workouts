@@ -553,14 +553,18 @@ export function createServer({ Env, Adapters, Tools }: BootstrapType) {
     "/preferences/weekly-summary/get",
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.GetWeeklySummary(Adapters.Preferences)),
+    bg.EndpointHonoAdapter.adapt(
+      bg.Preferences.HTTP.GetPreference(Preferences.VO.WeeklySummaryPreference, Adapters.Preferences),
+    ),
   );
   server.post(
     "/preferences/weekly-summary/update",
     Tools.ShieldCaptcha.handle(),
     Tools.Auth.ShieldAuth.attach,
     Tools.Auth.ShieldAuth.verify,
-    bg.EndpointHonoAdapter.adapt(HTTP.Preferences.UpdateWeeklySummary(deps)),
+    bg.EndpointHonoAdapter.adapt(
+      bg.Preferences.HTTP.UpdatePreference(Preferences.VO.WeeklySummaryPreference, deps),
+    ),
   );
   server.post(
     "/preferences/profile-avatar/update",

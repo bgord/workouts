@@ -43,7 +43,7 @@ export const WeeklySummaryComposeJobHandler =
     const status = await deps.GetWeeklySummaryStatusQuery.execute(job.payload.userId, job.payload.weekIsoId);
     if (status) return;
 
-    const preference = await deps.WeeklySummaryOHQ.execute(job.payload.userId);
+    const preference = await deps.WeeklySummaryOHQ.get(job.payload.userId);
     if (preference === Preferences.VO.WeeklySummaryOptions.off) return;
 
     const contact = await deps.UserContactOHQ.getPrimary(job.payload.userId);

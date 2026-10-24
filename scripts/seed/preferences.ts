@@ -25,8 +25,14 @@ export async function setWeeklySummary(
   const deps = { ...di.Adapters.System, ...di.Tools };
 
   const command = bg.command(
-    Preferences.Commands.WeeklySummarySetCommand,
-    { payload: { userId, weeklySummary: v.parse(Preferences.VO.WeeklySummary, weeklySummary) } },
+    bg.Preferences.Commands.SetPreferenceCommand,
+    {
+      payload: {
+        userId,
+        preference: Preferences.VO.WeeklySummaryPreference.key,
+        value: v.parse(Preferences.VO.WeeklySummary, weeklySummary),
+      },
+    },
     deps,
   );
 

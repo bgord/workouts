@@ -2,7 +2,6 @@ import * as bg from "@bgord/bun";
 import type * as ExercisesCommands from "+exercises/commands";
 import type * as MeasurementsCommands from "+measurements/commands";
 import type * as PlansCommands from "+plans/commands";
-import type * as PreferencesCommands from "+preferences/commands";
 import type * as WorkoutsCommands from "+workouts/commands";
 
 type Dependencies = { Logger: bg.LoggerPort; Clock: bg.ClockPort };
@@ -39,7 +38,7 @@ type AcceptedCommand =
   | bg.Preferences.Commands.SetUserLanguageCommandType
   | bg.Preferences.Commands.UpdateProfileAvatarCommandType
   | bg.Preferences.Commands.RemoveProfileAvatarCommandType
-  | PreferencesCommands.WeeklySummarySetCommandType
+  | bg.Preferences.Commands.SetPreferenceCommandType
   | WorkoutsCommands.WorkoutCreateCommandType
   | WorkoutsCommands.WorkoutExerciseAddCommandType
   | WorkoutsCommands.WorkoutExerciseRemoveCommandType

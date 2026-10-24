@@ -4,7 +4,7 @@ import * as Projections from "+infra/projections";
 export function registerProjectors({ Adapters, Tools }: Pick<BootstrapType, "Adapters" | "Tools">) {
   const deps = { ...Adapters.System, ...Tools };
 
-  new Projections.PreferencesProjector(deps);
+  new Projections.PreferencesProjector({ ...deps, PreferenceWriter: Adapters.Preferences.PreferenceWriter });
   new Projections.ProfileAvatarsProjector(deps);
   new Projections.ExercisesProjector(deps);
   new Projections.ExerciseCategoriesProjector(deps);

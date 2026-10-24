@@ -20,7 +20,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       ...di.Tools,
       JobDispatcher: di.Tools.JobDispatcher,
       GetWeeklySummaryStatusQuery: di.Adapters.Notifications.GetWeeklySummaryStatusQuery,
-      WeeklySummaryOHQ: di.Adapters.Preferences.GetWeeklySummaryQuery,
+      WeeklySummaryOHQ: di.Adapters.Preferences.WeeklySummaryOHQ,
       UserContactOHQ: di.Adapters.Auth.UserContactOHQ,
       UserLanguageOHQ: di.Adapters.Preferences.UserLanguageOHQ,
       ListWeekCompletedWorkoutsOHQ: di.Adapters.Workouts.ListWeekCompletedWorkoutsQuery,
@@ -36,7 +36,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
         Notifications.VO.WeeklySummaryStatusEnum.sent,
       ),
     );
-    using preference = spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute");
+    using preference = spyOn(di.Adapters.Preferences.WeeklySummaryOHQ, "get");
     using enqueue = spyOn(di.Tools.JobDispatcher, "enqueue");
     using eventStoreSave = spyOn(di.Tools.EventStore, "save");
 
@@ -53,7 +53,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       spyOn(di.Adapters.Notifications.GetWeeklySummaryStatusQuery, "execute").mockResolvedValue(null),
     );
     spies.use(
-      spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute").mockResolvedValue(
+      spyOn(di.Adapters.Preferences.WeeklySummaryOHQ, "get").mockResolvedValue(
         Preferences.VO.WeeklySummaryOptions.off,
       ),
     );
@@ -74,7 +74,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       spyOn(di.Adapters.Notifications.GetWeeklySummaryStatusQuery, "execute").mockResolvedValue(null),
     );
     spies.use(
-      spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute").mockResolvedValue(
+      spyOn(di.Adapters.Preferences.WeeklySummaryOHQ, "get").mockResolvedValue(
         Preferences.VO.WeeklySummaryOptions.on,
       ),
     );
@@ -96,7 +96,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       spyOn(di.Adapters.Notifications.GetWeeklySummaryStatusQuery, "execute").mockResolvedValue(null),
     );
     spies.use(
-      spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute").mockResolvedValue(
+      spyOn(di.Adapters.Preferences.WeeklySummaryOHQ, "get").mockResolvedValue(
         Preferences.VO.WeeklySummaryOptions.on,
       ),
     );
@@ -122,7 +122,7 @@ describe("WeeklySummaryComposeJobHandler", async () => {
       spyOn(di.Adapters.Notifications.GetWeeklySummaryStatusQuery, "execute").mockResolvedValue(null),
     );
     spies.use(
-      spyOn(di.Adapters.Preferences.GetWeeklySummaryQuery, "execute").mockResolvedValue(
+      spyOn(di.Adapters.Preferences.WeeklySummaryOHQ, "get").mockResolvedValue(
         Preferences.VO.WeeklySummaryOptions.on,
       ),
     );

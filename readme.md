@@ -479,21 +479,10 @@ modules/
 │       ├── rir-target.ts
 │       └── sets.ts
 ├── preferences
-│   ├── command-handlers
-│   │   ├── handleWeeklySummarySetCommand.ts
-│   ├── commands
-│   │   └── WEEKLY_SUMMARY_SET_COMMAND.ts
-│   ├── events
-│   │   └── WEEKLY_SUMMARY_SET_EVENT.ts
-│   ├── invariants
-│   │   └── weekly-summary-has-changed.ts
 │   ├── open-host-queries
 │   │   └── weekly-summary.ts
-│   ├── policies
-│   │   └── set-default-weekly-summary.ts
-│   ├── queries
-│   │   ├── get-weekly-summary.ts
 │   └── value-objects
+│       ├── preference-definitions.ts
 │       ├── profile-avatar.ts
 │       ├── weekly-summary-options.ts
 │       └── weekly-summary.ts
@@ -749,9 +738,6 @@ app/
 │   │   ├── plan-section-remove.ts
 │   │   ├── plan-section-rename.ts
 │   │   └── plan-section-warmup-set.ts
-│   ├── preferences
-│   │   ├── get-weekly-summary.ts
-│   │   └── update-weekly-summary.ts
 │   ├── statistics
 │   │   ├── exercise-performances-get.ts
 │   └── workouts
@@ -840,7 +826,8 @@ infra/
 │   │   ├── list-exercise-catalog.adapter.ts
 │   │   └── list-plans.adapter.ts
 │   ├── preferences
-│   │   ├── get-weekly-summary.adapter.ts
+│   │   ├── preference-reader.adapter.ts
+│   │   ├── preference-writer.adapter.ts
 │   │   ├── user-language-ohq.adapter.ts
 │   │   └── user-language-query.adapter.ts
 │   ├── system

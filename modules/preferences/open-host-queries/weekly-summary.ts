@@ -1,3 +1,4 @@
-import type { GetWeeklySummary } from "+preferences/queries/get-weekly-summary";
+import type * as bg from "@bgord/bun";
+import type { WeeklySummaryPreference } from "+preferences/value-objects";
 
-export type WeeklySummaryOHQ = GetWeeklySummary;
+export type WeeklySummaryOHQ = bg.Preferences.OHQ.PreferencePort<typeof WeeklySummaryPreference>;

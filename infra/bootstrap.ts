@@ -30,7 +30,7 @@ export async function bootstrap() {
     ...System,
     ...Tools,
     GetWeeklySummaryStatusQuery: Notifications.GetWeeklySummaryStatusQuery,
-    WeeklySummaryOHQ: Preferences.GetWeeklySummaryQuery,
+    WeeklySummaryOHQ: Preferences.WeeklySummaryOHQ,
     UserContactOHQ: Auth.UserContactOHQ,
     UserLanguageOHQ: Preferences.UserLanguageOHQ,
     ListWeekCompletedWorkoutsOHQ: Workouts.ListWeekCompletedWorkoutsQuery,

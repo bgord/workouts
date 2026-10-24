@@ -7,8 +7,6 @@ import * as MeasurementsCommandHandlers from "+measurements/command-handlers";
 import * as MeasurementsCommands from "+measurements/commands";
 import * as PlansCommandHandlers from "+plans/command-handlers";
 import * as PlansCommands from "+plans/commands";
-import * as PreferencesCommandHandlers from "+preferences/command-handlers";
-import * as PreferencesCommands from "+preferences/commands";
 import * as PreferencesVO from "+preferences/value-objects";
 import * as WorkoutsCommandHandlers from "+workouts/command-handlers";
 import * as WorkoutsCommands from "+workouts/commands";
@@ -225,10 +223,10 @@ export function registerCommandHandlers({ Adapters, Tools }: BootstrapType) {
   );
 
   Tools.CommandBus.on(
-    PreferencesCommands.WEEKLY_SUMMARY_SET_COMMAND,
-    PreferencesCommandHandlers.handleWeeklySummarySetCommand({
+    bg.Preferences.Commands.SET_PREFERENCE_COMMAND,
+    bg.Preferences.CommandHandlers.handleSetPreferenceCommand(PreferencesVO.PreferenceDefinitions, {
       ...deps,
-      GetWeeklySummaryQuery: Adapters.Preferences.GetWeeklySummaryQuery,
+      PreferenceReader: Adapters.Preferences.PreferenceReader,
     }),
   );
 
