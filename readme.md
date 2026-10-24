@@ -53,11 +53,7 @@ bun run bgord-scripts/secrets-encrypt.ts --master-key /run/master-key.txt --inpu
 modules/
 ├── auth
 │   ├── events
-│   │   ├── ACCOUNT_CREATED_EVENT.ts
-│   │   ├── ACCOUNT_DELETED_EVENT.ts
 │   ├── open-host-queries
-│   │   ├── user-contact.ts
-│   │   └── user-directory.ts
 │   ├── services
 │   │   ├── call-to-action-notification.ts
 │   │   ├── email-verification-notification-composer.ts
