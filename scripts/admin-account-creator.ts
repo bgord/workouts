@@ -1,5 +1,6 @@
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
+import { hashPassword } from "better-auth/crypto";
 import * as v from "valibot";
 import * as Auth from "+auth";
 import type { AuthInstance } from "+infra/tools/shield-auth.strategy";
@@ -44,7 +45,7 @@ export class AdminAccountCreator {
         userId: Auth.VO.ADMIN_USER_ID,
         providerId: "credential",
         accountId: Auth.VO.ADMIN_USER_ID,
-        password: await context.password.hash(password),
+        password: await hashPassword(password),
       });
 
       const event = bg.event(
