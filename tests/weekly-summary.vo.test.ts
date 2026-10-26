@@ -11,3 +11,9 @@ describe("WeeklySummary", () => {
     expect(() => v.parse(Preferences.VO.WeeklySummary, "invalid")).toThrow("weekly.summary.invalid");
   });
 });
+
+describe("PreferenceDefinitions", () => {
+  test("happy path", () => {
+    expect(Preferences.VO.PreferenceDefinitions).toEqual([Preferences.VO.WeeklySummaryPreference]);
+  });
+});
