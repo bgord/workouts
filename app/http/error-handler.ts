@@ -55,6 +55,7 @@ const validation = new bg.ErrorClassifierValidationStrategy([
   bg.UUIDError,
   tools.DayIsoIdError,
   tools.ExtensionError,
+  tools.FilenameFromStringError,
   tools.HeightMillimetersError,
   tools.IntegerNonNegativeError,
   tools.IntegerPositiveError,
