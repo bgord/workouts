@@ -13,10 +13,10 @@ export const PlanHistoryGet =
 
     const userId = context.identity.authenticatedUserId();
     const planId = v.parse(Plans.VO.PlanId, params["planId"]);
-    const before = v.parse(v.optional(tools.IntegerNonNegative), body["before"]);
+    const cursor = v.parse(v.optional(tools.IntegerNonNegative), body["cursor"]);
 
     const history = await deps.GetPlanHistoryQuery.execute(planId, userId, {
-      before,
+      cursor,
       limit: Plans.VO.PlanHistoryPageLimit,
     });
 

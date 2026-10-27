@@ -25,36 +25,36 @@ describe("QUERY /api/plans/:planId/history", async () => {
     await testcases.assertErrorResponse(response, 400, "uuid.type");
   });
 
-  test("validation - incorrect before", async () => {
+  test("validation - incorrect cursor", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
       url,
-      { method: "QUERY", body: JSON.stringify({ before: "abc" }) },
+      { method: "QUERY", body: JSON.stringify({ cursor: "abc" }) },
       mocks.ip,
     );
 
     await testcases.assertErrorResponse(response, 400, "integer.non.negative.type");
   });
 
-  test("validation - empty before", async () => {
+  test("validation - empty cursor", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
       url,
-      { method: "QUERY", body: JSON.stringify({ before: "" }) },
+      { method: "QUERY", body: JSON.stringify({ cursor: "" }) },
       mocks.ip,
     );
 
     await testcases.assertErrorResponse(response, 400, "integer.non.negative.type");
   });
 
-  test("validation - negative before", async () => {
+  test("validation - negative cursor", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
 
     const response = await server.request(
       url,
-      { method: "QUERY", body: JSON.stringify({ before: -1 }) },
+      { method: "QUERY", body: JSON.stringify({ cursor: -1 }) },
       mocks.ip,
     );
 
@@ -82,12 +82,12 @@ describe("QUERY /api/plans/:planId/history", async () => {
     expect(response.status).toEqual(200);
     expect(await response.json()).toEqual(mocks.planHistoryResponse);
     expect(getPlanHistory).toHaveBeenCalledWith(mocks.planId, mocks.userId, {
-      before: undefined,
+      cursor: undefined,
       limit: tools.Int.positive(20),
     });
   });
 
-  test("happy path - before", async () => {
+  test("happy path - cursor", async () => {
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
     using getPlanHistory = spyOn(di.Adapters.Plans.GetPlanHistoryQuery, "execute").mockResolvedValue(
       mocks.planHistoryResponse,
@@ -95,13 +95,13 @@ describe("QUERY /api/plans/:planId/history", async () => {
 
     const response = await server.request(
       url,
-      { method: "QUERY", body: JSON.stringify({ before: 40 }) },
+      { method: "QUERY", body: JSON.stringify({ cursor: 40 }) },
       mocks.ip,
     );
 
     expect(response.status).toEqual(200);
     expect(getPlanHistory).toHaveBeenCalledWith(mocks.planId, mocks.userId, {
-      before: tools.Int.nonNegative(40),
+      cursor: tools.Int.nonNegative(40),
       limit: tools.Int.positive(20),
     });
   });

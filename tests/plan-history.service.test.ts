@@ -530,7 +530,7 @@ describe("PlanHistory", () => {
       exercises: mocks.planHistoryExercises,
     });
 
-    expect(history.calculate({ before: tools.Int.nonNegative(1), limit: tools.Int.positive(2) })).toEqual({
+    expect(history.calculate({ cursor: tools.Int.nonNegative(1), limit: tools.Int.positive(2) })).toEqual({
       entries: [
         {
           name: "PLAN_CREATED_EVENT",

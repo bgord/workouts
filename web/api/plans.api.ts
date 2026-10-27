@@ -18,13 +18,13 @@ export class Plans {
 
   static async history(
     request: Request | null,
-    params: { planId: string; before?: number },
+    params: { planId: string; cursor?: number },
   ): Promise<PlanHistoryGetResponse | null> {
     return bg.ApiClient.json<PlanHistoryGetResponse | null>(
       `/api/plans/${params.planId}/history`,
       request,
       null,
-      { method: "QUERY", body: JSON.stringify({ before: params.before }) },
+      { method: "QUERY", body: JSON.stringify({ cursor: params.cursor }) },
     );
   }
 

@@ -1,9 +1,10 @@
+import type * as tools from "@bgord/tools";
 import * as bg from "@bgord/ui";
 import { History } from "lucide-react";
 import type { PlanHistoryEntry } from "../../modules/plans/value-objects/plan-history-entry";
 import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
+import { Plans } from "../api";
 import * as ui from "../components";
-import { usePlanHistory } from "../hooks/use-plan-history";
 import { RepsSchemeFormat } from "../kits/reps-scheme.format";
 import { planRoute } from "../router";
 
@@ -14,7 +15,14 @@ export function PlanHistory() {
   const { plan } = planRoute.useLoaderData();
 
   const planHistory = bg.useToggle({ name: "plan-history" });
-  const history = usePlanHistory(plan.data.id);
+  const history = bg.useLoadMore<PlanHistoryEntry, tools.IntegerNonNegativeType>({
+    key: { id: plan.data.id, revision: plan.data.revision },
+    load: async (cursor) => {
+      const response = await Plans.history(null, { planId: plan.data.id, cursor });
+
+      return response ? response.data : null;
+    },
+  });
 
   const days = Map.groupBy(history.entries, (entry) =>
     bg.CalendarDay.fromInstant(entry.createdAt, timeZone).toString(),
@@ -26,7 +34,7 @@ export function PlanHistory() {
         aria-haspopup="dialog"
         onClick={() => {
           planHistory.enable();
-          history.load();
+          if (history.entries.length === 0) history.more();
         }}
       >
         <History data-size="sm" />
@@ -36,11 +44,13 @@ export function PlanHistory() {
       <ui.Dialog data-md-overflow="auto" data-overflow="hidden" {...planHistory}>
         <ui.DialogHeader>{t("plan.history.header")}</ui.DialogHeader>
 
-        {history.state === "error" && <ui.DialogError>{t("plan.history.error")}</ui.DialogError>}
+        {history.state === bg.LoadMoreState.error && (
+          <ui.DialogError>{t("plan.history.error")}</ui.DialogError>
+        )}
 
         {history.entries.length > 0 && (
           <div
-            aria-busy={history.state === "loading"}
+            aria-busy={history.state === bg.LoadMoreState.loading}
             data-md-minh="unset"
             data-minh="0"
             data-overflow="auto"
@@ -63,7 +73,7 @@ export function PlanHistory() {
 
             {history.next !== null && (
               <div data-main="center" data-stack="x">
-                <ui.TextLink disabled={history.state === "loading"} onClick={history.more}>
+                <ui.TextLink disabled={history.state === bg.LoadMoreState.loading} onClick={history.more}>
                   {t("plan.history.more")}
                 </ui.TextLink>
               </div>

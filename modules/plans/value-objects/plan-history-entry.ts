@@ -1,3 +1,4 @@
+import type * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import type * as Exercises from "+exercises";
 import type * as Aggregates from "+plans/aggregates";
@@ -22,12 +23,9 @@ export type PlanHistoryEntry = {
   createdAt: tools.TimestampValueType;
 };
 
-export type PlanHistoryPage = {
-  entries: ReadonlyArray<PlanHistoryEntry>;
-  next: tools.IntegerNonNegativeType | null;
-};
+export type PlanHistoryPage = bg.Page<PlanHistoryEntry, tools.IntegerNonNegativeType>;
 
 export type PlanHistoryPageConfig = {
-  before?: tools.IntegerNonNegativeType;
+  cursor?: tools.IntegerNonNegativeType;
   limit: tools.IntegerPositiveType;
 };

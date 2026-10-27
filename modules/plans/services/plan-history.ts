@@ -1,3 +1,4 @@
+import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type * as Exercises from "+exercises";
 import type * as Aggregates from "+plans/aggregates";
@@ -47,12 +48,9 @@ export class PlanHistory {
         };
       })
       .toReversed()
-      .filter((entry) => config.before === undefined || entry.sequence < config.before);
+      .filter((entry) => config.cursor === undefined || entry.sequence < config.cursor);
 
-    const page = entries.slice(0, config.limit);
-    const last = page.at(-1);
-
-    return { entries: page, next: entries.length > config.limit && last ? last.sequence : null };
+    return bg.Page.of(entries, config.limit, (entry) => entry.sequence);
   }
 
   private details(event: Aggregates.PlanEventType, state: PlanHistoryState): VO.PlanHistoryEntryDetails {
