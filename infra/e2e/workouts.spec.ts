@@ -52,6 +52,45 @@ test.describe("Workouts - athlete", () => {
     await expect(page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`)).toBeVisible();
   });
 
+  test("shows the total of all workouts for the last week", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await expect(page.getByText(/^\d+ of 25$/)).toBeVisible();
+  });
+
+  test("shows the first page of workouts", async ({ page }) => {
+    const list = page.getByRole("list", { name: "Workouts" });
+
+    await page.goto("/workouts?filter=all_time");
+
+    await expect(list.getByTestId(/^workout-/)).toHaveCount(20);
+    await expect(page.getByRole("button", { name: "Show older" })).toBeVisible();
+  });
+
+  test("loads older workouts", async ({ page }) => {
+    const list = page.getByRole("list", { name: "Workouts" });
+
+    await page.goto("/workouts?filter=all_time");
+
+    await page.getByRole("button", { name: "Show older" }).click();
+
+    await expect(list.getByTestId(/^workout-/)).toHaveCount(25);
+    await expect(page.getByText("25 of 25")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Show older" })).toBeHidden();
+  });
+
+  test("shows the error when loading older workouts fails", async ({ page }) => {
+    const list = page.getByRole("list", { name: "Workouts" });
+
+    await page.goto("/workouts?filter=all_time");
+    await page.route("**/api/workouts/list", (route) => route.fulfill({ status: 500 }));
+
+    await page.getByRole("button", { name: "Show older" }).click();
+
+    await expect(page.getByText("Could not load more workouts")).toBeVisible();
+    await expect(list.getByTestId(/^workout-/)).toHaveCount(20);
+  });
+
   test("shows the scheduled workout as today", async ({ page }) => {
     const card = page.getByTestId(`workout-${fixtures.athlete.scheduledWorkout.id}`);
 

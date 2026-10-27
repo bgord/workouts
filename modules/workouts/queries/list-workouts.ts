@@ -22,8 +22,18 @@ export type WorkoutListPlan = {
   sections: ReadonlyArray<WorkoutListPlanSection>;
 };
 
-export type WorkoutListResponse = {
-  data: ReadonlyArray<VO.WorkoutSummary>;
+export type WorkoutListPage = bg.Page<VO.WorkoutSummary, VO.WorkoutListCursorType>;
+
+export type WorkoutListPageConfig = {
+  filter: VO.WorkoutListFilterOptions;
+  section?: string;
+  cursor?: VO.WorkoutListCursorType;
+  limit: tools.IntegerPositiveType;
+};
+
+export type WorkoutList = {
+  data: WorkoutListPage;
+  matching: tools.IntegerNonNegativeType;
   sections: ReadonlyArray<WorkoutSection>;
   plan: WorkoutListPlan | null;
   actions: { create: bg.ActionState };
@@ -32,7 +42,7 @@ export type WorkoutListResponse = {
 export interface ListWorkouts {
   execute(
     userId: Auth.VO.UserIdType,
-    filter: VO.WorkoutListFilterOptions,
+    config: WorkoutListPageConfig,
     now: tools.Timestamp,
-  ): Promise<WorkoutListResponse>;
+  ): Promise<WorkoutList>;
 }

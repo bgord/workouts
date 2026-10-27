@@ -13,7 +13,7 @@ type WorkoutListActionsFacts = {
 export class WorkoutListActions {
   constructor(private readonly facts: WorkoutListActionsFacts) {}
 
-  calculate(): Queries.WorkoutListResponse["actions"] {
+  calculate(): Queries.WorkoutList["actions"] {
     return {
       create: bg.ActionState.of(true, [
         bg.ActionBlocker.from(WorkoutPlanReady, { plan: this.facts.plan }),

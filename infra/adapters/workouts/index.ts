@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import * as Workouts from "+workouts";
 import { GetWorkoutQuery } from "./get-workout.adapter";
 import { GetWorkoutDashboardQuery } from "./get-workout-dashboard.adapter";
+import { GetWorkoutForOwnerCountQuery } from "./get-workout-for-owner-count.adapter";
 import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
 import { ListExercisePerformancesQuery } from "./list-exercise-performances.adapter";
 import { ListWeekCompletedWorkoutsQuery } from "./list-week-completed-workouts.adapter";
@@ -19,6 +20,7 @@ export function createWorkoutsAdapters(deps: Dependencies) {
   return {
     GetWorkoutQuery,
     GetWorkoutDashboardQuery,
+    GetWorkoutForOwnerCountQuery,
     GetWorkoutStatusForOwnerCountQuery,
     ListExercisePerformancesQuery,
     ListWeekCompletedWorkoutsQuery,

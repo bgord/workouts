@@ -530,6 +530,8 @@
   "workout.list.filter.all_time": "Cały okres",
   "workout.exercises": "Ćwiczenia",
   "workout.list.header": "Treningi",
+  "workout.list.more": "Pokaż starsze",
+  "workout.list.more.error": "Nie udało się wczytać kolejnych treningów",
   "workout.list.no_matches": "Żaden trening nie pasuje do filtrów",
   "workout.list.no_matches.hint": "Spróbuj innej sekcji lub wyczyść filtry",
   "workout.log_panel.exercise.title": "{{position}}. {{name}}",

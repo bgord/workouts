@@ -1,5 +1,6 @@
+import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import { and, asc, desc, eq, gte, max } from "drizzle-orm";
+import { and, asc, desc, eq, gte, max, sql } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
 import * as Plans from "+plans";
@@ -11,16 +12,16 @@ import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-own
 class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
   async execute(
     userId: Auth.VO.UserIdType,
-    filter: Workouts.VO.WorkoutListFilterOptions,
+    config: Workouts.Queries.WorkoutListPageConfig,
     now: tools.Timestamp,
-  ): Promise<Workouts.Queries.WorkoutListResponse> {
+  ): Promise<Workouts.Queries.WorkoutList> {
     const today = now.toZonedDateTimeUTC().startOfDay();
 
     const range = {
       [Workouts.VO.WorkoutListFilterOptions.last_week]: today.subtract({ weeks: 1 }),
       [Workouts.VO.WorkoutListFilterOptions.last_month]: today.subtract({ months: 1 }),
       [Workouts.VO.WorkoutListFilterOptions.all_time]: null,
-    }[filter];
+    }[config.filter];
 
     const since = range
       ? v.parse(
@@ -29,7 +30,17 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
         )
       : null;
 
-    const [workouts, plan, drafts, sections] = await Promise.all([
+    const period = and(
+      eq(Schema.workouts.userId, userId),
+      since ? gte(Schema.workouts.scheduledFor, since) : undefined,
+    );
+
+    const where = and(
+      period,
+      config.section ? sql`${Schema.workouts.planSectionId} = ${config.section}` : undefined,
+    );
+
+    const [workouts, matching, plan, drafts, sections] = await Promise.all([
       db.query.workouts.findMany({
         columns: {
           id: true,
@@ -43,11 +54,16 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
           revision: true,
         },
         where: and(
-          eq(Schema.workouts.userId, userId),
-          since ? gte(Schema.workouts.scheduledFor, since) : undefined,
+          where,
+          config.cursor
+            ? sql`(${Schema.workouts.scheduledFor}, ${Schema.workouts.id})
+                < (${config.cursor.scheduledFor}, ${config.cursor.id})`
+            : undefined,
         ),
-        orderBy: desc(Schema.workouts.scheduledFor),
+        orderBy: [desc(Schema.workouts.scheduledFor), desc(Schema.workouts.id)],
+        limit: bg.Page.take(config.limit),
       }),
+      db.$count(Schema.workouts, where),
       db.query.plans.findFirst({
         columns: { id: true, name: true },
         where: and(
@@ -76,18 +92,17 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
           latest: max(Schema.workouts.createdAt),
         })
         .from(Schema.workouts)
-        .where(
-          and(
-            eq(Schema.workouts.userId, userId),
-            since ? gte(Schema.workouts.scheduledFor, since) : undefined,
-          ),
-        )
+        .where(period)
         .groupBy(Schema.workouts.planSectionId)
         .orderBy(desc(max(Schema.workouts.createdAt))),
     ]);
 
     return {
-      data: workouts,
+      data: bg.Page.of(workouts, config.limit, (workout) => ({
+        scheduledFor: workout.scheduledFor,
+        id: workout.id,
+      })),
+      matching: tools.Int.nonNegative(matching),
       sections,
       plan: plan ?? null,
       actions: new Workouts.Services.WorkoutListActions({

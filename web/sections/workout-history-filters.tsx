@@ -2,11 +2,10 @@ import * as bg from "@bgord/ui";
 import { X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
-import type { WorkoutSummary } from "../../modules/workouts/value-objects/workout-summary";
 import * as ui from "../components";
 import { workoutsRoute } from "../router";
 
-export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }) {
+export function WorkoutHistoryFilters() {
   const t = bg.useTranslations();
   const { workouts } = workoutsRoute.useLoaderData();
   const navigate = workoutsRoute.useNavigate();
@@ -62,7 +61,7 @@ export function WorkoutHistoryFilters(props: { matching: Array<WorkoutSummary> }
         </ul>
 
         <small>
-          {t("workout.list.count", { matching: props.matching.length, total: workouts.data.length })}
+          {t("workout.list.count", { matching: workouts.count.matching, total: workouts.count.total })}
         </small>
 
         {!WorkoutHistoryFiltersForm.Form.isDefault(search) && (

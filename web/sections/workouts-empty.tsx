@@ -7,7 +7,7 @@ export function WorkoutsEmpty() {
   const t = bg.useTranslations();
   const { workouts } = workoutsRoute.useLoaderData();
 
-  if (workouts.data.length > 0) return null;
+  if (workouts.count.total > 0) return null;
 
   return (
     <ui.EmptyState>

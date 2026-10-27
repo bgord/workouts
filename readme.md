@@ -585,6 +585,7 @@ modules/
     ├── queries
     │   ├── get-exercise-previous-performance.ts
     │   ├── get-workout-dashboard.ts
+    │   ├── get-workout-for-owner-count.ts
     │   ├── get-workout-status-for-owner-count.ts
     │   ├── get-workout.ts
     │   ├── list-exercise-performances.ts
@@ -650,8 +651,10 @@ modules/
         ├── workout-exercise.ts
         ├── workout-id.ts
         ├── workout-in-progress-limit-for-owner.ts
+        ├── workout-list-cursor.ts
         ├── workout-list-filter-options.ts
         ├── workout-list-filter.ts
+        ├── workout-list-page-limit.ts
         ├── workout-note.ts
         ├── workout-note.validation.ts
         ├── workout-plan-name.ts
@@ -861,6 +864,7 @@ infra/
 │   └── workouts
 │       ├── get-exercise-previous-performance.adapter.ts
 │       ├── get-workout-dashboard.adapter.ts
+│       ├── get-workout-for-owner-count.adapter.ts
 │       ├── get-workout-status-for-owner-count.adapter.ts
 │       ├── get-workout.adapter.ts
 │       ├── list-exercise-performances.adapter.ts

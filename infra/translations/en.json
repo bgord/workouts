@@ -530,6 +530,8 @@
   "workout.list.filter.all_time": "All time",
   "workout.exercises": "Exercises",
   "workout.list.header": "Workouts",
+  "workout.list.more": "Show older",
+  "workout.list.more.error": "Could not load more workouts",
   "workout.list.no_matches": "No workouts match the filters",
   "workout.list.no_matches.hint": "Try another section or clear the filters",
   "workout.log_panel.exercise.title": "{{position}}. {{name}}",

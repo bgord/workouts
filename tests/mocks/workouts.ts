@@ -101,6 +101,11 @@ export const workoutListPlan: Workouts.Queries.WorkoutListPlan = {
   ],
 };
 
+export const workoutListCursor = v.parse(Workouts.VO.WorkoutListCursor, {
+  scheduledFor: workoutScheduledFor,
+  id: workoutId,
+});
+
 export const anotherWorkoutExerciseId = v.parse(
   Workouts.VO.WorkoutExerciseId,
   "6b2e4a17-9c05-4d3f-8a61-0e7d2f4b5c93",

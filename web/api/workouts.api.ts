@@ -1,18 +1,20 @@
+import type * as tools from "@bgord/tools";
 import * as bg from "@bgord/ui";
+import type { WorkoutListResponse } from "../../app/http/workouts/workout-list";
 import type { WorkoutGetResponse } from "../../modules/workouts/queries/get-workout";
-import type { WorkoutListResponse } from "../../modules/workouts/queries/list-workouts";
 import type { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
 
 export class Workouts {
   static async list(
     request: Request | null,
-    params: { filter?: WorkoutListFilterOptions },
+    params: { filter?: WorkoutListFilterOptions; section?: string },
   ): Promise<WorkoutListResponse> {
     return bg.ApiClient.json<WorkoutListResponse>(
       "/api/workouts/list",
       request,
       {
-        data: [],
+        data: { entries: [], next: null },
+        count: { matching: 0 as tools.IntegerNonNegativeType, total: 0 as tools.IntegerNonNegativeType },
         sections: [],
         plan: null,
         actions: { create: { available: true, enabled: false, hints: [] } },
