@@ -13,7 +13,7 @@ export class BodyPartMeasurementImportTemplateFileCsv extends bg.FileDraft {
   ) {
     super(
       v.parse(tools.Basename, "body-part-measurements-template"),
-      v.parse(tools.Extension, "csv"),
+      tools.Mimes.csv.extension,
       tools.Mimes.csv.mime,
     );
   }
