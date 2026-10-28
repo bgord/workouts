@@ -1,7 +1,6 @@
 import * as tools from "@bgord/tools";
 import { and, asc, eq } from "drizzle-orm";
 import type * as Auth from "+auth";
-import * as Exercises from "+exercises";
 import * as Workouts from "+workouts";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
@@ -59,80 +58,26 @@ class GetWorkoutQueryDrizzle implements Workouts.Queries.GetWorkout {
 
     if (!workout) return null;
 
-    const data = {
-      ...workout,
-      exercises: await Promise.all(
-        workout.exercises.map(async ({ exercise: catalogExercise, ...exercise }) => {
-          const [previous, recent] = await Promise.all([
-            GetExercisePreviousPerformanceQuery.execute(userId, exercise.exerciseId, workout),
-            ListExerciseRecentPerformancesQuery.execute(
-              userId,
-              exercise.exerciseId,
-              workout,
-              tools.Int.positive(Workouts.VO.ExerciseSignalWindowSessions),
-            ),
-          ]);
+    const exercises = await Promise.all(
+      workout.exercises.map(async (exercise) => {
+        const [previous, recent] = await Promise.all([
+          GetExercisePreviousPerformanceQuery.execute(userId, exercise.exerciseId, workout),
+          ListExerciseRecentPerformancesQuery.execute(
+            userId,
+            exercise.exerciseId,
+            workout,
+            tools.Int.positive(Workouts.VO.ExerciseSignalWindowSessions),
+          ),
+        ]);
 
-          return {
-            ...exercise,
-            exerciseImageEtag: catalogExercise?.imageEtag ?? null,
-            loggedSets: exercise.loggedSets.map((loggedSet) => ({
-              ...loggedSet,
-              rirBelowTarget: new Workouts.Services.RirBelowTarget({
-                target: exercise.prescription.rir,
-                rir: loggedSet.rir,
-              }).calculate(),
-              actions: new Workouts.Services.WorkoutGetLoggedSetActions({
-                status: workout.status,
-                loggedSetCount: tools.Int.nonNegative(
-                  workout.exercises.flatMap((exercise) => exercise.loggedSets).length,
-                ),
-              }).calculate(),
-            })),
-            previousPerformance: previous && {
-              scheduledFor: previous.scheduledFor,
-              sets: previous.sets,
-              diff:
-                exercise.target &&
-                new Workouts.Services.ExerciseTargetDiffCalculator(exercise.target, previous).calculate(),
-            },
-            recentPerformances: recent.map((performance) => ({
-              workoutId: performance.workoutId,
-              scheduledFor: performance.scheduledFor,
-              sets: performance.sets,
-              missed: new Workouts.Services.ExercisePrescriptionMissed({
-                prescription: performance.prescription,
-                performance,
-              }).calculate(),
-            })),
-            targetProgression:
-              previous &&
-              Workouts.Services.ProgressionMethodStrategyFactory.for(
-                exercise.prescription,
-                catalogExercise?.loadStep ?? Exercises.VO.ExerciseLoadStepOptions.none,
-                previous,
-                { scheduledFor: workout.scheduledFor, performances: recent },
-              ).calculate(),
-            actions: new Workouts.Services.WorkoutGetExerciseActions({
-              status: workout.status,
-              exercises: workout.exercises,
-              exercise,
-              catalogExerciseExists: catalogExercise !== null,
-            }).calculate(),
-          };
-        }),
-      ),
-    };
+        return { ...exercise, previous, recent };
+      }),
+    );
 
-    return {
-      data,
-      progress: new Workouts.Services.WorkoutProgress({ exercises: workout.exercises }).calculate(),
-      actions: new Workouts.Services.WorkoutGetActions({
-        status: workout.status,
-        exercises: data.exercises,
-        inProgressCount,
-      }).calculate(),
-    };
+    return new Workouts.Services.WorkoutGetView({
+      workout: { ...workout, exercises },
+      inProgressCount,
+    }).calculate();
   }
 }
 

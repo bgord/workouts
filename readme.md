@@ -624,6 +624,7 @@ modules/
     │   ├── workout-get-actions.ts
     │   ├── workout-get-exercise-actions.ts
     │   ├── workout-get-logged-set-actions.ts
+    │   ├── workout-get-view.ts
     │   ├── workout-list-actions.ts
     │   └── workout-progress.ts
     └── value-objects
