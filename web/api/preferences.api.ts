@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import type { WeeklySummaryType } from "../../modules/preferences/value-objects/weekly-summary";
-import { WeeklySummaryDefault } from "../../modules/preferences/value-objects/weekly-summary";
+import { WeeklySummaryDefault } from "../../modules/preferences/value-objects/weekly-summary.validation";
 
 type WeeklySummaryResponse = { weeklySummary: WeeklySummaryType };
 
