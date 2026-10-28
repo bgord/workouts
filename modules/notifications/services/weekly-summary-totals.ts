@@ -1,9 +1,8 @@
 import type * as bg from "@bgord/bun";
-import type { SupportedLanguages } from "+supported-languages";
+import type { SupportedLanguagesType } from "+supported-languages";
 import * as Workouts from "+workouts";
 import { locales } from "./weekly-summary-locales";
 
-type LanguagesType = (typeof SupportedLanguages)[number];
 type Translate = ReturnType<typeof bg.TranslatorService.use>;
 type CompletedWorkouts = ReadonlyArray<Workouts.OHQ.WeekCompletedWorkoutOHQ>;
 type LoggedSets = Workouts.OHQ.WeekCompletedWorkoutOHQ["loggedSets"];
@@ -21,7 +20,7 @@ export class WeeklySummaryTotals {
     private readonly workouts: CompletedWorkouts,
     private readonly previousWorkouts: CompletedWorkouts,
     private readonly t: Translate,
-    language: LanguagesType,
+    language: SupportedLanguagesType,
   ) {
     const locale = locales[language];
 

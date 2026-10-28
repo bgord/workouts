@@ -1,7 +1,7 @@
 import type * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import * as Measurements from "+measurements";
-import type { SupportedLanguages } from "+supported-languages";
+import type { SupportedLanguagesType } from "+supported-languages";
 import { locales } from "./weekly-summary-locales";
 
 export type WeeklySummaryStat = { heading: string; value: string; caption: string; note?: string };
@@ -15,7 +15,7 @@ export class WeeklySummaryBodyWeight {
     private readonly measurements: ReadonlyArray<Measurements.VO.BodyWeightMeasurement>,
     private readonly week: tools.Week,
     private readonly t: ReturnType<typeof bg.TranslatorService.use>,
-    language: (typeof SupportedLanguages)[number],
+    language: SupportedLanguagesType,
   ) {
     const locale = locales[language];
 

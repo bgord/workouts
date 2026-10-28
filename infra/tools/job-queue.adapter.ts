@@ -4,12 +4,10 @@ import type * as Auth from "+auth";
 import type * as Measurements from "+measurements";
 import * as Notifications from "+notifications";
 import type * as Preferences from "+preferences";
-import type { SupportedLanguages } from "+supported-languages";
+import type { SupportedLanguagesType } from "+supported-languages";
 import type * as Workouts from "+workouts";
 import * as Emails from "+infra/emails";
 import type { EnvironmentResultType } from "+infra/env";
-
-type LanguagesType = (typeof SupportedLanguages)[number];
 
 type Dependencies = {
   Clock: bg.ClockPort;
@@ -23,7 +21,7 @@ type Dependencies = {
   GetWeeklySummaryStatusQuery: Notifications.Queries.GetWeeklySummaryStatus;
   WeeklySummaryOHQ: Preferences.OHQ.WeeklySummaryOHQ;
   UserContactOHQ: Auth.OHQ.UserContactOHQ;
-  UserLanguageOHQ: bg.Preferences.OHQ.UserLanguagePort<LanguagesType>;
+  UserLanguageOHQ: bg.Preferences.OHQ.UserLanguagePort<SupportedLanguagesType>;
   ListWeekCompletedWorkoutsOHQ: Workouts.OHQ.ListWeekCompletedWorkoutsOHQ;
   ListBodyWeightMeasurementsOHQ: Measurements.OHQ.ListBodyWeightMeasurementsOHQ;
 };
