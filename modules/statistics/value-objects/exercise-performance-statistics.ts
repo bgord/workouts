@@ -3,7 +3,7 @@ import type * as Exercises from "+exercises";
 import type * as Workouts from "+workouts";
 import type * as VO from "+statistics/value-objects";
 
-type ExercisePerformanceSet = Workouts.Queries.ExercisePerformance["sets"][number];
+type ExercisePerformanceSet = Workouts.OHQ.ExercisePerformanceOHQ["sets"][number];
 
 export type WeightedExercisePerformanceStatisticsSet = ExercisePerformanceSet & {
   estimate: VO.OneRepMaxEstimateType;

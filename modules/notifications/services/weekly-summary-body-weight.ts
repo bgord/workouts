@@ -29,11 +29,11 @@ export class WeeklySummaryBodyWeight {
   }
 
   stat(): WeeklySummaryStat | undefined {
-    const current = Measurements.Services.BodyWeightAverage.forWeek(this.measurements, this.week).calculate();
+    const current = Measurements.OHQ.BodyWeightAverage.forWeek(this.measurements, this.week).calculate();
 
     if (!current) return undefined;
 
-    const previous = Measurements.Services.BodyWeightAverage.forWeek(
+    const previous = Measurements.OHQ.BodyWeightAverage.forWeek(
       this.measurements,
       this.week.previous(),
     ).calculate();

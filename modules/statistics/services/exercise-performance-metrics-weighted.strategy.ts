@@ -9,14 +9,14 @@ type Dependencies = { OneRepEstimator: Ports.OneRepEstimatorPort };
 export class ExercisePerformanceMetricsWeightedStrategy implements ExercisePerformanceMetricsStrategy<VO.WeightedExercisePerformanceStatistics> {
   constructor(private readonly deps: Dependencies) {}
 
-  calculate(performance: Workouts.Queries.ExercisePerformance): VO.WeightedExercisePerformanceStatistics {
+  calculate(performance: Workouts.OHQ.ExercisePerformanceOHQ): VO.WeightedExercisePerformanceStatistics {
     const sets = performance.sets.map((set) => ({
       ...set,
       estimate: this.deps.OneRepEstimator.estimate(set),
     }));
 
     const bestSet = sets.reduce((best, set) => (set.estimate > best.estimate ? set : best));
-    const volume = new Workouts.Services.LoggedSetsVolume(
+    const volume = new Workouts.OHQ.LoggedSetsVolume(
       sets.map((set) => ({ ...set, laterality: performance.laterality })),
     );
 

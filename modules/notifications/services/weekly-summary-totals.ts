@@ -5,8 +5,8 @@ import { locales } from "./weekly-summary-locales";
 
 type LanguagesType = (typeof SupportedLanguages)[number];
 type Translate = ReturnType<typeof bg.TranslatorService.use>;
-type CompletedWorkouts = ReadonlyArray<Workouts.Queries.WeekCompletedWorkout>;
-type LoggedSets = Workouts.Queries.WeekCompletedWorkout["loggedSets"];
+type CompletedWorkouts = ReadonlyArray<Workouts.OHQ.WeekCompletedWorkoutOHQ>;
+type LoggedSets = Workouts.OHQ.WeekCompletedWorkoutOHQ["loggedSets"];
 
 export type WeeklySummaryTile = { value: string; label: string; delta: string };
 
@@ -68,8 +68,8 @@ export class WeeklySummaryTotals {
   }
 
   private volumeTile(): WeeklySummaryTile {
-    const current = new Workouts.Services.LoggedSetsVolume(this.sets).calculate().toKilograms();
-    const previous = new Workouts.Services.LoggedSetsVolume(this.previousSets).calculate().toKilograms();
+    const current = new Workouts.OHQ.LoggedSetsVolume(this.sets).calculate().toKilograms();
+    const previous = new Workouts.OHQ.LoggedSetsVolume(this.previousSets).calculate().toKilograms();
 
     return {
       value: this.number.format(current),
