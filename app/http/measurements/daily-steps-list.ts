@@ -2,6 +2,16 @@ import type * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 
+export type DailyStepsListResponse = {
+  month: Measurements.VO.DailyStepsHistoryMonthType | null;
+  entries: ReadonlyArray<Measurements.VO.DailyStepsEntry>;
+  previous: Measurements.VO.DailySteps | null;
+  months: ReadonlyArray<Measurements.VO.DailyStepsMonthSummary>;
+  stats: Measurements.VO.DailyStepsStats | null;
+  goal: Measurements.VO.DailyStepsGoalType | null;
+  actions: { export: bg.ActionState };
+};
+
 type Dependencies = {
   ListDailyStepsQuery: Measurements.Queries.ListDailySteps;
   ListDailyStepsForMonthQuery: Measurements.Queries.ListDailyStepsForMonth;
@@ -33,11 +43,21 @@ export const DailyStepsList =
     });
 
     if (!month) {
-      return Response.json({ month: null, entries: [], previous: null, months, stats, goal, actions });
+      const response: DailyStepsListResponse = {
+        month: null,
+        entries: [],
+        previous: null,
+        months,
+        stats,
+        goal,
+        actions,
+      };
+
+      return Response.json(response);
     }
 
     if (month === Measurements.VO.DailyStepsHistoryMonthAll) {
-      return Response.json({
+      const response: DailyStepsListResponse = {
         month,
         entries: all.map(entry),
         previous: null,
@@ -45,10 +65,22 @@ export const DailyStepsList =
         stats,
         goal,
         actions,
-      });
+      };
+
+      return Response.json(response);
     }
 
     const { entries, previous } = await deps.ListDailyStepsForMonthQuery.execute(userId, month);
 
-    return Response.json({ month, entries: entries.map(entry), previous, months, stats, goal, actions });
+    const response: DailyStepsListResponse = {
+      month,
+      entries: entries.map(entry),
+      previous,
+      months,
+      stats,
+      goal,
+      actions,
+    };
+
+    return Response.json(response);
   };

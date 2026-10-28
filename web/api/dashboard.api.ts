@@ -1,13 +1,5 @@
 import * as bg from "@bgord/ui";
-import type { BodyWeightStats } from "../../modules/measurements/value-objects/body-weight-stats";
-import type { DailyStepsStats } from "../../modules/measurements/value-objects/daily-steps-stats";
-import type { WorkoutDashboardResponse } from "../../modules/workouts/queries/get-workout-dashboard";
-
-type DashboardResponse = {
-  workouts: WorkoutDashboardResponse;
-  bodyWeightStats: BodyWeightStats | null;
-  dailyStepsStats: DailyStepsStats | null;
-};
+import type { DashboardResponse } from "../../app/http/dashboard/dashboard-get";
 
 export class Dashboard {
   static async get(request: Request | null): Promise<DashboardResponse> {

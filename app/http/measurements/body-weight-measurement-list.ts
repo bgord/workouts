@@ -2,6 +2,15 @@ import type * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 
+export type BodyWeightListResponse = {
+  month: Measurements.VO.BodyWeightHistoryMonthType | null;
+  measurements: ReadonlyArray<Measurements.VO.BodyWeightMeasurement>;
+  previous: Measurements.VO.BodyWeightMeasurement | null;
+  months: ReadonlyArray<Measurements.VO.BodyWeightMonthSummary>;
+  stats: Measurements.VO.BodyWeightStats | null;
+  actions: { export: bg.ActionState };
+};
+
 type Dependencies = {
   ListBodyWeightMeasurementsQuery: Measurements.Queries.ListBodyWeightMeasurements;
   ListBodyWeightMeasurementsForMonthQuery: Measurements.Queries.ListBodyWeightMeasurementsForMonth;
@@ -29,13 +38,31 @@ export const BodyWeightMeasurementList =
     const month = requested ?? months[0]?.month;
 
     if (!month) {
-      return Response.json({ month: null, measurements: [], previous: null, months, stats, actions });
+      const response: BodyWeightListResponse = {
+        month: null,
+        measurements: [],
+        previous: null,
+        months,
+        stats,
+        actions,
+      };
+
+      return Response.json(response);
     }
 
     if (month === Measurements.VO.BodyWeightHistoryMonthAll) {
       const measurements = await deps.ListBodyWeightMeasurementsQuery.execute(userId);
 
-      return Response.json({ month, measurements, previous: null, months, stats, actions });
+      const response: BodyWeightListResponse = {
+        month,
+        measurements,
+        previous: null,
+        months,
+        stats,
+        actions,
+      };
+
+      return Response.json(response);
     }
 
     const { measurements, previous } = await deps.ListBodyWeightMeasurementsForMonthQuery.execute(
@@ -43,5 +70,7 @@ export const BodyWeightMeasurementList =
       month,
     );
 
-    return Response.json({ month, measurements, previous, months, stats, actions });
+    const response: BodyWeightListResponse = { month, measurements, previous, months, stats, actions };
+
+    return Response.json(response);
   };

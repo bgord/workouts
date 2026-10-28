@@ -5,7 +5,7 @@ import * as ui from "../components";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];
-const maxSizeBytes = 10_000_000;
+const maxSizeBytes = 10_485_760;
 
 export function ExerciseImageChange() {
   const t = bg.useTranslations();

@@ -2,6 +2,12 @@ import type * as bg from "@bgord/bun";
 import * as Measurements from "+measurements";
 import type * as Workouts from "+workouts";
 
+export type DashboardResponse = {
+  workouts: Workouts.Queries.WorkoutDashboardResponse;
+  bodyWeightStats: Measurements.VO.BodyWeightStats | null;
+  dailyStepsStats: Measurements.VO.DailyStepsStats | null;
+};
+
 type Dependencies = {
   Clock: bg.ClockPort;
   GetWorkoutDashboardQuery: Workouts.Queries.GetWorkoutDashboard;
@@ -22,5 +28,7 @@ export const DashboardGet =
     const bodyWeightStats = new Measurements.Services.BodyWeightStatsCalculator(measurements).calculate();
     const dailyStepsStats = new Measurements.Services.DailyStepsStatsCalculator(dailySteps).calculate();
 
-    return Response.json({ workouts, bodyWeightStats, dailyStepsStats });
+    const response: DashboardResponse = { workouts, bodyWeightStats, dailyStepsStats };
+
+    return Response.json(response);
   };

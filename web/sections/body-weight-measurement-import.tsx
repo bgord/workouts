@@ -5,7 +5,7 @@ import * as ui from "../components";
 import { bodyWeightRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
-const maxSizeBytes = 1_024_000;
+const maxSizeBytes = 1_048_576;
 
 export function BodyWeightMeasurementImport() {
   const t = bg.useTranslations();

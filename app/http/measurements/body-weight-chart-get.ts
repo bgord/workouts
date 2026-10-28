@@ -2,6 +2,8 @@ import type * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 
+export type BodyWeightChartResponse = { points: ReadonlyArray<Measurements.VO.BodyWeightChartPoint> };
+
 type Dependencies = { ListBodyWeightMeasurementsQuery: Measurements.Queries.ListBodyWeightMeasurements };
 
 export const BodyWeightChartGet =
@@ -15,5 +17,7 @@ export const BodyWeightChartGet =
     const measurements = await deps.ListBodyWeightMeasurementsQuery.execute(userId);
     const points = new Measurements.Services.BodyWeightChart(measurements).points(granularity);
 
-    return Response.json({ points });
+    const response: BodyWeightChartResponse = { points };
+
+    return Response.json(response);
   };

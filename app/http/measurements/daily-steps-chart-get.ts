@@ -2,6 +2,8 @@ import type * as bg from "@bgord/bun";
 import * as v from "valibot";
 import * as Measurements from "+measurements";
 
+export type DailyStepsChartResponse = { points: ReadonlyArray<Measurements.VO.DailyStepsChartPoint> };
+
 type Dependencies = { ListDailyStepsQuery: Measurements.Queries.ListDailySteps };
 
 export const DailyStepsChartGet =
@@ -15,5 +17,7 @@ export const DailyStepsChartGet =
     const entries = await deps.ListDailyStepsQuery.execute(userId);
     const points = new Measurements.Services.DailyStepsChart(entries).points(granularity);
 
-    return Response.json({ points });
+    const response: DailyStepsChartResponse = { points };
+
+    return Response.json(response);
   };

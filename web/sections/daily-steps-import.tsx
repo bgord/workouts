@@ -5,7 +5,7 @@ import * as ui from "../components";
 import { dailyStepsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];
-const maxSizeBytes = 1_024_000;
+const maxSizeBytes = 1_048_576;
 
 export function DailyStepsImport() {
   const t = bg.useTranslations();
