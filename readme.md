@@ -444,6 +444,7 @@ modules/
 │   │   ├── plan-get-actions.ts
 │   │   ├── plan-get-exercise-instruction-actions.ts
 │   │   ├── plan-get-section-actions.ts
+│   │   ├── plan-get-view.ts
 │   │   ├── plan-history.ts
 │   │   └── plan-list-actions.ts
 │   └── value-objects

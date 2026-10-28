@@ -56,53 +56,7 @@ class GetPlanQueryDrizzle implements Plans.Queries.GetPlan {
 
     if (!plan) return null;
 
-    const data = {
-      ...plan,
-      sections: plan.sections.map((section) => ({
-        ...section,
-        exerciseInstructions: section.exerciseInstructions.map((exerciseInstruction) => {
-          const { categoryAssignments, ...exercise } = exerciseInstruction.exercise;
-
-          return {
-            ...exerciseInstruction,
-            exercise: {
-              ...exercise,
-              progressionMethods: Plans.VO.ProgressionMethodApplicability.options(exercise.resistance),
-            },
-            actions: new Plans.Services.PlanGetExerciseInstructionActions({
-              status: plan.status,
-              section,
-              exerciseInstructionId: exerciseInstruction.id,
-            }).calculate(),
-          };
-        }),
-        actions: new Plans.Services.PlanGetSectionActions({ status: plan.status, section }).calculate(),
-      })),
-    };
-
-    const coverage = new Plans.Services.PlanCategoryCoverage({
-      categories,
-      instructions: plan.sections.flatMap((section) =>
-        section.exerciseInstructions.map((exerciseInstruction) => ({
-          sets: exerciseInstruction.sets,
-          categories: exerciseInstruction.exercise.categoryAssignments.map((assignment) => ({
-            ...assignment.category,
-            role: assignment.role,
-          })),
-        })),
-      ),
-    }).calculate();
-
-    return {
-      data,
-      actions: new Plans.Services.PlanGetActions({
-        status: plan.status,
-        sections: data.sections,
-        activeCount,
-        coverage,
-      }).calculate(),
-      coverage,
-    };
+    return new Plans.Services.PlanGetView({ plan, activeCount, categories }).calculate();
   }
 }
 
