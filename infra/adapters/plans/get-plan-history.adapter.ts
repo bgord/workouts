@@ -25,17 +25,10 @@ class GetPlanHistoryQueryEventStore implements Plans.Queries.GetPlanHistory {
 
     if (!plan) return null;
 
-    const exerciseIds = events.flatMap((event) =>
-      event.name === Plans.Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT ||
-      event.name === Plans.Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT
-        ? [event.payload.exerciseInstruction.exerciseId]
-        : [],
-    );
-
     const exercises = await db
       .select({ id: Schema.exercises.id, name: Schema.exercises.name })
       .from(Schema.exercises)
-      .where(inArray(Schema.exercises.id, exerciseIds));
+      .where(inArray(Schema.exercises.id, Plans.Services.PlanHistory.exerciseIds(events)));
 
     return { data: new Plans.Services.PlanHistory({ events, exercises }).calculate(config) };
   }

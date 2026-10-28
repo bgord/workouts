@@ -10,6 +10,10 @@ type PlanHistoryFacts = {
   exercises: ReadonlyArray<{ id: Exercises.VO.ExerciseIdType; name: Exercises.VO.ExerciseNameType }>;
 };
 
+type ExerciseReferencingEvent =
+  | Events.PlanSectionExerciseInstructionAddedEventType
+  | Events.PlanSectionExerciseInstructionExerciseChangedEventType;
+
 type PlanHistoryState = {
   sections: Map<VO.PlanSectionIdType, VO.PlanSectionNameType>;
   exerciseInstructions: Map<VO.ExerciseInstructionIdType, Exercises.VO.ExerciseIdType>;
@@ -17,6 +21,12 @@ type PlanHistoryState = {
 
 export class PlanHistory {
   constructor(private readonly facts: PlanHistoryFacts) {}
+
+  static exerciseIds(events: ReadonlyArray<Aggregates.PlanEventType>): Array<Exercises.VO.ExerciseIdType> {
+    return events
+      .filter(PlanHistory.referencesExercise)
+      .map((event) => event.payload.exerciseInstruction.exerciseId);
+  }
 
   calculate(config: VO.PlanHistoryPageConfig): VO.PlanHistoryPage {
     const state: PlanHistoryState = { sections: new Map(), exerciseInstructions: new Map() };
@@ -30,10 +40,7 @@ export class PlanHistory {
           state.sections.set(event.payload.planSectionId, event.payload.planSectionName);
         }
 
-        if (
-          event.name === Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT ||
-          event.name === Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT
-        ) {
+        if (PlanHistory.referencesExercise(event)) {
           state.exerciseInstructions.set(
             event.payload.exerciseInstruction.id,
             event.payload.exerciseInstruction.exerciseId,
@@ -112,5 +119,12 @@ export class PlanHistory {
     const exerciseId = state.exerciseInstructions.get(id);
 
     return this.facts.exercises.find((exercise) => exercise.id === exerciseId)?.name ?? null;
+  }
+
+  private static referencesExercise(event: Aggregates.PlanEventType): event is ExerciseReferencingEvent {
+    return (
+      event.name === Events.PLAN_SECTION_EXERCISE_INSTRUCTION_ADDED_EVENT ||
+      event.name === Events.PLAN_SECTION_EXERCISE_INSTRUCTION_EXERCISE_CHANGED_EVENT
+    );
   }
 }

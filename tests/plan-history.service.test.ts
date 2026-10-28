@@ -573,4 +573,16 @@ describe("PlanHistory", () => {
 
     expect(history.calculate({ limit: tools.Int.positive(1) })).toEqual({ entries: [], next: null });
   });
+
+  test("exerciseIds", () => {
+    const exerciseIds = Plans.Services.PlanHistory.exerciseIds([
+      mocks.GenericPlanCreatedEvent,
+      mocks.GenericPlanSectionCreatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionAddedEvent,
+      mocks.GenericPlanSectionExerciseInstructionUpdatedEvent,
+      mocks.GenericPlanSectionExerciseInstructionExerciseChangedEvent,
+    ]);
+
+    expect(exerciseIds).toEqual([mocks.exerciseId, mocks.anotherExerciseId]);
+  });
 });
