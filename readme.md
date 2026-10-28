@@ -47,6 +47,27 @@ Master key fils hould include 64 hex characters
 bun run bgord-scripts/secrets-encrypt.ts --master-key /run/master-key.txt --input /project/path/.env.production --output /project/path/infra/secrets.enc
 ```
 
+## Bounded contexts:
+
+```mermaid
+graph LR
+  exercises --> auth
+  measurements --> auth
+  notifications --> auth
+  notifications --> measurements
+  notifications --> preferences
+  notifications --> workouts
+  plans --> auth
+  plans --> exercises
+  preferences --> auth
+  statistics --> auth
+  statistics --> exercises
+  statistics --> workouts
+  workouts --> auth
+  workouts --> exercises
+  workouts --> plans
+```
+
 ## Domain:
 
 ```
