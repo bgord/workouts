@@ -517,7 +517,8 @@ modules/
 │       ├── preference-definitions.ts
 │       ├── profile-avatar.ts
 │       ├── weekly-summary-options.ts
-│       └── weekly-summary.ts
+│       ├── weekly-summary.ts
+│       └── weekly-summary.validation.ts
 ├── statistics
 │   ├── ports
 │   │   └── one-rep-estimator.port.ts
