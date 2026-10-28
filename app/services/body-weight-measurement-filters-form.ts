@@ -5,7 +5,7 @@ import { BodyWeightHistoryMonthAll } from "../../modules/measurements/value-obje
 export const Form = {
   month: { field: { name: "month" } },
   ...bg.SearchParam.form({
-    month: bg.SearchParam.or<typeof BodyWeightHistoryMonthAll, tools.MonthIsoIdType>(
+    month: bg.SearchParam.or(
       bg.SearchParam.oneOf([BodyWeightHistoryMonthAll]),
       bg.SearchParam.matches<tools.MonthIsoIdType>(/^\d{4}-(0[1-9]|1[0-2])$/),
     ),

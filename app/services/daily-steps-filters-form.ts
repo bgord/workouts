@@ -5,7 +5,7 @@ import { DailyStepsHistoryMonthAll } from "../../modules/measurements/value-obje
 export const Form = {
   month: { field: { name: "month" } },
   ...bg.SearchParam.form({
-    month: bg.SearchParam.or<typeof DailyStepsHistoryMonthAll, tools.MonthIsoIdType>(
+    month: bg.SearchParam.or(
       bg.SearchParam.oneOf([DailyStepsHistoryMonthAll]),
       bg.SearchParam.matches<tools.MonthIsoIdType>(/^\d{4}-(0[1-9]|1[0-2])$/),
     ),
