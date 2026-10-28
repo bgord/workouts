@@ -1,4 +1,5 @@
 export * from "./get-finalized-plan";
+export * from "./get-finalized-plan-for-owner";
 export * from "./get-plan";
 export * from "./get-plan-editable-for-owner-count";
 export * from "./get-plan-history";

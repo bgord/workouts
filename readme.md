@@ -430,6 +430,7 @@ modules/
 │   ├── ports
 │   │   └── plan-repository.ts
 │   ├── queries
+│   │   ├── get-finalized-plan-for-owner.ts
 │   │   ├── get-finalized-plan.ts
 │   │   ├── get-plan-editable-for-owner-count.ts
 │   │   ├── get-plan-history.ts
@@ -821,6 +822,7 @@ infra/
 │   ├── notifications
 │   │   ├── get-weekly-summary-status.adapter.ts
 │   ├── plans
+│   │   ├── get-finalized-plan-for-owner.adapter.ts
 │   │   ├── get-finalized-plan.adapter.ts
 │   │   ├── get-plan-editable-for-owner-count.adapter.ts
 │   │   ├── get-plan-history.adapter.ts

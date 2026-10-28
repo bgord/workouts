@@ -1,10 +1,10 @@
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
-import { and, asc, desc, eq, gte, max, sql } from "drizzle-orm";
+import { and, desc, eq, gte, max, sql } from "drizzle-orm";
 import * as v from "valibot";
 import type * as Auth from "+auth";
-import * as Plans from "+plans";
 import * as Workouts from "+workouts";
+import { GetFinalizedPlanForOwnerQuery } from "+infra/adapters/plans/get-finalized-plan-for-owner.adapter";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 import { GetWorkoutStatusForOwnerCountQuery } from "./get-workout-status-for-owner-count.adapter";
@@ -64,26 +64,7 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
         limit: bg.Page.take(config.limit),
       }),
       db.$count(Schema.workouts, where),
-      db.query.plans.findFirst({
-        columns: { id: true, name: true },
-        where: and(
-          eq(Schema.plans.userId, userId),
-          eq(Schema.plans.status, Plans.VO.PlanStatusEnum.finalized),
-        ),
-        with: {
-          sections: {
-            columns: { id: true, name: true },
-            orderBy: asc(Schema.planSections.createdAt),
-            with: {
-              exerciseInstructions: {
-                columns: { id: true },
-                orderBy: asc(Schema.planSectionExerciseInstructions.position),
-                with: { exercise: { columns: { name: true } } },
-              },
-            },
-          },
-        },
-      }),
+      GetFinalizedPlanForOwnerQuery.execute(userId),
       GetWorkoutStatusForOwnerCountQuery.execute(userId, Workouts.VO.WorkoutStatusEnum.draft),
       db
         .select({
@@ -104,9 +85,9 @@ class ListWorkoutsQueryDrizzle implements Workouts.Queries.ListWorkouts {
       })),
       matching: tools.Int.nonNegative(matching),
       sections,
-      plan: plan ?? null,
+      plan,
       actions: new Workouts.Services.WorkoutListActions({
-        plan: plan ?? null,
+        plan,
         draftCount: drafts,
       }).calculate(),
     };
