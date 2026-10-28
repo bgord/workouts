@@ -21,6 +21,7 @@ import { seedDrafter } from "./seed/personas/drafter";
 import { seedEmpty } from "./seed/personas/empty";
 import { seedHanger } from "./seed/personas/hanger";
 import { seedHoarder } from "./seed/personas/hoarder";
+import { seedLapsed } from "./seed/personas/lapsed";
 import { seedPocket } from "./seed/personas/pocket";
 import { seedPolyglot } from "./seed/personas/polyglot";
 
@@ -60,6 +61,7 @@ void (async function main() {
     await seedHoarder(di);
     await seedPocket(di);
     await seedHanger(di);
+    await seedLapsed(di);
 
     await di.Adapters.System.Sleeper.wait(tools.Duration.Ms(1));
 

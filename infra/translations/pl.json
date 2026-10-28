@@ -532,6 +532,8 @@
   "workout.list.header": "Treningi",
   "workout.list.more": "Pokaż starsze",
   "workout.list.more.error": "Nie udało się wczytać kolejnych treningów",
+  "workout.list.none_scheduled": "Brak treningów w ostatnim tygodniu",
+  "workout.list.none_scheduled.hint": "Zaplanuj trening, aby wrócić do rytmu",
   "workout.list.no_matches": "Żaden trening nie pasuje do filtrów",
   "workout.list.no_matches.hint": "Spróbuj innej sekcji lub wyczyść filtry",
   "workout.log_panel.exercise.title": "{{position}}. {{name}}",

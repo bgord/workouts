@@ -532,6 +532,8 @@
   "workout.list.header": "Workouts",
   "workout.list.more": "Show older",
   "workout.list.more.error": "Could not load more workouts",
+  "workout.list.none_scheduled": "No workouts in the last week",
+  "workout.list.none_scheduled.hint": "Schedule a workout to get back on track",
   "workout.list.no_matches": "No workouts match the filters",
   "workout.list.no_matches.hint": "Try another section or clear the filters",
   "workout.log_panel.exercise.title": "{{position}}. {{name}}",

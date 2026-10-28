@@ -20,6 +20,7 @@ const personas = {
   hoarder: fixtures.hoarder,
   pocket: fixtures.pocket,
   hanger: fixtures.hanger,
+  lapsed: fixtures.lapsed,
 };
 
 for (const [name, persona] of Object.entries(personas)) {

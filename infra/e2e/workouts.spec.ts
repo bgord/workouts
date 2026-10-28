@@ -200,3 +200,20 @@ test.describe("Workouts - active", () => {
     await expect(page.getByText("Try another section or clear the filters")).toBeVisible();
   });
 });
+
+test.describe("Workouts - lapsed", () => {
+  test.use({ storageState: ".auth/lapsed.json" });
+
+  test("shows the empty state when nothing is scheduled in the last week", async ({ page }) => {
+    await page.goto("/workouts");
+
+    await expect(page.getByText("No workouts in the last week")).toBeVisible();
+    await expect(page.getByText("Schedule a workout to get back on track")).toBeVisible();
+  });
+
+  test("lists the workout outside the last week for all time", async ({ page }) => {
+    await page.goto("/workouts?filter=all_time");
+
+    await expect(page.getByTestId(`workout-${fixtures.lapsed.scheduledWorkout.id}`)).toBeVisible();
+  });
+});

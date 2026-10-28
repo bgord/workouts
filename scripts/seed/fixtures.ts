@@ -940,6 +940,19 @@ export const hanger = {
   },
 };
 
+export const lapsed = {
+  email: "lapsed@example.com",
+  scheduledWorkout: { id: "3edcedab-590c-408d-b115-33faccfa9f31" },
+  plan: {
+    id: "3c1edb97-51a5-4d14-bcb3-42467239d47b",
+    name: core.name,
+    description: core.description,
+    sections: {
+      core: { id: "2ef97e61-7675-4d9e-aac4-dfd949cc8621", ...core.sections.core },
+    },
+  },
+};
+
 export const polyglot = { email: "polyglot@example.com", language: "pl" };
 
 export const polyglotMutation = { email: "polyglot-mutation@example.com", language: "pl" };
