@@ -8,6 +8,7 @@ import { BodyPartMeasuredOnIsNotInFuture } from "../invariants/body-part-measure
 import { BodyPartMeasurementBelongsToUser } from "../invariants/body-part-measurement-belongs-to-user";
 import { BodyPartMeasurementExists } from "../invariants/body-part-measurement-exists";
 import { BodyPartMeasurementHasChanged } from "../invariants/body-part-measurement-has-changed";
+import { BodyPartMeasurementStream } from "../value-objects/body-part-measurement-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -51,7 +52,7 @@ export const handleBodyPartMeasurementCorrectCommand =
 
     const event = bg.event(
       BodyPartMeasurementCorrectedEvent,
-      `body_part_measurement_${command.payload.id}`,
+      BodyPartMeasurementStream.of(command.payload.id),
       {
         id: command.payload.id,
         bodyPartId: command.payload.bodyPartId,

@@ -280,9 +280,11 @@ modules/
 │       ├── body-part-measured-on.ts
 │       ├── body-part-measurement-id.ts
 │       ├── body-part-measurement-import.ts
+│       ├── body-part-measurement-stream.ts
 │       ├── body-part-measurement.ts
 │       ├── body-part-name.ts
 │       ├── body-part-name.validation.ts
+│       ├── body-part-stream.ts
 │       ├── body-part-summary.ts
 │       ├── body-part.ts
 │       ├── body-weight-chart-granularity-options.ts
@@ -295,8 +297,10 @@ modules/
 │       ├── body-weight-measured-on.ts
 │       ├── body-weight-measurement-id.ts
 │       ├── body-weight-measurement-import.ts
+│       ├── body-weight-measurement-stream.ts
 │       ├── body-weight-measurement.ts
 │       ├── body-weight-month-summary.ts
+│       ├── body-weight-reference-stream.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
 │       ├── daily-steps-chart-granularity-options.ts
@@ -304,12 +308,14 @@ modules/
 │       ├── daily-steps-chart-point.ts
 │       ├── daily-steps-day.ts
 │       ├── daily-steps-entry.ts
+│       ├── daily-steps-goal-stream.ts
 │       ├── daily-steps-goal.ts
 │       ├── daily-steps-history-month.ts
 │       ├── daily-steps-history-month.validation.ts
 │       ├── daily-steps-import.ts
 │       ├── daily-steps-month-summary.ts
 │       ├── daily-steps-stats.ts
+│       ├── daily-steps-stream.ts
 │       ├── daily-steps.ts
 │       ├── steps-count.ts
 │       ├── steps-count.validation.ts

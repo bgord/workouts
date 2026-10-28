@@ -4,6 +4,7 @@ import { BodyPartDescriptionSetEvent } from "../events/BODY_PART_DESCRIPTION_SET
 import { BodyPartBelongsToUser } from "../invariants/body-part-belongs-to-user";
 import { BodyPartDescriptionHasChanged } from "../invariants/body-part-description-has-changed";
 import { BodyPartExists } from "../invariants/body-part-exists";
+import { BodyPartStream } from "../value-objects/body-part-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -27,7 +28,7 @@ export const handleBodyPartDescriptionSetCommand =
 
     const event = bg.event(
       BodyPartDescriptionSetEvent,
-      `body_part_${command.payload.id}`,
+      BodyPartStream.of(command.payload.id),
       {
         id: command.payload.id,
         description: command.payload.description,

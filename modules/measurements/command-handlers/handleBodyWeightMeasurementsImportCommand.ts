@@ -3,6 +3,7 @@ import * as tools from "@bgord/tools";
 import type * as Measurements from "+measurements";
 import { BodyWeightMeasuredEvent } from "../events/BODY_WEIGHT_MEASURED_EVENT";
 import { BodyWeightMeasuredOnIsNotInFuture } from "../invariants/body-weight-measured-on-is-not-in-future";
+import { BodyWeightMeasurementStream } from "../value-objects/body-weight-measurement-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -24,7 +25,7 @@ export const handleBodyWeightMeasurementsImportCommand =
     for (const measurement of command.payload.measurements) {
       const event = bg.event(
         BodyWeightMeasuredEvent,
-        `body_weight_measurement_${measurement.id}`,
+        BodyWeightMeasurementStream.of(measurement.id),
         {
           id: measurement.id,
           weight: measurement.weight,

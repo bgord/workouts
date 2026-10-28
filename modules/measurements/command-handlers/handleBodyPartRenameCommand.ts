@@ -5,6 +5,7 @@ import { BodyPartBelongsToUser } from "../invariants/body-part-belongs-to-user";
 import { BodyPartExists } from "../invariants/body-part-exists";
 import { BodyPartNameHasChanged } from "../invariants/body-part-name-has-changed";
 import { BodyPartNameIsUnique } from "../invariants/body-part-name-is-unique";
+import { BodyPartStream } from "../value-objects/body-part-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -34,7 +35,7 @@ export const handleBodyPartRenameCommand =
 
     const event = bg.event(
       BodyPartRenamedEvent,
-      `body_part_${command.payload.id}`,
+      BodyPartStream.of(command.payload.id),
       { id: command.payload.id, name: command.payload.name, requesterId: command.payload.requesterId },
       deps,
     );

@@ -6,6 +6,7 @@ import { BodyWeightMeasuredOnIsNotInFuture } from "../invariants/body-weight-mea
 import { BodyWeightMeasurementBelongsToUser } from "../invariants/body-weight-measurement-belongs-to-user";
 import { BodyWeightMeasurementExists } from "../invariants/body-weight-measurement-exists";
 import { BodyWeightMeasurementHasChanged } from "../invariants/body-weight-measurement-has-changed";
+import { BodyWeightMeasurementStream } from "../value-objects/body-weight-measurement-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -38,7 +39,7 @@ export const handleBodyWeightMeasurementCorrectCommand =
 
     const event = bg.event(
       BodyWeightMeasurementCorrectedEvent,
-      `body_weight_measurement_${command.payload.id}`,
+      BodyWeightMeasurementStream.of(command.payload.id),
       {
         id: command.payload.id,
         weight: command.payload.weight,

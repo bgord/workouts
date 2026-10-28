@@ -4,6 +4,7 @@ import { BodyWeightReferenceSetEvent } from "../events/BODY_WEIGHT_REFERENCE_SET
 import { BodyWeightMeasurementBelongsToUser } from "../invariants/body-weight-measurement-belongs-to-user";
 import { BodyWeightMeasurementExists } from "../invariants/body-weight-measurement-exists";
 import { BodyWeightReferenceHasChanged } from "../invariants/body-weight-reference-has-changed";
+import { BodyWeightReferenceStream } from "../value-objects/body-weight-reference-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -27,7 +28,7 @@ export const handleBodyWeightReferenceSetCommand =
 
     const event = bg.event(
       BodyWeightReferenceSetEvent,
-      `body_weight_reference_${command.payload.requesterId}`,
+      BodyWeightReferenceStream.of(command.payload.requesterId),
       {
         measurementId: command.payload.measurementId,
         goal: command.payload.goal,

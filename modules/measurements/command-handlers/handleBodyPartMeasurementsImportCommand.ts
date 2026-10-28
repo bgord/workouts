@@ -4,6 +4,7 @@ import type * as Measurements from "+measurements";
 import { BodyPartMeasuredEvent } from "../events/BODY_PART_MEASURED_EVENT";
 import { BodyPartExists } from "../invariants/body-part-exists";
 import { BodyPartMeasuredOnIsNotInFuture } from "../invariants/body-part-measured-on-is-not-in-future";
+import { BodyPartMeasurementStream } from "../value-objects/body-part-measurement-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -39,7 +40,7 @@ export const handleBodyPartMeasurementsImportCommand =
     for (const { measurement, bodyPart } of measurements) {
       const event = bg.event(
         BodyPartMeasuredEvent,
-        `body_part_measurement_${measurement.id}`,
+        BodyPartMeasurementStream.of(measurement.id),
         {
           id: measurement.id,
           bodyPartId: bodyPart.id,

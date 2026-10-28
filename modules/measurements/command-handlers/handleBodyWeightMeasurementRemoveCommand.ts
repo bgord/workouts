@@ -3,6 +3,7 @@ import type * as Measurements from "+measurements";
 import { BodyWeightMeasurementRemovedEvent } from "../events/BODY_WEIGHT_MEASUREMENT_REMOVED_EVENT";
 import { BodyWeightMeasurementBelongsToUser } from "../invariants/body-weight-measurement-belongs-to-user";
 import { BodyWeightMeasurementExists } from "../invariants/body-weight-measurement-exists";
+import { BodyWeightMeasurementStream } from "../value-objects/body-weight-measurement-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -25,7 +26,7 @@ export const handleBodyWeightMeasurementRemoveCommand =
 
     const event = bg.event(
       BodyWeightMeasurementRemovedEvent,
-      `body_weight_measurement_${command.payload.id}`,
+      BodyWeightMeasurementStream.of(command.payload.id),
       { id: command.payload.id, requesterId: command.payload.requesterId },
       deps,
     );

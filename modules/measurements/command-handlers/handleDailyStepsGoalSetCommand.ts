@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import type * as Measurements from "+measurements";
 import { DailyStepsGoalSetEvent } from "../events/DAILY_STEPS_GOAL_SET_EVENT";
 import { DailyStepsGoalHasChanged } from "../invariants/daily-steps-goal-has-changed";
+import { DailyStepsGoalStream } from "../value-objects/daily-steps-goal-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -19,7 +20,7 @@ export const handleDailyStepsGoalSetCommand =
 
     const event = bg.event(
       DailyStepsGoalSetEvent,
-      `daily_steps_goal_${command.payload.userId}`,
+      DailyStepsGoalStream.of(command.payload.userId),
       { userId: command.payload.userId, goal: command.payload.goal },
       deps,
     );

@@ -5,6 +5,7 @@ import { BodyPartMeasuredEvent } from "../events/BODY_PART_MEASURED_EVENT";
 import { BodyPartBelongsToUser } from "../invariants/body-part-belongs-to-user";
 import { BodyPartExists } from "../invariants/body-part-exists";
 import { BodyPartMeasuredOnIsNotInFuture } from "../invariants/body-part-measured-on-is-not-in-future";
+import { BodyPartMeasurementStream } from "../value-objects/body-part-measurement-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -30,7 +31,7 @@ export const handleBodyPartMeasureCommand =
 
     const event = bg.event(
       BodyPartMeasuredEvent,
-      `body_part_measurement_${command.payload.id}`,
+      BodyPartMeasurementStream.of(command.payload.id),
       {
         id: command.payload.id,
         bodyPartId: command.payload.bodyPartId,

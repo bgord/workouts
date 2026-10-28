@@ -2,6 +2,7 @@ import * as bg from "@bgord/bun";
 import type * as Measurements from "+measurements";
 import { BodyPartDefinedEvent } from "../events/BODY_PART_DEFINED_EVENT";
 import { BodyPartNameIsUnique } from "../invariants/body-part-name-is-unique";
+import { BodyPartStream } from "../value-objects/body-part-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -19,7 +20,7 @@ export const handleBodyPartDefineCommand =
 
     const event = bg.event(
       BodyPartDefinedEvent,
-      `body_part_${command.payload.id}`,
+      BodyPartStream.of(command.payload.id),
       {
         id: command.payload.id,
         name: command.payload.name,

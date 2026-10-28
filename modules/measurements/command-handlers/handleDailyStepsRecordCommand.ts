@@ -3,6 +3,7 @@ import * as tools from "@bgord/tools";
 import type * as Measurements from "+measurements";
 import { DailyStepsRecordedEvent } from "../events/DAILY_STEPS_RECORDED_EVENT";
 import { DailyStepsDayIsNotInFuture } from "../invariants/daily-steps-day-is-not-in-future";
+import { DailyStepsStream } from "../value-objects/daily-steps-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -21,7 +22,7 @@ export const handleDailyStepsRecordCommand =
 
     const event = bg.event(
       DailyStepsRecordedEvent,
-      `daily_steps_${command.payload.userId}_${command.payload.day}`,
+      DailyStepsStream.of(command.payload.userId, command.payload.day),
       {
         userId: command.payload.userId,
         day: command.payload.day,
