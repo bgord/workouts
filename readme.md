@@ -127,6 +127,7 @@ modules/
 │   │   ├── get-exercise.ts
 │   │   ├── list-categories-assigned-to-exercise.ts
 │   │   ├── list-exercise-categories.ts
+│   │   ├── list-exercises-for-catalog.ts
 │   │   └── list-exercises-with-categories.ts
 │   ├── services
 │   │   ├── exercise-category-list-actions.ts
@@ -800,6 +801,7 @@ infra/
 │   │   ├── get-exercise.adapter.ts
 │   │   ├── list-categories-assigned-to-exercise.adapter.ts
 │   │   ├── list-exercise-categories.adapter.ts
+│   │   ├── list-exercises-for-catalog.adapter.ts
 │   │   └── list-exercises-with-categories.adapter.ts
 │   ├── measurements
 │   │   ├── get-body-part-by-name.adapter.ts

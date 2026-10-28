@@ -1,40 +1,12 @@
-import { asc } from "drizzle-orm";
 import * as Plans from "+plans";
-import { db } from "+infra/db";
-import * as Schema from "+infra/schema";
+import { ListExercisesForCatalogQuery } from "+infra/adapters/exercises/list-exercises-for-catalog.adapter";
 
 class ListExerciseCatalogQueryDrizzle implements Plans.Queries.ListExerciseCatalog {
   async execute(): Promise<Plans.Queries.ExerciseCatalogResponse> {
-    const exercises = await db.query.exercises.findMany({
-      columns: {
-        id: true,
-        name: true,
-        description: true,
-        resistance: true,
-        laterality: true,
-        loadStep: true,
-        image: true,
-        imageEtag: true,
-      },
-      orderBy: asc(Schema.exercises.name),
-      with: {
-        categoryAssignments: {
-          columns: { role: true },
-          orderBy: [
-            asc(Schema.exerciseCategoryAssignments.role),
-            asc(Schema.exerciseCategoryAssignments.createdAt),
-          ],
-          with: { category: { columns: { id: true, name: true } } },
-        },
-      },
-    });
+    const exercises = await ListExercisesForCatalogQuery.execute();
 
-    const data = exercises.map(({ categoryAssignments, ...exercise }) => ({
+    const data = exercises.map((exercise) => ({
       ...exercise,
-      categories: categoryAssignments.map((assignment) => ({
-        ...assignment.category,
-        role: assignment.role,
-      })),
       progressionMethods: Plans.VO.ProgressionMethodApplicability.options(exercise.resistance),
     }));
 
