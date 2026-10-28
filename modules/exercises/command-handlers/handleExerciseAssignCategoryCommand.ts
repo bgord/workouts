@@ -6,6 +6,7 @@ import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseCategoryLimit } from "../invariants/exercise-category-limit";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsNotAssignedToCategory } from "../invariants/exercise-is-not-assigned-to-category";
+import { ExerciseStream } from "../value-objects/exercise-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -41,7 +42,7 @@ export const handleExerciseAssignCategoryCommand =
 
     const event = bg.event(
       ExerciseCategoryAssignedEvent,
-      `exercise_${command.payload.exerciseId}`,
+      ExerciseStream.of(command.payload.exerciseId),
       {
         exerciseId: command.payload.exerciseId,
         exerciseCategoryId: command.payload.exerciseCategoryId,

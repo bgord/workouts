@@ -8,6 +8,7 @@ import { ExerciseImageConstraints } from "../invariants/exercise-image-constrain
 import { ExerciseLoadStepIsApplicable } from "../invariants/exercise-load-step-is-applicable";
 import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
 import { ExerciseImage } from "../value-objects/exercise-image";
+import { ExerciseStream } from "../value-objects/exercise-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -67,7 +68,7 @@ export const handleExerciseAddCommand =
 
     const event = bg.event(
       ExerciseAddedEvent,
-      `exercise_${command.payload.id}`,
+      ExerciseStream.of(command.payload.id),
       {
         id: command.payload.id,
         name: command.payload.name,

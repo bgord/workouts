@@ -5,6 +5,7 @@ import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-adm
 import { ExerciseCategoryRoleHasChanged } from "../invariants/exercise-category-role-has-changed";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsAssignedToCategory } from "../invariants/exercise-is-assigned-to-category";
+import { ExerciseStream } from "../value-objects/exercise-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -37,7 +38,7 @@ export const handleExerciseCategoryRoleSetCommand =
 
     const event = bg.event(
       ExerciseCategoryRoleSetEvent,
-      `exercise_${command.payload.exerciseId}`,
+      ExerciseStream.of(command.payload.exerciseId),
       {
         exerciseId: command.payload.exerciseId,
         exerciseCategoryId: command.payload.exerciseCategoryId,

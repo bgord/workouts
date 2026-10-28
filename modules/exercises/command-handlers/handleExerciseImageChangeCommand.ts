@@ -7,6 +7,7 @@ import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-adm
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseImageConstraints } from "../invariants/exercise-image-constraints";
 import { ExerciseImage } from "../value-objects/exercise-image";
+import { ExerciseStream } from "../value-objects/exercise-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -56,7 +57,7 @@ export const handleExerciseImageChangeCommand =
 
     const event = bg.event(
       ExerciseImageChangedEvent,
-      `exercise_${command.payload.id}`,
+      ExerciseStream.of(command.payload.id),
       {
         id: command.payload.id,
         image: key,

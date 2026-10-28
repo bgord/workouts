@@ -3,6 +3,7 @@ import type * as Exercises from "+exercises";
 import { ExerciseCategoryDeletedEvent } from "../events/EXERCISE_CATEGORY_DELETED_EVENT";
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
+import { ExerciseCategoryStream } from "../value-objects/exercise-category-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -22,7 +23,7 @@ export const handleExerciseCategoryDeleteCommand =
 
     const event = bg.event(
       ExerciseCategoryDeletedEvent,
-      `exercise_category_${command.payload.id}`,
+      ExerciseCategoryStream.of(command.payload.id),
       { id: command.payload.id, requesterId: command.payload.requesterId },
       deps,
     );

@@ -4,6 +4,7 @@ import { ExerciseDeletedEvent } from "../events/EXERCISE_DELETED_EVENT";
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseIsNotUsed } from "../invariants/exercise-is-not-used";
+import { ExerciseStream } from "../value-objects/exercise-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -28,7 +29,7 @@ export const handleExerciseDeleteCommand =
 
     const event = bg.event(
       ExerciseDeletedEvent,
-      `exercise_${command.payload.id}`,
+      ExerciseStream.of(command.payload.id),
       { id: command.payload.id, image: exercise.image, requesterId: command.payload.requesterId },
       deps,
     );

@@ -5,6 +5,7 @@ import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-adm
 import { ExerciseExists } from "../invariants/exercise-exists";
 import { ExerciseHasChanged } from "../invariants/exercise-has-changed";
 import { ExerciseNameIsUnique } from "../invariants/exercise-name-is-unique";
+import { ExerciseStream } from "../value-objects/exercise-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -34,7 +35,7 @@ export const handleExerciseUpdateCommand =
 
     const event = bg.event(
       ExerciseUpdatedEvent,
-      `exercise_${command.payload.id}`,
+      ExerciseStream.of(command.payload.id),
       {
         id: command.payload.id,
         name: command.payload.name,

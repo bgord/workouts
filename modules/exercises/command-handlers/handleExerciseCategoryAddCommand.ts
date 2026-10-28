@@ -3,6 +3,7 @@ import type * as Exercises from "+exercises";
 import { ExerciseCategoryAddedEvent } from "../events/EXERCISE_CATEGORY_ADDED_EVENT";
 import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-admin";
 import { ExerciseCategoryNameIsUnique } from "../invariants/exercise-category-name-is-unique";
+import { ExerciseCategoryStream } from "../value-objects/exercise-category-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -22,7 +23,7 @@ export const handleExerciseCategoryAddCommand =
 
     const event = bg.event(
       ExerciseCategoryAddedEvent,
-      `exercise_category_${command.payload.id}`,
+      ExerciseCategoryStream.of(command.payload.id),
       { id: command.payload.id, name: command.payload.name, userId: command.payload.userId },
       deps,
     );

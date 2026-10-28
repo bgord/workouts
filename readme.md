@@ -143,6 +143,7 @@ modules/
 │       ├── exercise-category-role-options.ts
 │       ├── exercise-category-role-weight.ts
 │       ├── exercise-category-role.ts
+│       ├── exercise-category-stream.ts
 │       ├── exercise-category-with-exercise-names.ts
 │       ├── exercise-category.ts
 │       ├── exercise-description.ts
@@ -158,6 +159,7 @@ modules/
 │       ├── exercise-name.validation.ts
 │       ├── exercise-resistance-options.ts
 │       ├── exercise-resistance.ts
+│       ├── exercise-stream.ts
 │       ├── exercise-with-categories.ts
 │       ├── exercise.ts
 ├── languages.ts

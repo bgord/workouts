@@ -5,6 +5,7 @@ import { CatalogIsManagedByAdmin } from "../invariants/catalog-is-managed-by-adm
 import { ExerciseCategoryExists } from "../invariants/exercise-category-exists";
 import { ExerciseCategoryNameHasChanged } from "../invariants/exercise-category-name-has-changed";
 import { ExerciseCategoryNameIsUnique } from "../invariants/exercise-category-name-is-unique";
+import { ExerciseCategoryStream } from "../value-objects/exercise-category-stream";
 
 type Dependencies = {
   IdProvider: bg.IdProviderPort;
@@ -37,7 +38,7 @@ export const handleExerciseCategoryRenameCommand =
 
     const event = bg.event(
       ExerciseCategoryRenamedEvent,
-      `exercise_category_${command.payload.id}`,
+      ExerciseCategoryStream.of(command.payload.id),
       { id: command.payload.id, name: command.payload.name, requesterId: command.payload.requesterId },
       deps,
     );
