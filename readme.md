@@ -599,6 +599,7 @@ modules/
     │   ├── exercise-performance-lowest-rir.ts
     │   ├── exercise-performance-weakest-set.ts
     │   ├── exercise-prescription-missed.ts
+    │   ├── exercise-signal-window.ts
     │   ├── exercise-target-diff-calculator.ts
     │   ├── load-step-factory.strategy.ts
     │   ├── load-step-increment.strategy.ts
