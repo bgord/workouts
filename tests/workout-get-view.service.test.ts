@@ -210,7 +210,7 @@ describe("WorkoutGetView", () => {
             ...mocks.workoutExerciseWithoutTargetLogged,
             target: null,
             exerciseDescription: mocks.workoutExerciseDescription,
-            loggedSets: [{ ...mocks.loggedSet, rir: null }],
+            loggedSets: [],
             exercise: mocks.exercise,
             previous: null,
             recent: [],
@@ -222,7 +222,7 @@ describe("WorkoutGetView", () => {
 
     expect(view.calculate().data.exercises[0]?.loggedSets[0]?.actions).toEqual({
       correct: mocks.actionAvailable,
-      remove: mocks.actionAvailable,
+      remove: { available: true, enabled: false, hints: ["workout.retains.logged.sets"] },
     });
   });
 });
