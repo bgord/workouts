@@ -9,7 +9,6 @@ export type WeeklySummaryStat = { heading: string; value: string; caption: strin
 export class WeeklySummaryBodyWeight {
   private readonly weight: Intl.NumberFormat;
   private readonly signed: Intl.NumberFormat;
-  private readonly plural: Intl.PluralRules;
 
   constructor(
     private readonly measurements: ReadonlyArray<Measurements.VO.BodyWeightMeasurement>,
@@ -25,7 +24,6 @@ export class WeeklySummaryBodyWeight {
       maximumFractionDigits: 1,
       signDisplay: "always",
     });
-    this.plural = new Intl.PluralRules(locale);
   }
 
   stat(): WeeklySummaryStat | undefined {
@@ -45,7 +43,6 @@ export class WeeklySummaryBodyWeight {
       }),
       caption: this.t("notifications.weekly_summary.body_weight.caption", {
         count: current.count,
-        noun: this.t(`notifications.weekly_summary.measurements.${this.plural.select(current.count)}`),
       }),
       note: this.note(current.average, previous?.average),
     };

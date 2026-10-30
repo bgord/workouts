@@ -11,8 +11,8 @@ import * as mocks from "./mocks";
 describe("WeeklySummaryBodyWeight", async () => {
   const di = await bootstrap();
 
-  const en = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("en"));
-  const pl = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("pl"));
+  const en = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("en"), "en");
+  const pl = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("pl"), "pl");
 
   const heavier = v.parse(Measurements.VO.BodyWeight, tools.Weight.fromKilograms(82).get());
   const previousWeekMeasuredOn = v.parse(Measurements.VO.BodyWeightMeasuredOn, "2024-12-27");

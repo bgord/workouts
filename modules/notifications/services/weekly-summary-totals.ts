@@ -12,7 +12,6 @@ export type WeeklySummaryTile = { value: string; label: string; delta: string };
 export class WeeklySummaryTotals {
   private readonly number: Intl.NumberFormat;
   private readonly signed: Intl.NumberFormat;
-  private readonly plural: Intl.PluralRules;
   private readonly sets: LoggedSets;
   private readonly previousSets: LoggedSets;
 
@@ -30,7 +29,6 @@ export class WeeklySummaryTotals {
       useGrouping: "always",
       signDisplay: "always",
     });
-    this.plural = new Intl.PluralRules(locale);
 
     this.sets = workouts.flatMap((workout) => workout.loggedSets);
     this.previousSets = previousWorkouts.flatMap((workout) => workout.loggedSets);
@@ -46,7 +44,7 @@ export class WeeklySummaryTotals {
 
     return {
       value: this.number.format(current),
-      label: this.t(`notifications.weekly_summary.workouts.${this.plural.select(current)}`),
+      label: this.t("notifications.weekly_summary.workouts.label", { count: current }),
       delta: this.t("notifications.weekly_summary.delta", {
         value: this.signed.format(current - previous),
       }),

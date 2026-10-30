@@ -11,8 +11,8 @@ import * as mocks from "./mocks";
 describe("WeeklySummaryTotals", async () => {
   const di = await bootstrap();
 
-  const en = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("en"));
-  const pl = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("pl"));
+  const en = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("en"), "en");
+  const pl = bg.TranslatorService.use(await di.Tools.TranslationsProvider.getTranslationsFor("pl"), "pl");
 
   test("tiles - en", () => {
     const totals = new Notifications.Services.WeeklySummaryTotals([mocks.weekCompletedWorkout], [], en, "en");

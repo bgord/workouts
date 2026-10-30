@@ -5,18 +5,8 @@ import * as ui from "../components";
 
 export function DailyStepsStats(props: VO.DailyStepsStats) {
   const t = bg.useTranslations();
-  const pluralize = bg.usePluralize();
 
-  const days = (count: number) =>
-    t("measurements.daily_steps.stats.average.count", {
-      count,
-      noun: pluralize({
-        value: count,
-        singular: t("measurements.daily_steps.stats.average.noun.singular"),
-        plural: t("measurements.daily_steps.stats.average.noun.plural"),
-        genitive: t("measurements.daily_steps.stats.average.noun.genitive"),
-      }),
-    });
+  const days = (count: number) => t("measurements.daily_steps.stats.average.count", { count });
 
   return (
     <ul

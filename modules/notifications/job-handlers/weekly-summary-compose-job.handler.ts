@@ -64,7 +64,7 @@ export const WeeklySummaryComposeJobHandler =
 
     const language = await deps.UserLanguageOHQ.get(job.payload.userId);
     const translations = await deps.TranslationsProvider.getTranslationsFor(language);
-    const t = bg.TranslatorService.use(translations);
+    const t = bg.TranslatorService.use(translations, language);
 
     const range = WeeklySummaryRange.of(week, language);
 

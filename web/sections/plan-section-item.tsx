@@ -10,7 +10,6 @@ import { PlanSectionWarmup } from "./plan-section-warmup";
 
 export function PlanSectionItem(props: { section: PlanSection; first: boolean; last: boolean }) {
   const t = bg.useTranslations();
-  const pluralize = bg.usePluralize();
 
   const planSectionVisibility = bg.usePersistedToggle({ name: `plan-section-${props.section.id}` });
   const planSectionRename = bg.useToggle({ name: `plan-section-rename-${props.section.id}` });
@@ -37,15 +36,7 @@ export function PlanSectionItem(props: { section: PlanSection; first: boolean; l
           <small data-shrink="0">
             {props.section.exerciseInstructions.length === 0
               ? t("plan.section.exercise.list.empty")
-              : t("plan.section.exercise.count", {
-                  count: props.section.exerciseInstructions.length,
-                  noun: pluralize({
-                    value: props.section.exerciseInstructions.length,
-                    singular: t("plan.section.exercise.noun.singular"),
-                    plural: t("plan.section.exercise.noun.plural"),
-                    genitive: t("plan.section.exercise.noun.genitive"),
-                  }),
-                })}
+              : t("plan.section.exercise.count", { count: props.section.exerciseInstructions.length })}
           </small>
         )}
         {planSectionRename.off && <PlanSectionRemove {...props.section} />}

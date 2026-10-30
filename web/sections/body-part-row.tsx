@@ -6,7 +6,6 @@ import { BodyPartRename } from "./body-part-rename";
 
 export function BodyPartRow(props: BodyPartSummary & { first: boolean }) {
   const t = bg.useTranslations();
-  const pluralize = bg.usePluralize();
   const { first, measurements, ...bodyPart } = props;
   const bodyPartRename = bg.useToggle({ name: `body-part-rename-${props.id}` });
 
@@ -33,15 +32,7 @@ export function BodyPartRow(props: BodyPartSummary & { first: boolean }) {
           <span data-color="neutral-500" data-fs="xs">
             {measurements.length === 0 && t("measurements.body_parts.measure.never")}
             {measurements.length > 0 &&
-              t("measurements.body_parts.manage.count", {
-                count: measurements.length,
-                noun: pluralize({
-                  value: measurements.length,
-                  singular: t("measurements.body_parts.manage.count.noun.singular"),
-                  plural: t("measurements.body_parts.manage.count.noun.plural"),
-                  genitive: t("measurements.body_parts.manage.count.noun.genitive"),
-                }),
-              })}
+              t("measurements.body_parts.manage.count", { count: measurements.length })}
           </span>
         </ui.RowBody>
       )}

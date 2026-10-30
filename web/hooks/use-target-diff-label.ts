@@ -7,18 +7,9 @@ const sign = (value: number, language: string) =>
 export function useTargetDiffLabel() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const pluralize = bg.usePluralize();
 
   const noun = (key: "sets" | "reps", value: number) =>
-    t(`workout.previous_performance.diff.${key}`, {
-      value: sign(value, language),
-      noun: pluralize({
-        value: Math.abs(value),
-        singular: t(`workout.previous_performance.diff.${key}.noun.singular`),
-        plural: t(`workout.previous_performance.diff.${key}.noun.plural`),
-        genitive: t(`workout.previous_performance.diff.${key}.noun.genitive`),
-      }),
-    });
+    t(`workout.previous_performance.diff.${key}`, { value: sign(value, language), count: Math.abs(value) });
 
   return {
     sets: (value: number) => noun("sets", value),

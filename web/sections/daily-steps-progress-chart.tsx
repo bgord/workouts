@@ -12,7 +12,6 @@ const STEPS_IN_THOUSAND = 1000;
 export function DailyStepsProgressChart() {
   const t = bg.useTranslations();
   const language = bg.useLanguage();
-  const pluralize = bg.usePluralize();
   const format = bg.useDateFormat();
   const { chart, goal } = dailyStepsRoute.useLoaderData();
   const navigate = dailyStepsRoute.useNavigate();
@@ -21,15 +20,7 @@ export function DailyStepsProgressChart() {
   if (chart.length < LineChartMath.MINIMAL_POINTS) return null;
 
   const steps = (value: number) =>
-    t("measurements.daily_steps.value", {
-      count: value.toLocaleString(language),
-      noun: pluralize({
-        value,
-        singular: t("measurements.daily_steps.value.noun.singular"),
-        plural: t("measurements.daily_steps.value.noun.plural"),
-        genitive: t("measurements.daily_steps.value.noun.genitive"),
-      }),
-    });
+    t("measurements.daily_steps.value", { steps: value.toLocaleString(language), count: value });
 
   const layout = LineChartMath.layout(
     chart.map((point) => point.steps / STEPS_IN_THOUSAND),

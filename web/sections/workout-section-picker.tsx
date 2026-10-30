@@ -7,7 +7,6 @@ export function WorkoutSectionPicker(props: {
   field: bg.UseTextFieldReturnType<WorkoutListPlanSection["id"] | "">;
 }) {
   const t = bg.useTranslations();
-  const pluralize = bg.usePluralize();
 
   return (
     <fieldset>
@@ -40,15 +39,7 @@ export function WorkoutSectionPicker(props: {
                 </div>
 
                 <small data-shrink="0">
-                  {t("workout.create.section.exercises", {
-                    count: option.exerciseInstructions.length,
-                    noun: pluralize({
-                      value: option.exerciseInstructions.length,
-                      singular: t("plan.section.exercise.noun.singular"),
-                      plural: t("plan.section.exercise.noun.plural"),
-                      genitive: t("plan.section.exercise.noun.genitive"),
-                    }),
-                  })}
+                  {t("workout.create.section.exercises", { count: option.exerciseInstructions.length })}
                 </small>
               </ui.RadioTile>
             </li>

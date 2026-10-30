@@ -7,7 +7,6 @@ import { WorkoutStart } from "./workout-start";
 
 export function WorkoutStatus() {
   const t = bg.useTranslations();
-  const pluralize = bg.usePluralize();
   const { workout } = workoutRoute.useLoaderData();
 
   const { logged, total } = workout.progress;
@@ -18,15 +17,7 @@ export function WorkoutStatus() {
       id: "workout-start-hint",
       tone: "outline" as const,
       label: t("workout.status.draft"),
-      progress: t("workout.progress.exercises", {
-        count: total,
-        noun: pluralize({
-          value: total,
-          singular: t("plan.section.exercise.noun.singular"),
-          plural: t("plan.section.exercise.noun.plural"),
-          genitive: t("plan.section.exercise.noun.genitive"),
-        }),
-      }),
+      progress: t("workout.progress.exercises", { count: total }),
     },
     {
       action: workout.actions.complete,
@@ -36,12 +27,6 @@ export function WorkoutStatus() {
       progress: t("workout.progress.logged", {
         logged,
         count: total,
-        noun: pluralize({
-          value: total,
-          singular: t("workout.progress.noun.singular"),
-          plural: t("workout.progress.noun.plural"),
-          genitive: t("workout.progress.noun.genitive"),
-        }),
       }),
     },
   ].find(({ action }) => action.available);
