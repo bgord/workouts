@@ -16,6 +16,7 @@ export function registerEventHandlers(_Env: EnvironmentResultType, { Adapters, T
   // Policies
   new bg.Preferences.Policies.SetDefaultUserLanguage(languages.fallback, deps);
   new bg.Preferences.Policies.ProfileAvatarEraser(Preferences.VO.ProfileAvatar, deps);
+  new bg.Auth.Policies.EventStreamEraser(deps);
   new Exercises.Policies.ExerciseDeleter(deps);
   new Notifications.Policies.WeeklySummaryScheduler({
     ...deps,
