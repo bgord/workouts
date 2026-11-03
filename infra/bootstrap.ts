@@ -9,6 +9,7 @@ import { createWorkoutsAdapters } from "+infra/adapters/workouts";
 import { createEnvironmentLoader } from "+infra/env";
 import { createTools } from "+infra/tools";
 import { createJobQueue } from "+infra/tools/job-queue.adapter";
+import { createPrerequisites } from "+infra/tools/prerequisites";
 import { createShieldAuth } from "+infra/tools/shield-auth.strategy";
 
 export async function bootstrap() {
@@ -42,6 +43,7 @@ export async function bootstrap() {
     Adapters: { Auth, Preferences, System, Exercises, Plans, Workouts, Measurements, Notifications },
     Tools: {
       ...Tools,
+      Prerequisites: createPrerequisites(Env, { ...System, ...Tools, JobQueueStatsProvider }),
       Auth: createShieldAuth(Env, { ...System, ...Tools, JobDispatcher }),
       JobQueue,
       JobDispatcher,
