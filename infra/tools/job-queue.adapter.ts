@@ -46,7 +46,9 @@ export async function createJobQueue(
   JobQueueStatsProvider: bg.JobQueueStatsProviderPort;
   JobPruner: bg.JobPrunerPort;
 }> {
-  const store = new bg.JobQueueSqliteStore({ database: "jobs.db" });
+  const store = new bg.JobQueueSqliteStore({
+    database: Env.type === bg.NodeEnvironmentEnum.test ? ":memory:" : "jobs.db",
+  });
   await new bg.JobRecovererSqliteAdapter({ db: store.db }).recover();
 
   const JobDispatcher: bg.JobDispatcherPort<AcceptedJob> = { enqueue: (job) => JobQueue.enqueue(job) };
