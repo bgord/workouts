@@ -20,7 +20,7 @@ STORAGE_ARCHIVE_PATH="$BACKUPS_PATH/$CURRENT_TIME.storage.tar.gz"
 trap 'catch $? $LINENO' ERR
 
 catch() {
-  http POST https://lobbygow.bgord.space/api/notification-send \
+  http --ignore-stdin POST https://lobbygow.bgord.space/api/notification-send \
     kind="error" \
     subject="[$PROJECT_NAME] production server backup error" \
     content="Error occurred on $2 with status code $1" \
