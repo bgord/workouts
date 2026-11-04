@@ -929,12 +929,14 @@ infra/
 │   ├── layout.mobile.spec.ts
 │   ├── navigation.spec.ts
 │   ├── not-found.spec.ts
+│   ├── password-recovery.spec.ts
 │   ├── plan.spec.ts
 │   ├── plans.mutation.spec.ts
 │   ├── plans.spec.ts
 │   ├── playwright.config.ts
 │   ├── profile.mutation.spec.ts
 │   ├── profile.spec.ts
+│   ├── registration.mutation.spec.ts
 │   ├── shortcuts.spec.ts
 │   ├── test.ts
 │   ├── time-zone.spec.ts
