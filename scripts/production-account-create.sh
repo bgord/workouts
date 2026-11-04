@@ -8,7 +8,5 @@ fi
 echo "Environment: production"
 echo "Creating account..."
 
-export NODE_ENV="production"
-
 cd /var/www/workouts || exit
-"$HOME/.bun/bin/bun" scripts/account-create.js "$1"
+sudo -H -u workouts env NODE_ENV=production /opt/bun/bin/bun scripts/account-create.js "$1"
