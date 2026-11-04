@@ -16,11 +16,14 @@ export const test = base.extend<{ pageErrors: void; coverage: void }>({
       const response = await goto(url, options);
 
       await expect
-        .poll(async () => {
-          if (page.url().includes("/public/")) return true;
+        .poll(
+          async () => {
+            if (page.url().includes("/public/")) return true;
 
-          return (await page.locator("main[data-hydrated]").count()) > 0;
-        })
+            return (await page.locator("main[data-hydrated]").count()) > 0;
+          },
+          { intervals: [10] },
+        )
         .toBe(true);
 
       return response;

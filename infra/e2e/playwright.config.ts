@@ -13,7 +13,7 @@ export default defineConfig({
     : "list",
   use: {
     baseURL: "http://localhost:3000",
-    trace: "retain-on-failure",
+    trace: process.env["CI"] ? "retain-on-failure" : "off",
     timezoneId: "UTC",
     reducedMotion: "reduce",
   },
