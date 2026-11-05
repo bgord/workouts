@@ -26,6 +26,9 @@ export type EnvironmentResultType = bg.EnvironmentResultType<EnvironmentType>;
 
 export const MasterKeyPath = tools.FilePathAbsolute.fromString(`/etc/bgord/${config.name}/master.key`);
 export const SecretsPath = tools.FilePathAbsolute.fromString(`/var/www/${config.name}/secrets.enc`);
+export const BackupLastSuccessPath = tools.FilePathAbsolute.fromString(
+  `/var/backups/${config.name}/last-success.stamp`,
+);
 
 export async function createEnvironmentLoader(): Promise<bg.EnvironmentLoaderPort<EnvironmentType>> {
   const type = v.parse(v.enum(bg.NodeEnvironmentEnum), process.env.NODE_ENV);

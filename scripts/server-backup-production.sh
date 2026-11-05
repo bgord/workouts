@@ -50,3 +50,5 @@ echo "Storage archived to: $STORAGE_ARCHIVE_PATH"
 
 find "$BACKUPS_PATH" -mtime +7 -exec rm {} \;
 echo "Backups older than 7 days deleted"
+
+touch "$BACKUPS_PATH/last-success.stamp"
