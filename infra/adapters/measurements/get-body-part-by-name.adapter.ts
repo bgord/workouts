@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import type * as Auth from "+auth";
 import type * as Measurements from "+measurements";
 import { db } from "+infra/db";
@@ -9,13 +9,11 @@ class GetBodyPartByNameQueryDrizzle implements Measurements.Queries.GetBodyPartB
     userId: Auth.VO.UserIdType,
     bodyPartName: Measurements.VO.BodyPartNameType,
   ): Promise<Measurements.VO.BodyPart | null> {
-    const bodyPart = await db
-      .select()
-      .from(Schema.bodyParts)
-      .where(and(eq(Schema.bodyParts.userId, userId), eq(Schema.bodyParts.name, bodyPartName)))
-      .get();
+    const bodyParts = await db.select().from(Schema.bodyParts).where(eq(Schema.bodyParts.userId, userId));
 
-    return bodyPart ?? null;
+    const name = bodyPartName.toLowerCase();
+
+    return bodyParts.find((bodyPart) => bodyPart.name.toLowerCase() === name) ?? null;
   }
 }
 
