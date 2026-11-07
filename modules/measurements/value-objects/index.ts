@@ -25,6 +25,7 @@ export * from "./body-weight-measurement-import";
 export * from "./body-weight-measurement-stream";
 export * from "./body-weight-month-summary";
 export * from "./body-weight-reference-stream";
+export * from "./body-weight-rolling-window";
 export * from "./body-weight-stats";
 export * from "./daily-steps";
 export * from "./daily-steps-chart-granularity";

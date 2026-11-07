@@ -1,9 +1,7 @@
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
-import type * as VO from "+measurements/value-objects";
+import * as VO from "+measurements/value-objects";
 import { BodyWeightAverage } from "./body-weight-average";
-
-const ROLLING_WINDOW_DAYS = 7;
 
 export class BodyWeightStatsCalculator {
   constructor(private readonly measurements: ReadonlyArray<VO.BodyWeightMeasurement>) {}
@@ -19,14 +17,14 @@ export class BodyWeightStatsCalculator {
 
     const week = new BodyWeightAverage(
       this.measurements,
-      v.parse(tools.DayIsoId, anchor.subtract({ days: ROLLING_WINDOW_DAYS - 1 }).toString()),
+      v.parse(tools.DayIsoId, anchor.subtract({ days: VO.BodyWeightRollingWindowDays - 1 }).toString()),
       latest.measuredOn,
     ).calculate();
 
     const previousWeek = new BodyWeightAverage(
       this.measurements,
-      v.parse(tools.DayIsoId, anchor.subtract({ days: ROLLING_WINDOW_DAYS * 2 - 1 }).toString()),
-      v.parse(tools.DayIsoId, anchor.subtract({ days: ROLLING_WINDOW_DAYS }).toString()),
+      v.parse(tools.DayIsoId, anchor.subtract({ days: VO.BodyWeightRollingWindowDays * 2 - 1 }).toString()),
+      v.parse(tools.DayIsoId, anchor.subtract({ days: VO.BodyWeightRollingWindowDays }).toString()),
     ).calculate();
 
     return {

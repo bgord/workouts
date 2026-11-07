@@ -324,6 +324,7 @@ modules/
 │       ├── body-weight-measurement.ts
 │       ├── body-weight-month-summary.ts
 │       ├── body-weight-reference-stream.ts
+│       ├── body-weight-rolling-window.ts
 │       ├── body-weight-stats.ts
 │       ├── body-weight.ts
 │       ├── daily-steps-chart-granularity-options.ts

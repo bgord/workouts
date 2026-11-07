@@ -1,6 +1,6 @@
 import { and, asc, desc, eq, gte, inArray, or, sql } from "drizzle-orm";
 import type * as Auth from "+auth";
-import type * as Measurements from "+measurements";
+import * as Measurements from "+measurements";
 import { db } from "+infra/db";
 import * as Schema from "+infra/schema";
 
@@ -39,7 +39,10 @@ class ListBodyWeightMeasurementsForStatsQueryDrizzle
             inArray(Schema.bodyWeightMeasurements.id, latestTwo),
             inArray(Schema.bodyWeightMeasurements.id, oldest),
             eq(Schema.bodyWeightMeasurements.reference, true),
-            gte(Schema.bodyWeightMeasurements.measuredOn, sql`date((${latestMeasuredOn}), '-13 days')`),
+            gte(
+              Schema.bodyWeightMeasurements.measuredOn,
+              sql`date((${latestMeasuredOn}), ${`-${Measurements.VO.BodyWeightRollingWindowDays * 2 - 1} days`})`,
+            ),
           ),
         ),
       )
