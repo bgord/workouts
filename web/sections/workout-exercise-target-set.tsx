@@ -112,7 +112,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
         </div>
 
         <ui.InlineEditActions
-          data-ml="auto"
+          data-md-ml="auto"
           data-shrink="0"
           disabled={
             !action.enabled ||
