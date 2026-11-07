@@ -71,8 +71,8 @@ type AcceptedCommand =
   | MeasurementsCommands.DailyStepsRemoveCommandType;
 
 export function createCommandBus(deps: Dependencies): bg.CommandBusPort<AcceptedCommand> {
-  const emittery = new bg.CommandBusEmitteryAdapter<AcceptedCommand>();
-  const inner = new bg.CommandBusStrictAdapter<AcceptedCommand>({ inner: emittery });
+  const inMemory = new bg.CommandBusInMemoryAdapter<AcceptedCommand>();
+  const inner = new bg.CommandBusStrictAdapter<AcceptedCommand>({ inner: inMemory });
 
   return new bg.CommandBusWithLoggerAdapter<AcceptedCommand>({ inner, ...deps });
 }
