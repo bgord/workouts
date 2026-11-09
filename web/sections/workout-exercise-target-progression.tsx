@@ -1,5 +1,4 @@
 import * as bg from "@bgord/ui";
-import { History } from "lucide-react";
 import type { ExercisePrescriptionType } from "../../modules/workouts/value-objects/exercise-prescription";
 import { ExerciseSignalWindowSessions } from "../../modules/workouts/value-objects/exercise-signal-window";
 import type { ExerciseTargetType } from "../../modules/workouts/value-objects/exercise-target";
@@ -7,6 +6,7 @@ import type { ExerciseTargetProgression } from "../../modules/workouts/value-obj
 import type { WorkoutExerciseResistanceType } from "../../modules/workouts/value-objects/workout-exercise-resistance";
 import * as ui from "../components";
 import { useTargetDiffLabel } from "../hooks/use-target-diff-label";
+import { History } from "../icons";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { WeightFormat } from "../services/weight-format";
 

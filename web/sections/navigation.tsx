@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { CalendarCheck, Dumbbell, LayoutDashboard, ListChecks, Weight } from "lucide-react";
 import * as ui from "../components";
+import { CalendarCheck, Dumbbell, LayoutDashboard, ListChecks, Weight } from "../icons";
 
 const link = {
   "data-color": "neutral-300",

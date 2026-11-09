@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { LogOut } from "lucide-react";
+import { LogOut } from "../icons";
 import { IconButton } from "./icon-button";
 
 export function Logout(props: React.JSX.IntrinsicElements["button"]) {

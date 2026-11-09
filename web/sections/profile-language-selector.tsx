@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Languages } from "lucide-react";
 import * as ui from "../components";
+import { Languages } from "../icons";
 
 export function ProfileLanguageSelector() {
   const t = bg.useTranslations();

@@ -1,5 +1,5 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight } from "../icons";
 import { Gap } from "./gap";
 
 function EyebrowAnchor(props: React.JSX.IntrinsicElements["a"]) {

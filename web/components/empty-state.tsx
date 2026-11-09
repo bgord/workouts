@@ -1,5 +1,5 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "../icons";
 import { Spacing } from "./spacing";
 
 export function EmptyState(props: React.JSX.IntrinsicElements["div"]) {

@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Plus } from "lucide-react";
+import { Plus } from "../icons";
 
 export function AddPlaceholder(props: React.JSX.IntrinsicElements["div"]) {
   return (

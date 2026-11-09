@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import * as ui from "../components";
+import { Plus } from "../icons";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryAdd() {

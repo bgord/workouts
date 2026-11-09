@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Check } from "lucide-react";
+import { Check } from "../icons";
 
 export function StepperSubmit(props: React.JSX.IntrinsicElements["button"]) {
   return (

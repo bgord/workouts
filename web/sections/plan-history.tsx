@@ -1,10 +1,10 @@
 import type * as tools from "@bgord/tools";
 import * as bg from "@bgord/ui";
-import { History } from "lucide-react";
 import type { PlanHistoryEntry } from "../../modules/plans/value-objects/plan-history-entry";
 import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import { Plans } from "../api";
 import * as ui from "../components";
+import { History } from "../icons";
 import { RepsSchemeFormat } from "../kits/reps-scheme.format";
 import { planRoute } from "../router";
 

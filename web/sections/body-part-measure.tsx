@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Plus } from "lucide-react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";
 import * as ui from "../components";
+import { Check, Plus } from "../icons";
 import { bodyPartsRoute } from "../router";
 import { LengthFormat } from "../services/length-format";
 

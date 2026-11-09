@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { Flag } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
+import { Flag } from "../icons";
 import { bodyWeightRoute } from "../router";
 import { BodyWeightDecimals } from "../services/weight-format";
 import { BodyWeightMeasurementCorrect } from "./body-weight-measurement-correct";

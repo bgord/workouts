@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Circle, Contrast } from "lucide-react";
 import { ExerciseCategoryRoleOptions } from "../../modules/exercises/value-objects/exercise-category-role-options";
+import { Circle, Contrast } from "../icons";
 
 const icons = {
   [ExerciseCategoryRoleOptions.primary]: <Circle data-size="xs" fill="currentColor" />,

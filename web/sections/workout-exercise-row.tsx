@@ -1,5 +1,4 @@
 import * as bg from "@bgord/ui";
-import { ListChecks } from "lucide-react";
 import { useId } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
@@ -7,6 +6,7 @@ import * as ui from "../components";
 import { useLogPanel } from "../hooks/use-log-panel";
 import { useOptimisticSet } from "../hooks/use-optimistic-set";
 import { useSetCorrection } from "../hooks/use-set-correction";
+import { ListChecks } from "../icons";
 import { workoutRoute } from "../router";
 import { WorkoutExerciseMove } from "./workout-exercise-move";
 import { WorkoutExercisePreviousPerformance } from "./workout-exercise-previous-performance";

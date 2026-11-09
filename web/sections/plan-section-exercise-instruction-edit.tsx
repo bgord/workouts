@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Pencil } from "lucide-react";
 import { Form } from "../../app/services/plan-section-exercise-instruction-add-form";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import type { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
@@ -8,6 +7,7 @@ import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
+import { Pencil } from "../icons";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
 import { planRoute } from "../router";
 import { ProgressionMethodChoice } from "../services/progression-method-choice";

@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Trash2 } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import * as ui from "../components";
+import { Trash2 } from "../icons";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryDelete(props: ExerciseCategory) {

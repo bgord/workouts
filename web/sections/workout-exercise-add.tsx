@@ -1,11 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
 import { Form } from "../../app/services/workout-exercise-add-form";
 import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import { RepsSchemeOptions } from "../../modules/plans/value-objects/reps-scheme-options";
 import * as ui from "../components";
 import { useExerciseCatalog } from "../hooks/use-exercise-catalog";
+import { Plus } from "../icons";
 import { RepsSchemeKit } from "../kits/reps-scheme.kit";
 import { workoutRoute } from "../router";
 import { ProgressionMethodChoice } from "../services/progression-method-choice";

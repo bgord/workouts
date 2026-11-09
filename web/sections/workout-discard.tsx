@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { Trash2 } from "lucide-react";
 import * as ui from "../components";
+import { Trash2 } from "../icons";
 import { dashboardRoute, workoutRoute } from "../router";
 
 export function WorkoutDiscard() {

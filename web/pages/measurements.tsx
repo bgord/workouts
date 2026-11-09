@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Footprints, Ruler, Scale } from "lucide-react";
 import * as ui from "../components";
+import { Footprints, Ruler, Scale } from "../icons";
 
 export function Measurements() {
   const t = bg.useTranslations();

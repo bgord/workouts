@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { CircleCheck, CircleDashed } from "lucide-react";
 import { Fragment } from "react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { CircleCheck, CircleDashed } from "../icons";
 
 export function WorkoutExerciseRecentPerformances(
   props: { exercise: WorkoutExercise } & bg.UseToggleReturnType,

@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis } from "../icons";
 
 export function MenuTrigger(props: React.JSX.IntrinsicElements["button"]) {
   const t = bg.useTranslations();

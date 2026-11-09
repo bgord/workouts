@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Download } from "lucide-react";
 import * as ui from "../components";
+import { Download } from "../icons";
 
 export function ProfileWorkoutsExport() {
   const t = bg.useTranslations();

@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
-import { Pencil, Target } from "lucide-react";
 import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { Pencil, Target } from "../icons";
 import { SetNotation } from "../services/set-notation";
 
 export function WorkoutExerciseTarget(props: { exercise: WorkoutExercise } & bg.UseToggleReturnType) {

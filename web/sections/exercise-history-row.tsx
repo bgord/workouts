@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { Link } from "@tanstack/react-router";
-import { Trophy } from "lucide-react";
 import type { ExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import * as ui from "../components";
+import { Trophy } from "../icons";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 
 export function ExerciseHistoryRow(props: {

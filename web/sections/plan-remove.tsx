@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Trash2 } from "lucide-react";
 import * as ui from "../components";
+import { Trash2 } from "../icons";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRemove() {

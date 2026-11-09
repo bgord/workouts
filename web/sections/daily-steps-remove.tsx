@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { X } from "lucide-react";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import * as ui from "../components";
+import { X } from "../icons";
 import { dailyStepsRoute } from "../router";
 
 export function DailyStepsRemove(props: { entry: DailySteps }) {

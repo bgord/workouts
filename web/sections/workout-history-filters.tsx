@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
-import { X } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import { WorkoutListFilterOptions } from "../../modules/workouts/value-objects/workout-list-filter-options";
 import * as ui from "../components";
+import { X } from "../icons";
 import { workoutsRoute } from "../router";
 
 export function WorkoutHistoryFilters() {

@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "../icons";
 import { TextLink } from "./text-link";
 
 export function ShowMoreLink(

@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { X } from "lucide-react";
 import type { PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
+import { X } from "../icons";
 import { planRoute } from "../router";
 
 export function PlanSectionRemove(props: PlanSection) {

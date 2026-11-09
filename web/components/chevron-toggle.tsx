@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight } from "../icons";
 
 export function ChevronToggle(props: React.JSX.IntrinsicElements["button"] & bg.UseToggleReturnType) {
   const { toggle, rest } = bg.extractUseToggle(props);

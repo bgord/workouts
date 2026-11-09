@@ -1,5 +1,5 @@
-import { Minus, TrendingDown, TrendingUp } from "lucide-react";
 import { BodyWeightGoalOptions } from "../../modules/measurements/value-objects/body-weight-goal-options";
+import { Minus, TrendingDown, TrendingUp } from "../icons";
 
 const icons = {
   [BodyWeightGoalOptions.bulk]: TrendingUp,

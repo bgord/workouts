@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Download } from "lucide-react";
+import { Download } from "../icons";
 import { bodyPartsRoute } from "../router";
 
 export function BodyPartMeasurementExport() {

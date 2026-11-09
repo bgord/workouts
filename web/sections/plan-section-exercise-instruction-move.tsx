@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import type { PlanExerciseInstruction, PlanSection } from "../../modules/plans/queries/get-plan";
 import * as ui from "../components";
+import { ChevronDown, ChevronUp } from "../icons";
 import { planRoute } from "../router";
 
 export function PlanSectionExerciseInstructionMove(props: {

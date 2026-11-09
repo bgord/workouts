@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
-import { X } from "lucide-react";
 import * as BodyWeightChartForm from "../../app/services/body-weight-chart-form";
 import { BodyWeightChartGranularityOptions } from "../../modules/measurements/value-objects/body-weight-chart-granularity-options";
 import * as ui from "../components";
+import { X } from "../icons";
 import { bodyWeightRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";

@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { X } from "lucide-react";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import { StepsCountMax } from "../../modules/measurements/value-objects/steps-count.validation";
 import * as ui from "../components";
+import { X } from "../icons";
 import { dailyStepsRoute } from "../router";
 
 export function DailyStepsCorrect(props: { entry: DailySteps } & bg.UseToggleReturnType) {

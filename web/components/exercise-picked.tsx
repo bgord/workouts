@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { ArrowLeftRight } from "lucide-react";
 import type { Exercise } from "../../modules/exercises/value-objects/exercise";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
+import { ArrowLeftRight } from "../icons";
 import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { ExerciseImage, ExerciseImageSize } from "./exercise-image";

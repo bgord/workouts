@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
-import { Search, X } from "lucide-react";
 import { useRef } from "react";
 import * as ExerciseCatalogFiltersForm from "../../app/services/exercise-catalog-filters-form";
 import type { ExerciseWithCategories } from "../../modules/exercises/value-objects/exercise-with-categories";
 import * as ui from "../components";
+import { Search, X } from "../icons";
 import { catalogRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 

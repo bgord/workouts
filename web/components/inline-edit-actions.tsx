@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Check, X } from "lucide-react";
+import { Check, X } from "../icons";
 import { Gap } from "./gap";
 import { IconButton } from "./icon-button";
 

@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
-import { X } from "lucide-react";
 import * as DailyStepsChartForm from "../../app/services/daily-steps-chart-form";
 import { DailyStepsChartGranularityOptions } from "../../modules/measurements/value-objects/daily-steps-chart-granularity-options";
 import * as ui from "../components";
+import { X } from "../icons";
 import { dailyStepsRoute } from "../router";
 import { LineChartMath } from "../services/line-chart";
 

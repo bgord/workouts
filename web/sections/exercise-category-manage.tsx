@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Tags } from "lucide-react";
 import * as ui from "../components";
+import { Tags } from "../icons";
 import { catalogRoute } from "../router";
 import { ExerciseCategoryAdd } from "./exercise-category-add";
 import { ExerciseCategoryRow } from "./exercise-category-row";

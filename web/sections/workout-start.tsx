@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Play } from "lucide-react";
 import * as ui from "../components";
+import { Play } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutStart() {

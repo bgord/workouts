@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { List } from "lucide-react";
 import * as ui from "../components";
+import { List } from "../icons";
 import { planRoute } from "../router";
 
 export function PlanCategoryCoverageToggle(props: bg.UseToggleReturnType) {

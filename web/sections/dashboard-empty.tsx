@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { CalendarOff } from "lucide-react";
 import * as ui from "../components";
+import { CalendarOff } from "../icons";
 import { dashboardRoute } from "../router";
 
 export function DashboardEmpty() {

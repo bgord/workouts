@@ -1,5 +1,4 @@
 import * as bg from "@bgord/ui";
-import { EqualApproximately, Sigma, Trophy } from "lucide-react";
 import type {
   WeightedExercisePerformanceStatistics,
   WeightedExercisePerformanceStatisticsSet,
@@ -9,6 +8,7 @@ import { Gap } from "../components/gap";
 import { SetValue } from "../components/set-value";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
 import { WeightDelta } from "../components/weight-delta";
+import { EqualApproximately, Sigma, Trophy } from "../icons";
 import { WeightFormat } from "../services/weight-format";
 
 function LoadTiles(props: { records: ExerciseRecords<WeightedExercisePerformanceStatistics> }) {

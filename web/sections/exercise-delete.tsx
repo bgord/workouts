@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Trash2 } from "lucide-react";
 import * as ui from "../components";
+import { Trash2 } from "../icons";
 import { exerciseRoute } from "../router";
 
 export function ExerciseDelete() {

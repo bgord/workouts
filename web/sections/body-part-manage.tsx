@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Ruler } from "lucide-react";
 import * as ui from "../components";
+import { Ruler } from "../icons";
 import { bodyPartsRoute } from "../router";
 import { BodyPartDefine } from "./body-part-define";
 import { BodyPartRow } from "./body-part-row";

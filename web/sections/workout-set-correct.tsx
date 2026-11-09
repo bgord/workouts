@@ -1,11 +1,11 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Pencil, X } from "lucide-react";
 import { useRef } from "react";
 import { Form } from "../../app/services/workout-target-form";
 import { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { Pencil, X } from "../icons";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { workoutRoute } from "../router";
 import { WeightFormat } from "../services/weight-format";

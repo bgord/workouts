@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { PersonStanding } from "lucide-react";
+import { PersonStanding } from "../icons";
 import { Gap } from "./gap";
 
 export function BodyweightBadge(props: React.JSX.IntrinsicElements["span"]) {

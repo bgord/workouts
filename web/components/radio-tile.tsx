@@ -1,4 +1,4 @@
-import { Circle, CircleCheck } from "lucide-react";
+import { Circle, CircleCheck } from "../icons";
 import { Gap } from "./gap";
 import { Spacing } from "./spacing";
 

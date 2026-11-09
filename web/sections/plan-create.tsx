@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
 import { Form } from "../../app/services/plan-create-form";
 import * as ui from "../components";
+import { Plus } from "../icons";
 import { plansRoute } from "../router";
 
 export function PlanCreate() {

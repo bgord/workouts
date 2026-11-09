@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Mail } from "lucide-react";
 import { WeeklySummaryOptions } from "../../modules/preferences/value-objects/weekly-summary-options";
 import * as ui from "../components";
+import { Mail } from "../icons";
 import { profileRoute } from "../router";
 
 const options = [WeeklySummaryOptions.on, WeeklySummaryOptions.off];

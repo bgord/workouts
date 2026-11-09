@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Trash2 } from "lucide-react";
 import type { BodyPart } from "../../modules/measurements/value-objects/body-part";
 import * as ui from "../components";
+import { Trash2 } from "../icons";
 import { bodyPartsRoute } from "../router";
 
 export function BodyPartDelete(props: BodyPart) {

@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { KeyRound, Send } from "lucide-react";
 import * as ui from "../components";
+import { KeyRound, Send } from "../icons";
 import { rootRoute } from "../router";
 
 export function ProfilePasswordChange() {

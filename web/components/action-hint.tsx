@@ -1,6 +1,6 @@
 import type { ActionState } from "@bgord/bun";
 import * as bg from "@bgord/ui";
-import { Info } from "lucide-react";
+import { Info } from "../icons";
 import { Gap } from "./gap";
 
 export function ActionHint(props: ActionState & React.JSX.IntrinsicElements["small"] & { icon?: boolean }) {

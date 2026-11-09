@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { CalendarX, SearchX } from "lucide-react";
 import * as WorkoutHistoryFiltersForm from "../../app/services/workout-history-filters-form";
 import * as ui from "../components";
+import { CalendarX, SearchX } from "../icons";
 import { workoutsRoute } from "../router";
 
 export function WorkoutHistoryEmpty() {

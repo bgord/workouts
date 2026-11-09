@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
 import { Form as DescriptionForm } from "../../app/services/body-part-description-form";
 import { Form } from "../../app/services/body-part-name-form";
 import * as ui from "../components";
+import { Plus } from "../icons";
 import { bodyPartsRoute } from "../router";
 
 export function BodyPartDefine() {

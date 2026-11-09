@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { Equal } from "lucide-react";
 import type { ExerciseTargetDiff } from "../../modules/workouts/value-objects/exercise-target-diff";
 import { useTargetDiffLabel } from "../hooks/use-target-diff-label";
+import { Equal } from "../icons";
 import { Gap } from "./gap";
 
 function TargetDiffPill(props: { value: number; children: React.ReactNode }) {

@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { FileImage, ImageUp } from "lucide-react";
 import * as ui from "../components";
+import { FileImage, ImageUp } from "../icons";
 import { exerciseRoute } from "../router";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];

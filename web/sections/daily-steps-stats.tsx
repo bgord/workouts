@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { Calendar, CalendarRange, Footprints } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/daily-steps-stats";
 import * as ui from "../components";
+import { Calendar, CalendarRange, Footprints } from "../icons";
 
 export function DailyStepsStats(props: VO.DailyStepsStats) {
   const t = bg.useTranslations();

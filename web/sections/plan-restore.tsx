@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ArchiveRestore } from "lucide-react";
 import * as ui from "../components";
+import { ArchiveRestore } from "../icons";
 import { planRoute, plansRoute } from "../router";
 
 export function PlanRestore() {

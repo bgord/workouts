@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { ChevronDown, ChevronUp, Snowflake } from "lucide-react";
 import * as ui from "../components";
+import { ChevronDown, ChevronUp, Snowflake } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutCooldown() {

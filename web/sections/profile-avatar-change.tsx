@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CircleUser, FileImage, ImageUp } from "lucide-react";
 import * as ui from "../components";
+import { CircleUser, FileImage, ImageUp } from "../icons";
 import { ProfileAvatarDelete } from "./profile-avatar-delete";
 
 const mimeTypes = ["image/png", "image/jpeg", "image/webp"];

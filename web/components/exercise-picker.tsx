@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
-import { Check, Search } from "lucide-react";
 import { Suspense, use } from "react";
 import type {
   ExerciseCatalogItem,
   ExerciseCatalogResponse,
 } from "../../modules/plans/queries/list-exercise-catalog";
+import { Check, Search } from "../icons";
 import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { ButtonCancel } from "./button-cancel";

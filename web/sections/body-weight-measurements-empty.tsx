@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Scale } from "lucide-react";
 import * as ui from "../components";
+import { Scale } from "../icons";
 import { bodyWeightRoute } from "../router";
 
 export function BodyWeightMeasurementsEmpty() {

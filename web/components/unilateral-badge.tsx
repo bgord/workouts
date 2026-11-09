@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { FlipHorizontal2 } from "lucide-react";
+import { FlipHorizontal2 } from "../icons";
 import { Gap } from "./gap";
 
 export function UnilateralBadge(props: React.JSX.IntrinsicElements["span"]) {

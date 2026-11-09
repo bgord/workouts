@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
-import { X } from "lucide-react";
 import * as DailyStepsFiltersForm from "../../app/services/daily-steps-filters-form";
 import type { DailyStepsHistoryMonthType } from "../../modules/measurements/value-objects/daily-steps-history-month";
 import { DailyStepsHistoryMonthAll } from "../../modules/measurements/value-objects/daily-steps-history-month.validation";
 import * as ui from "../components";
+import { X } from "../icons";
 import { dailyStepsRoute } from "../router";
 
 export function DailyStepsFilters() {

@@ -1,5 +1,5 @@
-import { ArrowUp, ChevronsUp, Equal, TrendingUp } from "lucide-react";
 import { ProgressionMethodOptions } from "../../modules/plans/value-objects/progression-method-options";
+import { ArrowUp, ChevronsUp, Equal, TrendingUp } from "../icons";
 
 const icons = {
   [ProgressionMethodOptions.double_progression]: TrendingUp,

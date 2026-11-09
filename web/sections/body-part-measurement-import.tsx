@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Download, FileSpreadsheet, FileUp, Upload } from "lucide-react";
 import * as ui from "../components";
+import { Download, FileSpreadsheet, FileUp, Upload } from "../icons";
 import { bodyPartsRoute } from "../router";
 
 const mimeTypes = ["text/csv"];

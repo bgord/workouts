@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { SearchX } from "lucide-react";
 import * as ui from "../components";
+import { SearchX } from "../icons";
 
 export function PlanNotFound() {
   const t = bg.useTranslations();

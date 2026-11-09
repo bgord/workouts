@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Check, Copy, X } from "lucide-react";
 import { useState } from "react";
+import { Check, Copy, X } from "../icons";
 
 type CopyButtonState = "idle" | "done" | "failed";
 

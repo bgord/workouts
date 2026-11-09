@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { CalendarPlus } from "lucide-react";
 import * as ui from "../components";
+import { CalendarPlus } from "../icons";
 import { workoutsRoute } from "../router";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { WorkoutDatePicker } from "./workout-date-picker";

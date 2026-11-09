@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Triangle } from "lucide-react";
+import { Triangle } from "../icons";
 import { Gap } from "./gap";
 
 type DeltaColor = React.JSX.IntrinsicElements["span"]["data-color"];

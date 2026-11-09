@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { CircleAlert, RotateCcw } from "lucide-react";
 import { createContext, useContext } from "react";
 import { createPortal } from "react-dom";
+import { CircleAlert, RotateCcw } from "../icons";
 import { ButtonCancel } from "./button-cancel";
 import { ButtonClose } from "./button-close";
 import { Gap } from "./gap";

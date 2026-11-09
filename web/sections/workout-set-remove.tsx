@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { X } from "lucide-react";
 import type { LoggedSet, WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
+import { X } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutSetRemove(props: { exercise: WorkoutExercise; loggedSet: LoggedSet }) {

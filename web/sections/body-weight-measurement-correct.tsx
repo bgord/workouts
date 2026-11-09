@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { X } from "lucide-react";
 import type { BodyWeightMeasurement } from "../../modules/measurements/value-objects/body-weight-measurement";
 import * as ui from "../components";
+import { X } from "../icons";
 import { bodyWeightRoute } from "../router";
 import { BodyWeightDecimals, WeightFormat } from "../services/weight-format";
 

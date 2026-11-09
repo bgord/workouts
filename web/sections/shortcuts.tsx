@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { CircleHelp, Keyboard } from "lucide-react";
 import * as ui from "../components";
+import { CircleHelp, Keyboard } from "../icons";
 import * as ShortcutDefinitions from "../services/shortcuts";
 import { ShortcutGroup } from "./shortcut-group";
 

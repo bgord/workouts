@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { ClipboardList } from "lucide-react";
 import * as ui from "../components";
+import { ClipboardList } from "../icons";
 import { plansRoute } from "../router";
 
 export function PlansEmpty() {

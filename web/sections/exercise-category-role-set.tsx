@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ChevronDown } from "lucide-react";
 import type { ExerciseCategoryAssignment } from "../../modules/exercises/value-objects/exercise-category-assignment";
 import { ExerciseCategoryRoleOptions } from "../../modules/exercises/value-objects/exercise-category-role-options";
 import * as ui from "../components";
+import { ChevronDown } from "../icons";
 import { exerciseRoute } from "../router";
 
 const options = Object.values(ExerciseCategoryRoleOptions);

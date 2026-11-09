@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown } from "../icons";
 
 export function RirBelowTargetMarker(props: React.JSX.IntrinsicElements["span"] & { target?: number }) {
   const t = bg.useTranslations();

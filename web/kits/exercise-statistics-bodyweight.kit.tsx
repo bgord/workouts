@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
-import { ChevronsUp, Sigma, Trophy } from "lucide-react";
 import type { BodyweightExercisePerformanceStatistics } from "../../modules/statistics/value-objects/exercise-performance-statistics";
 import type { ExerciseRecords } from "../../modules/statistics/value-objects/exercise-records";
 import { CountDelta } from "../components/count-delta";
 import { Gap } from "../components/gap";
 import { Tile, TileContext, TileHeader, TileLink, TileValue } from "../components/tile";
+import { ChevronsUp, Sigma, Trophy } from "../icons";
 
 const repsValue = (t: bg.TranslateType, language: string, value: number) =>
   t("statistics.exercise.reps.value", { value: value.toLocaleString(language) });

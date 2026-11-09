@@ -1,10 +1,10 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Pencil } from "lucide-react";
 import { Form as DescriptionForm } from "../../app/services/body-part-description-form";
 import { Form } from "../../app/services/body-part-name-form";
 import type { BodyPart } from "../../modules/measurements/value-objects/body-part";
 import * as ui from "../components";
+import { Pencil } from "../icons";
 import { bodyPartsRoute } from "../router";
 
 export function BodyPartRename(props: BodyPart & bg.UseToggleReturnType) {

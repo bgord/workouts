@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Pencil } from "lucide-react";
 import { Form } from "../../app/services/exercise-category-add-form";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
 import * as ui from "../components";
+import { Pencil } from "../icons";
 import { catalogRoute } from "../router";
 
 export function ExerciseCategoryRename(props: ExerciseCategory & bg.UseToggleReturnType) {

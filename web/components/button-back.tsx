@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "../icons";
 
 function ButtonBackAnchor(props: React.JSX.IntrinsicElements["a"]) {
   const t = bg.useTranslations();

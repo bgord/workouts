@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
-import { ArrowDown } from "lucide-react";
 import type { DailySteps } from "../../modules/measurements/value-objects/daily-steps";
 import type { DailyStepsEntry } from "../../modules/measurements/value-objects/daily-steps-entry";
 import * as ui from "../components";
+import { ArrowDown } from "../icons";
 import { dailyStepsRoute } from "../router";
 import { DailyStepsCorrect } from "./daily-steps-correct";
 import { DailyStepsRemove } from "./daily-steps-remove";

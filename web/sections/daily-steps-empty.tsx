@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Footprints } from "lucide-react";
 import * as ui from "../components";
+import { Footprints } from "../icons";
 import { dailyStepsRoute } from "../router";
 
 export function DailyStepsEmpty() {

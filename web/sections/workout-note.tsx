@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { NotebookPen } from "lucide-react";
 import { Form } from "../../app/services/workout-note-form";
 import * as ui from "../components";
+import { NotebookPen } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutNoteMenuItem(props: bg.UseToggleReturnType) {

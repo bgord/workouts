@@ -1,6 +1,5 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ArrowRight, ImageUp, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { Form } from "../../app/services/exercise-add-form";
 import type { ExerciseLateralityOptions } from "../../modules/exercises/value-objects/exercise-laterality-options";
@@ -8,6 +7,7 @@ import { ExerciseLoadStepApplicability } from "../../modules/exercises/value-obj
 import type { ExerciseLoadStepOptions } from "../../modules/exercises/value-objects/exercise-load-step-options";
 import type { ExerciseResistanceOptions } from "../../modules/exercises/value-objects/exercise-resistance-options";
 import * as ui from "../components";
+import { ArrowRight, ImageUp, Pencil, Plus } from "../icons";
 import { LateralityKit } from "../kits/laterality.kit";
 import { ResistanceKit } from "../kits/resistance.kit";
 import { catalogRoute } from "../router";

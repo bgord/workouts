@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Dumbbell } from "lucide-react";
 import * as ui from "../components";
+import { Dumbbell } from "../icons";
 import { exerciseRoute } from "../router";
 
 export function ExercisePerformancesEmpty() {

@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Download } from "lucide-react";
+import { Download } from "../icons";
 import { dailyStepsRoute } from "../router";
 
 export function DailyStepsExport() {

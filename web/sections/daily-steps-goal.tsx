@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Pencil, Plus, Target } from "lucide-react";
 import * as ui from "../components";
+import { Pencil, Plus, Target } from "../icons";
 import { dailyStepsRoute } from "../router";
 import { DailyStepsGoalSet } from "./daily-steps-goal-set";
 

@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { Check, Pencil } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";
+import { Check, Pencil } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutIdentity(props: { back: React.ReactNode; menu: React.ReactNode }) {

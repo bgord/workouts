@@ -1,5 +1,5 @@
 import * as bg from "@bgord/ui";
-import { Check } from "lucide-react";
+import { Check } from "../icons";
 import { RirColor } from "./rir-color";
 import { RirOptions } from "./rir-options";
 

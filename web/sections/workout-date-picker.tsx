@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { CalendarDays } from "lucide-react";
 import { WorkoutScheduledForHorizonDaysMax } from "../../modules/workouts/value-objects/workout-scheduled-for-horizon";
 import * as ui from "../components";
+import { CalendarDays } from "../icons";
 
 export function WorkoutDatePicker(props: { field: bg.UseDateFieldReturnType } & bg.UseToggleReturnType) {
   const t = bg.useTranslations();

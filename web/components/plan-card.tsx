@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { Layers } from "lucide-react";
 import type { PlanSummary } from "../../modules/plans/value-objects/plan-summary";
+import { Layers } from "../icons";
 import { Gap } from "./gap";
 import { PlanStatusBadge } from "./plan-status-badge";
 import { RowBody, RowChevron, RowLink, RowTitle } from "./row";

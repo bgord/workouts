@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { PanelBottomOpen } from "lucide-react";
 import { useLogPanel } from "../hooks/use-log-panel";
+import { PanelBottomOpen } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutLogPanelOpen() {

@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
-import { CalendarRange, Scale, TrendingUp } from "lucide-react";
 import type * as VO from "../../modules/measurements/value-objects/body-weight-stats";
 import * as ui from "../components";
+import { CalendarRange, Scale, TrendingUp } from "../icons";
 import { BodyWeightDecimals } from "../services/weight-format";
 
 export function BodyWeightStats(props: VO.BodyWeightStats) {

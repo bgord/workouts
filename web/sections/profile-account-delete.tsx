@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { ArrowRight, UserX } from "lucide-react";
 import * as ui from "../components";
+import { ArrowRight, UserX } from "../icons";
 
 export function ProfileAccountDelete() {
   const t = bg.useTranslations();

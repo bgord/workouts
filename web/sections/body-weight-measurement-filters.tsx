@@ -1,9 +1,9 @@
 import * as bg from "@bgord/ui";
-import { X } from "lucide-react";
 import * as BodyWeightMeasurementFiltersForm from "../../app/services/body-weight-measurement-filters-form";
 import type { BodyWeightHistoryMonthType } from "../../modules/measurements/value-objects/body-weight-history-month";
 import { BodyWeightHistoryMonthAll } from "../../modules/measurements/value-objects/body-weight-history-month.validation";
 import * as ui from "../components";
+import { X } from "../icons";
 import { bodyWeightRoute } from "../router";
 
 export function BodyWeightMeasurementFilters() {

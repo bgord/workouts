@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { ArrowUpDown } from "lucide-react";
 import * as ui from "../components";
+import { ArrowUpDown } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutReorder(props: bg.UseToggleReturnType) {

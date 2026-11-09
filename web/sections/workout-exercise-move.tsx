@@ -1,8 +1,8 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
+import { ChevronDown, ChevronUp } from "../icons";
 import { workoutRoute } from "../router";
 
 export function WorkoutExerciseMove(props: {

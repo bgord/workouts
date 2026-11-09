@@ -1,7 +1,7 @@
 import * as bg from "@bgord/ui";
 import { useRouter } from "@tanstack/react-router";
-import { X } from "lucide-react";
 import type { ExerciseCategory } from "../../modules/exercises/value-objects/exercise-category";
+import { X } from "../icons";
 import { exerciseRoute } from "../router";
 
 export function ExerciseCategoryUnassign(props: ExerciseCategory & bg.UseToggleReturnType) {

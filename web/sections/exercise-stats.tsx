@@ -1,6 +1,6 @@
 import * as bg from "@bgord/ui";
-import { CalendarCheck } from "lucide-react";
 import * as ui from "../components";
+import { CalendarCheck } from "../icons";
 import { ExerciseStatisticsKit } from "../kits/exercise-statistics.kit";
 import { exerciseRoute } from "../router";
 
