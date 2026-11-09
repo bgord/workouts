@@ -31,10 +31,6 @@ step_start "scripts/production-account-create.sh copy"
 cp scripts/production-account-create.sh $OUTPUT_DIRECTORY
 step_end "scripts/production-account-create.sh copy"
 
-step_start "package.json copy"
-cp package.json $OUTPUT_DIRECTORY
-step_end "package.json copy"
-
 step_start "Infra directory create"
 mkdir -p "$OUTPUT_DIRECTORY/infra"
 step_end "Infra directory create"
@@ -46,10 +42,6 @@ step_end "Translations copy"
 step_start "Migrations copy"
 cp -r infra/drizzle "$OUTPUT_DIRECTORY/infra"
 step_end "Migrations copy"
-
-step_start "Drizzle config copy"
-cp bgord-scripts/templates/drizzle.config.ts "$OUTPUT_DIRECTORY"
-step_end "Drizzle config copy"
 
 step_start "Remote file storage directory create"
 mkdir -p "$OUTPUT_DIRECTORY/infra/storage"
