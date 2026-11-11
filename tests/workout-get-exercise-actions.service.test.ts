@@ -6,8 +6,8 @@ describe("WorkoutGetExerciseActions", () => {
   test("draft - first", () => {
     const actions = new Workouts.Services.WorkoutGetExerciseActions({
       status: Workouts.VO.WorkoutStatusEnum.draft,
-      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
-      exercise: mocks.workoutExercise,
+      exercises: [mocks.workoutExerciseWithoutTarget, mocks.workoutExercise],
+      exercise: mocks.workoutExerciseWithoutTarget,
       catalogExerciseExists: true,
     });
 
@@ -42,8 +42,8 @@ describe("WorkoutGetExerciseActions", () => {
   test("draft - single", () => {
     const actions = new Workouts.Services.WorkoutGetExerciseActions({
       status: Workouts.VO.WorkoutStatusEnum.draft,
-      exercises: [mocks.workoutExercise],
-      exercise: mocks.workoutExercise,
+      exercises: [mocks.workoutExerciseWithoutTarget],
+      exercise: mocks.workoutExerciseWithoutTarget,
       catalogExerciseExists: true,
     });
 
@@ -75,22 +75,11 @@ describe("WorkoutGetExerciseActions", () => {
     });
   });
 
-  test("in progress - exercise without a target", () => {
+  test("in progress - exercise without logged sets", () => {
     const actions = new Workouts.Services.WorkoutGetExerciseActions({
       status: Workouts.VO.WorkoutStatusEnum.in_progress,
       exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
       exercise: mocks.workoutExerciseWithoutTarget,
-      catalogExerciseExists: true,
-    });
-
-    expect(actions.calculate().targetSet).toEqual(mocks.actionAvailable);
-  });
-
-  test("in progress - exercise with a null target", () => {
-    const actions = new Workouts.Services.WorkoutGetExerciseActions({
-      status: Workouts.VO.WorkoutStatusEnum.in_progress,
-      exercises: [mocks.workoutExercise, mocks.workoutExerciseWithoutTarget],
-      exercise: { id: mocks.anotherWorkoutExerciseId, target: null },
       catalogExerciseExists: true,
     });
 

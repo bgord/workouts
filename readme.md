@@ -589,6 +589,7 @@ modules/
     │   ├── workout-catalog-exercise-exists.ts
     │   ├── workout-draft-limit-for-owner.ts
     │   ├── workout-exercise-exists.ts
+    │   ├── workout-exercise-has-no-logged-sets.ts
     │   ├── workout-exercise-limit.ts
     │   ├── workout-exercise-load-is-applicable.ts
     │   ├── workout-exercise-position-has-changed.ts

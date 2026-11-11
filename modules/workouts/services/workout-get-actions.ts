@@ -17,7 +17,7 @@ type WorkoutGetActionsFacts = {
   exercises: Array<
     Pick<VO.WorkoutExercise, "id"> & {
       target?: VO.ExerciseTargetType | null;
-      loggedSets: ReadonlyArray<unknown>;
+      loggedSets: ReadonlyArray<Pick<VO.LoggedSetType, "id">>;
     }
   >;
   inProgressCount: tools.IntegerNonNegativeType;

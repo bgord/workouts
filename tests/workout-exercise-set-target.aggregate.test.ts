@@ -51,6 +51,24 @@ describe("Workout.setExerciseTarget", async () => {
     ).toThrow(Workouts.Invariants.WorkoutExerciseExists.error);
   });
 
+  test("WorkoutExerciseHasNoLoggedSets", async () => {
+    const workout = Workouts.Aggregates.Workout.build(
+      mocks.workoutId,
+      [
+        mocks.GenericWorkoutCreatedEvent,
+        mocks.GenericWorkoutExerciseAddedEvent,
+        mocks.GenericWorkoutExerciseTargetSetEvent,
+        mocks.GenericWorkoutStartedEvent,
+        mocks.GenericWorkoutSetLoggedEvent,
+      ],
+      deps,
+    );
+
+    expect(() =>
+      workout.setExerciseTarget(mocks.workoutExerciseId, mocks.anotherExerciseTarget, mocks.userId),
+    ).toThrow(Workouts.Invariants.WorkoutExerciseHasNoLoggedSets.error);
+  });
+
   test("WorkoutExerciseTargetHasChanged", async () => {
     const workout = Workouts.Aggregates.Workout.build(
       mocks.workoutId,

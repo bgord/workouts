@@ -3,6 +3,7 @@ export * from "./workout-belongs-to-user";
 export * from "./workout-catalog-exercise-exists";
 export * from "./workout-draft-limit-for-owner";
 export * from "./workout-exercise-exists";
+export * from "./workout-exercise-has-no-logged-sets";
 export * from "./workout-exercise-limit";
 export * from "./workout-exercise-load-is-applicable";
 export * from "./workout-exercise-position-has-changed";

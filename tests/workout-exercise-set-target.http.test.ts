@@ -200,6 +200,27 @@ describe("PATCH /api/workouts/:workoutId/exercise/:workoutExerciseId/target", as
     expect(eventStoreSave).not.toHaveBeenCalled();
   });
 
+  test("WorkoutExerciseHasNoLoggedSets", async () => {
+    const events = mocks.workoutWithLoggedSetHistory;
+    using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);
+    using eventStoreSave = spyOn(di.Tools.EventStore, "save");
+    using spies = new DisposableStack();
+    spies.use(spyOn(di.Tools.EventStore, "find")).mockResolvedValue(events);
+
+    const response = await server.request(
+      url,
+      {
+        method: "PATCH",
+        headers: mocks.revisionHeaders(events.length),
+        body: JSON.stringify(mocks.anotherExerciseTarget),
+      },
+      mocks.ip,
+    );
+
+    await testcases.assertErrorResponse(response, 403, "workout.exercise.has.no.logged.sets");
+    expect(eventStoreSave).not.toHaveBeenCalled();
+  });
+
   test("WorkoutExerciseTargetHasChanged", async () => {
     const events = mocks.workoutWithTargetHistory;
     using _ = spyOn(di.Tools.Auth.config.api, "getSession").mockResolvedValue(mocks.auth);

@@ -1,8 +1,9 @@
 import * as bg from "@bgord/bun";
+import type * as VO from "+workouts/value-objects";
 
 class WorkoutHasLoggedSetsError extends Error {}
 
-type WorkoutHasLoggedSetsConfigType = { workoutExercises: Array<{ loggedSets: ReadonlyArray<unknown> }> };
+type WorkoutHasLoggedSetsConfigType = { workoutExercises: Array<{ loggedSets: ReadonlyArray<Pick<VO.LoggedSetType, "id">> }> };
 
 class WorkoutHasLoggedSetsFactory extends bg.Invariant<WorkoutHasLoggedSetsConfigType> {
   passes(config: WorkoutHasLoggedSetsConfigType) {
