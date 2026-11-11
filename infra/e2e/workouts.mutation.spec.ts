@@ -997,6 +997,27 @@ test.describe("Workouts - active-mutation", () => {
     await expect(row.getByRole("img", { name: "Below target RIR 2", exact: true })).toBeVisible();
   });
 
+  test("edits the target in the log panel and prefills the log form with it", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const form = panel.getByRole("form", { name: "Set target" });
+
+    await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+    await panel
+      .getByRole("toolbar", { name: "Exercises" })
+      .getByRole("button", { name: `5. ${fixtures.exercises.lateralRaiseDumbbells.name}`, exact: true })
+      .click();
+    await panel.getByRole("button", { name: /^Edit target/ }).click();
+    await form.getByRole("spinbutton", { name: "Sets", exact: true }).fill("3");
+    await form.getByRole("spinbutton", { name: "Reps", exact: true }).fill("11");
+    await form.getByRole("spinbutton", { name: "Load (kg)", exact: true }).fill("10");
+    await form.getByRole("button", { name: "Save", exact: true }).click();
+
+    await expect(panel.getByRole("button", { name: "Edit target: 3×11 10 kg", exact: true })).toBeVisible();
+    await expect(panel.getByRole("spinbutton", { name: "Reps", exact: true })).toHaveValue("11");
+    await expect(panel.getByRole("spinbutton", { name: "Load (kg)", exact: true })).toHaveValue("10");
+  });
+
   test("completes the workout in progress", async ({ page }) => {
     await page.goto(`/workouts/${fixtures.activeMutation.workout.id}`);
 

@@ -70,6 +70,7 @@ export function WorkoutExerciseTargetSet(props: { exercise: WorkoutExercise } & 
     <>
       <form
         aria-busy={mutation.isLoading}
+        aria-label={t("workout.target.cta")}
         data-md-ml="1"
         data-md-pl="8"
         data-pl="12"

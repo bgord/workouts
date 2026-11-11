@@ -1,9 +1,10 @@
 import * as bg from "@bgord/ui";
-import { RepsScheme } from "../../modules/plans/value-objects/reps-scheme";
 import type { WorkoutExercise } from "../../modules/workouts/queries/get-workout";
 import * as ui from "../components";
 import { useLogPanel } from "../hooks/use-log-panel";
-import { PanelBottomClose, Target } from "../icons";
+import { PanelBottomClose } from "../icons";
+import { WorkoutExerciseTarget } from "./workout-exercise-target";
+import { WorkoutExerciseTargetSet } from "./workout-exercise-target-set";
 import { WorkoutLogPanelImage } from "./workout-log-panel-image";
 
 export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
@@ -14,6 +15,7 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
   const title = t("workout.exercise.log_panel.close.title", { name: exercise.exerciseName });
 
   const description = bg.useToggle({ name: `workout-log-panel-description-${exercise.id}` });
+  const target = bg.useToggle({ name: `workout-log-panel-target-${exercise.id}` });
 
   return (
     <>
@@ -66,27 +68,11 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
               {t("workout.log_panel.position", { position, total: available.length })}
             </span>
 
-            {exercise.target && (
+            {(exercise.target || exercise.actions.targetSet.available) && (
               <>
                 <span data-color="neutral-600">·</span>
 
-                <span
-                  data-color="neutral-300"
-                  data-fw="medium"
-                  data-stack="x"
-                  data-transform="font-variant-numeric"
-                  {...ui.Gap.inline}
-                >
-                  <Target data-color="neutral-500" data-size="xs" />
-                  <ui.TargetValue
-                    laterality={exercise.laterality}
-                    load={exercise.target.load}
-                    reps={exercise.target.reps}
-                    resistance={exercise.resistance}
-                    scheme={RepsScheme.of(exercise.prescription.reps)}
-                    sets={exercise.target.sets}
-                  />
-                </span>
+                <WorkoutExerciseTarget exercise={exercise} {...target} />
               </>
             )}
 
@@ -108,6 +94,8 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
           {exercise.exerciseDescription}
         </div>
       )}
+
+      <WorkoutExerciseTargetSet exercise={exercise} {...target} />
     </>
   );
 }

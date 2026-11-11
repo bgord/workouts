@@ -298,6 +298,33 @@ test.describe("Workout - active", () => {
     await expect(row.getByTitle("Set target", { exact: true })).toBeHidden();
   });
 
+  test("edits the target of an exercise without logged sets in the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+
+    await panel.getByRole("button", { name: "Edit target: 3×8 25 kg", exact: true }).click();
+
+    await expect(panel.getByRole("button", { name: "Save", exact: true })).toBeVisible();
+  });
+
+  test("locks the target of an exercise with logged sets in the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const rail = panel.getByRole("toolbar", { name: "Exercises" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+    await rail
+      .getByRole("button", {
+        name: `2. ${fixtures.exercises.overheadPressSeatedDumbbells.name}`,
+        exact: true,
+      })
+      .click();
+
+    await expect(panel.getByTitle("Set target", { exact: true })).toBeHidden();
+  });
+
   test("toggles the exercise description from the log panel image", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
     const toggle = panel.getByRole("button", { name: "Description", exact: true });
