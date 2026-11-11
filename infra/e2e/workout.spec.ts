@@ -248,6 +248,26 @@ test.describe("Workout - active", () => {
     await expect(head.getByRole("img", { name: "0 / 3" })).toBeVisible();
   });
 
+  test("toggles the exercise description from the log panel image", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const toggle = panel.getByRole("button", { name: "Description", exact: true });
+    const description = panel.getByText(fixtures.exercises.tricepsPushDownBar.description, { exact: true });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+
+    await expect(description).toBeHidden();
+
+    await toggle.click();
+
+    await expect(description).toBeVisible();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+    await toggle.click();
+
+    await expect(description).toBeHidden();
+  });
+
   test("lists every exercise with its progress in the log panel rail", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
     const rail = panel.getByRole("toolbar", { name: "Exercises" });
