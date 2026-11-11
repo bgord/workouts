@@ -44,9 +44,22 @@ export function WorkoutLogPanelHead(props: { exercise: WorkoutExercise }) {
         </button>
 
         <div data-basis="0" data-grow="1" data-minw="0" data-stack="y" {...ui.Gap.inline}>
-          <strong data-color="neutral-100" data-transform="line-clamp" title={exercise.exerciseName}>
-            {exercise.exerciseName}
-          </strong>
+          {exercise.actions.catalogView.available && (
+            <ui.ExerciseLink
+              data-transform="line-clamp"
+              params={{ exerciseId: exercise.exerciseId }}
+              title={exercise.exerciseName}
+              to="/catalog/exercise/$exerciseId"
+            >
+              {exercise.exerciseName}
+            </ui.ExerciseLink>
+          )}
+
+          {!exercise.actions.catalogView.available && (
+            <strong data-color="neutral-100" data-transform="line-clamp" title={exercise.exerciseName}>
+              {exercise.exerciseName}
+            </strong>
+          )}
 
           <div data-color="neutral-400" data-fs="xs" data-stack="x" data-wrap="wrap" {...ui.Gap.cluster}>
             <span data-transform="font-variant-numeric">

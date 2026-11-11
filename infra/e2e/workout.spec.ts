@@ -248,6 +248,35 @@ test.describe("Workout - active", () => {
     await expect(head.getByRole("img", { name: "0 / 3" })).toBeVisible();
   });
 
+  test("goes back from the exercise to the workout it was opened from in the log panel", async ({ page }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+    const back = page.getByRole("main").getByRole("link", { name: "Back", exact: true });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+    await panel.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }).click();
+    await expect(page).toHaveURL(`/catalog/exercise/${fixtures.exercises.tricepsPushDownBar.id}`);
+
+    await back.click();
+
+    await expect(page).toHaveURL(`/workouts/${fixtures.active.workout.id}`);
+  });
+
+  test("swipes back from the exercise to the workout it was opened from in the log panel", async ({
+    page,
+  }) => {
+    const panel = page.getByRole("dialog", { name: "Logging panel" });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+    await page.getByRole("button", { name: "Continue" }).click();
+    await panel.getByRole("link", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true }).click();
+    await expect(page).toHaveURL(`/catalog/exercise/${fixtures.exercises.tricepsPushDownBar.id}`);
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(`/workouts/${fixtures.active.workout.id}`);
+  });
+
   test("toggles the exercise description from the log panel image", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
     const toggle = panel.getByRole("button", { name: "Description", exact: true });
