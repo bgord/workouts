@@ -277,6 +277,27 @@ test.describe("Workout - active", () => {
     await expect(page).toHaveURL(`/workouts/${fixtures.active.workout.id}`);
   });
 
+  test("edits the target of an exercise without logged sets", async ({ page }) => {
+    const row = page.getByRole("listitem", { name: fixtures.exercises.tricepsPushDownBar.name, exact: true });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await row.getByRole("button", { name: "Edit target: 3×8 25 kg", exact: true }).click();
+
+    await expect(row.getByRole("button", { name: "Save", exact: true })).toBeVisible();
+  });
+
+  test("locks the target of an exercise with logged sets", async ({ page }) => {
+    const row = page.getByRole("listitem", {
+      name: fixtures.exercises.overheadPressSeatedDumbbells.name,
+      exact: true,
+    });
+
+    await page.goto(`/workouts/${fixtures.active.workout.id}`);
+
+    await expect(row.getByTitle("Set target", { exact: true })).toBeHidden();
+  });
+
   test("toggles the exercise description from the log panel image", async ({ page }) => {
     const panel = page.getByRole("dialog", { name: "Logging panel" });
     const toggle = panel.getByRole("button", { name: "Description", exact: true });

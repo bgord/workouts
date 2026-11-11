@@ -452,6 +452,7 @@
   "statistics.exercise.total_reps": "Najwięcej powtórzeń łącznie",
   "statistics.exercise.volume": "Najlepsza objętość",
   "statistics.exercise.progress.point": "{{date}} — {{value}}",
+  "workout.exercise.has.no.logged.sets": "Cel jest zablokowany po zapisaniu serii",
   "workout.has.logged.sets": "Najpierw zapisz choć jedną serię",
   "workout.complete.cta": "Zakończ",
   "workout.complete.error": "Nie udało się zakończyć treningu",

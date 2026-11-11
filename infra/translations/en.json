@@ -452,6 +452,7 @@
   "statistics.exercise.total_reps": "Best total reps",
   "statistics.exercise.volume": "Best volume",
   "statistics.exercise.progress.point": "{{date}} — {{value}}",
+  "workout.exercise.has.no.logged.sets": "The target is locked once a set is logged",
   "workout.has.logged.sets": "Log at least one set first",
   "workout.complete.cta": "Complete",
   "workout.complete.error": "Could not complete the workout",
