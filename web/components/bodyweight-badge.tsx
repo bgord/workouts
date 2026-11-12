@@ -6,7 +6,7 @@ export function BodyweightBadge(props: React.JSX.IntrinsicElements["span"]) {
   const t = bg.useTranslations();
 
   return (
-    <span data-stack="x" {...Gap.inline} {...props}>
+    <span data-shrink="0" data-stack="x" {...Gap.inline} {...props}>
       <PersonStanding data-size="xs" />
       {t("exercise.resistance.bodyweight")}
     </span>

@@ -6,7 +6,7 @@ export function UnilateralBadge(props: React.JSX.IntrinsicElements["span"]) {
   const t = bg.useTranslations();
 
   return (
-    <span data-stack="x" {...Gap.inline} {...props}>
+    <span data-shrink="0" data-stack="x" {...Gap.inline} {...props}>
       <FlipHorizontal2 data-size="xs" />
       {t("exercise.laterality.unilateral")}
     </span>
