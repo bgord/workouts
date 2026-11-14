@@ -3,6 +3,7 @@
 import type * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import { relations, sql } from "drizzle-orm";
+// biome-ignore lint: lint/suspicious/noDeprecatedImports
 import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 import type { UserIdType } from "../modules/auth/value-objects/user-id";
 import type { ExerciseCategoryIdType } from "../modules/exercises/value-objects/exercise-category-id";
