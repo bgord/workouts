@@ -5,7 +5,7 @@
     "": {
       "name": "workouts",
       "dependencies": {
-        "@bgord/bun": "1.24.30",
+        "@bgord/bun": "1.24.31",
         "@bgord/design": "2.1.10",
         "@bgord/ui": "0.10.25",
         "@tanstack/react-router": "1.170.46",
@@ -129,7 +129,7 @@
 
     "@better-fetch/fetch": ["@better-fetch/fetch@1.3.3", "", {}, "sha512-U6SlDt/GUWtK2JAxS/NhdoYTEim+EL1G5byz2TUj83KjLZBUpYzb5SmX0aXaCnbGkAjFKnV/o/0+cyXMbEcqqg=="],
 
-    "@bgord/bun": ["@bgord/bun@1.24.30", "", { "dependencies": { "@bgord/tools": "1.7.1", "@hono/bun": "1.0.1", "hono": "4.13.18" }, "peerDependencies": { "better-auth": "1.7.18", "nodemailer": "10.5.0" }, "optionalPeers": ["better-auth", "nodemailer"] }, "sha512-5XfG0c57t8frl4iqc2qDicz1PhKiRdZp+SNOI4WozycMhxdKyE2t8FqEaCHPQLHcM9CnZFws9yxsWjkPS3SmxQ=="],
+    "@bgord/bun": ["@bgord/bun@1.24.31", "", { "dependencies": { "@bgord/tools": "1.7.1", "@hono/bun": "1.0.1", "hono": "4.13.18" }, "peerDependencies": { "better-auth": "1.7.18", "nodemailer": "10.5.0" }, "optionalPeers": ["better-auth", "nodemailer"] }, "sha512-e/DT+QVmgjgGeR68gnl+AcDW4jGu1s5VS7woSN9h/hox9vLQSBqEOyU/VbBw1ZvOpe+IAsAEhBs7+NEifU3NoQ=="],
 
     "@bgord/design": ["@bgord/design@2.1.10", "", { "bin": { "bgord-css-purge": "dist/css-purge.js" } }, "sha512-xbLLDbi7x2aSyf17gh1YPbuQvFIfDuLC5SLZ56/zHrvNO30bsbbx7QlxBR6s87codOt7J13Gvg1Xl7KzXA/Kqg=="],
 
