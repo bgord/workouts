@@ -31,6 +31,17 @@ test.describe("Mobile - athlete", () => {
     await expect(page).toHaveURL("/profile");
   });
 
+  test("scrolls to the top keeping the filters when tapping the current page", async ({ page }) => {
+    await page.goto("/workouts?filter=all_time");
+    await page.evaluate(() => window.scrollTo(0, 1000));
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+    await page.getByRole("navigation").getByRole("link", { name: "Workouts" }).click();
+
+    await expect(page).toHaveURL("/workouts?filter=all_time");
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  });
+
   test("keeps the pages within the viewport width", async ({ page }) => {
     const routes = [
       "/",

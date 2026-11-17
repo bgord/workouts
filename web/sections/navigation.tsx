@@ -13,7 +13,14 @@ const link = {
 
 const desktopItem = { "data-cross": "center", ...ui.Gap.cluster } as const;
 
-const drawerItem = { "data-grow": "1", "data-py": "4" } as const;
+const drawerItem = { "data-grow": "1", "data-py": "4", onClick: scrollToTopOnCurrentPage } as const;
+
+function scrollToTopOnCurrentPage(event: React.MouseEvent<HTMLAnchorElement>) {
+  if (event.currentTarget.pathname !== window.location.pathname) return;
+
+  event.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
 export function Navigation() {
   return (
