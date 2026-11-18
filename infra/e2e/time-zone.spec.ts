@@ -1,4 +1,3 @@
-// cSpell:ignore Kiritimati Pago
 import { expect, test } from "./test";
 
 const timeZone =

@@ -1,4 +1,3 @@
-// cSpell:ignore brzycki
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import type * as Ports from "+statistics/ports";

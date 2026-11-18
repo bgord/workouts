@@ -1,4 +1,3 @@
-// cSpell:ignore brzycki
 import { describe, expect, test } from "bun:test";
 import * as tools from "@bgord/tools";
 import * as v from "valibot";

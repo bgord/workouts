@@ -1,4 +1,3 @@
-// cSpell:ignore epley brzycki
 export * from "./exercise-performance-calculator";
 export * from "./exercise-performance-metrics.strategy";
 export * from "./exercise-performance-metrics-bodyweight.strategy";

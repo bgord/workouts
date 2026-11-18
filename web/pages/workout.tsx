@@ -1,4 +1,3 @@
-/* cSpell:disable */
 import * as bg from "@bgord/ui";
 import { WorkoutStatusEnum } from "../../modules/workouts/value-objects/workout-status";
 import * as ui from "../components";

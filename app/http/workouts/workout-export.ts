@@ -1,4 +1,3 @@
-// cspell:ignore Stringifier
 import type * as bg from "@bgord/bun";
 import * as Workouts from "+workouts";
 

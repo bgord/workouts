@@ -1,4 +1,3 @@
-// cSpell:ignore stringifier
 import type { EnvironmentResultType } from "+infra/env";
 import { createAtomicFileWriter } from "./atomic-file-writer.adapter";
 import { createCertificateInspector } from "./certificate-inspector.adapter";

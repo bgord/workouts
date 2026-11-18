@@ -1,4 +1,3 @@
-// cspell:disable
 import * as tools from "@bgord/tools";
 import * as v from "valibot";
 import * as Exercises from "+exercises";

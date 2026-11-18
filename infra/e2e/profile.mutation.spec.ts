@@ -1,4 +1,3 @@
-// cSpell:ignore Tygodniowe podsumowanie Wyloguj
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 

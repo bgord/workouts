@@ -1,4 +1,3 @@
-// cSpell:ignore Profil Język Tygodniowe podsumowanie delet
 import * as fixtures from "../../scripts/seed/fixtures";
 import { expect, test } from "./test";
 

@@ -1,4 +1,3 @@
-// cSpell:ignore epley
 import { describe, expect, spyOn, test } from "bun:test";
 import * as Statistics from "+statistics";
 import { bootstrap } from "+infra/bootstrap";

@@ -1,5 +1,3 @@
-/* cSpell:disable */
-
 import type * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import { relations, sql } from "drizzle-orm";
@@ -108,10 +106,7 @@ export const events = sqliteTable(
     commit: text("commit").notNull().$type<bg.CommitShaValueType>(),
     payload: text("payload").notNull(),
   },
-  (table) => [
-    // cspell:disable-next-line
-    uniqueIndex("stream_revision_uidx").on(table.stream, table.revision),
-  ],
+  (table) => [uniqueIndex("stream_revision_uidx").on(table.stream, table.revision)],
 );
 
 export const userPreferences = sqliteTable(

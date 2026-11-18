@@ -1,4 +1,3 @@
-/* cSpell:disable */
 import { describe, expect, spyOn, test } from "bun:test";
 import { bootstrap } from "+infra/bootstrap";
 import { registerCommandHandlers } from "+infra/register-command-handlers";

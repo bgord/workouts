@@ -1,4 +1,3 @@
-// cspell:disable
 import * as bg from "@bgord/bun";
 import * as tools from "@bgord/tools";
 import type { Session, User } from "better-auth";

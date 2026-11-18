@@ -1,4 +1,3 @@
-// cSpell:ignore sparkline
 import * as bg from "@bgord/ui";
 import { useId } from "react";
 import type { BodyPartSummary } from "../../modules/measurements/value-objects/body-part-summary";

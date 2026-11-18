@@ -1,4 +1,3 @@
-// cSpell:ignore GRIDLINE GRIDLINES
 const WIDTH = 600;
 const HEIGHT = 200;
 const PADDING = { top: 8, right: 6, bottom: 8, left: 6 };

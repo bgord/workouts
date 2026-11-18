@@ -1,4 +1,3 @@
-// cSpell:ignore Choosable
 import * as bg from "@bgord/bun";
 import type * as tools from "@bgord/tools";
 import type * as Auth from "+auth";

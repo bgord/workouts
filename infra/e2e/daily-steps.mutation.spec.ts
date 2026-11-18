@@ -1,4 +1,3 @@
-// cSpell:ignore spinbutton
 import { expect, test } from "./test";
 
 test.describe("Daily steps - empty-mutation", () => {
